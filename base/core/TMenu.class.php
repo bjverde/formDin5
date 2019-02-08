@@ -232,15 +232,4 @@ class TMenu
  	}
 }
 return;
-new TElement();
-$menu = new TMenu('main_menu',null,null,null,40,10,500);
-$menu->addItem(1,null,'Cadastro','search.gif',null,'hint do item',null);
-$menu->addItem();
-$menu->addItem(2,null,'Relatório','lixeira.gif',null,'Relatório de Produtos');
-$menu->addItem(22,2,'Vidas2','lixeira.gif',null,'Relatório de Funcionarios',null);
-$menu->addItem(23,2,'Vidas','lixeira.gif',null,'Relatório de Funcionarios',null);
-$menu->addItem();
-$menu->addItem(24,2,'Maria','lixeira.gif',null,'Relatório de Funcionarios',null);
-$menu->addItem(25,2,'Maria maria é um dom uma certa magia','lixeira.gif',null,'Relatório de Funcionarios',null,400);
-$menu->show();
 ?>
