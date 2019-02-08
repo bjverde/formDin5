@@ -1,0 +1,11 @@
+{
+	"type" : "project",
+	"description" : "formDin FrameWork",
+	"require" : {
+		"php" : ">=7.0.0"
+		,"components/jquery" : "^3.2"
+		,"components/font-awesome" : "^5.0.6"
+		,"twbs/bootstrap" : "^4.1"
+		,"fpdf/fpdf": "^1.81"
+	}
+}
