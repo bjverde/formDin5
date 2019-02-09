@@ -41,8 +41,13 @@
 if (! defined ( 'DS' )) {
 	define ( 'DS', DIRECTORY_SEPARATOR );
 }
+if(!defined('ENCODINGS') ) { 
+	define('ENCODINGS', 'UTF-8'); 
+}
+
 $currentl_dir = dirname ( __FILE__ );
 
+/*
 require_once ($currentl_dir . DS . '..' . DS . 'constants.php');
 
 $exeptions_dir = $currentl_dir . DS . '..' . DS . 'exceptions' . DS;
@@ -61,8 +66,11 @@ require_once ($helps_dir . 'ServerHelper.class.php');
 require_once ($helps_dir . 'SqlHelper.class.php');
 require_once ($helps_dir . 'StringHelper.class.php');
 require_once ($helps_dir . 'UrlHelper.class.php');
+*/
 
-include_once ('autoload_formdin.php');
+require_once 'autoload_formdin.php';
+require_once $currentl_dir.DS.'..'.DS.'helpers'.DS.'formdin_autoload_helpers.php';
+
 class TApplication extends TLayout {
 	private $strTitle;
 	private $strTitleTag;
@@ -88,9 +96,6 @@ class TApplication extends TLayout {
 	private $bodyContent;
 	private $horizontalAlign;
 	private $verticalAlign;
-	private $cellLogin;
-	private $cellHeader;
-	private $cellLogo;
 	private $loCenter; // instância do LayoutCenter
 	private $beforeActionFunction;
 	private $width;
@@ -419,43 +424,11 @@ class TApplication extends TLayout {
 		$this->setJavaScriptCss();
 		
 		if ($this->getLoginDone ()) {
-			// montar o cabeçalho da pagina
-			$this->buildPageHeader ();
-			
-			$btnLogOut = '';
-			
-			// montar o rodapé da pagina
-			$this->buildPageFooter ();
-			
-			if (isset ( $this->cellLogin )) {
-				// exibir o botão de ecerrar a sessão somente se existir tela de login definida
-				if ($this->getLoginFile ()) {
-					$btnLogOut = '<input id="button_end_session" type="button" value="Encerrar Sessão" onclick="app_login(1,\'' . $this->getLoginFile () . '\')">';
-				}
-				if ($this->getLoginInfo ()) {
-					$this->cellLogin->add ( $this->getLoginInfo () );
-				} else if (isset ( $_SESSION [APLICATIVO] ["login"] ["num_cpf"] ) && $_SESSION [APLICATIVO] ["login"] ["num_cpf"]) {
-					$this->cellLogin->add ( 'CPF:' . formatar_cpf_cnpj ( $_SESSION [APLICATIVO] ["login"] ["num_cpf"] ) . '<br/>' . $_SESSION [APLICATIVO] ["login"] ["nom_pessoa"] );
-				}
-				
-				if (preg_match ( '/<input/i', $this->getLoginInfo () ) == 0) {
-					$this->cellLogin->add ( '<br/>' . $btnLogOut );
-				}
-			} else {
-				$this->cellHeader->clearChildren (); // limpar a celula da tabela
-				$this->cellHeader->add ( $this->getHeaderContent () );
-			}
+		    $this->buildPageHeader(); // montar o cabeçalho da pagina
+			$this->buildPageFooter(); // montar o rodapé da pagina
 		} else {
-			// montar o cabeçalho da pagina
-			$this->buildPageHeader ();
-			
-			// montar o rodapé da pagina
-			$this->buildPageFooter ();
-			
-			// $this->loCenter->setNorthInitClosed(true); // não mostrar a área de menu
-			if ($this->getLoginInfo () && isset ( $this->cellLogin )) {
-				$this->cellLogin->add ( $this->getLoginInfo () );
-			}
+		    $this->buildPageHeader(); // montar o cabeçalho da pagina
+		    $this->buildPageFooter(); // montar o rodapé da pagina
 			
 			if ($this->getLoginFile ()) {
 				if (file_exists ( $this->getLoginFile () )) {
@@ -469,16 +442,7 @@ class TApplication extends TLayout {
 			}
 		}
 		
-		if ($this->getShowMenu ()) {
-			if ($this->getMainMenuFile ()) {
-				if (file_exists ( $this->getMainMenuFile () )) {
-					$this->addJavascript ( 'try{app_main_menu = new dhtmlXMenuObject("div_main_menu",menuTheme);}catch(e){alert( "Erro no menu. Não foi possível instanciar a classe dhtmlXMenuObject.\t"+e.message)}' );
-					$this->addJavascript ( 'app_build_menu(false,null,"' . $this->getMainMenuFile () . '")' );
-				} else {
-					$this->addJavascript ( 'alert("Módulo de menu:' . $this->getMainMenuFile () . ', defindo para a aplicação, não existe.")' );
-				}
-			}
-		}
+		$this->buildMainMenu();
 		
 		// se pressionar F5, recarregar o ultimo módulo solicitado
 		$loadModule = null;
@@ -1322,69 +1286,101 @@ class TApplication extends TLayout {
 	public function getHorizontalAlign() {
 		return is_null ( $this->horizontalAlign ) ? 'center' : $this->horizontalAlign;
 	}
+	
+	private function getHeaderLogo() {
+	    $app_header_logo = new TDiv( 'app_header_logo' );
+	    $sigla = $this->getSigla();
+	    $app_header_logo->add( $sigla );
+	    return $app_header_logo;
+	}
+	
+	private function getHeaderSubTitle() {
+	    $app_header_subtitle = null;
+	    if ( $this->getSubtitle() ) {
+	        $app_header_subtitle = new TDiv( 'app_header_subtitle' );
+	        $title = $this->getSubtitle();
+	        $app_header_subtitle->add( $title );
+	    }
+	    return $app_header_subtitle;
+	}
+	
+	private function getHeaderTitle() {
+	    $app_header_title = new TDiv( 'app_header_title' );
+	    //$app_header_title->setAttribute('class','elm');
+	    
+	    $app_header_title_main = new TDiv( 'app_header_title_main' );
+	    $title = $this->getTitle();
+	    $app_header_title_main->add( $title );
+	    
+	    $app_header_title->add( $app_header_title_main );
+	    $app_header_title->add( $this->getHeaderSubTitle() );
+	    
+	    return $app_header_title;
+	}
+	
+	private function getHeaderLogin() {
+	    
+	    $userInfo  = null;
+	    $btnLogOut = null;
+	    if ($this->getLoginDone ()) {
+	        // exibir o botão de ecerrar a sessão somente se existir tela de login definida
+	        if ($this->getLoginFile ()) {
+	            $btnLogOut = '<input id="button_end_session" type="button" value="Encerrar Sessão" onclick="app_login(1,\'' . $this->getLoginFile () . '\')">';
+	        }
+	        if ($this->getLoginInfo ()) {
+	            $userInfo = $this->getLoginInfo ();
+	        } else if (isset ( $_SESSION [APLICATIVO] ["login"] ["num_cpf"] ) && $_SESSION [APLICATIVO] ["login"] ["num_cpf"]) {
+	            $userInfo = 'CPF:' . formatar_cpf_cnpj ( $_SESSION [APLICATIVO] ["login"] ["num_cpf"] ) . '<br/>' . $_SESSION [APLICATIVO] ["login"] ["nom_pessoa"] ;
+	        }
+	        
+	        if (preg_match ( '/<input/i', $this->getLoginInfo () ) == 0) {
+	            $userInfo =  $userInfo. '<br/>' . $btnLogOut;
+	        }
+	    } else {
+	        if ( $this->getLoginInfo() ) {
+	            $userInfo = $this->getLoginInfo();
+	        }
+	    }
+	    
+	    $app_header_login = new TDiv( 'app_header_login' );
+	    $app_header_login->add( $userInfo );
+	    return $app_header_login;
+	}
+	
+	private function buildMainMenu() {
+	    if ($this->getShowMenu ()) {
+	        if ($this->getMainMenuFile ()) {
+	            if (file_exists ( $this->getMainMenuFile () )) {
+	                $this->addJavascript ( 'try{app_main_menu = new dhtmlXMenuObject("div_main_menu",menuTheme);}catch(e){alert( "Erro no menu. Não foi possível instanciar a classe dhtmlXMenuObject.\t"+e.message)}' );
+	                $this->addJavascript ( 'app_build_menu(false,null,"' . $this->getMainMenuFile () . '")' );
+	            } else {
+	                $this->addJavascript ( 'alert("Módulo de menu:' . $this->getMainMenuFile () . ', defindo para a aplicação, não existe.")' );
+	            }
+	        }
+	    }
+	}
+	
 	private function buildPageHeader() {
-		/**
-		 * tabela do cabeçalho
-		 * ids: app_header_logo ,app_header_title, app_header_login
-		 */
-		$tbCab = new TTable ( 'table_header' );
-		$tbCab->setProperty ( 'width', '100%' );
-		$tbCab->setProperty ( 'border', '0' );
-		$tbCab->setProperty ( 'cellpadding', '0px' );
-		$tbCab->setProperty ( 'cellspacing', '0px' );
-		$this->getNorthArea ()->add ( $tbCab );
-		
-		if ($this->getHeaderContent ()) {
-			// cabeçalho definido pelo usuário
-			$row = $tbCab->addRow ();
-			$cellHeader = $row->addCell ( $this->getHeaderContent () );
-			$cellHeader->setId ( 'app_header' );
-			$cellHeader->clearCss ();
-			$cellHeader->setCss ( 'text-align', 'left' );
-			$cellHeader->setCss ( 'font-size', '14px' );
-			$cellHeader->setCss ( 'border-top', 'none' );
-			$cellHeader->setCss ( 'font-weight', 'normal' );
-			$cellHeader->setCss ( 'line-height', '100%' );
-			// td do cabeçalho
-			$this->cellHeader = $cellHeader;
-		} else {
-			$row = $tbCab->addRow ();
-			// app_header_logo
-			$app_header_logo = $row->addCell ( $this->getSigla () );
-			$app_header_logo->setId ( 'app_header_logo' );
-			$app_header_logo->setCss ( 'width', '200' );
-			// app_header_title
-			$app_header_title = $row->addCell ( $this->getTitle () );
-			$app_header_title->setId ( 'app_header_title' );
-			$app_header_title->setCss ( 'Height', '55' );
-			$app_header_title->setCss ( 'width', '*' );
-			
-			if ($this->getSubtitle ()) {
-				$app_header_title->add ( '<br><span style="font-size:15px;" id="app_header_subtitle">' . $this->getSubtitle () . '</span>' );
-			}
-			
-			$app_header_title->clearCss ();
-			$app_header_title->setCss ( 'background-color', 'transparent' );
-			
-			if (defined ( 'COR_TITULO' )) {
-				$app_header_title->setCss ( 'color', COR_TITULO );
-			}
-			
-			// app_header_login
-			$app_header_login = $row->addCell ( '' );
-			$app_header_login->setId ( 'app_header_login' );
-			$app_header_login->setCss ( 'Height', '55' );
-			$app_header_login->setCss ( 'width', '200' );
-			
-			// propriedades da class
-			$this->cellHeader = $app_header_title;
-			$this->cellLogin = $app_header_login;
-			$this->cellLogo = $app_header_logo;
-			$this->cellLogo->setCss ( 'border', $this->getNorthArea ()->getCss ( 'border' ) );
-			$this->cellHeader->setCss ( 'border', $this->getNorthArea ()->getCss ( 'border' ) );
-			$this->cellLogin->setCss ( 'border', $this->getNorthArea ()->getCss ( 'border' ) );
-		}
-	}	
+	    
+	    $app_hearder = new TElement('header');
+	    //$app_hearder = new TDiv( 'header' );
+	    
+	    if ( $this->getHeaderContent() ) {
+	        $app_hearderUser = new TDiv( 'app_header' );
+	        $app_hearderUser->add( $this->getHeaderContent() );
+	        $app_hearder->add( $app_hearderUser );
+	    }else{
+	        $app_header_logo  = $this->getHeaderLogo();
+	        $app_header_title = $this->getHeaderTitle();
+	        $app_header_login = $this->getHeaderLogin();
+	        
+	        $app_hearder->add( $app_header_logo );
+	        $app_hearder->add( $app_header_title );
+	        $app_hearder->add( $app_header_login );
+	    }
+	    
+	    $this->getNorthArea ()->add ( $app_hearder );
+	}
 	
 	/**
 	 * Build defaulf page Footer  Div: app_footer
@@ -1396,7 +1392,8 @@ class TApplication extends TLayout {
 			return;
 		}
 		
-		$app_footer = new TDiv( 'footer' );		
+		$app_footer = new TElement('footer');
+		//$app_footer = new TDiv( 'footer' );		
 		
 		if ( $this->getFooterContent() ) {
 			$app_footer->add( $this->getFooterContent() );
@@ -1534,19 +1531,7 @@ class TApplication extends TLayout {
 		}
 		return $this->menuTheme;
 	}
-	public function getCellLogo()
-	{
-		return $this->cellLogo;
-	}
-	public function getCellHeader()
-	{
-		return $this->cellHeader;
-	}
-	public function getCellLogin()
-	{
-		return $this->cellLogin;
-	}
-
+	
 	public function setOnBeforeLogin( $strFunctionName = null )
 	{
 		$this->onBeforeLogin = $strFunctionName;
