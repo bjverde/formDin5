@@ -431,13 +431,6 @@ class THtmlPage extends TElement
 		}
 		return CHARSET;
 	}
-	/**
-	* @deprecated - substituido pelo método getCharset();
-	* @codeCoverageIgnore
-	*/
-	public function getContentType() {
-		return $this->getCharset();
-	}
 
 	public function setTitle($strNewValue=null)
 	{
