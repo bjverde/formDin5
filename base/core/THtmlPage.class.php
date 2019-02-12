@@ -177,76 +177,75 @@ class THtmlPage extends TElement
 		return self::$arrJsCssFile;
 	}
 	
+	
+	/**
+	 * Verifica se o arquivo existe e devolve o caminho. Se não existir
+	 * retona null
+	 * @param array $aFile
+	 * @return NULL|string
+	 */
+	protected function getPathJsCssFiles($aFile)
+	{
+	    $file = null;
+	    if( !file_exists( $aFile[0] ) ) {
+	        $fileTemp = $this->getBase().'js/'.$aFile[0];
+	        
+	        if( file_exists($fileTemp) ){
+	            $file = $fileTemp.$aFile[1];
+	        } else {
+	            $fileTemp = $this->getBase().'css/'.$aFile[0];
+	            if(file_exists($fileTemp)) {
+	                $file = $fileTemp.$aFile[1];
+	            } else {
+	                $fileTemp = $this->getRoot().'css/'.$aFile[0];
+	                if(file_exists($fileTemp)) {
+	                    $file = $fileTemp.$aFile[1];
+	                } else {
+	                    $fileTemp = $this->getRoot().'js/'.$aFile[0];
+	                    if(file_exists($fileTemp)) {
+	                        $file = $fileTemp.$aFile[1];
+	                    } else {
+	                        $file = null;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    
+	    if ( $file == null && file_exists($this->getBase().$aFile[0]) ){
+	        $file = $this->getBase().$aFile[0];
+	    } else {
+	        $log = 'formDin: '.FORMDIN_VERSION.' failed to load file:'.$aFile[0];
+	        error_log($log);
+	    }
+        return $file;
+	}
+	
 	/**
 	* Método interno para gerar o codigo html de inserção do arquivo js
 	*
 	*/
 	protected function includeJsCssFiles()
 	{
-		if( is_array(self::$arrJsCssFile))
-		{
+		if( is_array(self::$arrJsCssFile)) {
 			$jquery=false;
-			foreach(self::$arrJsCssFile as $k=>$file)
-			{
+			foreach(self::$arrJsCssFile as $k=>$file) {
 				$aFile 		= explode('?',$file);
 				$aFile[1]	= ( isset( $aFile[1]) ? $aFile[1] : '' );
-
-				if( !file_exists( $aFile[0] ) )
-				{
-					$fileTemp = $this->getBase().'js/'.$aFile[0];
-
-					if( file_exists($fileTemp) )
-					{
-						$file = $fileTemp.$aFile[1];
-					}
-					else
-					{
-						$fileTemp = $this->getBase().'css/'.$aFile[0];
-						if(file_exists($fileTemp))
-						{
-							$file = $fileTemp.$aFile[1];
-						}
-						else
-						{
-							$fileTemp = $this->getRoot().'css/'.$aFile[0];
-							if(file_exists($fileTemp))
-							{
-								$file = $fileTemp.$aFile[1];
-							}
-							else
-							{
-								$fileTemp = $this->getRoot().'js/'.$aFile[0];
-								if(file_exists($fileTemp))
-								{
-									$file = $fileTemp.$aFile[1];
-								}
-								else
-								{
-									$file = null;
-								}
-        					}
-						}
-					}
-				}
-				if($file)
-				{
-					if( strpos($file,'.js'))
-					{
+				$file       = $this->getPathJsCssFiles($aFile);
+				if($file) {
+					if( strpos($file,'.js')) {
 						$this->objHead->add('<script type="text/javascript" src="'.$file.'"></script>');
-						if( strpos($file,'jquery')!==false)
-						{
+						if( strpos($file,'jquery')!==false) {
 							$jquery=true;
 						}
-					}
-					else if( strpos($file,'.css'))
-					{
+					} else if( strpos($file,'.css')) {
 						$this->objHead->add('<link rel="stylesheet" type="text/css" href="'.$file.'" />');
 
 					}
 				}
 			}
-			if( $jquery )
-			{
+			if( $jquery ) {
 				$this->objHead->add('<script>try{jQuery.noConflict();}catch(e){}</script>');
 			}
 		}
