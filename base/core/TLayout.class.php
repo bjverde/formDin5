@@ -169,35 +169,16 @@ class TLayout extends THtmlPage {
     , $boolWestInitClosed=null) {
 	parent::__construct();
 
-	// adicionar prototype
-	$this->addJsFile('prototype/prototype.js');
-	$this->addJsFile('prototype/window_ext.js');
 
-	//$this->addJsFile('prototype/effects.js');
-	$this->addJsFile('prototype/window.js');
-	//$this->addJsFile('prototype/window_effects.js');
-	$this->addCssFile('prototype/themes/default.css');
-	$this->addCssFile('prototype/themes/alphacube.css');
-		
-	if(!defined('MIGRATE_JQUERY')){ define('MIGRATE_JQUERY',FALSE); }	
-	if(MIGRATE_JQUERY){
-		// Tentaiva de Migrar para Jquery 1.9.1 
-		$this->addJsFile('jquery-1.9/jquery-1.9.1.js');
-		$this->addJsFile('jquery-1.9/jquery-migrate-1.4.1.js');
-		$this->addJsFile('jquery/js_new/jquery.corner.js' );
-	}else{
-		// adicionar jquery
-		$this->addJsFile( 'jquery/jquery.js' );
-		$this->addJsFile( 'jquery/jquery.corner.js' );
-	}
+	$this->addCssFile('lib/bootstrap/css/bootstrap.min.css');
+	$this->addCssFile('lib/font-awesome/css/fa-brands.min.css');
+	$this->addCssFile('lib/font-awesome/css/fontawesome.min.css');
+	$this->addCssFile('lib/font-awesome/css/font-awesome.css');
+
+	$this->addJsFile( 'lib/jquery/jquery.min.js' );
+	$this->addJsFile( 'lib/bootstrap/assets/js/vendor/popper.min.js' );
+	$this->addJsFile( 'lib/bootstrap/js/bootstrap.min.js' );
 	
-	$this->addJsFile('jquery/jlayout/jquery.jlayout-1.3.js');
-	$this->addJsFile('jquery/jquery-ui-all.js');
-	$this->addJsFile( 'jquery/blockui/jquery.blockUI.js' );
-	$this->addJsFile( 'jquery/jAlert/jquery.alerts.js' );
-	$this->addCssFile( 'jquery/jAlert/jquery.alerts.css' );
-	$this->addCssFile( 'jquery/ui/base/base.css' );
-	$this->addJsFile( 'lazyload/lazyload-min.js' );
 	$this->setId(is_null($strId) ? $this->getRandomChars(5) : $strId );
 	$this->parent = null;
 	//$this->setId('myLayout');
