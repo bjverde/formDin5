@@ -68,6 +68,7 @@ require_once ($helps_dir . 'StringHelper.class.php');
 require_once ($helps_dir . 'UrlHelper.class.php');
 */
 
+require_once $currentl_dir.DS.'..'.DS.'constants.php';
 require_once 'autoload_formdin.php';
 require_once $currentl_dir.DS.'..'.DS.'helpers'.DS.'formdin_autoload_helpers.php';
 
