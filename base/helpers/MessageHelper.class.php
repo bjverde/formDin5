@@ -59,4 +59,3 @@ class MessageHelper
         error_log($log);
     }
 }
-?>

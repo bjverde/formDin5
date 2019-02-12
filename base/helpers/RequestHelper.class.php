@@ -53,4 +53,3 @@ class RequestHelper
         return $result;
     }
 }
-?>

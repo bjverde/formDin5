@@ -62,4 +62,3 @@ class FormDinHelper
         return version_compare($version,self::version(),'>=');
     }
 }
-?>

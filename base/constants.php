@@ -72,6 +72,3 @@ define('DBMS_SQLSERVER', 'SQLSERVER');
 define('GRID_SIMPLE', '1');
 define('GRID_SCREEN_PAGINATION', '2');
 define('GRID_SQL_PAGINATION', '3');
-
-
-?>

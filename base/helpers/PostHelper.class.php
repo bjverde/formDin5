@@ -75,4 +75,3 @@ class PostHelper
         return strtoupper($_POST[$atributeName]) == "S" ? true : false;
     }
 }
-?>

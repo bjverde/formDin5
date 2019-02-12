@@ -71,4 +71,3 @@ class GetHelper
         return $value;
     }
 }
-?>
