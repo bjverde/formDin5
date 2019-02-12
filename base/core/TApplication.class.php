@@ -148,8 +148,6 @@ class TApplication extends TLayout {
         $this->setSigla ( $strSigla );
         $this->setShowMenu ( true );
         
-        // arquivo css padrão localizado na base base/css
-        $this->addCssFile ( 'app.css' );
         $this->setBackgroundImage ( $this->getBase () . '/css/imagens/app/bg_listrado.jpg' );
         
         // biblioteca de funções geral
@@ -535,10 +533,6 @@ class TApplication extends TLayout {
         // $menuTheme = 'modern_red';
         // $menuTheme = 'standard';
         
-        // javascript
-        $this->addJsCssFile ( 'dhtmlx/dhtmlxcommon.js' );
-        $this->addJsCssFile ( 'dhtmlx/menu/dhtmlxmenu_cas.js' );
-        
         // o nome do estilo tem que ser alterado no arquivo app.js tambem
         $this->addJavascript ( "app_layout=true;" );
         $this->addJavascript ( "pastaBase='{$this->getBase()}';" );
@@ -550,26 +544,10 @@ class TApplication extends TLayout {
         $this->addJavascript ( "background_image='" . $this->getBackgroundImage () . "';" );
         $this->addJavascript ( "background_repeat='" . $this->getBackgroundRepeat () . "';" );
         $this->addJavascript ( "background_position='" . $this->getBackgroundPosition () . "';" );
-        $this->addJsCssFile ( $this->getBase () . 'js/dhtmlx/menu/skins/' . $this->getMenuTheme() . '/' . $this->getMenuTheme() . '.css' );
-        $this->addJsCssFile ( 'app.js' );
+
         
         $this->addJsCssFile ( $this->getCssFile () );
-        $this->addJsCssFile ( 'FormDin4.css' );
-        
-        // arquivo js que será carregado por último se existir
-        $this->addJsCssFile ( 'js/main.js' );
-        
-        // arquivo css que será carregado por último se existir
-        $this->addJsCssFile ( 'css/main.css' );
-        
-        /*
-         * $this->addJsCssFile( 'jquery/jquery.js' );
-         * $this->addJsCssFile( 'jquery/jquery.corner.js' );
-         * $this->addJsCssFile( 'jquery/jAlert/jquery.alerts.js' );
-         * $this->addJsCssFile( 'jquery/jAlert/jquery.alerts.css' );
-         * $this->addJsCssFile( 'lazyload/lazyload-min.js' );
-         */
-        
+               
         if (! $this->getShowMenu ()) {
             $this->addJavascript ( 'showMenu = false;' );
         } else {
