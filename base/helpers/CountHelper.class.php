@@ -1,9 +1,9 @@
 <?php
 /*
  * FormDin 5 Framework
- * Criado por Reinaldo A. Barrêto Jr 
- * Baseado no FormDin 4 de Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin5
+ * Created by Reinaldo A. Barrêto Jr em 2019
+ * Based on FormDin 4 de Luís Eugênio Barbosa
+ * https://github.com/bjverde/formDin5
  *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.

@@ -1,9 +1,9 @@
 <?php
 /*
- * Formdin Framework
- * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
+ * FormDin 5 Framework
+ * Created by Reinaldo A. Barrêto Jr em 2019
+ * Based on FormDin 4 de Luís Eugênio Barbosa
+ * https://github.com/bjverde/formDin5
  *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
@@ -250,7 +250,6 @@ class TLayout extends THtmlPage {
 		if (is_null ( $this->parent )) {
 			$arrJsOnLoad = $this->getJsOnLoad ();
 			$this->setJsOnLoad ( null );
-			$this->addJsCssFile ( 'jlayout.css' );
 			$this->addStyle ( $this->getStyle () );
 			$this->addJavascript ( $this->getJs () );
 			if (is_array ( self::$arrLayout )) {
