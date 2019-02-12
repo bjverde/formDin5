@@ -94,7 +94,7 @@ class THtmlPage extends TElement
 			if( self::$style->getChildren()) {
 				$this->addInHead(self::$style);
 			}
-			$this->getJavascript();
+			//$this->getJavascript();
 		}
 		if($this->getFavIcon())
 		{
