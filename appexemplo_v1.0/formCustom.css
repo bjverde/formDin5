@@ -1,0 +1,36 @@
+header{
+    display  :table;
+    width	    :100%;
+    background		:#efefef;
+}
+#app_header_logo{
+    display  :table-cell;
+}
+#app_header_title{
+    display  :table-cell;
+}
+#app_header_login{
+    display  :table-cell;
+}
+
+.rodape{
+    display  :table;
+    width	    :100%;
+    border			:0px;
+	font-size		:10px;
+	text-align		:center;
+	vertical-align	:middle;
+	color			:navy;
+	background		:#efefef;
+    height          :20px;
+    
+}
+#app_footer_message{
+    display  :table-cell;
+}
+#app_footer_company{
+    display  :table-cell;
+}
+#app_footer_module{
+    display  :table-cell;
+}

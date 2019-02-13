@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/fa-brands.min.css">
   <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/fontawesome.min.css">
   <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="formCustom.css">
   <style>
 .content {
     padding-top: 110px; /* height of header + navbar*/
@@ -31,7 +32,7 @@
 <body>
 
 
-<header>
+<header class="sticky-top">
 	<div id="app_header_logo">
 		<img src="adianti_5/adianti-framework-5.0.0/app/templates/theme1/images/adianti.png">
 	</div>
@@ -48,7 +49,7 @@
 	</div>
 </header>
 
-  <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+  <nav class="sticky-top navbar navbar-expand-md navbar-dark bg-dark">
   <!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark"> -->
     <a class="navbar-brand" href="index.html">Form Sigla</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,7 +131,13 @@
               <h2>Adiante 5.5</h2>
               <p>Lista de aplicações. Nem tudo funciona com PHP 7.2.X.</p>
               <p><a class="btn btn-secondary" href="adianti_5.5/" role="button">Diretorio &raquo;</a></p>
-          </div>  
+          </div>
+          <div class="col-md-4">
+              <h2>Adiante 5.5 - FramaWork</h2>
+              <p>O FramaWork Puro</p>
+              <p><a href="https://www.adianti.com.br/framework-contacts"/>https://www.adianti.com.br/framework-contacts</a></p>
+              <p><a class="btn btn-secondary" href="adianti_5.5/adianti-framework-5.5.0" role="button">View details &raquo;</a></p>
+          </div>
           <div class="col-md-4">
               <h2>Adiante 5.5 - Tutor</h2>
               <p>Tutor - uma aplicação para demostrantar cada um dos recursos do adianti. Versão recomendada PHP 7.0.X</p>
@@ -144,46 +151,58 @@
           </div>
           <div class="col-md-4">
               <h2>Adiante 5.5 - Contacts</h2>
-              <p>sistema de controle de mudanças (chamados, tickets). . O objetivo do sistema é permitir o registro e rastreabilidade de solicitações realizadas pelo usuário, mantendo seu histórico e permitindo a emissão de relatórios. </p>
+              <p>Contacts API é uma mini aplicação que demonstra as capacidades relativas à rotas amigáveis, REST, e RESTful do Framework. Esta aplicação é descrita no livro Adianti Framework para PHP, onde é explicado em detalhes como configurar estes recursos. A aplicação em si apresenta um cadastro simples de contatos. O objetivo principal é a exposição da API. </p>
               <p><a href="https://www.adianti.com.br/framework-contacts"/>https://www.adianti.com.br/framework-contacts</a></p>
               <p><a class="btn btn-secondary" href="adianti_5.5/adianti-contacts-5.5.0" role="button">View details &raquo;</a></p>
-          </div>          
+          </div>
           <div class="col-md-4">
-              <h2>Adiante 5.5 - FramaWork</h2>
-              <p>O FramaWork Puro</p>
-              <p><a href="https://www.adianti.com.br/framework-contacts"/>https://www.adianti.com.br/framework-contacts</a></p>
-              <p><a class="btn btn-secondary" href="adianti_5.5/adianti-framework-5.5.0" role="button">View details &raquo;</a></p>
-          </div>   
+            <h2>Adiante 5.5 - Libray</h2>
+            <p>A aplicação biblioteca é um pequeno sistema para usuário final construído com o Adianti Framework e pretende demonstrar como usar os componentes e controladores do framework para escrever uma aplicação de negócio. Esse sistema não pretende fornecer um conjunto completo de funcionalidades de um sistema para gerenciamento de bibliotecas, mas somente demonstrar as características do framework</p>
+            <p><a href="https://www.adianti.com.br/framework-library"/>https://www.adianti.com.br/framework-contacts</a></p>
+            <p><a class="btn btn-secondary" href="adianti_5.5/adianti-library-5.5.0" role="button">View details &raquo;</a></p>
+          </div>
           <div class="col-md-4">
+            <h2>Adiante 5.5 - Template</h2>
+            <p>O Template ERP é um modelo de aplicação para desenvolvimento com o Adianti Framework. O Template ERP possui permissão de acesso por usuários e por grupos já integrado em seu código</p>
+            <p><a href="https://www.adianti.com.br/framework-template"/>https://www.adianti.com.br/framework-contacts</a></p>
+            <p><a class="btn btn-secondary" href="adianti_5.5/adianti-template-5.5.0" role="button">View details &raquo;</a></p>
+          </div>
+        </div>
+<!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
               <h2>Adiante 5 - Tutor</h2>
               <p>Tutor - uma aplicação para demostrantar cada um dos recursos do adianti. Versão recomendada PHP 7.0.X</p>
               <p><a class="btn btn-secondary" href="adianti_5/adianti-tutor-5.0.0" role="button">View details &raquo;</a></p>
           </div>
-          <div class="col-md-4">
-            <h2>Adiante 5</h2>
-            <p>Blog</p>
-            <p><a class="btn btn-secondary" href="adianti_5/adianti-blog-5.0.0" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
+            <div class="col-md-4">
               <h2>Adiante 5</h2>
-              <p>Changeman</p>
-              <p><a class="btn btn-secondary" href="adianti_5/adianti-changeman-5.0.0" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-              <h2>Adiante 5 - FrameWork</h2>
-              <p>FramaWork é só uma casca vazia para a construção de novas aplicações</p>
-              <p><a class="btn btn-secondary" href="adianti_5/adianti-framework-5.0.0" role="button">Diretorio &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Adiante 5</h2>
-            <p>Library</p>
-            <p><a class="btn btn-secondary" href="adianti_5/adianti-library-5.0.0" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
+              <p>Blog</p>
+              <p><a class="btn btn-secondary" href="adianti_5/adianti-blog-5.0.0" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Adiante 5</h2>
+                <p>Changeman</p>
+                <p><a class="btn btn-secondary" href="adianti_5/adianti-changeman-5.0.0" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Adiante 5 - FrameWork</h2>
+                <p>FramaWork é só uma casca vazia para a construção de novas aplicações</p>
+                <p><a class="btn btn-secondary" href="adianti_5/adianti-framework-5.0.0" role="button">Diretorio &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
               <h2>Adiante 5</h2>
-              <p>Template</p>
-              <p><a class="btn btn-secondary" href="adianti_5/adianti-template-5.0.0" role="button">View details &raquo;</a></p>
+              <p>Library</p>
+              <p><a class="btn btn-secondary" href="adianti_5/adianti-library-5.0.0" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Adiante 5</h2>
+                <p>Template</p>
+                <p><a class="btn btn-secondary" href="adianti_5/adianti-template-5.0.0" role="button">View details &raquo;</a></p>
+            </div>
           </div>
+<!-- Example row of columns -->          
+          <div class="row">
           <div class="col-md-4">
             <h2>Adiante 4</h2>
             <p>Lista de aplicações</p>
@@ -214,13 +233,13 @@
     </main>
 
 	
-<footer class="footer">
-					<div id="app_footer_message">0 [23:23:29 ]</div>
-					<div id="app_footer_company">
-						Centro Nacional de Telemática - CNT 1.0.0
-					</div>
-					<div id="app_footer_module">view/css/exe_css_form03.php</div>
-				</footer>	
+  <footer class="fixed-bottom rodape">
+    <div id="app_footer_message">0 [23:23:29 ]</div>
+    <div id="app_footer_company">
+      Centro Nacional de Telemática - CNT 1.0.0
+    </div>
+    <div id="app_footer_module">view/css/exe_css_form03.php</div>
+  </footer>	
 	
 	<!-- ================================================== -->
 	<!-- Bootstrap core JavaScript -->
