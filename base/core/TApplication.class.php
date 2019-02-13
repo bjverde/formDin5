@@ -475,7 +475,7 @@ class TApplication extends TLayout {
         if ($loadModule) {
             $this->addJavascript ( 'app_load_module("' . $loadModule . '")' );
         }
-        $this->show ();
+        $this->show();
     }
     
     /**
@@ -1356,7 +1356,7 @@ class TApplication extends TLayout {
             $app_hearder->add( $app_header_login );
         }
         
-        $this->getNorthArea ()->add ( $app_hearder );
+        $this->getNorthArea()->add ( $app_hearder );
     }
     
     /**
