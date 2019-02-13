@@ -184,9 +184,10 @@ class THtmlPage extends TElement
 	 * @param array $aFile
 	 * @return NULL|string
 	 */
-	protected function getPathJsCssFiles($aFile)
+	protected function getPathJsCssFiles($file)
 	{
-	    $file = null;
+	    $aFile 		= explode('?',$file);
+	    $aFile[1]	= ( isset( $aFile[1]) ? $aFile[1] : '' );
 	    if( !file_exists( $aFile[0] ) ) {
 	        $fileTemp = $this->getBase().'js/'.$aFile[0];
 	        
@@ -229,10 +230,8 @@ class THtmlPage extends TElement
 	{
 		if( is_array(self::$arrJsCssFile)) {
 			$jquery=false;
-			foreach(self::$arrJsCssFile as $k=>$file) {
-				$aFile 		= explode('?',$file);
-				$aFile[1]	= ( isset( $aFile[1]) ? $aFile[1] : '' );
-				$file       = $this->getPathJsCssFiles($aFile);
+			foreach(self::$arrJsCssFile as $file) {
+			    $file = $this->getPathJsCssFiles($file);
 				if($file) {
 					if( strpos($file,'.js')) {
 						$this->objHead->add('<script type="text/javascript" src="'.$file.'"></script>');
