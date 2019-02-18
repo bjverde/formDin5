@@ -28,9 +28,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -39,28 +39,11 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-require_once('includes/constantes.php');
-include('includes/config_conexao.php');
-include('../base/core/TApplication.class.php');
-
-//use FormDin\Core\*;
-
-
-//$app = new TApplication('Exemplos das Funcionalidades',null,'FORMDIN 4','Centro Nacional de Telemática - CNT');
-$app = new TApplication(); // criar uma instancia do objeto aplicacao
-$app->setAppRootDir(__DIR__);
-$app->setTitle(SYSTEM_NAME);
-$app->setSubtitle(APLICATIVO);
-$app->setSigla(APLICATIVO);
-$app->setImgLogoPath('imagem/appv1_logo.png');
-$app->setUnit('Centro Nacional de Telemática - CNT');
-$app->setVersionSystem(SYSTEM_VERSION);
-$app->setMenuIconsPath('imagem/');
-
-$app->setWidth(990);
-$app->setNorthSize(55);
-//$app->setMainMenuFile('includes/menu.php');
-$app->setConfigFile(null);
-
-
-$app->run();
+class HtmlHelper
+{
+    static function getViewPort() 
+    {
+        return '<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">';
+    }
+}
+?>

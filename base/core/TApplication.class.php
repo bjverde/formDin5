@@ -644,6 +644,61 @@ class TApplication extends TLayout {
         }
     }
     
+    /**
+     * utilizado para criar o xml do menu quando o modulo base/seguranca/ler_menu_xml.php for chamado
+     * @param string $modulo
+     */
+    private function criaXmlSegurancaLerMenu($modulo)
+    {
+        // utilizado para criar o xml do menu quando o modulo base/seguranca/ler_menu_xml.php for chamado
+        if (isset ( $_REQUEST ['content-type'] ) && strtolower ( $_REQUEST ['content-type'] ) == 'xml') {
+            $_SESSION [APLICATIVO] ['modulo'] = null;
+            if (! file_exists ( $modulo )) {
+                header ( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+                header ( "Cache-Control: no-cache" );
+                header ( "Pragma: no-cache" );
+                header ( "content-type: text/xml; charset=" . $this->getCharset () . '"' );
+                
+                echo '<menu>
+							<item id="cadastro" img="error16.gif" text="Arquivo: ' . $modulo . ' não existe."/>
+							<item id="verifique" text="Verifique as configurações no index.php"/>
+						</menu>';
+                exit ();
+            }
+            
+            $aFileInfo = pathinfo ( $modulo );
+            
+            if ($aFileInfo ['extension'] == 'php' || $aFileInfo ['extension'] == 'inc') {
+                header ( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+                header ( "Cache-Control: no-cache" );
+                header ( "Pragma: no-cache" );
+                header ( "content-type: text/xml; charset=" . $this->getCharset () . '"' );
+                $this->includeConnectionFile ();
+                require_once ($modulo);
+            } else {
+                header ( "content-type: text/xml; charset=" . $this->getCharset () . "'" );
+                
+                echo file_get_contents ( $modulo );
+            }
+            
+            exit ();
+        }
+    }
+    
+    private function getHeaderHtmlForm()
+    {
+        $htmlViewPort = HtmlHelper::getViewPort();
+        $htmlScript = "<!DOCTYPE html>"
+                      ."\n<html>"
+                      ."\n<head>"
+                      ."\n<meta charset=\"".$this->getCharset()."\">"
+                      ."\n".$htmlViewPort
+                      ."\n</head>"
+                      ."\n<body>"
+                      ."\n<table border=\"0\" width=\"100%\" height=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr>\n<td name=\"data_content\" id=\"data_content\" align=\"" . $this->getHorizontalAlign () . "\" valign=\"" . $this->getVerticalAlign () . "\">";
+        return $htmlScript;
+    }
+    
     
     // -----------------------------------------------------------------
     /**
@@ -709,44 +764,9 @@ class TApplication extends TLayout {
             // ajustar caminho do modulo recebido
             $modulo = $this->getRealPath ( $modulo );
             
-            // utilizado para criar o xml do menu quando o modulo base/seguranca/ler_menu_xml.php for chamado
-            if (isset ( $_REQUEST ['content-type'] ) && strtolower ( $_REQUEST ['content-type'] ) == 'xml') {
-                $_SESSION [APLICATIVO] ['modulo'] = null;
-                if (! file_exists ( $modulo )) {
-                    header ( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-                    header ( "Cache-Control: no-cache" );
-                    header ( "Pragma: no-cache" );
-                    header ( "content-type: text/xml; charset=" . $this->getCharset () . '"' );
-                    
-                    echo '<menu>
-							<item id="cadastro" img="error16.gif" text="Arquivo: ' . $modulo . ' não existe."/>
-							<item id="verifique" text="Verifique as configurações no index.php"/>
-						</menu>';
-                    exit ();
-                }
-                
-                $aFileInfo = pathinfo ( $modulo );
-                
-                if ($aFileInfo ['extension'] == 'php' || $aFileInfo ['extension'] == 'inc') {
-                    header ( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-                    header ( "Cache-Control: no-cache" );
-                    header ( "Pragma: no-cache" );
-                    header ( "content-type: text/xml; charset=" . $this->getCharset () . '"' );
-                    $this->includeConnectionFile ();
-                    require_once ($modulo);
-                } else {
-                    header ( "content-type: text/xml; charset=" . $this->getCharset () . "'" );
-                    
-                    echo file_get_contents ( $modulo );
-                }
-                
-                exit ();
-            }
-            $htmlScript = "<!DOCTYPE html>"
-                ."\n<html>"
-                    ."\n<meta charset=\"".$this->getCharset()."\">"
-                        ."\n<body>"
-                            ."\n<table border=\"0\" width=\"100%\" height=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr>\n<td name=\"data_content\" id=\"data_content\" align=\"" . $this->getHorizontalAlign () . "\" valign=\"" . $this->getVerticalAlign () . "\">";
+            $this->criaXmlSegurancaLerMenu($modulo);
+            
+            $htmlScript = $this->getHeaderHtmlForm();
                             
                             if (! file_exists ( $modulo )) {
                                 echo $htmlScript;
