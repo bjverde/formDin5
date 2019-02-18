@@ -47,17 +47,21 @@ if(!defined('ENCODINGS') ) {
 
 $currentl_dir = dirname ( __FILE__ );
 
-/*
-require_once ($currentl_dir . DS . '..' . DS . 'constants.php');
 
-$exeptions_dir = $currentl_dir . DS . '..' . DS . 'exceptions' . DS;
-require_once ($exeptions_dir . 'UploadException.class.php');
+require_once $currentl_dir.DS.'..'.DS.'constants.php';
+require_once 'autoload_formdin.php';
+
+//require_once $currentl_dir.DS.'..'.DS.'helpers'.DS.'formdin_autoload_helpers.php';
+
+//$exeptions_dir = $currentl_dir . DS . '..' . DS . 'exceptions' . DS;
+//require_once ($exeptions_dir . 'UploadException.class.php');
 
 $helps_dir = $currentl_dir . DS . '..' . DS . 'helpers' . DS;
 require_once ($helps_dir . 'ArrayHelper.class.php');
 require_once ($helps_dir . 'CountHelper.class.php');
 require_once ($helps_dir . 'DateTimeHelper.class.php');
 require_once ($helps_dir . 'GetHelper.class.php');
+require_once ($helps_dir . 'HtmlHelper.class.php');
 require_once ($helps_dir . 'MessageHelper.class.php');
 require_once ($helps_dir . 'PaginationSQLHelper.class.php');
 require_once ($helps_dir . 'PostHelper.class.php');
@@ -66,11 +70,7 @@ require_once ($helps_dir . 'ServerHelper.class.php');
 require_once ($helps_dir . 'SqlHelper.class.php');
 require_once ($helps_dir . 'StringHelper.class.php');
 require_once ($helps_dir . 'UrlHelper.class.php');
-*/
 
-require_once $currentl_dir.DS.'..'.DS.'constants.php';
-require_once 'autoload_formdin.php';
-require_once $currentl_dir.DS.'..'.DS.'helpers'.DS.'formdin_autoload_helpers.php';
 
 class TApplication extends TLayout {
     private $strTitle;
