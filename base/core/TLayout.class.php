@@ -176,6 +176,7 @@ class TLayout extends THtmlPage {
 
 	$this->addJsFile( 'lib/jquery/jquery.min.js' );
 	$this->addJsFile( 'lib/bootstrap/assets/js/vendor/popper.min.js' );
+	$this->addJsFile( 'lib/bootstrap/js/bootstrap.bundle.min.js' );
 	$this->addJsFile( 'lib/bootstrap/js/bootstrap.min.js' );
 	
 	$this->setId(is_null($strId) ? $this->getRandomChars(5) : $strId );
