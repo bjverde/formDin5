@@ -1345,6 +1345,9 @@ class TApplication extends TLayout {
     }
     
     private function buildMainMenu() {
+        $menu =  new TMenuBootStrap();
+        $menuBootStrap = $menu->getMenuBootStrap();
+        $this->getCenterArea()->add( $menuBootStrap );
         if ($this->getShowMenu ()) {
             if ($this->getMainMenuFile ()) {
                 if (file_exists ( $this->getMainMenuFile () )) {
