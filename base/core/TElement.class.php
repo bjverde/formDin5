@@ -39,16 +39,16 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
-Esta classe representa qualquer elemento HTML criado atraves de tag de abertura e fechamento
-Ex: <input> <br> <p> <h1> etc...
-
-Estrutura básica
-<tagType class="" style="">x y z</tagType>
-*/
 //error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 $GLOBALS[ 'teste' ] = true; // deixar as quebras de linha e a identação do html
 
+/**
+ * Esta classe representa qualquer elemento HTML criado atraves de tag de abertura e fechamento
+ * Ex: <input> <br> <p> <h1> etc...
+ * 
+ * Estrutura básica
+ * <tagType class="" style="">x y z</tagType>
+ */
 class TElement
 {
     /**
