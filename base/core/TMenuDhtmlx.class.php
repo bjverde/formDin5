@@ -499,5 +499,39 @@ class TMenuDhtmlx {
 		</menu>';
 		*/
 	}
+	
+    //--------------------------------------------------------------------------------------
+    /*
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    */
+	public function getNavBarButton()
+	{
+        $button = new TElement('button');
+        $button->setClass('navbar-toggler');
+        $button->setAttribute('type','button');
+        $button->setAttribute('data-toggle','collapse');
+        $button->setAttribute('data-target','#navbarsExampleDefault');
+        $button->setAttribute('aria-controls','navbarsExampleDefault');
+        $button->setAttribute('aria-expanded','false');
+        $button->setAttribute(' aria-label','Toggle navigation');
+        return $button;
+    }
+
+    public function getNavBar()
+	{
+        $navBar = new TElement('nav');
+        $navBar->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
+        $navBar->add( $this->getNavBarButton() );
+        return $navBar;
+    }
+
+	public function getNavBarBootStrap($print=true)
+	{
+        $navBar = $this->getNavBar();
+	}
 }
 ?>
