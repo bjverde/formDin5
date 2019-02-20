@@ -59,7 +59,7 @@ $app->setMenuIconsPath('imagem/');
 
 $app->setWidth(990);
 $app->setNorthSize(55);
-//$app->setMainMenuFile('includes/menu.php');
+$app->setMainMenuFile('includes/menu.php');
 $app->setConfigFile(null);
 
 
