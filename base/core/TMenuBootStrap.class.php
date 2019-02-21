@@ -41,11 +41,42 @@
 
 class TMenuBootStrap {
 
-    public function __construct() {
+    private $nav;
+
+    public function __construct(){       
     }
+
+    public function getNav()
+    {
+		return $this->nav;
+    }
+    
+    public function setNav($nav)
+    {
+		$this->nav = $nav;
+    }
+    
+    public function BuildNav()
+    {
+        $nav = new TElement('nav');
+        $nav->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
+        $this->setNav($nav);
+    }
+    
+	public function getNavBrand()
+	{
+        $navBrand = new TElement('a');
+        $navBrand->setClass('navbar-brand');
+        $navBrand->setAttribute('href','index.php');
+        $navBrand->add('Form Sigla');
+        return $navBrand;
+    }    
     
 	public function getNavBarButton()
 	{
+        $icon = new TElement('span');
+        $icon->setClass('navbar-toggler-icon');
+
         $button = new TElement('button');
         $button->setClass('navbar-toggler');
         $button->setAttribute('type','button');
@@ -54,19 +85,35 @@ class TMenuBootStrap {
         $button->setAttribute('aria-controls','navbarsExampleDefault');
         $button->setAttribute('aria-expanded','false');
         $button->setAttribute(' aria-label','Toggle navigation');
+        $button->add($icon);
         return $button;
     }
 
-    public function getNavBar()
+    public function getNavUl()
 	{
-        $navBar = new TElement('nav');
-        $navBar->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
-        $navBar->add( $this->getNavBarButton() );
-        return $navBar;
+        $navUl = new TElement('ul');
+        $navUl->setClass('navbar-nav mr-auto');
+        return $navUl;
+    }    
+
+    public function getNavCollapse()
+	{
+        $navColl = new TDiv('navbarsExampleDefault');
+        $navColl->setClass('collapse navbar-collapse');
+        return $navColl;
+    }
+
+    public function getNav2()
+	{
+        $nav = new TElement('nav');
+        $nav->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
+        //$nav->add( $this->getNavBrand() );
+        $nav->add( $this->getNavBarButton() );
+        return $nav;
     }
 
    public function getObjXmlMenu($menuFile)
-	{
+   {
      if ( !file_exists($menuFile) ) {
          throw new InvalidArgumentException (TMesage::MENU_FILE_FAIL);
      }
@@ -75,26 +122,71 @@ class TMenuBootStrap {
      $result = ob_get_clean();
      ob_end_clean();
      $xmlMenu = simplexml_load_string($result);
-
      return $xmlMenu;
    }
 
+   public function getArrayMenu($menuFile)
+   {
+    $xmlMenu = $this->getObjXmlMenu($menuFile);
+    $jsonMenu = json_encode($xmlMenu);
+    $arrayMenu = json_decode($jsonMenu,TRUE);
+    return $arrayMenu;
+   }
+
+   public function buildItem($item)
+   {
+       //var_dump($item);
+        $text = $item['@attributes']['text'];
+        $item = new TElement('a');
+        $item->setClass('dropdown-menu');
+        $item->setAttribute('href','#');
+        $item->add($text);
+        return $item;
+   }
+
+   public function buildNavLink($item)
+   {
+        $text = $item['@attributes']['text'];
+        $item = new TElement('a');
+        $item->setClass('nav-link');
+        $item->setAttribute('href','#');
+        $item->add($text);
+        return $item;
+   }   
+
+   public function buildNavItem($item)
+   {
+        $navLinks = $this->buildNavLink($item);
+
+        $item = new TElement('li');
+        $item->setClass('nav-item');
+        $item->add($navLinks);
+        return $item;
+   }   
+
 	public function getMenuBootStrap($menuFile, $print=true)
 	{
-      $xmlMenu = $this->getObjXmlMenu($menuFile);
 
-      ini_set('xdebug.var_display_max_depth', '10');
-      ini_set('xdebug.var_display_max_children', '256');
-      ini_set('xdebug.var_display_max_data', '-1');
-      //var_dump($xmlMenu);
+    ini_set('xdebug.var_display_max_depth', '10');
+    ini_set('xdebug.var_display_max_children', '256');
+    ini_set('xdebug.var_display_max_data', '-1');
+    //var_dump($xmlMenu);        
 
-      foreach($xmlMenu as $key => $item) {
-         echo $key;
-         var_dump($item);
+     $arrayMenu = $this->getArrayMenu($menuFile);
+
+     $navUl = $this->getNavUl();
+      foreach($arrayMenu['item'] as $key => $item) {
+         //echo $key;
+         //var_dump($item);
+         //print_r($item);
+         $ItemMenu = $this->buildNavItem($item);
+         $navUl->add($ItemMenu);
       }
-
-      $navBar = $this->getNavBar();
-      return $navBar;
+      $navColl = $this->getNavCollapse();
+      $navColl->add($navUl);
+      $nav = $this->getNav2();
+      $nav->add($navColl);
+      return $nav;
 	}
 }
 ?>
