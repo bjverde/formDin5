@@ -1,7 +1,7 @@
 header{
-    display  :table;
-    width	    :100%;
-    background		:#efefef;
+    display    :table;
+    width	   :100%;
+    background :#efefef;
 }
 #app_header_logo{
     display  :table-cell;
@@ -23,7 +23,6 @@ header{
 	color			:navy;
 	background		:#efefef;
     height          :20px;
-    
 }
 #app_footer_message{
     display  :table-cell;
@@ -33,4 +32,9 @@ header{
 }
 #app_footer_module{
     display  :table-cell;
+}
+
+.menuIcon {
+    width: 16px;
+    height: 16px;
 }
