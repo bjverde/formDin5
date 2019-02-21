@@ -1349,6 +1349,7 @@ class TApplication extends TLayout {
 
         //Inicio da Geração do Menu BootStrap
         $menu =  new TMenuBootStrap();
+        $menu->setMenuIconsPath( $this->getMenuIconsPath() );
         $menuBootStrap = $menu->getMenuBootStrap($menuFile);
         $this->getCenterArea()->add( $menuBootStrap );
         //include arquivo do Menu

@@ -42,6 +42,7 @@
 class TMenuBootStrap {
 
     private $nav;
+    private $menuIconsPath;
 
     public function __construct(){       
     }
@@ -54,6 +55,15 @@ class TMenuBootStrap {
     public function setNav($nav)
     {
 		$this->nav = $nav;
+    }
+
+    public function setMenuIconsPath($strNewValue = null)
+    {
+        $this->menuIconsPath = $strNewValue;
+    }
+    public function getMenuIconsPath()
+    {
+        return $this->menuIconsPath;
     }
     
     public function BuildNav()
@@ -146,10 +156,24 @@ class TMenuBootStrap {
 
    public function buildNavLink($item)
    {
+       //var_dump($item['@attributes']['img']);
+       
+       $img = null;
+       if(ArrayHelper::has('img',$item['@attributes'])){
+        $imgCaminho = $this->getMenuIconsPath();   
+        $imgCaminho = $imgCaminho.$item['@attributes']['img'];
+        $img = new TElement('img');
+        $img->setClass('menuIcon');
+        $img->setAttribute('src',$imgCaminho);
+       }       
+
         $text = $item['@attributes']['text'];
         $item = new TElement('a');
         $item->setClass('nav-link');
         $item->setAttribute('href','#');
+        if(!empty($img)){
+            $item->add($img);
+        }
         $item->add($text);
         return $item;
    }   
