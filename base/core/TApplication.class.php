@@ -405,6 +405,7 @@ class TApplication extends TLayout {
             $_SESSION [APLICATIVO] = null;
         }
         
+        /*
         if ($this->getWidth ()) {
             $e = new TElement ( 'div' );
             $e->setCss ( $this->getCss () );
@@ -420,6 +421,7 @@ class TApplication extends TLayout {
             
             $this->setContainer ( $e );
         }
+        */
         
         $this->buildCssNorthArea();
         $this->buildCssSouthArea();
