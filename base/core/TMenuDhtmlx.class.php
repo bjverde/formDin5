@@ -446,28 +446,42 @@ class TMenuDhtmlx {
 		return $xml;
 	}
 	//--------------------------------------------------------------------------------------
-	public function getXml($print=true)
+	public function addOrphanItems()
 	{
-		// adicionar os itens orfãos
-		if($this->getOrphans())
-		{
-			foreach( $this->getOrphans() as $k=>$objMenu)
-			{
-				 $objMenuPai =  $this->getMenuById( $objMenu->getIdParent() );
-				 if( $objMenuPai )
-				 {
-					$objMenuPai->addMenu($objMenu);
-				 }
-			}
-		}
-		$print = $print === null ? true : $print;
+        // adicionar os itens orfãos
+        if ($this->getOrphans()){
+            foreach( $this->getOrphans() as $k=>$objMenu){
+                $objMenuPai =  $this->getMenuById( $objMenu->getIdParent() );
+                if ( $objMenuPai ){
+                    $objMenuPai->addMenu($objMenu);
+                }
+            }
+        }
+    }
+	//--------------------------------------------------------------------------------------
+    /**
+     * Gerar um XML do Menu no formato do FormDin 4
+     * @param boolean $print
+     * @return string
+     */
+    public function getXml($print=true)
+	{
+        $this->addOrphanItems();
+        //Saida FormDin 5
+        echo str_replace("'",'"',$this->getStructure());
+
+        /*
+
+        // ------ Saida formDin4 --------
+        $print = $print === null ? true : $print;
 		if( $print) {
 			header ("content-type: text/xml; charset=".ENCODINGS);
 			echo str_replace("'",'"',$this->getStructure());
 		}else {
 			return str_replace("'",'"',$this->getStructure());
-		}
-        /*
+        }
+        
+        // ------  Exemplo de XML Gerado ------
 		echo '<menu>
 		<item id="file" text="Administração">
 			<item id="new" text="New" img="new.gif"/>
