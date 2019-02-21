@@ -1345,15 +1345,17 @@ class TApplication extends TLayout {
     }
     
     private function buildMainMenu() {
+        $menuFile = $this->getMainMenuFile();
+
         //Inicio da Geração do Menu BootStrap
         $menu =  new TMenuBootStrap();
-        $menuBootStrap = $menu->getMenuBootStrap();
+        $menuBootStrap = $menu->getMenuBootStrap($menuFile);
         $this->getCenterArea()->add( $menuBootStrap );
         //include arquivo do Menu
         //require $this->getMainMenuFile();
 
         if ($this->getShowMenu ()) {
-            if ($this->getMainMenuFile ()) {
+            if ($this->getMainMenuFile()) {
                 if (file_exists ( $this->getMainMenuFile () )) {
                     $this->addJavascript ( 'try{app_main_menu = new dhtmlXMenuObject("div_main_menu",menuTheme);}catch(e){alert( "Erro no menu. Não foi possível instanciar a classe dhtmlXMenuObject.\t"+e.message)}' );
                     $this->addJavascript ( 'app_build_menu(false,null,"' . $this->getMainMenuFile () . '")' );
