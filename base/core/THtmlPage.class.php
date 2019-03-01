@@ -245,9 +245,12 @@ class THtmlPage extends TElement
 					}
 				}
 			}
+			
+			/*
 			if( $jquery ) {
 				$this->objHead->add('<script>try{jQuery.noConflict();}catch(e){}</script>');
 			}
+			*/
 		}
 	}
 	/**
