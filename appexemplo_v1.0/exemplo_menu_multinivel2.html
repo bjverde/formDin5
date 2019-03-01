@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../aa_libs/bootstrap/favicon.ico">
+	<title>Exemplo Multi Nivel</title>
+
+<link rel="stylesheet" type="text/css" id="bootstrap-css" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" >
+<!------ Include the above in your HEAD tag ---------->
+<style>
+.navbar .dropdown-toggle, .navbar .dropdown-menu a {
+    cursor: pointer;
+}
+
+.navbar .dropdown-item.active, .navbar .dropdown-item:active {
+    color: inherit;
+    text-decoration: none;
+    background-color: inherit;
+}
+
+.navbar .dropdown-item:focus, .navbar .dropdown-item:hover {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+@media (min-width: 767px) {
+    .navbar .dropdown-toggle:not(.nav-link)::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .5em;
+        vertical-align: 0;
+        border-bottom: .3em solid transparent;
+        border-top: .3em solid transparent;
+        border-left: .3em solid;
+    }
+}
+</style>
+
+</head>
+<body>
+
+
+<nav class="sticky-top navbar navbar-expand-md navbar-dark bg-dark">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+					</span>
+				</button>
+				<div id="navbarCollapse" class="collapse navbar-collapse">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a id="1" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/user916.gif">
+								
+								Campos
+							</a>
+							<ul class="dropdown" aria-labelledby="1">
+								<li class="dropdown-item dropdown">
+									<a id="11" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Campo Texto
+									</a>
+									<ul class="dropdown" aria-labelledby="11">
+										<li class="dropdown-item dropdown">
+											<a id="111" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Campo Texto Simples
+											</a>
+											<ul class="dropdown" aria-labelledby="11.1">
+												<li class="dropdown-item">
+													<a id="1111">
+														Campo Texto
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1112">
+														Entrada com Máscara
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1123">
+														Campo Memo
+													</a>
+												</li>
+											</ul>
+										</li>
+										<li class="dropdown-item dropdown">
+											<a id="112" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Campo Texto Richo
+											</a>
+											<ul class="dropdown" aria-labelledby="11.2">
+												<li class="dropdown-item">
+													<a id="1121">
+														Campo Memo com tinyMCE
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1122">
+														Campo Editor com CkEditor
+													</a>
+												</li>
+											</ul>
+										</li>
+										<li class="dropdown-item dropdown">
+											<a id="113" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Campo Texto funções
+											</a>
+											<ul class="dropdown" aria-labelledby="11.3">
+												<li class="dropdown-item">
+													<a id="1131">
+														Autocompletar
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1132">
+														Autocompletar II
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1133">
+														Consulta On-line
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1134">
+														Consulta On-line I (ERRO)
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1135">
+														Autocompletar 3 + Consulta On-line
+													</a>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="12" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Campo HTML
+									</a>
+									<ul class="dropdown" aria-labelledby="12">
+										<li class="dropdown-item">
+											<a id="121">
+												Campo HTML
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="122">
+												Campo HTML com iFrame
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="13" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Campo Coord GMS
+									</a>
+									<ul class="dropdown" aria-labelledby="13">
+										<li class="dropdown-item">
+											<a id="131">
+												Campo Coord GMS
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="132">
+												Campo Coord GMS 02
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="14" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Campo Select
+									</a>
+									<ul class="dropdown" aria-labelledby="14">
+										<li class="dropdown-item">
+											<a id="141">
+												Campo Select - Simples
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="142">
+												Campo Select - Combinados
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item">
+									<a id="15">
+										Campo Radio
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="16">
+										<img class="menuIcon" src="imagem/../../base/imagens/iconCheckAll.gif">
+										
+										Campo Check
+									</a>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="17" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Campo Arquivo ou Blob
+									</a>
+									<ul class="dropdown" aria-labelledby="17">
+										<li class="dropdown-item dropdown">
+											<a id="171" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Campo Blob
+											</a>
+											<ul class="dropdown" aria-labelledby="171">
+												<li class="dropdown-item">
+													<a id="1171">
+														Campo Blob Salvo no Banco
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1172">
+														Campo Blob Salvo no Disco
+													</a>
+												</li>
+											</ul>
+										</li>
+										<li class="dropdown-item dropdown">
+											<a id="172" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Campo Arquivo simples
+											</a>
+											<ul class="dropdown" aria-labelledby="172">
+												<li class="dropdown-item">
+													<a id="1721">
+														Assincrono
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1722">
+														Normal
+													</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="1723">
+														TAssincrono
+													</a>
+												</li>
+											</ul>
+										</li>
+										<li class="dropdown-item">
+											<a id="173">
+												Cadastro Arquivo Postgres
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item">
+									<a id="18">
+										Campo Numérico
+									</a>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="19" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/flag_brazil.png">
+										
+										Campo Brasil
+									</a>
+									<ul class="dropdown" aria-labelledby="19">
+										<li class="dropdown-item">
+											<a id="191">
+												Campo CEP
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="192">
+												Campo Telefone
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="193">
+												Campo Cpf/Cnpj
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="110" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Campos Data e hora
+									</a>
+									<ul class="dropdown" aria-labelledby="110">
+										<li class="dropdown-item">
+											<a id="1101">
+												Campo Data
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="1102">
+												Campo Hora
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="1104">
+												Campo Agenda
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item">
+									<a id="111">
+										Campo Select Diretorio/Pasta
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="115">
+										<img class="menuIcon" src="imagem/../../base/imagens/lock16.gif">
+										
+										Campo Senha
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="117">
+										Campo Captcha
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="119">
+										Campo Cor
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="120">
+										Tecla de Atalho
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="121">
+										Campo Link
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="122">
+										Redirect
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="123">
+										TZip
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="124">
+										<img class="menuIcon" src="imagem/../../base/imagens/email.png">
+										
+										E-mail
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="2" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Containers
+							</a>
+							<ul class="dropdown" aria-labelledby="2">
+								<li class="dropdown-item dropdown">
+									<a id="22" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Grupo
+									</a>
+									<ul class="dropdown" aria-labelledby="22">
+										<li class="dropdown-item">
+											<a id="221">
+												Grupo 01 Normal
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="222">
+												Grupo 02 Combinados, ( Efeito Sanfona )
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="223">
+												Grupo 03 Combinados, muda cor fundo
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="23" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Abas
+									</a>
+									<ul class="dropdown" aria-labelledby="23">
+										<li class="dropdown-item">
+											<a id="231">
+												Aba - com tecla de atalha
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="232">
+												Aba2 - Botão ligando aba
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="233">
+												Aba3 - select chamando aba
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="234">
+												Aba4
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="235">
+												Aba5
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="24" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/folder-39-128.png">
+										
+										TreeView
+									</a>
+									<ul class="dropdown" aria-labelledby="24">
+										<li class="dropdown-item">
+											<a id="241">
+												Dentro do Formulário
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="242">
+												<img class="menuIcon" src="imagem/../../base/imagens/folder-bw.png">
+												
+												Fora do Formulário
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="243">
+												User Data - Array
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="244">
+												Uf x Municípios
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="245">
+												Uf x Municípios com SetXmlFile()
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="4" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/../../base/imagens/feedback-512.png">
+								
+								Mensagens e Ajuda
+							</a>
+							<ul class="dropdown" aria-labelledby="4">
+								<li class="dropdown-item">
+									<a id="40">
+										Hints / Tooltips
+									</a>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="41" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Mensagens
+									</a>
+									<ul class="dropdown" aria-labelledby="41">
+										<li class="dropdown-item">
+											<a id="411">
+												Exemplo 1
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="412">
+												Caixa de Confirmação
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="413">
+												Caixa de Confirmação 2
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="42" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Ajuda
+									</a>
+									<ul class="dropdown" aria-labelledby="42">
+										<li class="dropdown-item">
+											<a id="421">
+												<img class="menuIcon" src="imagem/../../base/imagens/icon_help.png">
+												
+												Ajuda com arquivo HTML
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="422">
+												Ajuda On-line (sqlite)
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="423">
+												Ajuda On-line (sqlite) - ERRO
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="5" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Ajax
+							</a>
+							<ul class="dropdown" aria-labelledby="5">
+								<li class="dropdown-item">
+									<a id="51">
+										Exemplo 1
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="52">
+										Atualizar Campos
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="53">
+										Ajax com Semáforo
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="54">
+										Ajax 04
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="55">
+										Ajax 05
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="56">
+										Ajax 06 - JavaScript e CSS
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="6" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/../../base/imagens/adobe-acrobat-pdf-file-512.png">
+								
+								PDF
+							</a>
+							<ul class="dropdown" aria-labelledby="6">
+								<li class="dropdown-item">
+									<a id="61">
+										Exemplo 1
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="62">
+										Exemplo 2 - grid simples
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="63">
+										Exemplo 3, com passagem de parametros via Json
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="64">
+										Exemplo 4
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="65">
+										Exemplo 5 - PDF diversos grids
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="8" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+								
+								Gride
+							</a>
+							<ul class="dropdown" aria-labelledby="8">
+								<li class="dropdown-item dropdown">
+									<a id="80" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+										
+										Grides simples
+									</a>
+									<ul class="dropdown" aria-labelledby="80">
+										<li class="dropdown-item">
+											<a id="801">
+												Gride 02 - Anexos e imagens - Ajax
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="802">
+												Gride 03 - Offline
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="803">
+												Gride 04 - fwGetGrid()
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="804">
+												Gride 05 - Paginação
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="805">
+												Gride 13 com imagens
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="81" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+										
+										Grides com campos internos
+									</a>
+									<ul class="dropdown" aria-labelledby="81">
+										<li class="dropdown-item">
+											<a id="811">
+												Gride Campos 01 - CheckColumn
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="812">
+												Gride Campos 02 - RadioButun
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="813">
+												Gride Campos 03 - Select
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="814">
+												Gride Campos 04 - Memo
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="815">
+												Gride 01 - botões sobre grid
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="816">
+												Gride 06 - Campos 1
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="817">
+												Gride 07 - Campos 2
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="818">
+												Gride 08 - Campos 3
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="82" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+										
+										Grides Draw - desenhando Dinamicamente
+									</a>
+									<ul class="dropdown" aria-labelledby="82">
+										<li class="dropdown-item">
+											<a id="821">
+												Gride Draw 01 - Desativando order
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="822">
+												Gride Draw 02 - Mudando a cor da linha
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="823">
+												Gride Draw 03 - Desativando Botões
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="83" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+										
+										Exempos Grides problemas
+									</a>
+									<ul class="dropdown" aria-labelledby="83">
+										<li class="dropdown-item">
+											<a id="831">
+												Gride 10 - erro
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="832">
+												Gride 11 Offine 02 - erro
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="833">
+												Gride 14 - erro
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="9" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/data_base.png">
+								
+								Banco e PDO
+							</a>
+							<ul class="dropdown" aria-labelledby="9">
+								<li class="dropdown-item">
+									<a id="91">
+										<img class="menuIcon" src="imagem/../../base/imagens/MySQL-Database-512.png">
+										
+										Exemplo Mysql
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="92">
+										<img class="menuIcon" src="imagem/../../base/imagens/MySQL-Database-512.png">
+										
+										Exemplo Sqlite e Mysql
+									</a>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="93" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Exemplo Postgres
+									</a>
+									<ul class="dropdown" aria-labelledby="93">
+										<li class="dropdown-item">
+											<a id="931">
+												DAO e VO
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="932">
+												Cadastro Arquivo Postgres
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="933">
+												Postgres SQL 02
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="934">
+												Postgres SQL 03
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item">
+									<a id="94">
+										PDO Firebird
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="96">
+										Testar Conexão
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="97">
+										Dados de Apoio
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="98">
+										Banco Textual DBM (db4)
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="10" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/../../base/imagens/fill_form-512.png">
+								
+								Formulário
+							</a>
+							<ul class="dropdown" aria-labelledby="10">
+								<li class="dropdown-item">
+									<a id="101">
+										Form 01 - Normal
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="102">
+										Form 02 - Subcadastro
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="103">
+										Form 03 - Mestre Detalhe com Ajax
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="104">
+										Form 04 - Consulta Pedidos
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="105">
+										Form 04 - Visualizar Item
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="106">
+										Form 05 - Grid Off-line
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="107">
+										Form 06 - Texto Rico TinyMCE
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="108">
+										Form 07 - Texto Rico CkEditor (ERRO)
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="109">
+										Boxes
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="1010">
+										Recurso de Autosize
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="1011">
+										Tela Login
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="1012">
+										Cadastro on-line (CRUD)
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="1013">
+										ERRO - Local Destino
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="200" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/../../base/imagens/art-1f3a8.png">
+								
+								Layouts
+							</a>
+							<ul class="dropdown" aria-labelledby="200">
+								<li class="dropdown-item dropdown">
+									<a id="20010" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Layout Menu Principal
+									</a>
+									<ul class="dropdown" aria-labelledby="20010">
+										<li class="dropdown-item">
+											<a id="200101">
+												Layout index
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200102">
+												Temas do Menu
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200103">
+												Esqueleto do Layout
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="20020" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/css.png">
+										
+										Customizado com CSS
+									</a>
+									<ul class="dropdown" aria-labelledby="20020">
+										<li class="dropdown-item">
+											<a id="200201">
+												<img class="menuIcon" src="imagem/../../base/imagens/css.png">
+												
+												Customizado com CSS
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200202">
+												<img class="menuIcon" src="imagem/../../base/imagens/css.png">
+												
+												Form Buttuns Customizado com CSS
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200203">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+												
+												Customizado grid com CSS - 01
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200204">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+												
+												Customizado grid com Font Awesome
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200205">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
+												
+												Customizado grid forma antiga
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item">
+									<a id="20021">
+										Definir Colunas no Formulário
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="20022">
+										Imagem de Fundo
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a id="210" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img class="menuIcon" src="imagem/settings_tool_preferences-512.png">
+								
+								Gerador de Código
+							</a>
+							<ul class="dropdown" aria-labelledby="210">
+								<li class="dropdown-item">
+									<a id="2101">
+										<img class="menuIcon" src="imagem/../../base/imagens/Icon_35-512.png">
+										
+										Gerador VO/DAO
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="2102">
+										<img class="menuIcon" src="imagem/../../base/imagens/smiley-1-512.png">
+										
+										Gerador Form VO/DAO
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="2103">
+										<img class="menuIcon" src="imagem/../../base/imagens/oculos-de-sol-smiley-1F60E.png">
+										
+										Gerador de Sistemas
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+<main role="main" class="container">
+    <div class="jumbotron text-center">
+        <h1>Bootstrap 4 NavBar</h1>
+        <p class="lead text-info">NavBar with too many childs.</p>
+    </div>
+</main>
+
+	<!-- ================================================== -->
+	<!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../base/lib/jquery/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../base/lib/jquery/jquery.min.js"><\/script>')</script>
+    <script src="../base/lib/bootstrap/assets/js/vendor/popper.min.js"></script>
+    <script src="../base/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../base/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="exemplo_menu_multinivel.js"></script>
+</body>
+</html>
