@@ -104,7 +104,7 @@ class TMenuBootStrap {
      * @param boolean $navLink     3: TRUE = setClass navLink, FALSE (Default) not set
      * @return TElement
      */
-    public function getDropLink($item,$dropToggle=false,$navLink=false)
+    public function getMenuLink($item,$dropToggle=false,$navLink=false)
     {
         $retorno = null;
         $id = $item['@attributes']['id'];
@@ -134,7 +134,7 @@ class TMenuBootStrap {
             }else{
                 $herf->setClass('dropdown-toggle');
             }
-            $herf->setAttribute('data-toggle','data-toggle');
+            $herf->setAttribute('data-toggle','dropdown');
             $herf->setAttribute('aria-haspopup','true');
             $herf->setAttribute('aria-expanded','false');
             $retorno = $herf;
@@ -167,12 +167,22 @@ class TMenuBootStrap {
         foreach($subItens as $key => $item) {
             $id = $item['@attributes']['id'];
             $subSubItens = ArrayHelper::getArray($item, 'item');
-            if( CountHelper::count( $subSubItens) > 0 ){
-                $ulDropMenu = $this->getUlDropMenu($id,$subSubItens);
-                $dropMenu->add($ulDropMenu);
-            }else{
-                $dropItem = $this->getDropLink($item,false,false);
+            if( CountHelper::count( $subSubItens) == 0 ){
+                $dropItem = $this->getMenuLink($item,false,false);
                 $dropMenu->add($dropItem);
+            }else{
+                $dropItem = $this->getMenuLink($item,true,false);
+                $ulDropMenu = $this->getUlDropMenu($id,$subSubItens,false);
+                
+                $liDropDown = new TElement('li');
+                $liDropDown->setClass('dropdown-item dropdown');
+                $liDropDown->add($dropItem);
+                $liDropDown->add($ulDropMenu);
+                
+                //$dropMenu->add($dropItem);
+                //$dropMenu->add($ulDropMenu);
+                
+                $dropMenu->add($liDropDown);
             }
         }
         return $dropMenu;
@@ -193,7 +203,7 @@ class TMenuBootStrap {
             $subMenu = $this->getUlDropMenu($id, $subItens,true);
         }
         
-        $navLinks = $this->getDropLink($item,true,true);
+        $navLinks = $this->getMenuLink($item,true,true);
         
         $item = new TElement('li');
         $item->setClass('nav-item');
@@ -238,7 +248,7 @@ class TMenuBootStrap {
         $button->setClass('navbar-toggler');
         $button->setAttribute('type','button');
         $button->setAttribute('data-toggle','collapse');
-        $button->setAttribute('data-target',$id);
+        $button->setAttribute('data-target','#'.$id);
         $button->setAttribute('aria-controls',$id);
         $button->setAttribute('aria-expanded','false');
         $button->setAttribute(' aria-label','Toggle navigation');
