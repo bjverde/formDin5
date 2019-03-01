@@ -41,30 +41,31 @@
 
 class TMenuBootStrap {
 
-    private $nav;
+    private $navBarId;
     private $menuIconsPath;
 
-    public function __construct(){       
+    public function __construct(){
+        $this->setNavBarId('navbarCollapse');
     }
 
-    public function getNav()
+    public function getNavBarId()
     {
-		return $this->nav;
+		return $this->navBarId;
     }
-    
-    public function setNav($nav)
+    public function setNavBarId($strNewValue = null)
     {
-		$this->nav = $nav;
+        $this->navBarId = $strNewValue;
     }
 
-    public function setMenuIconsPath($strNewValue = null)
-    {
-        $this->menuIconsPath = $strNewValue;
-    }
     public function getMenuIconsPath()
     {
         return $this->menuIconsPath;
     }
+    public function setMenuIconsPath($strNewValue = null)
+    {
+        $this->menuIconsPath = $strNewValue;
+    }
+    
     
     public function BuildNav()
     {
@@ -82,45 +83,6 @@ class TMenuBootStrap {
         return $navBrand;
     }    
     
-	public function getNavBarButton()
-	{
-        $icon = new TElement('span');
-        $icon->setClass('navbar-toggler-icon');
-
-        $button = new TElement('button');
-        $button->setClass('navbar-toggler');
-        $button->setAttribute('type','button');
-        $button->setAttribute('data-toggle','collapse');
-        $button->setAttribute('data-target','#navbarsExampleDefault');
-        $button->setAttribute('aria-controls','navbarsExampleDefault');
-        $button->setAttribute('aria-expanded','false');
-        $button->setAttribute(' aria-label','Toggle navigation');
-        $button->add($icon);
-        return $button;
-    }
-
-    public function getNav2()
-	{
-        $nav = new TElement('nav');
-        $nav->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
-        //$nav->add( $this->getNavBrand() );
-        $nav->add( $this->getNavBarButton() );
-        return $nav;
-    }
-
-    
-    public function buildItem($item)
-    {
-        //var_dump($item);
-        //$text = $item['@attributes']['text'];
-        $item = new TElement('a');
-        $item->setClass('dropdown-menu');
-        $item->setAttribute('href','#');
-        $item->add($text);
-        return $item;
-    }
-    
-    
     /***
      * Return HTML5 Element img or Font
      * @param string $imgString
@@ -135,6 +97,55 @@ class TMenuBootStrap {
         return $img;
     }
     
+    /**
+     * Return HTML5 Element A ou LI
+     * @param array $item          1: Array Menu
+     * @param boolean $dropToggle  2: TRUE = setClass dropToggle, FALSE (Default) not set
+     * @param boolean $navLink     3: TRUE = setClass navLink, FALSE (Default) not set
+     * @return TElement
+     */
+    public function getDropLink($item,$dropToggle=false,$navLink=false)
+    {
+        $retorno = null;
+        $id = $item['@attributes']['id'];
+        $text = $item['@attributes']['text'];        
+        $userdata = null;
+        if(ArrayHelper::has('userdata',$item['@attributes'])){
+            $userdata = $item['@attributes']['userdata'];
+        }        
+        $img = null;
+        if(ArrayHelper::has('img',$item['@attributes'])){
+            $img = $this->getMenuIcon($item['@attributes']['img']);
+        }
+
+        $herf = new TElement('a');
+        $herf->setAttribute('id',$id);        
+        if(!empty($userdata)){
+            $herf->setAttribute('href',$userdata);
+        }
+        if(!empty($img)){
+            $herf->add($img);
+        }
+        $herf->add($text);
+        
+        if($dropToggle){
+            if($navLink){
+                $herf->setClass('nav-link dropdown-toggle');
+            }else{
+                $herf->setClass('dropdown-toggle');
+            }
+            $herf->setAttribute('data-toggle','data-toggle');
+            $herf->setAttribute('aria-haspopup','true');
+            $herf->setAttribute('aria-expanded','false');
+            $retorno = $herf;
+        }else{
+            $li = new TElement('li');
+            $li->setClass('dropdown-item');
+            $li->add($herf);
+            $retorno = $li;
+        }
+        return $retorno;
+    }
     
     /**
      * Return HTML5 Element LU
@@ -142,50 +153,30 @@ class TMenuBootStrap {
      * @param array $subItens
      * @return TElement
      */
-    public function getUlDropMenu($id,$subItens){
-        $dropMenu = new TElement('ul');
-        $dropMenu->setClass('dropdown');
-        $dropMenu->setAttribute('aria-labelledby',$id);
-        return $dropMenu;
-    }
-    
-    public function buildNavLink($item)
-    {
+    public function getUlDropMenu($id,$subItens,$navLink=false){
         //ini_set('xdebug.var_display_max_depth', '10');
         //ini_set('xdebug.var_display_max_children', '256');
         //ini_set('xdebug.var_display_max_data', '-1');
-        //var_dump($item);exit();
-        //var_dump($item['@attributes']);
-        $id = $item['@attributes']['id'];
+        //var_dump($subItens);exit();
+        //var_dump($item['@attributes']);        
+                
+        $dropMenu = new TElement('ul');
+        $dropMenu->setClass('dropdown');
+        $dropMenu->setAttribute('aria-labelledby',$id);
         
-        $img = null;
-        if(ArrayHelper::has('img',$item['@attributes'])){
-            $img = $this->getMenuIcon($item['@attributes']['img']);
+        foreach($subItens as $key => $item) {
+            $id = $item['@attributes']['id'];
+            $subSubItens = ArrayHelper::getArray($item, 'item');
+            if( CountHelper::count( $subSubItens) > 0 ){
+                $ulDropMenu = $this->getUlDropMenu($id,$subSubItens);
+                $dropMenu->add($ulDropMenu);
+            }else{
+                $dropItem = $this->getDropLink($item,false,false);
+                $dropMenu->add($dropItem);
+            }
         }
-        
-        $subItens = null;
-        if(ArrayHelper::has('item',$item)){
-            $subItens = ArrayHelper::getArray($item, 'item');
-        }
-        
-        $text = $item['@attributes']['text'];
-        $item = new TElement('a');
-        If( CountHelper::count($subItens) > 0 ){
-            $item->setAttribute('id',$id);
-            $item->setClass('nav-link dropdown-toggle');
-            $item->setAttribute('data-toggle','dropdown');
-            $item->setAttribute('aria-haspopup','true');
-            $item->setAttribute('aria-expanded','false');
-        }else{
-            $item->setClass('nav-link');
-        }
-        $item->setAttribute('href','#');
-        if(!empty($img)){
-            $item->add($img);
-        }
-        $item->add($text);
-        return $item;
-    }
+        return $dropMenu;
+    }   
     
     /***
      * Return HTML5 Element LI
@@ -199,10 +190,10 @@ class TMenuBootStrap {
         if(ArrayHelper::has('item',$item)){
             $id = $item['@attributes']['id'];
             $subItens = ArrayHelper::getArray($item, 'item');
-            $subMenu = $this->getUlDropMenu($id, $subItens);
+            $subMenu = $this->getUlDropMenu($id, $subItens,true);
         }
         
-        $navLinks = $this->buildNavLink($item);
+        $navLinks = $this->getDropLink($item,true,true);
         
         $item = new TElement('li');
         $item->setClass('nav-item');
@@ -231,11 +222,38 @@ class TMenuBootStrap {
      */
     public function getNavCollapse()
     {   
-        $navColl = new TDiv('navbarCollapse');
+        $id = $this->getNavBarId();
+        $navColl = new TDiv($id);
         $navColl->setClass('collapse navbar-collapse');
         return $navColl;
     }
     
+    public function getNavBarButton()
+    {
+        $icon = new TElement('span');
+        $icon->setClass('navbar-toggler-icon');
+        
+        $id = $this->getNavBarId();
+        $button = new TElement('button');
+        $button->setClass('navbar-toggler');
+        $button->setAttribute('type','button');
+        $button->setAttribute('data-toggle','collapse');
+        $button->setAttribute('data-target',$id);
+        $button->setAttribute('aria-controls',$id);
+        $button->setAttribute('aria-expanded','false');
+        $button->setAttribute(' aria-label','Toggle navigation');
+        $button->add($icon);
+        return $button;
+    }
+    
+    public function getNav2()
+    {
+        $nav = new TElement('nav');
+        $nav->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
+        //$nav->add( $this->getNavBrand() );
+        $nav->add( $this->getNavBarButton() );
+        return $nav;
+    }
     /***
      * Return Objetc SimpleXMLElement with Menu
      * @param string $menuFile - path file menu
