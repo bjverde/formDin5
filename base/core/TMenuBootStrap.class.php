@@ -161,7 +161,7 @@ class TMenuBootStrap {
         //var_dump($item['@attributes']);        
                 
         $dropMenu = new TElement('ul');
-        $dropMenu->setClass('dropdown');
+        $dropMenu->setClass('dropdown-menu');
         $dropMenu->setAttribute('aria-labelledby',$id);
         
         foreach($subItens as $key => $item) {
@@ -206,7 +206,7 @@ class TMenuBootStrap {
         $navLinks = $this->getMenuLink($item,true,true);
         
         $item = new TElement('li');
-        $item->setClass('nav-item');
+        $item->setClass('nav-item dropdown');
         $item->add($navLinks);
         If( CountHelper::count($subItens) > 0 ){
             $item->add($subMenu);
