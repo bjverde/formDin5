@@ -110,8 +110,8 @@ class TMenuBootStrap {
         $id = $item['@attributes']['id'];
         $text = $item['@attributes']['text'];        
         $userdata = null;
-        if(ArrayHelper::has('userdata',$item['@attributes'])){
-            $userdata = $item['@attributes']['userdata'];
+        if(ArrayHelper::has('userdata',$item)){
+            $userdata = $item['userdata'];
         }        
         $img = null;
         if(ArrayHelper::has('img',$item['@attributes'])){
@@ -178,9 +178,6 @@ class TMenuBootStrap {
                 $liDropDown->setClass('dropdown-item dropdown');
                 $liDropDown->add($dropItem);
                 $liDropDown->add($ulDropMenu);
-                
-                //$dropMenu->add($dropItem);
-                //$dropMenu->add($ulDropMenu);
                 
                 $dropMenu->add($liDropDown);
             }
@@ -306,17 +303,9 @@ class TMenuBootStrap {
      */
     public function getMenuBootStrap($menuFile, $print=true)
     {    
-        //ini_set('xdebug.var_display_max_depth', '10');
-        //ini_set('xdebug.var_display_max_children', '256');
-        //ini_set('xdebug.var_display_max_data', '-1');
-        //var_dump($xmlMenu);
-        
         $arrayMenu = $this->getArrayMenu($menuFile);
         $navUl = $this->getNavUl();
-        foreach($arrayMenu['item'] as $key => $item) {
-            //echo $key;
-            //var_dump($item);
-            //print_r($item);
+        foreach($arrayMenu['item'] as $item) {
             $ItemMenu = $this->buildNavItem($item);
             $navUl->add($ItemMenu);
         }
