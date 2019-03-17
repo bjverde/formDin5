@@ -270,7 +270,7 @@ class TMenuBootStrap {
     public function getObjXmlMenu($menuFile)
     {
         if ( !file_exists($menuFile) ) {
-            throw new InvalidArgumentException (TMesage::MENU_FILE_FAIL);
+            throw new InvalidArgumentException (TMessage::MENU_FILE_FAIL);
         }
         
         ob_start();

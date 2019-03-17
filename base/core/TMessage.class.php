@@ -39,8 +39,9 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TMesage {
+class TMessage {
 
+    const CSS_FILE_FORM_DEFAULT_FAIL = 'Arquivo de CSS para o Padrão dos Forms não existe ou não está no formato CSS';
     const MENU_FILE_FAIL = 'Arquivo do Menu não existe';
 
     public function __construct() {
