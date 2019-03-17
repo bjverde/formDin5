@@ -76,7 +76,7 @@ class THtmlPage extends TElement
 		$this->objHtml->add($this->objBody);
 		$this->objHead->add('<meta http-equiv="Expires" content="Tue, 20 Aug 1996 14:25:27 GMT">');
 		$this->objHead->add('<meta charset="'.$this->getCharset().'">');
-		$this->objHead->add( HtmlHelper::getViewPort() );
+		$this->objHead->add(HtmlHelper::getViewPort());
 		
 		$this->objTitle = new TElement('title');
 		$this->objTitle->clearCss();
@@ -106,21 +106,16 @@ class THtmlPage extends TElement
 		 	//$this->addJsFile($this->objForm->getJs());
 			$this->addInBody($this->objForm);
 		}
-		if ( $this->objBody->getChildren())
-		{
-			foreach($this->objBody->getChildren() as $k=>$child )
-			{
-				if(is_object($child) && method_exists($child,'getFieldType') && $child->getFieldType() == 'form')
-				{
+		if ( $this->objBody->getChildren()) {
+			foreach($this->objBody->getChildren() as $k=>$child ) {
+				if(is_object($child) && method_exists($child,'getFieldType') && $child->getFieldType() == 'form') {
 					//print 'tem um formulario';
 					$this->addJsCssFile($child->getJsCss());
 					// o form já esta dentro de uma tag html, então nao precisa imprimir a tag html nes os js e css dele
-					if ( method_exists( $child, 'autoIncludeJsCss' ) )
-					{
+					if ( method_exists( $child, 'autoIncludeJsCss' ) ) {
 						$child->autoIncludeJsCss(false);
 					}
-					if ( method_exists( $child, 'showHtmlTag' ) )
-					{
+					if ( method_exists( $child, 'showHtmlTag' ) ) {
 						$child->showHtmlTag(false);
 					}
 				}
@@ -178,7 +173,6 @@ class THtmlPage extends TElement
 		return self::$arrJsCssFile;
 	}
 	
-	
 	/**
 	 * Verifica se o arquivo existe e devolve o caminho. Se não existir
 	 * retona null
@@ -220,7 +214,8 @@ class THtmlPage extends TElement
 	        $log = 'formDin: '.FORMDIN_VERSION.' failed to load file:'.$aFile[0];
 	        error_log($log);
 	    }
-        return $file;
+	    
+	    return $file;
 	}
 	
 	/**
@@ -229,29 +224,29 @@ class THtmlPage extends TElement
 	*/
 	protected function includeJsCssFiles()
 	{
-		if( is_array(self::$arrJsCssFile)) {
-			$jquery=false;
-			foreach(self::$arrJsCssFile as $file) {
-			    $file = $this->getPathJsCssFiles($file);
-				if($file) {
-					if( strpos($file,'.js')) {
-						$this->objHead->add('<script type="text/javascript" src="'.$file.'"></script>');
-						if( strpos($file,'jquery')!==false) {
-							$jquery=true;
-						}
-					} else if( strpos($file,'.css')) {
-						$this->objHead->add('<link rel="stylesheet" type="text/css" href="'.$file.'" />');
-
-					}
-				}
-			}
+	    if( is_array(self::$arrJsCssFile)) {
+	        $jquery=false;
+	        foreach(self::$arrJsCssFile as $file) {
+	            $file = $this->getPathJsCssFiles($file);
+	            if($file) {
+	                if( strpos($file,'.js')) {
+	                    $this->objHead->add('<script type="text/javascript" src="'.$file.'"></script>');
+	                    if( strpos($file,'jquery')!==false) {
+	                        $jquery=true;
+	                    }
+	                } else if( strpos($file,'.css')) {
+	                    $this->objHead->add('<link rel="stylesheet" type="text/css" href="'.$file.'" />');
+	                    
+	                }
+	            }
+	        }
 			
 			/*
-			if( $jquery ) {
-				$this->objHead->add('<script>try{jQuery.noConflict();}catch(e){}</script>');
-			}
+	        if( $jquery ) {
+	            $this->objHead->add('<script>try{jQuery.noConflict();}catch(e){}</script>');
+	        }
 			*/
-		}
+	    }
 	}
 	/**
 	* Adiciona conteudo dentro da tag body. Pode ser um texto ou outro objeto da classe Element
