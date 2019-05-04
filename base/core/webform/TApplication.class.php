@@ -45,7 +45,7 @@ if (! defined ( 'DS' )) {
 $currentl_dir = dirname ( __FILE__ );
 $dirClasses = $currentl_dir.DS.'..'.DS;
 
-require_once $dirClasses.'constants.php';
+require_once $dirClasses.'..'.DS.'constants.php';
 require_once $dirClasses.'exceptions' . DS. 'UploadException.class.php';
 require_once $dirClasses.'helpers'.DS.'autoload_formdin_helper.php';
 require_once $dirClasses.'..'.DS.'vendor/autoload.php';   //Composer
