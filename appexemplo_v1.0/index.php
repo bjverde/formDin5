@@ -57,10 +57,9 @@ $app->setUnit('Centro Nacional de Telemática - CNT');
 $app->setVersionSystem(SYSTEM_VERSION);
 $app->setMenuIconsPath('imagem/');
 
-$app->setWidth(990);
-$app->setNorthSize(55);
 $app->setMainMenuFile('includes/menu.php');
 $app->setConfigFile(null);
+$app->setDefaultModule('view/fields/exe_TextField.php');
 
 
 $app->run();
