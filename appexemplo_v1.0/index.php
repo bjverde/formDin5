@@ -39,9 +39,9 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-require_once('includes/constantes.php');
-include('includes/config_conexao.php');
-include('../base/core/TApplication.class.php');
+require_once 'includes/constantes.php';
+require_once 'includes/config_conexao.php';
+require_once '../base/core/TApplication.class.php'; //FormDin 5
 
 //use FormDin\Core\*;
 
@@ -58,7 +58,7 @@ $app->setVersionSystem(SYSTEM_VERSION);
 $app->setMenuIconsPath('imagem/');
 
 $app->setMainMenuFile('includes/menu.php');
-$app->setConfigFile(null);
+//$app->setConfigFile(null);
 $app->setDefaultModule('view/fields/exe_TextField.php');
 
 
