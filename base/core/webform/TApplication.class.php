@@ -41,11 +41,10 @@
 if (! defined ( 'DS' )) {
 	define ( 'DS', DIRECTORY_SEPARATOR );
 }
-
 $currentl_dir = dirname ( __FILE__ );
 $dirClasses = $currentl_dir.DS.'..'.DS;
 
-require_once $dirClasses.'..'.DS.'constants.php';
+require_once $dirClasses.'constants.php';
 require_once $dirClasses.'exceptions' . DS. 'UploadException.class.php';
 require_once $dirClasses.'helpers'.DS.'autoload_formdin_helper.php';
 require_once $dirClasses.'..'.DS.'vendor/autoload.php';   //Composer
@@ -137,6 +136,28 @@ class TApplication extends TLayout {
 		
 		// biblioteca de funções geral
 		$this->addIncludeFile ( $this->getBase () . 'includes/funcoes.inc' );
+	}
+
+	/***
+     * Sets the minimum formDin version for the system to work
+	 * 
+	 * Define a versão minima do formDin para o sistema funcionar
+     * @param string $minimumVersion
+     */
+	public function setFormDinMinimumVersion($minimumVersion) {		
+		if ( empty($minimumVersion) ) {
+		    throw new DomainException(TMessage::FORM_MIN_VERSION_BLANK);			
+		} else {
+		    $t = explode(".", $minimumVersion);
+		    if( CountHelper::count($t) != 3 ){
+		        throw new DomainException(TMessage::FORM_MIN_VERSION_INVALID_FORMAT);
+			}
+			$t = explode("-", $minimumVersion);
+			$minimumVersion = $t[0];
+			if( !FormDinHelper::versionMinimum($minimumVersion) ){
+			    throw new DomainException(TMessage::FORM_MIN_YOU_VERSION.FORMDIN_VERSION.TMessage::FORM_MIN_VERSION_NOT.$minimumVersion);
+			}
+		}
 	}
 
 	private function includePathClasses() {

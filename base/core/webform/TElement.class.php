@@ -114,7 +114,7 @@ class TElement
      * Recebe como parametro o tipo de tag html que sera gerada
      * Ex: div, span, input ...
      *
-     * @var string tagType
+     * @var string tagType - name tag html
      */
     public function __construct( $strTagType = null )
     {
@@ -320,9 +320,8 @@ class TElement
     {
         if ( is_array( $child ) )
         {
-            foreach( $child as $k => $v )
+            foreach( $child as $v )
             {
-                //$this->children[] = $v;
                 $this->add( $v, $boolLF );
             }
         }
@@ -579,7 +578,7 @@ class TElement
 
         if ( is_array( $this->children ) )
         {
-            foreach( $this->children as $k => $child )
+            foreach( $this->children as $child )
             {
                 if ( is_object( $child ) )
                 {
@@ -704,9 +703,16 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
     }
 
     //--------------------------------------------------------------------------
-    /**
-    * Define uma propriedade css para criar o style da tag. Para setar o CSS de um formulario utilize addCssFile
-    *
+   /**
+    * DEPRECADED - change to setClass. 
+    * 
+    * Defines a css IN LINE property to create the style of the tag.
+    * To set the CSS of a form use addCssFile.
+    * The $mixProperty parameter can be an array of properties and css values.
+    * 
+    * 
+    * Define uma propriedade do css IN LINE para criar o style da tag. 
+    * Para setar o CSS de um formulario utilize addCssFile.
     * O parametro $mixProperty pode ser um array de propriedades e valores de css.
     *
     * <code>
@@ -714,35 +720,24 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
     * 	$obj->setCss('border','1px dashed blue');
     * </code>
     *
+    * @deprecated 
+    * 
     * @param mixed $mixProperty
     * @param string $newValue
     */
     public function setCss( $mixProperty, $newValue = null )
     {
-        if ( is_array( $mixProperty ) )
-        {
+        if ( is_array( $mixProperty ) ) {
             $this->css = $mixProperty;
-        }
-        else
-        {
-
+        } else {
             // os nomes das propriedades serao em caixa baixa
             $mixProperty = preg_replace( '[-]', '_', $mixProperty );
             $mixProperty = $this->removeIllegalChars( strtolower( $mixProperty ) );
             $mixProperty = preg_replace( '[_]', '-', $mixProperty );
-
-            if ( $newValue === null )
-            {
+            if ( $newValue === null ) {
                 $this->css[ $mixProperty ] = null;
                 unset( $this->css[ $mixProperty ] );
-            }
-            else
-            {
-                /*if ( preg_match('/width|height/',$mixProperty) && preg_match('/[0-9]$/',$newValue)  )
-                {
-                    $newValue.='px';
-                }
-                */
+            } else {
                 $this->css[ $mixProperty ] = $newValue;
             }
         }
@@ -750,7 +745,7 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
     }
     /**
     * Retorna o valor de uma propriedade css
-    *
+    * @deprecated 
     */
     public function getCss( $strProperty = null )
     {
@@ -987,12 +982,11 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
     //-----------------------------------------------------------------------------
     public function getTopMostParent()
     {
-        if ( $this->parentControl )
-        {
-            $id = $this->parentControl->getId();
+        if ( $this->parentControl ){
+            //$id = $this->parentControl->getId();
             return $this->parentControl->getTopMostParent();
         }
-        $id = $this->getId();
+        //$id = $this->getId();
         return $this;
     }
 
