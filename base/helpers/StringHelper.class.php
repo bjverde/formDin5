@@ -1,9 +1,9 @@
 <?php
 /*
- * FormDin 5 Framework
- * Created by Reinaldo A. Barrêto Jr in 2019
- * Based on the FormDin 4 of Luís Eugênio Barbosa
- * https://github.com/bjverde/formDin5
+ * Formdin Framework
+ * Copyright (C) 2012 Ministério do Planejamento
+ * Criado por Luís Eugênio Barbosa
+ * Essa versão é um Fork https://github.com/bjverde/formDin
  *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
@@ -60,6 +60,20 @@ class StringHelper
         $string = utf8_decode($string);
         $string = strtoupper($string);
         $string = utf8_encode($string);
+        return $string;
+    }
+    
+    /***
+     * Checks if text is different from UTF8 and converts to UTF-8
+     * @param string $string
+     * @return string
+     */
+    public static function str2utf8($string)
+    {
+        if ( mb_detect_encoding($string, 'UTF-8', true)!='UTF-8' ){
+            //$string= iconv('ISO-8859-1', 'UTF-8', $string);
+            $string = utf8_encode($string);
+        }
         return $string;
     }
     

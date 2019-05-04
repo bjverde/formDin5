@@ -1,9 +1,9 @@
 <?php
 /*
- * FormDin 5 Framework
- * Created by Reinaldo A. Barrêto Jr in 2019
- * Based on the FormDin 4 of Luís Eugênio Barbosa
- * https://github.com/bjverde/formDin5
+ * Formdin Framework
+ * Copyright (C) 2012 Ministério do Planejamento
+ * Criado por Luís Eugênio Barbosa
+ * Essa versão é um Fork https://github.com/bjverde/formDin
  *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
@@ -48,6 +48,23 @@ class SqlHelper
 	const SQL_TYPE_TEXT_LIKE  = 'like';
 	const SQL_TYPE_TEXT_EQUAL = 'text';
 	
+	private static $dbms;	
+	
+	public static function setDbms($dbms)
+	{
+	    self::$dbms = $dbms;	    
+	}
+	public static function getDbms()	
+    {
+        $dbms =  null;
+        if ( !empty(self::$dbms) ){
+            $dbms = self::$dbms;
+        } else {
+            $dbms = BANCO;
+        }
+        return $dbms;
+    }
+    //--------------------------------------------------------------------------------
     public static function getRowStart($page,$rowsPerPage) 
     {
         $rowStart = 0;
@@ -88,22 +105,52 @@ class SqlHelper
         return $retorno;
     }
     //----------------------------------------
-    public static function validateString( $string) {
-        if ( preg_match('/(\')+|(")+/', $string ) > 0 ) {
-            throw new InvalidArgumentException('Não use aspas simples ou duplas na pesquisa');
+    public static function transformValidateString( $string ) {        
+        if ( self::getDbms() == DBMS_MYSQL ) {
+            //$string = addslashes($string);
+            //$patterns = '/(%)/';
+            $doubleQuotes = chr(34);
+            $patterns = '/(%|\'|"|'.$doubleQuotes.')/';
+            $replacements = '\\\$1';
+            $string = preg_replace($patterns, $replacements, $string);
+        } else {
+            if ( preg_match('/(\'|")/', $string ) > 0 ) {
+                throw new InvalidArgumentException('Não use aspas simples ou duplas na pesquisa !');
+            }
         }
+        return $string;
+    }
+    //----------------------------------------
+    /**
+     * Replace spaces with % to make it easier to search with like.
+     * 
+     * Substitua os espaços por % para facilitar a busca com like.
+     * 
+     * @param string $string
+     * @return string`
+     */
+    public static function explodeTextString( $string ) {
+        $dataBaseWithLike = (self::getDbms() == DBMS_MYSQL) || (self::getDbms() == DBMS_POSTGRES) || (self::getDbms() == DBMS_SQLITE) || (self::getDbms() == DBMS_SQLSERVER);
+        if ( $dataBaseWithLike ) {
+            $string = trim($string);
+            $string = preg_replace('/\s/', '%', $string);
+        }
+        return $string;
     }
     //----------------------------------------
     public static function getAtributeWhereGridParameters( $stringWhere, $arrayWhereGrid, $atribute, $type ,$testZero=true ) {
     	if( ArrayHelper::has($atribute, $arrayWhereGrid) ){
     		$valeu = $arrayWhereGrid[$atribute];
-    		self::validateString($valeu);
+    		if ( !empty($valeu) ){
+    		  $valeu = self::transformValidateString($valeu);
+    		}
     		if($type == self::SQL_TYPE_NUMERIC){
     			$isTrue = ' AND '.$atribute.' = '.$valeu.'  ';
     			$attribute = self::attributeIssetOrNotZero($arrayWhereGrid,$atribute,$isTrue,null,$testZero);
     			$stringWhere = $stringWhere.$attribute;
     		} else {
     			if($type == self::SQL_TYPE_TEXT_LIKE){
+    			    $valeu = self::explodeTextString($valeu);
     				$isTrue = ' AND '.$atribute.' like \'%'.$valeu.'%\' ';
     				$attribute = self::attributeIssetOrNotZero($arrayWhereGrid,$atribute,$isTrue,null,$testZero);
     				$stringWhere = $stringWhere.$attribute;
@@ -118,3 +165,4 @@ class SqlHelper
     }
     
 }
+?>
