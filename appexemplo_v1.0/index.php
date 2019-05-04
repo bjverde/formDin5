@@ -41,7 +41,7 @@
 
 require_once 'includes/constantes.php';
 require_once 'includes/config_conexao.php';
-require_once '../base/core/TApplication.class.php'; //FormDin 5
+require_once '../base/core/webform/TApplication.class.php'; //FormDin 5
 
 //use FormDin\Core\*;
 
