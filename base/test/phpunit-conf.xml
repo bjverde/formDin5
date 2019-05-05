@@ -1,0 +1,25 @@
+<phpunit 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.2/phpunit.xsd"
+    colors="true"
+    verbose="true"
+    >
+    <testsuites>
+        <testsuite name="services">
+            <directory>D:\wamp\www\formDin5\base\test</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">D:\wamp\www\formDin5\base</directory>
+            <exclude>
+                <directory suffix=".php">D:\wamp\www\formDin5\base\lib</directory>
+                <directory suffix=".php">D:\wamp\www\formDin5\base\vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="testdox-text" target="D:\wamp\www\formDin5\phpunit-code-coverage\testResult.txt"/>
+        <log type="testdox-html" target="D:\wamp\www\formDin5\phpunit-code-coverage\testResult.html"/>
+    </logging>     
+</phpunit>
