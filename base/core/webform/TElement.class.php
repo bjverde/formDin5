@@ -386,18 +386,13 @@ class TElement
         $result = '';
 
         // tags simples que nao possuem fechamento
-        if ( $this->tagType == 'br' )
-        {
-            $result .= "<{$this->tagType}/>";
-        }
-        else if( $this->tagType == 'doctype' )
-        {
-            $result
-                .= '<!DOCTYPE html> '
-                . "\n";
-        }
-        else
-        {
+        if ( $this->tagType == 'br' ) {
+            //https://pt.stackoverflow.com/questions/46370/o-certo-%C3%A9-br-ou-br-ou-br
+            //HTML tag BR is <br>
+            $result .= "<{$this->tagType}>"; 
+        } else if( $this->tagType == 'doctype' ){
+            $result .= '<!DOCTYPE html>'. "\n";
+        } else {
             $result = '';
 
             if ( $this->getTagType() )
@@ -500,31 +495,25 @@ class TElement
     {
         //print 'depth:'.self::$depth."\n";
         // tags que nao precisam ser fechadas
-        if ( $this->tagType == '' || $this->tagType == 'br' || $this->tagType == 'doctype'
-            || $this->tagType == 'input' )
-        {
+        if (   $this->tagType == '' 
+            || $this->tagType == 'br'
+            || $this->tagType == 'doctype'
+            || $this->tagType == 'input'
+            || $this->tagType == 'img'
+            ){
             return null;
         }
 
-        if ( $print )
-        {
-            if ( $this->tagType == 'textarea' || $this->tagType == 'option' )
-            {
+        if ( $print ){
+            if ( $this->tagType == 'textarea' || $this->tagType == 'option' ){
                 echo "</{$this->tagType}>";
-            }
-            else
-            {
+            } else {
                 echo $this->getIdent() . "</{$this->tagType}>\n";
             }
-        }
-        else
-        {
-            if ( $this->tagType == 'textarea' || $this->tagType == 'option' )
-            {
+        } else {
+            if ( $this->tagType == 'textarea' || $this->tagType == 'option' ) {
                 return "</{$this->tagType}>\n";
-            }
-            else
-            {
+            } else {
                 return $this->getIdent() . "</{$this->tagType}>\n";
             }
         }
