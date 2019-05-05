@@ -129,13 +129,10 @@ class TApplication extends TLayout {
 		$this->setSigla ( $strSigla );
 		$this->setShowMenu ( true );
 		$this->setResponsiveMode( true );
-		
-		// arquivo css padrão localizado na base base/css
-		$this->addCssFile ( 'app.css' );
-		$this->setBackgroundImage ( $this->getBase () . '/css/imagens/app/bg_listrado.jpg' );
+		$this->setBackgroundImage ( $this->getBase().'/css/imagens/app/bg_listrado.jpg' );
 		
 		// biblioteca de funções geral
-		$this->addIncludeFile ( $this->getBase () . 'includes/funcoes.inc' );
+		$this->addIncludeFile ( $this->getBase().'includes/funcoes.inc' );
 	}
 
 	/***
