@@ -38,6 +38,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
+if(!defined('EOL')){ define('EOL',"\n"); }
 
 $path =  __DIR__.'/../../../core/';
 require_once $path.'webform/TElement.class.php';
@@ -100,6 +101,8 @@ class TMenuBootStrapTest extends TestCase
 	    $result = $this->tMenuBootStrap->getMenuIcon('kkk.png');
 	    $resultClassCss = $result->getClass();
 	    $resultAttribute = $result->getAttribute('src');
+	    $resultHtml = $result->show(false);
+	    $this->assertEquals( '<img class="menuIcon"  src="/img/icon/kkk.png" >'.EOL, $resultHtml);
 	    $this->assertEquals( 'menuIcon', $resultClassCss);
 	    $this->assertEquals( '/img/icon/kkk.png', $resultAttribute);
 	    $this->assertInstanceOf(TElement::class,$result);
