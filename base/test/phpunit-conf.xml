@@ -5,20 +5,31 @@
     verbose="true"
     >
     <testsuites>
-        <testsuite name="services">
+        <testsuite name="FormDin 5">
             <directory>D:\wamp\www\formDin5\base\test</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">D:\wamp\www\formDin5\base</directory>
-            <exclude>
+            <exclude>                
                 <directory suffix=".php">D:\wamp\www\formDin5\base\lib</directory>
                 <directory suffix=".php">D:\wamp\www\formDin5\base\vendor</directory>
+                <file>D:\wamp\www\formDin5\base\index.php</file>
+                <file>D:\wamp\www\formDin5\base\core\index.php</file>
+                <file>D:\wamp\www\formDin5\base\core\webform\index.php</file>
+                <file>D:\wamp\www\formDin5\base\core\helpers\index.php</file>                
+                <file>D:\wamp\www\formDin5\base\css\index.php</file>
+                <file>D:\wamp\www\formDin5\base\imagens\index.php</file>
+                <file>D:\wamp\www\formDin5\base\js\index.php</file>
+                <file>D:\wamp\www\formDin5\base\lib\index.php</file>
+                <file>D:\wamp\www\formDin5\base\test\index.php</file>
+                <file>D:\wamp\www\formDin5\base\vendor\index.php</file>               
             </exclude>
         </whitelist>
     </filter>
     <logging>
+        <log type="coverage-html" target="D:\wamp\www\formDin5\phpunit-code-coverage\" lowUpperBound="35" highLowerBound="70"/>        
         <log type="testdox-text" target="D:\wamp\www\formDin5\phpunit-code-coverage\testResult.txt"/>
         <log type="testdox-html" target="D:\wamp\www\formDin5\phpunit-code-coverage\testResult.html"/>
     </logging>     

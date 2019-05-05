@@ -11,4 +11,4 @@
 /.project
 /.buildpath
 phpunit-code-coverage/*
-!phpunit-code-coverage/index.php
+!phpunit-code-coverage/phpunit-code-coverage.zip
