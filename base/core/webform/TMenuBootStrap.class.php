@@ -164,7 +164,7 @@ class TMenuBootStrap {
         $dropMenu->setClass('dropdown-menu');
         $dropMenu->setAttribute('aria-labelledby',$id);
         
-        foreach($subItens as $key => $item) {
+        foreach($subItens as $item) {
             $id = $item['@attributes']['id'];
             $subSubItens = ArrayHelper::getArray($item, 'item');
             if( CountHelper::count( $subSubItens) == 0 ){
