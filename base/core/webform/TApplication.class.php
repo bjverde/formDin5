@@ -354,6 +354,7 @@ class TApplication extends TLayout {
 	            // $this->addJavascript( 'app_load_module("' . $_SESSION[ APLICATIVO ][ 'modulo' ] . '")' );
 	        }
 	    }
+	    $loadModule = 'view/fields/exe_TextField.php';
 	    if (!$loadModule) {
 	        if ($this->getDefaultModule()) {
 	            $loadModule = $this->getDefaultModule();
