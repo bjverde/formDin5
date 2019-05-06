@@ -58,6 +58,7 @@ define('TAB', chr(9));
 
 
 define('FORMDIN_VERSION', '5.0.0-alpha');
+define('PHP_MIN_VERSION', '7.0.0');
 
 // --Data Base Management System
 define('DBMS_ACCESS', 'ACCESS');
