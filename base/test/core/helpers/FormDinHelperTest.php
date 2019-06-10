@@ -41,7 +41,7 @@
 
 $path =  __DIR__.'/../../../core/';
 require_once $path.'../constants.php';
-require_once $path.'helpers/FormDinHelper.class.php';
+require_once $path.'helpers/autoload_formdin_helper.php';
 
 use PHPUnit\Framework\TestCase;
 
