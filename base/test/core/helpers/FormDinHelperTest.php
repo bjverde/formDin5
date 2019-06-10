@@ -45,12 +45,9 @@ require_once $path.'helpers/FormDinHelper.class.php';
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * THtmlPage test case.
- */
 class FormDinHelperTest extends TestCase
 {
-	
+
     public function testVersion() {
 		$expected = '5.0.0-alpha';
 		$result =  FormDinHelper::version();
