@@ -55,19 +55,19 @@ class TElement
      * Armazenar o caminho do diretório base/
      * @var string
      */
-
+    
     static public $base;
     /**
-    * Controla a identacao do html gerado
-    *
-    * @var integer $depth
-    */
+     * Controla a identacao do html gerado
+     *
+     * @var integer $depth
+     */
     static private $depth;
     /**
-    * Array com as mensagens de advertências encontradas durante o processamento
-    *
-    * @var array $warnings
-    */
+     * Array com as mensagens de advertências encontradas durante o processamento
+     *
+     * @var array $warnings
+     */
     static public $warnings;
     //   $this->depth++;
     /**
@@ -104,11 +104,11 @@ class TElement
      */
     private $events;
     /**
-    * Armazena o Id do objeto pai
-    *
-    */
+     * Armazena o Id do objeto pai
+     *
+     */
     private $parentControl;
-
+    
     /**
      * Funcao construtora da classe.
      * Recebe como parametro o tipo de tag html que sera gerada
@@ -122,11 +122,11 @@ class TElement
         // chamado pelo controller
         if ( !defined( 'FORMDIN' ) )
         {
-        //die();
+            //die();
         }
         $strTagType = is_null( $strTagType ) ? 'span' : $strTagType;
         $this->tagType = $this->removeIllegalChars( strtolower( $strTagType ) );
-
+        
         //$this->setCss('font-family','Arial,Helvetica, Geneva, Sans-Serif');
         //$this->setCss('font-size','12px');
         if ( is_null( self::$depth ) )
@@ -140,25 +140,25 @@ class TElement
                 self::$depth = 0;
             }
         }
-
+        
         if ( is_null( self::$base ) )
         {
             $this->getBase();
         }
     }
     /**
-    * define uma propriedade da tag. Equivalente ao metodo setProperty()
-    *
-    * @param string $property
-    * @param mixed $value
-    */
+     * define uma propriedade da tag. Equivalente ao metodo setProperty()
+     *
+     * @param string $property
+     * @param mixed $value
+     */
     public function __set( $property, $value )
     {
         if ( is_object( $value ) )
         {
             return $this;
         }
-
+        
         if ( isset( $this->properties[ $property ] ) && is_object( $this->properties[ $property ] ) )
         {
             $this->properties[ strtolower( $property )]->$property = $value;
@@ -631,7 +631,7 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         if ( !$GLOBALS[ 'teste' ] )
         {
             $result = str_replace( "\n", '', $result );
-            $result = str_replace( chr( 9 ), '', $result );
+            $result = str_replace( ESP, '', $result );
         }
 
         if ( $print )
@@ -693,65 +693,6 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
 
     //--------------------------------------------------------------------------
    /**
-    * DEPRECADED - change to setClass. 
-    * 
-    * Defines a css IN LINE property to create the style of the tag.
-    * To set the CSS of a form use addCssFile.
-    * The $mixProperty parameter can be an array of properties and css values.
-    * 
-    * 
-    * Define uma propriedade do css IN LINE para criar o style da tag. 
-    * Para setar o CSS de um formulario utilize addCssFile.
-    * O parametro $mixProperty pode ser um array de propriedades e valores de css.
-    *
-    * <code>
-    * 	$obj->setCss( array('color'=>'white','border'=>'1px solid red') );
-    * 	$obj->setCss('border','1px dashed blue');
-    * </code>
-    *
-    * @deprecated 
-    * 
-    * @param mixed $mixProperty
-    * @param string $newValue
-    */
-    public function setCss( $mixProperty, $newValue = null )
-    {
-        if ( is_array( $mixProperty ) ) {
-            $this->css = $mixProperty;
-        } else {
-            // os nomes das propriedades serao em caixa baixa
-            $mixProperty = preg_replace( '[-]', '_', $mixProperty );
-            $mixProperty = $this->removeIllegalChars( strtolower( $mixProperty ) );
-            $mixProperty = preg_replace( '[_]', '-', $mixProperty );
-            if ( $newValue === null ) {
-                $this->css[ $mixProperty ] = null;
-                unset( $this->css[ $mixProperty ] );
-            } else {
-                $this->css[ $mixProperty ] = $newValue;
-            }
-        }
-        return $this;
-    }
-    /**
-    * Retorna o valor de uma propriedade css
-    * @deprecated 
-    */
-    public function getCss( $strProperty = null )
-    {
-        if ( $strProperty === null )
-        {
-            return $this->css;
-        }
-
-        if ( isset( $this->css[ $strProperty ] ) )
-        {
-            return $this->css[ $strProperty ];
-        }
-        return null;
-    }
-
-    //--------------------------------------------------------------------------
-    /**
     * Define o evento e a funcao javascript que sera executada ao ocorrer o evento
     * Se for restritivo e a função executada retornar false, interrompe a execução dos próximos eventos se houver
     *
@@ -846,11 +787,11 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
     }
 
     //-------------------------------------------------------------------------------------------------
-    protected function getIdent( $intDepth = 0 )
+    public function getIdent( $intDepth = 0 )
     {
         if ( $GLOBALS[ 'teste' ] && self::$depth > 0 )
         {
-            return str_repeat( chr( 9 ), ( self::$depth + $intDepth ) );
+            return str_repeat( ESP, ( self::$depth + $intDepth ) );
         }
         return null;
     }
@@ -1148,5 +1089,66 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
 		return utf8_decode( $strValue );
 	}
 
+    //--------------------------------------------------------------------------
+    /**
+     * DEPRECADED - change to setClass.
+     *
+     * Defines a css IN LINE property to create the style of the tag.
+     * To set the CSS of a form use addCssFile.
+     * The $mixProperty parameter can be an array of properties and css values.
+     *
+     *
+     * Define uma propriedade do css IN LINE para criar o style da tag.
+     * Para setar o CSS de um formulario utilize addCssFile.
+     * O parametro $mixProperty pode ser um array de propriedades e valores de css.
+     *
+     * <code>
+     * 	$obj->setCss( array('color'=>'white','border'=>'1px solid red') );
+     * 	$obj->setCss('border','1px dashed blue');
+     * </code>
+     *
+     * @deprecated
+     * @codeCoverageIgnore
+     *
+     * @param mixed $mixProperty
+     * @param string $newValue
+     */
+    public function setCss( $mixProperty, $newValue = null )
+    {
+        if ( is_array( $mixProperty ) ) {
+            $this->css = $mixProperty;
+        } else {
+            // os nomes das propriedades serao em caixa baixa
+            $mixProperty = preg_replace( '[-]', '_', $mixProperty );
+            $mixProperty = $this->removeIllegalChars( strtolower( $mixProperty ) );
+            $mixProperty = preg_replace( '[_]', '-', $mixProperty );
+            if ( $newValue === null ) {
+                $this->css[ $mixProperty ] = null;
+                unset( $this->css[ $mixProperty ] );
+            } else {
+                $this->css[ $mixProperty ] = $newValue;
+            }
+        }
+        return $this;
+    }
+    /**
+     * Retorna o valor de uma propriedade css
+     * @deprecated
+     * @codeCoverageIgnore
+     */
+    public function getCss( $strProperty = null )
+    {
+        if ( $strProperty === null )
+        {
+            return $this->css;
+        }
+        
+        if ( isset( $this->css[ $strProperty ] ) )
+        {
+            return $this->css[ $strProperty ];
+        }
+        return null;
+    }
+    
 }
 ?>
