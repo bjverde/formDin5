@@ -172,4 +172,43 @@ class TElementTest extends TestCase
 	    $this->assertSame($esperado, $retorno);
 	}
 	
+	public function testChilren() {
+	    $expected = 'If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".';
+	    $test = new TElement('p');
+	    $test->add('If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".');
+	    $result = $test->getChildren();
+	    $this->assertEquals( $expected , $result[0]);
+	}
+	
+	public function testChilren_index() {
+	    $expected = 'Text BBBB';
+	    $test = new TElement('p');
+	    $test->add('Text BBBB');
+	    $test->add('Text CCCC');
+	    $test->add('Text DDDD');
+	    $test->addOnTop('Text AAAA');
+	    $result = $test->getChildren();
+	    $this->assertEquals( $expected , $result[1]);
+	}
+	
+	public function testAddOnTop() {
+	    $expected = 'Text AAAA';
+	    $test = new TElement('p');
+	    $test->add('Text BBBB');
+	    $test->add('Text CCCC');
+	    $test->add('Text DDDD');
+	    $test->addOnTop('Text AAAA');
+	    $result = $test->getChildren();
+	    $this->assertEquals( $expected , $result[0]);
+	}
+	
+	public function testShow() {
+	    $expected = '<p>'.EOL
+	                .'If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".'.EOL
+	                .'</p>'.EOL;
+	    $test = new TElement('p');
+	    $test->add('If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".');
+	    $result = $test->show(false);
+	    $this->assertEquals( $expected , $result);
+	}
 }
