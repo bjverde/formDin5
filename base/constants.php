@@ -51,10 +51,19 @@ if(!defined('ENCODINGS') ) { define('ENCODINGS', 'UTF-8');
 
 // ============= FORMDIN FRAMEWORK CONSTANTS =================//
 
-if(!defined('DS')) { define('DS', DIRECTORY_SEPARATOR); 
+if(!defined('DS')) { define('DS', DIRECTORY_SEPARATOR);
 }
-define('EOL', "\n");
-define('TAB', chr(9));
+if (!defined('EOL')) {
+    define('EOL', "\n");
+}
+if (!defined('ESP')) {
+    $esp = chr(32).chr(32).chr(32).chr(32);
+    //define('ESP', '    ');
+    define('ESP', $esp);
+}
+if (!defined('TAB')) {
+    define('TAB', chr(9));
+}
 
 
 define('FORMDIN_VERSION', '5.0.0-alpha');
