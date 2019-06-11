@@ -71,5 +71,47 @@ class FormDinHelperTest extends TestCase
 	    $result = FormDinHelper::versionMinimum('5.0.0-alpha');
 	    $this->assertEquals( $expected , $result);
 	}
-}
 
+    public function testIssetOrNotZero_arrayNull() {
+        $expected = false;
+        $variable = array();
+        $result = FormDinHelper::issetOrNotZero($variable);
+        $this->assertEquals( $expected , $result);
+    }
+    
+    public function testIssetOrNotZero_arrayNotNull() {
+        $expected = true;
+        $variable = array(0,1);
+        $result = FormDinHelper::issetOrNotZero($variable);
+        $this->assertEquals( $expected , $result);
+    }
+    
+    public function testIssetOrNotZero_stringBlank() {
+        $expected = false;
+        $variable = '';
+        $result = FormDinHelper::issetOrNotZero($variable);
+        $this->assertEquals( $expected , $result);
+    }
+    
+    public function testIssetOrNotZero_stringNull() {
+        $expected = false;
+        $variable = null;
+        $result = FormDinHelper::issetOrNotZero($variable);
+        $this->assertEquals( $expected , $result);
+    }
+    
+    public function testIssetOrNotZero_stringZero() {
+        $expected = false;
+        $variable = '0';
+        $result = FormDinHelper::issetOrNotZero($variable);
+        $this->assertEquals( $expected , $result);
+    }
+    
+    public function testIssetOrNotZero_stringZeroNoTest() {
+        $expected = true;
+        $variable = '0';
+        $result = FormDinHelper::issetOrNotZero($variable,false);
+        $this->assertEquals( $expected , $result);
+    }
+    
+}
