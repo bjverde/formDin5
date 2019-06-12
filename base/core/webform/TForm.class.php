@@ -513,6 +513,26 @@ class TForm Extends TBox
         }
     }
     
+    public function showFormBorder(){
+        // remover/exibir as barras de rolagem
+        $this->body->setCss( "overflow",'hidden');
+        $this->body->setCss( "overflow-x", $this->getOverFlowX() );
+        $this->body->setCss( "overflow-y", $this->getOverFlowY() );
+        //$this->body->setCss('border','1px dashed blue');        
+        //$this->body->setCss('background-color','red');
+        
+        if( $this->getFlat()) {
+            $this->body->setCss( 'width', $this->getWidth()-5);
+        } else {
+            $this->body->setCss( 'width', $this->getWidth()-17);
+        }
+        
+        //$this->body->setCss( 'width', $this->getMaxWidth());
+        if( $this->getAutoSize() ) {
+            $this->setOverflowY( 'auto' );
+        }
+    }
+    
     /**
      * Exibe no browser ou devolve o html do formulário dependendo do parametro $print
      *
@@ -585,26 +605,7 @@ class TForm Extends TBox
             // implementação para permitir aplicativos com a estrutura de visão e controle separados
             // se existir arquivo js/css externo com o mesmo nome do modulo, no mesmo diretorio ou no diretorio js/ fazer a inclusão automática
             $this->addJsCssModule();
-            
-            // remover/exibir as barras de rolagem
-            $this->body->setCss( "overflow",'hidden');
-            $this->body->setCss( "overflow-x", $this->getOverFlowX() );
-            $this->body->setCss( "overflow-y", $this->getOverFlowY() );
-            //$this->body->setCss('border','1px dashed blue');
-            //$this->body->setCss('background-color','red');
-            if( $this->getFlat())
-            {
-                $this->body->setCss( 'width', $this->getWidth()-5);
-            }
-            else
-            {
-                $this->body->setCss( 'width', $this->getWidth()-17);
-            }
-            //$this->body->setCss( 'width', $this->getMaxWidth());
-            if( $this->getAutoSize() )
-            {
-                $this->setOverflowY( 'auto' );
-            }
+            $this->showFormBorder();
             
             // alterar a aparência do formulario se ele estiver sendo executado como subform - modal
             if( isset( $_REQUEST[ 'facebox' ] ) && $_REQUEST[ 'facebox' ] )
