@@ -487,6 +487,32 @@ class TForm Extends TBox
         }
     }
     
+    public function showAjaxErrosMessages(){
+        $boolAjax = ( isset( $_REQUEST[ 'ajax' ] ) && $_REQUEST[ 'ajax' ] == 1);
+        if( $boolAjax ){
+            // para funcionar com chamadas ajax sem fwAjaxRequest.
+            $_REQUEST['dataType'] = ( isset( $_REQUEST['dataType'] ) ) ? $_REQUEST['dataType'] : 'text';
+            
+            if( ! function_exists( 'prepareReturnAjax' ) ){
+                require_once($this->getBase() . 'includes/formDin4Ajax.php');
+            }
+            
+            // se tiver alguma coisa no buffer, poder ser algum echo, print ou mensagem de erro do php
+            $flagSucess=1;
+            if( $this->getErrors() ){
+                $flagSucess=0;
+                echo implode("\n", $this->getErrors() );// joga no buffer de saida
+                //die();
+            }
+            
+            if( $this->getMessages() ){
+                echo implode("\n", $this->getMessages() ); // joga no buffer de saida
+            }
+            prepareReturnAjax( $flagSucess,$this->getReturnAjaxData());
+            die;
+        }
+    }
+    
     /**
      * Exibe no browser ou devolve o html do formulário dependendo do parametro $print
      *
@@ -497,41 +523,14 @@ class TForm Extends TBox
      * @return mixed
      */
     public function show( $print=true, $flat=false )
-    {
-        $boolAjax = ( isset( $_REQUEST[ 'ajax' ] ) && $_REQUEST[ 'ajax' ] == 1);
+    {        
         $this->setFormIds();
         $this->ajustaModulo();
         $this->tboxNoOverFlow();
-
-        //print $this->getFieldType();
         
-        if( $this->getFieldType() == 'form' )
-        {
-            //$this->returnAjax();
-            if( $boolAjax )
-            {
-                // para funcionar com chamadas ajax sem fwAjaxRequest.
-                $_REQUEST['dataType'] = ( isset( $_REQUEST['dataType'] ) ) ? $_REQUEST['dataType'] : 'text';
-                
-                if( ! function_exists( 'prepareReturnAjax' ) )
-                {
-                    require_once($this->getBase() . 'includes/formDin4Ajax.php');
-                }
-                // se tiver alguma coisa no buffer, poder ser algum echo, print ou mensagem de erro do php
-                $flagSucess=1;
-                if( $this->getErrors() )
-                {
-                    $flagSucess=0;
-                    echo implode("\n", $this->getErrors() );// joga no buffer de saida
-                    //die();
-                }
-                if( $this->getMessages() )
-                {
-                    echo implode("\n", $this->getMessages() ); // joga no buffer de saida
-                }
-                prepareReturnAjax( $flagSucess,$this->getReturnAjaxData());
-                die;
-            }
+        if( $this->getFieldType() == 'form' ){
+            
+            $this->showAjaxErrosMessages();
             $this->verifySessionEnd();
             
             if( $this->getPublicMode() )
@@ -4667,7 +4666,6 @@ class TForm Extends TBox
               return $html;
           }
       }
-
       
       public function processActionGetModulo()
       {
@@ -4743,12 +4741,9 @@ class TForm Extends TBox
               }
               
               $strAction = $this->removeIllegalChars( $strAction );
-          }
-          
+          }          
           return $strAction;
-
-      }
-      
+      }      
       
       /**
        * Método para fazer a inclusão do modulo de acordo com a ação solicitada
@@ -4758,46 +4753,19 @@ class TForm Extends TBox
        */
       public function processAction( $arrVar=null, $strAction=null )
       {
-          
-          $boolAjax = ( isset( $_REQUEST[ 'ajax' ] ) && $_REQUEST[ 'ajax' ] == 1);
-          // para funcionar com chamadas ajax sem fwAjaxRequest.
-          if( $boolAjax )
-          {
-              $_REQUEST['dataType'] = ( isset( $_REQUEST['dataType'] ) ) ? $_REQUEST['dataType'] : $_REQUEST['dataType']='text';
-              require_once($this->getBase() . 'includes/formDin4Ajax.php');
-          }
-          $this->setVar( $arrVar );          
-          
+          $this->setVar( $arrVar );
           $strModule = $this->processActionGetModulo();
           $strAction = $this->processActionGetAction($strAction);
           
-          if( $strAction && $strModule )
-          {
+          if( $strAction && $strModule ) {
               $strModule = $this->getRealPath( $strModule, $strAction );
-              $frm = $this;
-              if( !is_null( $strModule ) )
-              {
+              if( !is_null( $strModule ) ){
                   include($strModule); // adiciona o arquivo da ação
               }
           }
-          if( $boolAjax )
-          {
-              // se tiver alguma coisa no buffer, poder ser algum echo, print ou mensagem de erro do php
-              $flagSucess=1;
-              if( $this->getErrors() )
-              {
-                  $flagSucess=0;
-                  echo implode("\n", $this->getErrors() );// joga no buffer de saida
-                  //die();
-              }
-              if( $this->getMessages() )
-              {
-                  echo implode("\n", $this->getMessages() ); // joga no buffer de saida
-              }
-              prepareReturnAjax( $flagSucess,$this->getReturnAjaxData());
-              die;
-          }
+          $this->showAjaxErrosMessages();
       }
+      
       /**
        * Este médodo faz uma atualização da página principal
        *
