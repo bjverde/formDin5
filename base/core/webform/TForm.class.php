@@ -6112,27 +6112,28 @@ class TForm Extends TBox
                return ( $this->maximize === false ? false: true );
            }
            
-           //-----------------------------------------------------------------------------
-           /**
-            * Define se o formulário será exibido ou não ao receber o post fwSession_expired da
-            * aplicação
-            *
-            * @param boolean $boolNewValue
-            */
-           public function setPublicMode($boolNewValue = null)
-           {
-               self::$publicMode = $boolNewValue;
-           }
-           /**
-            * Retorna se o formulário será exibido ou não ao receber o post fwSession_expired da
-            * aplicação
-            *
-            */
-           public function getPublicMode()
-           {
-               //return ( $this->publicMode == 'S' || strtolower($this->publicMode) == '1' || strtolower( $this->publicMode == 'true') ) ? true : false;
-               return ( self::$publicMode == 'S' || strtolower(self::$publicMode) == '1' || strtolower( self::$publicMode == 'true') ) ? true : false;
-           }
+    //-----------------------------------------------------------------------------
+    /**
+    * Define se o formulário será exibido ou não ao receber o post fwSession_expired da
+    * aplicação
+    *
+    * @param boolean $boolNewValue
+    */
+    public function setPublicMode($boolNewValue = null)
+    {
+       self::$publicMode = $boolNewValue;
+    }
+    
+   /**
+    * Retorna se o formulário será exibido ou não ao receber o post fwSession_expired da
+    * aplicação
+    *
+    */
+   public function getPublicMode()
+   {
+       //return ( $this->publicMode == 'S' || strtolower($this->publicMode) == '1' || strtolower( $this->publicMode == 'true') ) ? true : false;
+       return ( self::$publicMode == 'S' || strtolower(self::$publicMode) == '1' || strtolower( self::$publicMode == 'true') ) ? true : false;
+   }
            //-----------------------------------------------------------------------------
            public function setRequiredFieldText($strNewValue=null)
            {
