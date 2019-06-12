@@ -72,9 +72,10 @@ function testar($extensao=null, $html)
 }
 
     $frm = new TForm('Configurações do PHP');
-    $frm->setFlat(true);
-    $frm->setAutoSize(true);
+    //$frm->setFlat(true);
+    //$frm->setAutoSize(true);
     
+    /*
     $html = $frm->addHtmlField('conf', '');
     $html->setCss('font-size', '14px');
 
@@ -116,6 +117,7 @@ function testar($extensao=null, $html)
     testar('ldap', $html);
     testar('json', $html);
     testar('curl', $html);
+    */
 
     $frm->show();
     
