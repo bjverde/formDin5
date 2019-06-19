@@ -45,7 +45,7 @@ $GLOBALS[ 'teste' ] = true; // deixar as quebras de linha e a identação do htm
 /**
  * Esta classe representa qualquer elemento HTML criado atraves de tag de abertura e fechamento
  * Ex: <input> <br> <p> <h1> etc...
- * 
+ *
  * Estrutura básica
  * <tagType class="" style="">x y z</tagType>
  */
@@ -178,60 +178,60 @@ class TElement
         return $this;
     }
     /**
-    * Mesmo que setAttribute(). Define uma propriedade e um valor para a tag html de abertura
-    * Ex: setProperty('name','xxx'); gera: <tag name="xxx">
-    *
-    * @param string $name
-    * @param mixed $value
-    */
+     * Mesmo que setAttribute(). Define uma propriedade e um valor para a tag html de abertura
+     * Ex: setProperty('name','xxx'); gera: <tag name="xxx">
+     *
+     * @param string $name
+     * @param mixed $value
+     */
     public function setProperty( $strProperty, $strValue )
     {
         $strProperty = $this->removeIllegalChars( $strProperty,'-' );
         if( strtolower($strProperty) == 'id')
         {
-			$strValue = $this->removeIllegalChars($strValue);
+            $strValue = $this->removeIllegalChars($strValue);
         }
         $this->$strProperty = $strValue;
         return $this;
     }
     /**
-    * Mesmo que setProperty. Define um atributo e o seu valor para a tag html de abertura
-    * Ex: setAttribute('name','myDiv'); gera: <tag name="myDiv">
-    *
-    * @param string $name
-    * @param mixed $value
-    */
+     * Mesmo que setProperty. Define um atributo e o seu valor para a tag html de abertura
+     * Ex: setAttribute('name','myDiv'); gera: <tag name="myDiv">
+     *
+     * @param string $name
+     * @param mixed $value
+     */
     public function setAttribute( $strProperty, $strValue = null )
     {
         return $this->setProperty( $strProperty, $strValue );
     }
     /**
-    * Retorna o valor definido para uma propriedade
-    * o mesmo que getProperty()
-    *
-    * @param mixed $strProperty
-    */
+     * Retorna o valor definido para uma propriedade
+     * o mesmo que getProperty()
+     *
+     * @param mixed $strProperty
+     */
     public function getAttribute( $strProperty = null )
     {
         return $this->getProperty( $strProperty );
     }
     /**
-    * Retorna o valor definido para uma propriedade
-    *
-    * @param string $property
-    * @return string
-    */
+     * Retorna o valor definido para uma propriedade
+     *
+     * @param string $property
+     * @return string
+     */
     public function getProperty( $strProperty )
     {
         $strProperty = strtolower( $strProperty );
         return $this->$strProperty;
     }
     /**
-    * Retorna o valor definido para uma propriedade
-    *
-    * @param string $property
-    * @return string
-    */
+     * Retorna o valor definido para uma propriedade
+     *
+     * @param string $property
+     * @return string
+     */
     public function __get( $strProperty )
     {
         if ( isset( $this->properties[ $strProperty ] ) )
@@ -240,14 +240,14 @@ class TElement
         }
         return null;
     }
-
+    
     //---------------------------------------------------------------------
     /**
-    * Faz o tratamento das aspas duplas e simples para evitar erro de sintaxe
-    *
-    * @param string $str
-    * @return string
-    */
+     * Faz o tratamento das aspas duplas e simples para evitar erro de sintaxe
+     *
+     * @param string $str
+     * @return string
+     */
     private function setQuotes( $str )
     {
         $str = str_replace( '( "', "('", $str );
@@ -257,28 +257,28 @@ class TElement
         //$str=str_replace('"','“' ,$str);
         $str = str_replace( '"', "'", $str );
         //$str=str_replace('"',"\'\'" ,$str);
-
+        
         //$str=str_replace("(''","('\'" ,$str);
         //$str=str_replace("'')","\'')" ,$str);
-
+        
         $str = str_replace( "\\\'')", "\\'')", $str );
-
+        
         $str = str_replace( "\\'\\'+", "'+", $str );
         $str = str_replace( "+\\'\\'", "+'", $str );
-
+        
         $str = str_replace( "\\'\\' +", "'+", $str );
         $str = str_replace( " +\\'\\'", "+'", $str );
         //$str=str_replace("","" ,$str);
         return $str;
     }
-
+    
     //----------------------------------------------------------------------
     /**
-    * Transforma as tags html para o simbolo correspondente
-    *
-    * @param string $s
-    * @return string
-    */
+     * Transforma as tags html para o simbolo correspondente
+     *
+     * @param string $s
+     * @return string
+     */
     public function safehtml( $s )
     {
         $s = str_replace( "&", "&amp;", $s );
@@ -289,33 +289,33 @@ class TElement
         return $s;
     }
     /**
-    * Remove os caracteres invalidos para criacao de nomes de funcoes e variaveis
-    * Para não excluir algum caractere especifico, utilize o parametro $strExcept
-    * ex: removeIllegalChars($teste,'[]');
-    * @param string $word
-    * @param string $strExcept
-    * @return string
-    */
+     * Remove os caracteres invalidos para criacao de nomes de funcoes e variaveis
+     * Para não excluir algum caractere especifico, utilize o parametro $strExcept
+     * ex: removeIllegalChars($teste,'[]');
+     * @param string $word
+     * @param string $strExcept
+     * @return string
+     */
     public function removeIllegalChars( $word=null, $strExcept = null )
     {
-    	if( is_null($word) || trim($word) == '' )
-    	{
-    		return null;
-		}
+        if( is_null($word) || trim($word) == '' )
+        {
+            return null;
+        }
         if ( isset( $strExcept ) )
         {
             $strExcept = str_replace( array( '[', ']', '^' ), array( '\\[', '\\]', '\\^' ), $strExcept );
         }
         return $word = @preg_replace( "/[^a-zA-Z0-9_" . $strExcept . "]/", "",
             strtr( $word, "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ ", "aaaaeeiooouucAAAAEEIOOOUUC_" ) );
-
-
+        
+        
     }
     /**
-    * Adiciona conteudo dentro da tag. Pode ser um texto ou outro objeto da classe Element
-    *
-    * @param mixed $child
-    */
+     * Adiciona conteudo dentro da tag. Pode ser um texto ou outro objeto da classe Element
+     *
+     * @param mixed $child
+     */
     public function add( $child, $boolLF = true )
     {
         if ( is_array( $child ) )
@@ -338,7 +338,7 @@ class TElement
                 {
                     $this->children[ ] = $child;
                 }
-
+                
                 // gravar o objeto pai no objeto filho
                 if ( is_object( $child ) )
                 {
@@ -349,56 +349,56 @@ class TElement
         }
     }
     /**
-    * Adiciona conteudo dentro da tag antes de todos os objeto já inseridos.
-    * Pode ser um texto ou outro objeto da classe Element
-    *
-    * @param mixed $child
-    * @param mixed $boolLF
-    */
+     * Adiciona conteudo dentro da tag antes de todos os objeto já inseridos.
+     * Pode ser um texto ou outro objeto da classe Element
+     *
+     * @param mixed $child
+     * @param mixed $boolLF
+     */
     public function addOnTop( $child, $boolLF = true )
     {
-    	$children = $this->getChildren();
-    	$this->clearChildren();
-    	$this->add($child,$boolLF);
-    	$this->add($children);
-	}
-
+        $children = $this->getChildren();
+        $this->clearChildren();
+        $this->add($child,$boolLF);
+        $this->add($children);
+    }
+    
     // retorna o array de conteudo que sera impresso entre as tags de abertura e fechamento
     public function getChildren($intIndex=null)
     {
-    	if( !is_null( $intIndex ))
-    	{
-			return $this->children[$intIndex]; // retorna o filho selecionado
-    	}
+        if( !is_null( $intIndex ))
+        {
+            return $this->children[$intIndex]; // retorna o filho selecionado
+        }
         return $this->children; // retorna todos os filhos
     }
-
+    
     //---------------------------------------------------------------------
     /**
-    * Abre a tag e imprime todo o seu conteudo.
-    * Se print for false, retorna o html gerado
-    * Se print for true, joga o html para o browser ( padrao )
-    *
-    * @param bool $print
-    */
+     * Abre a tag e imprime todo o seu conteudo.
+     * Se print for false, retorna o html gerado
+     * Se print for true, joga o html para o browser ( padrao )
+     *
+     * @param bool $print
+     */
     protected function open( $print = true )
     {
         $result = '';
-
+        
         // tags simples que nao possuem fechamento
         if ( $this->tagType == 'br' ) {
             //https://pt.stackoverflow.com/questions/46370/o-certo-%C3%A9-br-ou-br-ou-br
             //HTML tag BR is <br>
-            $result .= "<{$this->tagType}>"; 
+            $result .= "<{$this->tagType}>";
         } else if( $this->tagType == 'doctype' ){
             $result .= '<!DOCTYPE html>'. "\n";
         } else {
             $result = '';
-
+            
             if ( $this->getTagType() )
             {
                 $result .= "<{$this->tagType}";
-
+                
                 if ( is_array( $this->properties ) )
                 {
                     foreach( $this->properties as $k => $v )
@@ -411,43 +411,43 @@ class TElement
                                 if( $k == 'name' )
                                 {
                                     if( preg_match('/(div|table|tr|td)/i',$this->getTagType()))
-                                     continue;
+                                        continue;
                                 }
-                            	if(substr($k,0,3) != '_fl')
-                            	{
-	                                if ( $k == 'nowrap' )
-	                                {
-	                                    $v = ( ( $v == '' || $v == '1' ) ? 'true' : $v );
-
-	                                    if ( $v == 'false' )
-	                                    {
-	                                        $k = null;
-	                                    }
-	                                }
-
-	                                // tags que devem possuir unidade de medida para funcionarem em strict mode no browser
-	                                if ( preg_match( '/(width|height|top|left|font-size|padding|margin) /', $k )
-	                                    && preg_match( '/[0-9]$/', $v ) )
-	                                {
-	                                    $v .= 'px';
-	                                }
+                                if(substr($k,0,3) != '_fl')
+                                {
+                                    if ( $k == 'nowrap' )
+                                    {
+                                        $v = ( ( $v == '' || $v == '1' ) ? 'true' : $v );
+                                        
+                                        if ( $v == 'false' )
+                                        {
+                                            $k = null;
+                                        }
+                                    }
+                                    
+                                    // tags que devem possuir unidade de medida para funcionarem em strict mode no browser
+                                    if ( preg_match( '/(width|height|top|left|font-size|padding|margin) /', $k )
+                                        && preg_match( '/[0-9]$/', $v ) )
+                                    {
+                                        $v .= 'px';
+                                    }
                                     // atributos que não possuem medidas
                                     if( preg_match('/(cellspacing|cellpadding)/i', $k ) )
                                     {
                                         $v = preg_replace('/[^0-9]/','',$v);
                                     }
-	                                if ( !is_null( $k ) && $k != '' )
-	                                {
-	                                	if( is_string($v) || is_numeric($v) )
-	                                	{
-	                                    	$result .= " $k=\"$v\" ";
-										}
-										else
-										{
-											$result .= "$k=\"".gettype($v)."\" ";
-										}
-	                                }
-								}
+                                    if ( !is_null( $k ) && $k != '' )
+                                    {
+                                        if( is_string($v) || is_numeric($v) )
+                                        {
+                                            $result .= " $k=\"$v\" ";
+                                        }
+                                        else
+                                        {
+                                            $result .= "$k=\"".gettype($v)."\" ";
+                                        }
+                                    }
+                                }
                             }
                         }
                         else
@@ -456,7 +456,7 @@ class TElement
                         }
                     }
                 }
-
+                
                 if ( $this->tagType == 'option' )
                 {
                     $result .= ">";
@@ -467,11 +467,11 @@ class TElement
                 }
             }
         }
-
+        
         if ( $result != '' )
         {
             $result = $this->getIdent() . $result;
-
+            
             if ( $print )
             {
                 echo $result;
@@ -482,28 +482,28 @@ class TElement
             }
         }
     }
-
+    
     //---------------------------------------------------------------------
     /**
-    * fecha a tag
-    * Se print for false, retorna o html gerado
-    * Se print for true, joga o html para o browser ( padrao )
-    *
-    * @param mixed $print
-    */
+     * fecha a tag
+     * Se print for false, retorna o html gerado
+     * Se print for true, joga o html para o browser ( padrao )
+     *
+     * @param mixed $print
+     */
     protected function close( $print = true )
     {
         //print 'depth:'.self::$depth."\n";
         // tags que nao precisam ser fechadas
-        if (   $this->tagType == '' 
+        if (   $this->tagType == ''
             || $this->tagType == 'br'
             || $this->tagType == 'doctype'
             || $this->tagType == 'input'
             || $this->tagType == 'img'
             ){
-            return null;
+                return null;
         }
-
+        
         if ( $print ){
             if ( $this->tagType == 'textarea' || $this->tagType == 'option' ){
                 echo "</{$this->tagType}>";
@@ -518,22 +518,22 @@ class TElement
             }
         }
     }
-
+    
     //---------------------------------------------------------------------
     /**
-    * Imprime/retorna o codigo completo de abertura e fechamento da tag
-    * Se print for false, retorna o html gerado
-    * Se print for true, joga o html para o browser ( padrao )
-    *
-    * @param mixed $print
-    */
+     * Imprime/retorna o codigo completo de abertura e fechamento da tag
+     * Se print for false, retorna o html gerado
+     * Se print for true, joga o html para o browser ( padrao )
+     *
+     * @param mixed $print
+     */
     public function show( $print = true )
     {
         // criar o estilo se tiver sido definida alguma propriedade
         if ( is_array( $this->css ) )
         {
             $css = '';
-
+            
             foreach( $this->css as $name => $value )
             {
                 if ( $value )
@@ -544,16 +544,16 @@ class TElement
                     {
                         $value .= 'px';
                     }
-				}
+                }
                 $css .= $name . ':' . $value . ';';
             }
-
+            
             if ( ( string ) $css != '' )
             {
                 $this->style = $css;
             }
         }
-
+        
         // adicionar os eventos definidos por setEvent()
         if ( is_array( $this->events ) )
         {
@@ -564,7 +564,7 @@ class TElement
             }
         }
         $result = $this->open( $print );
-
+        
         if ( is_array( $this->children ) )
         {
             foreach( $this->children as $child )
@@ -587,8 +587,8 @@ class TElement
                         }
                         else
                         {
-                        	$result .= $this->getIdent( 1 ) . $child . "\n";
-						}
+                            $result .= $this->getIdent( 1 ) . $child . "\n";
+                        }
                     }
                     else
                     {
@@ -600,40 +600,40 @@ class TElement
                 }
             }
         }
-
+        
         // encontrar depois uma expressão regular para retirar estra quebra
         // para evitar epaco em branco no internet explorer
-/* exeplo de codigo com problema:
-<fieldset name="lay_x"  id="lay_x"  type="panel"  style="width:auto;height:auto;overflow:auto;display:inline;verticalalign:top;margin:0px;padding:2px;border:1px dashed red;position:relative;" >
-<fieldset name="pnl_x"  id="pnl_x"  type="panel"  style="width:auto;height:auto;overflow:auto;display:inline;verticalalign:top;margin:0px;padding:2px;border:1px dashed red;position:relative;" >
-<div name="lblDataInclusao"  value="Data Inclusão:"  id="lblDataInclusao"  type="label"  style="float:left;position:relative;" >
-    Data Inclusão:
-</div>
-<input name="dat_inclusao"  maxlength="10"  size="10"  required="false"  id="dat_inclusao"  type="edit"  style="position:relative;"  onblur="fwValidarData(this,event,'dmy','','')"  onfocus="MaskInput(this,'99/99/9999')"  onkeyup="fwSetBordaCampo(this,false)" >
-</input>
-</fieldset>
-<br/>
-<fieldset name="pnl_x"  id="pnl_x"  type="panel"  style="width:auto;height:auto;overflow:auto;display:inline;verticalalign:top;margin:0px;padding:2px;border:1px dashed red;position:relative;" >
-<input name="dat_inclusao2"  maxlength="10"  size="10"  required="false"  id="dat_inclusao2"  type="edit"  style="position:relative;"  onblur="fwValidarData(this,event,'dmy','','')"  onfocus="MaskInput(this,'99/99/9999')"  onkeyup="fwSetBordaCampo(this,false)" >
-</input>
-</fieldset>
-</fieldset>
-
-*/
-/*$result = str_replace(chr(9).'<br/>','<br/>',$result);
-$result = str_replace(chr(9).'<br/>','<br/>',$result);
-$result = str_replace(chr(9).'<br/>','<br/>',$result);
-$result = str_replace(chr(9).'<br/>','<br/>',$result);
-$result = str_replace("\n".'<br/>','<br/>'."\n",$result);
-*/
-
+        /* exeplo de codigo com problema:
+         <fieldset name="lay_x"  id="lay_x"  type="panel"  style="width:auto;height:auto;overflow:auto;display:inline;verticalalign:top;margin:0px;padding:2px;border:1px dashed red;position:relative;" >
+         <fieldset name="pnl_x"  id="pnl_x"  type="panel"  style="width:auto;height:auto;overflow:auto;display:inline;verticalalign:top;margin:0px;padding:2px;border:1px dashed red;position:relative;" >
+         <div name="lblDataInclusao"  value="Data Inclusão:"  id="lblDataInclusao"  type="label"  style="float:left;position:relative;" >
+         Data Inclusão:
+         </div>
+         <input name="dat_inclusao"  maxlength="10"  size="10"  required="false"  id="dat_inclusao"  type="edit"  style="position:relative;"  onblur="fwValidarData(this,event,'dmy','','')"  onfocus="MaskInput(this,'99/99/9999')"  onkeyup="fwSetBordaCampo(this,false)" >
+         </input>
+         </fieldset>
+         <br/>
+         <fieldset name="pnl_x"  id="pnl_x"  type="panel"  style="width:auto;height:auto;overflow:auto;display:inline;verticalalign:top;margin:0px;padding:2px;border:1px dashed red;position:relative;" >
+         <input name="dat_inclusao2"  maxlength="10"  size="10"  required="false"  id="dat_inclusao2"  type="edit"  style="position:relative;"  onblur="fwValidarData(this,event,'dmy','','')"  onfocus="MaskInput(this,'99/99/9999')"  onkeyup="fwSetBordaCampo(this,false)" >
+         </input>
+         </fieldset>
+         </fieldset>
+         
+         */
+        /*$result = str_replace(chr(9).'<br/>','<br/>',$result);
+         $result = str_replace(chr(9).'<br/>','<br/>',$result);
+         $result = str_replace(chr(9).'<br/>','<br/>',$result);
+         $result = str_replace(chr(9).'<br/>','<br/>',$result);
+         $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
+         */
+        
         // tive que remover quebras e tabs para nao interferir no layout dos elementos na pagina
         if ( !$GLOBALS[ 'teste' ] )
         {
             $result = str_replace( "\n", '', $result );
             $result = str_replace( ESP, '', $result );
         }
-
+        
         if ( $print )
         {
             echo $result;
@@ -641,40 +641,40 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         $result .= $this->close( $print );
         return $result;
     }
-
+    
     //----------------------------------------------------------------
     /**
-    * permite alterar o tipo de tag que será gerada. Ex. input, label, textarea, div ...
-    *
-    * $param string $newTagType
-    */
+     * permite alterar o tipo de tag que será gerada. Ex. input, label, textarea, div ...
+     *
+     * $param string $newTagType
+     */
     public function setTagType( $newTagType )
     {
         $this->tagType = strtolower( $newTagType );
         return $this;
     }
-
+    
     //----------------------------------------------------------------
     /**
-    * Retorna o tipo da tag html definda
-    * ex: html, span, div, input...
-    *
-    * @return string
-    */
+     * Retorna o tipo da tag html definda
+     * ex: html, span, div, input...
+     *
+     * @return string
+     */
     public function getTagType()
     {
         return $this->tagType;
     }
     /**
-    * Define a classe (css) para estilizar a tag html
-    *
-    * @param string $newClass
-    */
+     * Define a classe (css) para estilizar a tag html
+     *
+     * @param string $newClass
+     */
     public function setClass( $newClass, $boolClearCss = null )
     {
         $boolClearCss = $boolClearCss === false ? false : true;
         $this->class = $newClass;
-
+        
         if ( $boolClearCss )
         {
             $this->clearCss();
@@ -682,30 +682,30 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         return $this;
     }
     /**
-    * Retorna a classe definida para estilizar a tag html
-    *
-    * @return string
-    */
+     * Retorna a classe definida para estilizar a tag html
+     *
+     * @return string
+     */
     public function getClass()
     {
         return $this->class;
     }
-
+    
     //--------------------------------------------------------------------------
-   /**
-    * Define o evento e a funcao javascript que sera executada ao ocorrer o evento
-    * Se for restritivo e a função executada retornar false, interrompe a execução dos próximos eventos se houver
-    *
-    * @param string $eventName
-    * @param string $functionJs
-    * @param boolean $boolRestrictive
-    */
+    /**
+     * Define o evento e a funcao javascript que sera executada ao ocorrer o evento
+     * Se for restritivo e a função executada retornar false, interrompe a execução dos próximos eventos se houver
+     *
+     * @param string $eventName
+     * @param string $functionJs
+     * @param boolean $boolRestrictive
+     */
     public function setEvent( $eventName, $functionJs = null, $boolRestrictive = null )
     {
         $eventName = strtolower( $this->removeIllegalChars( $eventName ) );
         //$functionJs	= $this->removeIllegalChars($functionJs);
         $this->events[ $eventName ] = '';
-
+        
         if ( ( string ) $functionJs != '' )
         {
             if ( ( bool ) $boolRestrictive === true )
@@ -717,39 +717,39 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         return $this;
     }
     /**
-    * Atribui um array de ventos e funções ao elemento
-    *
-    * @param array $arrEvents
-    */
+     * Atribui um array de ventos e funções ao elemento
+     *
+     * @param array $arrEvents
+     */
     public function setEvents( $arrEvents = null )
     {
         $this->events = $arrEvents;
         return $this;
     }
-
+    
     /**
-    * Adiciona um evento na tag html. Se ja exisitir um evento com o mesmo nome, faz a concatenacao
-    * dos eventos, executando ambos em sequencia.
-    * Se for restritivo e a função executada retornar false, interrompe a execução dos próximos eventos se houver
-    *
-    * @param string $eventName
-    * @param string $functionJs
-    * @param boolean $boolRestrictive
-    */
+     * Adiciona um evento na tag html. Se ja exisitir um evento com o mesmo nome, faz a concatenacao
+     * dos eventos, executando ambos em sequencia.
+     * Se for restritivo e a função executada retornar false, interrompe a execução dos próximos eventos se houver
+     *
+     * @param string $eventName
+     * @param string $functionJs
+     * @param boolean $boolRestrictive
+     */
     public function addEvent( $eventName, $functionJs = null, $boolRestrictive = null )
     {
         $eventName = strtolower( $this->removeIllegalChars( $eventName ) );
-
+        
         if ( isset( $this->events[ $eventName ] ) && ( string ) $this->events[ $eventName ] != '' )
         {
             $this->events[ $eventName ] .= ';';
         }
-
+        
         if ( ( bool ) $boolRestrictive === true )
         {
             $functionJs = 'if(!' . $functionJs . '){return false;}';
         }
-
+        
         if ( !isset( $this->events[ $eventName ] ) )
         {
             $this->events[ $eventName ] = ""; // evitar wornings do php
@@ -758,34 +758,34 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         return $this;
     }
     /**
-    *  Retorna a função chamada pelo evento solicitado
-    *  se não existir, retorna null
-    *
-    * @param string $strEventName
-    */
+     *  Retorna a função chamada pelo evento solicitado
+     *  se não existir, retorna null
+     *
+     * @param string $strEventName
+     */
     public function getEvent( $strEventName )
     {
         $strEventName = strtolower( $this->removeIllegalChars( $strEventName ) );
         return $this->events[ $strEventName ];
     }
     /**
-    *  Retorna o array de eventos ligados ao elemento
-    *  se não existir, retorna null
-    *
-    */
+     *  Retorna o array de eventos ligados ao elemento
+     *  se não existir, retorna null
+     *
+     */
     public function getEvents()
     {
         return $this->events;
     }
     /**
-    * Remove todos os eventos definidos
-    *
-    */
+     * Remove todos os eventos definidos
+     *
+     */
     public function clearEvents()
     {
         $this->events = null;
     }
-
+    
     //-------------------------------------------------------------------------------------------------
     public function getIdent( $intDepth = 0 )
     {
@@ -795,13 +795,13 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         }
         return null;
     }
-
+    
     //-------------------------------------------------------------------------------
     public function clearChildren()
     {
         $this->children = null;
     }
-
+    
     //---------------------------------------------------------------------------------
     public function setId( $newId )
     {
@@ -810,53 +810,53 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         $this->id = $this->removeIllegalChars( $newId );
         if( ! is_null($newId) )
         {
-	        // se o nome não possuir colchetes, dos campos multivalorados, igualar ao id
-	        if ( !strpos( $this->name, '[' ) )
-	        {
-	            $this->name = $this->removeIllegalChars( $newId, '[]' );
-	        }
-		}
+            // se o nome não possuir colchetes, dos campos multivalorados, igualar ao id
+            if ( !strpos( $this->name, '[' ) )
+            {
+                $this->name = $this->removeIllegalChars( $newId, '[]' );
+            }
+        }
         return $this;
     }
-
+    
     //---------------------------------------------------------------------
     public function setName( $newName )
     {
         $this->name = $this->removeIllegalChars( $newName, '[]' );
-
+        
         // se o nome não possuir colchetes, dos campos multivalorados, igualar ao id
         if ( !$this->id )
         {
             $this->id = $this->removeIllegalChars( $newName);
         }
         return $this;
-    /*
-    if( !strpos($this->name,'['))
-    {
-        $this->id	= $this->removeIllegalChars($newName);
+        /*
+         if( !strpos($this->name,'['))
+         {
+         $this->id	= $this->removeIllegalChars($newName);
+         }
+         */
+        
     }
-    */
-
-    }
-
+    
     //---------------------------------------------------------------------
     public function getName()
     {
         return $this->name;
     }
-
+    
     //---------------------------------------------------------------------
     public function getId()
     {
         return $this->id;
     }
-
+    
     //---------------------------------------------------------------------
     public function clearCss()
     {
         $this->css = null;
     }
-
+    
     public function getBase()
     {
         //if((string)$this->base=="")
@@ -865,7 +865,7 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
             for( $i = 0; $i < 10; $i++ )
             {
                 $base = str_repeat( '../', $i ) . 'base/';
-
+                
                 if ( file_exists( $base ) )
                 {
                     $i = 1000;
@@ -877,38 +877,38 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         }
         return self::$base;
     }
-
+    
     public function getRoot()
     {
         $base = $this->getBase();
         return str_replace( 'base/', '', $base );
     }
-
+    
     //----------------------------------------------------------------------------
     public function setValue( $strNewValue = null )
     {
         $this->value = $strNewValue;
         return $this;
     }
-
+    
     //----------------------------------------------------------------------------
     public function getValue()
     {
         return $this->value;
     }
-
+    
     public function setParentControl( $objParent = null )
     {
         $this->parentControl = $objParent;
         return $this;
     }
-
+    
     //-----------------------------------------------------------------------------
     public function getParentControl()
     {
         return $this->parentControl;
     }
-
+    
     //-----------------------------------------------------------------------------
     public function getTopMostParent()
     {
@@ -919,7 +919,7 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         //$id = $this->getId();
         return $this;
     }
-
+    
     //------------------------------------------------------------------------------
     public function setXY( $mixX = null, $mixY = null )
     {
@@ -927,14 +927,14 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         {
             $this->setCss( 'left', $mixX );
         }
-
+        
         if ( !is_null( $mixY ) )
         {
             $this->setCss( 'top', $mixY );
         }
         return $this;
     }
-
+    
     //---------------------------------------------------------------------------------
     public function getRandomChars( $intSize = 5 )
     {
@@ -942,9 +942,9 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         $intSize = ( int ) $intSize > 32 ? 32 : $intSize;
         return substr( preg_replace('/[li1]/','x',md5( microtime() ) ), 0, $intSize );
     }
-
+    
     //-----------------------------------------------------------------------------
-	public function getIndexFileName()
+    public function getIndexFileName()
     {
         if ( defined( 'INDEX_FILE_NAME' ) )
         {
@@ -959,31 +959,31 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
         {
             return 'index.php';
         }
-		if( preg_match('/\./',$url))
-		{
-			$aFileParts = pathinfo( $url );
-			return $aFileParts[ 'basename' ];
-		}
-		return '';
+        if( preg_match('/\./',$url))
+        {
+            $aFileParts = pathinfo( $url );
+            return $aFileParts[ 'basename' ];
+        }
+        return '';
     }
-
+    
     public function addWarning($strWarning=null)
     {
-		if( ! is_null( $strWarning ) )
-		{
-			self::$warnings[] = $strWarning;
-		}
+        if( ! is_null( $strWarning ) )
+        {
+            self::$warnings[] = $strWarning;
+        }
     }
-
+    
     public function getWarnings()
     {
-		return self::$warnings;
+        return self::$warnings;
     }
-
+    
     public function specialChars2htmlEntities($value = null) {
         if (is_string($value)) {
             $html_entities = array
-                (
+            (
                 'Á' => '&Aacute;',
                 'À' => '&Agrave;',
                 'É' => '&Eacute;',
@@ -1047,48 +1047,48 @@ $result = str_replace("\n".'<br/>','<br/>'."\n",$result);
                 'ß' => '&szlig;',
                 'æ' => '&aelig;'
             );
-
+            
             return strtr($value, $html_entities);
         }
     }
     /**
-    * aplicar utf8_encode em todos os elementos de um array com recursividade
-    *
-    * @param string[] $data
-    * @return string[]
-    */
-	public function utf8_encode_array( $data=null )
-	{
-		if( is_array($data ))
-		{
-			foreach($data as $k=>$v)
-			{
-				if( is_array( $v ) )
-				{
-					$data[$k] = $this->utf8_encode_array($v);
-				}
-				else
-				{
-					$data[$k] = utf8_encode($v);
-				}
-			}
-		}
-		return $data;
-	}
-
-  	public function decodeUtf8( $strValue=null )
-	{
-		if( is_null( $strValue ) || $strValue == '' )
-		{
-			return $strValue;
-		}
-		if( preg_match( '/\?/', utf8_decode($strValue) ) )
-		{
-			return $strValue;
-		}
-		return utf8_decode( $strValue );
-	}
-
+     * aplicar utf8_encode em todos os elementos de um array com recursividade
+     *
+     * @param string[] $data
+     * @return string[]
+     */
+    public function utf8_encode_array( $data=null )
+    {
+        if( is_array($data ))
+        {
+            foreach($data as $k=>$v)
+            {
+                if( is_array( $v ) )
+                {
+                    $data[$k] = $this->utf8_encode_array($v);
+                }
+                else
+                {
+                    $data[$k] = utf8_encode($v);
+                }
+            }
+        }
+        return $data;
+    }
+    
+    public function decodeUtf8( $strValue=null )
+    {
+        if( is_null( $strValue ) || $strValue == '' )
+        {
+            return $strValue;
+        }
+        if( preg_match( '/\?/', utf8_decode($strValue) ) )
+        {
+            return $strValue;
+        }
+        return utf8_decode( $strValue );
+    }
+    
     //--------------------------------------------------------------------------
     /**
      * DEPRECADED - change to setClass.

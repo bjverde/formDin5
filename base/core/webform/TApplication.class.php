@@ -112,8 +112,8 @@ class TApplication extends TLayout {
 		
 		// desenv: error_reporting( E_ALL | E_STRICT );
 		// error_reporting( E_ALL | E_STRICT );
-		parent::__construct ( 'app', 50, 20 ); // criar layout com norte=50px e sul=20px
-		$this->setPadding ( 0 );
+		parent::__construct( 'app', 50, 20 ); // criar layout com norte=50px e sul=20px
+		$this->setPadding( 0 );
 		// criar o layout central com area de menu 30px e o iframe central
 		$this->loCenter = new TLayout( 'loCenter', 30 );
 		$this->loCenter->setPadding( '0px' );
@@ -394,9 +394,9 @@ class TApplication extends TLayout {
 		
         $this->clearTempFiles();
 		
-		if( !$this->getLoginFile() && !$this->getMainMenuFile() && !$this->getDefaultModule() ) {
-			$_SESSION [APLICATIVO] = null;
-		}
+        if( !$this->getLoginFile() && !$this->getMainMenuFile() && !$this->getDefaultModule() ) {
+            $_SESSION [APLICATIVO] = null;
+        }
 		
 		if ( $this->getResponsiveMode() == false &&  $this->getWidth()  ) {
 			$e = new TElement ( 'div' );
