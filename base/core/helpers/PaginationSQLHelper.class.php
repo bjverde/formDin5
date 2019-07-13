@@ -39,6 +39,9 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+if(!defined('ROWS_PER_PAGE')) { define('ROWS_PER_PAGE', 20); 
+}
+
 /**
  * @codeCoverageIgnore
  * @deprecated Please change to SqlHelper
