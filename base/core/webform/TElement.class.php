@@ -129,20 +129,15 @@ class TElement
         
         //$this->setCss('font-family','Arial,Helvetica, Geneva, Sans-Serif');
         //$this->setCss('font-size','12px');
-        if ( is_null( self::$depth ) )
-        {
-            if ( $this->tagType == 'doctype' )
-            {
+        if ( is_null( self::$depth ) ) {
+            if ( $this->tagType == 'doctype' ) {
                 self::$depth = -1;
-            }
-            else
-            {
+            }else {
                 self::$depth = 0;
             }
         }
         
-        if ( is_null( self::$base ) )
-        {
+        if ( is_null( self::$base ) ) {
             $this->getBase();
         }
     }
@@ -311,6 +306,7 @@ class TElement
         
         
     }
+    
     /**
      * Adiciona conteudo dentro da tag. Pode ser um texto ou outro objeto da classe Element
      *
@@ -318,36 +314,28 @@ class TElement
      */
     public function add( $child, $boolLF = true )
     {
-        if ( is_array( $child ) )
-        {
-            foreach( $child as $v )
-            {
+        if ( is_array( $child ) ) {
+            foreach( $child as $v ) {
                 $this->add( $v, $boolLF );
             }
-        }
-        else
-        {
-            if ( $child != null )
-            {
-                if ( $boolLF === false && !is_object( $child ) )
-                {
+        } else {
+            if ( $child != null ) {
+                if ( $boolLF === false && !is_object( $child ) ) {
                     $index = ( is_array( $this->children ) ? count( $this->children ) - 1 : 0 );
                     $this->children[ $index ] .= $child;
-                }
-                else
-                {
+                } else {
                     $this->children[ ] = $child;
                 }
                 
                 // gravar o objeto pai no objeto filho
-                if ( is_object( $child ) )
-                {
+                if ( is_object( $child ) ) {
                     $child->setParentControl( $this );
                 }
                 return $child;
             }
         }
     }
+    
     /**
      * Adiciona conteudo dentro da tag antes de todos os objeto já inseridos.
      * Pode ser um texto ou outro objeto da classe Element
@@ -432,52 +420,39 @@ class TElement
                                         $v .= 'px';
                                     }
                                     // atributos que não possuem medidas
-                                    if( preg_match('/(cellspacing|cellpadding)/i', $k ) )
-                                    {
+                                    if( preg_match('/(cellspacing|cellpadding)/i', $k ) ) {
                                         $v = preg_replace('/[^0-9]/','',$v);
                                     }
-                                    if ( !is_null( $k ) && $k != '' )
-                                    {
-                                        if( is_string($v) || is_numeric($v) )
-                                        {
+                                    
+                                    if ( !is_null( $k ) && $k != '' ) {
+                                        if( is_string($v) || is_numeric($v) ) {
                                             $result .= " $k=\"$v\" ";
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             $result .= "$k=\"".gettype($v)."\" ";
                                         }
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
+                        } else {
                             $result .= " $k=\"{$v->show(false)}\"";
                         }
                     }
                 }
                 
-                if ( $this->tagType == 'option' )
-                {
+                if ( $this->tagType == 'option' ) {
                     $result .= ">";
-                }
-                else
-                {
+                } else {
                     $result .= ">\n";
                 }
             }
         }
         
-        if ( $result != '' )
-        {
-            $result = $this->getIdent() . $result;
-            
-            if ( $print )
-            {
+        if ( $result != '' ) {
+            $ident  = $this->getIdent();
+            $result = $ident.$result;
+            if ( $print ) {
                 echo $result;
-            }
-            else
-            {
+            } else {
                 return $result;
             }
         }
