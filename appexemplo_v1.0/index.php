@@ -62,6 +62,8 @@ $app->setMenuIconsPath('imagem/');
 $app->setMainMenuFile('includes/menu.php');
 //$app->setConfigFile(null);
 $app->setDefaultModule('view/fields/exe_TextField.php');
+//$app->setDefaultModule('view/fields/exe_campo_hora.php');
+//$app->setDefaultModule('view/fields/exe_NumberField.php');
 
 
 $app->run();
