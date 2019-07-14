@@ -1,9 +1,9 @@
 <?php
 /*
- * Formdin Framework
- * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
+ * FormDin 5 Framework
+ * Created by Reinaldo A. Barrêto Jr in 2019
+ * Based on the FormDin 4 of Luís Eugênio Barbosa
+ * https://github.com/bjverde/formDin5
  *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
@@ -108,7 +108,7 @@
 			$this->divBody->setCss('background-color',$this->getCss('background-color'));
 		}
 		if($this->getCss('border')=='none') {
-			$this->setCss('border','1px solid #c0c0c0');
+			$this->setClass('fwFieldBoarder');
 		}
 		if( $this->getPosition() ) {
 			$this->divBody->add('<script>window.setTimeout(\'fwSet_position("'.$this->getId().'","'.$this->getPosition().'")\',100);</script>');
@@ -135,7 +135,6 @@
 		$this->divBody->SetCss('border','none');
 		$this->divBody->SetCss('top','5px');
 		$this->divBody->SetCss('left','5px');
-		//$this->divBody->setCss('background-color', $this->getCss('background-color'));
 
 		$this->divContent->add($this->divBody);
 
@@ -144,7 +143,6 @@
 		$divlb->clearCss();
 		$divlb->setCss('background-color','transparent');
 		$divlb->setClass('lb');
-		//$divlb->setCss('background-color','transparent');
 
 		$divrb = new TElement('div');
 		$divrb->clearCss();
