@@ -38,6 +38,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
+
 $path =  __DIR__.'/../../../core/';
 require_once $path.'../constants.php';
 require_once $path.'webform/autoload_formdin.php';
@@ -172,27 +173,6 @@ class TElementTest extends TestCase
 	    $this->assertSame($esperado, $retorno);
 	}
 	
-	public function testgetIdent_null() {
-	    $expected = null;
-	    $test = new TElement('nav');	    
-	    $result = $test->getIdent();
-	    $this->assertSame($expected, $result);
-	}
-	
-	public function testgetIdent_3_depthNull() {
-	    $expected = null;
-	    $test = new TElement('nav');
-	    $result = $test->getIdent(3);
-	    $this->assertEquals($expected, $result);
-	}
-	
-	public function testgetIdent_1_depthNull() {
-	    $expected = null;
-	    $test = new TElement('nav');
-	    $result = $test->getIdent(1);
-	    $this->assertEquals($expected, $result);
-	}
-	
 	public function testChilren() {
 	    $expected = 'If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".';
 	    $test = new TElement('p');
@@ -230,6 +210,34 @@ class TElementTest extends TestCase
 	    $test = new TElement('p');
 	    $test->add('If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".');
 	    $result = $test->show(false);
+	    $this->assertEquals( $expected , $result);
+	}
+	
+	public function testgetIdent_null() {
+	    $expected = null;
+	    $test = new TElement('nav');
+	    $result = $test->getIdent();
+	    $this->assertSame($expected, $result);
+	}
+	
+	public function testgetIdent_3_depthNull() {
+	    $expected = null;
+	    $test = new TElement('nav');
+	    $result = $test->getIdent(3);
+	    $this->assertEquals($expected, $result);
+	}
+	
+	public function testgetIdent_1_depthNull() {
+	    $expected = null;
+	    $test = new TElement('nav');
+	    $result = $test->getIdent(1);
+	    $this->assertEquals($expected, $result);
+	}
+	
+	public function testGetIdent_Zero() {
+	    $expected = null;
+	    $test = new TElement();
+	    $result = $test->getIdent(0);
 	    $this->assertEquals( $expected , $result);
 	}
 }

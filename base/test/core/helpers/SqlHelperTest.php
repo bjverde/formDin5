@@ -233,7 +233,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	/**
-	 * @expectedException InvalidArgumentException
+	 * @expectedException DomainException
 	 */
 	public function testTransformValidateString_SingleQuotes_SqlServer() {
 	    $string = "blabl'abla";
@@ -242,12 +242,82 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	/**
-	 * @expectedException InvalidArgumentException
+	 * @expectedException DomainException
 	 */
 	public function testTransformValidateString_DubleQuotes_SqlServer() {
 	    $string = 'blabl"abla';
 	    SqlHelper::setDbms(DBMS_SQLSERVER);
 	    SqlHelper::transformValidateString( $string );
+	}
+	//--------------------------------------------------------------------------------
+	public function testGetSqlTypeIn_TextNoArray() {
+	    $expected = EOL.' AND LETRAS = \'xxx\'  ';
+	    $stringWhere = null;
+	    $value = 'xxx';
+	    $arrayWhereGrid = array();
+	    $arrayWhereGrid['LETRAS'] = $value;
+	    $attribute = 'LETRAS';
+	    $result = SqlHelper::getSqlTypeIn($stringWhere, $arrayWhereGrid, $attribute, true ,$value,null,SqlHelper::SQL_TYPE_IN_TEXT);
+	    $this->assertEquals( $expected , $result);
+	}
+	public function testGetSqlTypeIn_TextArray1Element() {
+	    $expected = EOL.' AND LETRAS = \'a\'  ';
+	    $stringWhere = null;
+	    $value = array('a');
+	    $arrayWhereGrid = array();
+	    $arrayWhereGrid['X'] = 123;
+	    $arrayWhereGrid['D'] = 123;
+	    $arrayWhereGrid['LETRAS'] = $value;
+	    $attribute = 'LETRAS';
+	    $result = SqlHelper::getSqlTypeIn($stringWhere, $arrayWhereGrid, $attribute, true ,$value,null,SqlHelper::SQL_TYPE_IN_TEXT);
+	    $this->assertEquals( $expected , $result);
+	}
+	public function testGetSqlTypeIn_Text() {
+	    $expected = EOL.' AND LETRAS in (\'a\',\'b\',\'c\') ';
+	    $stringWhere = null;
+	    $value = array('a','b','c');
+	    $arrayWhereGrid = array(); 
+	    $arrayWhereGrid['X'] = 123;
+	    $arrayWhereGrid['D'] = 123;
+	    $arrayWhereGrid['LETRAS'] = $value;
+	    $attribute = 'LETRAS';
+	    $result = SqlHelper::getSqlTypeIn($stringWhere, $arrayWhereGrid, $attribute, true ,$value,null,SqlHelper::SQL_TYPE_IN_TEXT);
+	    $this->assertEquals( $expected , $result);
+	}
+	//--------------------------------------------------------------------------------
+	public function testGetSqlTypeIn_NumericNoArray() {
+	    $expected = EOL.' AND NUMEROS = 1  ';
+	    $stringWhere = null;
+	    $value = '1';
+	    $arrayWhereGrid = array();
+	    $arrayWhereGrid['NUMEROS'] = $value;
+	    $attribute = 'NUMEROS';
+	    $result = SqlHelper::getSqlTypeIn($stringWhere, $arrayWhereGrid, $attribute, true ,$value,null,SqlHelper::SQL_TYPE_IN_NUMERIC);
+	    $this->assertEquals( $expected , $result);
+	}
+	public function testGetSqlTypeIn_NumericArray1Element() {
+	    $expected = EOL.' AND NUMEROS = 1  ';
+	    $stringWhere = null;
+	    $value = array('1');
+	    $arrayWhereGrid = array();
+	    $arrayWhereGrid['X'] = 123;
+	    $arrayWhereGrid['D'] = 123;
+	    $arrayWhereGrid['NUMEROS'] = $value;
+	    $attribute = 'NUMEROS';
+	    $result = SqlHelper::getSqlTypeIn($stringWhere, $arrayWhereGrid, $attribute, true ,$value,null,SqlHelper::SQL_TYPE_IN_NUMERIC);
+	    $this->assertEquals( $expected , $result);
+	}
+	public function testGetSqlTypeIn_Numeric() {
+	    $expected = EOL.' AND NUMEROS in (1,2,3) ';
+	    $stringWhere = null;
+	    $value = array('1','2','3');
+	    $arrayWhereGrid = array();
+	    $arrayWhereGrid['X'] = 123;
+	    $arrayWhereGrid['D'] = 123;
+	    $arrayWhereGrid['NUMEROS'] = $value;
+	    $attribute = 'NUMEROS';
+	    $result = SqlHelper::getSqlTypeIn($stringWhere, $arrayWhereGrid, $attribute, true ,$value,null,SqlHelper::SQL_TYPE_IN_NUMERIC);
+	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_1Word_MySQL() {
@@ -356,7 +426,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testGetAtributeWhereGridParameters_Numeric_only() {
-	    $expected = ' AND NUM_ORD = 1200  ';
+	    $expected = EOL.' AND NUM_ORD = 1200  ';
 	    $where = null;
 	    $whereGrid = self::getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, 'NUM_ORD', SqlHelper::SQL_TYPE_NUMERIC);
@@ -364,7 +434,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testGetAtributeWhereGridParameters_Numeric_others() {
-	    $expected = ' AND 1WORD = \'blablabla\'   AND NUM_ORD = 1200  ';
+	    $expected = ' AND 1WORD = \'blablabla\'  '.EOL.' AND NUM_ORD = 1200  ';
 	    $where = ' AND 1WORD = \'blablabla\'  ';
 	    $whereGrid = self::getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, 'NUM_ORD', SqlHelper::SQL_TYPE_NUMERIC);
@@ -372,7 +442,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testGetAtributeWhereGridParameters_TextEqual_1word() {
-	    $expected = ' AND 1WORD = \'blablabla\'  ';
+	    $expected = EOL.' AND 1WORD = \'blablabla\'  ';
 	    $where = null;
 	    $whereGrid = self::getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_EQUAL);
@@ -380,7 +450,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testGetAtributeWhereGridParameters_TextEqual_5word() {
-	    $expected = ' AND 5WORD = \'aaa bbb ccc ddd eee\'  ';
+	    $expected = EOL.' AND 5WORD = \'aaa bbb ccc ddd eee\'  ';
 	    $where = null;
 	    $whereGrid = self::getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_EQUAL);
@@ -388,7 +458,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testGetAtributeWhereGridParameters_TextLike_1word() {
-	    $expected = ' AND 1WORD like \'%blablabla%\' ';
+	    $expected = EOL.' AND 1WORD like \'%blablabla%\' ';
 	    $where = null;
 	    $whereGrid = self::getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
@@ -396,7 +466,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testGetAtributeWhereGridParameters_TextLike_5word() {
-	    $expected = ' AND 5WORD like \'%aaa%bbb%ccc%ddd%eee%\' ';
+	    $expected = EOL.' AND 5WORD like \'%aaa%bbb%ccc%ddd%eee%\' ';
 	    $where = null;
 	    $whereGrid = self::getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
