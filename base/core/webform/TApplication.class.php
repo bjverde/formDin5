@@ -131,7 +131,7 @@ class TApplication extends TLayout {
 		$this->setResponsiveMode( true );
 		
 		// arquivo css padrão localizado na base base/css
-		//$this->addCssFile ( 'css/app.css' );
+		$this->addCssFile ( 'css/app.css' );
 		$this->setBackgroundImage ( $this->getBase().'/css/imagens/app/bg_listrado.jpg' );
 		
 		// biblioteca de funções geral
@@ -513,7 +513,8 @@ class TApplication extends TLayout {
 		$this->addJavascript ( "background_position='" . $this->getBackgroundPosition () . "';" );
 		
 		$this->addJsCssFile ( 'js/app.js' );
-		$this->addJsCssFile ( $this->getCssFile () );
+		$this->addJsCssFile ( 'css/FormDin4.css' );
+		$this->addJsCssFile ( $this->getCssFile() );
 		
 		if (! $this->getShowMenu ()) {
 			$this->addJavascript ( 'showMenu = false;' );
