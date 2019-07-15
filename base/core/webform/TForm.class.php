@@ -3939,7 +3939,7 @@ class TForm Extends TBox
      * @return NULL|string
      */
     protected function getPathJsCssFiles($file)
-    {
+    {       
         $fileType = false;
         $result = array();
         $result['type'] = null;
@@ -3977,14 +3977,6 @@ class TForm Extends TBox
             $file = $fileName;
         }
         
-        if ( $fileType == true && file_exists($file) ){
-            $result['type'] = $tipo;
-            $result['path'] = $file;   
-        } else {
-            $log = 'formDin: '.FORMDIN_VERSION.' failed to load file:'.$file;
-            error_log($log);
-        }
-        
         if ( $fileType == false ){
             $result['type'] = $tipo;
             $result['path'] = $file;
@@ -3996,7 +3988,7 @@ class TForm Extends TBox
                 $log = 'formDin: '.FORMDIN_VERSION.' failed to load file:'.$file;
                 error_log($log);
             }
-        }        
+        }
         return $result;
     }
 
@@ -4011,17 +4003,13 @@ class TForm Extends TBox
          $this->getCssFileFormDefault();
          $arrTemp = array_merge( $this->jsFiles, $this->cssFiles );
          if( is_array( $arrTemp ) ) {
-             foreach( $arrTemp as $file ) {
-                 
+             foreach( $arrTemp as $file ) {                 
                  $fileinfo = $this->getPathJsCssFiles($file);
-
-                if( $isUrl || file_exists( $fileName ) ) {
-                    if( $tipo == 'js' ) {
-                        $this->add( '<script type="text/javascript" src="' . $fileName . '"></script>' );
-                    } else if( $tipo == 'css' ) {
-                        $this->add( '<link rel="stylesheet" type="text/css" href="' . $fileName . '" />' );
-                    }
-                }
+                 if( $fileinfo['type'] == 'js' ) {
+                     $this->add( '<script type="text/javascript" src="' . $fileinfo['path'] . '"></script>' );
+                 } else if( $fileinfo['type'] == 'css' ) {
+                     $this->add( '<link rel="stylesheet" type="text/css" href="' . $fileinfo['path'] . '" />' );
+                 }
              }
              // evitar que a classe JQuery entre em confilto com outras classes
              $this->add( '<script>jQuery.noConflict();</script>' );
