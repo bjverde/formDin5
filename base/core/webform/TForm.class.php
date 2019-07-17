@@ -3993,7 +3993,7 @@ class TForm Extends TBox
          $this->getCssFileFormDefault();
          $arrTemp = array_merge( $this->jsFiles, $this->cssFiles );
          if( is_array( $arrTemp ) ) {
-             foreach( $arrTemp as $file ) {                 
+             foreach( $arrTemp as $file ) {
                  $fileinfo = $this->getPathJsCssFiles($file);
                  if( $fileinfo['type'] == 'js' ) {
                      $this->add( '<script type="text/javascript" src="' . $fileinfo['path'] . '"></script>' );
