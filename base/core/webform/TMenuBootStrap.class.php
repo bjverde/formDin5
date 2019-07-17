@@ -39,6 +39,11 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+
+/**
+ * Create Menu Type BootStrap https://getbootstrap.com/
+ * @author bjverde
+ */
 class TMenuBootStrap {
 
     private $navBarId;
