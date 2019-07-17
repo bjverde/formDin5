@@ -117,9 +117,9 @@ class TApplication extends TLayout {
 		// criar o layout central com area de menu 30px e o iframe central
 		$this->loCenter = new TLayout( 'loCenter', 30 );
 		$this->loCenter->setPadding( '0px' );
-		$this->loCenter->getCenterArea()->setTagType( 'iframe' );
-		$this->loCenter->getCenterArea()->setId( 'app_iframe' );
 		$this->loCenter->getNorthArea()->setId( 'div_main_menu' );
+		$this->loCenter->getCenterArea()->setTagType( 'iframe' );
+		$this->loCenter->getCenterArea()->setId( 'app_iframe' );		
 		$this->loCenter->setNorthInitClosed( false );
 		$this->addLayout( $this->loCenter, 'C' );
 		
@@ -1341,13 +1341,18 @@ class TApplication extends TLayout {
 	}
 	
 	private function buildMainMenu() {
-        $menuFile = $this->getMainMenuFile();
-
-        //Inicio da Geração do Menu BootStrap
-        $menu =  new TMenuBootStrap();
-        $menu->setMenuIconsPath( $this->getMenuIconsPath() );
-        $menuBootStrap = $menu->getMenuBootStrap($menuFile);
-        $this->getCenterArea()->add( $menuBootStrap );
+	    if( $this->getShowMenu() ) {
+            $menuFile = $this->getMainMenuFile();
+    
+            //Inicio da Geração do Menu BootStrap
+            $menu =  new TMenuBootStrap();
+            $menu->setMenuIconsPath( $this->getMenuIconsPath() );
+            $menuBootStrap = $menu->getMenuBootStrap($menuFile);
+            //Seta Menu na Div Main Menu
+            $centerArea = $this->getLoCenter();
+            $NorthAreaInCenter = $centerArea->getNorthArea();
+            $NorthAreaInCenter->add( $menuBootStrap );
+	    }
         /*
         if( $this->getShowMenu() ) {
             if( $this->getMainMenuFile() ){
@@ -1381,7 +1386,7 @@ class TApplication extends TLayout {
 	        $app_hearder->add( $app_header_login );
 	    }
 	    
-	    $this->getNorthArea ()->add ( $app_hearder );
+	    $this->getNorthArea()->add ( $app_hearder );
 	}
 	
 	/**
