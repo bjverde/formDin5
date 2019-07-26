@@ -1,5 +1,5 @@
 /*
- * jQuery Tooltip plugin 1.3
+ * jQuery Tooltip plugin 1.3.1
  *
  * http://bassistance.de/jquery-plugins/jquery-plugin-tooltip/
  * http://docs.jquery.com/Plugins/Tooltip
@@ -7,6 +7,7 @@
  * Copyright (c) 2006 - 2008 Jörn Zaefferer
  *
  * $Id: jquery.tooltip.js,v 1.1 2010/01/12 16:40:39 LUIS_EUGENIO_BARBOSA Exp $
+ * browser: jquery.tooltip.js,v 1.2 2019/07/26 16:40:39 Reinaldo A. Barrêto Jr Exp $
  * 
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -14,6 +15,13 @@
  */
  
 ;(function($) {
+	
+    var browser = {
+            mozilla : /firefox/.test(navigator.userAgent.toLowerCase()),
+            webkit : /webkit/.test(navigator.userAgent.toLowerCase()),
+            opera : /opera/.test(navigator.userAgent.toLowerCase()),
+            msie : /msie/.test(navigator.userAgent.toLowerCase()),
+        }	
 	
 		// the tooltip element
 	var helper = {},
@@ -24,9 +32,11 @@
 		// timeout id for delayed tooltips
 		tID,
 		// IE 5.5 or 6
-		IE = $.browser.msie && /MSIE\s(5\.5|6\.)/.test(navigator.userAgent),
+		IE = browser.msie && /MSIE\s(5\.5|6\.)/.test(navigator.userAgent),
 		// flag for mouse tracking
 		track = false;
+	
+	
 	
 	$.tooltip = {
 		blocked: false,
