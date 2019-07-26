@@ -214,12 +214,13 @@ class TForm Extends TBox
             $this->pdfs = null;
             $this->disableF5(); // não permitir atualizar a página com F5
             $this->setFade( 150 ); // habilitar o efeito fade-in para exibir o formulario
+                        
+            $this->addJsFile($this->getBase().'lib/jquery/jquery.min.js' );
+            
             $this->addJsFile( 'ajax.js' );
             $this->addJsFile( 'FormDin4.js' );
             $this->addJsFile( 'FormDin4Ajax.js' );
             
-            
-            $this->addJsFile($this->getBase().'lib/jquery/jquery.min.js' );
             //Font Awesome Icons
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-brands.min.css' );
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-regular.min.css' );
