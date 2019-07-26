@@ -1,8 +1,6 @@
 /*
  * jQuery Tooltip plugin 1.3.1
- *
- * http://bassistance.de/jquery-plugins/jquery-plugin-tooltip/
- * http://docs.jquery.com/Plugins/Tooltip
+ * https://github.com/bjverde/jquery-tooltip
  *
  * Copyright (c) 2006 - 2008 Jörn Zaefferer
  *
