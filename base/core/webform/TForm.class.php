@@ -3976,8 +3976,8 @@ class TForm Extends TBox
                 $result['type'] = $tipo;
                 $result['path'] = $file;
             } else {
-                $log = 'formDin: '.FORMDIN_VERSION.' failed to load file:'.$file;
-                error_log($log);
+                $message = ' failed to load file:'.$file;
+                MessageHelper::logRecordSimple($message);
             }
         }
         return $result;
