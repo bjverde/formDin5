@@ -1343,10 +1343,18 @@ class TApplication extends TLayout {
 	private function buildMainMenu() {
 	    if( $this->getShowMenu() ) {
             $menuFile = $this->getMainMenuFile();
+            $menuIconsPath = $this->getMenuIconsPath();
     
             //Inicio da Geração do Menu BootStrap
             $menu =  new TMenuBootStrap();
-            $menu->setMenuIconsPath( $this->getMenuIconsPath() );
+            if( !empty($menuIconsPath) ){
+                $menu->setMenuIconsPath( $menuIconsPath );
+            }else{
+                $basePath = $this->getBase();
+                $menuIconsPath = $basePath.'imagens/';
+                $menu->setMenuIconsPath( $menuIconsPath );
+            }
+            
             $menuBootStrap = $menu->getMenuBootStrap($menuFile);
             //Seta Menu na Div Main Menu
             $centerArea = $this->getLoCenter();
