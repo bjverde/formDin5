@@ -1347,14 +1347,7 @@ class TApplication extends TLayout {
     
             //Inicio da Geração do Menu BootStrap
             $menu =  new TMenuBootStrap();
-            if( !empty($menuIconsPath) ){
-                $menu->setMenuIconsPath( $menuIconsPath );
-            }else{
-                $basePath = $this->getBase();
-                $menuIconsPath = $basePath.'imagens/';
-                $menu->setMenuIconsPath( $menuIconsPath );
-            }
-            
+            $menu->setMenuIconsPath( $menuIconsPath );
             $menuBootStrap = $menu->getMenuBootStrap($menuFile);
             //Seta Menu na Div Main Menu
             $centerArea = $this->getLoCenter();
@@ -1465,12 +1458,13 @@ class TApplication extends TLayout {
 	public function setMenuIconsPath($strNewValue = null) {
 		$this->menuIconsPath = $strNewValue;
 	}
-	public function getMenuIconsPath() {
-		// if ( isset( $this->menuIconsPath ) && file_exists( $this->menuIconsPath ) )
-		{
-			return $this->menuIconsPath;
-		}
-		return '';
+	public function getMenuIconsPath() {	    
+	    $menuIconsPath = $this->menuIconsPath;
+	    if( empty($menuIconsPath) ){
+	        $basePath = $this->getBase();
+	        $menuIconsPath = $basePath.'imagens/';
+	    }
+	    return $menuIconsPath;
 	}
 	
 	public function setMenuTheme($strNewValue = 'standard | aqua_dark | aqua_sky | aqua_orange | clear_blue | clear_green | dhx_black | dhx_blue | glassy_blue | modern_black | modern_blue | modern_red | clear_silver') {
