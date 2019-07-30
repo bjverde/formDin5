@@ -227,7 +227,7 @@ class TForm Extends TBox
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-solid.min.css' );
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fontawesome.min.css' );
             
-            $this->addJsFile( 'jquery/jlayout/jquery.jlayout-1.3.js');
+            $this->addJsFile( 'jquery/jlayout/jquery.jlayout.js');
             $this->addJsFile( 'jquery/jquery-ui-all.js');
             $this->addJsFile( 'jquery/jAlert/jquery.alerts.js' );
             $this->addCssFile('jquery/jAlert/jquery.alerts.css' );
