@@ -590,6 +590,7 @@ class TElement
                     $result .= $child->show( false );
                     self::$depth--;
                 } else {
+                    $preg = preg_match('/^\/\//',ltrim( $child ) );
                     // o texto do campo textarea e option não ser identado senão aparece na tela
                     if ( $this->tagType != 'textarea' && $this->tagType != 'option' ) {
                         // linha de comentario

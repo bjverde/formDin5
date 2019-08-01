@@ -184,6 +184,13 @@ class TLayout extends THtmlPage {
 	$this->addJsFile( 'lib/bootstrap/js/bootstrap.min.js' );
 	$this->addJsFile( 'js/menu_multilevel_bootstrap.js' );
 	
+	$this->addJsFile('jquery/jlayout/jquery.jlayout.js');
+	$this->addJsFile('jquery/jquery-ui-all.js');
+	$this->addJsFile( 'jquery/blockui/jquery.blockUI.js' );
+	$this->addJsFile( 'jquery/jAlert/jquery.alerts.js' );
+	$this->addCssFile( 'jquery/jAlert/jquery.alerts.css' );
+	$this->addCssFile( 'jquery/ui/base/base.css' );
+	$this->addJsFile( 'lazyload/lazyload-min.js' );
 	$this->setId(is_null($strId) ? $this->getRandomChars(5) : $strId );
 	$this->parent = null;
 	//$this->setId('myLayout');

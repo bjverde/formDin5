@@ -54,7 +54,8 @@ class TEdit extends TControl
 		$this->setMaxLenght($intMaxLength);
 		$this->setSize($intSize);
 		$this->setRequired($boolRequired);
-		$this->setClass('fwFieldBoarder');
+		$this->setCss('border','1px solid #c0c0c0');
+		//$this->setClass('fwFieldBoarder');
 		$this->setCss('cursor','pointer');
 		$this->setCss('font-family',"Arial");
 		//$this->setCss('font-size',"13px");
@@ -166,11 +167,13 @@ class TEdit extends TControl
 	*/
 	public function validate()
 	{
-		$this->setClass('fwFieldBoarder');
+	    $this->setCss('border','1px solid #c0c0c0');
+	    //$this->setClass('fwFieldBoarder');
 		//$this->setError(null);
 		if($this->getRequired() && (string)$this->getValue()=="")
 		{
-			$this->setClass('fwFieldRequiredBoarder');
+		    $this->setCss('border','1px solid #ff0000'); //#176 relacionado com FormDin4.js
+			//$this->setClass('fwFieldRequiredBoarder');
 			$this->setError('Campo obrigatório.');
 		}
 		// validar o tamanho
@@ -185,7 +188,8 @@ class TEdit extends TControl
 				}
 				if( (int)$this->getMaxLenght() < strlen( $value ) )
 				{
-				    $this->setClass('fwFieldRequiredBoarder');
+				    $this->setCss('border','1px solid #ff0000'); //#176 relacionado com FormDin4.js
+				    //$this->setClass('fwFieldRequiredBoarder');
 					$this->setError('máximo '.$this->getMaxLenght().' caracteres.');
 				}
 			}

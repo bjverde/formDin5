@@ -3976,7 +3976,7 @@ class TForm Extends TBox
                 $result['type'] = $tipo;
                 $result['path'] = $file;
             } else {
-                $message = ' failed to load file:'.$file;
+                $message = __CLASS__.' failed to load file:'.$file;
                 MessageHelper::logRecordSimple($message);
             }
         }
@@ -7204,47 +7204,59 @@ class TForm Extends TBox
     }
            
     /**
-    * Campo para criação de hiperlink no formulário
-    *
-    * @param string $strName           - 1: id do campo
-    * @param string $strLabel          - 2: Rotulo do campo que irá aparece na tela
-    * @param string $strValue
-    * @param string $strOnClick
-    * @param string $strUrl
-    * @param string $strTarget
-    * @param boolean $boolNewLine
-    * @param boolean $boolLabelAbove
-    * @param boolean $boolNoWrapLabel
-    * @param string $strHint
-    * @return TLink
-    */
+     * Campo para criação de hiperlink no formulário
+     *
+     * @param string $strName           - 1: id do campo
+     * @param string $strLabel          - 2: Rotulo do campo que irá aparece na tela
+     * @param string $strValue          - 3: Valor
+     * @param string $strOnClick        - 4: Nome metodo JavScript
+     * @param string $strUrl            - 5: Url destinos
+     * @param string $strTarget
+     * @param boolean $boolNewLine
+     * @param boolean $boolLabelAbove
+     * @param boolean $boolNoWrapLabel
+     * @param string $strHint
+     * @return TLink
+     */
     public function addLinkField( $strName, $strLabel=null, $strValue=null, $strOnClick=null, $strUrl=null, $strTarget=null, $boolNewLine=null, $boolLabelAbove=null, $boolNoWrapLabel=null, $strHint=null )
     {
-       $field = new TLink( $strName, $strValue, $strOnClick, $strUrl, $strTarget, $strHint );
-       $this->addDisplayControl( new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel ) );
-       return $field;
+        $field = new TLink( $strName, $strValue, $strOnClick, $strUrl, $strTarget, $strHint );
+        $displayControl = new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel );
+        $this->addDisplayControl( $displayControl );
+        return $field;
     }
            
     /**
-    * Método para criar campo de edição de horas
-    *
-    * @param string  $strName             - 1: id do campo
-    * @param string  $strLabel            - 2: Rotulo do campo que irá aparece na tela
-    * @param boolean $boolRequired
-    * @param string  $strMinValue
-    * @param string  $strMaxValue
-    * @param string  $strMask        6: HM, HMS
-    * @param boolean $boolNewLine  7: 
-    * @param string  $strValue
-    * @param boolean $boolLabelAbove
-    * @param boolean $boolNoWrapLabel
-    * @return TTime
-    */
-    public function addTimeField( $strName, $strLabel=null, $boolRequired=null, $strMinValue=null, $strMaxValue=null, $strMask=null, $boolNewLine=null, $strValue=null, $boolLabelAbove=null, $boolNoWrapLabel=null )
+     * Método para criar campo de edição de horas
+     *
+     * @param string  $strName             - 1: id do campo
+     * @param string  $strLabel            - 2: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired        - 3: True = Obrigatorio; False (Defalt) = Não Obrigatorio
+     * @param string  $strMinValue         - 4: Menor Valor
+     * @param string  $strMaxValue         - 5: Maior valor
+     * @param string  $strMask             - 6: HM, HMS
+     * @param boolean $boolNewLine         - 7: Em nova linha. DEFAULT = true
+     * @param string  $strValue            - 8:
+     * @param boolean $boolLabelAbove
+     * @param boolean $boolNoWrapLabel
+     * @return TTime
+     */
+    public function addTimeField( $strName
+                                , $strLabel=null
+                            , $boolRequired=null, $strMinValue=null
+                            , $strMaxValue=null, $strMask=null, $boolNewLine=null
+                            , $strValue=null, $boolLabelAbove=null
+                            , $boolNoWrapLabel=null )
     {
-       $field = new TTime( $strName, $boolRequired, $strValue, $strMinValue, $strMaxValue, $strMask );
-       $this->addDisplayControl( new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel ) );
-       return $field;
+        $field = new TTime( $strName
+                          , $boolRequired
+                          , $strValue
+                          , $strMinValue
+                          , $strMaxValue
+                          , $strMask );
+        $control = new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel );
+        $this->addDisplayControl( $control );
+        return $field;
     }
            
     /**
