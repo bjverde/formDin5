@@ -328,7 +328,7 @@ $.fn.layout = function (opts) {
 		,	slideDelay_open:		300			// applies only for mouseenter event - 0 = instant open
 		,	slideDelay_close:		300			// applies only for mouseleave event (300ms is the minimum!)
 		,	hideTogglerOnSlide:		false		// when pane is slid-open, should the toggler show?
-		,	preventQuickSlideClose:	!!($.browser.webkit || $.browser.safari) // Chrome triggers slideClosed as is opening
+		,	preventQuickSlideClose:	!!(browser.webkit || browser.safari) // Chrome triggers slideClosed as is opening
 		,	preventPrematureSlideClose: false
 		//	HOT-KEYS & MISC
 		,	showOverflowOnHover:	false		// will bind allowOverflow() utility to pane.onMouseOver
@@ -1294,14 +1294,14 @@ $.fn.layout = function (opts) {
 		if (o.useStateCookie && o.cookie.autoLoad)
 			loadCookie(); // Update options from state-cookie
 
-		// set environment - can update code here if $.browser is phased out
+		// set environment - can update code here if browser is phased out
 		state.browser = {
-			mozilla:	$.browser.mozilla
-		,	webkit:		$.browser.webkit || $.browser.safari
-		,	msie:		$.browser.msie
-		,	isIE6:		$.browser.msie && $.browser.version == 6
+			mozilla:	browser.mozilla
+		,	webkit:		browser.webkit || browser.safari
+		,	msie:		browser.msie
+		,	isIE6:		browser.msie && browser.version == 6
 		,	boxModel:	$.support.boxModel
-		//,	version:	$.browser.version - not used
+		//,	version:	browser.version - not used
 		};
 
 		// initialize all layout elements
