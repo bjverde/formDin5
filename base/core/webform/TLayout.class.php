@@ -184,7 +184,7 @@ class TLayout extends THtmlPage {
 	$this->addJsFile( 'lib/bootstrap/js/bootstrap.min.js' );
 	$this->addJsFile( 'js/menu_multilevel_bootstrap.js' );
 	
-	$this->addJsFile('jquery/jlayout/jquery.jlayout.js');
+	$this->addJsFile('jquery/jlayout/jquery.jlayout.min.js');
 	$this->addJsFile('jquery/jquery-ui-all.js');
 	$this->addJsFile( 'jquery/blockui/jquery.blockUI.js' );
 	$this->addJsFile( 'jquery/jAlert/jquery.alerts.js' );
