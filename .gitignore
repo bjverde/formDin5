@@ -5,6 +5,8 @@
 # VsCode files
 .vscode/
 
+sysinfra
+
 # Eclipse files
 /.settings/
 /.vscode/
