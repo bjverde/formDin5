@@ -3,6 +3,7 @@
  * jquery.layout 1.7.2
  * $Date: 2018-04-14 08:00:00 $
  * $Rev: 1.0.7.2 $
+ * https://github.com/GedMarc/layout/tree/master/source/stable
  *
  * Copyright (c) 2014 Kevin Dalman (http://jquery-dev.com)
  * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
