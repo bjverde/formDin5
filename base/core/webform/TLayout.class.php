@@ -287,8 +287,8 @@ class TLayout extends THtmlPage {
 		    $container->add($this->getWestArea());
 		    $this->addInBody($container);
 		} else {
-		    $this->addInBody($this->getNorthArea());
-		    $this->addInBody($this->centerArea);    //FormDin5 #22
+		    $this->addInBody($this->centerArea);
+		    $this->addInBody($this->getNorthArea()); //Menu over form
 		    $this->addInBody($this->getSouthArea());
 		    $this->addInBody($this->getEastArea());
 		    $this->addInBody($this->getWestArea());
