@@ -38,3 +38,8 @@ header{
     width: 16px;
     height: 16px;
 }
+
+.table-hover tbody tr:hover td {
+    /* background-color: rgb(255, 255, 5); */
+    background: #D0D0D0 url(../base/imagens/fwSmallDarkGradient.png) left center repeat-x !important;
+}
