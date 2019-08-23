@@ -596,3 +596,46 @@ input:focus ,textarea:focus, select:focus {
 .fwGridCellAction:hover{
 	 background: #D0D0D0 url(../imagens/fwSmallDarkGradient.png) left center repeat-x !important;
 }
+
+.th-mobile{
+    display: none;
+}
+
+@media (max-width: 575.98px) { 
+
+    
+     table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    
+    table tr {
+      display: block;
+    }
+    
+    table td {
+      display: block;
+    }
+
+    .th-mobile {
+        display: inline-block;
+        font-weight: bold
+    }
+    
+    .fwHeaderBar{
+        display: none;    
+    }
+    
+    .fwGridRow {
+        font-family: Arial,Helvetica, Geneva, Sans-Serif;
+        font-size: unset;
+        height: unset;
+    }
+
+}
