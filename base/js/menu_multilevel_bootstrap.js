@@ -67,3 +67,14 @@ jQuery(document).ready(function () {
     });
 
 });
+
+function showItemMenu(e){
+    url=e.dataset.url;
+    jQuery('#app_footer_company').text(url);
+}
+
+function changeItemMenu(e){
+    url=e.dataset.url;
+    jQuery('#app_footer_module').text(url);
+    jQuery("#modulo").attr("src", url);
+}
