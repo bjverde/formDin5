@@ -8,7 +8,7 @@
     <link rel="icon" href="../aa_libs/bootstrap/favicon.ico">
 	<title>Exemplo Multi Nivel</title>
 
-<link rel="stylesheet" type="text/css" id="bootstrap-css" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" id="bootstrap-css" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <script type="text/javascript" src="../base/js/menu_multilevel_bootstrap.js"></script>
 
 </head>
@@ -25,8 +25,6 @@
 
 						<li class="nav-item dropdown">
 							<a id="200" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								
-								
 								Layouts
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="200">
@@ -82,15 +80,13 @@
 										</li>
 										<li class="dropdown-item">
 											<a id="200204">
-												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
-												
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">												
 												Customizado grid com Font Awesome
 											</a>
 										</li>
 										<li class="dropdown-item">
 											<a id="200205">
-												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">
-												
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">												
 												Customizado grid forma antiga
 											</a>
 										</li>
@@ -109,16 +105,105 @@
 							</ul>
 						</li>
 
+
+						<li class="nav-item dropdown">
+							<a id="200" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Layouts 3 niveis
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="200">
+								<li class="dropdown-item dropdown">
+									<a id="20010" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Layout Menu Principal
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="20010">
+										<li class="dropdown-item">
+											<a id="200101">
+												Layout index
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200102">
+												Temas do Menu
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200103">
+												Esqueleto do Layout
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item dropdown">
+									<a id="20020" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">Customizado com CSS
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="20020">
+										<li class="dropdown-item">
+											<a id="200201">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">Customizado com CSS
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200202">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">Form Buttuns Customizado com CSS
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200203">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">Customizado grid com CSS - 01
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200204">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">Customizado grid com Font Awesome
+											</a>
+										</li>
+										<li class="dropdown-item">
+											<a id="200205">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">Customizado grid forma antiga
+											</a>
+										</li>
+										<li class="dropdown-item dropdown">
+											<a id="200206" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<img class="menuIcon" src="imagem/../../base/imagens/table16.gif">Inicio nivel 3
+											</a>
+											<ul class="dropdown-menu" aria-labelledby="200206">
+												<li class="dropdown-item">
+													<a id="2002061" data-url="https://www.youtube.com/">3.1</a>
+												</li>
+												<li class="dropdown-item">
+													<a id="2002062" data-url="https://www.bb.com/">3.2</a>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-item">
+									<a id="20021">
+										Definir Colunas no Formulário
+									</a>
+								</li>
+								<li class="dropdown-item">
+									<a id="20022">
+										Imagem de Fundo
+									</a>
+								</li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</nav>
 
-<main role="main" class="container">
-    <div class="jumbotron text-center">
-        <h1>Bootstrap 4 NavBar</h1>
-        <p class="lead text-info">NavBar with too many childs.</p>
-    </div>
-</main>
+	<main role="main" class="container">
+		<div class="jumbotron text-center">
+			<h1>Bootstrap 4 NavBar</h1>
+			<p class="lead text-info">NavBar with too many childs.</p>
+		</div>
+	</main>
+
+	<div class="container">
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/owsfdh4gxyc" frameborder="0" allowfullscreen></iframe>
+	</div>
 
 	<!-- ================================================== -->
 	<!-- Bootstrap core JavaScript -->
@@ -129,5 +214,18 @@
     <script src="../base/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../base/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../base/js/menu_multilevel_bootstrap.js"></script>
+
+	<script type="text/javascript">        
+		function mudaTexto(e){
+		  id = e.id;
+		  var text = $('#'+id).text();
+		  var compararTexto = 'Exibir Texto';
+		  if(text == compararTexto){
+			  $('#'+id).text('Ocultar Texto');
+		  }else{
+			  $('#'+id).text('Exibir Texto');
+		  };
+		}	  
+  	</script>
 </body>
 </html>
