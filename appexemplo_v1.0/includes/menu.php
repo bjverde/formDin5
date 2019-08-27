@@ -116,26 +116,31 @@ $menu->add('2', null, 'Containers');
         $menu->add('234', '23', 'Aba4', 'view/containers/exe_aba_4.php');
         $menu->add('235', '23', 'Aba5', 'view/containers/exe_aba05_pagacontrol.php');
     $menu->add('24', '2', 'TreeView', null, null, '../../base/imagens/folder-39-128.png');
-        $menu->add('241', '24', 'Dentro do Formulário', 'tree/exe_tree_view_1.php');
+        $menu->add('241', '24', 'Dentro do Formulário', 'tree/exe_tree_view_1.php', null, '../../base/imagens/folder-bw.png');
         $menu->add('242', '24', 'Fora do Formulário', 'tree/exe_tree_view_2.php', null, '../../base/imagens/folder-bw.png');
-        $menu->add('243', '24', 'User Data - Array', 'tree/exe_tree_view_3.php');
+        $menu->add('243', '24', 'User Data - Array', 'tree/exe_tree_view_3.php', null, '../../base/imagens/folder-bw.png');
         $menu->add('244', '24', 'Uf x Municípios', 'tree/exe_tree_view_4.php');
         $menu->add('245', '24', 'Uf x Municípios com SetXmlFile()', 'tree/exe_tree_view_5.php');
+        $menu->add('246', '24', 'TreeView with CheckBox (ERRO)', 'tree/exe_tree_view_6_check.php');
+        $menu->add('247', '24', 'TreeView with Drag and Drop (ERRO)', 'tree/exe_tree_view_7_drag.php');
 
 //-----------------------------------------------------------------------------
 $menu->add('4', null, 'Mensagens e Ajuda', null, null, '../../base/imagens/feedback-512.png');
     $menu->add('40', '4', 'Hints / Tooltips', 'exe_hint.php');
     $menu->add('41', '4', 'Mensagens');
-        $menu->add('411', '41', 'Exemplo 1', 'view/messages/exe_mensagem.php');
-        $menu->add('412', '41', 'Caixa de Confirmação', 'view/messages/exe_confirmDialog.php');
-        $menu->add('413', '41', 'Caixa de Confirmação 2', 'view/messages/exe_confirm_dialog.php');
+        $menu->add('411', '41', 'Mensagens JS', 'view/messages/exe_mensagem.php');
+        $menu->add('412', '41', 'Mensagens PHP', 'view/messages/exe_mensagemv2.php');
+        $menu->add('413', '41', 'Caixa de Confirmação', 'view/messages/exe_confirmDialog.php');
+        $menu->add('414', '41', 'Caixa de Confirmação 2', 'view/messages/exe_confirm_dialog.php');
+        $menu->add('415', '41', 'Caixa de Confirmação 3', 'view/messages/exe_confirm_dialogv3.php');
     $menu->add('42', '4', 'Ajuda');
         $menu->add('421', '42', 'Ajuda com arquivo HTML', 'exe_campo_ajuda.php', 'Com um arquivo HTML separado', '../../base/imagens/icon_help.png');
         $menu->add('422', '42', 'Ajuda On-line (sqlite)', 'exe_documentacao_online.php', 'Confe??o do texto de ajuda gravando no banco de dados sqlite');
         $menu->add('423', '42', 'Ajuda On-line (sqlite) - ERRO', 'exe_help_online_1.php');
 
 //-----------------------------------------------------------------------------
-$menu->add('5', null, 'Ajax');
+$menu->add('5', null, 'JavaScript', null, null, '../../base/imagens/logo_js_flat.png');
+	$menu->add('50', '5', 'JavaScript Leia-me', 'jscrip/exe_js_texto.php', null, '../../base/imagens/logo_js_flat.png');
     $menu->add('51', '5', 'Exemplo 1', 'ajax/exe_ajax01.php');
     $menu->add('52', '5', 'Atualizar Campos', 'ajax/exe_ajax02.php');
     $menu->add('53', '5', 'Ajax com Semáforo', 'ajax/exe_ajax03_semaphore.php');
@@ -150,6 +155,7 @@ $menu->add('6', null, 'PDF', null, null, '../../base/imagens/adobe-acrobat-pdf-f
     $menu->add('63', '6', 'Exemplo 3, com passagem de parametros via Json', 'pdf/exe_pdf03.php');
     $menu->add('64', '6', 'Exemplo 4', 'pdf/exe_pdf04.php');
     $menu->add('65', '6', 'Exemplo 5 - PDF diversos grids', 'pdf/exe_pdf05.php');
+    $menu->add('66', '6', 'Exemplo 6 - Grid chamando PDF', 'pdf/exe_pdf06_grid.php');
 
 //-----------------------------------------------------------------------------
 $menu->add('8', null, 'Gride', null, null, '../../base/imagens/table16.gif');
@@ -164,14 +170,16 @@ $menu->add('8', null, 'Gride', null, null, '../../base/imagens/table16.gif');
         $menu->add('81.2', '81', 'Gride Campos 02 - RadioButun', 'grid/exe_gride_field02.php');
         $menu->add('81.3', '81', 'Gride Campos 03 - Select', 'grid/exe_gride_field03.php');
         $menu->add('81.4', '81', 'Gride Campos 04 - Memo', 'grid/exe_gride_field04_memo.php');
-        $menu->add('81.5', '81', 'Gride 01 - botões sobre grid', 'grid/exe_gride01.php');
-        $menu->add('81.6', '81', 'Gride 06 - Campos 1', 'grid/exe_gride06.php');
-        $menu->add('81.7', '81', 'Gride 07 - Campos 2', 'grid/exe_gride07.php');
-        $menu->add('81.8', '81', 'Gride 08 - Campos 3', 'grid/exe_gride08.php');
+        $menu->add('81.5', '81', 'Gride Campos 05 - Oculto', 'grid/exe_gride_field05_hidden.php');
+        $menu->add('81.6', '81', 'Gride 01 - botões sobre grid', 'grid/exe_gride01.php');
+        $menu->add('81.7', '81', 'Gride 06 - Campos 1', 'grid/exe_gride06.php');
+        $menu->add('81.8', '81', 'Gride 07 - Campos 2', 'grid/exe_gride07.php');
+        $menu->add('81.9', '81', 'Gride 08 - Campos 3', 'grid/exe_gride08.php');
     $menu->add('82', '8', 'Grides Draw - desenhando Dinamicamente', null, null, '../../base/imagens/table16.gif');
         $menu->add('82.1', '82', 'Gride Draw 01 - Desativando order', 'grid/exe_gride_draw_01.php');
         $menu->add('82.2', '82', 'Gride Draw 02 - Mudando a cor da linha', 'grid/exe_gride_draw_02.php');
-        $menu->add('82.3', '82', 'Gride Draw 03 - Desativando Botões', 'grid/exe_gride_draw_03.php');
+        $menu->add('82.3', '82', 'Gride Draw 03 - Desativando Botões v1', 'grid/exe_gride_draw_03.php');
+        $menu->add('82.4', '82', 'Gride Draw 04 - Desativando Botões v2', 'grid/exe_gride_draw_04.php');
         
     $menu->add('83', '8', 'Exempos Grides problemas', null, null, '../../base/imagens/table16.gif');
         $menu->add('83.1', '83', 'Gride 10 - erro', 'grid/exe_gride10.php');
@@ -196,6 +204,12 @@ $menu->add('9', null, 'Banco e PDO', null, 'Exemplo de Recursos para conectar no
 
 //-----------------------------------------------------------------------------
 $menu->add('10', null, 'Formulário', null, null, '../../base/imagens/fill_form-512.png');
+
+    $menu->add('10.01', '10', 'Recursos do Formulário');
+        $menu->add('10.0.1', '10.01', 'Recurso de Autosize', 'view/form/exe_TForm_autosize.php');
+        $menu->add('10.0.2', '10.01', 'Boxes', 'view/form/exe_TBox.php');
+        $menu->add('10.0.3', '10.01', 'Maximizar', 'view/form/exe_max.php');
+        $menu->add('10.0.4', '10.01', 'Inicia Maximizar', 'view/form/exe_max_start.php');
     $menu->add('10.1', '10', 'Form 01 - Normal', 'view/form/exe_TForm.php');
     $menu->add('10.2', '10', 'Form 02 - Subcadastro', 'view/form/exe_TForm2.php');
     $menu->add('10.3', '10', 'Form 03 - Mestre Detalhe com Ajax', 'cad_mestre_detalhe/cad_mestre_detalhe.php');
@@ -204,8 +218,9 @@ $menu->add('10', null, 'Formulário', null, null, '../../base/imagens/fill_form-
     $menu->add('10.6', '10', 'Form 05 - Grid Off-line', 'view/form/exe_tform4_grid-off_form.php');
     $menu->add('10.7', '10', 'Form 06 - Texto Rico TinyMCE', 'view/form/exe_TForm5.php');
     $menu->add('10.8', '10', 'Form 07 - Texto Rico CkEditor (ERRO)', 'view/form/exe_TForm5_ckeditor.php');
-    $menu->add('10.9', '10', 'Boxes', 'view/form/exe_TBox.php');
-    $menu->add('10.10', '10', 'Recurso de Autosize', 'view/form/exe_TForm_autosize.php');
+    $menu->add('10.9', '10', 'Agenda');
+        $menu->add('10.9.1', '10.9', 'Cadastro de Horarios disponiveis', 'view/form/horario_atendimento.php');
+        $menu->add('10.9.2', '10.9', 'Cadastro de Pessoas', 'view/form/pessoa.php');
     $menu->add('10.11', '10', 'Tela Login', 'view/form/exe_tela_login.php');
     $menu->add('10.12', '10', 'Cadastro on-line (CRUD)', 'view/form/exe_crud_online.php');
     $menu->add('10.13', '10', 'ERRO - Local Destino', 'view/form/exe_form_local_destino.php');
@@ -223,7 +238,8 @@ $menu->add('200', 0, 'Layouts', null, 'Exemplos de Layouts, CSS e apresentaçõe
         $menu->add('20020.4', '20020', 'Customizado grid com Font Awesome', 'view/css/exe_css_form04.php', null, '../../base/imagens/table16.gif');
         $menu->add('20020.5', '20020', 'Customizado grid forma antiga', 'view/css/exe_css_form05.php', null, '../../base/imagens/table16.gif');
     $menu->add('20021', '200', 'Definir Colunas no Formulário', 'view/form/exe_colunas.php');
-    $menu->add('20022', '200', 'Imagem de Fundo', 'view/form/exe_TFormImage.php');
+    $menu->add('20022', '200', 'Formulário Borda Redonda', 'view/form/exe_borda.php');
+    $menu->add('20023', '200', 'Imagem de Fundo', 'view/form/exe_TFormImage.php');
 
 
 //-----------------------------------------------------------------------------
@@ -234,9 +250,3 @@ $menu->add('210', null, 'Gerador de Código', null, 'Formularios geradores de co
     
 
 $menu->getXml();
-
-//ini_set('xdebug.var_display_max_depth', '10');
-//ini_set('xdebug.var_display_max_children', '256');
-//ini_set('xdebug.var_display_max_data', '-1');
-//$xml = $menu->getXml(false);
-//var_dump($xml);
