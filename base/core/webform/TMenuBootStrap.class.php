@@ -126,10 +126,10 @@ class TMenuBootStrap {
         $herf = new TA;
         $herf->setAttribute('id',$id);        
         if(!empty($userdata)){
-            $herf->setAttribute('href',$userdata);
-            //$herf->setAttribute('data-url',$userdata);
-            //$herf->setAttribute('onmouseover','showItemMenu(this)');
-            //$herf->setAttribute('onclick','changeItemMenu(this)');
+            //$herf->setAttribute('href',$userdata);
+            $herf->setAttribute('data-url',$userdata);
+            $herf->setAttribute('onmouseover','showItemMenu(this)');
+            $herf->setAttribute('onclick','changeItemMenu(this)');
         }
         if(!empty($img)){
             $herf->add($img);
