@@ -81,7 +81,7 @@ class TMenuBootStrap {
     
 	public function getNavBrand()
 	{
-        $navBrand = new TElement('a');
+        $navBrand = new TA();
         $navBrand->setClass('navbar-brand');
         $navBrand->setAttribute('href','index.php');
         $navBrand->add('Form Sigla');
@@ -123,10 +123,13 @@ class TMenuBootStrap {
             $img = $this->getMenuIcon($item['@attributes']['img']);
         }
 
-        $herf = new TElement('a');
+        $herf = new TA;
         $herf->setAttribute('id',$id);        
         if(!empty($userdata)){
             $herf->setAttribute('href',$userdata);
+            //$herf->setAttribute('data-url',$userdata);
+            //$herf->setAttribute('onmouseover','showItemMenu(this)');
+            //$herf->setAttribute('onclick','changeItemMenu(this)');
         }
         if(!empty($img)){
             $herf->add($img);
