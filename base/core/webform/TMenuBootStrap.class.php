@@ -155,6 +155,26 @@ class TMenuBootStrap {
         return $retorno;
     }
     
+    
+    public function getUlDropMenuSubItem(&$dropMenu,$item){
+        $id = $item['@attributes']['id'];
+        $subSubItens = ArrayHelper::getArray($item, 'item');
+        if( CountHelper::count( $subSubItens) == 0 ){
+            $dropItem = $this->getMenuLink($item,false,false);
+            $dropMenu->add($dropItem);
+        }else{
+            $dropItem = $this->getMenuLink($item,true,false);
+            $ulDropMenu = $this->getUlDropMenu($id,$subSubItens,false);
+            
+            $liDropDown = new TElement('li');
+            $liDropDown->setClass('dropdown-item dropdown');
+            $liDropDown->add($dropItem);
+            $liDropDown->add($ulDropMenu);
+            
+            $dropMenu->add($liDropDown);
+        }
+    }
+    
     /**
      * Return HTML5 Element LU
      * @param string $id
@@ -172,24 +192,14 @@ class TMenuBootStrap {
         $dropMenu->setClass('dropdown-menu');
         $dropMenu->setAttribute('aria-labelledby',$id);
         
-        foreach($subItens as $item) {
-            $id = $item['@attributes']['id'];
-            $subSubItens = ArrayHelper::getArray($item, 'item');
-            if( CountHelper::count( $subSubItens) == 0 ){
-                $dropItem = $this->getMenuLink($item,false,false);
-                $dropMenu->add($dropItem);
-            }else{
-                $dropItem = $this->getMenuLink($item,true,false);
-                $ulDropMenu = $this->getUlDropMenu($id,$subSubItens,false);
-                
-                $liDropDown = new TElement('li');
-                $liDropDown->setClass('dropdown-item dropdown');
-                $liDropDown->add($dropItem);
-                $liDropDown->add($ulDropMenu);
-                
-                $dropMenu->add($liDropDown);
+        if( ArrayHelper::has('@attributes',$subItens) ){
+            $item = $subItens;
+            $this->getUlDropMenuSubItem($dropMenu, $item);
+        } else {
+            foreach($subItens as $item) {
+                $this->getUlDropMenuSubItem($dropMenu, $item);
             }
-        }
+        }        
         return $dropMenu;
     }   
     
