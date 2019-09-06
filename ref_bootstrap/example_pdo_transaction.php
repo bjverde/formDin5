@@ -38,11 +38,30 @@ function getAllAttributes($conn){
     }
 }
 
+function debug($var){
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+}
+
+function showSelect($conn,$sql){
+    $stmt = $conn->query($sql, PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll(); 
+    debug($result[0]['qtd']);
+}
+
 $conn->beginTransaction();       
 try { 
     //getAllAttributes($conn);
     
+    $sql = "select count(*) as qtd from form_exemplo.acesso_user";
+    showSelect($conn,$sql);
+
+    $sql = "select count(*) as qtd from form_exemplo.acesso_perfil_user";
+    showSelect($conn,$sql);
+
     var_dump($conn->inTransaction());
+    $login = 'login'.rand(1, 100);
 
     $sql = 'insert into form_exemplo.acesso_user(
         login_user
@@ -51,11 +70,50 @@ try {
        ,idpessoa
        ) values (:val0,:val1,:val2,null)';
     $stmt = $conn->prepare($sql);  
-    $stmt->bindValue(':val0', 'login'.rand(1, 3)); 
+    $stmt->bindValue(':val0', $login); 
     $stmt->bindValue(':val1', null); 
     $stmt->bindValue(':val2', 'S'); 
     $result = $stmt->execute();
-    var_dump($result);
+
+    $sql = "select * from form_exemplo.acesso_user
+            where login_user = '".$login."'";
+    $stmt = $conn->query($sql, PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll();    
+    //var_dump($result);
+
+    $iduser = $result[0]['iduser'];
+
+    $sql = 'insert into form_exemplo.acesso_perfil_user(
+            idperfil
+            ,iduser
+            ,sit_ativo
+            ) values (4,:val0,:val1)';
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':val0', $iduser); 
+    $stmt->bindValue(':val1', 'S');
+    $result = $stmt->execute();
+
+
+    $sql = "select count(*) as qtd from form_exemplo.acesso_user";
+    showSelect($conn,$sql);
+
+    $sql = "select count(*) as qtd from form_exemplo.acesso_perfil_user";
+    showSelect($conn,$sql);
+
+    throw new Exception('xxx');
+
+    $sql = 'delete form_exemplo.acesso_perfil_user
+            where iduser = :val0';
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':val0', $iduser); 
+    $result = $stmt->execute();
+
+    $sql = 'delete form_exemplo.acesso_user
+            where login_user = :val0';
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':val0', $login); 
+    $result = $stmt->execute();
+
 
     $res1 = $conn->commit();    
     var_dump($res1);
