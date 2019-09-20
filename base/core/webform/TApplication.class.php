@@ -476,6 +476,14 @@ class TApplication extends TLayout {
 			$_POST ['formDinAcao'] = $action;
 		}
 	 }
+
+	 private function addCssFileMenuTemplatesColour(){
+		$nameMenuTheme=$this->getMenuTheme();
+		//$this->addCssFile('css/menu_multilevel_bootstrap.css');
+		//$this->addCssFile('css/menu_multilevel_strandard.css');
+		//$this->addCssFile('css/menu_multilevel_dracula.css');
+		$this->addCssFile('css/menu_multilevel_'.$nameMenuTheme.'.css');
+	 }
 	 
 	 private function setJavaScriptCss() {
 		// $this->addJsCssFile('greybox/gb_styles.css');
@@ -514,6 +522,7 @@ class TApplication extends TLayout {
 		
 		$this->addJsCssFile ( 'js/app.js' );
 		$this->addJsCssFile ( 'css/FormDin4.css' );
+		$this->addCssFileMenuTemplatesColour();
 		$this->addJsCssFile ( $this->getCssFile() );
 		
 		if (! $this->getShowMenu ()) {

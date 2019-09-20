@@ -176,9 +176,6 @@ class TLayout extends THtmlPage {
 	$this->addCssFile('lib/font-awesome/css/fa-brands.min.css');
 	$this->addCssFile('lib/font-awesome/css/fontawesome.min.css');
 	$this->addCssFile('css/app.css');
-	//$this->addCssFile('css/menu_multilevel_bootstrap.css');
-	$this->addCssFile('css/menu_multilevel_strandard.css');
-	$this->addCssFile('css/menu_multilevel_dracula.css');
 
 	$this->addJsFile( 'lib/jquery/jquery.min.js' );
 	$this->addJsFile( 'lib/bootstrap/assets/popper.min.js' );
