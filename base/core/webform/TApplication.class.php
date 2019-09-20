@@ -1476,8 +1476,8 @@ class TApplication extends TLayout {
 	    return $menuIconsPath;
 	}
 	
-	public function setMenuTheme($strNewValue = 'standard | aqua_dark | aqua_sky | aqua_orange | clear_blue | clear_green | dhx_black | dhx_blue | glassy_blue | modern_black | modern_blue | modern_red | clear_silver') {
-		$aThemes = explode ( ',', 'standard,aqua_dark,aqua_sky,aqua_orange,clear_blue,clear_green,dhx_black,dhx_blue,glassy_blue,modern_black,modern_blue,modern_red,clear_silver' );
+	public function setMenuTheme($strNewValue = 'standard | dracula | aqua_dark | aqua_sky | aqua_orange | clear_blue | clear_green | dhx_black | dhx_blue | glassy_blue | modern_black | modern_blue | modern_red | clear_silver') {
+		$aThemes = explode ( ',', 'standard,dracula,aqua_dark,aqua_sky,aqua_orange,clear_blue,clear_green,dhx_black,dhx_blue,glassy_blue,modern_black,modern_blue,modern_red,clear_silver' );
 		if (array_search ( $strNewValue, $aThemes )=== false ) {
 			$strNewValue = 'clear_silver';
 		}
