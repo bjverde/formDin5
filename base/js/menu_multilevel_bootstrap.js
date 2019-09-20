@@ -54,7 +54,11 @@ jQuery(document).ready(function () {
                 $parent.parent().find('.show').removeClass('show');
                 $parent.addClass('show');
                 $el.next().addClass('show');
-                $el.next().css({"top": $el[0].offsetTop, "left": $parent.outerWidth() - 4});
+                var $offsetTop = null;
+                if($el.length > 0){
+                    var $offsetTop = $el[0].offsetTop;
+                }
+                $el.next().css({"top": $offsetTop, "left": $parent.outerWidth() - 4});
             }
             e.preventDefault();
             e.stopPropagation();
