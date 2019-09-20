@@ -266,7 +266,7 @@ class TMenuBootStrap {
         $button->setAttribute('data-target','#'.$id);
         $button->setAttribute('aria-controls',$id);
         $button->setAttribute('aria-expanded','false');
-        $button->setAttribute(' aria-label','Toggle navigation');
+        $button->setAttribute('aria-label','Toggle navigation');
         $button->add($icon);
         return $button;
     }
@@ -274,7 +274,7 @@ class TMenuBootStrap {
     public function getNav2()
     {
         $nav = new TElement('nav');
-        $nav->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
+        $nav->setClass('sticky-top navbar navbar-expand-md');
         //$nav->add( $this->getNavBrand() );
         $nav->add( $this->getNavBarButton() );
         return $nav;

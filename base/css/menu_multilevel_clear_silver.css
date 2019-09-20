@@ -1,0 +1,187 @@
+/*
+ * FormDin 5 Framework
+ * Created by Reinaldo A. Barrêto Jr in 2019
+ * Based on the FormDin 4 of Luís Eugênio Barbosa
+ * https://github.com/bjverde/formDin5
+ *
+ * ----------------------------------------------------------------------------
+ * This file is part of Formdin Framework.
+ *
+ * Formdin Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Formdin.
+ *
+ * O Framework Formdin é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ *
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ *
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ */
+
+/**
+Created with 
+https://work.smarchal.com/twbscolor/
+**/
+
+.navbar {
+    background-color: #e9e9e9;
+  }
+  .navbar .navbar-brand {
+    color: #000000;
+  }
+  .navbar .navbar-brand:hover,
+  .navbar .navbar-brand:focus {
+    color: #000000;
+  }
+  .navbar .navbar-text {
+    color: #000000;
+  }
+  .navbar .navbar-text a {
+    color: #000000;
+  }
+  .navbar .navbar-text a:hover,
+  .navbar .navbar-text a:focus {
+    color: #000000; 
+  }
+  .navbar .navbar-nav .nav-link {
+    color: #000000;
+    border-radius: .25rem;
+    margin: 0 0.25em;
+  }
+  .navbar .navbar-nav .nav-link:not(.disabled):hover,
+  .navbar .navbar-nav .nav-link:not(.disabled):focus {
+    color: #000000;
+  }
+  .navbar .navbar-nav .dropdown-menu {
+    background-color: #e9e9e9;
+    border-color: #bcbcbc;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-item {
+    color: #000000;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+  .navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
+  .navbar .navbar-nav .dropdown-menu .dropdown-item.active {
+    color: #000000;
+    background-color: #bcbcbc;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-divider {
+    border-top-color: #bcbcbc;
+  }
+  .navbar .navbar-nav .nav-item.active .nav-link,
+  .navbar .navbar-nav .nav-item.active .nav-link:hover,
+  .navbar .navbar-nav .nav-item.active .nav-link:focus,
+  .navbar .navbar-nav .nav-item.show .nav-link,
+  .navbar .navbar-nav .nav-item.show .nav-link:hover,
+  .navbar .navbar-nav .nav-item.show .nav-link:focus {
+    color: #000000;
+    background-color: #bcbcbc;
+  }
+  .navbar .navbar-toggle {
+    border-color: #bcbcbc;
+  }
+  .navbar .navbar-toggle:hover,
+  .navbar .navbar-toggle:focus {
+    background-color: #bcbcbc;
+  }
+  .navbar .navbar-toggle .navbar-toggler-icon {
+    color: #000000;
+  }
+  .navbar .navbar-collapse,
+  .navbar .navbar-form {
+    border-color: #000000;
+  }
+  .navbar .navbar-link {
+    color: #000000;
+  }
+  .navbar .navbar-link:hover {
+    color: #000000;
+  }
+  
+  @media (max-width: 575px) {
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #000000;
+    }
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #000000;
+    }
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #000000;
+      background-color: #bcbcbc;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #000000;
+    }
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #000000;
+    }
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #000000;
+      background-color: #bcbcbc;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #000000;
+    }
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #000000;
+    }
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #000000;
+      background-color: #bcbcbc;
+    }
+  }
+  
+  @media (max-width: 1199px) {
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #000000;
+    }
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #000000;
+    }
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #000000;
+      background-color: #bcbcbc;
+    }
+  }
+  
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #000000;
+  }
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #000000;
+  }
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #000000;
+    background-color: #bcbcbc;
+  }

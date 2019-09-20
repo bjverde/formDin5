@@ -1,7 +1,7 @@
 /*
  * FormDin 5 Framework
- * Created by Reinaldo A. Barrêto Jr in 2019
- * Based on the FormDin 4 of Luiz Eugênio
+ * Created by Reinaldo A. Barrï¿½to Jr in 2019
+ * Based on the FormDin 4 of Luiz Eugï¿½nio
  * https://github.com/bjverde/formDin5
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
@@ -49,8 +49,8 @@ body
     padding: 0px;
     margin: 0px;
     overflow: auto;
-    font-family: arial, times new roman;
-    font-size:11px;
+    font-family: arial, "times new roman";
+    /*font-size:11px;*/
 	background-color:transparent;
 	/*background-image:url('imagens/app/bg_listrado.jpg');*/
 	/*background-image:url('../imagens/marcaDagua.png');
