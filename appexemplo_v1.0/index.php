@@ -59,7 +59,7 @@ $app->setUnit('Centro Nacional de Telemática - CNT');
 $app->setVersionSystem(SYSTEM_VERSION);
 $app->setMenuIconsPath('imagem/');
 
-$app->setMenuTheme("dracula"); 
+//$app->setMenuTheme("dracula"); 
 $app->setMainMenuFile('includes/menu.php');
 //$app->setConfigFile(null);
 $app->setDefaultModule('view/fields/exe_TextField.php');
