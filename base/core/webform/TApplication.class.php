@@ -479,10 +479,10 @@ class TApplication extends TLayout {
 
 	 private function addCssFileMenuTemplatesColour(){
 		$nameMenuTheme=$this->getMenuTheme();
-		$this->addCssFile('css/menu_multilevel_bootstrap.css');
+		//$this->addCssFile('css/menu_multilevel_bootstrap.css');
 		//$this->addCssFile('css/menu_multilevel_strandard.css');
 		//$this->addCssFile('css/menu_multilevel_dracula.css');
-		//$this->addCssFile('css/menu_multilevel_'.$nameMenuTheme.'.css');
+		$this->addCssFile('css/menu_multilevel_'.$nameMenuTheme.'.css');
 	 }
 	 
 	 private function setJavaScriptCss() {

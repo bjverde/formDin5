@@ -274,7 +274,8 @@ class TMenuBootStrap {
     public function getNav2()
     {
         $nav = new TElement('nav');
-        $nav->setClass('sticky-top navbar navbar-expand-md');
+        //$nav->setClass('sticky-top navbar navbar-expand-md navbar-dark bg-dark');
+        $nav->setClass('sticky-top navbar navbar-expand-md navbar-dark');
         //$nav->add( $this->getNavBrand() );
         $nav->add( $this->getNavBarButton() );
         return $nav;
