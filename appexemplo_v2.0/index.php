@@ -42,8 +42,8 @@
 require_once 'includes/constantes.php';
 require_once 'includes/config_conexao.php';
 
-//FormDin version: 4.7.5
-require_once '../base/classes/webform/TApplication.class.php';
+require_once '../base/core/webform/TApplication.class.php'; //FormDin 5
+//require_once '../base/classes/webform/TApplication.class.php'; //FormDin 4.X
 require_once 'controllers/autoload_appev2.php';
 require_once 'dao/autoload_appev2_dao.php';
 
