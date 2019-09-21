@@ -1,76 +1,58 @@
 <?php
+
 /*
  * Formdin Framework
  * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
- *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
- *
+ * 
  * Formdin Framework is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Lesser General Public License version 3
  * along with this program; if not,  see <http://www.gnu.org/licenses/>
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  * ----------------------------------------------------------------------------
  * Este arquivo é parte do Framework Formdin.
- *
+ * 
  * O Framework Formdin é um software livre; você pode redistribuí-lo e/ou
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
- *
+ * 
  * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
  * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
- *
+ * 
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
  * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
- define('BANCO','FIREBIRD');
- define('DATABASE','F://xampp//htdocs//www//base//exemplos//DBTESTE.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- return;
- */
 
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
-}
-// sqlite
-define('BANCO', 'SQLITE');
-define('DATABASE', __DIR__.DS.'..'.DS.'bancos_locais'.DS.'bdApoio.s3db');
-define('UTF8_DECODE', 0);
+define("APLICATIVO","TEST");
+define("TITULO_SISTEMA","SistemaS de TesteS");
+define("FORMDINCSS","css/FormDin.css");
+define('PASTA_BASE','base/');
+define("DEBUG",1);
+define("BANCO_TNS","desenv");
+define('TIPO_ACESSO','E'); // 'I'= banco_interno ; 'E' = banco_externo
 
+// as seguintes linhas apenas para conxÃ£o com usuÃ¡rio fixo. (TIPO_ACESSO='E')
+define('AUTENTICAR_EXTERNO','MCP.PK_AUTENTICAR.AUTENTICAR'); // funÃ§Ã£o usada para autenticar usuÃ¡rio externo
+define('SESSAO_TEMPO_MAX',0); // Tempo mÃ¡ximo que usuÃ¡rio pode ficar logado em segundos. 0=sem limite
+define("BANCO_USUARIO","12345678909");
+define("BANCO_SENHA","teste");
 
-/*
- define('BANCO','MYSQL');
- define('HOST','127.0.0.1');
- define('PORT','3306');
- define('DATABASE','bdApoio');
- define('USUARIO','root');
- define('SENHA','');
- */
+define("CACHE_REFRESH",86400);	// Tempo que a descricao dos cabeÃ§alhos do pacotes ficam em cache
+								//segundos !! 1 hora=3600 1 dia=86400
+?>
 
-/*
- // firebird
- define('BANCO','FIREBIRD');
- define('DATABASE','C://xampp//htdocs//formdin//base//exemplos//BDAPOIO.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- */

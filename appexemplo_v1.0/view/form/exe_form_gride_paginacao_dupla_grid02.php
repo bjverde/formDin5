@@ -2,9 +2,6 @@
 /*
  * Formdin Framework
  * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
- *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -39,38 +36,25 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
- define('BANCO','FIREBIRD');
- define('DATABASE','F://xampp//htdocs//www//base//exemplos//DBTESTE.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- return;
- */
 
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
+if (isset($_REQUEST['ajax'])  && $_REQUEST['ajax']) {
+    $res = TPDOConnection::executeSql("select * from tb_municipio");
+
+    $gride = new TGrid( 'gd02'                        // id do gride
+                       ,'Municipios'
+                    );
+    $gride->addKeyField( 'COD_MUNICIPIO' ); // chave primaria
+    $gride->setData( $res ); // array de dados
+    $gride->setMaxRows( 17 );
+    $gride->setUrl( 'view/form/exe_form_gride_paginacao_dupla_grid02.php' );
+
+    $gride->addRowNumColumn();
+    $gride->addColumn('COD_MUNICIPIO', 'Id');
+    $gride->addColumn('COD_UF', 'Id UF');
+    $gride->addColumn('NOM_MUNICIPIO', 'Municipio');
+
+    $gride->enableDefaultButtons(false);
+    $gride->setExportExcel(false);
+    $gride->show();
+    die();
 }
-// sqlite
-define('BANCO', 'SQLITE');
-define('DATABASE', __DIR__.DS.'..'.DS.'bancos_locais'.DS.'bdApoio.s3db');
-define('UTF8_DECODE', 0);
-
-
-/*
- define('BANCO','MYSQL');
- define('HOST','127.0.0.1');
- define('PORT','3306');
- define('DATABASE','bdApoio');
- define('USUARIO','root');
- define('SENHA','');
- */
-
-/*
- // firebird
- define('BANCO','FIREBIRD');
- define('DATABASE','C://xampp//htdocs//formdin//base//exemplos//BDAPOIO.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- */

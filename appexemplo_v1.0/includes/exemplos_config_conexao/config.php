@@ -1,10 +1,8 @@
 <?php
+
 /*
  * Formdin Framework
  * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
- *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -39,38 +37,4 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
- define('BANCO','FIREBIRD');
- define('DATABASE','F://xampp//htdocs//www//base//exemplos//DBTESTE.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- return;
- */
-
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
-}
-// sqlite
-define('BANCO', 'SQLITE');
-define('DATABASE', __DIR__.DS.'..'.DS.'bancos_locais'.DS.'bdApoio.s3db');
-define('UTF8_DECODE', 0);
-
-
-/*
- define('BANCO','MYSQL');
- define('HOST','127.0.0.1');
- define('PORT','3306');
- define('DATABASE','bdApoio');
- define('USUARIO','root');
- define('SENHA','');
- */
-
-/*
- // firebird
- define('BANCO','FIREBIRD');
- define('DATABASE','C://xampp//htdocs//formdin//base//exemplos//BDAPOIO.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- */
+DEFINE('REQUIRED_FIELD_MARK', '*');

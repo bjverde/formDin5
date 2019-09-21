@@ -38,44 +38,35 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
+
 define('MIGRATE_JQUERY', false);
 
-require_once 'includes/constantes.php';
-require_once 'includes/config_conexao.php';
-require_once '../base/classes/webform/TApplication.class.php'; //FormDin 5
-require_once 'classes/autoload_ap1v.php';
-require_once 'dao/autoload_ap1v_dao.php';
+define('APLICATIVO', 'APPEV1.0_layout03');
+define('FORMDIN', 1);
+define('DECIMAL_SEPARATOR', ',');
 
-
-//$app = new TApplication('Exemplos das Funcionalidades',null,'FORMDIN 4','Centro Nacional de Telemática - CNT');
+include('../base/classes/webform/TApplication.class.php');
 $app = new TApplication(); // criar uma instancia do objeto aplicacao
-$app->setAppRootDir(__DIR__);
-$app->setFormDinMinimumVersion('4.5.1');
-
-$app->setTitle(SYSTEM_NAME);
-$app->setSubtitle(APLICATIVO);
+$app->setTitle('Exemplos das Funcionalidades '.FORMDIN_VERSION);
 $app->setSigla(APLICATIVO);
-$app->setImgLogoPath('imagem/appv1_logo.png');
-$app->setUnit('Centro Nacional de Telemática - CNT');
-$app->setVersionSystem(SYSTEM_VERSION);
+$app->setUnit('FormDin Version'.FORMDIN_VERSION);
+$app->setVersionSystem('v 1.0.0.0');
 $app->setMenuIconsPath('imagem/');
 
 $app->setWidth(990);
-$app->setNorthSize(55);
+$app->setNorthSize(100);
+$app->getNorthArea()->setCss('border', '0px');
+
 $app->setMainMenuFile('includes/menu.php');
-$app->setFavIcon('../base/imagens/favicon-16x16.png');
 $app->setConfigFile(null);
-//$app->setLoginFile('includes/tela_login.php');
 $app->setOnGetLoginInfo('minhaFuncaoLogin');
-//$app->setConnectionFile(null);
 
-//$app->addIncludeFile('config.php');
-//$app->getLoCenter()->setCss('background-color','blue');
 
-//$app->setBackgroundImage(null);
-$app->setBackgroundImage('../css/imagens/app/bg_listrado.jpg');
-//$app->setBackgroundImage('../imagens/bg_blackmosaic.png');
-
+$app->setHeaderContent('header.php');
+$app->getLoCenter()->setCss('background-color', 'blue');
+$app->setBackgroundImage('../imagens/bg_blackmosaic.png');
+$app->setHeaderBgImage('imagem/h2.jpg');
+$app->setMenuTheme('dhx_black');
 
 // testar prototyï¿½
 set_error_handler("exception_error_handler");
@@ -83,7 +74,7 @@ $app->run();
 
 function minhaFuncaoLogin()
 {
-    return 'Olá, FormDin '.FORMDIN_VERSION;
+    return 'Olá';
 }
 
 function exception_error_handler($errno, $errstr, $errfile, $errline)

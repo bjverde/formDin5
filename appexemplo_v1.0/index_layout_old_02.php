@@ -38,62 +38,27 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-define('MIGRATE_JQUERY', false);
-
-require_once 'includes/constantes.php';
-require_once 'includes/config_conexao.php';
-require_once '../base/classes/webform/TApplication.class.php'; //FormDin 5
-require_once 'classes/autoload_ap1v.php';
-require_once 'dao/autoload_ap1v_dao.php';
+error_reporting(E_ALL);
 
 
-//$app = new TApplication('Exemplos das Funcionalidades',null,'FORMDIN 4','Centro Nacional de Telemática - CNT');
-$app = new TApplication(); // criar uma instancia do objeto aplicacao
-$app->setAppRootDir(__DIR__);
-$app->setFormDinMinimumVersion('4.5.1');
+define('APLICATIVO', 'APPEV1.0_layout02');
+define('DECIMAL_SEPARATOR', ',');
 
-$app->setTitle(SYSTEM_NAME);
-$app->setSubtitle(APLICATIVO);
+include('../base/classes/webform/TApplication.class.php');
+$app = new TApplication();
 $app->setSigla(APLICATIVO);
-$app->setImgLogoPath('imagem/appv1_logo.png');
-$app->setUnit('Centro Nacional de Telemática - CNT');
-$app->setVersionSystem(SYSTEM_VERSION);
+$app->setUnit('FormDin Version'.FORMDIN_VERSION);
+$app->setVersionSystem('v 1.0.0.0');
 $app->setMenuIconsPath('imagem/');
 
-$app->setWidth(990);
+$app->setWidth(779);
 $app->setNorthSize(55);
+$app->getNorthArea()->setCss('border', '1px solid red');
+$app->getNorthArea()->add('<img style="border:none;float:right;" src="imagem/acessibilidade-brasil.gif"/>');
+$app->setHeaderBgImage('imagem/spoa-cabec.gif');
+$app->setBackgroundImage('../base/css/imagens/app/bg_listrado.jpg');
+$app->setCssFile('css/css_form.css');
+$app->setMenuTheme('clear_green');
+
 $app->setMainMenuFile('includes/menu.php');
-$app->setFavIcon('../base/imagens/favicon-16x16.png');
-$app->setConfigFile(null);
-//$app->setLoginFile('includes/tela_login.php');
-$app->setOnGetLoginInfo('minhaFuncaoLogin');
-//$app->setConnectionFile(null);
-
-//$app->addIncludeFile('config.php');
-//$app->getLoCenter()->setCss('background-color','blue');
-
-//$app->setBackgroundImage(null);
-$app->setBackgroundImage('../css/imagens/app/bg_listrado.jpg');
-//$app->setBackgroundImage('../imagens/bg_blackmosaic.png');
-
-
-// testar prototyï¿½
-set_error_handler("exception_error_handler");
 $app->run();
-
-function minhaFuncaoLogin()
-{
-    return 'Olá, FormDin '.FORMDIN_VERSION;
-}
-
-function exception_error_handler($errno, $errstr, $errfile, $errline)
-{
-    echo '<pre>';
-    //throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-
-    echo '<div style="text-align:left;border:1px solid red;width:100%;font-size:18px;">Erro N.'.$errno.'<br>'.
-    'Mensagem:'.$errstr.'<br>'.
-    'Arquivo:'.$errfile.'<br>'.
-    'Linha:'.$errline.'</div></pre>'.
-    '<script>try{top.app_unblockUI();}catch(e){};</script>';
-}

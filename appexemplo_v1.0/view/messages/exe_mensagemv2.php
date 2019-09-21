@@ -1,10 +1,8 @@
 <?php
+
 /*
  * Formdin Framework
  * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
- *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -39,38 +37,35 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
- define('BANCO','FIREBIRD');
- define('DATABASE','F://xampp//htdocs//www//base//exemplos//DBTESTE.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- return;
- */
+d($_REQUEST);
 
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
+$frm = new TForm('Exemplo Mensagem apenas PHP', 200, 900);
+$frm->addTextField('nome', 'Nome:', 30);
+
+$frm->addButton('Msg Alert', 'msgalert', null, null, null, true, false);
+$frm->addButton('Msg POP Sucesso', 'msgpopsu', null, null, null, false, false);
+$frm->addButton('Msg POP Error', 'msgpoperror', null, null, null, false, false);
+$frm->addButton('Msg POP Attention', 'msgpopattention', null, null, null, false, false);
+
+
+$acao = isset($acao) ? $acao : null;
+switch ($acao) {
+    case 'msgalert':
+        $frm->setMessage('Mensagem Alert Normal');
+    break;
+    //--------------------------------------------------------------------------------
+    case 'msgpopsu':
+        $frm->setPopUpMessage('Mensagem Pop-up sucesso');
+    break;
+    //--------------------------------------------------------------------------------
+    case 'msgpoperror':
+        $frm->setPopUpMessage('Mensagem Pop-up Error',null,'ERROR');
+    break;
+    //--------------------------------------------------------------------------------
+    case 'msgpopattention':
+        $frm->setPopUpMessage('Mensagem Pop-up Attention',null,'ATTENTION');
+    break;
 }
-// sqlite
-define('BANCO', 'SQLITE');
-define('DATABASE', __DIR__.DS.'..'.DS.'bancos_locais'.DS.'bdApoio.s3db');
-define('UTF8_DECODE', 0);
 
-
-/*
- define('BANCO','MYSQL');
- define('HOST','127.0.0.1');
- define('PORT','3306');
- define('DATABASE','bdApoio');
- define('USUARIO','root');
- define('SENHA','');
- */
-
-/*
- // firebird
- define('BANCO','FIREBIRD');
- define('DATABASE','C://xampp//htdocs//formdin//base//exemplos//BDAPOIO.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- */
+$frm->show();
+?>

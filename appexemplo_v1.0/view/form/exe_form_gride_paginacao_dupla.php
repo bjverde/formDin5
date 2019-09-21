@@ -1,10 +1,8 @@
 <?php
+
 /*
  * Formdin Framework
  * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
- *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -39,38 +37,30 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
- define('BANCO','FIREBIRD');
- define('DATABASE','F://xampp//htdocs//www//base//exemplos//DBTESTE.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- return;
- */
+$frm = new TForm('Exemplo Paginação do Gride',1200);
+$frm->setShowCloseButton(false);
+$frm->setFlat(true);
+$frm->setMaximize(true);
 
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
+$frm->addHtmlField('mensagem', "<h3>Este exemplo utiliza a tabela tb_paginacao do banco de dados bdApoio.s3db (sqlite).</h3>");
+
+//Arquivo do Grid 01 
+require_once 'view/form/exe_form_gride_paginacao_dupla_grid01.php';
+
+//Arquivo do Grid 02 com a lista de municipios
+require_once 'view/form/exe_form_gride_paginacao_dupla_grid02.php';
+
+$frm->addHtmlField('html_gride01');
+$frm->addHtmlField('html_gride02');
+$frm->setAction("Refresh");
+$frm->addJavascript('init()');
+$frm->show();
+
+?>
+<script>
+function init()
+{
+    fwGetGrid("view/form/exe_form_gride_paginacao_dupla_grid01.php",'html_gride01');
+    fwGetGrid("view/form/exe_form_gride_paginacao_dupla_grid02.php",'html_gride02');
 }
-// sqlite
-define('BANCO', 'SQLITE');
-define('DATABASE', __DIR__.DS.'..'.DS.'bancos_locais'.DS.'bdApoio.s3db');
-define('UTF8_DECODE', 0);
-
-
-/*
- define('BANCO','MYSQL');
- define('HOST','127.0.0.1');
- define('PORT','3306');
- define('DATABASE','bdApoio');
- define('USUARIO','root');
- define('SENHA','');
- */
-
-/*
- // firebird
- define('BANCO','FIREBIRD');
- define('DATABASE','C://xampp//htdocs//formdin//base//exemplos//BDAPOIO.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- */
+</script>

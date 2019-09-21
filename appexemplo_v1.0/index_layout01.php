@@ -1,10 +1,8 @@
 <?php
+
 /*
  * Formdin Framework
  * Copyright (C) 2012 Ministério do Planejamento
- * Criado por Luís Eugênio Barbosa
- * Essa versão é um Fork https://github.com/bjverde/formDin
- *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -39,38 +37,34 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
- define('BANCO','FIREBIRD');
- define('DATABASE','F://xampp//htdocs//www//base//exemplos//DBTESTE.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- return;
- */
+include('../base/classes/webform/TApplication.class.php');
 
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
+class TAppSeiam extends TApplication
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setPadding(0);
+        $this->setNorthSize(91.5); // cabeçalho
+        $this->setWestSize(219); // menu lateral
+        $this->setSouthInitClosed(true); // não exibir o rodapé
+        $this->getWestArea()->setTagType('iframe');
+        $this->getWestArea()->setId('menuLateral');
+        $this->setVerticalAlign('top');
+        $this->setHorizontalAlign('left');
+        $this->setDefaultModule('includes/boot.php');
+
+        // desabilitar as opções padrão IBAMA
+        $this->setLoginFile(null);
+        $this->setMainMenuFile(null);
+        $this->setConnectionFile(null);
+        $this->setConfigFile(null);
+        $this->setWaterMark(null);
+        $this->setBackgroundImage(null);
+        $this->addJsFile('js/appJs.js');
+        $this->addCssFile('css/css_form.css');
+        $this->setTitle('FormDin Layout01 - Menu Lateral');
+    }
 }
-// sqlite
-define('BANCO', 'SQLITE');
-define('DATABASE', __DIR__.DS.'..'.DS.'bancos_locais'.DS.'bdApoio.s3db');
-define('UTF8_DECODE', 0);
-
-
-/*
- define('BANCO','MYSQL');
- define('HOST','127.0.0.1');
- define('PORT','3306');
- define('DATABASE','bdApoio');
- define('USUARIO','root');
- define('SENHA','');
- */
-
-/*
- // firebird
- define('BANCO','FIREBIRD');
- define('DATABASE','C://xampp//htdocs//formdin//base//exemplos//BDAPOIO.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- */
+$app = new TAppSeiam();
+$app->run();

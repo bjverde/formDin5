@@ -39,38 +39,19 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/*
- define('BANCO','FIREBIRD');
- define('DATABASE','F://xampp//htdocs//www//base//exemplos//DBTESTE.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- return;
- */
 
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
-}
-// sqlite
-define('BANCO', 'SQLITE');
-define('DATABASE', __DIR__.DS.'..'.DS.'bancos_locais'.DS.'bdApoio.s3db');
-define('UTF8_DECODE', 0);
+$html1  = 'o FormDin faz uso da classe TPDOConnectionObj.class.php para fazer o controle transacional com operação de commit ou rollback.'
+.'<br>'
+.'<br>Veja um exemplo funcionando em <a href="../appexemplo_v2.0/">Aplicação de exemplo 2.0 > Banco > Commit </a>.'
+.'<br>'
+.'<br>Obserção esse exemplo precisa do Banco MySQL funcionando e configurado. '
+.'<br>';
 
+$frm = new TForm('Banco PDO, Commit');
+$frm->setFlat(true);
+$frm->setMaximize(true);
+$frm->addCssFile('css/css_formDinv5.css');
 
-/*
- define('BANCO','MYSQL');
- define('HOST','127.0.0.1');
- define('PORT','3306');
- define('DATABASE','bdApoio');
- define('USUARIO','root');
- define('SENHA','');
- */
+$frm->addHtmlField('html1', $html1, null, null, null, null)->setClass('boxAlert',false);
 
-/*
- // firebird
- define('BANCO','FIREBIRD');
- define('DATABASE','C://xampp//htdocs//formdin//base//exemplos//BDAPOIO.GDB');
- define('UTF8_DECODE',0);
- define('USUARIO','SYSDBA');
- define('SENHA','masterkey');
- */
+$frm->show();
