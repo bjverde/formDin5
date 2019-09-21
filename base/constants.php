@@ -66,7 +66,7 @@ if (!defined('TAB')) {
 }
 
 
-define('FORMDIN_VERSION', '5.0.0-alpha');
+define('FORMDIN_VERSION', '5.0.0-alpha2');
 define('PHP_MIN_VERSION', '7.0.0');
 
 // --Data Base Management System
