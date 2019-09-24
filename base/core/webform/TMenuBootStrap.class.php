@@ -46,6 +46,7 @@
  */
 class TMenuBootStrap {
 
+    const DEFAULT_THEME = 'clear_silver';
     private $navBarId;
     private $menuIconsPath;
 

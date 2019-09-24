@@ -1475,21 +1475,57 @@ class TApplication extends TLayout {
 	    }
 	    return $menuIconsPath;
 	}
-	
-	public function setMenuTheme($strNewValue = 'standard | dracula | aqua_dark | aqua_sky | aqua_orange | clear_blue | clear_green | dhx_black | dhx_blue | glassy_blue | modern_black | modern_blue | modern_red | clear_silver') {
-		$aThemes = explode ( ',', 'standard,dracula,aqua_dark,aqua_sky,aqua_orange,clear_blue,clear_green,dhx_black,dhx_blue,glassy_blue,modern_black,modern_blue,modern_red,clear_silver' );
-		if (array_search ( $strNewValue, $aThemes )=== false ) {
-			$strNewValue = 'clear_silver';
+
+	/**
+	 * Set the name of the theme menu. Entering a predefined theme or CSS file of your project.
+	 * 
+	 * See the complete list of predefined names in the getMenuThemeList () method. Some examples: 
+	 * clear_silver, aqua_dark, modern_blue, dracula, bt4_clear_silver
+	 * 
+	 * 
+	 *
+	 * @param string $strNewValue
+	 * @return void
+	 */
+	public function setMenuTheme( $strNewValue )
+	{
+		$listMenuThemes = $this->getMenuThemeList();
+		if (!in_array($strNewValue, $listMenuThemes)){
+			throw new InvalidArgumentException(TMessage::ERROR_MENU_THEME_NOT_VALIDATED.':'.$strNewValue );
 		}
 		$this->menuTheme = $strNewValue;
 	}
+	/**
+	 * get Menu Theme or file CSS
+	 *
+	 * @return string
+	 */
 	public function getMenuTheme() {
-		if( ! is_null( $this->menuTheme ) ) {
-			return $this->menuTheme;
+		if( !is_null( $this->menuTheme ) ) {
+			$this->setMenuTheme(TMenuBootStrap::DEFAULT_THEME);
 		}else{
-			$this->setMenuTheme('clear_silver');
+			$this->setMenuTheme(TMenuBootStrap::DEFAULT_THEME);
 		}
 		return $this->menuTheme;
+	}
+	public function getMenuThemeList() {
+		$listMenuThemes = array(
+			 'standard'
+			,'dracula'
+			,'aqua_dark'
+			,'aqua_sky'
+			,'aqua_orange'
+			,'clear_blue'
+			,'clear_green'
+			,'dhx_black'
+			,'dhx_blue'
+			,'glassy_blue'
+			,'modern_black'
+			,'modern_blue'
+			,'modern_red'
+			,'clear_silver'
+		);
+		return $listMenuThemes;
 	}
 	
 	public function setOnBeforeLogin( $strFunctionName = null )

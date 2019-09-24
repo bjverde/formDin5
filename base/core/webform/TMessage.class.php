@@ -55,6 +55,8 @@ class TMessage {
     
     const ERROR_FIELD_ID_CANNOT_EMPTY = 'O id do campo não pode ficar em branco';
 
+    const ERROR_MENU_THEME_NOT_VALIDATED = 'O Nome do tema informado, não é válido!';
+
     public function __construct() {
     }
 	
