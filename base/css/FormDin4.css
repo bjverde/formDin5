@@ -60,8 +60,12 @@ body
 	*/
 }
 
+header {
+	line-height: initial;
+}
+
 input:focus ,textarea:focus, select:focus {
-	//border-color: #DAE8F3;
+	/* border-color: #DAE8F3; */
 	border-color: rgba(82,168,236,.8);
 	border-color: rgba(82,168,236,.8);
     outline: 0;
@@ -368,12 +372,14 @@ input:focus ,textarea:focus, select:focus {
 	float:right;
 	cursor:pointer;
 }
+/*
 .fwOnlineDocTitleSystemName{
 }
 .fwOnlineDocTitleModuleName{
 }
 .fwOnlineDocTitleFieldName{
 }
+*/
 .fwOnlineDocInput
 {
 	font-size:12px;
