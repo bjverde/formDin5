@@ -43,6 +43,14 @@
 // url para teste: http://index.php?modulo=menu_principal.php&ajax=1&content-type=xml
 $menu =  new TMenuDhtmlx();
 $menu->add('1', null, 'Campos', null, null, 'user916.gif');
+//$menu->add('11', '1', 'Campo Texto', null, 'Declaração de texto');
+//$menu->add('1.1', '1', 'Campo Texto', 'view/fields/exe_TextField.php')->setJsonParams("{'p1':'parametro_1','p2':'parametro_2'}");
+$menu->add('1.2', '1', 'Campo Memo', 'view/fields/exe_TMemo.php');
+
+//$menu->add(2, null, 'Pessoas', null, null);
+
+/*
+$menu->add('1', null, 'Campos', null, null, 'user916.gif');
 $menu->add('11', '1', 'Campo Texto', null, 'Declaração de texto');
 	$menu->add('11.1', '11', 'Campo Texto Simples');
     	$menu->add('11.1.1', '11.1', 'Campo Texto', 'view/fields/exe_TextField.php')->setJsonParams("{'p1':'parametro_1','p2':'parametro_2'}");
@@ -254,6 +262,6 @@ $menu->add('210', null, 'Gerador de Código', null, 'Formularios geradores de co
     $menu->add('210.1', '210', 'Gerador VO/DAO', '../base/includes/gerador_vo_dao.php', null, '../../base/imagens/Icon_35-512.png');
     $menu->add('210.2', '210', 'Gerador Form VO/DAO', '../base/includes/gerador_form_vo_dao.php', null, '../../base/imagens/smiley-1-512.png');
     $menu->add('210.3', '210', 'Gerador de Sistemas', '../base/includes/gerador_sysgen.php', null, '../../base/imagens/oculos-de-sol-smiley-1F60E.png');
-    
+*/    
 
 $menu->getXml();

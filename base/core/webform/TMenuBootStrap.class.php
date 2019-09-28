@@ -314,14 +314,18 @@ class TMenuBootStrap {
         $jsonMenu = json_encode($xmlMenu);
         $arrayMenu = json_decode($jsonMenu,TRUE);
 
-        $rest = ArrayHelper::has('item',$arrayMenu['item']);
-        if( $rest ){
+        $qtdItens = CountHelper::count($arrayMenu['item']);
+        if( $qtdItens == 2 ) {
+            $rest = ArrayHelper::has('item',$arrayMenu['item']);
             $arrayMenuNew = array();
-            $arrayMenuNew['item'][0]['@attributes'] = $arrayMenu['item']['@attributes'];
-            $arrayMenuNew['item'][0]['item'] = $arrayMenu['item']['item'];
+            if( $rest ){
+                $arrayMenuNew['item'][0]['@attributes'] = $arrayMenu['item']['@attributes'];
+                $arrayMenuNew['item'][0]['item'] = $arrayMenu['item']['item'];                
+            } else {
+                $arrayMenuNew['item'][0]['@attributes'] = $arrayMenu['item']['@attributes'];
+            }
             $arrayMenu = $arrayMenuNew;
         }
-        
         return $arrayMenu;
     }
 

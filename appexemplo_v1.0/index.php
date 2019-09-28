@@ -69,6 +69,10 @@ $app->setConfigFile(null);
 //$app->setLoginFile('includes/tela_login.php');
 $app->setOnGetLoginInfo('minhaFuncaoLogin');
 //$app->setConnectionFile(null);
+$app->setMenuTheme("clear_silver");
+//$app->setMenuTheme("strandard");
+//$app->setMenuTheme("modern_blue");
+//$app->setMenuTheme("dracula");
 
 //$app->addIncludeFile('config.php');
 //$app->getLoCenter()->setCss('background-color','blue');
