@@ -117,7 +117,12 @@ class TMenuBootStrap {
         $text = $item['@attributes']['text'];        
         $userdata = null;
         if(ArrayHelper::has('userdata',$item)){
-            $userdata = $item['userdata'];
+            if( !is_array($item['userdata']) ){
+                $userdata = $item['userdata'];
+            } else {
+                $userdata = $item['userdata'][0];
+                //TODO Parametros Json #12
+            }            
         }        
         $img = null;
         if(ArrayHelper::has('img',$item['@attributes'])){
