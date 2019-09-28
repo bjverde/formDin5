@@ -313,6 +313,15 @@ class TMenuBootStrap {
         $xmlMenu = $this->getObjXmlMenu($menuFile);
         $jsonMenu = json_encode($xmlMenu);
         $arrayMenu = json_decode($jsonMenu,TRUE);
+
+        $rest = ArrayHelper::has('item',$arrayMenu['item']);
+        if( $rest ){
+            $arrayMenuNew = array();
+            $arrayMenuNew['item'][0]['@attributes'] = $arrayMenu['item']['@attributes'];
+            $arrayMenuNew['item'][0]['item'] = $arrayMenu['item']['item'];
+            $arrayMenu = $arrayMenuNew;
+        }
+        
         return $arrayMenu;
     }
 
