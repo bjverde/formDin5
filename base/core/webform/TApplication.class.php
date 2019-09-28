@@ -1502,7 +1502,7 @@ class TApplication extends TLayout {
 	 */
 	public function getMenuTheme() {
 		if( !is_null( $this->menuTheme ) ) {
-			$this->setMenuTheme(TMenuBootStrap::DEFAULT_THEME);
+			$this->setMenuTheme($this->menuTheme);
 		}else{
 			$this->setMenuTheme(TMenuBootStrap::DEFAULT_THEME);
 		}
