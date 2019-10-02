@@ -42,7 +42,8 @@ define('MIGRATE_JQUERY', false);
 
 require_once('includes/constantes.php');
 include('includes/config_conexao.php');
-include('../base/classes/webform/TApplication.class.php');
+require_once '../base/core/webform/TApplication.class.php'; //FormDin 5
+//require_once '../base/classes/webform/TApplication.class.php'; //FormDin 4.X
 require_once('classes/autoload_ap1v.php');
 require_once('dao/autoload_ap1v_dao.php');
 
