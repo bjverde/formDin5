@@ -221,6 +221,12 @@ class TForm Extends TBox
             $this->addJsFile( 'FormDin4.js' );
             $this->addJsFile( 'FormDin4Ajax.js' );
             
+            //BootStrap 4.3.1
+            $this->addCssFile($this->getBase().'lib/bootstrap/css/bootstrap.min.css');
+            $this->addJsFile( $this->getBase().'lib/bootstrap/assets/popper.min.js' );
+            $this->addJsFile( $this->getBase().'lib/bootstrap/js/bootstrap.bundle.min.js' );
+            $this->addJsFile( $this->getBase().'lib/bootstrap/js/bootstrap.min.js' );
+            
             //Font Awesome Icons
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-brands.min.css' );
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-regular.min.css' );
