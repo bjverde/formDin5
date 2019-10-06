@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="../../aa_libs/bootstrap/favicon.ico">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="formCustom.css">
+    <title>Exemplo Table</title>
+  </head>
+  <body>
+    <h1>Exemplo Table</h1>
+
+    <form>
+        <button id="find" type="button" class="btn"><i class="far fa-edit"></i></i></button>
+        <button id="save" type="button" class="btn"><i class="far fa-trash-alt"></i></button>
+        <button id="clear"type="button" class="btn"><i class="far fa-trash-alt"></i></button>
+    </form>
+
+    <div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th id="gd_th_cod_municipio" name="gd_th_cod_municipio"   column_index="1" column_name="cod_municipio" >
+                    id
+                </th>
+                <th id="gd_th_cod_uf" name="gd_th_cod_uf"   column_index="2" column_name="cod_uf" >
+                    COD UF
+                </th>
+                <th id="gd_th_sig_uf" name="gd_th_sig_uf"    column_name="sig_uf" >
+                    UF
+                </th>
+                <th id="gd_th_nom_municipio" name="gd_th_nom_municipio"   column_index="4" column_name="nom_municipio" >
+                    Nome
+                </th>
+                <th id="gd_th_sit_ativo" name="gd_th_sit_ativo"   column_index="5" column_name="sit_ativo" >
+                    Ativo
+                </th>
+                <th id="gd_th_col_action" name="gd_th_col_action"   column_index="6" column_name="gd_action" >
+                    Ação
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="gd_tr_1"  class="fwGridRow" line_number="1" row_count="5580" >
+                <td id="gd_cod_municipio_1" column_index="1"  line_number="1" field_name="COD_MUNICIPIO">
+                    431173
+                </td>
+                <td id="gd_cod_uf_1" line_number="1" >
+                    43
+                </td>
+                <td id="gd_sig_uf_1"   line_number="1" >
+                    RS
+                </td>
+                <td id="gd_nom_municipio_1" column_index="4"  line_number="1" field_name="NOM_MUNICIPIO">
+                    MANOEL VIANA
+                </td>
+                <td id="gd_sit_ativo_1" column_index="5"  line_number="1" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_1" column_index="6"  class="fwGridCellAction" line_number="1" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <button id="gdExcluir" type="button" class="btn btn-warning" onclick="mudaTexto(this)"><i class="far fa-edit"></i></i></button>
+                    <button id="gdExcluir" type="button" class="btn btn-danger" onclick="mudaTexto(this)"><i class="far fa-trash-alt"></i></button>
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="431173" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','431173|43|MANOEL VIANA|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="431173" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','431173|43|MANOEL VIANA|S','gd','1')">
+                </td>
+            </tr>
+            <tr id="gd_tr_2"  class="fwGridRow" line_number="2" row_count="5580" >
+                <td id="gd_cod_municipio_2" column_index="1"  line_number="2" field_name="COD_MUNICIPIO">
+                    1100015
+                </td>
+                <td id="gd_cod_uf_2" line_number="2" >
+                    11
+                </td>
+                <td id="gd_sig_uf_2"   line_number="2" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_2" column_index="4"  line_number="2" field_name="NOM_MUNICIPIO">
+                    ALTA FLORESTA D'OESTE
+                </td>
+                <td id="gd_sit_ativo_2" column_index="5"  line_number="2" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_2" column_index="6"  class="fwGridCellAction" line_number="2" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100015" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100015|11|ALTA FLORESTA D\'OESTE|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100015" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100015|11|ALTA FLORESTA D\'OESTE|S','gd','2')">
+                </td>
+            </tr>
+            <tr id="gd_tr_3"  class="fwGridRow" line_number="3" row_count="5580" >
+                <td id="gd_cod_municipio_3" column_index="1"  line_number="3" field_name="COD_MUNICIPIO">
+                    1100023
+                </td>
+                <td id="gd_cod_uf_3" line_number="3" >
+                    11
+                </td>
+                <td id="gd_sig_uf_3"   line_number="3" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_3" column_index="4"  line_number="3" field_name="NOM_MUNICIPIO">
+                    ARIQUEMES
+                </td>
+                <td id="gd_sit_ativo_3" column_index="5"  line_number="3" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_3" column_index="6"  class="fwGridCellAction" line_number="3" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100023" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100023|11|ARIQUEMES|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100023" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100023|11|ARIQUEMES|S','gd','3')">
+                </td>
+            </tr>
+            <tr id="gd_tr_4"  class="fwGridRow" line_number="4" row_count="5580" >
+                <td id="gd_cod_municipio_4" column_index="1"  line_number="4" field_name="COD_MUNICIPIO">
+                    1100031
+                </td>
+                <td id="gd_cod_uf_4" line_number="4" >
+                    11
+                </td>
+                <td id="gd_sig_uf_4"   line_number="4" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_4" column_index="4"  line_number="4" field_name="NOM_MUNICIPIO">
+                    CABIXI
+                </td>
+                <td id="gd_sit_ativo_4" column_index="5"  line_number="4" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_4" column_index="6"  class="fwGridCellAction" line_number="4" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100031" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100031|11|CABIXI|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100031" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100031|11|CABIXI|S','gd','4')">
+                </td>
+            </tr>
+            <tr id="gd_tr_5"  class="fwGridRow" line_number="5" row_count="5580" >
+                <td id="gd_cod_municipio_5" column_index="1"  line_number="5" field_name="COD_MUNICIPIO">
+                    1100049
+                </td>
+                <td id="gd_cod_uf_5" line_number="5" >
+                    11
+                </td>
+                <td id="gd_sig_uf_5"   line_number="5" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_5" column_index="4"  line_number="5" field_name="NOM_MUNICIPIO">
+                    CACOAL
+                </td>
+                <td id="gd_sit_ativo_5" column_index="5"  line_number="5" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_5" column_index="6"  class="fwGridCellAction" line_number="5" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100049" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100049|11|CACOAL|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100049" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100049|11|CACOAL|S','gd','5')">
+                </td>
+            </tr>
+            <tr id="gd_tr_6"  class="fwGridRow" line_number="6" row_count="5580" >
+                <td id="gd_cod_municipio_6" column_index="1"  line_number="6" field_name="COD_MUNICIPIO">
+                    1100056
+                </td>
+                <td id="gd_cod_uf_6" line_number="6" >
+                    11
+                </td>
+                <td id="gd_sig_uf_6"   line_number="6" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_6" column_index="4"  line_number="6" field_name="NOM_MUNICIPIO">
+                    CEREJEIRAS
+                </td>
+                <td id="gd_sit_ativo_6" column_index="5"  line_number="6" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_6" column_index="6"  class="fwGridCellAction" line_number="6" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100056" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100056|11|CEREJEIRAS|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100056" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100056|11|CEREJEIRAS|S','gd','6')">
+                </td>
+            </tr>
+            <tr id="gd_tr_7"  class="fwGridRow" row_count="5580" >
+                <td id="gd_cod_municipio_7" column_index="1"  field_name="COD_MUNICIPIO">
+                    1100064
+                </td>
+                <td id="gd_cod_uf_7" >
+                    11
+                </td>
+                <td id="gd_sig_uf_7"   >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_7" column_index="4"  field_name="NOM_MUNICIPIO">
+                    COLORADO DO OESTE
+                </td>
+                <td id="gd_sit_ativo_7" column_index="5"  field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_7" column_index="6"  class="fwGridCellAction" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <button id="33386" type="button" class="btn btn-success" onclick="mudaTexto(this)">Exibir Texto</button>
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100064" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100064|11|COLORADO DO OESTE|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100064" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100064|11|COLORADO DO OESTE|S','gd','7')">
+                </td>
+            </tr>
+            <tr id="gd_tr_8"  class="fwGridRow" row_count="5580" >
+                <td id="gd_cod_municipio_8" column_index="1"  field_name="COD_MUNICIPIO">
+                    1100072
+                </td>
+                <td id="gd_cod_uf_8" >
+                    11
+                </td>
+                <td id="gd_sig_uf_8"   >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_8" column_index="4"  field_name="NOM_MUNICIPIO">
+                    CORUMBIARA
+                </td>
+                <td id="gd_sit_ativo_8" column_index="5"  field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_8" column_index="6"  class="fwGridCellAction" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100072" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100072|11|CORUMBIARA|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100072" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100072|11|CORUMBIARA|S','gd','8')">
+                </td>
+            </tr>
+            <tr id="gd_tr_9"  class="fwGridRow" line_number="9" row_count="5580" >
+                <td id="gd_cod_municipio_9" column_index="1"  line_number="9" field_name="COD_MUNICIPIO">
+                    1100080
+                </td>
+                <td id="gd_cod_uf_9" line_number="9" >
+                    11
+                </td>
+                <td id="gd_sig_uf_9"   line_number="9" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_9" column_index="4"  line_number="9" field_name="NOM_MUNICIPIO">
+                    COSTA MARQUES
+                </td>
+                <td id="gd_sit_ativo_9" column_index="5"  line_number="9" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_9" column_index="6"  class="fwGridCellAction" line_number="9" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100080" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100080|11|COSTA MARQUES|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100080" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100080|11|COSTA MARQUES|S','gd','9')">
+                </td>
+            </tr>
+            <tr id="gd_tr_10"  class="fwGridRow" line_number="10" row_count="5580" >
+                <td id="gd_cod_municipio_10" column_index="1"  line_number="10" field_name="COD_MUNICIPIO">
+                    1100098
+                </td>
+                <td id="gd_cod_uf_10" line_number="10" >
+                    11
+                </td>
+                <td id="gd_sig_uf_10"   line_number="10" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_10" column_index="4"  line_number="10" field_name="NOM_MUNICIPIO">
+                    ESPIGAO D'OESTE
+                </td>
+                <td id="gd_sit_ativo_10" column_index="5"  line_number="10" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_10" column_index="6"  class="fwGridCellAction" line_number="10" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100098" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100098|11|ESPIGAO D\'OESTE|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100098" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100098|11|ESPIGAO D\'OESTE|S','gd','10')">
+                </td>
+            </tr>
+            <tr id="gd_tr_11"  class="fwGridRow" line_number="11" row_count="5580" >
+                <td id="gd_cod_municipio_11" column_index="1"  line_number="11" field_name="COD_MUNICIPIO">
+                    1100106
+                </td>
+                <td id="gd_cod_uf_11" line_number="11" >
+                    11
+                </td>
+                <td id="gd_sig_uf_11"   line_number="11" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_11" column_index="4"  line_number="11" field_name="NOM_MUNICIPIO">
+                    GUAJARA-MIRIM
+                </td>
+                <td id="gd_sit_ativo_11" column_index="5"  line_number="11" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_11" column_index="6"  class="fwGridCellAction" line_number="11" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100106" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100106|11|GUAJARA-MIRIM|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100106" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100106|11|GUAJARA-MIRIM|S','gd','11')">
+                </td>
+            </tr>
+            <tr id="gd_tr_12"  class="fwGridRow" line_number="12" row_count="5580" >
+                <td id="gd_cod_municipio_12" column_index="1"  line_number="12" field_name="COD_MUNICIPIO">
+                    1100114
+                </td>
+                <td id="gd_cod_uf_12" line_number="12" >
+                    11
+                </td>
+                <td id="gd_sig_uf_12"   line_number="12" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_12" column_index="4"  line_number="12" field_name="NOM_MUNICIPIO">
+                    JARU
+                </td>
+                <td id="gd_sit_ativo_12" column_index="5"  line_number="12" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_12" column_index="6"  class="fwGridCellAction" line_number="12" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100114" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100114|11|JARU|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100114" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100114|11|JARU|S','gd','12')">
+                </td>
+            </tr>
+            <tr id="gd_tr_13"  class="fwGridRow" line_number="13" row_count="5580" >
+                <td id="gd_cod_municipio_13" column_index="1"  line_number="13" field_name="COD_MUNICIPIO">
+                    1100122
+                </td>
+                <td id="gd_cod_uf_13" line_number="13" >
+                    11
+                </td>
+                <td id="gd_sig_uf_13"   line_number="13" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_13" column_index="4"  line_number="13" field_name="NOM_MUNICIPIO">
+                    JI-PARANA
+                </td>
+                <td id="gd_sit_ativo_13" column_index="5"  line_number="13" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_13" column_index="6"  class="fwGridCellAction" line_number="13" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100122" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100122|11|JI-PARANA|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100122" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100122|11|JI-PARANA|S','gd','13')">
+                </td>
+            </tr>
+            <tr id="gd_tr_14"  class="fwGridRow" line_number="14" row_count="5580" >
+                <td id="gd_cod_municipio_14" column_index="1"  line_number="14" field_name="COD_MUNICIPIO">
+                    1100130
+                </td>
+                <td id="gd_cod_uf_14" line_number="14" >
+                    11
+                </td>
+                <td id="gd_sig_uf_14"   line_number="14" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_14" column_index="4"  line_number="14" field_name="NOM_MUNICIPIO">
+                    MACHADINHO D'OESTE
+                </td>
+                <td id="gd_sit_ativo_14" column_index="5"  line_number="14" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_14" column_index="6"  class="fwGridCellAction" line_number="14" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100130" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100130|11|MACHADINHO D\'OESTE|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100130" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100130|11|MACHADINHO D\'OESTE|S','gd','14')">
+                </td>
+            </tr>
+            <tr id="gd_tr_15"  class="fwGridRow" line_number="15" row_count="5580" >
+                <td id="gd_cod_municipio_15" column_index="1"  line_number="15" field_name="COD_MUNICIPIO">
+                    1100148
+                </td>
+                <td id="gd_cod_uf_15" line_number="15" >
+                    11
+                </td>
+                <td id="gd_sig_uf_15"   line_number="15" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_15" column_index="4"  line_number="15" field_name="NOM_MUNICIPIO">
+                    NOVA BRASILANDIA D'OESTE
+                </td>
+                <td id="gd_sit_ativo_15" column_index="5"  line_number="15" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_15" column_index="6"  class="fwGridCellAction" line_number="15" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100148" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100148|11|NOVA BRASILANDIA D\'OESTE|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100148" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100148|11|NOVA BRASILANDIA D\'OESTE|S','gd','15')">
+                </td>
+            </tr>
+            <tr id="gd_tr_16"  class="fwGridRow" line_number="16" row_count="5580" >
+                <td id="gd_cod_municipio_16" column_index="1"  line_number="16" field_name="COD_MUNICIPIO">
+                    1100155
+                </td>
+                <td id="gd_cod_uf_16" line_number="16" >
+                    11
+                </td>
+                <td id="gd_sig_uf_16"   line_number="16" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_16" column_index="4"  line_number="16" field_name="NOM_MUNICIPIO">
+                    OURO PRETO DO OESTE
+                </td>
+                <td id="gd_sit_ativo_16" column_index="5"  line_number="16" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_16" column_index="6"  class="fwGridCellAction" line_number="16" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100155" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100155|11|OURO PRETO DO OESTE|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100155" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100155|11|OURO PRETO DO OESTE|S','gd','16')">
+                </td>
+            </tr>
+            <tr id="gd_tr_17"  class="fwGridRow" line_number="17" row_count="5580" >
+                <td id="gd_cod_municipio_17" column_index="1"  line_number="17" field_name="COD_MUNICIPIO">
+                    1100189
+                </td>
+                <td id="gd_cod_uf_17" line_number="17" >
+                    11
+                </td>
+                <td id="gd_sig_uf_17"   line_number="17" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_17" column_index="4"  line_number="17" field_name="NOM_MUNICIPIO">
+                    PIMENTA BUENO
+                </td>
+                <td id="gd_sit_ativo_17" column_index="5"  line_number="17" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_17" column_index="6"  class="fwGridCellAction" line_number="17" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100189" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100189|11|PIMENTA BUENO|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100189" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100189|11|PIMENTA BUENO|S','gd','17')">
+                </td>
+            </tr>
+            <tr id="gd_tr_18"  class="fwGridRow" line_number="18" row_count="5580" >
+                <td id="gd_cod_municipio_18" column_index="1"  line_number="18" field_name="COD_MUNICIPIO">
+                    1100205
+                </td>
+                <td id="gd_cod_uf_18" line_number="18" >
+                    11
+                </td>
+                <td id="gd_sig_uf_18"   line_number="18" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_18" column_index="4"  line_number="18" field_name="NOM_MUNICIPIO">
+                    PORTO VELHO
+                </td>
+                <td id="gd_sit_ativo_18" column_index="5"  line_number="18" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_18" column_index="6"  class="fwGridCellAction" line_number="18" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100205" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100205|11|PORTO VELHO|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100205" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100205|11|PORTO VELHO|S','gd','18')">
+                </td>
+            </tr>
+            <tr id="gd_tr_19"  class="fwGridRow" line_number="19" row_count="5580" >
+                <td id="gd_cod_municipio_19" column_index="1"  line_number="19" field_name="COD_MUNICIPIO">
+                    1100254
+                </td>
+                <td id="gd_cod_uf_19" line_number="19" >
+                    11
+                </td>
+                <td id="gd_sig_uf_19"   line_number="19" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_19" column_index="4"  line_number="19" field_name="NOM_MUNICIPIO">
+                    PRESIDENTE MEDICI
+                </td>
+                <td id="gd_sit_ativo_19" column_index="5"  line_number="19" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_19" column_index="6"  class="fwGridCellAction" line_number="19" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100254" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100254|11|PRESIDENTE MEDICI|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100254" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100254|11|PRESIDENTE MEDICI|S','gd','19')">
+                </td>
+            </tr>
+            <tr id="gd_tr_20"  class="fwGridRow" line_number="20" row_count="5580" >
+                <td id="gd_cod_municipio_20" column_index="1"  line_number="20" field_name="COD_MUNICIPIO">
+                    1100262
+                </td>
+                <td id="gd_cod_uf_20" line_number="20" >
+                    11
+                </td>
+                <td id="gd_sig_uf_20"   line_number="20" >
+                    RO
+                </td>
+                <td id="gd_nom_municipio_20" column_index="4"  line_number="20" field_name="NOM_MUNICIPIO">
+                    RIO CRESPO
+                </td>
+                <td id="gd_sit_ativo_20" column_index="5"  line_number="20" field_name="SIT_ATIVO" >
+                    S
+                </td>
+                <td id="gd_td_20" column_index="6"  class="fwGridCellAction" line_number="20" style="text-align:center;padding:2.5px;" nowrap="true">
+                    <img name="gdAlterar" id="gdAlterar" title="Alterar" cod_municipio="1100262" src="../base/imagens/alterar.gif" alt="Alterar" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwAtualizarCampos('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100262|11|RIO CRESPO|S');fwFazerAcao('gd_alterar')">
+                    <img name="gdExcluir" id="gdExcluir" title="Excluir" cod_municipio="1100262" src="../base/imagens/lixeira.gif" alt="Excluir" fieldtype="img" style="width:auto;height:auto;display:inline;cursor:pointer;border:none;vertical-align:top;position:relative;" onclick="fwGridConfirmDelete('COD_MUNICIPIO|COD_UF|NOM_MUNICIPIO|SIT_ATIVO','1100262|11|RIO CRESPO|S','gd','20')">
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
