@@ -48,6 +48,44 @@ header{
     display: none;
 }
 
+/************************
+    BOOTSTRAP
+****************************/
+
+.icon::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+.find::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f002";
+}
+.save::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f067";
+}
+.erase::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f12d";
+}
+.update::before {
+     font-family: "Font Awesome 5 Free";
+     font-weight: 900;
+     content: "\f044";
+}
+.delete::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f2ed";
+}
+
+/****************************************************/
 @media screen and (max-width: 600px) {
     table thead {
       border: none;
