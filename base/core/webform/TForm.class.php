@@ -2585,8 +2585,8 @@ class TForm Extends TBox
       * Adiciona uma mensagem à lista, para ser exibida na tela via alert() em javascript quando o formulário for exibido
       *
       * <code>
-      * 	$frm->addMessae('Mensagem nova');
-      * 	$frm->addMessae(array('Mensagem 1', 'Mensagem 2');
+      * 	$frm->addMessage('Mensagem nova');
+      * 	$frm->addMessage(array('Mensagem 1', 'Mensagem 2');
       * </code>
       *
       * @param string $mixMessage
@@ -5160,12 +5160,12 @@ class TForm Extends TBox
     * @param boolean $boolNewLine       - 6 :Em nova linha. DEFAULT = true
     * @param boolean $boolFooter        - 7 :Mostrar o botão no rodapé do form. DEFAULT = true
     * @param string  $strImage          - 8 :Imagem no botão. Evite usar no lugar procure usar a propriedade setClass
-    * @param string  $strImageDisabled  - 9 :
-    * @param string  $strHint           -10 :Texto para explicar
-    * @param string  $strVerticalAlign
-    * @param boolean $boolLabelAbove
-    * @param string  $strLabel
-    * @param string  $strHorizontalAlign
+    * @param string  $strImageDisabled   - 9 :
+    * @param string  $strHint            -10 : Texto hint para explicar
+    * @param string  $strVerticalAlign   -11 :
+    * @param boolean $boolLabelAbove     -12 : Position text label 
+    * @param string  $strLabel           -13 : Text label 
+    * @param string  $strHorizontalAlign -14 : Text align DEFAULT = center, left, right
     * @return TButton|string|array
     ***/
     public function addButton( $mixValue=null
@@ -6488,19 +6488,28 @@ class TForm Extends TBox
     * criado o espaço
     * @param string $strName        - 1: Nome do campo            
     * @param string $strValue       - 2: Texto HTML que irá aparece dentro
-    * @param string $strIncludeFile - 3:
-    * @param string $strLabel       - 4:
+    * @param string $strIncludeFile - 3: Arquivo que será incluido
+    * @param string $strLabel       - 4: label do campo
     * @param string $strWidth       - 5:
     * @param string $strHeight      - 6: 
     * @param boolean $boolNewLine   - 7: Default TRUE = campo em nova linha, FALSE continua na linha anterior
     * @param boolean $boolLabelAbove  8:
     * @return THtml Field
     */
-   public function addHtmlField( $strName, $strValue=null, $strIncludeFile=null, $strLabel=null, $strHeight=null, $strWidth=null, $boolNewLine=null, $boolLabelAbove=null, $boolNoWrapLabel=null )
+   public function addHtmlField( $strName
+                               , $strValue=null
+                               , $strIncludeFile=null
+                               , $strLabel=null
+                               , $strHeight=null
+                               , $strWidth=null
+                               , $boolNewLine=null
+                               , $boolLabelAbove=null
+                               , $boolNoWrapLabel=null )
    {
        //$strWidth = is_null($strWidth) ? $this->getMaxWidth('html') : $strWidth;
        $field = new THtml( $strName, $strValue, $strIncludeFile, $strHeight, $strWidth );
-       $this->addDisplayControl( new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel, null, null, null, false ));
+       $displayControl = new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel, null, null, null, false );
+       $this->addDisplayControl( $displayControl );
        return $field;
    }
    
@@ -6537,7 +6546,8 @@ class TForm Extends TBox
            $msgDefault = '<center>Carregando...<br><img width=\"190px\" height=\"20px\" src=\"' . $this->getBase() . 'imagens/processando.gif\"><center>';
            $strLoadingMessage = is_null( $strLoadingMessage ) ? $msgDefault : $strLoadingMessage;
            $field->setLoadingMessage( $strLoadingMessage );
-           $this->addDisplayControl( new TDisplayControl( null, $field, false, $boolNewLine ) );
+           $displayControl = new TDisplayControl( null, $field, false, $boolNewLine );
+           $this->addDisplayControl( $displayControl );
            return $field;
        }
    }
