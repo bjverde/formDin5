@@ -48,6 +48,27 @@ header{
     display: none;
 }
 
+.fwButton
+{
+	font-family:Arial,Helvetica, Geneva, Sans-Serif;
+	font-size:11px;
+	border:1px outset silver;
+	background-color:#E1E1E1;
+	background:#ddd url(../base/imagens/fwbuttonbg.gif) left center repeat-x;
+	color:blue;
+	cursor:pointer;
+	position:relative;
+}
+.fwButton:hover
+{
+	cursor:pointer;
+	text-decoration: underline;
+	background:#ddd url(../base/imagens/fwbuttonbg.gif) left center repeat-y;
+	text-decoration: underline;
+	/*background: url(../imagens/fwsubmit-btn.gif) no-repeat bottom left;*/
+}
+
+
 /************************
     BOOTSTRAP
 ****************************/
