@@ -44,6 +44,10 @@
 */
 class TButton extends TControl
 {
+	//const CLASS_CSS = 'fwButton'; //FormDin 4
+	const CLASS_CSS = 'btn btn-primary btn-sm'; //FormDin 5
+	const CLASS_CSS_IMG = 'fwButtonImg';
+
 	private $action;
 	private $onClick;
 	private $confirMessage;
@@ -54,9 +58,9 @@ class TButton extends TControl
 	/***
 	 *  Cria um botão 
 	 * @param string $strName           - 1: Id do botão
-	 * @param string $strValue          - 2: label do botão
-	 * @param string $strAction         - 3: 
-	 * @param string $strOnClick        - 4:
+	 * @param string $strValue          - 2: label do botão que irá aparecer para o usuário
+	 * @param string $strAction         - 3: nome da ação que será executada
+	 * @param string $strOnClick        - 4: 
 	 * @param string $strConfirmMessage - 5: Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
 	 * @param string $strImageEnabled   - 6: Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
 	 * @param string $strImageDisabled  - 7: Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
@@ -84,8 +88,7 @@ class TButton extends TControl
 		$this->setSubmitAction($boolSubmitAction);
 		$this->setImage($strImageEnabled);
 		$this->setImageDisabled($strImageDisabled);
-		//$this->setClass('fwButton');
-		$this->setClass('btn btn-primary btn-sm');
+		$this->setClass(self::CLASS_CSS);
 	}
 
 	public function show($print=true)
@@ -97,18 +100,10 @@ class TButton extends TControl
 			$this->setTagType('img');
 			$this->setFieldType('img');
 			$this->setProperty('src',$this->getImage());
-			//if( $this->getClass() == 'fwButton' )
-			if( $this->getClass() == 'btn btn-primary btn-sm' )
+			if( $this->getClass() == self::CLASS_CSS )
 			{
 				$this->setProperty('class',null);
-				$this->setCss('background',null);
-				$this->setCss('cursor','pointer');
-				$this->setCss('background-color',null);
-				$this->setCss('font-family',null);
-				$this->setCss('font-size',null);
-				$this->setCss('border','none');
-				$this->setCss('color',null);
-				$this->setCss('vertical-align','top');
+				$this->setClass(self::CLASS_CSS_IMG);
                 if( is_null( $this->getProperty('alt')))
                 {
                     $this->setProperty('alt', $this->getvalue() );
@@ -271,14 +266,19 @@ class TButton extends TControl
 		parent::clearEvents();
 	}
 }
-/*
+
+/***
+ * Exemplo de como usar apenas o botão
+ */
+/***
 $btn = new TButton('btnGravar','Gravar','actGravar',null,'Confirma Gravação ?');
 $btn->setImage('btnCalendario.gif');
 $btn->show();
-*/
-
-//$btn = new TButton('btnGravar','Gravar',null,'fwTeste()','Tem Certeza ?','../../imagens/search.gif','../../imagens/lixeira.gif');
-//$btn->setEnabled(false);
-//$btn->setVisible(false);
-//$btn->show();
+echo '<br>';
+echo '<br>';
+$btn = new TButton('btnGravar','Gravar',null,'fwTeste()','Tem Certeza ?','../../imagens/search.gif','../../imagens/lixeira.gif');
+$btn->setEnabled(false);
+$btn->setVisible(false);
+$btn->show();
+ */
 ?>
