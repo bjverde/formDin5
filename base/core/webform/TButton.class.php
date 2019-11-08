@@ -66,7 +66,12 @@ class TButton extends TControl
 	public function __construct($strName
 	                           ,$strValue=null
 	                           ,$strAction=null
-	                           ,$strOnClick=null,$strConfirmMessage=null,$strImageEnabled=null,$strImageDisabled=null,$strHint=null,$boolSubmitAction=null)
+	                           ,$strOnClick=null
+	                           ,$strConfirmMessage=null
+	                           ,$strImageEnabled=null
+	                           ,$strImageDisabled=null
+	                           ,$strHint=null
+	                           ,$boolSubmitAction=null)
 	{
 		$strName = is_null( $strName ) ? $this->removeIllegalChars( $strValue ) : $strName;
 		parent::__construct('button',$strName,$strValue);
@@ -79,7 +84,8 @@ class TButton extends TControl
 		$this->setSubmitAction($boolSubmitAction);
 		$this->setImage($strImageEnabled);
 		$this->setImageDisabled($strImageDisabled);
-		$this->setClass('fwButton');
+		//$this->setClass('fwButton');
+		$this->setClass('btn btn-primary');
 	}
 
 	public function show($print=true)
@@ -91,6 +97,7 @@ class TButton extends TControl
 			$this->setTagType('img');
 			$this->setFieldType('img');
 			$this->setProperty('src',$this->getImage());
+			/*
 			if( $this->getClass() == 'fwButton' )
 			{
 				$this->setProperty('class',null);
@@ -113,6 +120,7 @@ class TButton extends TControl
                 $this->setAttribute('type',null);
 				$this->setValue('');
 			}
+			*/
 			$isImage=true;
 		}
 
