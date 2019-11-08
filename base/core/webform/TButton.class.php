@@ -85,7 +85,7 @@ class TButton extends TControl
 		$this->setImage($strImageEnabled);
 		$this->setImageDisabled($strImageDisabled);
 		//$this->setClass('fwButton');
-		$this->setClass('btn btn-primary');
+		$this->setClass('btn btn-primary btn-sm');
 	}
 
 	public function show($print=true)
@@ -97,8 +97,8 @@ class TButton extends TControl
 			$this->setTagType('img');
 			$this->setFieldType('img');
 			$this->setProperty('src',$this->getImage());
-			/*
-			if( $this->getClass() == 'fwButton' )
+			//if( $this->getClass() == 'fwButton' )
+			if( $this->getClass() == 'btn btn-primary btn-sm' )
 			{
 				$this->setProperty('class',null);
 				$this->setCss('background',null);
@@ -120,7 +120,6 @@ class TButton extends TControl
                 $this->setAttribute('type',null);
 				$this->setValue('');
 			}
-			*/		
 			$isImage=true;
 		}
 
