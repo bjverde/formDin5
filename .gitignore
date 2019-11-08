@@ -5,12 +5,15 @@
 # VsCode files
 .vscode/
 
-sysinfra
-
 # Eclipse files
 /.settings/
 /.vscode/
 /.project
 /.buildpath
+
+#FormDin Project
+!base/tmp/index.php
+base/tmp/*
+/sysgen/
 phpunit-code-coverage/*
 !phpunit-code-coverage/phpunit-code-coverage.zip
