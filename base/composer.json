@@ -1,11 +1,17 @@
 {
 	"type" : "project",
-	"description" : "formDin FrameWork",
+	"homepage" : "https://github.com/bjverde/formDin5",
+	"description" : "FormDin 5 FrameWork",
 	"require" : {
-		"php" : ">=7.0.0"
+		"php" : ">=7.1.0"
 		,"components/jquery" : "^3.2"
 		,"components/font-awesome" : "^5.4"
 		,"twbs/bootstrap" : "^4.3"
 		,"fpdf/fpdf": "^1.81"
 	}
+	,"require-dev": {
+         "phpunit/phpunit": "^8.1"
+        ,"squizlabs/php_codesniffer": "^3.4"
+        ,"phan/phan": "^1.3"
+    }
 }
