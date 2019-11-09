@@ -11,9 +11,12 @@
 /.project
 /.buildpath
 
-#FormDin Project
+#FormDin5 Project
 !base/tmp/index.php
 base/tmp/*
 /sysgen/
 phpunit-code-coverage/*
 !phpunit-code-coverage/phpunit-code-coverage.zip
+
+#FormDin5 Composer Dependence
+/base/vendor/*
