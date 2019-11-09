@@ -260,7 +260,7 @@ class TForm Extends TBox
             $this->addJsFile( 'sorttable.js' );
             $this->addJsFile( 'lazyload/lazyload-min.js' );
             $this->addJsFile( 'jquery/jquery.qtip.min.js' );;
-            
+
             // area de mensagem no topo do formulário
             $this->message_area = $this->addHtmlField( $this->getId() . '_msg_area',null,null,null);
             
@@ -5189,17 +5189,16 @@ class TForm Extends TBox
            $boolFooter = ($boolFooter === null) ? true : $boolFooter;
            $strVerticalAlign = is_null( $strVerticalAlign ) ? 'center' : $strVerticalAlign;
            $strHorizontalAlign = is_null( $strHorizontalAlign ) ? 'center' : $strHorizontalAlign;
+           
            // a maioria dos botões ficam na frente dos campos
-           if( $boolNewLine === null )
-           {
+           if( $boolNewLine === null ){
                $boolNewLine = false;
            }
-           if( is_string( $mixValue ) && strpos( $mixValue, ',' ) > 0 )
-           {
+           if( is_string( $mixValue ) && strpos( $mixValue, ',' ) > 0 ){
                $mixValue = explode( ',', $mixValue );
            }
-           if( is_array( $mixValue ) )
-           {
+
+           if( is_array( $mixValue ) ){
                // passar o objeto e o nome do botão se for informado o nome de uma função para tratamento do click
                $onClick = $strOnClick;
                if( ( string ) $strOnClick != '' ) {
@@ -5222,13 +5221,11 @@ class TForm Extends TBox
                        $strAction = null;
                        $strOnClick = $onClick . '("' . $value . '",this)';
                    }
-                   $btn = new TButton( $strName, $strValue, $strAction, $strOnClick, $strConfirmMessage, $strImage, $strImageDisabled, $strHint );
-                   if( $boolFooter )
-                   {
+                   $btn = new TButton( $strName, $strValue, $strAction, $strOnClick, $strConfirmMessage
+                                     , $strImage, $strImageDisabled, $strHint );
+                   if( $boolFooter ) {
                        $this->footerButtons[ $btn->getId() ] = $btn;
-                   }
-                   else
-                   {
+                   } else {
                        $this->addDisplayControl( new TDisplayControl( $strLabel, $btn, $boolLabelAbove, $boolNewLine, false, $strVerticalAlign ) );
                        //$dc->setCss('text-align',$strHorizontalAlign);
                        $btn->setAttribute('align',$strHorizontalAlign);
@@ -5237,38 +5234,26 @@ class TForm Extends TBox
                    // colocar os botões lado a lado na horizontal
                    $boolNewLine = false;
                }
-           }
-           else if( !is_object( $mixValue ) )
-           {
-               if( !isset( $strName ) )
-               {
-                   if( isset( $mixValue ) )
-                   {
+           } else if( !is_object( $mixValue ) ) {
+               if( !isset( $strName ) ) {
+                   if( isset( $mixValue ) ) {
                        $strName = strtolower( $this->removeIllegalChars( $mixValue ) );
                    }
                }
                $button = new TButton( $strName, $mixValue, $strAction, $strOnClick, $strConfirmMessage, $strImage, $strImageDisabled, $strHint );
-               if( $boolFooter )
-               {
+               if( $boolFooter ) {
                    $this->footerButtons[ $button->getId() ] = $button;
-               }
-               else
-               {
+               } else {
                    $dc = $this->addDisplayControl( new TDisplayControl( $strLabel, $button, $boolLabelAbove, $boolNewLine, false, $strVerticalAlign ) );
                    //$dc->setCss('text-align',$strHorizontalAlign);
                    $button->setAttribute('align',$strHorizontalAlign);
                }
-           }
-           else
-           {
+           } else {
                $strName = $mixValue->getName();
                $button = $mixValue;
-               if( $boolFooter )
-               {
+               if( $boolFooter ) {
                    $this->footerButtons[ $button->getId() ] = $button;
-               }
-               else
-               {
+               } else {
                    $this->addDisplayControl( new TDisplayControl( null, $button, false, $boolNewLine, false, $strVerticalAlign ) );
                    //$dc->setCss('text-align',$strHorizontalAlign);
                    $button->setAttribute('align',$strHorizontalAlign);
@@ -5359,12 +5344,10 @@ class TForm Extends TBox
             */
            $function = is_null($strJsCallback) ? 'null' : $strJsCallback;
            $functionBeforeSend = is_null($strJsBeforeSend) ? 'null':$strJsBeforeSend;
-           if( is_null( $strAction ) )
-           {
+           if( is_null( $strAction ) ) {
                $strAction = $this->removeIllegalChars( $strValue );
            }
-           if( is_null( $strDataTypeReturn ) )
-           {
+           if( is_null( $strDataTypeReturn ) ) {
                $strDataTypeReturn = 'json'; // json is default
                // @todo validar parametro =>  json || text
            }
@@ -5372,12 +5355,9 @@ class TForm Extends TBox
            //$strOnClick = 'fwAjaxRequest( {"callback": (typeof ' . $function . ' == "function") ? ' . $function . ' : null,"beforeSend": (typeof ' . $functionBeforeSend . ' == "function") ? ' . $functionBeforeSend . ' : null,"action":"' . $strAction . '","async":' . ( ( $boolAsync ) ? 'true' : 'false' ) . ',"dataType":"' . $strDataTypeReturn . '","msgLoad":"' . $strMsgLoading . '","containerId":"' . $strContainerId . '","module":"' . $strModule . '"});';
            $strAction = null;
            $button = new TButton( $strName, $strValue, $strAction, $strOnClick, $strConfirmMessage, $strImage, $strImageDisabled, $strHint );
-           if( $boolFooter )
-           {
+           if( $boolFooter ) {
                $this->footerButtons[ $button->getId() ] = $button;
-           }
-           else
-           {
+           } else {
                $dc=$this->addDisplayControl( new TDisplayControl( $strLabel, $button, $boolLabelAbove, $boolNewLine, false, $strVerticalAlign ) );
                $dc->setCss('text-align',$strHorizontalAlign);
                $button->setAttribute('align',$strHorizontalAlign);
