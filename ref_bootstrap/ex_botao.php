@@ -70,13 +70,13 @@ $btn->show();
 
 echo '<br>';
 echo '<br>';
-$btn = new TButton('AAA', 'BBB','CCC','DDD');
+$btn = new TButton('Alterar',null);
 $btn->setClass('btn btn-sm btn-warning icon update');
 $btn->show();
 
 echo '<br>';
 echo '<br>';
-$btn = new TButton('AAA', 'BBB','CCC','DDD');
+$btn = new TButton('Excluir', null);
 $btn->setClass('btn btn-sm btn-danger icon delete');
 $btn->show();
 

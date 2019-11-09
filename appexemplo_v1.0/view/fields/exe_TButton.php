@@ -47,8 +47,11 @@ $frm = new TForm('Exemplo do TButton');
 
 $frm->addNumberField('num_peso', 'Peso Unitário:', 5, true, 2, true)->setExampleText('Kg');
 $frm->addButton('Limpar', null, 'Limpar', null, null, false, false);
-$btn = $frm->addButton('Exemplo 09', 'ccc', 'act08');
-$btn->setClass('btn btn-sm btn-danger icon delete');
+
+$btn = $frm->addButton('Exemplo 09', null, 'act08', null, null, false, false);
+$btn->setClass('icon delete btn btn-sm btn-danger');
+//FormDinHelper::debug($btn);
+d($btn);
 
 $frm->addButton('Exemplo 09 - img', null, 'act09', null, null, true, false,'joia.gif');
 $frm->addButton('Exemplo 09 - img desabilitado', null, 'act09d', null, null, true, false,'joia.gif','joia_desabilitado.gif');
