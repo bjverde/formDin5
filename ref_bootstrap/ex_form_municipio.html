@@ -18,8 +18,118 @@
     <div class="card-header">
         <h1>Exemplo Table</h1>
     </div> 
-    <div class="card-body"></div>
+    <div class="card-body">xxx</div>
     <form>
+            <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Usuário" aria-label="Usuário" aria-describedby="basic-addon1">
+                  </div>
+                  
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Recipiente para nickname" aria-label="Recipiente para nickname" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">@exemplo.com</span>
+                    </div>
+                  </div>
+                  
+                  <label for="basic-url">Sua tão honrada URL</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon3">https://exemplo.com.br/users/</span>
+                    </div>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                  </div>
+                  
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">R$</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Quantia">
+                    <div class="input-group-append">
+                      <span class="input-group-text">.00</span>
+                    </div>
+                  </div>
+                  
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Addon com textarea</span>
+                    </div>
+                    <textarea class="form-control" aria-label="Com textarea"></textarea>
+                  </div>
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                Destaque
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Nome">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Sobrenome">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" type="text" placeholder="Input só de leitura, aqui..." readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+                <input class="form-control" type="text" placeholder="Input só de leitura, aqui..." readonly>
+            <label for="exampleInputEmail1">Endereço de email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seu email">
+            <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Senha</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Clique em mim</label>
+        </div>
+        <hr>
+        <fieldset class="form-group">
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+            <div class="col-sm-10">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="opcao1" checked>
+                <label class="form-check-label" for="gridRadios1">
+                Primeiro radio
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="opcao2">
+                <label class="form-check-label" for="gridRadios2">
+                Segundo radio
+                </label>
+            </div>
+            <div class="form-check disabled">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="opcao3" disabled>
+                <label class="form-check-label" for="gridRadios3">
+                Terceiro radio desativado
+                </label>
+            </div>
+            </div>
+        </div>
+        </fieldset>
+        <div class="form-group row">
+        <div class="col-sm-2">Checkbox</div>
+        <div class="col-sm-10">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck1">
+            <label class="form-check-label" for="gridCheck1">
+                Checkbox exemplo
+            </label>
+            </div>
+        </div>
+        </div>
+        <hr>
         <div class="form-group">
           <label for="exampleFormControlInput1">Endereço de email</label>
           <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="nome@exemplo.com">
@@ -27,11 +137,10 @@
         <div class="form-group">
           <label for="exampleFormControlSelect1">Select de exemplo</label>
           <select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+                <option selected>Escolher...</option>
+                <option value="1">Um</option>
+                <option value="2">Dois</option>
+                <option value="3">Três</option>
           </select>
         </div>
         <div class="form-group">
@@ -48,6 +157,12 @@
           <label for="exampleFormControlTextarea1">Exemplo de textarea</label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
+
+        <div class="form-group">
+                <label for="exampleFormControlFile1">Exemplo de input de arquivo</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+              </div>        
+
         <button id="find" type="button" class="btn btn-primary icon find">Buscar</button>
         <button id="save" type="button" class="btn btn-success icon save">Salvar</button>
         <button id="erase"type="button" class="btn btn-light icon erase">Limpar</button>
@@ -98,7 +213,7 @@
                             S
                         </td>
                         <td id="gd_td_1" column_index="6"  class="fwGridCellAction" line_number="1" style="text-align:center;padding:2.5px;" nowrap="true">
-                            <button id="gdExcluir" type="button" class="btn btn-warning icon update"></button>
+                            <button id="gdAlerar" type="button" class="btn btn-warning icon update"></button>
                             <button id="gdExcluir" type="button" class="btn btn-danger icon delete"></button>
                         </td>
                     </tr>
