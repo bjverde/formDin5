@@ -228,10 +228,12 @@ class TForm Extends TBox
             $this->addJsFile( $this->getBase().'lib/bootstrap/js/bootstrap.min.js' );
             
             //Font Awesome Icons
+            $this->addCssFile($this->getBase().'lib/font-awesome/css/fontawesome-all.min.css' );
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-brands.min.css' );
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-regular.min.css' );
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fa-solid.min.css' );
             $this->addCssFile($this->getBase().'lib/font-awesome/css/fontawesome.min.css' );
+            $this->addCssFile($this->getBase().'lib/font-awesome/css/brands.min.css');
             
             $this->addJsFile( 'jquery/jlayout/jquery.jlayout.min.js');
             $this->addJsFile( 'jquery/jquery-ui-all.js');
@@ -252,9 +254,10 @@ class TForm Extends TBox
             $this->addJsFile( 'calendario/calendar-br.js' );
             $this->addJsFile( 'calendario/calendar-setup.js' );
             $this->addCssFile( 'calendario/calendar-win2k-cold-1.css' );
-            $this->addCssFile( 'jquery/ui/base/base.css' );
-            //$this->addJsFile( 'sorttable.js' );
+            $this->addCssFile( 'jquery/ui/base/base.css' );                        
             $this->addCssFile( 'FormDin4.css' );
+            
+            $this->addJsFile( 'sorttable.js' );
             $this->addJsFile( 'lazyload/lazyload-min.js' );
             $this->addJsFile( 'jquery/jquery.qtip.min.js' );;
             

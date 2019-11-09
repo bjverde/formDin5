@@ -48,6 +48,10 @@ if(!defined('ENCODINGS')){ define('ENCODINGS','UTF-8'); }
 include_once( 'autoload_formdin.php');
 class TGrid extends TTable
 {
+
+    const CSS_CLASS_BTN_UPDATE = 'btn btn-sm btn-warning icon update';
+    const CSS_CLASS_BTN_DELETE = 'btn btn-sm btn-danger icon delete';
+
     private $width;
     private $height;
     private $columns;
@@ -1217,20 +1221,30 @@ class TGrid extends TTable
         // adicionar os botões Alterar e Excluir
         if ( $this->getCreateDefaultButtons() ) {
             $imgEdit = null;
-            $imgDeleter = null;
+            $imgDelete = null;
             
             if ( $this->getUseDefaultImages() ) {
-                $imgEdit = 'alterar.gif';
-                $imgDelete = 'lixeira.gif';
+                //FormDin4
+                //$imgEdit = 'alterar.gif';
+                //$imgDelete = 'lixeira.gif';
+                
+                //FormDin5
+                $imgEdit = null;
+                $imgDelete = null;
             }
             
             if ( $this->getCreateDefaultEditButton() ) {
-                $this->addbutton( 'Alterar', $this->getId() . '_alterar', null, null, null, $imgEdit, null, 'Alterar' );
+                $this->addbutton('Alterar', $this->getId() . '_alterar', null
+                                ,null, null, $imgEdit, null, 'Alterar'
+                                ,false,self::CSS_CLASS_BTN_UPDATE
+                                );
             }
             
             if ( $this->getCreateDefaultDeleteButton() ) {
-                //$this->addButton('Excluir',$this->getId().'_excluir',null,null,'Confirma exclusão ?',$imgDelete,null,'Excluir');
-                $this->addButton( 'Excluir', $this->getId() . '_excluir', null, 'fwGridConfirmDelete()', null, $imgDelete, null, 'Excluir' );
+                $this->addButton('Excluir', $this->getId() . '_excluir', null
+                                ,'fwGridConfirmDelete()', null, $imgDelete, null, 'Excluir'
+                                ,false,self::CSS_CLASS_BTN_DELETE
+                                );
             }
         }
     }
@@ -1540,9 +1554,10 @@ class TGrid extends TTable
      * @param string $strConfirmMessage - 5: Mensagem com caixa de confirmação
      * @param string $strImage          - 6: Imagem que irá aparecer
      * @param string $strImageDisabled  - 7: Imagem quado desabilitado
-     * @param string $strHint
-     * @param boolean $boolSubmitAction
-     * @return object> TButton
+     * @param string $strHint           - 8: Texto Explicação
+     * @param boolean $boolSubmitAction - 9: 
+     * @param string $strHint           - 10: class css que deve ser aplicada
+     * @return object TButton
      */
     public function addButton( $strRotulo
         , $strAction = null
@@ -1553,6 +1568,7 @@ class TGrid extends TTable
         , $strImageDisabled = null
         , $strHint = null
         , $boolSubmitAction = null
+        , $css_class = null
         ){
             if ( is_null( $strName ) ){
                 $strName = $this->getId() . ucwords( $this->removeIllegalChars( $strRotulo ) );
@@ -1560,7 +1576,13 @@ class TGrid extends TTable
             if ( is_null( $strAction ) && is_null( $strOnClick ) ){
                 $strAction = strtolower( $this->getId() . '_' . $strRotulo );
             }
-            $this->buttons[ $strName ] = new TButton( $strName, $strRotulo, $strAction, $strOnClick, $strConfirmMessage, $strImage, $strImageDisabled, $strHint, $boolSubmitAction );
+            $btn = new TButton( $strName, $strRotulo, $strAction, $strOnClick
+                              , $strConfirmMessage, $strImage, $strImageDisabled
+                              , $strHint, $boolSubmitAction );
+            if(!empty($css_class)){
+                $btn->setClass($css_class);
+            }
+            $this->buttons[ $strName ] = $btn;
             // se o usuário adicionar um botão, cancelar a criação dos botões padrão de alterar e excluir
             $this->enableDefaultButtons( false );
             return $this->buttons[ $strName ];

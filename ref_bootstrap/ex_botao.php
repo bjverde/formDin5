@@ -21,8 +21,12 @@ require_once '../base/core/webform/TButton.class.php';
 
 
     <link rel="stylesheet" type="text/css" href="../base/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/fontawesome.min.css">
     <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/fa-brands.min.css">
-    <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/fontawesome.min.css">    
+    <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/brands.min.css">
+    <link rel="stylesheet" type="text/css" href="../base/lib/font-awesome/css/fa-regular.min.css">
+    
     <link rel="stylesheet" type="text/css" href="formCustom.css">    
 
 
@@ -62,6 +66,18 @@ echo '<br>';
 echo '<br>';
 $btn = new TButton('AAA', 'BBB','CCC','DDD');
 $btn->setClass('btn btn-danger');
+$btn->show();
+
+echo '<br>';
+echo '<br>';
+$btn = new TButton('AAA', 'BBB','CCC','DDD');
+$btn->setClass('btn btn-sm btn-warning icon update');
+$btn->show();
+
+echo '<br>';
+echo '<br>';
+$btn = new TButton('AAA', 'BBB','CCC','DDD');
+$btn->setClass('btn btn-sm btn-danger icon delete');
 $btn->show();
 
 ?>

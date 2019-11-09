@@ -173,8 +173,14 @@ class TLayout extends THtmlPage {
 
 
 	$this->addCssFile('lib/bootstrap/css/bootstrap.min.css');
-	$this->addCssFile('lib/font-awesome/css/fa-brands.min.css');
-	$this->addCssFile('lib/font-awesome/css/fontawesome.min.css');
+
+	//Font Awesome Icons
+	$this->addCssFile($this->getBase().'lib/font-awesome/css/fontawesome-all.min.css' );
+	$this->addCssFile($this->getBase().'lib/font-awesome/css/fa-brands.min.css' );
+	$this->addCssFile($this->getBase().'lib/font-awesome/css/fa-regular.min.css' );
+	$this->addCssFile($this->getBase().'lib/font-awesome/css/fa-solid.min.css' );
+	$this->addCssFile($this->getBase().'lib/font-awesome/css/fontawesome.min.css' );
+
 	$this->addCssFile('css/app.css');
 
 	$this->addJsFile( 'lib/jquery/jquery.min.js' );
