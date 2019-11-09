@@ -565,8 +565,28 @@ input:focus ,textarea:focus, select:focus {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius:15px;
-
 }
+
+.fwDebugArea{
+	text-align:left;
+	font-family:"Lucida Console", Monaco, monospace;
+	font-size:12px;
+	border-width: 2px;
+    border-style: solid;
+    border-color: #00ff00;
+	background-color: #ffe6c6da;
+}
+
+.fwDebugHeader{
+	color:#007000;
+	font-size:18px;
+}
+
+.fwDebugBody{
+	color:#ff0000;
+	font-size:18px;
+}
+
 /* temas para as caixas de dialogos utilizando o plugin jAlert */
 #popup_container.error {
 	font-family: Arial, sans-serif;

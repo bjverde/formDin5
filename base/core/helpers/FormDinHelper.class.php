@@ -156,5 +156,63 @@ class FormDinHelper
     }
     
 
+    public static function debug( $mixExpression,$strComentario='Debug', $boolExit=FALSE, $showTrace = false ) {
+        if (defined('DEBUGAR') && !DEBUGAR){
+            return;
+        }
+        $arrBacktrace = debug_backtrace();
+        if( isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ){
+            echo '<pre>';
+            foreach ( $arrBacktrace[0] as $strAttribute => $mixValue ){
+                if ( !is_array($mixValue) ){
+                    echo $strAttribute .'='. $mixValue ."\n";
+                }
+            }
+            echo "---------------\n";
+               print_r( $mixExpression );
+               echo '</pre>';
+    
+        } else {
+            echo "<script>try{fwUnblockUI();}catch(e){try{top.app_unblockUI();}catch(e){}}</script>";
+            echo '<fieldset class="fwDebugArea">';
+            echo '<legend  class="fwDebugHeader">'.$strComentario.'</legend>';
+            echo '<pre>';
+            foreach ( $arrBacktrace[0] as $strAttribute => $mixValue ) {
+                if( is_string( $mixValue ) ) {
+                    echo "<b>" . $strAttribute . "</b> ". $mixValue ."\n";
+                }else{
+                    if($strAttribute != 'args'){                        
+                        echo "<b>" . $strAttribute . "</b> ". strval($mixValue) ."\n";
+                    }
+                }
+            }
+            echo '</pre>';
+            echo '<hr>';
+            echo '<legend  class="fwDebugHeader">Trace</legend>';
+            foreach ( $arrBacktrace as $key => $step ) {
+                echo '<br>'.$step['file'].' '.strval($step['line']);
+            }
+            echo '<hr>';
+            
+            echo '<legend  class="fwDebugBody">'.$strComentario.'</legend>'."\n";
+            ini_set('xdebug.var_display_max_depth', -1);
+            ini_set('xdebug.var_display_max_children', -1);
+            ini_set('xdebug.var_display_max_data', -1);
+            echo '<pre>';
+            if( is_object($mixExpression) ) {
+                var_dump( $mixExpression );
+            } else {
+                var_dump( $mixExpression );
+            }
+            echo '</pre>';
+            echo '</fieldset>';
+
+            if ( $boolExit ) {
+                echo '<br /><font color="#700000" size="4"><b>DIE!!!!</b></font>';
+                exit();
+            }
+        }
+    }
+
 }
 ?>
