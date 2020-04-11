@@ -14,6 +14,7 @@ This version has the proposal to be the next version of **[FormDin 4 in GitHub.]
 
 Used libraries
 
+* [Adinati FrameWork 7.1](https://www.adianti.com.br/)
 * BootStrap 4.1.3
 * Jquery 3.3.1
 * FPF 1.8.2
@@ -23,12 +24,13 @@ Used libraries
 
 FormDin ou Formulário Dinâmico é um Framework php simples para criar sistema web de forma rápida e fácil.
 
-Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. Por favor use a versão 4 para sistemas em produção.
+Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. O FormDin 5 é um meta FrameWork, por ser conconstruido sobre o [Adinati FrameWork 7.1](https://www.adianti.com.br/).
 
 # Sobre
 
 Bibliotecas usadas
 
+* [Adinati FrameWork 7.1](https://www.adianti.com.br/)
 * BootStrap 4.1.3
 * Jquery 3.3.1
 * FPF 1.8.2
