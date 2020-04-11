@@ -1,0 +1,200 @@
+html, body {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    transition:all 0.3s ease;
+}
+header{
+    display    :table;
+    width	   :100%;
+    background :#efefef;
+}
+#app_header_logo{
+    display  :table-cell;
+}
+#app_header_title{
+    display  :table-cell;
+}
+#app_header_login{
+    display  :table-cell;
+}
+.embed-responsive-1by1 {
+    background-color: #000;
+}
+.rodape{
+    display  :table;
+    width	    :100%;
+    border			:0px;
+	font-size		:10px;
+	text-align		:center;
+	vertical-align	:middle;
+	color			:navy;
+	background		:#ffc24f;
+    height          :20px;
+    bottom: 0;
+    position: absolute;
+    z-index: -999;
+}
+#app_footer_message{
+    display  :table-cell;
+}
+#app_footer_company{
+    display  :table-cell;
+}
+#app_footer_module{
+    display  :table-cell;
+}
+
+
+.menuIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.table-hover tbody tr:hover td {
+    /* background-color: rgb(255, 255, 5); */
+    background: #D0D0D0 url(imagens/fwSmallDarkGradient.png) left center repeat-x !important;
+}
+
+.th-mobile{
+    display: none;
+}
+
+.fwButton
+{
+	font-family:Arial,Helvetica, Geneva, Sans-Serif;
+	font-size:11px;
+	border:1px outset silver;
+	background-color:#E1E1E1;
+	background:#ddd url(imagens/fwbuttonbg.gif) left center repeat-x;
+	color:blue;
+	cursor:pointer;
+	position:relative;
+}
+.fwButton:hover
+{
+	cursor:pointer;
+	text-decoration: underline;
+	background:#ddd url(imagens/fwbuttonbg.gif) left center repeat-y;
+	text-decoration: underline;
+	/*background: url(../imagens/fwsubmit-btn.gif) no-repeat bottom left;*/
+}
+
+
+/************************
+    BOOTSTRAP
+****************************/
+
+.icon::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+.find::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f002";
+}
+.save::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f067";
+}
+.erase::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f12d";
+}
+.update::before {
+     font-family: "Font Awesome 5 Free";
+     font-weight: 900;
+     content: "\f044";
+}
+.delete::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f2ed";
+}
+
+/****************************************************/
+@media screen and (max-width: 600px) {
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    
+    table tr {
+      display: block;
+      margin-top: 20px;
+    }
+    
+    table td {
+      display: block;
+    }
+
+    .th-mobile {
+        display: inline-block;
+        font-weight: bold
+    }
+    #frame {
+      display: none;
+    }
+    #klaus {
+        width: 100%;
+        
+        
+    }
+  }
+@media screen and (min-height: 700px) {
+#klaus {
+    display: none;
+}
+#frame {
+    height: 100%;
+}
+}
+.map-responsive{
+    overflow:hidden;
+    padding-bottom:36.5%;
+    position:relative;
+    height:0;
+    margin-bottom: 0;
+}
+.map-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+@media screen and (min-height: 900px) {
+#klaus {
+    display: none;
+}
+#frame {
+    height: 100%;
+}
+}
+.map-responsive{
+    overflow:hidden;
+    padding-bottom:58.5%;
+    position:relative;
+    height:0;
+    margin-bottom: 0;
+}
+.map-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+  
