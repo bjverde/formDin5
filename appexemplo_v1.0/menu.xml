@@ -6,16 +6,16 @@
                 <icon>fa:align-left fa-fw</icon>
                 <menu>
                     <menuitem label='Simples'>
-                        <icon>fa:table fa-fw</icon>
-                        <action>EmpresaForm</action>
+                        <icon>fa:align-left fa-fw</icon>
+                        <action>exe_TextField</action>
                     </menuitem>            
                     <menuitem label='Máscara'>
-                        <icon>fa:table fa-fw</icon>
-                        <action>SocioForm</action>
+                        <icon>fa:align-left fa-fw</icon>
+                        <action>exe_maskField</action>
                     </menuitem>
                     <menuitem label='Memo'>
-                        <icon>fa:table fa-fw</icon>
-                        <action>CnaesSecundarioForm</action>
+                        <icon>fa:align-left fa-fw</icon>
+                        <action>exe_TMemo</action>
                     </menuitem>          
                 </menu>
             </menuitem>            
