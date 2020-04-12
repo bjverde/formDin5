@@ -5,7 +5,7 @@
  * SourceCode https://github.com/bjverde/formDin5
  * @author Reinaldo A. Barrêto Junior
  * 
- * É uma reconstrução do FormDin 4 Sobre o Adianti 7.1
+ * É uma reconstrução do FormDin 4 Sobre o Adianti 7
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
