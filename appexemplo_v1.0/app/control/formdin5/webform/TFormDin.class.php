@@ -14,8 +14,16 @@ class TFormDin
 
     /**
      * Método construtor da classe do Formulario Padronizado em BoorStrap
-     * Reconstruido FormDin 4 Sobre o Adianti 7
+     * ------------------------------------------------------------------------
+     * Reconstruido FormDin 4 Sobre o Adianti 7.1
+     * 
+     * FormDin 5 - Alguns parametros estão marcados como DEPRECATED por não 
+     * funcionar no Adianti foram mantidos para diminuir o impacto sobre
+     * as migrações.
      *
+     * FORMDIN5 = Parametro novo disponivel apenas na nova versão
+     * NOT_IMPLEMENTED = parametros que serão implementados em versões futuras
+     * ------------------------------------------------------------------------
      * <code>
      * 	$frm = new TFormDin('Título do Formuláio');
      * 	$frm->show();
