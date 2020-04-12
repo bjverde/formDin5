@@ -1,19 +1,60 @@
 <menu>
-    <menuitem label='Home'>
-        <icon>fa:home fa-fw</icon>
+    <menuitem label='Campos'>
+        <icon>fa:user fa-fw</icon>
         <menu>
-            <menuitem label='Empresas'>
-                <icon>fa:table fa-fw</icon>
-                <action>EmpresaForm</action>
+            <menuitem label='Texto'>
+                <icon>fa:align-left fa-fw</icon>
+                <menu>
+                    <menuitem label='Simples'>
+                        <icon>fa:table fa-fw</icon>
+                        <action>EmpresaForm</action>
+                    </menuitem>            
+                    <menuitem label='Máscara'>
+                        <icon>fa:table fa-fw</icon>
+                        <action>SocioForm</action>
+                    </menuitem>
+                    <menuitem label='Memo'>
+                        <icon>fa:table fa-fw</icon>
+                        <action>CnaesSecundarioForm</action>
+                    </menuitem>          
+                </menu>
             </menuitem>            
-            <menuitem label='Socios'>
-                <icon>fa:table fa-fw</icon>
+            <menuitem label='HTML'>
+                <icon>fab:html5 fa-fw</icon>
                 <action>SocioForm</action>
             </menuitem>
-            <menuitem label='CNEA'>
+            <menuitem label='Coord GMS'>
+                <icon>fa:map-marker fa-fw</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>
+            <menuitem label='Select'>
+                <icon>fa:sort-down fa-fw</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>
+            <menuitem label='Radio'>
                 <icon>fa:table fa-fw</icon>
                 <action>CnaesSecundarioForm</action>
-            </menuitem>          
+            </menuitem>
+            <menuitem label='Check'>
+                <icon>fa:check-square fa-fw</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>
+            <menuitem label='Arquivo ou Blob'>
+                <icon>fa:check-square fa-fw</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>
+            <menuitem label='Númerico'>
+                <icon>fa:check-square fa-fw</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>
+            <menuitem label='Brasil'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>
+            <menuitem label='Data e hora'>
+                <icon>fa:check-square fa-fw</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>             
         </menu>
     </menuitem>
     <menuitem label='Facilitadores'>
@@ -28,7 +69,75 @@
                 <action>SystemDatabaseExplorer</action>
             </menuitem>
         </menu>
-    </menuitem>    
+    </menuitem>
+    <menuitem label='Containers'>
+        <icon>fa:life-ring fa-fw</icon>
+        <menu>
+            <menuitem label='Ajuda'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>AjudaView</action>
+            </menuitem>      
+            <menuitem label='Ver módulos'>
+                <icon>fa:cube fa-fw</icon>
+                <action>SystemModulesCheckView</action>
+            </menuitem>
+            <menuitem label='Setup PHP'>
+                <icon>fa:code fa-fw</icon>
+                <action>SystemPHPInfoView</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='Mensagens e Ajuda'>
+        <icon>fa:life-ring fa-fw</icon>
+        <menu>
+            <menuitem label='Ajuda'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>AjudaView</action>
+            </menuitem>      
+            <menuitem label='Ver módulos'>
+                <icon>fa:cube fa-fw</icon>
+                <action>SystemModulesCheckView</action>
+            </menuitem>
+            <menuitem label='Setup PHP'>
+                <icon>fa:code fa-fw</icon>
+                <action>SystemPHPInfoView</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='JavaScript'>
+        <icon>fab:js fa-fw</icon>
+        <menu>
+            <menuitem label='Ajuda'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>AjudaView</action>
+            </menuitem>      
+            <menuitem label='Ver módulos'>
+                <icon>fa:cube fa-fw</icon>
+                <action>SystemModulesCheckView</action>
+            </menuitem>
+            <menuitem label='Setup PHP'>
+                <icon>fa:code fa-fw</icon>
+                <action>SystemPHPInfoView</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='PDF'>
+        <icon>fa:file-pdf fa-fw red</icon>
+        <menu>
+            <menuitem label='Ajuda'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>AjudaView</action>
+            </menuitem>      
+            <menuitem label='Ver módulos'>
+                <icon>fa:cube fa-fw</icon>
+                <action>SystemModulesCheckView</action>
+            </menuitem>
+            <menuitem label='Setup PHP'>
+                <icon>fa:code fa-fw</icon>
+                <action>SystemPHPInfoView</action>
+            </menuitem>
+        </menu>
+    </menuitem>        
     <menuitem label='Ajuda'>
         <icon>fa:life-ring fa-fw</icon>
         <menu>
@@ -45,5 +154,5 @@
                 <action>SystemPHPInfoView</action>
             </menuitem>
         </menu>
-    </menuitem>    
+    </menuitem>
 </menu>
