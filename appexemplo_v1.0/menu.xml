@@ -1,0 +1,49 @@
+<menu>
+    <menuitem label='Home'>
+        <icon>fa:home fa-fw</icon>
+        <menu>
+            <menuitem label='Empresas'>
+                <icon>fa:table fa-fw</icon>
+                <action>EmpresaForm</action>
+            </menuitem>            
+            <menuitem label='Socios'>
+                <icon>fa:table fa-fw</icon>
+                <action>SocioForm</action>
+            </menuitem>
+            <menuitem label='CNEA'>
+                <icon>fa:table fa-fw</icon>
+                <action>CnaesSecundarioForm</action>
+            </menuitem>          
+        </menu>
+    </menuitem>
+    <menuitem label='Facilitadores'>
+        <icon>fa:magic fa-fw</icon>
+        <menu>
+            <menuitem label='Gera Grafo'>
+                <icon>fa:magic fa-fw</icon>
+                <action>GeraGrafoForm</action>
+            </menuitem>
+            <menuitem label='Database explorer'>
+                <icon>fas:database fa-fw red</icon>
+                <action>SystemDatabaseExplorer</action>
+            </menuitem>
+        </menu>
+    </menuitem>    
+    <menuitem label='Ajuda'>
+        <icon>fa:life-ring fa-fw</icon>
+        <menu>
+            <menuitem label='Ajuda'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>AjudaView</action>
+            </menuitem>      
+            <menuitem label='Ver módulos'>
+                <icon>fa:cube fa-fw</icon>
+                <action>SystemModulesCheckView</action>
+            </menuitem>
+            <menuitem label='Setup PHP'>
+                <icon>fa:code fa-fw</icon>
+                <action>SystemPHPInfoView</action>
+            </menuitem>
+        </menu>
+    </menuitem>    
+</menu>
