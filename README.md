@@ -4,8 +4,9 @@
 
 FormDin or Dynamic Form is a simple php Framework for creating web system quickly and easily.
 
+FormDin created in 2004 by Luís Eugênio Barbosa to increase the speed of development in IBAMA. Version 4 is based on the ideas in the Books [Pablo Dall'Oglio](http://www.dalloglio.net/c5?livros).
 
-This version has the proposal to be the next version of **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. Please use version 4 for systems in production.
+This version has the proposal to be the next version of **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. FormDin 5 is a FrameWork meta, as it is built on the [Adinati FrameWork 7.1](https://www.adianti.com.br/) of [Pablo Dall'Oglio](http://www.dalloglio.net/ ). Therefore, it is not a complete FrameWork, it has total dependence on [Adinati FrameWork 7.1](https://www.adianti.com.br/).
 
 *unfortunately the documentation in English is not complete. The first language is Brazilian Portuguese. Translations are made as soon as possible.*
 
@@ -24,14 +25,24 @@ Used libraries
 
 FormDin ou Formulário Dinâmico é um Framework php simples para criar sistema web de forma rápida e fácil.
 
-Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. O FormDin 5 é um meta FrameWork, por ser conconstruido sobre o [Adinati FrameWork 7.1](https://www.adianti.com.br/).
+Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. O FormDin 5 é um meta FrameWork, por ser conconstruido sobre o [Adinati FrameWork 7.1](https://www.adianti.com.br/) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total depencendia do [Adinati FrameWork 7.1](https://www.adianti.com.br/).
 
 # Sobre
 
-Bibliotecas usadas
-
+## Bibliotecas usadas
 * [Adinati FrameWork 7.1](https://www.adianti.com.br/)
 * BootStrap 4.1.3
 * Jquery 3.3.1
 * FPF 1.8.2
 * Font Awesome
+
+## Branchs
+* Master - tem as modificações e novidades
+* (bk20200410_formdin4to5)[https://github.com/bjverde/formDin5/tree/bk20200410_formdin4to5]- versão congelada, primeira tentatica de criar o FormDin5.
+
+## Aplicações de Exemplo
+* appexemplo_v1.0
+
+# Instalação
+1. Usar o [Adinati FrameWork 7.1](https://www.adianti.com.br/)
+1. Copiar a psta FormDin5 para dentro da pasta `app/controll`
