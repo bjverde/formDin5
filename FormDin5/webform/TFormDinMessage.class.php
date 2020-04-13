@@ -40,34 +40,34 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TFormDinGridColumn
-{
-    protected $adiantiObj;
-    
-    /**
-     * Coluna do Grid Padronizado em BoorStrap
-     * Reconstruido FormDin 4 Sobre o Adianti 7.1
-     *
-     * @param  $action Callback to be executed
-     * @param  string $name  = Name of the column in the database
-     * @param  string $label = Text label that will be shown in the header
-     * @param  string $align = Column align (left, center, right)
-     * @param  string $width = Column Width (pixels)
-     * @return BootstrapFormBuilder
-     */
-    public function __construct($action
-                              , string $name
-                              , string $label
-                              , string $align='left'
-                              , string $width = NULL)
-    {
-        $this->adiantiObj = new TDataGridColumn($name, $label,$align,$width);
-        $tAction = new TAction([$action, 'onReload']);
-        $this->adiantiObj->setAction( $tAction , ['order' => $name]);
-        return $this->getAdiantiObj();
-    }
+class TFormDinMessage {
 
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
+    const CSS_FILE_FORM_DEFAULT_FAIL = 'Arquivo de CSS para o Padrão dos Forms não existe ou não está no formato CSS';
+    const MENU_FILE_FAIL = 'Arquivo do Menu não existe';
+
+    const FORM_MIN_VERSION_INVALID_FORMAT = 'O formato da versão não é válido, informe no formato X.Y.Z';
+    const FORM_MIN_VERSION_BLANK = 'Informe a versão minima do formDin';
+    const FORM_MIN_VERSION_NOT = ' Para esse sistema funcionar a versão mínima necessária do formDin é: ';
+    const FORM_MIN_YOU_VERSION = 'Sua versão do FormDin é : ';
+    
+    const ARRAY_EXPECTED = 'O atribruto deveria ser um array';
+    const ARRAY_KEY_NOT_EXIST = 'Não existe a chave procurada no array FormDin';
+    const ARRAY_ATTRIBUTE_NOT_EXIST = 'Não existe a atributo procurada no array FormDin';
+    
+    const DONOT_QUOTATION = 'Não use aspas simples ou duplas na pesquisa !';
+    
+    const ERROR_FIELD_ID_CANNOT_EMPTY = 'O id do campo não pode ficar em branco';
+
+    const ERROR_HTML_COLOR_HEXA = 'Informe uma cor HTML no formato hexadecimal. Exemplo #efefef !';
+
+    const ERROR_EMPTY_INPUT = 'O Parametro não pode ficar em branco';
+    const ERROR_TYPE_NOT_INT = 'Tipo não númerico! ';
+    const ERROR_TYPE_NOT_ARRAY = 'Tipo não é um array! ';
+    const ERROR_TYPE_NOT_SET = 'A variable has not been defined! ';
+
+    const ERROR_FD5_PARAM_MIGRA  = 'Falha na migração do FormDin 4 para 5.';
+    
+    public function __construct() {
     }
 }
+?>

@@ -39,35 +39,32 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-
-class TFormDinGridColumn
+class MessageHelper
 {
-    protected $adiantiObj;
     
-    /**
-     * Coluna do Grid Padronizado em BoorStrap
-     * Reconstruido FormDin 4 Sobre o Adianti 7.1
-     *
-     * @param  $action Callback to be executed
-     * @param  string $name  = Name of the column in the database
-     * @param  string $label = Text label that will be shown in the header
-     * @param  string $align = Column align (left, center, right)
-     * @param  string $width = Column Width (pixels)
-     * @return BootstrapFormBuilder
-     */
-    public function __construct($action
-                              , string $name
-                              , string $label
-                              , string $align='left'
-                              , string $width = NULL)
+    public static function logRecord(Exception $exception)
     {
-        $this->adiantiObj = new TDataGridColumn($name, $label,$align,$width);
-        $tAction = new TAction([$action, 'onReload']);
-        $this->adiantiObj->setAction( $tAction , ['order' => $name]);
-        return $this->getAdiantiObj();
+        $app = $_SESSION[APLICATIVO];
+        $login = null;
+        $grupo = null;
+        if( ArrayHelper::has('USER',$_SESSION[APLICATIVO]) ) {
+            $login = ( ArrayHelper::has('LOGIN', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['LOGIN']:null );
+            $grupo = ( ArrayHelper::has('GRUPO_NOME', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['GRUPO_NOME']:null );
+        }
+        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION.' ,usuario: '.$login
+        .PHP_EOL.'type: '.get_class($exception).' ,Code: '.$exception->getCode().' ,file: '.$exception->getFile().' ,line: '.$exception->getLine()
+        .PHP_EOL.'mensagem: '.$exception->getMessage()
+        .PHP_EOL."Stack trace:"
+        .PHP_EOL.$exception->getTraceAsString();
+        
+        error_log($log);
     }
-
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
+    
+    public static function logRecordSimple($message)
+    {
+        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION
+        .PHP_EOL.TAB.'mensagem: '.$message;
+        error_log($log);
     }
 }
+?>

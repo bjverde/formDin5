@@ -1,36 +1,124 @@
 <?php
+/*
+ * ----------------------------------------------------------------------------
+ * Formdin 5 Framework
+ * SourceCode https://github.com/bjverde/formDin5
+ * @author Reinaldo A. Barrêto Junior
+ * 
+ * É uma reconstrução do FormDin 4 Sobre o Adianti 7
+ * ----------------------------------------------------------------------------
+ * This file is part of Formdin Framework.
+ *
+ * Formdin Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Formdin.
+ *
+ * O Framework Formdin é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ *
+ * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
+ * para maiores detalhes.
+ *
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ */
 
 /**
  * Classe para criação de formulários web para entrada de dados
+ * ------------------------------------------------------------------------
+ * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.1
  * 
- * Esse é o FormDin 5, que é um reconstrução do 
- * FormDin 4.8 sobre o Adianti 7.1
+ * FormDin 5 - Alguns parametros estão marcados como DEPRECATED por não 
+ * funcionar no Adianti foram mantidos para diminuir o impacto sobre
+ * as migrações.
+ *
+ * FORMDIN5 = Parametro novo disponivel apenas na nova versão
+ * NOT_IMPLEMENTED = parametros que serão implementados em versões futuras
+ * ------------------------------------------------------------------------
  * 
  * @author Reinaldo A. Barrêto Junior
  */
 class TFormDin
 {
     protected $adiantiObj;
-    
+
     /**
-     * Formulario Padronizado em BoorStrap
+     * Método construtor da classe do Formulario Padronizado em BoorStrap
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.1
+     * 
+     * FormDin 5 - Alguns parametros estão marcados como DEPRECATED por não 
+     * funcionar no Adianti foram mantidos para diminuir o impacto sobre
+     * as migrações.
      *
-     * @param string $strName       - 1: Name do Form
-     * @param string $strTitle      - 2: Titulo que irá aparecer no Form
-     * @param boolean $boolRequired - 3: Se vai fazer validação no Cliente (Navegador)
+     * FORMDIN5 = Parametro novo disponivel apenas na nova versão
+     * NOT_IMPLEMENTED = parametros que serão implementados em versões futuras
+     * ------------------------------------------------------------------------
+     * <code>
+     * 	$frm = new TFormDin('Título do Formuláio');
+     * 	$frm->show();
+     * </code>
+     *
+     * @param string $strName   - 1: Titulo que irá aparecer no Form
+     * @param string $strHeight - 2: DEPRECATED: Altura em pixels - padrão=400px
+     * @param string $strWidth  - 3: DEPRECATED: largura em pixels - padrão=800px
+     * @param bool $strFormName - 4: ID nome do formulario para criação da tag form. Padrão=formdin
+     * @param string $strMethod - 5: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
+     * @param string $strAction - 6: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
+     * @param boolean $boolPublicMode - 7: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
+     * @param boolean $boolRequired - 8: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
+     *
      * @return BootstrapFormBuilder
-     */
-    public function __construct(string $strName
-                               ,string $strTitle
+     */    
+    public function __construct(string $strTitle
+                               ,$strHeigh = null
+                               ,$strWidth = null
+                               ,string $strName = 'formdin'
+                               ,$strMethod = null
+                               ,$strAction  = null
+                               ,$boolPublicMode  = null
                                ,$boolClientValidation = true)
     {
+        $this->validateDeprecated($strHeigh,$strWidth);
         $this->adiantiObj = new BootstrapFormBuilder($strName);
         $this->adiantiObj->setFormTitle($strTitle);
         $this->adiantiObj->setClientValidation($boolClientValidation);
+        $this->adiantiObj->generateAria(); // automatic aria-label
         return $this->getAdiantiObj();
     }
 
-    public function getAdiantiObj(){
+    public function validateDeprecated($strHeigh,$strWidth)
+    {
+        ValidateHelper::validadeParam('strHeigh',$strHeigh
+                                     ,ValidateHelper::TYPE_ERRO_WARNING
+                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
+
+        ValidateHelper::validadeParam('strWidth',$strWidth
+                                     ,ValidateHelper::TYPE_ERRO_WARNING
+                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);                                     
+    }
+
+    public function getAdiantiObj()
+    {
         return $this->adiantiObj;
     }
 
@@ -39,7 +127,8 @@ class TFormDin
      * @param array $label - label que será incluido com o campo
      * @param array $campo - campo que será incluido
      */
-    public function addFields(array $label, array $campo){
+    public function addFields(array $label, array $campo)
+    {
         $this->adiantiObj->addFields($label, $campo);
     }
 
