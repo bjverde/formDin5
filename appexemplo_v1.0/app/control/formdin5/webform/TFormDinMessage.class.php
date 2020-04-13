@@ -40,7 +40,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TMessage {
+class TFormDinMessage {
 
     const CSS_FILE_FORM_DEFAULT_FAIL = 'Arquivo de CSS para o Padrão dos Forms não existe ou não está no formato CSS';
     const MENU_FILE_FAIL = 'Arquivo do Menu não existe';
@@ -65,8 +65,9 @@ class TMessage {
     const ERROR_TYPE_NOT_ARRAY = 'Tipo não é um array! ';
     const ERROR_TYPE_NOT_SET = 'A variable has not been defined! ';
 
+    const ERROR_FD5_PARAM_MIGRA  = 'Falha na migração do FormDin 4 para 5.';
+    
     public function __construct() {
     }
-	
 }
 ?>
