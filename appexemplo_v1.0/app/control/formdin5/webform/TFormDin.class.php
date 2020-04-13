@@ -96,11 +96,25 @@ class TFormDin
                                ,$boolPublicMode  = null
                                ,$boolClientValidation = true)
     {
+        $this->validateDeprecated($strHeigh,$strWidth);
         $this->adiantiObj = new BootstrapFormBuilder($strName);
         $this->adiantiObj->setFormTitle($strTitle);
         $this->adiantiObj->setClientValidation($boolClientValidation);
         $this->adiantiObj->generateAria(); // automatic aria-label
         return $this->getAdiantiObj();
+    }
+
+    public function validateDeprecated($strHeigh,$strWidth)
+    {
+        ValidateHelper::validadeParam('strHeigh',$strHeigh
+                                     ,ValidateHelper::TYPE_ERRO_WARNING
+                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
+
+        ValidateHelper::validadeParam('strWidth',$strWidth
+                                     ,ValidateHelper::TYPE_ERRO_WARNING
+                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);                                     
     }
 
     public function getAdiantiObj()

@@ -123,7 +123,7 @@ class ValidateHelper
                 .' O parametro: '.$paramName
                 .$complemento
                 .', na classe: '.$class
-                .', na classe: '.$method
+                .', na metodo: '.$method
                 .', na linha: '.$line
                 ;
             if($typeErro == self::TYPE_ERRO_EXECEPTION){
