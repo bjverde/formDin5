@@ -99,7 +99,8 @@ class FormDinHelper
 			$t = explode("-", $minimumVersion);
 			$minimumVersion = $t[0];
 			if( !FormDinHelper::versionMinimum($minimumVersion) ){
-			    throw new DomainException(TMessage::FORM_MIN_YOU_VERSION.FORMDIN_VERSION.TMessage::FORM_MIN_VERSION_NOT.$minimumVersion);
+                $msg = TMessage::FORM_MIN_YOU_VERSION.self::version().TMessage::FORM_MIN_VERSION_NOT.$minimumVersion;
+			    throw new DomainException($msg);
 			}
 		}
 	}    
