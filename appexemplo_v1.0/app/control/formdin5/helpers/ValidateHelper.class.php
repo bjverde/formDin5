@@ -40,15 +40,19 @@
  */
 class ValidateHelper
 {
-    
+    const TYPE_ERRO_NOTICIE = 'TYPE_ERRO_NOTICIE';
+    const TYPE_ERRO_WARNING = 'TYPE_ERRO_WARNING';
+    const TYPE_ERRO_EXECEPTION = 'TYPE_ERRO_EXECEPTION';
+    const TYPE_ERRO_MSG_DECREP = 'TYPE_ERRO_MSG_DECREP';
+    const TYPE_ERRO_MSG_NOT_IMPLEMENTED = 'TYPE_ERRO_MSG_NOT_IMPLEMENTED';
     
     public static function methodLine($method,$line,$nameMethodValidate)
     {
         if( empty($method) ){
-            throw new InvalidArgumentException(TMessage::ERROR_EMPTY_INPUT.' variable method is null. '.$nameMethodValidate);
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT.' variable method is null. '.$nameMethodValidate);
         }
         if( empty($line) ){
-            throw new InvalidArgumentException(TMessage::ERROR_EMPTY_INPUT.' variable line is null. '.$nameMethodValidate);
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT.' variable line is null. '.$nameMethodValidate);
         }
     }
     
@@ -56,7 +60,7 @@ class ValidateHelper
     {
         self::methodLine($method, $line, __METHOD__);
         if( empty($id) || !is_numeric($id) ){
-            throw new InvalidArgumentException(TMessage::ERROR_TYPE_NOT_INT.'See the method: '.$method.' in the line: '.$line);
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_NOT_INT.'See the method: '.$method.' in the line: '.$line);
         }
     }
     
@@ -64,7 +68,7 @@ class ValidateHelper
     {
         self::methodLine($method, $line, __METHOD__);
         if( is_null($variable) ){
-            throw new InvalidArgumentException(TMessage::ERROR_TYPE_NOT_SET.'See the method: '.$method.' in the line: '.$line);
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_NOT_SET.'See the method: '.$method.' in the line: '.$line);
         }
     }
     
@@ -80,7 +84,7 @@ class ValidateHelper
     {
         self::methodLine($method, $line, __METHOD__);
         if( empty($array) || !is_array($array) ){
-            throw new InvalidArgumentException(TMessage::ERROR_TYPE_NOT_ARRAY.'See the method: '.$method.' in the line: '.$line);
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_NOT_ARRAY.'See the method: '.$method.' in the line: '.$line);
         }
     }
     
@@ -100,6 +104,35 @@ class ValidateHelper
         $typeObjWrong = !($tpdo instanceof TPDOConnectionObj);
         if( !is_null($tpdo) && $typeObjWrong ){
             throw new InvalidArgumentException('Informed class is not an instance of TPDOConnectionObj. See the method: '.$method.' in the line: '.$line);
+        }
+    }
+
+    //--------------------------------------------------------------------------------
+    public static function validadeParam($paramName,$paramValue,$typeErro,$typeErroMsg,$class,$method,$line)
+    {
+        $test = isset($paramValue) && !empty($paramValue);
+        if($test){
+            $complemento = null;
+            if($typeErroMsg==self::TYPE_ERRO_MSG_NOT_IMPLEMENTED){
+                $complemento = ' não foi implementado!';
+            }else{
+                $complemento = ' FOI DESCONTINUADO!!';
+            }
+
+            $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
+                .' O parametro: '.$paramName
+                .$complemento
+                .', na classe: '.$class
+                .', na classe: '.$method
+                .', na linha: '.$line
+                ;
+            if($typeErro == self::TYPE_ERRO_EXECEPTION){
+                throw new InvalidArgumentException($msg);
+            } else if($typeErro == self::TYPE_ERRO_WARNING){
+                trigger_error($msg, E_USER_WARNING);
+            }else{
+                trigger_error($msg, E_USER_NOTICE);
+            }
         }
     }
 }

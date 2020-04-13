@@ -90,16 +90,16 @@ class FormDinHelper
      */
 	public static function setFormDinMinimumVersion($minimumVersion) {		
 		if ( empty($minimumVersion) ) {
-		    throw new DomainException(TMessage::FORM_MIN_VERSION_BLANK);			
+		    throw new DomainException(TFormDinMessage::FORM_MIN_VERSION_BLANK);			
 		} else {
 		    $t = explode(".", $minimumVersion);
 		    if( CountHelper::count($t) != 3 ){
-		        throw new DomainException(TMessage::FORM_MIN_VERSION_INVALID_FORMAT);
+		        throw new DomainException(TFormDinMessage::FORM_MIN_VERSION_INVALID_FORMAT);
 			}
 			$t = explode("-", $minimumVersion);
 			$minimumVersion = $t[0];
 			if( !FormDinHelper::versionMinimum($minimumVersion) ){
-                $msg = TMessage::FORM_MIN_YOU_VERSION.self::version().TMessage::FORM_MIN_VERSION_NOT.$minimumVersion;
+                $msg = TFormDinMessage::FORM_MIN_YOU_VERSION.self::version().TFormDinMessage::FORM_MIN_VERSION_NOT.$minimumVersion;
 			    throw new DomainException($msg);
 			}
 		}
