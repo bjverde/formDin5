@@ -15,8 +15,4 @@
 !base/tmp/index.php
 base/tmp/*
 /sysgen/
-phpunit-code-coverage/*
-!phpunit-code-coverage/phpunit-code-coverage.zip
-
-#FormDin5 Composer Dependence
-/base/vendor/*
+/sysgenad/
