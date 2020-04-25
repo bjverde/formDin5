@@ -60,6 +60,14 @@ class FormDinHelper
 
     const FORMDIN_VERSION = '5.0.0-alpha2';
 
+    const DBMS_ACCESS = 'ACCESS';
+    const DBMS_FIREBIRD = 'ibase';
+    const DBMS_MYSQL    = 'mysql';
+    const DBMS_ORACLE   = 'oracle';
+    const DBMS_POSTGRES = 'pgsql';
+    const DBMS_SQLITE   = 'sqlite';
+    const DBMS_SQLSERVER = 'sqlsrv';
+
     /**
      * Return FormDin version
      * @return string
@@ -105,6 +113,20 @@ class FormDinHelper
 		}
 	}    
     
+    public static function getListDBMS()
+    {
+        $list = array();
+        //$list[self::DBMS_ACCESS]='Access';
+        //$list[self::DBMS_FIREBIRD]='FIREBIRD';
+        $list[self::DBMS_MYSQL]='MySQL';
+        $list[self::DBMS_ORACLE]='Oracle';
+        $list[self::DBMS_POSTGRES]='PostgreSQL';
+        $list[self::DBMS_SQLITE]='SqLite';
+        $list[self::DBMS_SQLSERVER]='SQL Server';
+        return $list;
+    }
+
+
     //--------------------------------------------------------------------------------
     /**
      * Recebe o corpo de um request e um objeto VO. Quando o id do array bodyRequest for
