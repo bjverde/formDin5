@@ -15,15 +15,13 @@ class exe_maskField extends TPage
     {
         parent::__construct();
 
-        $formDin = new TFormDin('Exemplo de Entrada de Dados com Máscara');
-        $this->form =$formDin->getAdiantiObj();
-        
-        $formDinText01Label = 'Nome da pessoa sem quebra';
-        $formDinText01 = new TFormDinTextField('TEXT01',$formDinText01Label);
-        $text01 = $formDinText01->getAdiantiObj();
+        $frm = new TFormDin('Exemplo de Entrada de Dados com Máscara');
 
-        $this->form->addFields( [new TLabel($formDinText01Label)],[$text01]);
+        $frm->addMaskField('c1', 'Código:', false, '99.99.99', null, null, null, null, '99.99.99');
+        $frm->addMaskField('c2', 'Placa do Carro:', false, 'aaa-9999')->setExampleText('aaa-9999');
+        $frm->addMaskField('c3', 'Código de Barras:', false, '9 999999 999999')->setExampleText('9 999999 999999');
 
+        $this->form = $frm->show();
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
