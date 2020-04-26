@@ -40,54 +40,77 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/**
- * Classe para criação campo texto simples
- * ------------------------------------------------------------------------
- * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
- * os parâmetros do metodos foram marcados com:
- * 
- * NOT_IMPLEMENTED = Parâmetro não implementados, talvez funcione em 
- *                   verões futuras do FormDin. Não vai fazer nada
- * DEPRECATED = Parâmetro que não vai funcionar no Adianti e foi mantido
- *              para o impacto sobre as migrações. Vai gerar um Warning
- * FORMDIN5 = Parâmetro novo disponivel apenas na nova versão
- * ------------------------------------------------------------------------
- * 
- * @author Reinaldo A. Barrêto Junior
- */
-class TFormDinTextField extends TFormDinGenericField
+
+ /**
+  * Classe generica de campos do Adianti
+  */
+class TFormDinGenericField
 {
+    protected $adiantiObj;
+    protected $label;
+    
     /**
-     * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
-     * ------------------------------------------------------------------------
      *
-     * @param string $id            - 1: ID do campo
-     * @param string $strLabel      - 2: Label do campo, usado para validações
-     * @param integer $intMaxLength - 3: Tamanho máximo de caracteres
-     * @param boolean $boolRequired - 4: Obrigatorio. DEFAULT = False.
-     * @param string $strValue      - 5: Texto preenchido ou valor default
-     * @param string $strExampleText- 6: Texto de exemplo ou placeholder 
-     * @return TEntry
+     * @param object $objAdiantiField - 1: Objeto de campo do Adianti
+     * @param string $id              - 2: Id do campos
+     * @param string $label           - 3: Label do campo
+     * @param boolean $boolRequired   - 4: Obrigatorio ou não. DEFAULT = False.
+     * @param string $strValue        - 5: Texto preenchido
+     * @param string $placeholder     - 6: PlaceHolder é um Texto de exemplo
      */
-    public function __construct(string $id
+    public function __construct($adiantiObj
+                               ,string $id
                                ,string $label
-                               ,int $intMaxLength = null
                                ,$boolRequired = false
                                ,string $value=null
                                ,string $placeholder =null)
     {
-        $adiantiObj = new TEntry($id);
-        parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
-        $this->setMaxLength($label,$intMaxLength);
+        $this->setLabel($label);
+        $this->setAdiantiObj($adiantiObj);
+        $this->setId($id);
+        $this->setValue($value);
+        $this->setRequired($boolRequired);
+        $this->setExampleText($placeholder);
         return $this->getAdiantiObj();
     }
 
-    public function setMaxLength($label,$intMaxLength){
-        if($intMaxLength>=1){
-            $this->getAdiantiObj()->addValidation($label, new TMaxLengthValidator, array($intMaxLength));
+    public function setAdiantiObj($adiantiObj){
+        if( empty($adiantiObj) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }        
+        return $this->adiantiObj=$adiantiObj;
+    }
+    public function getAdiantiObj(){
+        return $this->adiantiObj;
+    }
+
+    public function setLabel($label){
+        $this->label = $label;
+    }
+    public function getLabel(){
+        return $this->label;
+    }
+
+    public function setId($id){
+        $this->getAdiantiObj()->setId($id);
+    }
+
+    public function setRequired($boolRequired){
+        if($boolRequired){
+            $strLabel = $this->getLabel();
+            $this->getAdiantiObj()->addValidation($strLabel, new TRequiredValidator);
+        }
+    }
+
+    public function setValue($value){
+        if(!empty($value)){
+            $this->getAdiantiObj()->setValue($value);
+        }
+    }
+
+    public function setExampleText($placeholder){
+        if(!empty($placeholder)){
+            $this->getAdiantiObj()->placeholder = $placeholder;
         }
     }
 }

@@ -40,8 +40,9 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+
 /**
- * Classe para criação campo texto simples
+ * Classe para criação campo com mascará
  * ------------------------------------------------------------------------
  * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
  * os parâmetros do metodos foram marcados com:
@@ -55,39 +56,45 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinTextField extends TFormDinGenericField
-{
+class TFormDinMaskField extends TFormDinGenericField
+{    
     /**
      * ------------------------------------------------------------------------
      * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
      * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
      * o que cada marca significa.
      * ------------------------------------------------------------------------
+     * 
+     * S - Represents an alpha character (A-Z,a-z)
+     * 9 - Represents a numeric character (0-9)
+     * A - Represents an alphanumeric character (A-Z,a-z,0-9)
      *
-     * @param string $id            - 1: ID do campo
-     * @param string $strLabel      - 2: Label do campo, usado para validações
-     * @param integer $intMaxLength - 3: Tamanho máximo de caracteres
-     * @param boolean $boolRequired - 4: Obrigatorio. DEFAULT = False.
-     * @param string $strValue      - 5: Texto preenchido ou valor default
-     * @param string $strExampleText- 6: Texto de exemplo ou placeholder 
-     * @return TEntry
+     * @param string $id              - 1: id do campo
+     * @param string $strLabel        - 2: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired   - 3: Obrigatorio
+     * @param string $strMask         - 4: A mascara
+     * @param boolean $boolNewLine    - 5: NOT_IMPLEMENTED Nova linha
+     * @param string $strValue        - 6: texto preenchido
+     * @param boolean $boolLabelAbove - 7: NOT_IMPLEMENTED - Label sobre
+     * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED
+     * @param string $strExampleText  - 9: PlaceHolder é um Texto de exemplo
+     * @param boolean $boolSendMask   - 10: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.
+     * @return void
      */
-    public function __construct(string $id
-                               ,string $label
-                               ,int $intMaxLength = null
-                               ,$boolRequired = false
-                               ,string $value=null
-                               ,string $placeholder =null)
+    public function __construct( $id
+                               , $label=null
+                               , $boolRequired=false
+                               , $strMask=null
+                               , $boolNewLine=null
+                               , $value=null
+                               , $boolLabelAbove=null
+                               , $boolNoWrapLabel=null
+                               , $placeholder=null
+                               , $boolSendMask=false )
     {
         $adiantiObj = new TEntry($id);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
-        $this->setMaxLength($label,$intMaxLength);
+        $this->getAdiantiObj()->setMask($strMask, $boolSendMask);
         return $this->getAdiantiObj();
-    }
-
-    public function setMaxLength($label,$intMaxLength){
-        if($intMaxLength>=1){
-            $this->getAdiantiObj()->addValidation($label, new TMaxLengthValidator, array($intMaxLength));
-        }
-    }
+    }   
 }
