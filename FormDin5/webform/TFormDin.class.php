@@ -62,9 +62,9 @@ class TFormDin
     /**
      * Método construtor da classe do Formulario Padronizado em BoorStrap
      * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      * <code>
      * 	$frm = new TFormDin('Título do Formuláio');
@@ -117,6 +117,11 @@ class TFormDin
         return $this->adiantiObj;
     }
 
+    public function show()
+    {
+        return $this->getAdiantiObj();
+    }
+
     /**
      * Inclusão 
      * @param array $label - label que será incluido com o campo
@@ -135,18 +140,18 @@ class TFormDin
     }
 
     /**
-     * Adiciona um campo oculto ao layout
-     * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
-     * ------------------------------------------------------------------------
-     *
-     * @param string $strName       - 1: Id do Campo
-     * @param string $strValue      - 2: Valor inicial
-     * @param boolean $boolRequired - 3: True = Obrigatorio; False (Defalt) = Não Obrigatorio  
-     * @return THidden
-     */
+    * Adiciona um campo oculto ao layout
+    * ------------------------------------------------------------------------
+    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+    * os parâmetros do metodos foram marcados veja documentação da classe para
+    * saber o que cada marca singinifica.
+    * ------------------------------------------------------------------------
+    *
+    * @param string $strName       - 1: Id do Campo
+    * @param string $strValue      - 2: Valor inicial
+    * @param boolean $boolRequired - 3: True = Obrigatorio; False (Defalt) = Não Obrigatorio  
+    * @return THidden
+    */
     public function addHiddenField(string $id
                                 ,string $strValue=null
                                 ,$boolRequired = false)
@@ -154,15 +159,15 @@ class TFormDin
         $formField = new TFormDinHiddenField($id,$strValue,$boolRequired);
         $objField = $formField->getAdiantiObj();
         $this->adiantiObj->addFields([$objField]);
-        return $objField;
+        return $formField;
     }
 
     /**
      * Adicionar campo entrada de dados texto livre.
      * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
      * @param string $id              -  1: ID do campo
@@ -199,15 +204,15 @@ class TFormDin
         $objField = $formDinTextField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $objField;
+        return $formDinTextField;
     }
 
     /**
      * Cria um RadioGroup com efeito visual de Switch dp BootStrap
      * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      * 
      * @param string $id            - 1: ID do campo
@@ -225,15 +230,15 @@ class TFormDin
         $objField = $formDinSwitch->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $objField;
+        return $formDinSwitch;
     }
  
     /**
      * Adicionar campo entrada de dados texto com mascara
      * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      * 
      * S - Represents an alpha character (A-Z,a-z)
@@ -270,15 +275,15 @@ class TFormDin
         $objField = $formDinSwitch->getAdiantiObj();
         $label = $this->getLabelField($label,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $objField;
+        return $formDinSwitch;
     }    
 
     /**
      * Adicionar campo tipo combobox ou menu select
      * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
      * $mixOptions = array no formato "key=>value". No FormDin 5 só permite array PHP
@@ -324,7 +329,7 @@ class TFormDin
         $objField = $formDinSelectField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $objField;
+        return $formDinSelectField;
     }
 
     //----------------------------------------------------------------
