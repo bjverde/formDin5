@@ -15,14 +15,18 @@ class exe_TextField extends TPage
     {
         parent::__construct();
 
-        $formDin = new TFormDin('Exemplo do Campo Texto');
-        $this->form =$formDin->getAdiantiObj();
-        
-        $formDinText01Label = 'Nome da pessoa sem quebra';
-        $formDinText01 = new TFormDinTextField('TEXT01',$formDinText01Label);
-        $text01 = $formDinText01->getAdiantiObj();
 
-        $this->form->addFields( [new TLabel($formDinText01Label)],[$text01]);
+
+        $frm = new TFormDin('Exemplo do Campo Texto');
+
+        $frm->addTextField('TEXT01','Texto tam 10', 10);
+
+        $frm->addTextField('TEXT01','Texto obrigatorio', 10,true);
+
+        $frm->addTextField('GEN_SYSTEM_NAME', 'Nome do sistem', 50, true);
+
+        $this->form = $frm->show();
+
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
