@@ -199,6 +199,7 @@ class TFormDin
                                                  ,$strLabel
                                                  ,$intMaxLength
                                                  ,$boolRequired
+                                                 ,$intSize
                                                  ,$strValue);
         $formDinTextField->setExampleText($strExampleText);
         $objField = $formDinTextField->getAdiantiObj();

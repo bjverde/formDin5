@@ -68,14 +68,16 @@ class TFormDinTextField extends TFormDinGenericField
      * @param string $strLabel      - 2: Label do campo, usado para validações
      * @param integer $intMaxLength - 3: Tamanho máximo de caracteres
      * @param boolean $boolRequired - 4: Obrigatorio. DEFAULT = False.
-     * @param string $strValue      - 5: Texto preenchido ou valor default
-     * @param string $strExampleText- 6: Texto de exemplo ou placeholder 
+     * @param integer $intSize      - 5: NOT_IMPLEMENTED quantidade de caracteres visíveis
+     * @param string $strValue      - 6: Texto preenchido ou valor default
+     * @param string $strExampleText- 7: Texto de exemplo ou placeholder 
      * @return TEntry
      */
     public function __construct(string $id
                                ,string $label
                                ,int $intMaxLength = null
                                ,$boolRequired = false
+                               ,int $intSize=null
                                ,string $value=null
                                ,string $placeholder =null)
     {

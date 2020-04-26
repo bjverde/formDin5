@@ -75,7 +75,7 @@ class TFormDinGenericField
         $this->setId($id);
         $this->setValue($value);
         $this->setRequired($boolRequired);
-        $this->setExampleText($placeholder);
+        $this->setPlaceHolder($placeholder);
         return $this->getAdiantiObj();
     }
 
@@ -113,12 +113,15 @@ class TFormDinGenericField
         }
     }
 
-    public function setExampleText($placeholder){
+    public function setPlaceHolder($placeholder){
         if(!empty($placeholder)){
             $this->getAdiantiObj()->placeholder = $placeholder;
         }
     }
 
+    public function getPlaceHolder(){
+        return $this->getAdiantiObj()->placeholder;
+    }
 
     //------------------------------------------------------------------------------
 	/**
@@ -133,11 +136,21 @@ class TFormDinGenericField
         $this->tooltip = $strText;
 		$this->getAdiantiObj()->setTip($strText);
 	}
-	//------------------------------------------------------------------------------
 	public function getTooltip()
 	{
 		return $this->tooltip;
+    }
+    //------------------------------------------------------------------------------
+	public function setExampleText($strNewValue=null)
+	{
+        $this->tooltip = $strNewValue;
+		$this->getAdiantiObj()->setTip($strNewValue);
 	}
+	public function getExampleText()
+	{
+		return $this->tooltip;
+    }    
+	//------------------------------------------------------------------------------    
 	public function setReadOnly($boolNewValue=null)
 	{
         $this->readOnly = $boolNewValue;
@@ -150,5 +163,6 @@ class TFormDinGenericField
 	public function getReadOnly()
 	{
 		return ( $this->readOnly === true) ? true : false;
-	}
+    }
+	//------------------------------------------------------------------------------    
 }
