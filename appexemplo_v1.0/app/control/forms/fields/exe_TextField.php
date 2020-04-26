@@ -20,10 +20,12 @@ class exe_TextField extends TPage
         $frm = new TFormDin('Exemplo do Campo Texto');
 
         $frm->addTextField('TEXT01','Texto tam 10', 10);
-
-        $frm->addTextField('TEXT01','Texto obrigatorio', 10,true);
-
-        $frm->addTextField('GEN_SYSTEM_NAME', 'Nome do sistem', 50, true);
+        $frm->addTextField('TEXT02','Texto obrigatorio', 10,true);
+        $frm->addTextField('TEXT03', 'Com valor inicial', 50, null,null,'inicial');
+        $frm->addTextField('TEXT04', 'Place Holder', 50, null,null,null,null,null,'Place Holder');
+        $frm->addTextField('TEXT05', 'Leitura 01', 50, null,null,'inicial')->setReadOnly(true);        
+        $x = $frm->addTextField('TEXT06', 'Leitura 02', 50, null,null,'inicial');
+        $x->setReadOnly(true);
 
         $this->form = $frm->show();
 
