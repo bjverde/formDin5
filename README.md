@@ -25,7 +25,7 @@ Used libraries
 
 FormDin ou Formulário Dinâmico é um Framework php simples para criar sistema web de forma rápida e fácil.
 
-Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. O FormDin 5 é um meta FrameWork, por ser conconstruido sobre o [Adinati FrameWork 7.1](https://www.adianti.com.br/) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total depencendia do [Adinati FrameWork 7.1](https://www.adianti.com.br/).
+Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. O FormDin 5 é um meta FrameWork, por ser conconstruido sobre o [Adinati FrameWork 7.X](https://www.adianti.com.br/) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total depencendia do [Adinati](https://www.adianti.com.br/). É um Framework de transição do FormDin 4 para o Adianti FrameWork, facilitando a migração. É uma abastração das chamadas do FormDin no Adianti
 
 # Sobre
 
@@ -38,7 +38,7 @@ Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.
 
 ## Branchs
 * Master - tem as modificações e novidades
-* (bk20200410_formdin4to5)[https://github.com/bjverde/formDin5/tree/bk20200410_formdin4to5]- versão congelada, primeira tentatica de criar o FormDin5.
+* [bk20200410_formdin4to5](https://github.com/bjverde/formDin5/tree/bk20200410_formdin4to5)- versão congelada, primeira tentatica de criar o FormDin5.
 
 ## Aplicações de Exemplo
 * appexemplo_v1.0
