@@ -150,7 +150,7 @@ class TFormDin
     * @param string $strName       - 1: Id do Campo
     * @param string $strValue      - 2: Valor inicial
     * @param boolean $boolRequired - 3: True = Obrigatorio; False (Defalt) = Não Obrigatorio  
-    * @return THidden
+    * @return TFormDinHiddenField
     */
     public function addHiddenField(string $id
                                 ,string $strValue=null
@@ -181,7 +181,7 @@ class TFormDin
      * @param string $strExampleText  -  9: PlaceHolder é um Texto de exemplo
      * @param boolean $boolLabelAbove - 10: NOT_IMPLEMENTED - Label sobre
      * @param boolean $boolNoWrapLabel- 11: NOT_IMPLEMENTED
-     * @return TEntry
+     * @return TFormDinTextField
      */
     public function addTextField(string $id
                                 ,string $strLabel
@@ -195,16 +195,63 @@ class TFormDin
                                 ,$boolLabelAbove=null
                                 ,$boolNoWrapLabel = null)
     {
-        $formDinTextField = new TFormDinTextField($id
-                                                 ,$strLabel
-                                                 ,$intMaxLength
-                                                 ,$boolRequired
-                                                 ,$strValue);
-        $formDinTextField->setExampleText($strExampleText);
-        $objField = $formDinTextField->getAdiantiObj();
+        $formField = new TFormDinTextField($id
+                                    ,$strLabel
+                                    ,$intMaxLength
+                                    ,$boolRequired
+                                    ,$intSize
+                                    ,$strValue);
+        $formField->setExampleText($strExampleText);
+        $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $formDinTextField;
+        return $formField;
+    }
+
+    /**
+     * Adicionar campo de entrada de texto com multiplas linhas ( memo ) equivalente ao html textarea
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     *
+     * @param string  $strName         - 1: ID do campo
+     * @param string  $strLabel        - 2: Label
+     * @param integer $intMaxLength    - 3: Tamanho maximos
+     * @param boolean $boolRequired    - 4: Obrigatorio
+     * @param integer $intColumns      - 5: Largura use px ou %, valores inteiros serão multiplicados 1.5 e apresentado em px
+     * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param boolean $boolNewLine     - 7: NOT_IMPLEMENTED nova linha
+     * @param boolean $boolLabelAbove  - 8: NOT_IMPLEMENTED Label sobre o campo
+     * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
+     * @param string  $strValue       - 10: texto preenchido
+     * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
+     * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo
+     * @return TFormDinMemoField
+     */
+    public function addMemoField( $strName
+   		                       , $strLabel=null
+   		                       , $intMaxLength
+   		                       , $boolRequired=null
+   		                       , $intColumns=null
+   		                       , $intRows=null
+   		                       , $boolNewLine=null
+   		                       , $boolLabelAbove=null
+   		                       , $boolShowCounter=null
+   		                       , $strValue=null
+                               , $boolNoWrapLabel=null
+                               , $placeholder=null )
+    {
+        $formField = new TFormDinMemoField( $strName, $strLabel, $intMaxLength
+                                      , $boolRequired, $intColumns, $intRows
+                                      , $boolNewLine, $boolLabelAbove
+                                      , $boolShowCounter, $strValue
+                                      , $boolNoWrapLabel, $placeholder );
+        $objField = $formField->getAdiantiObj();
+        $label = $this->getLabelField($strLabel,$boolRequired);
+        $this->addFields([$label], [$objField]);
+    	return $formField;
     }
 
     /**
@@ -226,11 +273,11 @@ class TFormDin
                                   ,$boolRequired = false
                                   ,array $itens= null)
     {
-        $formDinSwitch = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
-        $objField = $formDinSwitch->getAdiantiObj();
+        $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
+        $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $formDinSwitch;
+        return $formField;
     }
  
     /**
@@ -268,14 +315,14 @@ class TFormDin
                                 , $strExampleText=null 
                                 , $boolSendMask=false)
     {
-        $formDinSwitch = new TFormDinMaskField($id,$label,$boolRequired
+        $formField = new TFormDinMaskField($id,$label,$boolRequired
                                               ,$strMask,$boolNewLine,$strValue
                                               ,$boolLabelAbove,$boolNoWrapLabel
                                               ,$strExampleText,$boolSendMask);
-        $objField = $formDinSwitch->getAdiantiObj();
+        $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($label,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $formDinSwitch;
+        return $formField;
     }    
 
     /**
@@ -325,11 +372,11 @@ class TFormDin
                                   ,$boolRequired = false
                                   ,array $mixOptions)
     {
-        $formDinSelectField = new TFormDinSelectField($id,$strLabel,$boolRequired,$mixOptions);
-        $objField = $formDinSelectField->getAdiantiObj();
+        $formField = new TFormDinSelectField($id,$strLabel,$boolRequired,$mixOptions);
+        $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields([$label], [$objField]);
-        return $formDinSelectField;
+        return $formField;
     }
 
     //----------------------------------------------------------------

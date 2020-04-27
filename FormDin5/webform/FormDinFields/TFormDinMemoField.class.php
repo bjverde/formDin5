@@ -55,35 +55,48 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinTextField extends TFormDinGenericField
+class TFormDinMemoField extends TFormDinGenericField
 {
+    const REGEX = '/(\d+)((px?)|(\%?))/';
+
     /**
+     * Adicionar campo de entrada de texto com multiplas linhas ( memo ) equivalente ao html textarea
      * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * @param string $id            - 1: ID do campo
-     * @param string $strLabel      - 2: Label do campo, usado para validações
-     * @param integer $intMaxLength - 3: Tamanho máximo de caracteres
-     * @param boolean $boolRequired - 4: Obrigatorio. DEFAULT = False.
-     * @param integer $intSize      - 5: NOT_IMPLEMENTED quantidade de caracteres visíveis
-     * @param string $strValue      - 6: Texto preenchido ou valor default
-     * @param string $strExampleText- 7: Texto de exemplo ou placeholder 
-     * @return TEntry
+     * @param string  $strName         - 1: ID do campo
+     * @param string  $strLabel        - 2: Label
+     * @param integer $intMaxLength    - 3: Tamanho maximos
+     * @param boolean $boolRequired    - 4: Obrigatorio
+     * @param integer $intColumns      - 5: Qtd colunas
+     * @param integer $intRows         - 6: Qtd linhas
+     * @param boolean $boolNewLine     - 7: NOT_IMPLEMENTED nova linha
+     * @param boolean $boolLabelAbove  - 8: NOT_IMPLEMENTED Label sobre o campo
+     * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
+     * @param string  $strValue       - 10: texto preenchido
+     * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
+     * @return TFormDinMemoField
      */
-    public function __construct(string $id
-                               ,string $label
-                               ,int $intMaxLength = null
-                               ,$boolRequired = false
-                               ,int $intSize=null
-                               ,string $value=null
-                               ,string $placeholder =null)
+    public function __construct($id
+                              , $label=null
+                              , $intMaxLength
+                              , $boolRequired=null
+                              , $intColumns=null
+                              , $intRows=null
+                              , $boolNewLine=null
+                              , $boolLabelAbove=null
+                              , $boolShowCounter=null
+                              , $value=null
+                              , $boolNoWrapLabel=null
+                              , $placeholder=null)
     {
-        $adiantiObj = new TEntry($id);
+        $adiantiObj = new TText($id);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
         $this->setMaxLength($label,$intMaxLength);
+        $this->setSize($intColumns, $intRows);
         return $this->getAdiantiObj();
     }
 
@@ -91,5 +104,31 @@ class TFormDinTextField extends TFormDinGenericField
         if($intMaxLength>=1){
             $this->getAdiantiObj()->addValidation($label, new TMaxLengthValidator, array($intMaxLength));
         }
+    }
+
+    protected function testSize($valeu){
+        if(preg_match(self::REGEX, $valeu,$output)){
+            //FormDinHelper::debug($output);
+            if($output[2]=='px'){
+                $valeu = $output[1];
+            }
+        }else{
+            throw new InvalidArgumentException('use % ou px');
+        }
+        return $valeu;
+    }
+
+    public function setSize($intColumns, $intRows){
+        if(is_numeric($intRows)){
+            $intRows = $intRows * 4;
+        }else{
+            $intRows = $this->testSize($intRows);
+        }
+        if(is_numeric($intColumns)){
+            $intColumns = $intColumns * 1.5;
+        }else{
+            $intColumns = $this->testSize($intColumns);
+        }
+        $this->getAdiantiObj()->setSize($intColumns, $intRows);
     }
 }
