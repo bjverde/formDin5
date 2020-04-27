@@ -19,6 +19,8 @@ class exe_TMemo extends TPage
         $frm->addMemoField('campo_memo_simples', 'Descrição:', 1000, true, 80, 5);
         $frm->addMemoField('memo2', 'Descrição:', 400, false, 120, 30);
         $frm->addMemoField('memo3', 'Memo3:', 400, false,'30%', '10%')->setPlaceHolder('Texto de exemplo 30% largura com 10% de altura');
+        $frm->addMemoField('memo4', 'Memo4:', 400, false,'30%', '10%')->setReadOnly(true);
+        $frm->addMemoField('memo5', 'Memo5:', 400, false,'30%', '10%',null,null,null,'Texto já preenchido');
         
         $this->form = $frm->show();
 

@@ -7,13 +7,26 @@
                 <menu>
                     <menuitem label='Simples'>
                         <icon>fa:align-left fa-fw</icon>
-                        <action>exe_TextField</action>
+                        <menu>
+                            <menuitem label='Texto'>
+                                <icon>fa:align-left fa-fw</icon>
+                                <action>exe_TextField</action>
+                            </menuitem>            
+                            <menuitem label='Máscara'>
+                                <icon>fa:align-left fa-fw</icon>
+                                <action>exe_maskField</action>
+                            </menuitem>
+                            <menuitem label='Memo'>
+                                <icon>fa:align-left fa-fw</icon>
+                                <action>exe_TMemo</action>
+                            </menuitem>          
+                        </menu>
                     </menuitem>            
-                    <menuitem label='Máscara'>
+                    <menuitem label='Rico'>
                         <icon>fa:align-left fa-fw</icon>
                         <action>exe_maskField</action>
                     </menuitem>
-                    <menuitem label='Memo'>
+                    <menuitem label='Funções'>
                         <icon>fa:align-left fa-fw</icon>
                         <action>exe_TMemo</action>
                     </menuitem>          
