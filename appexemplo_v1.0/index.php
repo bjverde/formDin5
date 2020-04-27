@@ -11,13 +11,13 @@ $content     = file_get_contents("app/templates/{$theme}/layout.html");
 $menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
 $content     = str_replace('{MENU}', $menu_string, $content);
 
-$system_version = $ini['system']['version'];
-$head_title  = $ini['system']['head_title'].' - v'.$system_version;
-$content     = str_replace('{head_title}', $head_title, $content);
-$content     = str_replace('{system_version}', $system_version, $content);
-$content     = str_replace('{logo-mini}', $ini['general']['application'], $content);
+$content     = str_replace('{system_name}', $ini['system']['system_name'], $content);
+$content     = str_replace('{system_name_sub}', $ini['system']['system_name_sub'], $content);
+$content     = str_replace('{system_version}', $ini['system']['version'], $content);
+$content     = str_replace('{logo-mini}', $ini['system']['logo-mini'], $content);
 $content     = str_replace('{logo-lg}', $ini['system']['logo-lg'], $content);
 $content     = str_replace('{logo-link-class}', $ini['system']['logo-link-class'], $content);
+$content     = str_replace('{login-link}', $ini['system']['login-link'], $content);
 
 $content     = ApplicationTranslator::translateTemplate($content);
 $content     = str_replace('{LIBRARIES}', file_get_contents("app/templates/{$theme}/libraries.html"), $content);

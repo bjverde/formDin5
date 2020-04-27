@@ -21,17 +21,38 @@
     <link href="app/templates/{template}/css/AdminLTE.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="app/templates/{template}/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="app/templates/{template}/css/fonts/MaterialIcons/material-icons.css" rel="stylesheet">
+
+    <link href="app/templates/{template}/css/formdin5.css" rel="stylesheet">
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
+
+    <header>
+      <div id="app_header_logo">
+          <a href="{login-link}" target=”_blank”><img src="app/templates/{template}/img/formdin_logo_small.png"></a>
+      </div>
+      <div id="app_header_title">
+          <div id="app_header_title_main">
+            {system_name}
+          </div>
+          <div id="app_header_subtitle">
+            {system_name_sub}
+          </div>
+      </div>
+      <div id="app_header_login">
+          Olá, FormDin {system_version}<br>
+      </div>
+    </header>
+
     <div class="wrapper">
 
-      <header class="main-header">
+      <div class="main-header">
         <!-- Logo -->
-        <a href="index.php?class={logo-link-class}" generator="adianti" target="newwindow" class="logo">
+        <a href="{logo-link-class}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini">{logo-mini}</span>
+          <span class="logo-mini layout-logo-mini">{logo-mini}</span>
+          <!--<img src="app/images/favicon-32x32.png" class="logo-mini layout-logo-mini" alt="{head_title}" />-->
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">{logo-lg}</span>
+          <span class="logo-lg layout-logo">{logo-lg}</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -43,7 +64,7 @@
             <span class="icon-bar"></span>
           </a>
         </nav>
-      </header>
+      </div>
       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -73,14 +94,18 @@
         <div id="adianti_right_panel" class="right-panel"></div>
         
       </div><!-- /.content-wrapper -->
-      <footer class="row main-footer">
-        {system_version}        
-      </footer>
       
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
+
+    <footer>
+      <div id="app_footer_message"><b>Version</b> {system_version}</div>
+      <div id="app_footer_company"></div>
+      <div id="app_footer_module">        
+      </div>
+    </footer>    
 
     <!-- AdminLTE App -->
     <script src="app/templates/{template}/js/app.min.js"></script>
