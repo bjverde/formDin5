@@ -108,8 +108,7 @@ class TFormDinMemoField extends TFormDinGenericField
 
     protected function testSize($valeu){
         if(preg_match(self::REGEX, $valeu,$output)){
-            FormDinHelper::debug($output);
-            //$valeu = $output[1];
+            //FormDinHelper::debug($output);
             if($output[2]=='px'){
                 $valeu = $output[1];
             }
