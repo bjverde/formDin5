@@ -57,6 +57,8 @@
  */
 class TFormDinMemoField extends TFormDinGenericField
 {
+    const REGEX = '/(\d+)((px?)|(\%?))/';
+
     /**
      * Adicionar campo de entrada de texto com multiplas linhas ( memo ) equivalente ao html textarea
      * ------------------------------------------------------------------------
@@ -104,9 +106,30 @@ class TFormDinMemoField extends TFormDinGenericField
         }
     }
 
+    protected function testSize($valeu){
+        if(preg_match(self::REGEX, $valeu,$output)){
+            FormDinHelper::debug($output);
+            //$valeu = $output[1];
+            if($output[2]=='px'){
+                $valeu = $output[1];
+            }
+        }else{
+            throw new InvalidArgumentException('use % ou px');
+        }
+        return $valeu;
+    }
+
     public function setSize($intColumns, $intRows){
-        $intRows = $intRows * 10;
-        $intColumns = $intColumns * 3;
+        if(is_numeric($intRows)){
+            $intRows = $intRows * 4;
+        }else{
+            $intRows = $this->testSize($intRows);
+        }
+        if(is_numeric($intColumns)){
+            $intColumns = $intColumns * 1.5;
+        }else{
+            $intColumns = $this->testSize($intColumns);
+        }
         $this->getAdiantiObj()->setSize($intColumns, $intRows);
     }
 }
