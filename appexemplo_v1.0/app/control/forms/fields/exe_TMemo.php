@@ -15,39 +15,11 @@ class exe_TMemo extends TPage
     {
         parent::__construct();
 
-        $this->form = new BootstrapFormBuilder;
-        $this->form->setFormTitle('Exemplo Campo Memo ');
-        $this->form->generateAria(); // automatic aria-label
-
-        $listSituacaoCadastral = SituacaoCadastralEmpresa::getList();
+        $frm = new TFormDin('Exemplo Campo Memo');
+        $frm->addMemoField('campo_memo_simples', 'Descrição:', 1000, true, 80, 5);
+        $frm->addMemoField('memo2', 'Descrição:', 400, false, 120, 30);
         
-        $cnpjLabel = 'CNPJ';
-        $formDinCnpjField = new TFormDinCnpjField('cnpj',$cnpjLabel);
-        $cnpj = $formDinCnpjField->getAdiantiObj();
-
-        $comboMotivoSituacao  = new TCombo('motivo_situacao');
-        $comboMotivoSituacao->addItems($listSituacaoCadastral);
-
-        $razao_social = new TEntry('razao_social');
-        $nome_fantasia = new TEntry('nome_fantasia');
-        $uf = new TEntry('uf');
-        $comboMatrizFilial  = new TCombo('matriz_filial');
-        $comboMatrizFilial->addItems(TipoMatrizFilial::getList());
-        $comboSituacao      = new TCombo('situacao');
-        $comboSituacao->addItems(TipoEmpresaSituacao::getList());        
-        
-
-        $this->form->addFields( [new TLabel($cnpjLabel)],[$cnpj]
-                               ,[new TLabel('Razão Social')],[$razao_social]
-                            );
-        $this->form->addFields( [new TLabel('Nome Fantasia')], [$nome_fantasia] );
-        $this->form->addFields([new TLabel('Situação')], [$comboSituacao]
-                              ,[new TLabel('Motivo Situação')], [$comboMotivoSituacao]
-                              );        
-        $this->form->addFields( [new TLabel('UF')], [$uf]
-                               ,[new TLabel('Matriz')], [$comboMatrizFilial]
-                              );
-
+        $this->form = $frm->show();
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
