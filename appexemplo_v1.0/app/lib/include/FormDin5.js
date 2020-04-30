@@ -51,56 +51,51 @@
 function fwGetObj(nomeObjeto,propriedade)
 {
 	var app_iframe = document.getElementById('app_iframe');
-	if ( app_iframe )
-	{
+	if ( app_iframe ){
 		return app_iframe.contentWindow.fwGetObj(nomeObjeto,propriedade);
-	}
+    }
+    
 	// compatibilidade com formdin3
 	app_iframe = document.getElementById('iframe_area_dados');
-	if ( app_iframe )
-	{
+	if ( app_iframe ){
 		return app_iframe.contentWindow.fwGetObj(nomeObjeto,propriedade);
 	}
 	var obj;
 
-		try {
-		obj=jQuery("#"+nomeObjeto).get(0);
-		} catch(e){}
-		if(!obj)
-		{
-			try{
-			obj=jQuery("#"+nomeObjeto+'disabled').get(0);
-			} catch(e){}
-		}
-		if(!obj)
-		{
-			try{
-			obj=jQuery("#"+nomeObjeto+'_disabled').get(0);
-			} catch(e){}
-		}
-		// procurar em caixa baixa
-	nomeObjeto = nomeObjeto.toLowerCase();
-		if(!obj)
-		{
-			try{
-			obj=jQuery("#"+nomeObjeto).get(0);
-			} catch(e){}
-		}
-		if(!obj)
-		{
-			try{
-			obj=jQuery("#"+nomeObjeto+'disabled').get(0);
-			} catch(e){}
-		}
-		if(!obj)
-		{
-			try{
-			obj=jQuery("#"+nomeObjeto+'_disabled').get(0);
-			} catch(e){}
-		}
+    try {
+        obj=jQuery("#"+nomeObjeto).get(0);
+    } catch(e){}
+    
+    if(!obj){
+        try{
+        obj=jQuery("#"+nomeObjeto+'disabled').get(0);
+        } catch(e){}
+    }
+    if(!obj){
+        try{
+        obj=jQuery("#"+nomeObjeto+'_disabled').get(0);
+        } catch(e){}
+    }
+        
+    // procurar em caixa baixa
+    nomeObjeto = nomeObjeto.toLowerCase();
+    if(!obj){
+        try{
+        obj=jQuery("#"+nomeObjeto).get(0);
+        } catch(e){}
+    }
+    if(!obj){
+        try{
+        obj=jQuery("#"+nomeObjeto+'disabled').get(0);
+        } catch(e){}
+    }
+    if(!obj){
+        try{
+        obj=jQuery("#"+nomeObjeto+'_disabled').get(0);
+        } catch(e){}
+    }
 
-	if( obj && propriedade)
-	{
+	if( obj && propriedade){
 		try {
 			eval('var prop = obj.'+propriedade);
 			return prop;
@@ -129,24 +124,21 @@ function fwRemoverCaractere(input,codigoAscii)
 function fwCheckNumChar(e,max)
 {
 	try {
-		var obj = fwGetObj(e.id+'_counter');
+        var obj = fwGetObj(e.id+'_counter');
 		var texto = e.value.trim();
 		var tamanho = texto.length;
 		obj.style.color='#000000';
-		if( tamanho > max )
-		{
+		if( tamanho > max ){
 			fwRemoverCaractere(e,13);
 			texto = e.value.trim();
 			tamanho = texto.length;
-			if( tamanho > max )
-			{
+			if( tamanho > max ){
 				obj.style.color='red';
 				alert('Limite de '+max+' caracteres atingido!');
 				texto = texto.substr(0,max);
 				e.value=texto;
 				var dif = (tamanho-e.value.length);
-				if( dif > 1 )
-				{
+				if( dif > 1 ){
 					alert( 'Foram removidos '+dif+' caracteres do final do texto.')
 				}
 			}
