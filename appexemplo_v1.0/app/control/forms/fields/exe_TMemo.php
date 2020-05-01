@@ -70,7 +70,7 @@ class exe_TMemo extends TPage
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
         // add form actions
-        $this->form->addAction('Find', new TAction([$this, 'onSearch']), 'fa:search blue');        
+        $this->form->addAction('Send', new TAction(array($this, 'onSend')), 'far:check-circle green');
         $this->form->addActionLink('Clear',  new TAction([$this, 'clear']), 'fa:eraser red');
 
         // creates the page structure using a table
@@ -90,4 +90,15 @@ class exe_TMemo extends TPage
         $this->clearFilters();
         $this->onReload();
     }
+
+    public function onSend($param)
+    {
+        $data = $this->form->getData();
+        $this->form->setData($data);
+        
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+    }
+
 }
