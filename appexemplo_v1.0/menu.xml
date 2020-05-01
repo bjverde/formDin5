@@ -34,7 +34,16 @@
             </menuitem>            
             <menuitem label='HTML'>
                 <icon>fab:html5 fa-fw</icon>
-                <action>SocioForm</action>
+                <menu>            
+                    <menuitem label='HTML'>
+                        <icon>fab:html5 fa-fw</icon>
+                        <action>exe_HtmlField</action>
+                    </menuitem>
+                    <menuitem label='HTML com iFrame'>
+                        <icon>fab:html5 fa-fw</icon>
+                        <action>exe_HtmlField_iframe</action>
+                    </menuitem>          
+                </menu>
             </menuitem>
             <menuitem label='Coord GMS'>
                 <icon>fa:map-marker fa-fw</icon>
