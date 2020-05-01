@@ -94,6 +94,7 @@ class TFormDin
         $this->validateDeprecated($strHeigh,$strWidth);
         $this->adiantiObj = new BootstrapFormBuilder($strName);
         $this->adiantiObj->setFormTitle($strTitle);
+        //$this->adiantiObj->setFieldSizes('100%');
         $this->adiantiObj->setClientValidation($boolClientValidation);
         $this->adiantiObj->generateAria(); // automatic aria-label
         return $this->getAdiantiObj();
