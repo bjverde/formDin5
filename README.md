@@ -45,4 +45,4 @@ Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.
 
 # Instalação
 1. Baixar o [Adinati FrameWork 7.1](https://www.adianti.com.br/) funciona com o template ou FrameWork Puro
-1. Copiar a psta FormDin5 para dentro da pasta `/app/lib/widget` conforme orientação da [Estensibilidade do Adianti](https://www.adianti.com.br/framework-extensibility)
+1. Copiar o conteudo pasta FormDin5 para dentro da pasta `/app/`. Será criada novas pastas `/app/lib/widget/FormDin5` e `/app/lib/include/FormDin5.js` conforme orientação da [Estensibilidade do Adianti](https://www.adianti.com.br/framework-extensibility)
