@@ -127,10 +127,15 @@ class TFormDin
      * Inclusão 
      * @param array $label - label que será incluido com o campo
      * @param array $campo - campo que será incluido
+     * @param array $boolLabelAbove - informa se o Label é acima
      */
-    public function addFields(array $label, array $campo)
+    public function addFields($label, $campo, $boolLabelAbove = false)
     {
-        $this->adiantiObj->addFields($label, $campo);
+        if($boolLabelAbove){
+            $this->adiantiObj->addFields([$label, $campo]);
+        }else{
+            $this->adiantiObj->addFields([$label], [$campo]);
+        }
     }
 
     protected function getLabelField($strLabel,$boolRequired)
@@ -180,7 +185,7 @@ class TFormDin
      * @param boolean $boolNewLine    -  7: NOT_IMPLEMENTED Nova linha
      * @param string $strHint         -  9: NOT_IMPLEMENTED
      * @param string $strExampleText  -  9: PlaceHolder é um Texto de exemplo
-     * @param boolean $boolLabelAbove - 10: NOT_IMPLEMENTED - Label sobre
+     * @param boolean $boolLabelAbove - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel- 11: NOT_IMPLEMENTED
      * @return TFormDinTextField
      */
@@ -193,7 +198,7 @@ class TFormDin
                                 ,$boolNewLine = true
                                 ,string $strHint = null
                                 ,string $strExampleText =null
-                                ,$boolLabelAbove=null
+                                ,$boolLabelAbove=false
                                 ,$boolNoWrapLabel = null)
     {
         $formField = new TFormDinTextField($id
@@ -205,7 +210,7 @@ class TFormDin
         $formField->setExampleText($strExampleText);
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
-        $this->addFields([$label], [$objField]);
+        $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }
 
@@ -224,7 +229,7 @@ class TFormDin
      * @param integer $intColumns      - 5: Largura use px ou %, valores inteiros serão multiplicados 1.5 e apresentado em px
      * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
      * @param boolean $boolNewLine     - 7: NOT_IMPLEMENTED nova linha
-     * @param boolean $boolLabelAbove  - 8: NOT_IMPLEMENTED Label sobre o campo
+     * @param boolean $boolLabelAbove  - 8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
      * @param string  $strValue       - 10: texto preenchido
      * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
@@ -238,7 +243,7 @@ class TFormDin
    		                       , $intColumns=null
    		                       , $intRows=null
    		                       , $boolNewLine=null
-   		                       , $boolLabelAbove=null
+   		                       , $boolLabelAbove=false
    		                       , $boolShowCounter=null
    		                       , $strValue=null
                                , $boolNoWrapLabel=null
@@ -251,7 +256,7 @@ class TFormDin
                                       , $boolNoWrapLabel, $placeholder );
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
-        $this->addFields([$label], [$objField]);
+        $this->addFields($label ,$objField ,$boolLabelAbove);
     	return $formField;
     }
 
@@ -263,21 +268,23 @@ class TFormDin
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      * 
-     * @param string $id            - 1: ID do campo
-     * @param string $strLabel      - 2: Label do campo
-     * @param boolean $boolRequired - 3: Obrigatorio
-     * @param array $itens          - 4: Informe um array do tipo "chave=>valor", com maximo de 2 elementos
+     * @param string $id             - 1: ID do campo
+     * @param string $strLabel       - 2: Label do campo
+     * @param boolean $boolRequired  - 3: Obrigatorio
+     * @param array $itens           - 4: Informe um array do tipo "chave=>valor", com maximo de 2 elementos
+     * @param boolean $boolLabelAbove- 5: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @return TRadioGroup
      */
     public function addSwitchField(string $id
                                   ,string $strLabel
                                   ,$boolRequired = false
-                                  ,array $itens= null)
+                                  ,array $itens= null
+                                  ,$boolLabelAbove=false)
     {
         $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
-        $this->addFields([$label], [$objField]);
+        $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }
  
@@ -299,7 +306,7 @@ class TFormDin
      * @param string $strMask         - 4: A mascara
      * @param boolean $boolNewLine    - 5: NOT_IMPLEMENTED Nova linha
      * @param string $strValue        - 6: texto preenchido
-     * @param boolean $boolLabelAbove - 7: NOT_IMPLEMENTED - Label sobre
+     * @param boolean $boolLabelAbove - 7: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED
      * @param string $strExampleText  - 9: PlaceHolder é um Texto de exemplo
      * @param boolean $boolSendMask   -10: FORMDIN5: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.
@@ -311,7 +318,7 @@ class TFormDin
                                 , $strMask=null
                                 , $boolNewLine=null
                                 , $strValue=null
-                                , $boolLabelAbove=null
+                                , $boolLabelAbove=false
                                 , $boolNoWrapLabel=null
                                 , $strExampleText=null 
                                 , $boolSendMask=false)
@@ -322,7 +329,7 @@ class TFormDin
                                               ,$strExampleText,$boolSendMask);
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($label,$boolRequired);
-        $this->addFields([$label], [$objField]);
+        $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }    
 
@@ -355,7 +362,7 @@ class TFormDin
      * @param boolean $boolRequired   - 3: Obrigatorio. Default FALSE
      * @param mixed   $mixOptions     - 4: array dos valores. no formato "key=>value". No FormDin 5 só permite array PHP
      * @param boolean $boolNewLine    - 5: NOT_IMPLEMENTED Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
-     * @param boolean $boolLabelAbove - 6: NOT_IMPLEMENTED Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param mixed   $mixValue       - 7: NOT_IMPLEMENTED Valor DEFAULT, informe o ID do array
      * @param boolean $boolMultiSelect- 8: NOT_IMPLEMENTED Default FALSE = SingleSelect, TRUE = MultiSelect
      * @param integer $intSize             - 9: NOT_IMPLEMENTED Default 1. Num itens que irão aparecer. 
@@ -371,12 +378,14 @@ class TFormDin
     public function addSelectField(string $id
                                   ,string $strLabel
                                   ,$boolRequired = false
-                                  ,array $mixOptions)
+                                  ,array $mixOptions
+                                  ,$boolNewLine = true
+                                  ,$boolLabelAbove = false)
     {
         $formField = new TFormDinSelectField($id,$strLabel,$boolRequired,$mixOptions);
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
-        $this->addFields([$label], [$objField]);
+        $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }
 
