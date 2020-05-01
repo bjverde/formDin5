@@ -57,10 +57,9 @@ class exe_TextField extends TPage
     public function onSend($param)
     {
         $data = $this->form->getData();
-        $this->form->setData($data);
-        
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
+        $this->form->setData($data);    
+        FormDinHelper::debug($param,'$param');
+        FormDinHelper::debug($data,'$data');
+        FormDinHelper::debug($_REQUEST,'$_REQUEST');
     }
 }

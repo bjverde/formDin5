@@ -51,10 +51,9 @@ class exe_maskField extends TPage
     {
         $data = $this->form->getData();
         $this->form->setData($data);
-        
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
+        FormDinHelper::debug($param,'$param');
+        FormDinHelper::debug($data,'$data');
+        FormDinHelper::debug($_REQUEST,'$_REQUEST');
     }
 
 }
