@@ -53,6 +53,7 @@ class TFormDinGenericField
 
     private $tooltip;
     private $readOnly;
+    private $class = array();
     
     /**
      *
@@ -165,4 +166,15 @@ class TFormDinGenericField
 		return ( $this->readOnly === true) ? true : false;
     }
 	//------------------------------------------------------------------------------    
+	public function setClass($className)
+	{
+        $this->class[]=$className;
+        $className = implode(' ', $this->class);
+        $this->getAdiantiObj()->setProperty('class',$className);
+	}
+	public function getClass()
+	{
+		return $this->getAdiantiObj()->getProperty('class');
+    }
+	//------------------------------------------------------------------------------     
 }
