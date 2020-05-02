@@ -58,6 +58,8 @@
 class TFormDinMemoField extends TFormDinGenericField
 {
     const REGEX = '/(\d+)((px?)|(\%?))/';
+    private $showCountChar;
+    private $intMaxLength;
 
     /**
      * Adicionar campo de entrada de texto com multiplas linhas ( memo ) equivalente ao html textarea
@@ -78,6 +80,8 @@ class TFormDinMemoField extends TFormDinGenericField
      * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
      * @param string  $strValue       - 10: texto preenchido
      * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
+     * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo
+     * @param string $boolShowCountChar 13: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinMemoField
      */
     public function __construct($id
@@ -91,22 +95,59 @@ class TFormDinMemoField extends TFormDinGenericField
                               , $boolShowCounter=null
                               , $value=null
                               , $boolNoWrapLabel=null
-                              , $placeholder=null)
+                              , $placeholder=null
+                              , $boolShowCountChar=true)
     {
         $adiantiObj = new TText($id);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
         $this->setMaxLength($label,$intMaxLength);
         $this->setSize($intColumns, $intRows);
+        $this->setShowCountChar($boolShowCountChar);
         return $this->getAdiantiObj();
     }
 
-    public function setMaxLength($label,$intMaxLength){
+    public function getFullComponent()
+    {
+        $adiantiObj = parent::getAdiantiObj();
+        $intMaxLength = $this->getMaxLength();
+        if( $this->getShowCountChar() && ($intMaxLength>=1) ){
+            $adiantiObj = parent::getAdiantiObj();
+            $adiantiObj->setProperty('onkeyup', 'fwCheckNumChar(this,'.$intMaxLength.');');
+            $idField = $adiantiObj->id;
+
+            $charsText  = new TElement('span');
+            $charsText->setProperty('id',$idField.'_counter');
+            $charsText->setProperty('name',$idField.'_counter');
+            $charsText->add('caracteres: 0 / '.$intMaxLength);
+
+            $script = new TElement('script');
+            $script->setProperty('src', 'app/lib/include/FormDin5.js');
+
+            $div = new TElement('div');
+            $div->add($adiantiObj);
+            $div->add('<br>');
+            $div->add($charsText);
+            $div->add($script);
+            $adiantiObj = $div;
+        }
+        return $adiantiObj;
+    }
+
+    public function setMaxLength($label,$intMaxLength)
+    {
+        $this->intMaxLength = (int) $intMaxLength;
         if($intMaxLength>=1){
             $this->getAdiantiObj()->addValidation($label, new TMaxLengthValidator, array($intMaxLength));
         }
     }
 
-    protected function testSize($valeu){
+    public function getMaxLength()
+    {
+        return $this->intMaxLength;
+    }
+
+    protected function testSize($valeu)
+    {
         if(preg_match(self::REGEX, $valeu,$output)){
             //FormDinHelper::debug($output);
             if($output[2]=='px'){
@@ -118,7 +159,8 @@ class TFormDinMemoField extends TFormDinGenericField
         return $valeu;
     }
 
-    public function setSize($intColumns, $intRows){
+    public function setSize($intColumns, $intRows)
+    {
         if(is_numeric($intRows)){
             $intRows = $intRows * 4;
         }else{
@@ -130,5 +172,14 @@ class TFormDinMemoField extends TFormDinGenericField
             $intColumns = $this->testSize($intColumns);
         }
         $this->getAdiantiObj()->setSize($intColumns, $intRows);
+    }
+
+    public function setShowCountChar($showCountChar)
+    {
+        $this->showCountChar = $showCountChar;
+    }
+    public function getShowCountChar()
+    {
+        return $this->showCountChar;
     }
 }

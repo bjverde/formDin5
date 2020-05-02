@@ -234,6 +234,7 @@ class TFormDin
      * @param string  $strValue       - 10: texto preenchido
      * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
      * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo
+     * @param string $boolShowCountChar 13: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinMemoField
      */
     public function addMemoField( $strName
@@ -247,13 +248,17 @@ class TFormDin
    		                       , $boolShowCounter=null
    		                       , $strValue=null
                                , $boolNoWrapLabel=null
-                               , $placeholder=null )
+                               , $placeholder=null 
+                               , $boolShowCountChar=true)
     {
         $formField = new TFormDinMemoField( $strName, $strLabel, $intMaxLength
                                       , $boolRequired, $intColumns, $intRows
                                       , $boolNewLine, $boolLabelAbove
                                       , $boolShowCounter, $strValue
-                                      , $boolNoWrapLabel, $placeholder );
+                                      , $boolNoWrapLabel
+                                      , $placeholder 
+                                      , $boolShowCountChar);
+        //$objField = $formField->getFullComponent();
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addFields($label ,$objField ,$boolLabelAbove);
@@ -286,7 +291,7 @@ class TFormDin
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
-    } 
+    }
     /**
      * Adicionar campo entrada de dados texto com mascara
      * ------------------------------------------------------------------------
@@ -387,8 +392,6 @@ class TFormDin
         $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }
-
-
     /**
      * Campo de uso geral para insersão manual de códigos html na página
      * ------------------------------------------------------------------------
@@ -429,8 +432,6 @@ class TFormDin
         $this->addFields($label ,$formField ,$boolLabelAbove);
         return $formField;
     }
-
-
     //----------------------------------------------------------------
     //----------------------------------------------------------------
     //----------------------------------------------------------------
