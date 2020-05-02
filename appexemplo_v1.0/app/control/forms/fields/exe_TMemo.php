@@ -11,7 +11,7 @@ class exe_TMemo extends TPage
     // trait com onReload, onSearch, onDelete...
     use Adianti\Base\AdiantiStandardListTrait;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -88,7 +88,7 @@ class exe_TMemo extends TPage
     /**
      * Clear filters
      */
-    function clear()
+    public function clear()
     {
         $this->clearFilters();
         $this->onReload();
@@ -98,7 +98,9 @@ class exe_TMemo extends TPage
     {
         $data = $this->form->getData();
         $this->form->setData($data);
-        FormDinHelper::debug($param,'$param');
+
+        //Função do FormDin para Debug
+        FormDinHelper::d($param,'$param');
         FormDinHelper::debug($data,'$data');
         FormDinHelper::debug($_REQUEST,'$_REQUEST');
     }

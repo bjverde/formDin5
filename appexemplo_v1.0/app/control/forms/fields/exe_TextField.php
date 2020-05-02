@@ -11,7 +11,7 @@ class exe_TextField extends TPage
     // trait com onReload, onSearch, onDelete...
     use Adianti\Base\AdiantiStandardListTrait;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -51,7 +51,7 @@ class exe_TextField extends TPage
     /**
      * Clear filters
      */
-    function clear()
+    public function clear()
     {
         $this->clearFilters();
         $this->onReload();
