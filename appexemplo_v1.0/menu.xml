@@ -127,7 +127,7 @@
         </menu>
     </menuitem>
     <menuitem label='JavaScript'>
-        <icon>fab:js fa-fw</icon>
+        <icon>fab:js fa-fw #f0db4f </icon>
         <menu>
             <menuitem label='Ajuda'>
                 <icon>fa:life-ring fa-fw</icon>
@@ -159,7 +159,23 @@
                 <action>SystemPHPInfoView</action>
             </menuitem>
         </menu>
-    </menuitem>        
+    </menuitem>
+    <menuitem label='Gride'>
+        <icon>fab:fa-wpforms fa-fw #2965f1</icon>
+        <action>CnaesSecundarioForm</action>
+    </menuitem>
+    <menuitem label='Banco e PDO'>
+        <icon>fa:table fa-fw</icon>
+        <action>CnaesSecundarioForm</action>
+    </menuitem>
+    <menuitem label='Formulário'>
+        <icon>fa:table fa-fw</icon>
+        <action>CnaesSecundarioForm</action>
+    </menuitem>
+    <menuitem label='Layout e CSS'>
+        <icon>fab:fa-css3 fa-fw #264de4</icon>
+        <action>CnaesSecundarioForm</action>
+    </menuitem>    
     <menuitem label='Ajuda'>
         <icon>fa:life-ring fa-fw</icon>
         <menu>
