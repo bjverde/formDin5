@@ -70,8 +70,11 @@ class exe_TMemo extends TPage
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
         // add form actions
-        $this->form->addAction('Send', new TAction(array($this, 'onSend')), 'far:check-circle green');
-        $this->form->addActionLink('Clear',  new TAction([$this, 'clear']), 'fa:eraser red');
+        // O Adianti permite a Internacionalização - A função _t('string') serve
+        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
+        //primeiro em ingles e depois traduzindo
+        $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
+        $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
