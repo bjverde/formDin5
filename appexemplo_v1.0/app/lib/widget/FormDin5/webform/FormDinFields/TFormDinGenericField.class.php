@@ -72,9 +72,9 @@ class TFormDinGenericField
                                ,string $value=null
                                ,string $placeholder =null)
     {
+        $this->setAdiantiObj($adiantiObj);
         $this->setLabelTxt($label);
         $this->setLabel($label,$boolRequired);
-        $this->setAdiantiObj($adiantiObj);
         $this->setId($id);
         $this->setValue($value);
         $this->setRequired($boolRequired);
