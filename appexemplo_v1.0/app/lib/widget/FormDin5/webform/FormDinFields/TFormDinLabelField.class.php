@@ -43,6 +43,7 @@
 class TFormDinLabelField
 {
     protected $adiantiObj;
+    private $class = array();
     
 
     /**
@@ -66,4 +67,16 @@ class TFormDinLabelField
     public function getAdiantiObj(){
         return $this->adiantiObj;
     }
+	//------------------------------------------------------------------------------    
+	public function setClass($className)
+	{
+        $this->class[]=$className;
+        $className = implode(' ', $this->class);
+        $this->getAdiantiObj()->setProperty('class',$className);
+	}
+	public function getClass()
+	{
+		return $this->getAdiantiObj()->getProperty('class');
+    }
+	//------------------------------------------------------------------------------       
 }
