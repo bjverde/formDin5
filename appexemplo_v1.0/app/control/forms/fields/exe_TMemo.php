@@ -46,25 +46,33 @@ class exe_TMemo extends TPage
 
         $this->form->addFields([new TLabel('Texto 01')], [$container]);
 
-        $idField = 'det02';
+        //-------------------------------
+        $idField = 'text02';
+        $strLabel = 'Texto 02';
         $maxlength = 5;
-        $det02    = new TText($idField);
-        $det02->maxlength =$maxlength;
-        $det02->setId($idField);
-        $det02->setProperty('onkeyup', 'fwCheckNumChar(this,'.$maxlength.');');
+        
+        $fieldTxt02 = new TText($idField);
+        $fieldTxt02->maxlength =$maxlength;
+        $fieldTxt02->setId($idField);
+        $fieldTxt02->setProperty('onkeyup', 'fwCheckNumChar(this,'.$maxlength.');');
+        $fieldTxt02->addValidation($strLabel, new TRequiredValidator);
+        
         $chars02  = new TElement('span');
         $chars02->setProperty('id',$idField.'_counter');
         $chars02->setProperty('name',$idField.'_counter');
         $chars02->add('caracteres: 0 / '.$maxlength);
+        
         $script02 = new TElement('script');
         $script02->setProperty('src', 'app/lib/include/FormDin5.js');
+        
         $div02    = new TElement('div');
-        $div02->add($det02);
+        $div02->add($fieldTxt02);
         $div02->add('<br>');
         $div02->add($chars02);
         $div02->add($script02);
 
-        $this->form->addFields([new TLabel('xxxx22')], [$div02]);
+        $this->form->addFields([new TLabel($strLabel,'red')], [$div02]);
+        //------------------------
 
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
