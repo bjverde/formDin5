@@ -16,13 +16,10 @@ class exe_HtmlField extends TPage
         parent::__construct();
 
         $frm = new TFormDin('Exemplo do Campo HTML');
-        $frm->addHtmlField('html1', 'O campo html é um campo livre. Você poderá adicionar qualquer conteúdo na página.', null, 'Dica:', null, 200)->setCss('border', '1px dashed blue');
-        $frm->addHtmlField('html2', null, 'ajuda/texto.txt', 'Arquivo: texto.txt:', 200, 650)->setCss('border', '1px solid blue');
-        
-        $frm->addGroupField('gp1', 'Grupo');
-            $frm->addHtmlField('html3', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100)->setCss('border', '1px solid red');
-        $frm->setAction('Refresh');
-        $frm->show();
+        $frm->addHtmlField('html1', '<b>O campo html é um campo livre</b>. Você poderá adicionar qualquer conteúdo na página.', null, 'Dica:', null, 200);
+        $frm->addHtmlField('html2', null, 'ajuda/texto.txt', 'Arquivo: texto.txt:', 200, 650);
+        $frm->addHtmlField('html3', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100);
+                
 
         $this->form = $frm->show();
 
