@@ -94,7 +94,7 @@ class exe_TMemo extends TPage
         $this->onReload();
     }
 
-    public function onSend($param)
+    public function onSave($param)
     {
         $data = $this->form->getData();
         $this->form->setData($data);
