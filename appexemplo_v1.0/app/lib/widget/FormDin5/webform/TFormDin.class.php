@@ -209,7 +209,7 @@ class TFormDin
                                     ,$strValue);
         $formField->setExampleText($strExampleText);
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($strLabel,$boolRequired);
+        $label = $formField->getLabel();
         $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }
@@ -255,7 +255,7 @@ class TFormDin
                                       , $boolShowCounter, $strValue
                                       , $boolNoWrapLabel, $placeholder );
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($strLabel,$boolRequired);
+        $label = $formField->getLabel();
         $this->addFields($label ,$objField ,$boolLabelAbove);
     	return $formField;
     }
@@ -327,7 +327,7 @@ class TFormDin
                                               ,$boolLabelAbove,$boolNoWrapLabel
                                               ,$strExampleText,$boolSendMask);
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($label,$boolRequired);
+        $label = $formField->getLabel();
         $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }    
