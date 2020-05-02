@@ -49,10 +49,12 @@
 class TFormDinGenericField
 {
     protected $adiantiObj;
-    protected $label;
+    protected $labelTxt;
+    protected $labelObj;
 
     private $tooltip;
     private $readOnly;
+    private $class = array();
     
     /**
      *
@@ -70,8 +72,9 @@ class TFormDinGenericField
                                ,string $value=null
                                ,string $placeholder =null)
     {
-        $this->setLabel($label);
         $this->setAdiantiObj($adiantiObj);
+        $this->setLabelTxt($label);
+        $this->setLabel($label,$boolRequired);
         $this->setId($id);
         $this->setValue($value);
         $this->setRequired($boolRequired);
@@ -89,11 +92,20 @@ class TFormDinGenericField
         return $this->adiantiObj;
     }
 
-    public function setLabel($label){
-        $this->label = $label;
+    protected function setLabelTxt($label){
+        $this->labelTxt = $label;
+    }
+    protected function getLabelTxt(){
+        return $this->labelTxt;
+    }
+
+    protected function setLabel($label,$boolRequired){
+        $formDinLabelField = new TFormDinLabelField($label,$boolRequired);
+        $label = $formDinLabelField->getAdiantiObj();
+        $this->labelObj = $label;
     }
     public function getLabel(){
-        return $this->label;
+        return $this->labelObj;
     }
 
     public function setId($id){
@@ -165,4 +177,15 @@ class TFormDinGenericField
 		return ( $this->readOnly === true) ? true : false;
     }
 	//------------------------------------------------------------------------------    
+	public function setClass($className)
+	{
+        $this->class[]=$className;
+        $className = implode(' ', $this->class);
+        $this->getAdiantiObj()->setProperty('class',$className);
+	}
+	public function getClass()
+	{
+		return $this->getAdiantiObj()->getProperty('class');
+    }
+	//------------------------------------------------------------------------------     
 }
