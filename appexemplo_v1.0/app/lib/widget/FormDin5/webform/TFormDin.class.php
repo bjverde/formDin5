@@ -138,7 +138,7 @@ class TFormDin
         }
     }
 
-    protected function getLabelField($strLabel,$boolRequired)
+    protected function getLabelField($strLabel,$boolRequired=false)
     {
         $formDinLabelField = new TFormDinLabelField($strLabel,$boolRequired);
         $label = $formDinLabelField->getAdiantiObj();
@@ -286,8 +286,7 @@ class TFormDin
         $label = $this->getLabelField($strLabel,$boolRequired);
         $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
-    }
- 
+    } 
     /**
      * Adicionar campo entrada de dados texto com mascara
      * ------------------------------------------------------------------------
@@ -388,6 +387,49 @@ class TFormDin
         $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }
+
+
+    /**
+     * Campo de uso geral para insersão manual de códigos html na página
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     *
+      * Se o label for null, não será criado o espaço referente a ele no formulário, para criar
+     * um label invisível defina como "" o seu valor
+     *
+     * criado o espaço
+     * @param string $strName        - 1: ID do campo
+     * @param string $strValue       - 2: Texto HTML que irá aparece dentro
+     * @param string $strIncludeFile - 3: NOT_IMPLEMENTED Arquivo que será incluido
+     * @param string $strLabel       - 4: Label do campo
+     * @param string $strWidth       - 5: NOT_IMPLEMENTED
+     * @param string $strHeight      - 6: NOT_IMPLEMENTED
+     * @param boolean $boolNewLine   - 7: NOT_IMPLEMENTED Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove  8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @return THtml Field
+     */
+    public function addHtmlField( string $id
+                                , $strValue=null
+                                , $strIncludeFile=null
+                                , $strLabel=null
+                                , $strHeight=null
+                                , $strWidth=null
+                                , $boolNewLine=null
+                                , $boolLabelAbove=null
+                                , $boolNoWrapLabel=null )
+    {
+        $formField = new TElement('div');
+        $formField->id = $id;
+        $formField->add($strValue);
+        $strLabel = is_null($strLabel)?'':$strLabel;
+        $label = $this->getLabelField($strLabel);
+        $this->addFields($label ,$formField ,$boolLabelAbove);
+        return $formField;
+    }
+
 
     //----------------------------------------------------------------
     //----------------------------------------------------------------
