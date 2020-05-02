@@ -244,7 +244,7 @@ class FormDinHelper
     }
 
 
-    public static function d( $mixExpression,$strComentario,$boolExit )
+    public static function d( $mixExpression,$strComentario='Debug', $boolExit=FALSE )
     {        
         return self::debug($mixExpression,$strComentario,$boolExit);
     }
@@ -261,6 +261,7 @@ class FormDinHelper
         }
         $arrBacktrace = debug_backtrace();
         if( isset($_REQUEST['ajax']) && $_REQUEST['ajax'] ){
+            echo '<div class="formDinDebug">';
             echo '<pre>';
             foreach ( $arrBacktrace[0] as $strAttribute => $mixValue ){
                 if ( !is_array($mixValue) ){
@@ -270,8 +271,9 @@ class FormDinHelper
             echo "---------------\n";
             print_r( $mixExpression );
             echo '</pre>';
-
+            echo '</div>';
         } else {
+            echo '<div class="formDinDebug">';
             echo "<script>try{fwUnblockUI();}catch(e){try{top.app_unblockUI();}catch(e){}}</script>";
             echo "<fieldset style='text-align:left;'><legend><font color=\"#007000\">".$strComentario."</font></legend><pre>" ;
             foreach ( $arrBacktrace[0] as $strAttribute => $mixValue ) {
@@ -288,6 +290,7 @@ class FormDinHelper
             print_r($mixExpression);
             }
             echo "</pre></fieldset>";
+            echo '</div>';
             if ( $boolExit ) {
                 echo "<br /><font color=\"#700000\" size=\"4\"><b>D I E</b></font>";
                 exit();
