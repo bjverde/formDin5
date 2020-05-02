@@ -398,21 +398,33 @@ class TFormDin
      * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
      * @return void
      */
-    public function setShowCloseButton(){        
+    public function setShowCloseButton( $boolNewValue=null ){
+        ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
+                                    ,ValidateHelper::TYPE_ERRO_WARNING
+                                    ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                    ,__CLASS__,__METHOD__,__LINE__); 
     }
 
     /**
      * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
      * @return void
      */
-    public function setFlat(){        
+    public function setFlat($boolNewValue=null){
+        ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
+                                    ,ValidateHelper::TYPE_ERRO_WARNING
+                                    ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                    ,__CLASS__,__METHOD__,__LINE__); 
     }
 
     /**
      * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
      * @return void
      */
-    public function setMaximize(){        
+    public function setMaximize($boolNewValue = null){
+        ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
+                                    ,ValidateHelper::TYPE_ERRO_WARNING
+                                    ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                    ,__CLASS__,__METHOD__,__LINE__); 
     }
 
     /**
