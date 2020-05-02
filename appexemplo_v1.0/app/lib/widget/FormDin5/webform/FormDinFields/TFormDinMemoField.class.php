@@ -113,11 +113,12 @@ class TFormDinMemoField extends TFormDinGenericField
         if( $this->getShowCountChar() && ($intMaxLength>=1) ){
             $adiantiObj = parent::getAdiantiObj();
             $adiantiObj->setProperty('onkeyup', 'fwCheckNumChar(this,'.$intMaxLength.');');
-            $idField = $adiantiObj->id;
+            $idField = $adiantiObj->getId();
 
             $charsText  = new TElement('span');
             $charsText->setProperty('id',$idField.'_counter');
             $charsText->setProperty('name',$idField.'_counter');
+            $charsText->setProperty('class', 'tformdinmemo_counter');
             $charsText->add('caracteres: 0 / '.$intMaxLength);
 
             $script = new TElement('script');
