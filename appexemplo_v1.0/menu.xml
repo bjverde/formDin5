@@ -186,6 +186,10 @@
                         <icon>fa:life-ring fa-fw</icon>
                         <action>exe_TForm3</action>
                     </menuitem>
+                    <menuitem label='Form Buttuns Customizado com CSS'>
+                        <icon>fa:life-ring fa-fw</icon>
+                        <action>exe_css_form02</action>
+                    </menuitem>                    
                 </menu>
             </menuitem>
             <menuitem label='Definir Colunas no Formulário'>
