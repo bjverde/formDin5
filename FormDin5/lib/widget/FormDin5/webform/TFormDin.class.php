@@ -258,8 +258,8 @@ class TFormDin
                                       , $boolNoWrapLabel
                                       , $placeholder 
                                       , $boolShowCountChar);
-        $objField = $formField->getFullComponent();
-        //$objField = $formField->getAdiantiObj();
+        //$objField = $formField->getFullComponent();
+        $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addFields($label ,$objField ,$boolLabelAbove);
     	return $formField;
@@ -424,12 +424,14 @@ class TFormDin
                                 , $boolLabelAbove=null
                                 , $boolNoWrapLabel=null )
     {
-        $formField = new TElement('div');
-        $formField->id = $id;
-        $formField->add($strValue);
-        $strLabel = is_null($strLabel)?'':$strLabel;
-        $label = $this->getLabelField($strLabel);
-        $this->addFields($label ,$formField ,$boolLabelAbove);
+        $formField = new TFormDinHtmlField($id,$strValue
+                                          ,$strIncludeFile
+                                          ,$strLabel
+                                          ,$strHeight
+                                          ,$strWidth,$boolNewLine,$boolNoWrapLabel);
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addFields($label ,$objField ,$boolLabelAbove);
         return $formField;
     }
     //----------------------------------------------------------------
