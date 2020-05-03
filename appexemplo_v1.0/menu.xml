@@ -47,52 +47,92 @@
             </menuitem>
             <menuitem label='Coord GMS'>
                 <icon>fa:map-marker fa-fw</icon>
-                <action>CnaesSecundarioForm</action>
+                <action>AjudaView</action>
             </menuitem>
             <menuitem label='Select'>
                 <icon>fa:sort-down fa-fw</icon>
-                <action>CnaesSecundarioForm</action>
+                <action>AjudaView</action>
             </menuitem>
             <menuitem label='Radio'>
                 <icon>fa:table fa-fw</icon>
-                <action>CnaesSecundarioForm</action>
+                <action>AjudaView</action>
             </menuitem>
             <menuitem label='Check'>
                 <icon>fa:check-square fa-fw</icon>
-                <action>CnaesSecundarioForm</action>
+                <action>AjudaView</action>
             </menuitem>
             <menuitem label='Arquivo ou Blob'>
                 <icon>fa:check-square fa-fw</icon>
-                <action>CnaesSecundarioForm</action>
+                <action>AjudaView</action>
             </menuitem>
             <menuitem label='Númerico'>
                 <icon>fa:check-square fa-fw</icon>
-                <action>CnaesSecundarioForm</action>
+                <action>AjudaView</action>
             </menuitem>
             <menuitem label='Brasil'>
                 <icon>fa:flag fa-fw green</icon>
-                <action>CnaesSecundarioForm</action>
+                <action>AjudaView</action>
             </menuitem>
             <menuitem label='Data e hora'>
                 <icon>fas:calendar-alt fa-fw</icon>
                 <menu>            
                     <menuitem label='Data'>
-                        <icon>fab:html5 fa-fw</icon>
+                        <icon>fas:calendar-alt fa-fw</icon>
                         <action>exe_DateField</action>
                     </menuitem>
                     <menuitem label='Hora'>
-                        <icon>fab:html5 fa-fw</icon>
+                        <icon>fas:calendar-alt fa-fw</icon>
                         <action>exe_campo_hora</action>
                     </menuitem>
                     <menuitem label='Agenda'>
-                        <icon>fab:html5 fa-fw</icon>
+                        <icon>fas:calendar-alt fa-fw</icon>
                         <action>exe_TCalendar</action>
                     </menuitem>
                     <menuitem label='Data hora'>
-                        <icon>fab:html5 fa-fw</icon>
+                        <icon>fas:calendar-alt fa-fw</icon>
                         <action>exe_DateTimeField</action>
                     </menuitem>                    
                 </menu>
+            </menuitem>
+            <menuitem label='Select Diretorio/Pasta'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>            
+            <menuitem label='Campo Senha'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='Campo Captcha'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='Campo Cor'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='Tecla de Atalho'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='Campo Link'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='Redirect'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='TZip'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='E-mail'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
+            </menuitem>
+            <menuitem label='Button'>
+                <icon>fa:flag fa-fw green</icon>
+                <action>AjudaView</action>
             </menuitem>             
         </menu>
     </menuitem>
