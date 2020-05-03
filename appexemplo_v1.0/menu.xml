@@ -174,7 +174,25 @@
     </menuitem>
     <menuitem label='Layout e CSS'>
         <icon>fab:fa-css3 fa-fw #264de4</icon>
-        <action>CnaesSecundarioForm</action>
+        <menu>
+            <menuitem label='Ajuda'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>Layout Menu Principal</action>
+            </menuitem>      
+            <menuitem label='Customizado com CSS'>
+                <icon>fa:cube fa-fw</icon>
+                <menu>
+                    <menuitem label='Cores diferentes no Form'>
+                        <icon>fa:life-ring fa-fw</icon>
+                        <action>exe_TForm3</action>
+                    </menuitem>
+                </menu>
+            </menuitem>
+            <menuitem label='Definir Colunas no Formulário'>
+                <icon>fa:code fa-fw</icon>
+                <action>SystemPHPInfoView</action>
+            </menuitem>
+        </menu>
     </menuitem>    
     <menuitem label='Ajuda'>
         <icon>fa:life-ring fa-fw</icon>

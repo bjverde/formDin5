@@ -1,0 +1,19 @@
+#adianti_div_content
+{
+    background-color: #FFCEA2;
+    color: rgb(87, 31, 31);
+}
+.card-header{
+    background-color: #7C9E7D;
+}
+.card-body{
+    background-color: rgb(225, 245, 217);
+    color: rgb(87, 31, 31);
+}
+.card-footer{
+    background-color: #7C9E7D;
+}
+
+.btn.btn-default {
+    background-color: rgb(30, 255, 0);
+}
