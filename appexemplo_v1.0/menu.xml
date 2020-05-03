@@ -74,8 +74,17 @@
                 <action>CnaesSecundarioForm</action>
             </menuitem>
             <menuitem label='Data e hora'>
-                <icon>fa:check-square fa-fw</icon>
-                <action>CnaesSecundarioForm</action>
+                <icon>fas:calendar-alt fa-fw</icon>
+                <menu>            
+                    <menuitem label='HTML'>
+                        <icon>fab:html5 fa-fw</icon>
+                        <action>exe_HtmlField</action>
+                    </menuitem>
+                    <menuitem label='HTML com iFrame'>
+                        <icon>fab:html5 fa-fw</icon>
+                        <action>exe_HtmlField_iframe</action>
+                    </menuitem>          
+                </menu>
             </menuitem>             
         </menu>
     </menuitem>
@@ -169,25 +178,21 @@
         <action>CnaesSecundarioForm</action>
     </menuitem>
     <menuitem label='Formulário'>
-        <icon>fa:table fa-fw</icon>
+        <icon>fab fa:wpforms fa-fw</icon>
         <action>CnaesSecundarioForm</action>
     </menuitem>
     <menuitem label='Layout e CSS'>
-        <icon>fab:fa-css3 fa-fw #264de4</icon>
-        <menu>
-            <menuitem label='Ajuda'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>Layout Menu Principal</action>
-            </menuitem>      
+        <icon>fab fa:css3 fa-fw #264de4</icon>
+        <menu>   
             <menuitem label='Customizado com CSS'>
-                <icon>fa:cube fa-fw</icon>
+                <icon>fab fa:css3 fa-fw</icon>
                 <menu>
                     <menuitem label='Cores diferentes no Form'>
-                        <icon>fa:life-ring fa-fw</icon>
+                        <icon>fab fa:css3-alt fa-fw</icon>
                         <action>exe_TForm3</action>
                     </menuitem>
                     <menuitem label='Form Buttuns Customizado com CSS'>
-                        <icon>fa:life-ring fa-fw</icon>
+                        <icon>fab fa:css3-alt fa-fw</icon>
                         <action>exe_css_form02</action>
                     </menuitem>                    
                 </menu>
@@ -196,6 +201,23 @@
                 <icon>fa:code fa-fw</icon>
                 <action>SystemPHPInfoView</action>
             </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='Gerador de Código'>
+        <icon>fas:cog fa-fw</icon>
+        <menu>
+            <menuitem label='Gerador VO/DAO'>
+                <icon>fas:cog fa-fw</icon>
+                <action>GeraGrafoForm</action>
+            </menuitem>
+            <menuitem label='Gerador Form VO/DAO'>
+                <icon>fas:cog fa-fw</icon>
+                <action>GeraGrafoForm</action>
+            </menuitem>
+            <menuitem label='Gerador de Sistemas'>
+                <icon>fa:magic fa-fw #f0db4f</icon>
+                <action>GeraGrafoForm</action>
+            </menuitem>            
         </menu>
     </menuitem>    
     <menuitem label='Ajuda'>
