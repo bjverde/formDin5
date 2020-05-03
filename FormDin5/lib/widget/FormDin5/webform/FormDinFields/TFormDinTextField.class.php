@@ -87,7 +87,8 @@ class TFormDinTextField extends TFormDinGenericField
         return $this->getAdiantiObj();
     }
 
-    public function setMaxLength($label,$intMaxLength){
+    public function setMaxLength($label,$intMaxLength)
+    {
         if($intMaxLength>=1){
             $this->getAdiantiObj()->addValidation($label, new TMaxLengthValidator, array($intMaxLength));
         }
