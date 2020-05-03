@@ -88,21 +88,8 @@
             </menuitem>             
         </menu>
     </menuitem>
-    <menuitem label='Facilitadores'>
-        <icon>fa:magic fa-fw</icon>
-        <menu>
-            <menuitem label='Gera Grafo'>
-                <icon>fa:magic fa-fw</icon>
-                <action>GeraGrafoForm</action>
-            </menuitem>
-            <menuitem label='Database explorer'>
-                <icon>fas:database fa-fw red</icon>
-                <action>SystemDatabaseExplorer</action>
-            </menuitem>
-        </menu>
-    </menuitem>
     <menuitem label='Containers'>
-        <icon>fa:life-ring fa-fw</icon>
+        <icon>fas:archive fa-fw</icon>
         <menu>
             <menuitem label='Ajuda'>
                 <icon>fa:life-ring fa-fw</icon>
@@ -170,15 +157,15 @@
         </menu>
     </menuitem>
     <menuitem label='Gride'>
-        <icon>fab:fa-wpforms fa-fw #2965f1</icon>
+        <icon>fas:th fa-fw #2965f1</icon>
         <action>CnaesSecundarioForm</action>
     </menuitem>
     <menuitem label='Banco e PDO'>
-        <icon>fa:table fa-fw</icon>
+        <icon>fas:database fa-fw</icon>
         <action>CnaesSecundarioForm</action>
     </menuitem>
     <menuitem label='Formulário'>
-        <icon>fab fa:wpforms fa-fw</icon>
+        <icon>far:edit fa-fw green</icon>
         <action>CnaesSecundarioForm</action>
     </menuitem>
     <menuitem label='Layout e CSS'>
