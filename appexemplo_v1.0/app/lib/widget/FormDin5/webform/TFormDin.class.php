@@ -258,8 +258,8 @@ class TFormDin
                                       , $boolNoWrapLabel
                                       , $placeholder 
                                       , $boolShowCountChar);
-        //$objField = $formField->getFullComponent();
-        $objField = $formField->getAdiantiObj();
+        $objField = $formField->getFullComponent();
+        //$objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addFields($label ,$objField ,$boolLabelAbove);
     	return $formField;
