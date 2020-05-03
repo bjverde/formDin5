@@ -76,14 +76,22 @@
             <menuitem label='Data e hora'>
                 <icon>fas:calendar-alt fa-fw</icon>
                 <menu>            
-                    <menuitem label='HTML'>
+                    <menuitem label='Data'>
                         <icon>fab:html5 fa-fw</icon>
-                        <action>exe_HtmlField</action>
+                        <action>exe_DateField</action>
                     </menuitem>
-                    <menuitem label='HTML com iFrame'>
+                    <menuitem label='Hora'>
                         <icon>fab:html5 fa-fw</icon>
-                        <action>exe_HtmlField_iframe</action>
-                    </menuitem>          
+                        <action>exe_campo_hora</action>
+                    </menuitem>
+                    <menuitem label='Agenda'>
+                        <icon>fab:html5 fa-fw</icon>
+                        <action>exe_TCalendar</action>
+                    </menuitem>
+                    <menuitem label='Data hora'>
+                        <icon>fab:html5 fa-fw</icon>
+                        <action>exe_DateTimeField</action>
+                    </menuitem>                    
                 </menu>
             </menuitem>             
         </menu>
@@ -169,7 +177,7 @@
         <action>CnaesSecundarioForm</action>
     </menuitem>
     <menuitem label='Layout e CSS'>
-        <icon>fab fa:css3 fa-fw #264de4</icon>
+        <icon>fas:exclamation-triangle fa-fw #264de4</icon>
         <menu>   
             <menuitem label='Customizado com CSS'>
                 <icon>fab fa:css3 fa-fw</icon>
