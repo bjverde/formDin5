@@ -95,43 +95,43 @@
                 </menu>
             </menuitem>
             <menuitem label='Select Diretorio/Pasta'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>            
             <menuitem label='Campo Senha'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='Campo Captcha'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='Campo Cor'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='Tecla de Atalho'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='Campo Link'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='Redirect'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='TZip'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='E-mail'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
             <menuitem label='Button'>
-                <icon>fa:flag fa-fw green</icon>
+                <icon>fa:flag fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>             
         </menu>
