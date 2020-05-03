@@ -33,8 +33,8 @@ class exe_css_form02 extends TPage
         //$frm->getLabel('data_pedido')->setClass('label', true);
         
         $x=$frm->addTextField('nome_comprador', 'Comprador:', 60, false, null)->setClass('textyellow', true);
-        $label = $x->getLabel();
-        $label->setClass('label', true);
+        //$label = $x->getLabel();
+        //$label->setClass('label', true);
         $frm->addTextField('nome_comprador1', 'Comprador:', 60, false, null)->setClass('text-center-green', true);
         //$frm->addSelectField('forma_pagamento', 'Forma Pagamento:', false, '1=Dinheiro,2=Cheque,3=Cartão');
         $frm->addTextField('QTD', 'Quantidade de Itens', 50, false);
