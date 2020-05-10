@@ -154,8 +154,8 @@ class TFormDin
     * 	$frm->setMessage(array('Mensagem linha 1','mensagem linha 2');
     * </code>
     *
-    * @param string $message   - 1: Texto da mensagem 
-    * @param string $type      - 2: FORMDIN5 Type mensagem: info, error, warning
+    * @param string $message   - 1: Texto da mensagem ser HTML
+    * @param string $type      - 2: FORMDIN5 Type mensagem: DEFAULT=info, error, warning. Use TFormDinMessage::TYPE_
     * @param TAction $action   - 3: FORMDIN5 Classe TAction do Adianti
     * @param string $title_msg - 4: FORMDIN5 titulo da mensagem
     */
@@ -165,6 +165,28 @@ class TFormDin
                               , $title_msg = '' )
     {
         $formDinLabelField = new TFormDinMessage($message,$type,$action,$title_msg);
+        return $formDinLabelField;
+    }
+
+   /**
+    * ALIAS para setMessage
+    *
+    * <code>
+    * 	$frm->setMessage('Nova mensagem'); // limpa e define uma nova mensagem
+    * 	$frm->setMessage(array('Mensagem linha 1','mensagem linha 2');
+    * </code>
+    *
+    * @param string $message   - 1: Texto da mensagem ser HTML
+    * @param string $type      - 2: FORMDIN5 Type mensagem: DEFAULT=info, error, warning. Use TFormDinMessage::TYPE_
+    * @param TAction $action   - 3: FORMDIN5 Classe TAction do Adianti
+    * @param string $title_msg - 4: FORMDIN5 titulo da mensagem
+    */
+    public function addMessage( $message
+                              , $type = TFormDinMessage::TYPE_INFO
+                              , TAction $action = NULL
+                              , $title_msg = '' )
+    {
+        $formDinLabelField = $this->setMessage($message,$type,$action,$title_msg);
         return $formDinLabelField;
     }
 

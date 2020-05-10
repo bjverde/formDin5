@@ -16,7 +16,9 @@ class exe_mensagemv2 extends TPage
         parent::__construct();
 
         $frm = new TFormDin('Exemplo Mensagem apenas PHP');
-        $frm->setMessage('campo_memo_simples');
+        $text[] = 'linha1';
+        $text[] = "linha2 <b>'xxx'</b> linha2";
+        $frm->setMessage($text,TFormDinMessage::TYPE_WARING);
         
         $this->form = $frm->show();
 

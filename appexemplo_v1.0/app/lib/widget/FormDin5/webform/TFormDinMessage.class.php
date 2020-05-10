@@ -90,7 +90,7 @@ class TFormDinMessage {
 
     //-----------------------------------------------------------
     protected $adiantiObj;
-    protected $message;
+    protected $mixMessage;
 
     /**
      * ------------------------------------------------------------------------
@@ -99,27 +99,34 @@ class TFormDinMessage {
      * o que cada marca significa.
      * ------------------------------------------------------------------------
      *
-     * @param string $message   - 1: Texto da mensagem 
-     * @param string $type      - 2: FORMDIN5 Type mensagem: info, error, warning
+     * @param string $message   - 1: Texto da mensagem pode ser HTML
+     * @param string $type      - 2: 2: FORMDIN5 Type mensagem: DEFAULT=info, error, warning. Use TFormDinMessage::TYPE_
      * @param TAction $action   - 3: FORMDIN5 Classe TAction do Adianti
      * @param string $title_msg - 4: FORMDIN5 titulo da mensagem
      */
-    public function __construct($message
+    public function __construct($mixMessage
                               , $type = TFormDinMessage::TYPE_INFO
                               , TAction $action = NULL
                               , $title_msg = '')
     {
-        $this->setMessage($message);
-        $message = $this->getMessage();
-        $this->adiantiObj = new TMessage($type,$message,$action,$title_msg);
+        $this->setMixMessage($mixMessage);
+        $mixMessage = $this->getMixMessage();
+        $this->adiantiObj = new TMessage($type,$mixMessage,$action,$title_msg);
         return $this->adiantiObj;
     }
 
-    public function setMessage($message){   
-        return $this->message=$message;
+    public function setMixMessage($mixMessage){
+        if(is_array($mixMessage)){
+            $mixMessage = implode( '<br>', $mixMessage );
+            $mixMessage = preg_replace( '/' . chr( 10 ) . '/', '<br>', $mixMessage );
+            $mixMessage = preg_replace( '/' . chr( 13 ) . '/', '', $mixMessage );
+            $this->mixMessage=$mixMessage;
+        }else{
+            $this->mixMessage=$mixMessage;
+        }        
     }
-    public function getMessage(){
-        return $this->message;
+    public function getMixMessage(){
+        return $this->mixMessage;
     }
 }
 ?>
