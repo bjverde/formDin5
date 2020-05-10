@@ -132,7 +132,7 @@
             </menuitem>
             <menuitem label='Button'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>exe_TButton</action>
             </menuitem>             
         </menu>
     </menuitem>
