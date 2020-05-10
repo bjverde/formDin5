@@ -90,6 +90,7 @@ class TFormDinMessage {
 
     //-----------------------------------------------------------
     protected $adiantiObj;
+    protected $message;
 
     /**
      * ------------------------------------------------------------------------
@@ -108,8 +109,17 @@ class TFormDinMessage {
                               , TAction $action = NULL
                               , $title_msg = '')
     {
-        $this->adiantiObj = new TMessage($message,$type,$action,$title_msg);
+        $this->setMessage($message);
+        $message = $this->getMessage();
+        $this->adiantiObj = new TMessage($type,$message,$action,$title_msg);
         return $this->adiantiObj;
+    }
+
+    public function setMessage($message){   
+        return $this->message=$message;
+    }
+    public function getMessage(){
+        return $this->message;
     }
 }
 ?>
