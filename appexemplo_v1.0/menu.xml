@@ -156,17 +156,43 @@
     <menuitem label='Mensagens e Ajuda'>
         <icon>fa:life-ring fa-fw</icon>
         <menu>
-            <menuitem label='Ajuda'>
+            <menuitem label='Hints / Tooltips'>
                 <icon>fa:life-ring fa-fw</icon>
-                <action>AjudaView</action>
+                <action>exe_hint</action>
             </menuitem>      
-            <menuitem label='Ver módulos'>
-                <icon>fa:cube fa-fw</icon>
-                <action>SystemModulesCheckView</action>
+            <menuitem label='Mensagens'>
+                <icon>fa:life-ring fa-fw</icon>
+                <menu>
+                    <menuitem label='Mensagens JS'>
+                        <icon>fa:life-ring fa-fw</icon>
+                        <action>exe_mensagemv2</action>
+                    </menuitem>      
+                    <menuitem label='Mensagens PHP'>
+                        <icon>fa:life-ring fa-fw</icon>
+                        <action>exe_mensagemv2</action>
+                    </menuitem>
+                    <menuitem label='Caixa de Confirmação'>
+                        <icon>fa:life-ring fa-fw</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>
+                </menu>
             </menuitem>
-            <menuitem label='Setup PHP'>
+            <menuitem label='Ajuda'>
                 <icon>fa:code fa-fw</icon>
-                <action>SystemPHPInfoView</action>
+                <menu>
+                    <menuitem label='Ajuda com arquivo HTM'>
+                        <icon>fa:life-ring fa-fw</icon>
+                        <action>AjudaView</action>
+                    </menuitem>      
+                    <menuitem label='Ajuda On-line (sqlite)'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemModulesCheckView</action>
+                    </menuitem>
+                    <menuitem label='Ajuda'>
+                        <icon>fa:code fa-fw</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>
+                </menu>
             </menuitem>
         </menu>
     </menuitem>

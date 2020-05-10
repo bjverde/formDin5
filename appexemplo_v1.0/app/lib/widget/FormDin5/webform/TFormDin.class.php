@@ -145,6 +145,29 @@ class TFormDin
         return $label;
     }
 
+
+   /**
+    * Define as mensagens que serão exibidas na tela via alert() em javascript
+    *
+    * <code>
+    * 	$frm->setMessage('Nova mensagem'); // limpa e define uma nova mensagem
+    * 	$frm->setMessage(array('Mensagem linha 1','mensagem linha 2');
+    * </code>
+    *
+    * @param string $message   - 1: Texto da mensagem 
+    * @param string $type      - 2: FORMDIN5 Type mensagem: info, error, warning
+    * @param TAction $action   - 3: FORMDIN5 Classe TAction do Adianti
+    * @param string $title_msg - 4: FORMDIN5 titulo da mensagem
+    */
+    public function setMessage( $message
+                              , $type = TFormDinMessage::TYPE_INFO
+                              , TAction $action = NULL
+                              , $title_msg = '' )
+    {
+        $formDinLabelField = new TFormDinMessage($message,$type,$action,$title_msg);
+        return $formDinLabelField;
+    }
+
     /**
     * Adiciona um campo oculto ao layout
     * ------------------------------------------------------------------------
