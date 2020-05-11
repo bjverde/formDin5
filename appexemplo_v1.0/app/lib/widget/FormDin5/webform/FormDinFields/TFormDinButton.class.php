@@ -58,43 +58,102 @@
 class TFormDinButton {
 
     protected $adiantiObj;
-    protected $mixMessage;
+    protected $objForm;
+    protected $objAction;
+    protected $label;
 
     /**
-     * ------------------------------------------------------------------------
-     * FormDin 5, que é uma reconstrução do FormDin 4 sobre o Adianti 7.X
-     * Alguns parâmetros têm uma TAG, veja documentação da classe para saber
-     * o que cada marca significa.
-     * ------------------------------------------------------------------------
-     *
-     * @param string $message   - 1: Texto da mensagem pode ser HTML
-     * @param string $type      - 2: 2: FORMDIN5 Type mensagem: DEFAULT=info, error, warning. Use TFormDinMessage::TYPE_
-     * @param TAction $action   - 3: FORMDIN5 Classe TAction do Adianti
-     * @param string $title_msg - 4: FORMDIN5 titulo da mensagem
-     */
-    public function __construct($mixMessage
-                              , $type = TFormDinMessage::TYPE_INFO
-                              , TAction $action = NULL
-                              , $title_msg = '')
+    * Adicionar botão no layout
+    *
+    * ------------------------------------------------------------------------
+    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+    * os parâmetros do metodos foram marcados veja documentação da classe para
+    * saber o que cada marca singinifica.
+    * ------------------------------------------------------------------------
+    *
+    * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
+    * definir o parametro boolLabelAbove do botão para true tambem.
+    *
+    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Form, é só informar $this
+    * @param mixed   $mixValue          - 2 : Label do Botão ou array('Gravar', 'Limpar') com nomes
+    * @param string  $strAction         - 3 : Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
+    * @param string  $strName           - 4 : Nome da ação com submit
+    * @param string  $strOnClick        - 5 : Nome da função javascript
+    * @param string  $strConfirmMessage - 6 : Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
+    * @param boolean $boolNewLine       - 7 : Em nova linha. DEFAULT = true
+    * @param boolean $boolFooter        - 8 : Mostrar o botão no rodapé do form. DEFAULT = true
+    * @param string  $strImage          - 9 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
+    * @param string  $strImageDisabled  -10 : Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
+    * @param string  $strHint           -11 : Texto hint para explicar
+    * @param string  $strVerticalAlign  -12 :
+    * @param boolean $boolLabelAbove    -13 : Position text label. DEFAULT is false. NULL = false. 
+    * @param string  $strLabel          -14 : Text label 
+    * @param string  $strHorizontalAlign-15 : Text Horizontal align. DEFAULT = center. Valeus center, left, right
+    * @return TButton|string|array
+    */
+    public function __construct($objForm
+                                , $label
+                                , $strAction=null
+                                , $strName=null
+                                , $strOnClick=null
+                                , $strConfirmMessage=null
+                                , $boolNewLine=null
+                                , $boolFooter=null
+                                , $strImage=null
+                                , $strImageDisabled=null
+                                , $strHint=null
+                                , $strVerticalAlign=null
+                                , $boolLabelAbove=null
+                                , $strLabel=null
+                                , $strHorizontalAlign=null)
     {
-        $this->setMixMessage($mixMessage);
+        $this->setObjForm($objForm);
+        $this->setLabel($label);
         $mixMessage = $this->getMixMessage();
         $this->adiantiObj = new TMessage($type,$mixMessage,$action,$title_msg);
         return $this->adiantiObj;
     }
 
-    public function setMixMessage($mixMessage){
-        if(is_array($mixMessage)){
-            $mixMessage = implode( '<br>', $mixMessage );
-            $mixMessage = preg_replace( '/' . chr( 10 ) . '/', '<br>', $mixMessage );
-            $mixMessage = preg_replace( '/' . chr( 13 ) . '/', '', $mixMessage );
-            $this->mixMessage=$mixMessage;
-        }else{
-            $this->mixMessage=$mixMessage;
-        }        
+    public function setObjForm($objForm)
+    {
+        if( !is_object($objForm) ){
+            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
+            ValidateHelper::migrarMensage($msg
+                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                         ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
+                                         ,__CLASS__,__METHOD__,__LINE__);
+        }       
+        return $this->objForm=$objForm;
     }
-    public function getMixMessage(){
-        return $this->mixMessage;
+    public function getObjForm(){
+        return $this->objForm;
+    }
+
+    public function setLabel($label)
+    {
+        if( is_array($label) ){
+            $msg = 'O parametro $mixValue não recebe mais um array! Faça uma chamada por Action';
+            ValidateHelper::migrarMensage($msg
+                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                         ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
+                                         ,__CLASS__,__METHOD__,__LINE__);
+        }else{
+            $this->label=$label;
+        }
+    }
+    public function getLabel(){
+        return $this->label;
+    }
+
+    public function setAdiantiObj($adiantiObj)
+    {
+        if( empty($adiantiObj) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }        
+        return $this->adiantiObj=$adiantiObj;
+    }
+    public function getAdiantiObj(){
+        return $this->adiantiObj;
     }
 }
 ?>

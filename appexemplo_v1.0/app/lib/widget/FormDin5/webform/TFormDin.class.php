@@ -103,12 +103,12 @@ class TFormDin
     public function validateDeprecated($strHeigh,$strWidth)
     {
         ValidateHelper::validadeParam('strHeigh',$strHeigh
-                                     ,ValidateHelper::TYPE_ERRO_WARNING
+                                     ,ValidateHelper::TRIGGER_ERROR_WARNING
                                      ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);
 
         ValidateHelper::validadeParam('strWidth',$strWidth
-                                     ,ValidateHelper::TYPE_ERRO_WARNING
+                                     ,ValidateHelper::TRIGGER_ERROR_WARNING
                                      ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
@@ -196,6 +196,83 @@ class TFormDin
         return $formDinLabelField;
     }
 
+    /**
+    * Adicionar botão no layout
+    *
+    * ------------------------------------------------------------------------
+    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+    * os parâmetros do metodos foram marcados veja documentação da classe para
+    * saber o que cada marca singinifica.
+    * ------------------------------------------------------------------------
+    *
+    * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
+    * definir o parametro boolLabelAbove do botão para true tambem.
+    *
+    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Form, é só informar $this
+    * @param mixed   $mixValue          - 2 : Label do Botão ou array('Gravar', 'Limpar') com nomes
+    * @param string  $strAction         - 3 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
+    * @param string  $strName           - 4 : Nome da ação com submit
+    * @param string  $strOnClick        - 5 : NOT_IMPLEMENTED Nome da função javascript
+    * @param string  $strConfirmMessage - 6 : NOT_IMPLEMENTED Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
+    * @param boolean $boolNewLine       - 7 : Em nova linha. DEFAULT = true
+    * @param boolean $boolFooter        - 8 : Mostrar o botão no rodapé do form. DEFAULT = true
+    * @param string  $strImage          - 9 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
+    * @param string  $strImageDisabled  -10 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
+    * @param string  $strHint           -11 : Texto hint para explicar
+    * @param string  $strVerticalAlign  -12 : NOT_IMPLEMENTED
+    * @param boolean $boolLabelAbove    -13 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
+    * @param string  $strLabel          -14 : NOT_IMPLEMENTED Text label 
+    * @param string  $strHorizontalAlign-15 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Valeus center, left, right
+    * @return TButton|string|array
+    */
+    public function addButton( $objForm
+                            , $mixValue
+				       		, $strAction=null
+				       		, $strName=null
+				       		, $strOnClick=null
+				       		, $strConfirmMessage=null
+				       		, $boolNewLine=null
+				       		, $boolFooter=true
+				       		, $strImage=null
+				       		, $strImageDisabled=null
+				       		, $strHint=null
+				       		, $strVerticalAlign=null
+				       		, $boolLabelAbove=null
+				       		, $strLabel=null
+                            , $strHorizontalAlign=null)
+    {
+        if( !is_object($objForm) ){
+            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
+            ValidateHelper::migrarMensage($msg
+                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                         ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
+                                         ,__CLASS__,__METHOD__,__LINE__);
+        }else{
+            if($boolFooter){
+                return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
+            }else{
+                $formField = new TFormDinButton($objForm
+                                            , $mixValue
+                                            , $strAction=null
+                                            , $strName=null
+                                            , $strOnClick=null
+                                            , $strConfirmMessage=null
+                                            , $boolNewLine=null
+                                            , $boolFooter=null
+                                            , $strImage=null
+                                            , $strImageDisabled=null
+                                            , $strHint=null
+                                            , $strVerticalAlign=null
+                                            , $boolLabelAbove=null
+                                            , $strLabel=null
+                                            , $strHorizontalAlign=null);
+                $objField = $formField->getAdiantiObj();
+                $this->adiantiObj->addFields([$objField]);
+                return $formField;
+            }
+        }
+    }
+
    /**
     * Define os botões de ação no formulario. Pode ser passado uma acao ou um array de ações.
     * Cada ação será um botão no rodapé ou título do formulário
@@ -217,9 +294,9 @@ class TFormDin
     public function setAction( $actionsLabel, $actionsName=null, $objForm=null, $header=false, $iconImagem=null, $color=null )
     {
         if( is_array($actionsLabel) ){
-            $msg = 'Não é permitido usar ARRAY, migre para informação unica';
+            $msg = 'Não é permitido usar ARRAY no setAction, migre para chamada unica por Action';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TYPE_ERRO_WARNING
+                                         ,ValidateHelper::TRIGGER_ERROR_WARNING
                                          ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
@@ -559,7 +636,7 @@ class TFormDin
      */
     public function setShowCloseButton( $boolNewValue=null ){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
-                                    ,ValidateHelper::TYPE_ERRO_WARNING
+                                    ,ValidateHelper::TRIGGER_ERROR_WARNING
                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
@@ -570,7 +647,7 @@ class TFormDin
      */
     public function setFlat($boolNewValue=null){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
-                                    ,ValidateHelper::TYPE_ERRO_WARNING
+                                    ,ValidateHelper::TRIGGER_ERROR_WARNING
                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
@@ -581,7 +658,7 @@ class TFormDin
      */
     public function setMaximize($boolNewValue = null){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
-                                    ,ValidateHelper::TYPE_ERRO_WARNING
+                                    ,ValidateHelper::TRIGGER_ERROR_WARNING
                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
@@ -592,7 +669,7 @@ class TFormDin
      */
     public function setHelpOnLine(){
         ValidateHelper::validadeParam('$setHelpOnLine',null
-                                ,ValidateHelper::TYPE_ERRO_WARNING
+                                ,ValidateHelper::TRIGGER_ERROR_WARNING
                                 ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                 ,__CLASS__,__METHOD__,__LINE__); 
     }
