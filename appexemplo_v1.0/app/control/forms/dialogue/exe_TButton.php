@@ -16,6 +16,8 @@ class exe_TButton extends TPage
         parent::__construct();
 
         $frm = new TFormDin('Exemplo Mensagem apenas PHP');
+        $frm->setAction('Nome Botão','onSave',$this);
+        $frm->setAction('YYYY','onSave',$this,true,null,'green');
         $this->form = $frm->show();
         
         $entry     = new TEntry('entry');
@@ -26,7 +28,7 @@ class exe_TButton extends TPage
         $bt3c->class = 'btn btn-success btn-lg';
        
 
-        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
+        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data') );
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);

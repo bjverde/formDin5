@@ -136,5 +136,33 @@ class ValidateHelper
             }
         }
     }
+
+    //--------------------------------------------------------------------------------
+    public static function migrarMensage($mensagem,$typeErro,$typeErroMsg,$class,$method,$line)
+    {
+        $test = isset($mensagem) && !empty($mensagem);
+        if($test){
+            $complemento = null;
+            if($typeErroMsg==self::TYPE_ERRO_MSG_NOT_IMPLEMENTED){
+                $complemento = ' não foi implementado!';
+            }else{
+                $complemento = ' FOI DESCONTINUADO!!';
+            }
+
+            $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
+                .$complemento
+                .': '.$mensagem
+                ;
+            if($typeErro == self::TYPE_ERRO_EXECEPTION){
+                throw new InvalidArgumentException($msg);
+            } else if($typeErro == self::TYPE_ERRO_WARNING){
+                trigger_error($msg, E_USER_WARNING);
+            }else{
+                trigger_error($msg, E_USER_NOTICE);
+            }
+        }
+    }
+
+
 }
 ?>

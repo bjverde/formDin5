@@ -149,6 +149,12 @@ class TFormDin
    /**
     * Define as mensagens que serão exibidas na tela via alert() em javascript
     *
+    * ------------------------------------------------------------------------
+    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+    * os parâmetros do metodos foram marcados veja documentação da classe para
+    * saber o que cada marca singinifica.
+    * ------------------------------------------------------------------------
+    *
     * <code>
     * 	$frm->setMessage('Nova mensagem'); // limpa e define uma nova mensagem
     * 	$frm->setMessage(array('Mensagem linha 1','mensagem linha 2');
@@ -188,6 +194,46 @@ class TFormDin
     {
         $formDinLabelField = $this->setMessage($message,$type,$action,$title_msg);
         return $formDinLabelField;
+    }
+
+   /**
+    * Define os botões de ação no formulario. Pode ser passado uma acao ou um array de ações.
+    * Cada ação será um botão no rodapé ou título do formulário
+    *
+    * ------------------------------------------------------------------------
+    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+    * os parâmetros do metodos foram marcados veja documentação da classe para
+    * saber o que cada marca singinifica.
+    * ------------------------------------------------------------------------
+    *
+    * @param mixed $actionsLabel- 1: Texto ações.
+    * @param object $actionsName- 2: FORMDIN5 Nome da ação
+    * @param object $objForm    - 2: FORMDIN5 Objeto do Form, é só informar $this
+    * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=false, mostra no rodapé. TRUE = mostra no Título
+    * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
+    * @param string $color      - 5: FORMDIN5 cor do icone.
+    * @return TButton
+    */
+    public function setAction( $actionsLabel, $actionsName=null, $objForm=null, $header=false, $iconImagem=null, $color=null )
+    {
+        if( is_array($actionsLabel) ){
+            $msg = 'Não é permitido usar ARRAY, migre para informação unica';
+            ValidateHelper::migrarMensage($msg
+                                         ,ValidateHelper::TYPE_ERRO_WARNING
+                                         ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                         ,__CLASS__,__METHOD__,__LINE__);
+        }else{
+            ValidateHelper::isSet($actionsName,__METHOD__,__LINE__);
+            ValidateHelper::isSet($objForm,__METHOD__,__LINE__);
+
+            $action = new TAction(array($objForm, $actionsName));
+            $icon = $iconImagem.' '.$color;
+            if($header){
+                return $this->getAdiantiObj()->addHeaderAction($actionsLabel,$action,$icon);
+            }else{
+                return $this->getAdiantiObj()->addAction($actionsLabel,$action,$icon);
+            }
+        }
     }
 
     /**
@@ -521,6 +567,10 @@ class TFormDin
      * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
      * @return void
      */
-    public function setHelpOnLine(){        
+    public function setHelpOnLine(){
+        ValidateHelper::validadeParam('$setHelpOnLine',null
+                                ,ValidateHelper::TYPE_ERRO_WARNING
+                                ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                ,__CLASS__,__METHOD__,__LINE__); 
     }
 }
