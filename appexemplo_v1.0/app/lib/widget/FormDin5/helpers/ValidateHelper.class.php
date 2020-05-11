@@ -47,6 +47,7 @@ class ValidateHelper
     const TYPE_ERRO_EXECEPTION = 'TYPE_ERRO_EXECEPTION';
     const TYPE_ERRO_MSG_DECREP = 'TYPE_ERRO_MSG_DECREP';
     const TYPE_ERRO_MSG_NOT_IMPLEMENTED = 'TYPE_ERRO_MSG_NOT_IMPLEMENTED';
+    const TYPE_ERRO_MSG_CHANGE = 'TYPE_ERRO_MSG_CHANGE';
     
     public static function methodLine($method,$line,$nameMethodValidate)
     {
@@ -121,16 +122,24 @@ class ValidateHelper
         }
     }
     //--------------------------------------------------------------------------------
+    public static function typeErrorMsg($typeErroMsg)
+    {
+        $complemento = null;
+        if($typeErroMsg==self::TYPE_ERRO_MSG_NOT_IMPLEMENTED){
+            $complemento = ' não foi implementado!';
+        }else if($typeErroMsg == self::TYPE_ERRO_MSG_CHANGE){
+            $complemento = ' FOI ALTERADO!';
+        }else{
+            $complemento = ' FOI DESCONTINUADO!!';
+        }
+        return $complemento;
+    }    
+    //--------------------------------------------------------------------------------
     public static function validadeParam($paramName,$paramValue,$typeErro,$typeErroMsg,$class,$method,$line)
     {
         $test = isset($paramValue) && !empty($paramValue);
         if($test){
-            $complemento = null;
-            if($typeErroMsg==self::TYPE_ERRO_MSG_NOT_IMPLEMENTED){
-                $complemento = ' não foi implementado!';
-            }else{
-                $complemento = ' FOI DESCONTINUADO!!';
-            }
+            $complemento = self::typeErrorMsg($typeErroMsg);
 
             $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
                 .' O parametro: '.$paramName
@@ -147,12 +156,7 @@ class ValidateHelper
     {
         $test = isset($mensagem) && !empty($mensagem);
         if($test){
-            $complemento = null;
-            if($typeErroMsg==self::TYPE_ERRO_MSG_NOT_IMPLEMENTED){
-                $complemento = ' não foi implementado!';
-            }else{
-                $complemento = ' FOI DESCONTINUADO!!';
-            }
+            $complemento = self::typeErrorMsg($typeErroMsg);
 
             $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
                 .$complemento
