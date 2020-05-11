@@ -236,6 +236,29 @@ class TFormDin
         }
     }
 
+   /**
+    * Define os botões de ação no formulario. Pode ser passado uma acao ou um array de ações.
+    * Cada ação será um botão no rodapé ou título do formulário
+    *
+    * ------------------------------------------------------------------------
+    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+    * os parâmetros do metodos foram marcados veja documentação da classe para
+    * saber o que cada marca singinifica.
+    * ------------------------------------------------------------------------
+    *
+    * @param mixed $actionsLabel- 1: Texto ações.
+    * @param object $actionsName- 2: FORMDIN5 Nome da ação
+    * @param object $objForm    - 2: FORMDIN5 Objeto do Form, é só informar $this
+    * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=TRUE, mostra no Título. false, mostra no rodapé. 
+    * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
+    * @param string $color      - 5: FORMDIN5 cor do icone.
+    * @return TButton
+    */
+    public function setActionHeader( $actionsLabel, $actionsName=null, $objForm=null, $header=true, $iconImagem=null, $color=null )
+    {
+        return $this->setAction($actionsLabel, $actionsName, $objForm, $header, $iconImagem, $color);
+    }
+
     /**
     * Adiciona um campo oculto ao layout
     * ------------------------------------------------------------------------
