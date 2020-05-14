@@ -41,7 +41,8 @@ Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.
 * [bk20200410_formdin4to5](https://github.com/bjverde/formDin5/tree/bk20200410_formdin4to5)- versão congelada, primeira tentatica de criar o FormDin5.
 
 ## Aplicações de Exemplo
-* appexemplo_v1.0
+* appexemplo_v1.0 - está neste projeto
+* appexemplo_v2.0 - https://github.com/bjverde/appexemplo_v2
 
 # Instalação
 1. Baixar o [Adinati FrameWork 7.1](https://www.adianti.com.br/) funciona com o template ou FrameWork Puro
