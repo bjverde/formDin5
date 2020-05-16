@@ -144,15 +144,15 @@
                 <menu>
                     <menuitem label='Grupo 01 Normal'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>AjudaView</action>
-                    </menuitem>      
+                        <action>exe_GroupField01</action>
+                    </menuitem>
                     <menuitem label='Grupo 02 Combinados, ( Efeito Sanfona )'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemModulesCheckView</action>
+                        <action>exe_GroupField02</action>
                     </menuitem>
                     <menuitem label='Grupo 03 Combinados, muda cor fundo'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>exe_GroupField03</action>
                     </menuitem>
                 </menu>
             </menuitem>      
@@ -263,9 +263,9 @@
     <menuitem label='PDF'>
         <icon>fa:file-pdf fa-fw red</icon>
         <menu>
-            <menuitem label='Ajuda'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>AjudaView</action>
+            <menuitem label='PDF e HTML Simples'>
+                <icon>fa:file-pdf fa-fw red</icon>
+                <action>pdf_html</action>
             </menuitem>      
             <menuitem label='Ver módulos'>
                 <icon>fa:cube fa-fw</icon>
