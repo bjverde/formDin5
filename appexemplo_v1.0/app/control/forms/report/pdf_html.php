@@ -41,6 +41,10 @@ class pdf_html extends TPage
             $array_object['name'] = 'Paulo Deleo';
             $array_object['phone'] = '1234-5678';
             $array_object['address'] = 'Santa Rosa, Brasil';
+            $array_object['data'] = '16/05/2020';
+            $array_object['produto'] = 'Sistema Panzo';
+            $array_object['quantidade'] = '10';
+            $array_object['preco'] = '1.000,52';
             
             // load the html template
             $html = new THtmlRenderer('app/resources/cliente.html');
