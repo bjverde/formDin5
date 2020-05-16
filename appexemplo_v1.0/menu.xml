@@ -139,17 +139,64 @@
     <menuitem label='Containers'>
         <icon>fas:archive fa-fw</icon>
         <menu>
-            <menuitem label='Ajuda'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>AjudaView</action>
-            </menuitem>      
-            <menuitem label='Ver módulos'>
+            <menuitem label='Grupo'>
                 <icon>fa:cube fa-fw</icon>
-                <action>SystemModulesCheckView</action>
+                <menu>
+                    <menuitem label='Grupo 01 Normal'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>AjudaView</action>
+                    </menuitem>      
+                    <menuitem label='Grupo 02 Combinados, ( Efeito Sanfona )'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemModulesCheckView</action>
+                    </menuitem>
+                    <menuitem label='Grupo 03 Combinados, muda cor fundo'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>
+                </menu>
+            </menuitem>      
+            <menuitem label='Abas'>
+                <icon>fa:cube fa-fw</icon>
+                <menu>
+                    <menuitem label='Aba - com tecla de atalha'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>AjudaView</action>
+                    </menuitem>      
+                    <menuitem label='Aba2 - Botão ligando aba'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemModulesCheckView</action>
+                    </menuitem>
+                    <menuitem label='Aba3 - select chamando aba'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>
+                    <menuitem label='Aba4'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>
+                    <menuitem label='Aba5'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>                                        
+                </menu>
             </menuitem>
-            <menuitem label='Setup PHP'>
+            <menuitem label='TreeView'>
                 <icon>fa:code fa-fw</icon>
-                <action>SystemPHPInfoView</action>
+                <menu>
+                    <menuitem label='Dentro do Formulário'>
+                        <icon>fa:life-ring fa-fw</icon>
+                        <action>AjudaView</action>
+                    </menuitem>      
+                    <menuitem label='Fora do Formulário'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>SystemModulesCheckView</action>
+                    </menuitem>
+                    <menuitem label='User Data - Array'>
+                        <icon>fa:code fa-fw</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>
+                </menu>
             </menuitem>
         </menu>
     </menuitem>
