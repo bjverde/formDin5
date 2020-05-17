@@ -57,7 +57,10 @@
  */
 class TFormDin
 {
+    const TYPE_FIELD  = 'feild';
+    const TYPE_LAYOUT = 'layout';
     protected $adiantiObj;
+    private $listFormElements = array();
 
     /**
      * Método construtor da classe do Formulario Padronizado em BoorStrap
@@ -113,6 +116,33 @@ class TFormDin
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
 
+
+    public function getAdiantiObj2()
+    {
+        $listFormElements = $this->getListFormElements();
+        foreach ($listFormElements as $key => $element){
+            if($element['type']==self::TYPE_FIELD){
+                if($element['boolNewLine']==true){
+                    $this->addFields($element['label'], $element['obj'], $element['boolLabelAbove']);
+                }else{
+                    $x=null;
+                    //$fieldsRow = $this->addFieldsRow($element);
+                    //$adiantiObj = $this->adiantiObj;
+                    //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
+                    //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
+                }
+            }
+            if($element['type']==self::TYPE_LAYOUT){
+                    //$fieldsRow = $this->addFieldsRow($element);
+                    //$adiantiObj = $this->adiantiObj;
+                    //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
+                    //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
+            }
+        }
+        return $this->adiantiObj;
+    }
+
+
     public function getAdiantiObj()
     {
         return $this->adiantiObj;
@@ -123,13 +153,33 @@ class TFormDin
         return $this->getAdiantiObj();
     }
 
+    protected function addElementFormList($obj
+                                         ,$type = self::TYPE_FIELD
+                                         ,$label=null
+                                         ,$boolNewLine=true
+                                         ,$boolLabelAbove=false)
+    {
+        $element = array();
+        $element['obj']=$obj;
+        $element['type']=$type;
+        $element['label']=$label;
+        $element['boolNewLine']=$boolNewLine;
+        $element['boolLabelAbove']=$boolLabelAbove;
+        $this->listFormElements[]=$element;
+    }
+
+    protected function getListFormElements()
+    {
+        return $this->listFormElements;
+    }
+
     /**
      * Inclusão 
      * @param array $label - label que será incluido com o campo
      * @param array $campo - campo que será incluido
      * @param array $boolLabelAbove - informa se o Label é acima
      */
-    public function addFields($label, $campo, $boolLabelAbove = false)
+    protected function addFields($label, $campo, $boolLabelAbove = false)
     {
         if($boolLabelAbove){
             $this->adiantiObj->addFields([$label, $campo]);
