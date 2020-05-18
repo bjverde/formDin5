@@ -144,6 +144,7 @@ footer
 	background-image:url('../img/footerbgsilver.gif');
 	font-family: arial, times new roman;
 	color: #000000;
+	z-index: 910;
 }
 #app_footer_message
 {
@@ -163,6 +164,7 @@ footer
 .main-sidebar{
 	margin-top :56px;
 	margin-bottom: 20px;
+	min-height: unset;
 }
 
 
