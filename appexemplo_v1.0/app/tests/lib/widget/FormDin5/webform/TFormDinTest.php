@@ -54,6 +54,7 @@ class TFormDinTest extends TestCase
      * Prepares the environment before running a test.
      */
     protected function setUp(): void {
+        parent::setUp();
         $this->classTest = new TFormDin('Phpunit');
     }
     
@@ -62,6 +63,7 @@ class TFormDinTest extends TestCase
      */
     protected function tearDown(): void {
         $this->classTest = null;
+        parent::tearDown();
     }
     
     

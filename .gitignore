@@ -12,7 +12,6 @@
 /.buildpath
 
 #FormDin5 Project
-!base/tmp/index.php
-base/tmp/*
+appexemplo_v1.0/.phpunit.result.cache
 /sysgen/
 /sysgenad/
