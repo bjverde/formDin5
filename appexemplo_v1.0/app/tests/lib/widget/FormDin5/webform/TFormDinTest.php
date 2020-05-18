@@ -70,6 +70,23 @@ class TFormDinTest extends TestCase
     public function testGetListFormElements_null()
     {
         $list = $this->classTest->getListFormElements();
-        $this->assertNull($list);
+        $this->assertEmpty($list);
+    }
+
+    public function testGetListFormElements_qtd1()
+    {
+        $this->classTest->addElementFormList('1');
+        $list = $this->classTest->getListFormElements();
+        $qtd = CountHelper::count($list);
+        $this->assertEquals(1, $qtd);
+    }
+
+    public function testGetListFormElements_qtd2()
+    {
+        $this->classTest->addElementFormList('1');
+        $this->classTest->addElementFormList('2');
+        $list = $this->classTest->getListFormElements();
+        $qtd = CountHelper::count($list);
+        $this->assertEquals(2, $qtd);
     }
 }

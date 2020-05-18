@@ -168,7 +168,7 @@ class TFormDin
         return $this->getAdiantiObj();
     }
 
-    protected function addElementFormList($obj
+    public function addElementFormList($obj
                                          ,$type = self::TYPE_FIELD
                                          ,$label=null
                                          ,$boolNewLine=true
@@ -183,7 +183,7 @@ class TFormDin
         $this->listFormElements[]=$element;
     }
 
-    protected function getListFormElements()
+    public function getListFormElements()
     {
         return $this->listFormElements;
     }
