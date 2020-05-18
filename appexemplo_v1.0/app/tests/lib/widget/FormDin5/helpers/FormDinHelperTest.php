@@ -130,6 +130,7 @@ class FormDinHelperTest extends TestCase
      */
     public function testConvertVo2ArrayFormDin_failNull(){
         FormDinHelper::convertVo2ArrayFormDin(null);
+        //$this->expectException(InvalidArgumentException::class);
     }
     
     /**
@@ -137,6 +138,7 @@ class FormDinHelperTest extends TestCase
      */
     public function testConvertVo2ArrayFormDin_failString(){
         FormDinHelper::convertVo2ArrayFormDin('xx');
+        //$this->expectException(InvalidArgumentException::class);
     }
     
     /**
