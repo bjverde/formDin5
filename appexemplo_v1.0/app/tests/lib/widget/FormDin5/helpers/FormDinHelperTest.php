@@ -40,8 +40,9 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../../../';
-require_once $path.'tests/initTest.php';
+$path =  __DIR__.'/../../../../../../';
+//require_once $path.'init.php';
+//require_once $path.'tests/initTest.php';
 
 require_once  __DIR__.'/../../mockMunicipioVO.class.php';
 

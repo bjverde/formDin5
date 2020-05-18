@@ -41,7 +41,7 @@
  */
 
 $path =  __DIR__.'/../../../../../';
-require_once $path.'tests/initTest.php';
+//require_once $path.'tests/initTest.php';
 
 use PHPUnit\Framework\TestCase;
 
