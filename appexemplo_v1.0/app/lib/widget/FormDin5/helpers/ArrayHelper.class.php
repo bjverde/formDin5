@@ -254,10 +254,10 @@ class ArrayHelper
         $result['formarray'] = $array;
         
         if( !self::has($attributeName, $array) ) {
-            $result['message'] = TMessage::ARRAY_ATTRIBUTE_NOT_EXIST;
+            $result['message'] = TFormDinMessage::ARRAY_ATTRIBUTE_NOT_EXIST;
         }else{
             if( !self::formDinGetValue($array, $attributeName, $keyIndex) ){
-                $result['message'] = TMessage::ARRAY_KEY_NOT_EXIST;
+                $result['message'] = TFormDinMessage::ARRAY_KEY_NOT_EXIST;
             }else{
                 $arrayResult = array();
                 foreach ($array as $attribute => $arrayAttribute) {

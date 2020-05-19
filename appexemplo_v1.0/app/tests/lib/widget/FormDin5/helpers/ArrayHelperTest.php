@@ -252,7 +252,7 @@ class ArrayHelperTest extends TestCase
         
         $expected = false;
         $this->assertEquals($expected, $result['result']);
-        $expected = TMessage::ARRAY_KEY_NOT_EXIST;
+        $expected = TFormDinMessage::ARRAY_KEY_NOT_EXIST;
         $this->assertEquals($expected, $result['message']);
     }
     
@@ -274,7 +274,7 @@ class ArrayHelperTest extends TestCase
         
         $expected = false;
         $this->assertEquals($expected, $result['result']);
-        $expected = TMessage::ARRAY_ATTRIBUTE_NOT_EXIST;
+        $expected = TFormDinMessage::ARRAY_ATTRIBUTE_NOT_EXIST;
         $this->assertEquals($expected, $result['message']);
     }
     
@@ -286,7 +286,7 @@ class ArrayHelperTest extends TestCase
         
         $expected = false;
         $this->assertEquals($expected, $result['result']);
-        $expected = TMessage::ARRAY_KEY_NOT_EXIST;
+        $expected = TFormDinMessage::ARRAY_KEY_NOT_EXIST;
         $this->assertEquals($expected, $result['message']);
     }
     
