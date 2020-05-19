@@ -44,6 +44,7 @@ $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Warning;
 
 class TFormDinTest extends TestCase
 {
@@ -65,7 +66,24 @@ class TFormDinTest extends TestCase
         $this->classTest = null;
         parent::tearDown();
     }
-    
+      
+    public function testValidateDeprecated_null()
+    {
+        $this->expectNotToPerformAssertions();
+        $this->classTest->validateDeprecated(null,null);
+    }
+
+    public function testValidateDeprecated_Heigh()
+    {
+        $this->expectException(Warning::class);
+        $this->classTest->validateDeprecated(200,null);
+    }
+
+    public function testValidateDeprecated_Width()
+    {
+        $this->expectException(Warning::class);
+        $this->classTest->validateDeprecated(null,200);
+    }
     
     public function testGetListFormElements_null()
     {
