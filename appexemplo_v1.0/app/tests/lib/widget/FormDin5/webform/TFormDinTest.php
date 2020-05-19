@@ -84,7 +84,55 @@ class TFormDinTest extends TestCase
         $this->expectException(Warning::class);
         $this->classTest->validateDeprecated(null,200);
     }
-    
+
+    public function mockAddElementFormList($listFormElements
+                                         ,$obj
+                                         ,$type = TFormDin::TYPE_FIELD
+                                         ,$label=null
+                                         ,$boolNewLine=true
+                                         ,$boolLabelAbove=false)
+    {
+        if(is_null($listFormElements) || !is_array($listFormElements) ){
+            $listFormElements = array();
+        }
+        $element = array();
+        $element['obj']=$obj;
+        $element['type']=$type;
+        $element['label']=$label;
+        $element['boolNewLine']=$boolNewLine;
+        $element['boolLabelAbove']=$boolLabelAbove;
+        $listFormElements[]=$element;
+        return $listFormElements;
+    }
+
+    public function testAddFieldsRow_1Element()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $expected = array([$label], [$campo]);
+
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $result = $this->classTest->addFieldsRow(0);
+        $this->assertEquals(0, $result['key']);
+        $this->assertEquals($expected, $result['row']);        
+    }
+
+    public function testAddFieldsRow_2Elements()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $label1 = 'teste1';
+        $expected = array([$label], [$campo],[$label1], [$campo]);
+
+
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label1,FALSE);
+
+        $result = $this->classTest->addFieldsRow(0);
+        $this->assertEquals(1, $result['key']);
+        $this->assertEquals($expected, $result['row']); 
+    }
+
     public function testGetListFormElements_null()
     {
         $list = $this->classTest->getListFormElements();

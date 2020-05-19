@@ -116,12 +116,26 @@ class TFormDin
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
 
-    public function addFieldsRow($listFormElements,$key)
+    public function addFieldsRow($key)
     {
-
-        while ($key <= $qtd) {
-            
+        $result = array();
+        $listFormElements = $this->getListFormElements();
+        if( ArrayHelper::has($key+1,$listFormElements) ){
+            if( $listFormElements[$key+1]['boolNewLine']==true){
+                $result['key']=$key;
+                $result['row']=array($listFormElements[$key]['label'], $listFormElements[$key]['obj']);
+            }else{
+                $row = array();
+                while ($listFormElements[$key+1]['boolNewLine']==false) {
+                    $row[] = $listFormElements[$key]['label'];
+                    $row[] = $listFormElements[$key]['obj'];
+                    $key = $key + 1;
+                }
+                $result['key']=$key;
+                $result['row']=$row;
+            }
         }
+        return $result;
     }
 
     public function getAdiantiObj2()
