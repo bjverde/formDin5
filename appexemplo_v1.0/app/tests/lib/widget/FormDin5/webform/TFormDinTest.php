@@ -105,6 +105,7 @@ class TFormDinTest extends TestCase
         return $listFormElements;
     }
 
+    //-----------------------------------------------------------------------
     public function testNextElementHaveNewLine_0Element()
     {
         $result = $this->classTest->nextElementHaveNewLine(0);
@@ -162,6 +163,17 @@ class TFormDinTest extends TestCase
         $this->assertEquals(false, $result);
     }
 
+    public function testNextElementHaveNewLine_3Element_resultNull_start02()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',true);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'02',true);
+        $result = $this->classTest->nextElementHaveNewLine(2);
+        $this->assertEquals(null, $result);
+    }
+    //-----------------------------------------------------------------------
     public function testAddFieldsRow_1Element()
     {
         $campo = new stdClass();

@@ -130,23 +130,21 @@ class TFormDin
     {
         $result = array();
         $listFormElements = $this->getListFormElements();
-        if( ArrayHelper::has($key+1,$listFormElements) ){
-            if( $listFormElements[$key+1]['boolNewLine']==true){
-                $result['key']=$key;
-                $result['row']=array($listFormElements[$key]['label'], $listFormElements[$key]['obj']);
-            }else{
-                $row = array();
-                if( ArrayHelper::has($key+1,$listFormElements) ){
-                    $nextElementHaveNewLine = ( $listFormElements[$key+1]['boolNewLine']==false );
-                    while ($listFormElements[$key+1]['boolNewLine']==false) {
-                        $row[] = $listFormElements[$key]['label'];
-                        $row[] = $listFormElements[$key]['obj'];
-                        $key = $key + 1;
-                    }
-                }
-                $result['key']=$key;
-                $result['row']=$row;
+        if( $this->nextElementHaveNewLine($key)===true ){
+            $result['key']=$key;
+            $result['row']=array($listFormElements[$key]['label'], $listFormElements[$key]['obj']);
+        }else if( $this->nextElementHaveNewLine($key)===false ){
+            $row = array();
+            while( $this->nextElementHaveNewLine($key)===true ) {
+                $row[] = $listFormElements[$key]['label'];
+                $row[] = $listFormElements[$key]['obj'];
+                $key = $key + 1;
             }
+            $result['key']=$key;
+            $result['row']=$row;
+        }else{
+            $result['key']=$key;
+            $result['row']=null;
         }
         return $result;
     }
