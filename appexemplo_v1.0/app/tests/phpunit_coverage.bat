@@ -5,7 +5,7 @@ cd ../../
 
 REM ---------------- 7.2.4 -------------------------
 
-REM ECHO PHP 7.3.5 and PHPUnit 7.2.4 Simples
+ECHO PHP 7.3.5 and PHPUnit 7.2.4 Simples
 D:\wamp\bin\php\php7.3.5\php.exe D:\wamp\bin\phpunit\phpunit-7.2.4.phar --colors=auto --bootstrap D:\wamp\www\formDin5\appexemplo_v1.0\init.php D:\wamp\www\formDin5\appexemplo_v1.0\app\tests\
 
 REM ECHO PHP 7.3.5 and PHPUnit 7.2.4 Simples with Coverage
