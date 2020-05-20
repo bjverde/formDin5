@@ -174,6 +174,13 @@ class TFormDinTest extends TestCase
         $this->assertEquals(null, $result);
     }
     //-----------------------------------------------------------------------
+    public function testAddFieldsRow_0Element()
+    {
+        $result = $this->classTest->addFieldsRow(0);
+        $this->assertEquals(0, $result['key']);
+        $this->assertEquals(null, $result['row']);  
+    }
+
     public function testAddFieldsRow_1Element()
     {
         $campo = new stdClass();

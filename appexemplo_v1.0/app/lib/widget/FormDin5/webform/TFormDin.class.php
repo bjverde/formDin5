@@ -132,7 +132,8 @@ class TFormDin
         $listFormElements = $this->getListFormElements();
         if( $this->nextElementHaveNewLine($key)===true ){
             $result['key']=$key;
-            $result['row']=array($listFormElements[$key]['label'], $listFormElements[$key]['obj']);
+            $element = $listFormElements[$key];
+            $result['row']=array([$element['label']], [$element['obj']]);
         }else if( $this->nextElementHaveNewLine($key)===false ){
             $row = array();
             while( $this->nextElementHaveNewLine($key)===true ) {
@@ -144,7 +145,12 @@ class TFormDin
             $result['row']=$row;
         }else{
             $result['key']=$key;
-            $result['row']=null;
+            if(!ArrayHelper::has($key,$listFormElements)){
+                $result['row']=null;
+            }else{
+                $element = $listFormElements[$key];
+                $result['row']=array([$element['label']], [$element['obj']]);
+            }            
         }
         return $result;
     }
