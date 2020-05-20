@@ -105,6 +105,63 @@ class TFormDinTest extends TestCase
         return $listFormElements;
     }
 
+    public function testNextElementHaveNewLine_0Element()
+    {
+        $result = $this->classTest->nextElementHaveNewLine(0);
+        $this->assertEquals(null, $result);
+    }
+
+    public function testNextElementHaveNewLine_1Element()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $result = $this->classTest->nextElementHaveNewLine(0);
+        $this->assertEquals(null, $result);
+    }
+
+    public function testNextElementHaveNewLine_2Element_resultTrue()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',true);
+        $result = $this->classTest->nextElementHaveNewLine(0);
+        $this->assertEquals(true, $result);
+    }
+
+    public function testNextElementHaveNewLine_2Element_resultFalse()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',false);
+        $result = $this->classTest->nextElementHaveNewLine(0);
+        $this->assertEquals(false, $result);
+    }
+
+    public function testNextElementHaveNewLine_3Element_resultTrue_start01()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',true);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'02',true);
+        $result = $this->classTest->nextElementHaveNewLine(1);
+        $this->assertEquals(true, $result);
+    }
+
+    public function testNextElementHaveNewLine_3Element_resultFalse_start01()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',false);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'02',false);
+        $result = $this->classTest->nextElementHaveNewLine(1);
+        $this->assertEquals(false, $result);
+    }
+
     public function testAddFieldsRow_1Element()
     {
         $campo = new stdClass();

@@ -116,6 +116,16 @@ class TFormDin
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
 
+    public function nextElementHaveNewLine($key)
+    {
+        $result = null;
+        $listFormElements = $this->getListFormElements();
+        if( ArrayHelper::has($key+1,$listFormElements) ){
+            $result = $listFormElements[$key+1]['boolNewLine'];
+        }
+        return $result;
+    }
+
     public function addFieldsRow($key)
     {
         $result = array();
@@ -126,10 +136,13 @@ class TFormDin
                 $result['row']=array($listFormElements[$key]['label'], $listFormElements[$key]['obj']);
             }else{
                 $row = array();
-                while ($listFormElements[$key+1]['boolNewLine']==false) {
-                    $row[] = $listFormElements[$key]['label'];
-                    $row[] = $listFormElements[$key]['obj'];
-                    $key = $key + 1;
+                if( ArrayHelper::has($key+1,$listFormElements) ){
+                    $nextElementHaveNewLine = ( $listFormElements[$key+1]['boolNewLine']==false );
+                    while ($listFormElements[$key+1]['boolNewLine']==false) {
+                        $row[] = $listFormElements[$key]['label'];
+                        $row[] = $listFormElements[$key]['obj'];
+                        $key = $key + 1;
+                    }
                 }
                 $result['key']=$key;
                 $result['row']=$row;
