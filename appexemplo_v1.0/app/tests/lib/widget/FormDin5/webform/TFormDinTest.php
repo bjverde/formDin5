@@ -174,6 +174,49 @@ class TFormDinTest extends TestCase
         $this->assertEquals(null, $result);
     }
     //-----------------------------------------------------------------------
+    public function testGetArrayElementLabelAbove_ArrayNull_Exception()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $result = $this->classTest->getArrayElementLabelAbove(null);
+    }
+
+    public function testGetArrayElementLabelAbove_ArrayEmpty_Exception()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $result = $this->classTest->getArrayElementLabelAbove(array());
+    }
+
+    public function testGetArrayElementLabelAbove_true()
+    {
+        $element = array();
+        $element['obj']=new stdClass();;
+        $element['type']=TFormDin::TYPE_FIELD;
+        $element['label']='Teste';
+        $element['boolNewLine']=true;
+        $element['boolLabelAbove']=true;
+
+        $expected = array([$element['label'],$element['obj']]);
+
+        $result = $this->classTest->getArrayElementLabelAbove($element);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetArrayElementLabelAbove_false()
+    {
+        $element = array();
+        $element['obj']=new stdClass();;
+        $element['type']=TFormDin::TYPE_FIELD;
+        $element['label']='Teste';
+        $element['boolNewLine']=true;
+        $element['boolLabelAbove']=false;
+
+        $expected = array([$element['label']],[$element['obj']]);
+
+        $result = $this->classTest->getArrayElementLabelAbove($element);
+        $this->assertEquals($expected, $result);
+    }
+
+    //-----------------------------------------------------------------------
     public function testAddFieldsRow_0Element()
     {
         $result = $this->classTest->addFieldsRow(0);

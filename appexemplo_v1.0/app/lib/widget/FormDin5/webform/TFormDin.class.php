@@ -126,6 +126,20 @@ class TFormDin
         return $result;
     }
 
+    public function getArrayElementLabelAbove($element)
+    {
+        ValidateHelper::isArray($element,__METHOD__,__LINE__);
+        $result = null;
+        $label = $element['label'];
+        $obj   = $element['obj'];
+        if($element['boolLabelAbove']==true){
+            $result = array([$label, $obj]);
+        }else{
+            $result = array([$label], [$obj]);
+        }
+        return $result;
+    }
+
     public function addFieldsRow($key)
     {
         $result = array();
@@ -133,7 +147,7 @@ class TFormDin
         if( $this->nextElementHaveNewLine($key)===true ){
             $result['key']=$key;
             $element = $listFormElements[$key];
-            $result['row']=array([$element['label']], [$element['obj']]);
+            $result['row']=$this->getArrayElementLabelAbove($element);
         }else if( $this->nextElementHaveNewLine($key)===false ){
             $row = array();
             while( $this->nextElementHaveNewLine($key)===true ) {
@@ -149,7 +163,7 @@ class TFormDin
                 $result['row']=null;
             }else{
                 $element = $listFormElements[$key];
-                $result['row']=array([$element['label']], [$element['obj']]);
+                $result['row']=$this->getArrayElementLabelAbove($element);
             }            
         }
         return $result;
