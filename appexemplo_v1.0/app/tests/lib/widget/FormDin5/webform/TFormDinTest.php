@@ -75,13 +75,13 @@ class TFormDinTest extends TestCase
 
     public function testValidateDeprecated_Heigh()
     {
-        $this->expectException(Warning::class);
+        $this->expectWarning();
         $this->classTest->validateDeprecated(200,null);
     }
 
     public function testValidateDeprecated_Width()
     {
-        $this->expectException(Warning::class);
+        $this->expectWarning();
         $this->classTest->validateDeprecated(null,200);
     }
 

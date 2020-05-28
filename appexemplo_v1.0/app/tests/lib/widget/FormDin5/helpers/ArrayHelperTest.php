@@ -208,23 +208,17 @@ class ArrayHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testValidateIsArray_FailNull(){
+        $this->expectException(InvalidArgumentException::class);
         ArrayHelper::validateIsArray(null,__METHOD__,__LINE__);
     }
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testValidateIsArray_FailArrayEmpty(){
+        $this->expectException(InvalidArgumentException::class);
         $listArray = array();
         $this->assertNull( ArrayHelper::validateIsArray($listArray,__METHOD__,__LINE__) );
     }
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testValidateIsArray_FailString(){
+        $this->expectException(InvalidArgumentException::class);
         $listArray = 'xxx';
         $this->assertNull( ArrayHelper::validateIsArray($listArray,__METHOD__,__LINE__) );
     }
@@ -237,10 +231,8 @@ class ArrayHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testFormDinDeleteRowByKeyIndex_FailNull(){
+        $this->expectException(InvalidArgumentException::class);
         ArrayHelper::formDinDeleteRowByKeyIndex(null,10);
     }
     
@@ -259,10 +251,8 @@ class ArrayHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testFormDinDeleteRowByColumnNameAndKeyIndex_FailNull(){
+        $this->expectException(InvalidArgumentException::class);
         ArrayHelper::formDinDeleteRowByColumnNameAndKeyIndex(null,'xx',10);
     }
     

@@ -125,26 +125,21 @@ class FormDinHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testConvertVo2ArrayFormDin_failNull(){
+        $this->expectException(InvalidArgumentException::class);
         FormDinHelper::convertVo2ArrayFormDin(null);
-        //$this->expectException(InvalidArgumentException::class);
     }
     
     /**
      * @expectedException InvalidArgumentException
      */
     public function testConvertVo2ArrayFormDin_failString(){
-        FormDinHelper::convertVo2ArrayFormDin('xx');
-        //$this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
+        FormDinHelper::convertVo2ArrayFormDin('xx');        
     }
     
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testConvertVo2ArrayFormDin_failInt(){
+        $this->expectException(InvalidArgumentException::class);
         FormDinHelper::convertVo2ArrayFormDin(120);
     }
     
@@ -164,10 +159,8 @@ class FormDinHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testValidateIdIsNumeric_FailNull(){
+        $this->expectException(InvalidArgumentException::class);
         FormDinHelper::validateIdIsNumeric(null,__METHOD__,__LINE__);
     }
     public function testValidateIdIsNumeric_OkInteger(){
