@@ -171,9 +171,16 @@ class TFormDin
             $result['row']=$this->getArrayElementLabelAbove($element);
         }else if( $this->nextElementNewLine($key)===false ){
             $row = array();
-            while( $this->nextElementNewLine($key)===true ) {
-                $row[] = $listFormElements[$key]['label'];
-                $row[] = $listFormElements[$key]['obj'];
+            while( $this->nextElementNewLine($key)==false && ArrayHelper::has($key,$listFormElements)) {
+                $element = $listFormElements[$key];
+                $label = $element['label'];
+                $obj   = $element['obj'];
+                if($element['boolLabelAbove']==true){
+                    $row[]=[$label, $obj];
+                }else{
+                    $row[]=[$label];
+                    $row[]=[$obj];
+                }
                 $key = $key + 1;
             }
             $result['key']=$key;

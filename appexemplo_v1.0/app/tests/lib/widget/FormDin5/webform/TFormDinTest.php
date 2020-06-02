@@ -254,7 +254,7 @@ class TFormDinTest extends TestCase
         $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label1,true);
 
         $result = $this->classTest->addFieldsRow($keyStart);
-        $this->assertEquals(1, $result['key']);
+        $this->assertEquals(0, $result['key']);
         $this->assertEquals($expected, $result['row']); 
     }
 
@@ -270,26 +270,6 @@ class TFormDinTest extends TestCase
 
         $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
         $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label1,FALSE);
-
-        $result = $this->classTest->addFieldsRow($keyStart);
-        $this->assertEquals(1, $result['key']);
-        $this->assertEquals($expected, $result['row']); 
-    }
-
-    public function testAddFieldsRow_3Elements_start0_3line0()
-    {
-        $campo = new stdClass();
-        $label = 'teste';
-        $label1 = 'teste1';
-        $label2 = 'teste2';
-        $expected = array([$label], [$campo]);
-
-        $keyStart = 0;
-
-
-        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
-        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label1);
-        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label2);
 
         $result = $this->classTest->addFieldsRow($keyStart);
         $this->assertEquals(2, $result['key']);
