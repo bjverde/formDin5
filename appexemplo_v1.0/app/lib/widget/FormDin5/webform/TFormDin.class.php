@@ -116,6 +116,12 @@ class TFormDin
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
 
+    /**
+     * Recebe a chave da posição do elemento e verifica se o proximo elemento
+     * deve ficar em mesma linha ou na proxima
+     * @param int $key
+     * @return void
+     */
     public function nextElementHaveNewLine($key)
     {
         $result = null;
@@ -126,6 +132,12 @@ class TFormDin
         return $result;
     }
 
+    /**
+     * Recebe um elemento e retorna o array do Label
+     *
+     * @param [type] $element
+     * @return void
+     */
     public function getArrayElementLabelAbove($element)
     {
         ValidateHelper::isArray($element,__METHOD__,__LINE__);
@@ -140,6 +152,13 @@ class TFormDin
         return $result;
     }
 
+    /**
+     * Recebe a chave da posição da posição inicial, vai percorrendo a lista
+     * para retorna o array com os elementos que compoem a linha
+     * 
+     * @param int $key
+     * @return array
+     */
     public function addFieldsRow($key)
     {
         $result = array();
