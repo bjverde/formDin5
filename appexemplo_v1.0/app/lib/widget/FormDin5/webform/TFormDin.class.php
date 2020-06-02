@@ -122,7 +122,7 @@ class TFormDin
      * @param int $key
      * @return void
      */
-    public function nextElementHaveNewLine($key)
+    public function nextElementNewLine($key)
     {
         $result = null;
         $listFormElements = $this->getListFormElements();
@@ -154,7 +154,9 @@ class TFormDin
 
     /**
      * Recebe a chave da posição da posição inicial, vai percorrendo a lista
-     * para retorna o array com os elementos que compoem a linha
+     * para retorna o array de duas posição
+     * $result['key'] - ultimo elemento incluido
+     *  $result['row']- array com todos os alementos da lista
      * 
      * @param int $key
      * @return array
@@ -163,13 +165,13 @@ class TFormDin
     {
         $result = array();
         $listFormElements = $this->getListFormElements();
-        if( $this->nextElementHaveNewLine($key)===true ){
+        if( $this->nextElementNewLine($key)===true ){
             $result['key']=$key;
             $element = $listFormElements[$key];
             $result['row']=$this->getArrayElementLabelAbove($element);
-        }else if( $this->nextElementHaveNewLine($key)===false ){
+        }else if( $this->nextElementNewLine($key)===false ){
             $row = array();
-            while( $this->nextElementHaveNewLine($key)===true ) {
+            while( $this->nextElementNewLine($key)===true ) {
                 $row[] = $listFormElements[$key]['label'];
                 $row[] = $listFormElements[$key]['obj'];
                 $key = $key + 1;
