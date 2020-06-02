@@ -294,6 +294,24 @@ class TFormDinTest extends TestCase
         $this->assertEquals($expected, $result['row']); 
     }
 
+    public function testAddFieldsRow_2Elements_nextSameLine_FristLabelAbove()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $label1 = 'teste1';
+        $expected = array([$label,$campo],[$label1],[$campo]);
+
+        $keyStart = 0;
+
+
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label,null,true);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label1,FALSE);
+
+        $result = $this->classTest->addFieldsRow($keyStart);
+        $this->assertEquals(2, $result['key']);
+        $this->assertEquals($expected, $result['row']); 
+    }
+
     public function testAddFieldsRow_3Elements_start0_1PerLine()
     {
         $campo = new stdClass();
