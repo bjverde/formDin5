@@ -203,22 +203,22 @@ class TFormDin
         $qtd = CountHelper::count($listFormElements);
         //foreach ($listFormElements as $key => $element){
         $key = 0;
-        while ($key <= $qtd) {
+        while ($key < $qtd) {
+            $fieldsRowResult = $this->addFieldsRow($key);            
+            $fieldsRow = $fieldsRowResult['row'];
+            $adiantiObj = $this->adiantiObj;
+            call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
+            $key = $fieldsRowResult['key'];
+            $key = $key + 1;
+            /*
             $element = $listFormElements[$key];
             if($element['type']==self::TYPE_FIELD){
-                if($element['boolNewLine']==true){
-                    if($listFormElements[$key+1]['boolNewLine']==true){
-                        $this->addFields($element['label'], $element['obj'], $element['boolLabelAbove']);
-                    }else{
-                        
-                    }                    
-                }else{
-                    $x=null;
-                    //$fieldsRow = $this->addFieldsRow($element);
-                    //$adiantiObj = $this->adiantiObj;
-                    //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
-                    //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
-                }
+                $fieldsRowResult = $this->addFieldsRow($key);
+                $key = $fieldsRowResult['key'];
+                $fieldsRow = $fieldsRowResult['row'];
+                $adiantiObj = $this->adiantiObj;
+                call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
+                //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
             }
             if($element['type']==self::TYPE_LAYOUT){
                     //$fieldsRow = $this->addFieldsRow($element);
@@ -226,6 +226,7 @@ class TFormDin
                     //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
                     //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
             }
+            */
         }
         return $this->adiantiObj;
     }
@@ -238,7 +239,7 @@ class TFormDin
 
     public function show()
     {
-        return $this->getAdiantiObj();
+        return $this->getAdiantiObj2();
     }
 
     public function addElementFormList($obj
@@ -582,7 +583,7 @@ class TFormDin
      * @param integer $intSize        -  5: NOT_IMPLEMENTED quantidade de caracteres visíveis
      * @param string $strValue        -  6: texto preenchido
      * @param boolean $boolNewLine    -  7: NOT_IMPLEMENTED Nova linha
-     * @param string $strHint         -  9: NOT_IMPLEMENTED
+     * @param string $strHint         -  8: NOT_IMPLEMENTED
      * @param string $strExampleText  -  9: PlaceHolder é um Texto de exemplo
      * @param boolean $boolLabelAbove - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel- 11: NOT_IMPLEMENTED
@@ -609,7 +610,8 @@ class TFormDin
         $formField->setExampleText($strExampleText);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        $this->addFields($label ,$objField ,$boolLabelAbove);
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
 
