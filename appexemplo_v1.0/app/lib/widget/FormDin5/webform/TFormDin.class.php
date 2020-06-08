@@ -582,7 +582,7 @@ class TFormDin
      * @param boolean $boolRequired   -  4: Obrigatorio ou não. DEFAULT = False.
      * @param integer $intSize        -  5: NOT_IMPLEMENTED quantidade de caracteres visíveis
      * @param string $strValue        -  6: texto preenchido
-     * @param boolean $boolNewLine    -  7: NOT_IMPLEMENTED Nova linha
+     * @param boolean $boolNewLine    -  7: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param string $strHint         -  8: NOT_IMPLEMENTED
      * @param string $strExampleText  -  9: PlaceHolder é um Texto de exemplo
      * @param boolean $boolLabelAbove - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
@@ -629,7 +629,7 @@ class TFormDin
      * @param boolean $boolRequired    - 4: Obrigatorio
      * @param integer $intColumns      - 5: Largura use px ou %, valores inteiros serão multiplicados 1.5 e apresentado em px
      * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
-     * @param boolean $boolNewLine     - 7: NOT_IMPLEMENTED nova linha
+     * @param boolean $boolNewLine     - 7: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove  - 8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
      * @param string  $strValue       - 10: texto preenchido
@@ -662,7 +662,8 @@ class TFormDin
         $objField = $formField->getFullComponent();
         //$objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        $this->addFields($label ,$objField ,$boolLabelAbove);
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
     	return $formField;
     }
 
@@ -709,7 +710,7 @@ class TFormDin
      * @param string $strLabel        - 2: Rotulo do campo que irá aparece na tela
      * @param boolean $boolRequired   - 3: Obrigatorio
      * @param string $strMask         - 4: A mascara
-     * @param boolean $boolNewLine    - 5: NOT_IMPLEMENTED Nova linha
+     * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param string $strValue        - 6: texto preenchido
      * @param boolean $boolLabelAbove - 7: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED
@@ -734,7 +735,8 @@ class TFormDin
                                               ,$strExampleText,$boolSendMask);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        $this->addFields($label ,$objField ,$boolLabelAbove);
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }    
 
@@ -766,7 +768,7 @@ class TFormDin
      * @param string  $strLabel       - 2: Label do campo
      * @param boolean $boolRequired   - 3: Obrigatorio. Default FALSE
      * @param mixed   $mixOptions     - 4: array dos valores. no formato "key=>value". No FormDin 5 só permite array PHP
-     * @param boolean $boolNewLine    - 5: NOT_IMPLEMENTED Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+     * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param mixed   $mixValue       - 7: NOT_IMPLEMENTED Valor DEFAULT, informe o ID do array
      * @param boolean $boolMultiSelect- 8: NOT_IMPLEMENTED Default FALSE = SingleSelect, TRUE = MultiSelect
@@ -790,7 +792,8 @@ class TFormDin
         $formField = new TFormDinSelectField($id,$strLabel,$boolRequired,$mixOptions);
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
-        $this->addFields($label ,$objField ,$boolLabelAbove);
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
     /**
@@ -811,7 +814,7 @@ class TFormDin
      * @param string $strLabel       - 4: Label do campo
      * @param string $strWidth       - 5: NOT_IMPLEMENTED
      * @param string $strHeight      - 6: NOT_IMPLEMENTED
-     * @param boolean $boolNewLine   - 7: NOT_IMPLEMENTED Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolNewLine   - 7: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param boolean $boolLabelAbove  8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @return THtml Field
      */
@@ -832,7 +835,8 @@ class TFormDin
                                           ,$strWidth,$boolNewLine,$boolNoWrapLabel);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        $this->addFields($label ,$objField ,$boolLabelAbove);
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
     //----------------------------------------------------------------
