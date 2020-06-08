@@ -389,10 +389,23 @@ class TFormDinTest extends TestCase
         $this->assertEquals(2, $result['key']);
         $this->assertEquals($expected, $result['row']); 
     }
+    //---------------------------------------------
+    public function testGetAdiantiObj2GetAdiantiObj2_null(){
+        $this->expectError();
+        $this->classTest->getAdiantiObj2();
+    }
+    //---------------------------------------------
+    public function testGetAdiantiObj2GetAdiantiObj2_1FieldText(){
+        $formField = new TFormDinTextField('TEXT01','Texto tam 10', 10);
+        $label = $formField->getLabel();
+        $objField = $formField->getAdiantiObj();
+        $this->classTest->addElementFormList($objField,TFormDin::TYPE_FIELD,$label);
 
+        $this->classTest->getAdiantiObj2();
+    }    
     //---------------------------------------------
 
-    public function testGetListFormElements_null()
+    public function testGetAdiantiObj2GetListFormElements_null()
     {
         $list = $this->classTest->getListFormElements();
         $this->assertEmpty($list);
