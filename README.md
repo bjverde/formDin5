@@ -15,7 +15,7 @@ This version has the proposal to be the next version of **[FormDin 4 in GitHub.]
 
 Used libraries
 
-* [Adinati FrameWork 7.1](https://www.adianti.com.br/)
+* [Adinati FrameWork 7.2.1](https://www.adianti.com.br/)
 * BootStrap 4.1.3
 * Jquery 3.3.1
 * FPF 1.8.2
@@ -30,7 +30,7 @@ Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.
 # Sobre
 
 ## Bibliotecas usadas
-* [Adinati FrameWork 7.1](https://www.adianti.com.br/)
+* [Adinati FrameWork 7.2.1](https://www.adianti.com.br/)
 * BootStrap 4.1.3
 * Jquery 3.3.1
 * FPF 1.8.2
@@ -45,9 +45,13 @@ Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.
 * appexemplo_v2.0 - https://github.com/bjverde/appexemplo_v2
 
 # Instalação
-1. Baixar o [Adinati FrameWork 7.1](https://www.adianti.com.br/) funciona com o template ou FrameWork Puro
-1. Copiar o conteudo pasta FormDin5 para dentro da pasta `/app/`. Será criada novas pastas `/app/lib/widget/FormDin5` e `/app/lib/include/FormDin5.js` conforme orientação da [Estensibilidade do Adianti](https://www.adianti.com.br/framework-extensibility)
+1. Baixar o [Adinati FrameWork 7.2.1](https://www.adianti.com.br/) funciona com o template ou FrameWork Puro. Pode ser que funcione com o Adianti 7.0 ou 7.1, porém não é garantido.
+1. Copiar o conteudo pasta FormDin5 para dentro da pasta `/app/`. Serão criada novas pastas abaixo, conforme orientação da [Estensibilidade do Adianti](https://www.adianti.com.br/framework-extensibility)
+    1. `/app/lib/widget/FormDin5`
+    1. `/app/lib/include/FormDin5.js` 
+    1. `/app/tests` é opcional e pode removida, contem os testes unitários com PHPUnit no FormDin 5
 
+    
 # Videos Sobre
-
+Abaixo um vídeo sobre o FormDin 5 e está esperado para o Futuro !
 [![FormDin 5 o futuro !!](http://img.youtube.com/vi/Sf8mQn1-CQc/0.jpg)](http://www.youtube.com/watch?v=Sf8mQn1-CQc "FormDin 5 o futuro !!")
