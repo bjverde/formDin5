@@ -31,7 +31,7 @@ ECHO PHP 7.3.5 and PHPUnit 9.1.4 Simples
 D:\wamp\bin\php\php7.3.5\php.exe D:\wamp\bin\phpunit\phpunit-9.1.4.phar --colors=auto --bootstrap D:\wamp\www\formDin5\appexemplo_v1.0\init.php D:\wamp\www\formDin5\appexemplo_v1.0\app\tests\
 
 REM ECHO PHP 7.3.5 and PHPUnit 9.1.4 Simples with Coverage
-REM D:\wamp\bin\php\php7.3.5\php.exe D:\wamp\bin\phpunit\phpunit-9.1.4.phar --colors=auto --bootstrap D:\wamp\www\formDin5\appexemplo_v1.0\init.php --whitelist D:\wamp\www\formDin5\appexemplo_v1.0\app\lib\widget --coverage-html D:\wamp\www\formDin5\phpunit-code-coverage D:\wamp\www\formDin5\appexemplo_v1.0\app\tests\
+REM D:\wamp\bin\php\php7.3.5\php.exe D:\wamp\bin\phpunit\phpunit-9.1.4.phar --colors=auto --bootstrap D:\wamp\www\formDin5\appexemplo_v1.0\init.php --whitelist D:\wamp\www\formDin5\appexemplo_v1.0\app\lib\widget\FormDin5 --coverage-html D:\wamp\www\formDin5\phpunit-code-coverage D:\wamp\www\formDin5\appexemplo_v1.0\app\tests\
 
 REM ECHO PHP 7.3.5 and PHPUnit 9.1.4 with Config XML file
 REM D:\wamp\bin\php\php7.3.5\php.exe D:\wamp\bin\phpunit\phpunit-9.1.4.phar --colors=auto --bootstrap D:\wamp\www\formDin5\appexemplo_v1.0\init.php --configuration D:\wamp\www\formDin5\appexemplo_v1.0\app\tests\phpunit-conf-win.xml D:\wamp\www\formDin5\appexemplo_v1.0\app\tests\
