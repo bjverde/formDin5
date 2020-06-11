@@ -781,7 +781,7 @@ class TFormDin
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED
      * @return TCombo
-    */     
+     */
     public function addSelectField(string $id
                                   ,string $strLabel
                                   ,$boolRequired = false
@@ -796,6 +796,86 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
+
+
+    /**
+     * Adiciona campo tipo grupo com legenda na parte superior
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------    
+     * Se o parametro $intHeight for null será auto height
+     * se o parametro $intWidth for null utilizado a largura do form
+     *
+     * <code>
+     * 	// sem quebra nos rotulos quando excederem a largura da coluna definida
+     *   $frm->addGroupField('gp01','Grupo Teste');
+     * 	// com quebra nos rotulos quando excederem a largura da coluna definida
+     *   $frm->addGroupField('gp01','Grupo Teste',null,null,null,true);
+     * </code>
+     *
+     * @param string $strName          - 01: NOT_IMPLEMENTED
+     * @param string $strLegend        - 02: Label que irá aparecer para o usuario 
+     * @param integer $intHeight       - 03: NOT_IMPLEMENTED altura do grupo. NULL = auto height
+     * @param integer $intWidth        - 04: NOT_IMPLEMENTED largura do grupo. NULL = largura do form
+     * @param boolean $boolNewLine     - 05: NOT_IMPLEMENTED Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolNoWrapLabel - 06: NOT_IMPLEMENTED
+     * @param boolean $boolCloseble    - 07: NOT_IMPLEMENTED pode fechar ou não
+     * @param string  $strAccordionId  - 08: NOT_IMPLEMENTED
+     * @param boolean $boolOpened      - 09: NOT_IMPLEMENTED inicia aberto
+     * @param string $imgOpened        - 10: NOT_IMPLEMENTED
+     * @param string $imgClosed        - 11: NOT_IMPLEMENTED
+     * @param boolean $boolOverflowX   - 12: NOT_IMPLEMENTED
+     * @param boolean $boolOverflowY   - 13: NOT_IMPLEMENTED
+     * @return TGroupBox
+     */
+	public function addGroupField( $strName
+           		, $strLegend=null
+				, $strHeight=null
+				, $strWidth=null
+				, $boolNewLine=null
+				, $boolNoWrapLabel=null
+				, $boolCloseble=null
+				, $strAccordionId=null
+				, $boolOpened=null
+				, $imgOpened=null
+				, $imgClosed=null
+				, $boolOverflowX=null
+				, $boolOverflowY=null )
+    {
+		//$strWidth = is_null($strWidth) ? $this->getMaxWidth('group') : $strWidth;
+		$field = new TGroup( $strName, $strLegend, $strHeight, $strWidth,$boolCloseble,$boolOpened,$boolOverflowY,$boolOverflowX );
+		$field->setAccordionId($strAccordionId);
+		$this->addDisplayControl( new TDisplayControl( null, $field, false, $boolNewLine ) );
+		$field->setColumns( $this->getColumns() );
+		$this->currentContainer[ ] = $field;
+		if( !is_null($strHeight))
+		{
+			$field->setOverFlowY(true);
+		}
+		return $field;
+    }
+    
+    /**
+     * Este método fecha um campo grupo ou um campo aba para que os campos
+     * seguintes fique abaixo dos mesmos e não dentro deles.
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------  
+     */
+    public function closeGroup()
+    {
+        //$this->currentContainer = array_pop($this->currentContainer);
+        
+        if( is_array($this->currentContainer) && count($this->currentContainer)>0)
+        {
+            array_pop( $this->currentContainer );
+        }
+    }
+
     /**
      * Campo de uso geral para insersão manual de códigos html na página
      * ------------------------------------------------------------------------
