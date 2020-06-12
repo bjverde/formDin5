@@ -486,15 +486,14 @@ class TFormDinTest extends TestCase
         $this->assertEquals('fields' , $list[1]->type);
         $this->assertEquals('content', $list[2]->type);
         $this->assertEquals('fields' , $list[3]->type);
-    }    
-    //---------------------------------------------
+    }
 
     public function testGetAdiantiObj2GetListFormElements_null()
     {
         $list = $this->classTest->getListFormElements();
         $this->assertEmpty($list);
     }
-
+    //-------------------------------------------------------------------------
     public function testGetListFormElements_qtd1()
     {
         $this->classTest->addElementFormList('1');
@@ -510,5 +509,28 @@ class TFormDinTest extends TestCase
         $list = $this->classTest->getListFormElements();
         $qtd = CountHelper::count($list);
         $this->assertEquals(2, $qtd);
+    }
+    //-------------------------------------------------------------------------
+    public function testAddGroupField(){
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'tabcontent');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setAdiantiObj( $bootForm );
+        $this->classTest->addGroupField(null,'Grupo Texto');
+        $this->classTest->addTextField('txe','Campo texto');
+        $this->classTest->closeGroup();
+
+        $adiantiObjForm = $this->classTest->getAdiantiObj2();
+        $tabcontent = $reflectionProperty->getValue($adiantiObjForm);
+        $list = array_values($tabcontent);
+        $list = $list[0];
+
+        $qtd = CountHelper::count($list);
+
+        $this->assertEquals(3, $qtd);
+        $this->assertEquals('content', $list[0]->type);
+        $this->assertEquals('fields' , $list[1]->type);
+        $this->assertEquals('content', $list[2]->type);
     }
 }
