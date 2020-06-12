@@ -448,12 +448,18 @@ class TFormDinTest extends TestCase
         $this->expectNotToPerformAssertions();
         $this->classTest->getAdiantiObj2();
     }
-    public function testGetAdiantiObj2GetAdiantiObj2_1FieldText(){
-        //$formDin = new ReflectionClass("TFormDin");
-        //$property = $class->getProperty("myProperty");
-        //$property->setAccessible(true);
+    public function testGetAdiantiObj2GetAdiantiObj2_2FieldText1Content(){
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'tabcontent');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setAdiantiObj( $bootForm );
 
 
+        $strLegend = null;
+        $objField = new TFormSeparator($strLegend);
+        $this->classTest->addElementFormList($objField,TFormDin::TYPE_LAYOUT);
+        
         $formField = new TFormDinTextField('TEXT01','Texto 1 tam 10', 10);
         $label = $formField->getLabel();
         $objField = $formField->getAdiantiObj();        
@@ -468,10 +474,18 @@ class TFormDinTest extends TestCase
         $objField = $formField->getAdiantiObj();  
         $this->classTest->addElementFormList($objField,TFormDin::TYPE_FIELD,$label);
 
-        $adiantiObjForm = $this->classTest->getAdiantiObj2(); 
-        //tabcontent
-        $element = $adiantiObjForm->getContents();
-        //$this->assertObjectHasAttribute('element', new stdClass);
+        $adiantiObjForm = $this->classTest->getAdiantiObj2();
+        $tabcontent = $reflectionProperty->getValue($adiantiObjForm);
+        $list = array_values($tabcontent);
+        $list = $list[0];
+
+        $qtd = CountHelper::count($list);
+
+        $this->assertEquals(4, $qtd);
+        $this->assertEquals('content', $list[0]->type);
+        $this->assertEquals('fields' , $list[1]->type);
+        $this->assertEquals('content', $list[2]->type);
+        $this->assertEquals('fields' , $list[3]->type);
     }    
     //---------------------------------------------
 
