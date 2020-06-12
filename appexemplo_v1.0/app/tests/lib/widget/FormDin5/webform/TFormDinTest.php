@@ -407,12 +407,20 @@ class TFormDinTest extends TestCase
     }
     public function testSetAdiantiObj_setNull()
     {
-        //$formDin = new TFormDin('Phpunit');
         $this->classTest->setAdiantiObj();
         $adiantiObj = $this->classTest->getAdiantiObj();
         $name = $adiantiObj->getName();
         $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
         $this->assertEquals(null, $name);
+    }
+    public function testSetAdiantiObj_setName()
+    {
+        $this->classTest->setAdiantiObj();
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $adiantiObj = $this->classTest->getAdiantiObj($bootForm);
+        $name = $adiantiObj->getName();
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals('bootForm', $name);
     }
     //-------------------------------------------------------------------------
     public function testgetAdiantiObj()
