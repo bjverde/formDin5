@@ -209,6 +209,9 @@ class TFormDin
             if( !($adiantiObj instanceof BootstrapFormBuilder) ){
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_BUILDER);
             }
+            if( !empty($strName) ){
+                $adiantiObj->setName($strName);
+            }
             $adiantiObj->setFormTitle($strTitle);
             //$this->adiantiObj->setFieldSizes('100%');
             $adiantiObj->setClientValidation($boolClientValidation);

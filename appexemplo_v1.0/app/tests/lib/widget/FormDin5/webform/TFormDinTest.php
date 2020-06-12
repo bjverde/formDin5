@@ -415,13 +415,22 @@ class TFormDinTest extends TestCase
     }
     public function testSetAdiantiObj_setName()
     {
-        $this->classTest->setAdiantiObj();
         $bootForm = new BootstrapFormBuilder('bootForm');
-        $adiantiObj = $this->classTest->getAdiantiObj($bootForm);
+        $this->classTest->setAdiantiObj($bootForm);
+        $adiantiObj = $this->classTest->getAdiantiObj();
         $name = $adiantiObj->getName();
         $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
         $this->assertEquals('bootForm', $name);
     }
+    public function testSetAdiantiObj_setTitle()
+    {
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $this->classTest->setAdiantiObj($bootForm,'b1','title form');
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $name = $adiantiObj->getName();
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals('b1', $name);
+    }    
     //-------------------------------------------------------------------------
     public function testgetAdiantiObj()
     {
