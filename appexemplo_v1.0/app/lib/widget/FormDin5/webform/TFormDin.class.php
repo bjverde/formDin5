@@ -840,19 +840,19 @@ class TFormDin
      * @param boolean $boolOverflowY   - 13: NOT_IMPLEMENTED
      * @return TGroupBox
      */
-	public function addGroupField( $strName
-           		, $strLegend=null
-				, $strHeight=null
-				, $strWidth=null
-				, $boolNewLine=null
-				, $boolNoWrapLabel=null
-				, $boolCloseble=null
-				, $strAccordionId=null
-				, $boolOpened=null
-				, $imgOpened=null
-				, $imgClosed=null
-				, $boolOverflowX=null
-				, $boolOverflowY=null )
+	public function addGroupField( $strName=null
+                                , $strLegend=null
+                                , $strHeight=null
+                                , $strWidth=null
+                                , $boolNewLine=null
+                                , $boolNoWrapLabel=null
+                                , $boolCloseble=null
+                                , $strAccordionId=null
+                                , $boolOpened=null
+                                , $imgOpened=null
+                                , $imgClosed=null
+                                , $boolOverflowX=null
+                                , $boolOverflowY=null )
     {
 		//$this->currentContainer[ ] = $field;
         $strLegend = empty($strLegend)?'':$strLegend;
@@ -872,12 +872,7 @@ class TFormDin
      */
     public function closeGroup()
     {
-        //$this->currentContainer = array_pop($this->currentContainer);
-        
-        if( is_array($this->currentContainer) && count($this->currentContainer)>0)
-        {
-            array_pop( $this->currentContainer );
-        }
+        $this->addGroupField();
     }
 
     /**
