@@ -42,7 +42,6 @@
 
 $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
-require_once  __DIR__.'/../../mockBootstrapFormBuilder.class.php';
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
@@ -425,10 +424,15 @@ class TFormDinTest extends TestCase
     }
     public function testSetAdiantiObj_setTitle()
     {
-        $bootForm = new mockBootstrapFormBuilder('bootForm');
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'title');
+        $reflectionProperty->setAccessible(true);
+
+
         $this->classTest->setAdiantiObj($bootForm,'b1','title form');
         $adiantiObj = $this->classTest->getAdiantiObj();
-        $title = $adiantiObj->title;
+        $title = $reflectionProperty->getValue($bootForm);
+        
         $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
         $this->assertEquals('title form', $title);
     }    
