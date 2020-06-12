@@ -389,20 +389,67 @@ class TFormDinTest extends TestCase
         $this->assertEquals(2, $result['key']);
         $this->assertEquals($expected, $result['row']); 
     }
-    //---------------------------------------------
+    //-------------------------------------------------------------------------
+    public function testSetAdiantiObj_wrongObj()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $formDin = new TFormDin('Phpunit');        
+        $WrongObj = new stdClass();
+        $formDin->setAdiantiObj($WrongObj);
+    }
+    public function testSetAdiantiObj_wrongString()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $formDin = new TFormDin('Phpunit');
+        $formDin->setAdiantiObj('string');
+    }
+    public function testSetAdiantiObj_setNull()
+    {
+        //$formDin = new TFormDin('Phpunit');
+        $this->classTest->setAdiantiObj();
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $name = $adiantiObj->getName();
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals(null, $name);
+    }
+    //-------------------------------------------------------------------------
+    public function testgetAdiantiObj()
+    {
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $name = $adiantiObj->getName();
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals('formdin', $name);
+    }        
+    //-------------------------------------------------------------------------
     public function testGetAdiantiObj2GetAdiantiObj2_null(){
         $this->expectNotToPerformAssertions();
         $this->classTest->getAdiantiObj2();
     }
-    //---------------------------------------------
     public function testGetAdiantiObj2GetAdiantiObj2_1FieldText(){
-        $formField = new TFormDinTextField('TEXT01','Texto tam 10', 10);
+        //$formDin = new ReflectionClass("TFormDin");
+        //$property = $class->getProperty("myProperty");
+        //$property->setAccessible(true);
+
+
+        $formField = new TFormDinTextField('TEXT01','Texto 1 tam 10', 10);
         $label = $formField->getLabel();
-        $objField = $formField->getAdiantiObj();
+        $objField = $formField->getAdiantiObj();        
+        $this->classTest->addElementFormList($objField,TFormDin::TYPE_FIELD,$label);
+        
+        $strLegend = null;
+        $objField = new TFormSeparator($strLegend);
+        $this->classTest->addElementFormList($objField,TFormDin::TYPE_LAYOUT);
+
+        $formField = new TFormDinTextField('TEXT02','Texto 2 tam 10', 10);
+        $label = $formField->getLabel();
+        $objField = $formField->getAdiantiObj();  
         $this->classTest->addElementFormList($objField,TFormDin::TYPE_FIELD,$label);
 
-        $adiantiObjForm = $this->classTest->getAdiantiObj2();
-        //$element = $adiantiObjForm->getContents();
+        $adiantiObjForm = $this->classTest->getAdiantiObj2(); 
+        //tabcontent
+        $element = $adiantiObjForm->getContents();
         //$this->assertObjectHasAttribute('element', new stdClass);
     }    
     //---------------------------------------------

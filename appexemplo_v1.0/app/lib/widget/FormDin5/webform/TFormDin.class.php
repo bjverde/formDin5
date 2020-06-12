@@ -197,36 +197,46 @@ class TFormDin
         return $result;
     }
 
+    public function setAdiantiObj( $adiantiObj=null, $strName=null,$strTitle=null, $boolClientValidation=true )
+    {
+        if( empty($adiantiObj) ){
+            $adiantiObj = new BootstrapFormBuilder($strName);
+            $adiantiObj->setFormTitle($strTitle);
+            //$this->adiantiObj->setFieldSizes('100%');
+            $adiantiObj->setClientValidation($boolClientValidation);
+            $adiantiObj->generateAria(); // automatic aria-label
+        }else{
+            if( !($adiantiObj instanceof BootstrapFormBuilder) ){
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_BUILDER);
+            }
+            $adiantiObj->setFormTitle($strTitle);
+            //$this->adiantiObj->setFieldSizes('100%');
+            $adiantiObj->setClientValidation($boolClientValidation);
+            $adiantiObj->generateAria(); // automatic aria-label
+        }
+        $this->adiantiObj = $adiantiObj;
+    }
+
     public function getAdiantiObj2()
     {
         $listFormElements = $this->getListFormElements();
         $qtd = CountHelper::count($listFormElements);
-        //foreach ($listFormElements as $key => $element){
         $key = 0;
         while ($key < $qtd) {
-            $fieldsRowResult = $this->addFieldsRow($key);            
-            $fieldsRow = $fieldsRowResult['row'];
-            $adiantiObj = $this->adiantiObj;
-            call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
-            $key = $fieldsRowResult['key'];
-            $key = $key + 1;
-            /*
             $element = $listFormElements[$key];
             if($element['type']==self::TYPE_FIELD){
                 $fieldsRowResult = $this->addFieldsRow($key);
-                $key = $fieldsRowResult['key'];
                 $fieldsRow = $fieldsRowResult['row'];
                 $adiantiObj = $this->adiantiObj;
                 call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
+                $key = $fieldsRowResult['key'];
+            } elseif ($element['type']==self::TYPE_LAYOUT){
+                $adiantiObj = $this->adiantiObj;
+                $adiantiObj->addContent( [$element['obj']] );
+                //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
                 //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
             }
-            if($element['type']==self::TYPE_LAYOUT){
-                    //$fieldsRow = $this->addFieldsRow($element);
-                    //$adiantiObj = $this->adiantiObj;
-                    //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
-                    //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
-            }
-            */
+            $key = $key + 1;
         }
         return $this->adiantiObj;
     }
@@ -844,17 +854,11 @@ class TFormDin
 				, $boolOverflowX=null
 				, $boolOverflowY=null )
     {
-		//$strWidth = is_null($strWidth) ? $this->getMaxWidth('group') : $strWidth;
-		$field = new TGroup( $strName, $strLegend, $strHeight, $strWidth,$boolCloseble,$boolOpened,$boolOverflowY,$boolOverflowX );
-		$field->setAccordionId($strAccordionId);
-		$this->addDisplayControl( new TDisplayControl( null, $field, false, $boolNewLine ) );
-		$field->setColumns( $this->getColumns() );
-		$this->currentContainer[ ] = $field;
-		if( !is_null($strHeight))
-		{
-			$field->setOverFlowY(true);
-		}
-		return $field;
+		//$this->currentContainer[ ] = $field;
+        $strLegend = empty($strLegend)?'':$strLegend;
+        $objField = new TFormSeparator($strLegend);
+        $this->addElementFormList($objField,self::TYPE_LAYOUT);
+		return $objField;
     }
     
     /**
