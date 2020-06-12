@@ -74,14 +74,14 @@ class TFormDin
      * 	$frm->show();
      * </code>
      *
-     * @param string $strName   - 1: Titulo que irá aparecer no Form
-     * @param string $strHeight - 2: DEPRECATED: INFORME NULL para remover o Warning
-     * @param string $strWidth  - 3: DEPRECATED: INFORME NULL para remover o Warning
-     * @param bool $strFormName - 4: ID nome do formulario para criação da tag form. Padrão=formdin
-     * @param string $strMethod - 5: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
-     * @param string $strAction - 6: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
-     * @param boolean $boolPublicMode - 7: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
-     * @param boolean $boolRequired - 8: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
+     * @param string $strName   - 01: Titulo que irá aparecer no Form
+     * @param string $strHeight - 02: DEPRECATED: INFORME NULL para remover o Warning
+     * @param string $strWidth  - 03: DEPRECATED: INFORME NULL para remover o Warning
+     * @param bool $strFormName - 04: ID nome do formulario para criação da tag form. Padrão=formdin
+     * @param string $strMethod - 05: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
+     * @param string $strAction - 06: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
+     * @param boolean $boolPublicMode - 07: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
+     * @param boolean $boolRequired   - 08: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
      *
      * @return BootstrapFormBuilder
      */    
@@ -95,11 +95,8 @@ class TFormDin
                                ,$boolClientValidation = true)
     {
         $this->validateDeprecated($strHeigh,$strWidth);
-        $this->adiantiObj = new BootstrapFormBuilder($strName);
-        $this->adiantiObj->setFormTitle($strTitle);
-        //$this->adiantiObj->setFieldSizes('100%');
-        $this->adiantiObj->setClientValidation($boolClientValidation);
-        $this->adiantiObj->generateAria(); // automatic aria-label
+        $bootForm = new BootstrapFormBuilder($strName);
+        $this->setAdiantiObj( $bootForm, $strName,$strTitle, $boolClientValidation);
         return $this->getAdiantiObj();
     }
 
@@ -197,27 +194,27 @@ class TFormDin
         return $result;
     }
 
-    public function setAdiantiObj( $adiantiObj=null, $strName=null,$strTitle=null, $boolClientValidation=true )
+    public function setAdiantiObj( $bootForm=null, $strName=null,$strTitle=null, $boolClientValidation=true )
     {
-        if( empty($adiantiObj) ){
-            $adiantiObj = new BootstrapFormBuilder($strName);
-            $adiantiObj->setFormTitle($strTitle);
+        if( empty($bootForm) ){
+            $bootForm = new BootstrapFormBuilder($strName);
+            $bootForm->setFormTitle($strTitle);
             //$this->adiantiObj->setFieldSizes('100%');
-            $adiantiObj->setClientValidation($boolClientValidation);
-            $adiantiObj->generateAria(); // automatic aria-label
+            $bootForm->setClientValidation($boolClientValidation);
+            $bootForm->generateAria(); // automatic aria-label
         }else{
-            if( !($adiantiObj instanceof BootstrapFormBuilder) ){
+            if( !($bootForm instanceof BootstrapFormBuilder) ){
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_BUILDER);
             }
             if( !empty($strName) ){
-                $adiantiObj->setName($strName);
+                $bootForm->setName($strName);
             }
-            $adiantiObj->setFormTitle($strTitle);
+            $bootForm->setFormTitle($strTitle);
             //$this->adiantiObj->setFieldSizes('100%');
-            $adiantiObj->setClientValidation($boolClientValidation);
-            $adiantiObj->generateAria(); // automatic aria-label
+            $bootForm->setClientValidation($boolClientValidation);
+            $bootForm->generateAria(); // automatic aria-label
         }
-        $this->adiantiObj = $adiantiObj;
+        $this->adiantiObj = $bootForm;
     }
 
     public function getAdiantiObj2()

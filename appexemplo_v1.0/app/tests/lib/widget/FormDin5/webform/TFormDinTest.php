@@ -428,11 +428,10 @@ class TFormDinTest extends TestCase
         $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'title');
         $reflectionProperty->setAccessible(true);
 
-
         $this->classTest->setAdiantiObj($bootForm,'b1','title form');
         $adiantiObj = $this->classTest->getAdiantiObj();
         $title = $reflectionProperty->getValue($bootForm);
-        
+
         $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
         $this->assertEquals('title form', $title);
     }    
