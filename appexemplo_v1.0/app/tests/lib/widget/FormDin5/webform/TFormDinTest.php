@@ -42,6 +42,7 @@
 
 $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
+require_once  __DIR__.'/../../mockBootstrapFormBuilder.class.php';
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
@@ -424,12 +425,12 @@ class TFormDinTest extends TestCase
     }
     public function testSetAdiantiObj_setTitle()
     {
-        $bootForm = new BootstrapFormBuilder('bootForm');
+        $bootForm = new mockBootstrapFormBuilder('bootForm');
         $this->classTest->setAdiantiObj($bootForm,'b1','title form');
         $adiantiObj = $this->classTest->getAdiantiObj();
-        $name = $adiantiObj->getName();
+        $title = $adiantiObj->title;
         $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
-        $this->assertEquals('b1', $name);
+        $this->assertEquals('title form', $title);
     }    
     //-------------------------------------------------------------------------
     public function testgetAdiantiObj()
