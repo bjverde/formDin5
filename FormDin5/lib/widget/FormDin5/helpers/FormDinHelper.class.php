@@ -5,7 +5,7 @@
  * SourceCode https://github.com/bjverde/formDin5
  * @author Reinaldo A. Barrêto Junior
  * 
- * É uma reconstrução do FormDin 4 Sobre o Adianti 7
+ * É uma reconstrução do FormDin 4 Sobre o Adianti 7.X
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -29,9 +29,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -118,7 +118,7 @@ class FormDinHelper
         $list = array();
         //$list[self::DBMS_ACCESS]='Access';
         //$list[self::DBMS_FIREBIRD]='FIREBIRD';
-        $list[self::DBMS_MYSQL]='MySQL';
+        $list[self::DBMS_MYSQL]='MariaDB ou MySQL';
         $list[self::DBMS_ORACLE]='Oracle';
         $list[self::DBMS_POSTGRES]='PostgreSQL';
         $list[self::DBMS_SQLITE]='SqLite';
@@ -277,7 +277,7 @@ class FormDinHelper
             echo "<script>try{fwUnblockUI();}catch(e){try{top.app_unblockUI();}catch(e){}}</script>";
             echo "<fieldset style='text-align:left;'><legend><font color=\"#007000\">".$strComentario."</font></legend><pre>" ;
             foreach ( $arrBacktrace[0] as $strAttribute => $mixValue ) {
-                if( is_string( $mixValue ) ) {
+                if( !is_array($mixValue) ) {
                     echo "<b>" . $strAttribute . "</b> ". $mixValue ."\n";
                 }
             }
@@ -287,7 +287,7 @@ class FormDinHelper
             if( is_object($mixExpression) ) {
                 var_dump( $mixExpression );
             } else {
-            print_r($mixExpression);
+                print_r($mixExpression);
             }
             echo "</pre></fieldset>";
             echo '</div>';
