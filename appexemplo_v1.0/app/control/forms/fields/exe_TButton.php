@@ -18,11 +18,13 @@ class exe_TButton extends TPage
         $frm = new TFormDin('Exemplo Mensagem apenas PHP');
         $frm->setAction('Nome Botão','onSave',$this);
         $frm->setAction('YYYY','onSave',$this,true,null,'green');
-        $this->form = $frm->show();
         
-        $label = new TLabel('TEntry');
-        $entry     = new TEntry('entry');
-        //$this->form->addFields( [ new TLabel('TEntry') ],   [ $entry ]);
+        
+        $frm->addTextField('entry','TEntry', 10);
+        //$frm->addButton($this,'Success',null,'bt3c',null,null,false,false);
+        $frm->addButton($this,'Success',null,'bt3c');
+
+        $this->form = $frm->show();
         
         $action = new TAction(array($this, 'onSave'));
 
@@ -31,14 +33,7 @@ class exe_TButton extends TPage
         //$bt3c->class = 'btn btn-success btn-lg';
         $bt3c->setAction($action,'Success');
 
-
-        $hbox2 = new THBox;
-        $hbox2->addRowSet( $label, $entry, $bt3c );
-        $frame1 = new TFrame;
-        $frame1->setLegend('Font awesome icons');
-        $frame1->add($hbox2);
-
-        $this->form->addFields( [ new TLabel('TEntry') ],   [ $entry ],[$bt3c]);
+        //$this->form->addFields( [ new TLabel('TEntry') ],   [ $entry ],[$bt3c]);
         //$this->form->addFields( [ $hbox2]);
        
 

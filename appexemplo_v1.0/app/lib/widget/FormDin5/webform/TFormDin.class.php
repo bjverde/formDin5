@@ -357,7 +357,7 @@ class TFormDin
     * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
     * definir o parametro boolLabelAbove do botão para true tambem.
     *
-    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Form, é só informar $this
+    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
     * @param mixed   $mixValue          - 2 : Label do Botão ou array('Gravar', 'Limpar') com nomes
     * @param string  $strAction         - 3 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
     * @param string  $strName           - 4 : Nome da ação com submit
@@ -391,12 +391,21 @@ class TFormDin
                             , $strHorizontalAlign=null)
     {
         if( !is_object($objForm) ){
-            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
+            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
             ValidateHelper::migrarMensage($msg
                                          ,ValidateHelper::TRIGGER_ERROR_ERROR
                                          ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
+
+            if( is_array($mixValue) ){
+                $msg = 'Não é permitido usar ARRAY no $mixValue, migre para chamada unica por Action';
+                ValidateHelper::migrarMensage($msg
+                                             ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                             ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                             ,__CLASS__,__METHOD__,__LINE__);
+            }
+
             if($boolFooter){
                 return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
             }else{
@@ -416,7 +425,8 @@ class TFormDin
                                             , $strLabel=null
                                             , $strHorizontalAlign=null);
                 $objField = $formField->getAdiantiObj();
-                $this->adiantiObj->addFields([$objField]);
+                //$this->adiantiObj->addFields([$objField]);
+                $this->addElementFormList($objField,self::TYPE_FIELD);
                 return $formField;
             }
         }
@@ -574,7 +584,8 @@ class TFormDin
     {
         $formField = new TFormDinHiddenField($id,$strValue,$boolRequired);
         $objField = $formField->getAdiantiObj();
-        $this->adiantiObj->addFields([$objField]);
+        //$this->adiantiObj->addFields([$objField]);
+        $this->addElementFormList($objField,self::TYPE_FIELD);
         return $formField;
     }
 
