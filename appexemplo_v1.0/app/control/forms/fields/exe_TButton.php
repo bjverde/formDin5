@@ -26,12 +26,11 @@ class exe_TButton extends TPage
 
         $this->form = $frm->show();
         
-        $action = new TAction(array($this, 'onSave'));
-
-        $bt3c = new TButton('bt3c');
-        $bt3c->setLabel('Success');
-        //$bt3c->class = 'btn btn-success btn-lg';
-        $bt3c->setAction($action,'Success');
+        //$hbox2 = new THBox;
+        //$hbox2->addRowSet( $label, $entry, $bt3c );
+        //$frame1 = new TFrame;
+        //$frame1->setLegend('Font awesome icons');
+        //$frame1->add($hbox2);
 
         //$this->form->addFields( [ new TLabel('TEntry') ],   [ $entry ],[$bt3c]);
         //$this->form->addFields( [ $hbox2]);

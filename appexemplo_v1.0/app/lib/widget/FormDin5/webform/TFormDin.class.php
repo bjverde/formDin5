@@ -402,23 +402,24 @@ class TFormDin
                 return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
             }else{
                 $formField = new TFormDinButton($objForm
-                                            , $mixValue
-                                            , $strAction=null
-                                            , $strName=null
-                                            , $strOnClick=null
-                                            , $strConfirmMessage=null
-                                            , $boolNewLine=null
-                                            , $boolFooter=null
-                                            , $strImage=null
-                                            , $strImageDisabled=null
-                                            , $strHint=null
-                                            , $strVerticalAlign=null
-                                            , $boolLabelAbove=null
-                                            , $strLabel=null
-                                            , $strHorizontalAlign=null);
+                                                , $mixValue
+                                                , $strAction
+                                                , $strName
+                                                , $strOnClick
+                                                , $strConfirmMessage
+                                                , $boolNewLine
+                                                , $boolFooter
+                                                , $strImage
+                                                , $strImageDisabled
+                                                , $strHint
+                                                , $strVerticalAlign
+                                                , $boolLabelAbove
+                                                , $strLabel
+                                                , $strHorizontalAlign
+                                            );
                 $objField = $formField->getAdiantiObj();
                 //$this->adiantiObj->addFields([$objField]);
-                $this->addElementFormList($objField,self::TYPE_FIELD);
+                $this->addElementFormList($objField,self::TYPE_FIELD,null,$boolNewLine);
                 return $formField;
             }
         }

@@ -107,8 +107,8 @@ class TFormDinButton {
                                 , $strLabel=null
                                 , $strHorizontalAlign=null)
     {
-        $this->adiantiObj = new TButton($strName);
-        $this->setAdiantiObj($this->adiantiObj);
+        $adiantiObj = new TButton($strName);
+        $this->setAdiantiObj($adiantiObj);
         $this->setObjForm($objForm);
         $this->setLabel($label);
         return $this->getAdiantiObj();
