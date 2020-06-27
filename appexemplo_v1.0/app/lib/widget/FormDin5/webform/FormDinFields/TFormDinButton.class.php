@@ -116,12 +116,8 @@ class TFormDinButton {
 
     public function setObjForm($objForm)
     {
-        if( !is_object($objForm) ){
-            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
-            ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
-                                         ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
-                                         ,__CLASS__,__METHOD__,__LINE__);
+        if( empty($objForm) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
         }       
         return $this->objForm=$objForm;
     }
@@ -150,7 +146,14 @@ class TFormDinButton {
     {
         if( empty($adiantiObj) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }        
+        }
+        if( !is_object($adiantiObj) ){
+            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
+            ValidateHelper::migrarMensage($msg
+                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                         ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
+                                         ,__CLASS__,__METHOD__,__LINE__);
+        }
         return $this->adiantiObj=$adiantiObj;
     }
     public function getAdiantiObj(){
