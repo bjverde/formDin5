@@ -398,14 +398,6 @@ class TFormDin
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
 
-            if( is_array($mixValue) ){
-                $msg = 'Não é permitido usar ARRAY no $mixValue, migre para chamada unica por Action';
-                ValidateHelper::migrarMensage($msg
-                                             ,ValidateHelper::TRIGGER_ERROR_ERROR
-                                             ,ValidateHelper::TYPE_ERRO_MSG_DECREP
-                                             ,__CLASS__,__METHOD__,__LINE__);
-            }
-
             if($boolFooter){
                 return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
             }else{

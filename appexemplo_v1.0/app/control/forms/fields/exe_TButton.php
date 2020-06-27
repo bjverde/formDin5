@@ -21,8 +21,8 @@ class exe_TButton extends TPage
         
         
         $frm->addTextField('entry','TEntry', 10);
-        //$frm->addButton($this,'Success',null,'bt3c',null,null,false,false);
-        $frm->addButton($this,'Success',null,'bt3c');
+        $frm->addButton($this,'Success',null,'onSave',null,null,false,false);
+        //$frm->addButton($this,'Success',null,'onSave');
 
         $this->form = $frm->show();
         
