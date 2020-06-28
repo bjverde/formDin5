@@ -29,9 +29,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -76,8 +76,6 @@ class TFormDinHtmlField extends TFormDinGenericField
      * @param string $strLabel       - 4: Label do campo
      * @param string $strWidth       - 5: NOT_IMPLEMENTED
      * @param string $strHeight      - 6: NOT_IMPLEMENTED
-     * @param boolean $boolNewLine   - 7: NOT_IMPLEMENTED Default TRUE = campo em nova linha, FALSE continua na linha anterior
-     * @param boolean $boolLabelAbove  8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @return THtml Field
      */     
     public function __construct( string $id
@@ -87,19 +85,16 @@ class TFormDinHtmlField extends TFormDinGenericField
                                , $strHeight=null
                                , $strWidth=null
                                , $boolNewLine=null
-                               , $boolLabelAbove=null
-                               , $boolNoWrapLabel=null )
+                               )
     {
         $adiantiObj = new TElement('div');
-        $adiantiObj->id = $id;
-        $adiantiObj->add($value);
-        //FormDinHelper::d($label,'$label');
         $label = is_null($label)?'':$label;
         parent::__construct($adiantiObj,$id,$label,null,null,null);
+        $this->add($value);
         return $this->getAdiantiObj();
     }
 
-    public function setId($id){
-        $this->getAdiantiObj()->id = $id;
+    public function add($element){
+        $this->getAdiantiObj()->add($element);
     }
 }
