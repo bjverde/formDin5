@@ -29,9 +29,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -74,14 +74,14 @@ class TFormDin
      * 	$frm->show();
      * </code>
      *
-     * @param string $strName   - 1: Titulo que irá aparecer no Form
-     * @param string $strHeight - 2: DEPRECATED: INFORME NULL para remover o Warning
-     * @param string $strWidth  - 3: DEPRECATED: INFORME NULL para remover o Warning
-     * @param bool $strFormName - 4: ID nome do formulario para criação da tag form. Padrão=formdin
-     * @param string $strMethod - 5: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
-     * @param string $strAction - 6: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
-     * @param boolean $boolPublicMode - 7: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
-     * @param boolean $boolRequired - 8: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
+     * @param string $strName   - 01: Titulo que irá aparecer no Form
+     * @param string $strHeight - 02: DEPRECATED: INFORME NULL para remover o Warning
+     * @param string $strWidth  - 03: DEPRECATED: INFORME NULL para remover o Warning
+     * @param bool $strFormName - 04: ID nome do formulario para criação da tag form. Padrão=formdin
+     * @param string $strMethod - 05: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
+     * @param string $strAction - 06: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
+     * @param boolean $boolPublicMode - 07: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
+     * @param boolean $boolRequired   - 08: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
      *
      * @return BootstrapFormBuilder
      */    
@@ -95,11 +95,8 @@ class TFormDin
                                ,$boolClientValidation = true)
     {
         $this->validateDeprecated($strHeigh,$strWidth);
-        $this->adiantiObj = new BootstrapFormBuilder($strName);
-        $this->adiantiObj->setFormTitle($strTitle);
-        //$this->adiantiObj->setFieldSizes('100%');
-        $this->adiantiObj->setClientValidation($boolClientValidation);
-        $this->adiantiObj->generateAria(); // automatic aria-label
+        $bootForm = new BootstrapFormBuilder($strName);
+        $this->setAdiantiObj( $bootForm, $strName,$strTitle, $boolClientValidation);
         return $this->getAdiantiObj();
     }
 
@@ -197,36 +194,49 @@ class TFormDin
         return $result;
     }
 
+    public function setAdiantiObj( $bootForm=null, $strName=null,$strTitle=null, $boolClientValidation=true )
+    {
+        if( empty($bootForm) ){
+            $bootForm = new BootstrapFormBuilder($strName);
+            $bootForm->setFormTitle($strTitle);
+            //$this->adiantiObj->setFieldSizes('100%');
+            $bootForm->setClientValidation($boolClientValidation);
+            $bootForm->generateAria(); // automatic aria-label
+        }else{
+            if( !($bootForm instanceof BootstrapFormBuilder) ){
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_BUILDER);
+            }
+            if( !empty($strName) ){
+                $bootForm->setName($strName);
+            }
+            $bootForm->setFormTitle($strTitle);
+            //$this->adiantiObj->setFieldSizes('100%');
+            $bootForm->setClientValidation($boolClientValidation);
+            $bootForm->generateAria(); // automatic aria-label
+        }
+        $this->adiantiObj = $bootForm;
+    }
+
     public function getAdiantiObj2()
     {
         $listFormElements = $this->getListFormElements();
         $qtd = CountHelper::count($listFormElements);
-        //foreach ($listFormElements as $key => $element){
         $key = 0;
         while ($key < $qtd) {
-            $fieldsRowResult = $this->addFieldsRow($key);            
-            $fieldsRow = $fieldsRowResult['row'];
-            $adiantiObj = $this->adiantiObj;
-            call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
-            $key = $fieldsRowResult['key'];
-            $key = $key + 1;
-            /*
             $element = $listFormElements[$key];
             if($element['type']==self::TYPE_FIELD){
                 $fieldsRowResult = $this->addFieldsRow($key);
-                $key = $fieldsRowResult['key'];
                 $fieldsRow = $fieldsRowResult['row'];
                 $adiantiObj = $this->adiantiObj;
                 call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
+                $key = $fieldsRowResult['key'];
+            } elseif ($element['type']==self::TYPE_LAYOUT){
+                $adiantiObj = $this->adiantiObj;
+                $adiantiObj->addContent( [$element['obj']] );
+                //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
                 //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
             }
-            if($element['type']==self::TYPE_LAYOUT){
-                    //$fieldsRow = $this->addFieldsRow($element);
-                    //$adiantiObj = $this->adiantiObj;
-                    //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
-                    //https://www.php.net/manual/pt_BR/function.call-user-func-array.php
-            }
-            */
+            $key = $key + 1;
         }
         return $this->adiantiObj;
     }
@@ -347,7 +357,7 @@ class TFormDin
     * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
     * definir o parametro boolLabelAbove do botão para true tambem.
     *
-    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Form, é só informar $this
+    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
     * @param mixed   $mixValue          - 2 : Label do Botão ou array('Gravar', 'Limpar') com nomes
     * @param string  $strAction         - 3 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
     * @param string  $strName           - 4 : Nome da ação com submit
@@ -381,32 +391,35 @@ class TFormDin
                             , $strHorizontalAlign=null)
     {
         if( !is_object($objForm) ){
-            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
+            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
             ValidateHelper::migrarMensage($msg
                                          ,ValidateHelper::TRIGGER_ERROR_ERROR
                                          ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
+
             if($boolFooter){
                 return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
             }else{
                 $formField = new TFormDinButton($objForm
-                                            , $mixValue
-                                            , $strAction=null
-                                            , $strName=null
-                                            , $strOnClick=null
-                                            , $strConfirmMessage=null
-                                            , $boolNewLine=null
-                                            , $boolFooter=null
-                                            , $strImage=null
-                                            , $strImageDisabled=null
-                                            , $strHint=null
-                                            , $strVerticalAlign=null
-                                            , $boolLabelAbove=null
-                                            , $strLabel=null
-                                            , $strHorizontalAlign=null);
+                                                , $mixValue
+                                                , $strAction
+                                                , $strName
+                                                , $strOnClick
+                                                , $strConfirmMessage
+                                                , $boolNewLine
+                                                , $boolFooter
+                                                , $strImage
+                                                , $strImageDisabled
+                                                , $strHint
+                                                , $strVerticalAlign
+                                                , $boolLabelAbove
+                                                , $strLabel
+                                                , $strHorizontalAlign
+                                            );
                 $objField = $formField->getAdiantiObj();
-                $this->adiantiObj->addFields([$objField]);
+                //$this->adiantiObj->addFields([$objField]);
+                $this->addElementFormList($objField,self::TYPE_FIELD,null,$boolNewLine);
                 return $formField;
             }
         }
@@ -564,7 +577,8 @@ class TFormDin
     {
         $formField = new TFormDinHiddenField($id,$strValue,$boolRequired);
         $objField = $formField->getAdiantiObj();
-        $this->adiantiObj->addFields([$objField]);
+        //$this->adiantiObj->addFields([$objField]);
+        $this->addElementFormList($objField,self::TYPE_FIELD);
         return $formField;
     }
 
@@ -781,7 +795,7 @@ class TFormDin
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED
      * @return TCombo
-    */     
+     */
     public function addSelectField(string $id
                                   ,string $strLabel
                                   ,$boolRequired = false
@@ -796,6 +810,75 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
+
+
+    /**
+     * Adiciona campo tipo grupo com legenda na parte superior
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------    
+     * Se o parametro $intHeight for null será auto height
+     * se o parametro $intWidth for null utilizado a largura do form
+     *
+     * <code>
+     * 	// sem quebra nos rotulos quando excederem a largura da coluna definida
+     *   $frm->addGroupField('gp01','Grupo Teste');
+     * 	// com quebra nos rotulos quando excederem a largura da coluna definida
+     *   $frm->addGroupField('gp01','Grupo Teste',null,null,null,true);
+     * </code>
+     *
+     * @param string $strName          - 01: NOT_IMPLEMENTED
+     * @param string $strLegend        - 02: Label que irá aparecer para o usuario 
+     * @param integer $intHeight       - 03: NOT_IMPLEMENTED altura do grupo. NULL = auto height
+     * @param integer $intWidth        - 04: NOT_IMPLEMENTED largura do grupo. NULL = largura do form
+     * @param boolean $boolNewLine     - 05: NOT_IMPLEMENTED Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolNoWrapLabel - 06: NOT_IMPLEMENTED
+     * @param boolean $boolCloseble    - 07: NOT_IMPLEMENTED pode fechar ou não
+     * @param string  $strAccordionId  - 08: NOT_IMPLEMENTED
+     * @param boolean $boolOpened      - 09: NOT_IMPLEMENTED inicia aberto
+     * @param string $imgOpened        - 10: NOT_IMPLEMENTED
+     * @param string $imgClosed        - 11: NOT_IMPLEMENTED
+     * @param boolean $boolOverflowX   - 12: NOT_IMPLEMENTED
+     * @param boolean $boolOverflowY   - 13: NOT_IMPLEMENTED
+     * @return TGroupBox
+     */
+	public function addGroupField( $strName=null
+                                , $strLegend=null
+                                , $strHeight=null
+                                , $strWidth=null
+                                , $boolNewLine=null
+                                , $boolNoWrapLabel=null
+                                , $boolCloseble=null
+                                , $strAccordionId=null
+                                , $boolOpened=null
+                                , $imgOpened=null
+                                , $imgClosed=null
+                                , $boolOverflowX=null
+                                , $boolOverflowY=null )
+    {
+		//$this->currentContainer[ ] = $field;
+        $strLegend = empty($strLegend)?'':$strLegend;
+        $objField = new TFormSeparator($strLegend);
+        $this->addElementFormList($objField,self::TYPE_LAYOUT);
+		return $objField;
+    }
+    
+    /**
+     * Este método fecha um campo grupo ou um campo aba para que os campos
+     * seguintes fique abaixo dos mesmos e não dentro deles.
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------  
+     */
+    public function closeGroup()
+    {
+        $this->addGroupField();
+    }
+
     /**
      * Campo de uso geral para insersão manual de códigos html na página
      * ------------------------------------------------------------------------
