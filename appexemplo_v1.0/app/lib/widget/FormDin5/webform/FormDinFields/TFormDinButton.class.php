@@ -118,7 +118,10 @@ class TFormDinButton {
     {
         if( empty($objForm) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }       
+        }
+        if( !is_object($objForm) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }        
         return $this->objForm=$objForm;
     }
     public function getObjForm(){
