@@ -59,14 +59,14 @@ class ValidateHelperTest extends TestCase
     public function testTriggerError_msgNull_WARNING() {
         $this->expectWarning();
         $msg = null;
-        $typeErro = ValidateHelper::TRIGGER_ERROR_WARNING;
+        $typeErro = ValidateHelper::WARNING;
         ValidateHelper::triggerError($msg,$typeErro);
     }
 
     public function testTriggerError_msgNull_ERROR() {
         $this->expectError();
         $msg = null;
-        $typeErro = ValidateHelper::TRIGGER_ERROR_ERROR;
+        $typeErro = ValidateHelper::ERROR;
         ValidateHelper::triggerError($msg,$typeErro);
     }
     

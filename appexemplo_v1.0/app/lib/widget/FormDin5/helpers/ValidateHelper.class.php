@@ -43,8 +43,8 @@ class ValidateHelper
 {
     const DEPRECATED = 'DEPRECATED';
     const NOTICIE = 'NOTICIE';
-    const TRIGGER_ERROR_WARNING = 'TRIGGER_ERROR_WARNING';
-    const TRIGGER_ERROR_ERROR   = 'TRIGGER_ERROR_ERROR';
+    const WARNING = 'WARNING';
+    const ERROR   = 'ERROR';
     const TYPE_ERRO_EXECEPTION = 'TYPE_ERRO_EXECEPTION';
     const TYPE_ERRO_MSG_DECREP = 'TYPE_ERRO_MSG_DECREP';
     const TYPE_ERRO_MSG_NOT_IMPLEMENTED = 'TYPE_ERRO_MSG_NOT_IMPLEMENTED';
@@ -114,9 +114,9 @@ class ValidateHelper
     {
         if($typeErro == self::TYPE_ERRO_EXECEPTION){
             throw new InvalidArgumentException($msg);
-        }else if($typeErro == self::TRIGGER_ERROR_ERROR){
+        }else if($typeErro == self::ERROR){
             trigger_error($msg, E_ERROR);
-        }else if($typeErro == self::TRIGGER_ERROR_WARNING){
+        }else if($typeErro == self::WARNING){
             trigger_error($msg, E_USER_WARNING);
         }else{
             trigger_error($msg, E_USER_NOTICE);

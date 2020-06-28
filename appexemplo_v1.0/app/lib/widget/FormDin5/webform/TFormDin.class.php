@@ -103,12 +103,12 @@ class TFormDin
     public function validateDeprecated($strHeigh,$strWidth)
     {
         ValidateHelper::validadeParam('strHeigh',$strHeigh
-                                     ,ValidateHelper::TRIGGER_ERROR_WARNING
+                                     ,ValidateHelper::WARNING
                                      ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);
 
         ValidateHelper::validadeParam('strWidth',$strWidth
-                                     ,ValidateHelper::TRIGGER_ERROR_WARNING
+                                     ,ValidateHelper::WARNING
                                      ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
@@ -393,7 +393,7 @@ class TFormDin
         if( !is_object($objForm) ){
             $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                         ,ValidateHelper::ERROR
                                          ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
@@ -455,7 +455,7 @@ class TFormDin
         if( is_array($actionsLabel) ){
             $msg = 'Não é permitido usar ARRAY no setAction, migre para chamada unica por Action';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TRIGGER_ERROR_WARNING
+                                         ,ValidateHelper::WARNING
                                          ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
@@ -933,7 +933,7 @@ class TFormDin
      */
     public function setShowCloseButton( $boolNewValue=null ){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
-                                    ,ValidateHelper::TRIGGER_ERROR_WARNING
+                                    ,ValidateHelper::WARNING
                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
@@ -944,7 +944,7 @@ class TFormDin
      */
     public function setFlat($boolNewValue=null){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
-                                    ,ValidateHelper::TRIGGER_ERROR_WARNING
+                                    ,ValidateHelper::WARNING
                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
@@ -955,7 +955,7 @@ class TFormDin
      */
     public function setMaximize($boolNewValue = null){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
-                                    ,ValidateHelper::TRIGGER_ERROR_WARNING
+                                    ,ValidateHelper::WARNING
                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
@@ -966,7 +966,7 @@ class TFormDin
      */
     public function setHelpOnLine(){
         ValidateHelper::validadeParam('$setHelpOnLine',null
-                                ,ValidateHelper::TRIGGER_ERROR_WARNING
+                                ,ValidateHelper::WARNING
                                 ,ValidateHelper::TYPE_ERRO_MSG_DECREP
                                 ,__CLASS__,__METHOD__,__LINE__); 
     }

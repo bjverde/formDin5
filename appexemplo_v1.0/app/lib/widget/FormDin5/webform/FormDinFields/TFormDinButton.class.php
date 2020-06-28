@@ -133,7 +133,7 @@ class TFormDinButton {
         if( is_array($label) ){
             $msg = 'O parametro $mixValue não recebe mais um array! Faça uma chamada por Action';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                         ,ValidateHelper::ERROR
                                          ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
@@ -153,7 +153,7 @@ class TFormDinButton {
         if( !is_object($adiantiObj) ){
             $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
+                                         ,ValidateHelper::ERROR
                                          ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
                                          ,__CLASS__,__METHOD__,__LINE__);
         }
