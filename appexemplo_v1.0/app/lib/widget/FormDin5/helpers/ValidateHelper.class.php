@@ -162,6 +162,8 @@ class ValidateHelper
             $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
                 .$complemento
                 .': '.$mensagem
+                .'. Metodo: '.$method
+                .', na linha: '.$line
                 ;
             self::triggerError($msg,$typeErro);
         }
