@@ -391,11 +391,16 @@ class TFormDin
                             , $strHorizontalAlign=null)
     {
         if( !is_object($objForm) ){
+            $track = debug_backtrace();            
             $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
             ValidateHelper::migrarMensage($msg
                                          ,ValidateHelper::ERROR
                                          ,ValidateHelper::MSG_CHANGE
-                                         ,__CLASS__,__METHOD__,__LINE__);
+                                         ,$track[0]['class']
+                                         ,$track[0]['function']
+                                         ,$track[0]['line']
+                                         ,$track[0]['file']
+                                        );
         }else{
 
             if($boolFooter){

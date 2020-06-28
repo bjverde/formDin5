@@ -153,17 +153,23 @@ class ValidateHelper
         }
     }
     //--------------------------------------------------------------------------------
-    public static function migrarMensage($mensagem,$typeErro,$typeErroMsg,$class,$method,$line)
+    public static function migrarMensage($mensagem,$typeErro,$typeErroMsg,$class,$method,$line,$arquivo=null)
     {
         $test = isset($mensagem) && !empty($mensagem);
         if($test){
             $complemento = self::typeErrorMsg($typeErroMsg);
-
+            
+            if(!empty($arquivo)){
+                $arquivo = explode(DIRECTORY_SEPARATOR, $arquivo);
+                $arquivo = ', no arquivo: '.end($arquivo);
+            }
             $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
                 .$complemento
                 .': '.$mensagem
-                .'. Metodo: '.$method
+                .'. Classe: '.$class
+                .', Metodo: '.$method
                 .', na linha: '.$line
+                .$arquivo
                 ;
             self::triggerError($msg,$typeErro);
         }
