@@ -23,14 +23,14 @@ class exe_TButton extends TPage
         $frm->addTextField('entry','TEntry', 10);
         $frm->addButton($this,'Success',null,'onSave',null,null,false,false);
 
-        $frm->addButton('Limpar', null, 'Limpar', null, null, false, false);
-        $frm->addButton('Exemplo 09 - img', null, 'act09', null, null, true, false,'joia.gif');
-        $frm->addButton('Exemplo 09 - img desabilitado', null, 'act09d', null, null, true, false,'joia.gif','joia_desabilitado.gif');
-        $frm->addButton('Exemplo 10 - img', null, 'act10', null, null, true, false,'favicon-32x32.png');
-        $frm->addButton('Exemplo 11 - hint', null, 'act11', null, null, true, false,null,null,'text hint');
-        $frm->addButton('Exemplo 12', null, 'act12', null, null, true, false,null,null,null,null,true,'xxx','center');
-        $frm->addButton('Exemplo 13', null, 'act13', null, null, true, false,null,null,null,null,true,'xxx','left');
-        $frm->addButton('Exemplo 14', null, 'act14', null, null, true, false,null,null,null,null,null,null,'left');
+        $frm->addButton($this,'Limpar', null, 'Limpar', null, null, false, false);
+        $frm->addButton($this,'Exemplo 09 - img', null, 'act09', null, null, true, false,'joia.gif');
+        $frm->addButton($this,'Exemplo 09 - img desabilitado', null, 'act09d', null, null, true, false,'joia.gif','joia_desabilitado.gif');
+        $frm->addButton($this,'Exemplo 10 - img', null, 'act10', null, null, true, false,'favicon-32x32.png');
+        $frm->addButton($this,'Exemplo 11 - hint', null, 'act11', null, null, true, false,null,null,'text hint');
+        $frm->addButton($this,'Exemplo 12', null, 'act12', null, null, true, false,null,null,null,null,true,'xxx','center');
+        $frm->addButton($this,'Exemplo 13', null, 'act13', null, null, true, false,null,null,null,null,true,'xxx','left');
+        $frm->addButton($this,'Exemplo 14', null, 'act14', null, null, true, false,null,null,null,null,null,null,'left');
         $frm->addTextField('xxx','xxx',30);
 
 
