@@ -42,19 +42,31 @@
 
 $path =  __DIR__.'/../../../../../../';
 //require_once $path.'init.php';
-//require_once $path.'tests/initTest.php';
-
-require_once  __DIR__.'/../../mockMunicipioVO.class.php';
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Warning;
 
 class ValidateHelperTest extends TestCase
 {
         
-    public function triggerError_msgNull_typeErrosNull() {
-        $this->expectException(InvalidArgumentException::class);
+    public function testTriggerError_msgNull_typeErrosNull() {
+        $this->expectNotice();
         $msg = null;
         $typeErro = null;
+        ValidateHelper::triggerError($msg,$typeErro);
+    }
+
+    public function testTriggerError_msgNull_WARNING() {
+        $this->expectWarning();
+        $msg = null;
+        $typeErro = ValidateHelper::TRIGGER_ERROR_WARNING;
+        ValidateHelper::triggerError($msg,$typeErro);
+    }
+
+    public function testTriggerError_msgNull_ERROR() {
+        $this->expectError();
+        $msg = null;
+        $typeErro = ValidateHelper::TRIGGER_ERROR_ERROR;
         ValidateHelper::triggerError($msg,$typeErro);
     }
     
