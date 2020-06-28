@@ -69,5 +69,21 @@ class ValidateHelperTest extends TestCase
         $typeErro = ValidateHelper::ERROR;
         ValidateHelper::triggerError($msg,$typeErro);
     }
+
+    public function testTriggerError_msgNull_Exceptio() {
+        $this->expectException(InvalidArgumentException::class);
+        $msg = null;
+        $typeErro = ValidateHelper::EXECEPTION;
+        ValidateHelper::triggerError($msg,$typeErro);
+    }
+
+    public function testMigrarMensage_msgNull_Exceptio() {
+        $this->expectError();
+        $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
+        ValidateHelper::migrarMensage($msg
+                                     ,ValidateHelper::ERROR
+                                     ,ValidateHelper::MSG_CHANGE
+                                     ,__CLASS__,__METHOD__,__LINE__);
+    }
     
 }

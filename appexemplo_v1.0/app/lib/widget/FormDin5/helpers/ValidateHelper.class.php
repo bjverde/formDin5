@@ -115,7 +115,7 @@ class ValidateHelper
         if($typeErro == self::EXECEPTION){
             throw new InvalidArgumentException($msg);
         }else if($typeErro == self::ERROR){
-            trigger_error($msg, E_ERROR);
+            trigger_error($msg, E_USER_ERROR);
         }else if($typeErro == self::WARNING){
             trigger_error($msg, E_USER_WARNING);
         }else{
