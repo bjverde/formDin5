@@ -367,7 +367,7 @@ class TFormDin
     * @param boolean $boolFooter        - 8 : Mostrar o botão no rodapé do form. DEFAULT = true
     * @param string  $strImage          - 9 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
     * @param string  $strImageDisabled  -10 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
-    * @param string  $strHint           -11 : Texto hint para explicar
+    * @param string  $strHint           -11 : NOT_IMPLEMENTED Texto hint para explicar
     * @param string  $strVerticalAlign  -12 : NOT_IMPLEMENTED
     * @param boolean $boolLabelAbove    -13 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
     * @param string  $strLabel          -14 : NOT_IMPLEMENTED Text label 
@@ -425,6 +425,7 @@ class TFormDin
                 $objField = $formField->getAdiantiObj();
                 //$this->adiantiObj->addFields([$objField]);
                 $this->addElementFormList($objField,self::TYPE_FIELD,null,$boolNewLine);
+                //$this->addElementFormList($objField,self::TYPE_LAYOUT,null,$boolNewLine);
                 return $formField;
             }
         }

@@ -107,10 +107,12 @@ class TFormDinButton {
                                 , $strLabel=null
                                 , $strHorizontalAlign=null)
     {
-        $adiantiObj = new TButton($strName);
-        $this->setAdiantiObj($adiantiObj);
+        $adiantiObj = new TButton('btn'.$strName);
         $this->setObjForm($objForm);
+        $this->setAdiantiObj($adiantiObj);
         $this->setLabel($label);
+        $this->setAction($strName);
+        $this->setImage($strImage);
         return $this->getAdiantiObj();
     }
 
@@ -168,9 +170,18 @@ class TFormDinButton {
         if( empty($strName) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
         }
-        $action = new TAction(array($this, $strName));
+        $objForm = $this->getObjForm();
+        $action = new TAction(array($objForm, $strName));
         $label = $this->getLabel();
         $this->getAdiantiObj()->setAction($action,$label);
     }
+
+    public function setImage($strImage)
+    {
+        if( !empty($strImage) ){
+            $this->getAdiantiObj()->setImage($strImage);
+        }
+    }
+
 }
 ?>
