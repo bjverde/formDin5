@@ -391,7 +391,7 @@ class TFormDin
                             , $strHorizontalAlign=null)
     {
         if( !is_object($objForm) ){
-            $track = debug_backtrace();            
+            $track = debug_backtrace();
             $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
             ValidateHelper::migrarMensage($msg
                                          ,ValidateHelper::ERROR
@@ -458,11 +458,16 @@ class TFormDin
                              , $methodPost=true)
     {
         if( is_array($actionsLabel) ){
+            $track = debug_backtrace();
             $msg = 'Não é permitido usar ARRAY no setAction, migre para chamada unica por Action';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::WARNING
-                                         ,ValidateHelper::MSG_DECREP
-                                         ,__CLASS__,__METHOD__,__LINE__);
+                                         ,ValidateHelper::ERROR
+                                         ,ValidateHelper::MSG_CHANGE
+                                         ,$track[0]['class']
+                                         ,$track[0]['function']
+                                         ,$track[0]['line']
+                                         ,$track[0]['file']
+                                        );
         }else{
             ValidateHelper::isSet($actionsName,__METHOD__,__LINE__);
             ValidateHelper::isSet($objForm,__METHOD__,__LINE__);
