@@ -46,8 +46,8 @@ class ValidateHelper
     const WARNING = 'WARNING';
     const ERROR   = 'ERROR';
     const EXECEPTION = 'EXECEPTION';
-    const TYPE_ERRO_MSG_DECREP = 'TYPE_ERRO_MSG_DECREP';
-    const TYPE_ERRO_MSG_NOT_IMPLEMENTED = 'TYPE_ERRO_MSG_NOT_IMPLEMENTED';
+    const MSG_DECREP = 'MSG_DECREP';
+    const MSG_NOT_IMPLEMENTED = 'MSG_NOT_IMPLEMENTED';
     const TYPE_ERRO_MSG_CHANGE = 'TYPE_ERRO_MSG_CHANGE';
     
     public static function methodLine($method,$line,$nameMethodValidate)
@@ -126,7 +126,7 @@ class ValidateHelper
     public static function typeErrorMsg($typeErroMsg)
     {
         $complemento = null;
-        if($typeErroMsg==self::TYPE_ERRO_MSG_NOT_IMPLEMENTED){
+        if($typeErroMsg==self::MSG_NOT_IMPLEMENTED){
             $complemento = ' não foi implementado!';
         }else if($typeErroMsg == self::TYPE_ERRO_MSG_CHANGE){
             $complemento = ' FOI ALTERADO!';

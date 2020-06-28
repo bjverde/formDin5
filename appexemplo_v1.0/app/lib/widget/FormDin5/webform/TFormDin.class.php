@@ -104,12 +104,12 @@ class TFormDin
     {
         ValidateHelper::validadeParam('strHeigh',$strHeigh
                                      ,ValidateHelper::WARNING
-                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                     ,ValidateHelper::MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);
 
         ValidateHelper::validadeParam('strWidth',$strWidth
                                      ,ValidateHelper::WARNING
-                                     ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                     ,ValidateHelper::MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
 
@@ -456,7 +456,7 @@ class TFormDin
             $msg = 'Não é permitido usar ARRAY no setAction, migre para chamada unica por Action';
             ValidateHelper::migrarMensage($msg
                                          ,ValidateHelper::WARNING
-                                         ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                         ,ValidateHelper::MSG_DECREP
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
             ValidateHelper::isSet($actionsName,__METHOD__,__LINE__);
@@ -934,7 +934,7 @@ class TFormDin
     public function setShowCloseButton( $boolNewValue=null ){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
                                     ,ValidateHelper::WARNING
-                                    ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                    ,ValidateHelper::MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
 
@@ -945,7 +945,7 @@ class TFormDin
     public function setFlat($boolNewValue=null){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
                                     ,ValidateHelper::WARNING
-                                    ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                    ,ValidateHelper::MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
 
@@ -956,7 +956,7 @@ class TFormDin
     public function setMaximize($boolNewValue = null){
         ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
                                     ,ValidateHelper::WARNING
-                                    ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                    ,ValidateHelper::MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
     }
 
@@ -967,7 +967,7 @@ class TFormDin
     public function setHelpOnLine(){
         ValidateHelper::validadeParam('$setHelpOnLine',null
                                 ,ValidateHelper::WARNING
-                                ,ValidateHelper::TYPE_ERRO_MSG_DECREP
+                                ,ValidateHelper::MSG_DECREP
                                 ,__CLASS__,__METHOD__,__LINE__); 
     }
 }
