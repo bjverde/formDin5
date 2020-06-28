@@ -45,7 +45,7 @@ class ValidateHelper
     const NOTICIE = 'NOTICIE';
     const WARNING = 'WARNING';
     const ERROR   = 'ERROR';
-    const TYPE_ERRO_EXECEPTION = 'TYPE_ERRO_EXECEPTION';
+    const EXECEPTION = 'EXECEPTION';
     const TYPE_ERRO_MSG_DECREP = 'TYPE_ERRO_MSG_DECREP';
     const TYPE_ERRO_MSG_NOT_IMPLEMENTED = 'TYPE_ERRO_MSG_NOT_IMPLEMENTED';
     const TYPE_ERRO_MSG_CHANGE = 'TYPE_ERRO_MSG_CHANGE';
@@ -112,7 +112,7 @@ class ValidateHelper
     //--------------------------------------------------------------------------------
     public static function triggerError($msg,$typeErro)
     {
-        if($typeErro == self::TYPE_ERRO_EXECEPTION){
+        if($typeErro == self::EXECEPTION){
             throw new InvalidArgumentException($msg);
         }else if($typeErro == self::ERROR){
             trigger_error($msg, E_ERROR);
