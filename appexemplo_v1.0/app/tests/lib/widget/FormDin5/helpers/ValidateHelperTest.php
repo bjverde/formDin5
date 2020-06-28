@@ -29,9 +29,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -40,22 +40,22 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class CountHelper
+$path =  __DIR__.'/../../../../../../';
+//require_once $path.'init.php';
+//require_once $path.'tests/initTest.php';
+
+require_once  __DIR__.'/../../mockMunicipioVO.class.php';
+
+use PHPUnit\Framework\TestCase;
+
+class ValidateHelperTest extends TestCase
 {
-    /**
-     * Avoid the problem warning of PHP 7.2.X
-     * @param array|object $element
-     * @return number
-     */
-    public static function count($element) 
-    {
-    	$isArray  = is_array( $element );
-    	$isObject = is_object( $element );
-    	$result   = 0;
-    	if( $isArray || $isObject ){
-    		$result = count( $element );
-    	}
-    	return $result;
+        
+    public function triggerError_msgNull_typeErrosNull() {
+        $this->expectException(InvalidArgumentException::class);
+        $msg = null;
+        $typeErro = null;
+        ValidateHelper::triggerError($msg,$typeErro);
     }
+    
 }
-?>
