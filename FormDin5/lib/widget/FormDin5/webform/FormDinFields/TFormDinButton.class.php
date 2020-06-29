@@ -107,10 +107,12 @@ class TFormDinButton {
                                 , $strLabel=null
                                 , $strHorizontalAlign=null)
     {
-        $adiantiObj = new TButton($strName);
-        $this->setAdiantiObj($adiantiObj);
+        $adiantiObj = new TButton('btn'.$strName);
         $this->setObjForm($objForm);
+        $this->setAdiantiObj($adiantiObj);
         $this->setLabel($label);
+        $this->setAction($strName);
+        $this->setImage($strImage);
         return $this->getAdiantiObj();
     }
 
@@ -133,8 +135,8 @@ class TFormDinButton {
         if( is_array($label) ){
             $msg = 'O parametro $mixValue não recebe mais um array! Faça uma chamada por Action';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
-                                         ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
+                                         ,ValidateHelper::ERROR
+                                         ,ValidateHelper::MSG_CHANGE
                                          ,__CLASS__,__METHOD__,__LINE__);
         }else{
             $this->label=$label;
@@ -153,8 +155,8 @@ class TFormDinButton {
         if( !is_object($adiantiObj) ){
             $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
             ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::TRIGGER_ERROR_ERROR
-                                         ,ValidateHelper::TYPE_ERRO_MSG_CHANGE
+                                         ,ValidateHelper::ERROR
+                                         ,ValidateHelper::MSG_CHANGE
                                          ,__CLASS__,__METHOD__,__LINE__);
         }
         return $this->adiantiObj=$adiantiObj;
@@ -168,9 +170,18 @@ class TFormDinButton {
         if( empty($strName) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
         }
-        $action = new TAction(array($this, $strName));
+        $objForm = $this->getObjForm();
+        $action = new TAction(array($objForm, $strName));
         $label = $this->getLabel();
         $this->getAdiantiObj()->setAction($action,$label);
     }
+
+    public function setImage($strImage)
+    {
+        if( !empty($strImage) ){
+            $this->getAdiantiObj()->setImage($strImage);
+        }
+    }
+
 }
 ?>

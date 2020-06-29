@@ -389,30 +389,111 @@ class TFormDinTest extends TestCase
         $this->assertEquals(2, $result['key']);
         $this->assertEquals($expected, $result['row']); 
     }
-    //---------------------------------------------
+    //-------------------------------------------------------------------------
+    public function testSetAdiantiObj_wrongObj()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $formDin = new TFormDin('Phpunit');        
+        $WrongObj = new stdClass();
+        $formDin->setAdiantiObj($WrongObj);
+    }
+    public function testSetAdiantiObj_wrongString()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $formDin = new TFormDin('Phpunit');
+        $formDin->setAdiantiObj('string');
+    }
+    public function testSetAdiantiObj_setNull()
+    {
+        $this->classTest->setAdiantiObj();
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $name = $adiantiObj->getName();
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals(null, $name);
+    }
+    public function testSetAdiantiObj_setName()
+    {
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $this->classTest->setAdiantiObj($bootForm);
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $name = $adiantiObj->getName();
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals('bootForm', $name);
+    }
+    public function testSetAdiantiObj_setTitle()
+    {
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'title');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setAdiantiObj($bootForm,'b1','title form');
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $title = $reflectionProperty->getValue($bootForm);
+
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals('title form', $title);
+    }    
+    //-------------------------------------------------------------------------
+    public function testgetAdiantiObj()
+    {
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $name = $adiantiObj->getName();
+        $this->assertInstanceOf(BootstrapFormBuilder::class, $adiantiObj);
+        $this->assertEquals('formdin', $name);
+    }        
+    //-------------------------------------------------------------------------
     public function testGetAdiantiObj2GetAdiantiObj2_null(){
         $this->expectNotToPerformAssertions();
         $this->classTest->getAdiantiObj2();
     }
-    //---------------------------------------------
-    public function testGetAdiantiObj2GetAdiantiObj2_1FieldText(){
-        $formField = new TFormDinTextField('TEXT01','Texto tam 10', 10);
+    public function testGetAdiantiObj2GetAdiantiObj2_2FieldText1Content(){
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'tabcontent');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setAdiantiObj( $bootForm );
+
+
+        $strLegend = null;
+        $objField = new TFormSeparator($strLegend);
+        $this->classTest->addElementFormList($objField,TFormDin::TYPE_LAYOUT);
+        
+        $formField = new TFormDinTextField('TEXT01','Texto 1 tam 10', 10);
         $label = $formField->getLabel();
-        $objField = $formField->getAdiantiObj();
+        $objField = $formField->getAdiantiObj();        
+        $this->classTest->addElementFormList($objField,TFormDin::TYPE_FIELD,$label);
+        
+        $strLegend = null;
+        $objField = new TFormSeparator($strLegend);
+        $this->classTest->addElementFormList($objField,TFormDin::TYPE_LAYOUT);
+
+        $formField = new TFormDinTextField('TEXT02','Texto 2 tam 10', 10);
+        $label = $formField->getLabel();
+        $objField = $formField->getAdiantiObj();  
         $this->classTest->addElementFormList($objField,TFormDin::TYPE_FIELD,$label);
 
         $adiantiObjForm = $this->classTest->getAdiantiObj2();
-        //$element = $adiantiObjForm->getContents();
-        //$this->assertObjectHasAttribute('element', new stdClass);
-    }    
-    //---------------------------------------------
+        $tabcontent = $reflectionProperty->getValue($adiantiObjForm);
+        $list = array_values($tabcontent);
+        $list = $list[0];
+
+        $qtd = CountHelper::count($list);
+
+        $this->assertEquals(4, $qtd);
+        $this->assertEquals('content', $list[0]->type);
+        $this->assertEquals('fields' , $list[1]->type);
+        $this->assertEquals('content', $list[2]->type);
+        $this->assertEquals('fields' , $list[3]->type);
+    }
 
     public function testGetAdiantiObj2GetListFormElements_null()
     {
         $list = $this->classTest->getListFormElements();
         $this->assertEmpty($list);
     }
-
+    //-------------------------------------------------------------------------
     public function testGetListFormElements_qtd1()
     {
         $this->classTest->addElementFormList('1');
@@ -428,5 +509,28 @@ class TFormDinTest extends TestCase
         $list = $this->classTest->getListFormElements();
         $qtd = CountHelper::count($list);
         $this->assertEquals(2, $qtd);
+    }
+    //-------------------------------------------------------------------------
+    public function testAddGroupField(){
+        $bootForm = new BootstrapFormBuilder('bootForm');
+        $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'tabcontent');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setAdiantiObj( $bootForm );
+        $this->classTest->addGroupField(null,'Grupo Texto');
+        $this->classTest->addTextField('txe','Campo texto');
+        $this->classTest->closeGroup();
+
+        $adiantiObjForm = $this->classTest->getAdiantiObj2();
+        $tabcontent = $reflectionProperty->getValue($adiantiObjForm);
+        $list = array_values($tabcontent);
+        $list = $list[0];
+
+        $qtd = CountHelper::count($list);
+
+        $this->assertEquals(3, $qtd);
+        $this->assertEquals('content', $list[0]->type);
+        $this->assertEquals('fields' , $list[1]->type);
+        $this->assertEquals('content', $list[2]->type);
     }
 }

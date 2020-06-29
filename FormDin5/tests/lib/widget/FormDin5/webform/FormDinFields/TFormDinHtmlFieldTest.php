@@ -40,50 +40,46 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../../../../';
-//require_once $path.'init.php';
+$path =  __DIR__.'/../../../../../';
+//require_once $path.'tests/initTest.php';
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
 
-class ValidateHelperTest extends TestCase
+class TFormDinHtmlFieldTest extends TestCase
 {
-        
-    public function testTriggerError_msgNull_typeErrosNull() {
-        $this->expectNotice();
-        $msg = null;
-        $typeErro = null;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
 
-    public function testTriggerError_msgNull_WARNING() {
-        $this->expectWarning();
-        $msg = null;
-        $typeErro = ValidateHelper::WARNING;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
-
-    public function testTriggerError_msgNull_ERROR() {
-        $this->expectError();
-        $msg = null;
-        $typeErro = ValidateHelper::ERROR;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
-
-    public function testTriggerError_msgNull_Exceptio() {
-        $this->expectException(InvalidArgumentException::class);
-        $msg = null;
-        $typeErro = ValidateHelper::EXECEPTION;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
-
-    public function testMigrarMensage_msgNull_Exceptio() {
-        $this->expectError();
-        $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
-        ValidateHelper::migrarMensage($msg
-                                     ,ValidateHelper::ERROR
-                                     ,ValidateHelper::MSG_CHANGE
-                                     ,__CLASS__,__METHOD__,__LINE__);
+    private $classTest;
+    
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->classTest = new TFormDinHtmlField('p1','html simples');
     }
     
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown(): void {
+        $this->classTest = null;
+        parent::tearDown();
+    }     
+    
+    public function test_instanceOff()
+    {
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $this->assertInstanceOf(TElement::class, $adiantiObj);
+    }
+
+    public function test_setId()
+    {
+        $formDinObj = $this->classTest;
+        $formDinObj->setId('id');
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $id = $adiantiObj->id;
+        $this->assertEquals('id',$id);
+    }
+
 }

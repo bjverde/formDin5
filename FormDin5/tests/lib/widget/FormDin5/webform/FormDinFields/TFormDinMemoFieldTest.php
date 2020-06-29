@@ -40,50 +40,65 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../../../../';
-//require_once $path.'init.php';
+$path =  __DIR__.'/../../../../../';
+//require_once $path.'tests/initTest.php';
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
 
-class ValidateHelperTest extends TestCase
+class TFormDinMemoFieldTest extends TestCase
 {
-        
-    public function testTriggerError_msgNull_typeErrosNull() {
-        $this->expectNotice();
-        $msg = null;
-        $typeErro = null;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
 
-    public function testTriggerError_msgNull_WARNING() {
-        $this->expectWarning();
-        $msg = null;
-        $typeErro = ValidateHelper::WARNING;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
-
-    public function testTriggerError_msgNull_ERROR() {
-        $this->expectError();
-        $msg = null;
-        $typeErro = ValidateHelper::ERROR;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
-
-    public function testTriggerError_msgNull_Exceptio() {
-        $this->expectException(InvalidArgumentException::class);
-        $msg = null;
-        $typeErro = ValidateHelper::EXECEPTION;
-        ValidateHelper::triggerError($msg,$typeErro);
-    }
-
-    public function testMigrarMensage_msgNull_Exceptio() {
-        $this->expectError();
-        $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
-        ValidateHelper::migrarMensage($msg
-                                     ,ValidateHelper::ERROR
-                                     ,ValidateHelper::MSG_CHANGE
-                                     ,__CLASS__,__METHOD__,__LINE__);
+    private $classTest;
+    
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->classTest = new TFormDinMemoField('p1','html simples',300);
     }
     
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown(): void {
+        $this->classTest = null;
+        parent::tearDown();
+    }     
+    
+    public function test_instanceOff()
+    {
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $this->assertInstanceOf(TText::class, $adiantiObj);
+    }
+
+    /*
+    public function testTestSize_fail()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        
+        $reflectionMethod = new \ReflectionMethod(TFormDinMemoField::class, 'testSize');
+        $reflectionMethod->setAccessible(true);
+        
+        $formDinObj  = new TFormDinMemoField('p1','html simples',300);
+
+        $reflectionMethod->invoke( $formDinObj->testSize(10) );
+    }
+    */
+
+    public function test_readOnly()
+    {
+        $reflectionProperty = new \ReflectionProperty(TText::class, 'editable');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setReadOnly(true);
+        $readOnly = $this->classTest->getReadOnly();
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $editable = $reflectionProperty->getValue($adiantiObj);
+        
+        $this->assertEquals(false,$editable);
+        $this->assertEquals(true,$readOnly);
+    }
+
 }
