@@ -307,7 +307,7 @@
             </menuitem>
             <menuitem label='Definir Colunas no Formulário'>
                 <icon>fa:code fa-fw</icon>
-                <action>SystemPHPInfoView</action>
+                <action>exe_colunas</action>
             </menuitem>
         </menu>
     </menuitem>
