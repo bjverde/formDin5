@@ -55,6 +55,35 @@ class exe_colunas extends TPage
         $frm->addTextField('fdl8id3', 'fdl8d3:', 20, false, 20, 'FormDin',false, null, null, true);
         $frm->addTextField('fdl8id4', 'fdl8d4:', 20, false, 20, 'FormDin',false, null, null, true);
 
+        $frm->addGroupField('fdl9', 'FormDin - 5 campos');
+        $frm->addTextField('fdl9id1', 'fdl9id1:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl9id2', 'fdl9id2:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl9id3', 'fdl9id3:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl9id4', 'fdl9id4:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl9id5', 'fdl9id5:', 20, false, 20, 'FormDin',false, null, null, false);
+        
+        $frm->addGroupField('fdl10', 'FormDin - 5 campo, label sobre');
+        $frm->addTextField('fdl10id1', 'fdl10d1:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl10id2', 'fdl10d2:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl10id3', 'fdl10d3:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl10id4', 'fdl10d4:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl10id5', 'fdl10d5:', 20, false, 20, 'FormDin',false, null, null, true);
+
+        $frm->addGroupField('fdl11', 'FormDin - 6 campos');
+        $frm->addTextField('fdl11id1', 'fdl11id1:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl11id2', 'fdl11id2:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl11id3', 'fdl11id3:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl11id4', 'fdl11id4:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl11id5', 'fdl11id5:', 20, false, 20, 'FormDin',false, null, null, false);
+        $frm->addTextField('fdl11id6', 'fdl11id6:', 20, false, 20, 'FormDin',false, null, null, false);
+        
+        $frm->addGroupField('fdl12', 'FormDin - 6 campo, label sobre');
+        $frm->addTextField('fdl12id1', 'fdl12d1:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl12id2', 'fdl12d2:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl12id3', 'fdl12d3:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl12id4', 'fdl12d4:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl12id5', 'fdl12d5:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl12id6', 'fdl12d6:', 20, false, 20, 'FormDin',false, null, null, true);        
 
         $this->form = $frm->show();
         //------------------------------------------------------------------------------
