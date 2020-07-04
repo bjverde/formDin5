@@ -305,7 +305,7 @@
                     </menuitem>                    
                 </menu>
             </menuitem>
-            <menuitem label='Definir Colunas no Formulário'>
+            <menuitem label='Colunas no Formulário'>
                 <icon>fa:code fa-fw</icon>
                 <action>exe_colunas</action>
             </menuitem>

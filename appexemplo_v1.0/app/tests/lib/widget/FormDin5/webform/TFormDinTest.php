@@ -121,7 +121,7 @@ class TFormDinTest extends TestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testNextElementHNewLine_2Element_resultTrue()
+    public function testNextElementHNewLine_2Element_start0ResultTrue()
     {
         $campo = new stdClass();
         $label = 'teste';
@@ -131,12 +131,54 @@ class TFormDinTest extends TestCase
         $this->assertEquals(true, $result);
     }
 
-    public function testNextElementHNewLine_2Element_resultFalse()
+    public function testNextElementHNewLine_2Element_start0ResultFalse()
     {
         $campo = new stdClass();
         $label = 'teste';
         $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
         $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',false);
+        $result = $this->classTest->nextElementNewLine(0);
+        $this->assertEquals(false, $result);
+    }
+
+    public function testNextElementHNewLine_2Element_start1ResultTrue()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',true);
+        $result = $this->classTest->nextElementNewLine(1);
+        $this->assertEquals(null, $result);
+    }
+
+    public function testNextElementHNewLine_2Element_start1ResultFalse()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',false);
+        $result = $this->classTest->nextElementNewLine(1);
+        $this->assertEquals(null, $result);
+    }
+
+    public function testNextElementHNewLine_3Element_resultTrue_start00()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',true);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'02',true);
+        $result = $this->classTest->nextElementNewLine(0);
+        $this->assertEquals(true, $result);
+    }
+
+    public function testNextElementHNewLine_3Element_resultFalse_start00()
+    {
+        $campo = new stdClass();
+        $label = 'teste';
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'01',false);
+        $this->classTest->addElementFormList($campo,TFormDin::TYPE_FIELD,$label.'02',false);
         $result = $this->classTest->nextElementNewLine(0);
         $this->assertEquals(false, $result);
     }
