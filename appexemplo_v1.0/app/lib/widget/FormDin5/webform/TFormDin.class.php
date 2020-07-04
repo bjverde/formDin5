@@ -252,6 +252,16 @@ class TFormDin
         return $this->getAdiantiObj2();
     }
 
+    /**
+     * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
+     * 
+     * @param object $obj  -  1: objeto Adianti
+     * @param string $type -  2: Typo confirmo constante
+     * @param object $label - 3: objeto do tipo Label do $obj
+     * @param boolean $boolNewLine    - 4: DEFAULT = True = campo em nova linha. FALSE = mesma linha
+     * @param boolean $boolLabelAbove - 5: DEFAULT = FALSE = Label na frente do campo. TRUE = Label sobre o campo
+     * @return void
+     */
     public function addElementFormList($obj
                                          ,$type = self::TYPE_FIELD
                                          ,$label=null
@@ -273,10 +283,10 @@ class TFormDin
     }
 
     /**
-     * Inclusão 
-     * @param array $label - label que será incluido com o campo
-     * @param array $campo - campo que será incluido
-     * @param array $boolLabelAbove - informa se o Label é acima
+     * Inclusão de um campo no Form
+     * @param object $label - label que será incluido com o campo
+     * @param object $campo - campo que será incluido
+     * @param boolean $boolLabelAbove - informa se o Label é acima
      */
     protected function addFields($label, $campo, $boolLabelAbove = false)
     {
