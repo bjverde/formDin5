@@ -132,8 +132,8 @@ class TFormDin
     /**
      * Recebe um elemento e retorna o array com Label do campo e Obj do campo
      *
-     * @param [type] $element
-     * @return void
+     * @param object $element
+     * @return array 
      */
     public function getArrayElementLabelAbove($element)
     {
