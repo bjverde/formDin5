@@ -130,7 +130,7 @@ class TFormDin
     }
 
     /**
-     * Recebe um elemento e retorna o array do Label
+     * Recebe um elemento e retorna o array com Label do campo e Obj do campo
      *
      * @param [type] $element
      * @return void
@@ -150,12 +150,13 @@ class TFormDin
     }
 
     /**
-     * Recebe a chave da posição da posição inicial, vai percorrendo a lista
-     * para retorna o array de duas posição
+     * Recebe a chave da posição da posição inicial da lista de objetos do form
+     * Percorrendo a lista para determinar todos objeto de uma linha do form.
+     * Retorna o array de duas posição
      * $result['key'] - ultimo elemento incluido
-     *  $result['row']- array com todos os alementos da lista
+     * $result['row'] - array com todos os alementos da lista
      * 
-     * @param int $key
+     * @param int $key - 1: Posição inicial da lista de objetos
      * @return array
      */
     public function addFieldsRow($key)
