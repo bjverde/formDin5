@@ -450,7 +450,7 @@ class TFormDinTest extends TestCase
         $this->classTest->addElementFormList($campo2,TFormDin::TYPE_FIELD,$label2,true);
 
         $result = $this->classTest->addFieldsRow($keyStart);
-        $this->assertEquals(2, $result['key']);
+        $this->assertEquals(1, $result['key']);
         $this->assertEquals($expected, $result['row']); 
     }
 
@@ -544,7 +544,7 @@ class TFormDinTest extends TestCase
         $this->classTest->addElementFormList($campo5,TFormDin::TYPE_FIELD,$label5,false,true);
 
         $result = $this->classTest->addFieldsRow($keyStart);
-        $this->assertEquals(3, $result['key']);
+        $this->assertEquals(2, $result['key']);
         $this->assertEquals($expected, $result['row']); 
     }
     public function testAddFieldsRow_6Elements_start04_2Group2FieldSameline()
