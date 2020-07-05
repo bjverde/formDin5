@@ -432,7 +432,7 @@ class TFormDinTest extends TestCase
         $this->assertEquals($expected, $result['row']); 
     }
 
-    public function testAddFieldsRow_3Elements_1Layout2FieldSamelines()
+    public function testAddFieldsRow_3Elements_start00_2FieldSamelines()
     {        
         $label0 = 'teste0';
         $campo0 = new stdClass();
@@ -448,6 +448,67 @@ class TFormDinTest extends TestCase
         $this->classTest->addElementFormList($campo0,TFormDin::TYPE_FIELD,$label0,true);
         $this->classTest->addElementFormList($campo1,TFormDin::TYPE_FIELD,$label1,false);
         $this->classTest->addElementFormList($campo2,TFormDin::TYPE_FIELD,$label2,true);
+
+        $result = $this->classTest->addFieldsRow($keyStart);
+        $this->assertEquals(2, $result['key']);
+        $this->assertEquals($expected, $result['row']); 
+    }
+
+    public function testAddFieldsRow_4Elements_start02_2FieldSamelines()
+    {        
+        $label0 = 'teste0';
+        $campo0 = new stdClass();
+        $label1 = 'teste1';
+        $campo1 = new stdClass();
+        $txtLabel = 'teste2';
+        $label2 = new TFormDinLabelField($txtLabel);
+        $campo2 = new TFormDinTextField('02',$txtLabel,20);
+        $txtLabel = 'teste3';
+        $label3 = new TFormDinLabelField($txtLabel);
+        $campo3 = new TFormDinTextField('03',$txtLabel,20);
+        $expected = array([$label2], [$campo2],[$label3], [$campo3]);
+
+        $keyStart = 2;
+
+
+        $this->classTest->addElementFormList($campo0,TFormDin::TYPE_FIELD,$label0,true);
+        $this->classTest->addElementFormList($campo1,TFormDin::TYPE_FIELD,$label1,false);
+        $this->classTest->addElementFormList($campo2,TFormDin::TYPE_FIELD,$label2,true);
+        $this->classTest->addElementFormList($campo3,TFormDin::TYPE_FIELD,$label3,false);
+
+        $result = $this->classTest->addFieldsRow($keyStart);
+        $this->assertEquals(4, $result['key']);
+        $this->assertEquals($expected, $result['row']); 
+    }
+
+    public function testAddFieldsRow_6Elements_start0_2Group2FieldSameline()
+    {        
+        $campo0 = new TFormSeparator('FormDin - 2 campos');
+        $txtLabel = 'teste1';
+        $label1 = new TFormDinLabelField($txtLabel);
+        $campo1 = new TFormDinTextField('02',$txtLabel,20);
+        $txtLabel = 'teste2';
+        $label2 = new TFormDinLabelField($txtLabel);
+        $campo2 = new TFormDinTextField('02',$txtLabel,20);
+
+
+        $campo3 = new TFormSeparator('FormDin - 2 campos');
+        $txtLabel = 'teste4';
+        $label4 = new TFormDinLabelField($txtLabel);
+        $campo4 = new TFormDinTextField('02',$txtLabel,20);
+        $txtLabel = 'teste5';
+        $label5 = new TFormDinLabelField($txtLabel);
+        $campo5 = new TFormDinTextField('02',$txtLabel,20);
+        $expected = array([$campo0]);
+
+        $keyStart = 0;
+
+        $this->classTest->addElementFormList($campo0,TFormDin::TYPE_LAYOUT);
+        $this->classTest->addElementFormList($campo1,TFormDin::TYPE_FIELD,$label1,true);
+        $this->classTest->addElementFormList($campo2,TFormDin::TYPE_FIELD,$label2,false);
+        $this->classTest->addElementFormList($campo3,TFormDin::TYPE_LAYOUT);
+        $this->classTest->addElementFormList($campo4,TFormDin::TYPE_FIELD,$label4,true,true);
+        $this->classTest->addElementFormList($campo5,TFormDin::TYPE_FIELD,$label5,false,true);
 
         $result = $this->classTest->addFieldsRow($keyStart);
         $this->assertEquals(1, $result['key']);
