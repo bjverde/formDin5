@@ -431,6 +431,28 @@ class TFormDinTest extends TestCase
         $this->assertEquals(2, $result['key']);
         $this->assertEquals($expected, $result['row']); 
     }
+
+    public function testAddFieldsRow_3Elements_1Layout2FieldSamelines()
+    {        
+        $label0 = 'teste0';
+        $campo0 = new stdClass();
+        $label1 = 'teste1';
+        $campo1 = new stdClass();
+        $label2 = 'teste2';
+        $campo2 = new stdClass();
+        $expected = array([$label0], [$campo0],[$label1], [$campo1]);
+
+        $keyStart = 0;
+
+
+        $this->classTest->addElementFormList($campo0,TFormDin::TYPE_FIELD,$label0,true);
+        $this->classTest->addElementFormList($campo1,TFormDin::TYPE_FIELD,$label1,false);
+        $this->classTest->addElementFormList($campo2,TFormDin::TYPE_FIELD,$label2,true);
+
+        $result = $this->classTest->addFieldsRow($keyStart);
+        $this->assertEquals(1, $result['key']);
+        $this->assertEquals($expected, $result['row']); 
+    }
     //-------------------------------------------------------------------------
     public function testSetAdiantiObj_wrongObj()
     {
