@@ -149,6 +149,19 @@ class TFormDin
         return $result;
     }
 
+    public function addtElementInRow($listFormElements,$key,$row){
+        $element = $listFormElements[$key];
+        $label = $element['label'];
+        $obj   = $element['obj'];
+        if($element['boolLabelAbove']==true){
+            $row[]=[$label, $obj];
+        }else{
+            $row[]=[$label];
+            $row[]=[$obj];
+        }
+        return $row;
+    }
+
     /**
      * Recebe a chave da posição da posição inicial da lista de objetos do form
      * Percorrendo a lista para determinar todos objeto de uma linha do form.
@@ -170,6 +183,8 @@ class TFormDin
         }else if( $this->nextElementNewLine($key)===false ){
             $row = array();
             while( $this->nextElementNewLine($key)==false && ArrayHelper::has($key,$listFormElements)) {
+                $row = $this->addtElementInRow($listFormElements,$key,$row);
+                /*
                 $element = $listFormElements[$key];
                 $label = $element['label'];
                 $obj   = $element['obj'];
@@ -179,7 +194,12 @@ class TFormDin
                     $row[]=[$label];
                     $row[]=[$obj];
                 }
+                */
                 $key = $key + 1;
+            }
+            if( $this->nextElementNewLine($key)==true && ArrayHelper::has($key,$listFormElements)){
+                $row = $this->addtElementInRow($listFormElements,$key,$row);
+                //$key = $key + 1;
             }
             $result['key']=$key;
             $result['row']=$row;
@@ -947,7 +967,7 @@ class TFormDin
     //----------------------------------------------------------------
     //----------------------------------------------------------------
     //----------------------------------------------------------------
-    //----------------------------------------------------------------s    
+    //----------------------------------------------------------------
 
     /**
      * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
