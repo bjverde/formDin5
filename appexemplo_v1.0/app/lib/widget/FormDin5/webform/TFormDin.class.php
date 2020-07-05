@@ -59,6 +59,7 @@ class TFormDin
 {
     const TYPE_FIELD  = 'feild';
     const TYPE_LAYOUT = 'layout';
+    const TYPE_HIDDEN = 'hidden';
     protected $adiantiObj;
     private $listFormElements = array();
 
@@ -251,7 +252,10 @@ class TFormDin
                 $adiantiObj = $this->adiantiObj;
                 call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
                 $key = $fieldsRowResult['key'];
-            } elseif ($element['type']==self::TYPE_LAYOUT){
+            }elseif ($element['type']==self::TYPE_HIDDEN){
+                $adiantiObj = $this->adiantiObj;
+                $adiantiObj->addFields( [$element['obj']] );
+            }elseif ($element['type']==self::TYPE_LAYOUT){
                 $adiantiObj = $this->adiantiObj;
                 $adiantiObj->addContent( [$element['obj']] );
                 //call_user_func_array(array($adiantiObj, "addFields"), $fieldsRow);
@@ -620,7 +624,7 @@ class TFormDin
         $formField = new TFormDinHiddenField($id,$strValue,$boolRequired);
         $objField = $formField->getAdiantiObj();
         //$this->adiantiObj->addFields([$objField]);
-        $this->addElementFormList($objField,self::TYPE_FIELD);
+        $this->addElementFormList($objField,self::TYPE_HIDDEN);
         return $formField;
     }
 
