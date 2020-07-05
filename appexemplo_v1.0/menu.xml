@@ -212,7 +212,7 @@
                 <menu>
                     <menuitem label='Mensagens JS'>
                         <icon>fa:life-ring fa-fw</icon>
-                        <action>exe_mensagemv2</action>
+                        <action>exe_mensagem</action>
                     </menuitem>      
                     <menuitem label='Mensagens PHP'>
                         <icon>fa:life-ring fa-fw</icon>
