@@ -40,13 +40,15 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-/**
- * Classe que faz varias transformações de data e hora
- *
- * @author reinaldo.junior
- */
-class TPdoAdiantiConnection
+class TPDOConnectionObj
 {
+    const DBMS_ACCESS = 'ACCESS';
+    const DBMS_FIREBIRD = 'ibase';
+    const DBMS_MYSQL    = 'mysql';
+    const DBMS_ORACLE   = 'oracle';
+    const DBMS_POSTGRES = 'pgsql';
+    const DBMS_SQLITE   = 'sqlite';
+    const DBMS_SQLSERVER = 'sqlsrv';
 
     private $database = null;
     private $fech = null;
@@ -79,6 +81,19 @@ class TPdoAdiantiConnection
     public function getFech()
     {
         return $this->fech;
+    }
+
+    public static function getListDBMS()
+    {
+        $list = array();
+        //$list[self::DBMS_ACCESS]='Access';
+        //$list[self::DBMS_FIREBIRD]='FIREBIRD';
+        $list[self::DBMS_MYSQL]='MariaDB ou MySQL';
+        $list[self::DBMS_ORACLE]='Oracle';
+        $list[self::DBMS_POSTGRES]='PostgreSQL';
+        $list[self::DBMS_SQLITE]='SqLite';
+        $list[self::DBMS_SQLSERVER]='SQL Server';
+        return $list;
     }
 
     public function executeSql($sql, $values = null)
