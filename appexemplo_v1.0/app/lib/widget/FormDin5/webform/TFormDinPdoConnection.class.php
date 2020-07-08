@@ -40,7 +40,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TPDOConnectionObj
+class TFormDinPdoConnection
 {
     const DBMS_ACCESS = 'ACCESS';
     const DBMS_FIREBIRD = 'ibase';
