@@ -61,9 +61,11 @@ class TFormDinPdoConnection
     private $pass;
     private $type;
 
-    public function __construct($database,$fech = null)
+    public function __construct($database = null,$fech = null)
     {
-        $this->setDatabase($database);
+        if(!empty($database)){
+            $this->setDatabase($database);
+        }
         $this->setFech($fech);
     }
 
@@ -174,13 +176,16 @@ class TFormDinPdoConnection
             throw new InvalidArgumentException('Fail to configure the database! Please input correct config');
         }
         
-        $db = array();
-        $db['host'] = $this->getHost();
-        $db['port'] = $this->getPort();
-        $db['name'] = $name;
-        $db['user'] = $this->getUser();
-        $db['pass'] = $this->getPass();
-        $db['type'] = $type;
+        $db =  null;
+        if(!$conditionArrayConnectEmpty){
+            $db = array();
+            $db['host'] = $this->getHost();
+            $db['port'] = $this->getPort();
+            $db['name'] = $name;
+            $db['user'] = $this->getUser();
+            $db['pass'] = $this->getPass();
+            $db['type'] = $type;
+        }
         
         $result['database'] = $databese;
         $result['db'] = $db;
