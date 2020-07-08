@@ -53,6 +53,14 @@ class TFormDinPdoConnection
     private $database = null;
     private $fech = null;
 
+
+    private $host;
+    private $port;
+    private $name;
+    private $user;
+    private $pass;
+    private $type;
+
     public function __construct($database,$fech = null)
     {
         $this->setDatabase($database);
@@ -94,6 +102,90 @@ class TFormDinPdoConnection
         $list[self::DBMS_SQLITE]='SqLite';
         $list[self::DBMS_SQLSERVER]='SQL Server';
         return $list;
+    }
+    
+    public function getHost()
+    {
+        return $this->host;
+    }
+    public function setHost($host)
+    {
+        $this->host = $host;
+    }
+    
+    public function getPort()
+    {
+        return $this->port;
+    }
+    public function setPort($port)
+    {
+        $this->port = $port;
+    }
+    
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    
+    public function getUser()
+    {
+        return $this->user;
+    }
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+    
+    public function getPass()
+    {
+        return $this->pass;
+    }
+    public function setPass($pass)
+    {
+        $this->pass = $pass;
+    }
+    
+    public function getType()
+    {
+        return $this->type;
+    }
+    public function setType($type)
+    {
+        $listType = self::getListDBMS();
+        $inArray = in_array($type, $listType);
+        if (!$inArray) {
+            throw new InvalidArgumentException('Type DBMS is not value valid');
+        }
+        $this->type = $type;
+    }
+    
+    public function getConnect()
+    {
+        $result = array();
+        $databese = $this->getDatabase();
+        $type = $this->getType();
+        $name = $this->getName();
+        $conditionArrayConnectEmpty = empty($type) && empty($name);
+        if( empty($databese) && $conditionArrayConnectEmpty ){
+            throw new InvalidArgumentException('Fail to configure the database! Please input correct config');
+        }
+        
+        $db = array();
+        $db['host'] = $this->getHost();
+        $db['port'] = $this->getPort();
+        $db['name'] = $name;
+        $db['user'] = $this->getUser();
+        $db['pass'] = $this->getPass();
+        $db['type'] = $type;
+        
+        $result['database'] = $databese;
+        $result['db'] = $db;
+        
+        return $result;
     }
 
     public function executeSql($sql, $values = null)
