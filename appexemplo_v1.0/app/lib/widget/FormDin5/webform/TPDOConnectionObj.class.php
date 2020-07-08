@@ -113,7 +113,7 @@ class TPdoAdiantiConnection
 
     public function getArrayKeyValueBySql($colunaChave,$colunaValor,$sql, $values = null)
     {
-        $resultList = $this->executeSql($sql, $values = null);
+        $resultList = $this->executeSql($sql, $values);
         $result = self::getArrayKeyValue($colunaChave,$colunaValor,$resultList);
         return $result;
     }
