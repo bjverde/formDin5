@@ -85,29 +85,43 @@ class TFormDinPdoConnectionTest extends TestCase
     }
 
     //---------------------------------------------
-    public function testGetConnect_null()
+    public function testGetConfigConnect_null()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->classTest->getConnect();
+        $this->classTest->getConfigConnect();
     }
 
-    public function testGetConnect_SetDatabase()
+    public function testGetConfigConnect_SetDatabase()
     {
         $database = 'formdin';
         $this->classTest->setDatabase($database);
-        $result = $this->classTest->getConnect();
+        $result = $this->classTest->getConfigConnect();
 
         $this->assertCount(2, $result);
         $this->assertEquals($database, $result['database']);
         $this->assertEquals(null, $result['db']);
     }
 
-    public function testGetConnect_nullDatabaseSetTypeOnly()
+    public function testGetConfigConnect_nullDatabaseSetTypeOnly()
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
-        $result = $this->classTest->getConnect();
+        $result = $this->classTest->getConfigConnect();
+    }
+
+    public function testGetConfigConnect_nullDatabaseGetDb()
+    {   
+        $name = 'bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $result = $this->classTest->getConfigConnect();
+
+        $this->assertCount(2, $result);
+        $this->assertEquals(null, $result['database']);
+        $this->assertCount(6, $result['db']);
+        $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $result['db']['type']);
+        $this->assertEquals($name, $result['db']['name']);
     }
 
 

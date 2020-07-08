@@ -165,13 +165,13 @@ class TFormDinPdoConnection
         $this->type = $type;
     }
     
-    public function getConnect()
+    public function getConfigConnect()
     {
         $result = array();
         $databese = $this->getDatabase();
         $type = $this->getType();
         $name = $this->getName();
-        $conditionArrayConnectEmpty = empty($type) && empty($name);
+        $conditionArrayConnectEmpty = empty($type) || empty($name);
         if( empty($databese) && $conditionArrayConnectEmpty ){
             throw new InvalidArgumentException('Fail to configure the database! Please input correct config');
         }
