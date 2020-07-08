@@ -66,7 +66,25 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->classTest = null;
         parent::tearDown();
     }
-      
+    
+
+    public function testSetType_null()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setType(null);
+    }
+    public function testSetType_wrongType()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setType('abc');
+    }
+    public function testSetType_correctType()
+    {
+        $this->expectNotToPerformAssertions();
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+    }
+
+    //---------------------------------------------
     public function testGetConnect_null()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -82,6 +100,14 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertCount(2, $result);
         $this->assertEquals($database, $result['database']);
         $this->assertEquals(null, $result['db']);
+    }
+
+    public function testGetConnect_nullDatabaseSetTypeOnly()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $result = $this->classTest->getConnect();
     }
 
 

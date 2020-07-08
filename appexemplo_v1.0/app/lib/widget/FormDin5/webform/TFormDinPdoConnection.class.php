@@ -158,7 +158,7 @@ class TFormDinPdoConnection
     public function setType($type)
     {
         $listType = self::getListDBMS();
-        $inArray = in_array($type, $listType);
+        $inArray = ArrayHelper::has($type,$listType);
         if (!$inArray) {
             throw new InvalidArgumentException('Type DBMS is not value valid');
         }
