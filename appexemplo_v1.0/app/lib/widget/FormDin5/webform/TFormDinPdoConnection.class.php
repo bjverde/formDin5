@@ -196,10 +196,12 @@ class TFormDinPdoConnection
     public function executeSql($sql, $values = null)
     {
         try {
-            $database = $this->getDatabase();
+            $configConnect = $this->getConfigConnect();
+            $database = $configConnect['database'];
+            $db = $configConnect['db'];
             $fech     = $this->getFech();
             
-            TTransaction::open($database); // abre uma transação
+            TTransaction::open($database,$db); // abre uma transação
             $conn = TTransaction::get();   // obtém a conexão  
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
@@ -233,8 +235,11 @@ class TFormDinPdoConnection
     public function selectByTCriteria(TCriteria $criteria, $repositoryName)
     {
         try {
-            $database = $this->getDatabase();
-            TTransaction::open($database); // abre uma transação
+            $configConnect = $this->getConfigConnect();
+            $database = $configConnect['database'];
+            $db = $configConnect['db'];
+            
+            TTransaction::open($database,$db); // abre uma transação
             $repository = new TRepository($repositoryName);
             $collections = $repository->load($criteria);
             TTransaction::close();         // fecha a transação.
@@ -249,8 +254,11 @@ class TFormDinPdoConnection
     public function selectCountByTCriteria(TCriteria $criteria, $repositoryName)
     {
         try {
-            $database = $this->getDatabase();
-            TTransaction::open($database); // abre uma transação
+            $configConnect = $this->getConfigConnect();
+            $database = $configConnect['database'];
+            $db = $configConnect['db'];
+            
+            TTransaction::open($database,$db); // abre uma transação
             $repository = new TRepository($repositoryName);
             $count = $repository->count($criteria);
             TTransaction::close();         // fecha a transação.

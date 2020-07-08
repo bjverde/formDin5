@@ -124,5 +124,19 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertEquals($name, $result['db']['name']);
     }
 
+    public function testExecuteSql_sqllite()
+    {   
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $sql = 'select * from dado_apoio order by seq_dado_apoio';
+        $result = $this->classTest->executeSql($sql);
+
+        $this->assertCount(3, $result);
+        $this->assertEquals(1, $result[0]['seq_dado_apoio']);
+        $this->assertEquals('Metro', $result[1]['tip_dado_apoio']);
+    }
+
 
 }
