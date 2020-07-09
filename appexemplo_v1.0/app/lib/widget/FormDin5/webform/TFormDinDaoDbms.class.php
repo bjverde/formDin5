@@ -1150,33 +1150,6 @@ class TFormDinDaoDbms
 		    file_put_contents( $filename, $data );
 		}
 	}
-    /**
-    * Desserializa as definições dos campos de uma tabela que foram salvos no diretório/pasta
-    * de metadados e carrega o array fields da classe
-    *
-    * @return boolean
-    */
-	public function unserializeFields()
-	{
-		$result=false;
-
-		if ( $this->getMetadataDir() && $this->getTableName() )
-		{
-			$fileName=$this->getMetadataDir() . $this->getConnDbType() . '-' . $this->getTableName() . '.ser';
-
-			if ( file_exists( $fileName ) )
-			{
-				$this->fields=unserialize( file_get_contents( $fileName ) );
-
-				if ( is_array( $this->fields ) )
-				{
-					$result = true;
-				}
-			}
-		}
-
-		return $result;
-	}
 	
 	public function loadTablesFromDatabase() {
 		$DbType = $this->getType();
@@ -1796,62 +1769,7 @@ class TFormDinDaoDbms
 	{
 		return $this->lastId;
 	}
-    /**
-    * Recupera do banco de dados o valor campo autoincremento referente ao último insert ocorrido
-    *
-    */
-	public function getLastInsertId()
-	{
-		$sql   =null;
-		$params=null;
-		$dbType = $this->getConnDbType();
-		if ( $dbType == DBMS_MYSQL )
-		{
-			$sql = 'SELECT LAST_INSERT_ID() as ID';
-		}
-		else if( $dbType == DBMS_POSTGRES )
-		{
-			if ( $this->getAutoincFieldName() )
-			{
-				$sql="SELECT currval(pg_get_serial_sequence(?,?) ) as ID";
 
-				$params=array
-					(
-					$this->getTableName(),
-					$this->getAutoincFieldName()
-					);
-			}
-		}
-		else if( $dbType == DBMS_ORACLE )
-		{
-			if ( $this->getAutoincFieldName() )
-			{
-				return $this->lastId;
-			}
-		}
-		else if( $dbType == DBMS_SQLITE )
-		{
-			if ( $this->getAutoincFieldName() )
-			{
-				$sql = "select last_insert_rowid() as ID";
-				$params=null;
-			}
-		}
-		if ( $sql )
-		{
-			$res = self::query($sql,$params);
-			if ( isset( $res[ 0 ][ 'ID' ] ) )
-			{
-				return $res[ 0 ][ 'ID' ];
-			}
-			else if( isset( $res[ 0 ][ 'id' ] ) )
-			{
-				return $res[ 0 ][ 'id' ];
-			}
-		}
-
-		return null;
-	}
     /**
     * Retorna se a conexão está utilizando a extensão PDO para conexão com o
     * banco de dados
