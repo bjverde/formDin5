@@ -193,6 +193,25 @@ class TFormDinPdoConnection
         return $result;
     }
 
+    public function getDefaulPort() {
+        $result = null;
+        switch( $this->getType() ) {
+            case self::DBMS_POSTGRES:
+                $result = '5432';
+            break;
+            case self::DBMS_MYSQL:
+                $result = '3306';
+            break;
+            case self::DBMS_SQLSERVER:
+                $$result = '1433';
+            break;
+            case self::DBMS_ORACLE:
+                $result = '1521';
+            break;
+        }
+		return $result;
+	}
+
     public function executeSql($sql, $values = null)
     {
         try {
