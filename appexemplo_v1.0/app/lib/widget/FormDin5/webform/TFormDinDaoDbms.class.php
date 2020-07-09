@@ -42,12 +42,12 @@
 
 class TFormDinDaoDbms
 {
-	private $dbType      = null;
-	private $username    = null;
-	private $password    = null;
-	private $database    = null;
-	private $host        = null;
-	private $port        = null;
+    private $host = null;
+    private $port = null;
+    private $name = null;
+    private $user = null;
+    private $pass = null;
+    private $type = null;
 	private $schema      = null;
 	private $utf8        = null;
 	private $error		= null;
@@ -70,48 +70,6 @@ class TFormDinDaoDbms
 	/**
 	* Classe para pegar metadatos sobre diversos banco de dados.
 	*
-	*
-    * Exemplo Postgres
-	* $dbType = "postgres";
-	* $host = "192.168.1.140";
-	* $port = "5432";
-	* $database = "dbteste";
-	* $username = "postgres";
-	* $password = "123456";
-	* $utf8=1;
-	*
-    * Exemplo Mysql
-	* $dbType = "mysql";
-	* $host = "192.168.1.140";
-	* $port = "5432";
-	* $database = "dbteste";
-	* $username = "root";
-	* $password = "123456";
-	* $utf8=1;
-	*
-	* Exemplo Oracle
-	* $dbType = 'oracle';
-	* $host = '192.168.1.140';
-	* $port = '1521';
-	* $database = 'xe';
-	* $username = 'root';
-	* $password = '123456';
-	* $utf8=0;
-	*
-	* Exemplo Firebird/Interbase
-	* $dbType = "firebird";
-	* $host = '192.168.1.140';
-	* $port = null;
-	* $database = 'f:/fiirebird/DBTESTE.GDB';
-	* $username = "SYSDBA";
-	* $password = "masterkey";
-	* $utf8=1;
-	* return;
-	*
-	* Exemplo Sqlite
-	* $dbType = "sqlite";
-	* $database = "bdApoio.s3db";
-	* $utf8=0;
 	*/
 
 	/**
@@ -164,46 +122,81 @@ class TFormDinDaoDbms
 		$this->setDbType( $strDbType );
 		$this->setUserName( $strUsername );
 		$this->setPassword( $strPassword );
-		$this->setDataBase( $strDatabase );
-		$this->setHost( $strHost );
-		$this->setPort( $strPort );
+		$this->setName($name);
+		$this->setHost($host);
+		$this->setPort($port);
 		$this->setSchema( $strSchema );
 		$this->setUtf8( $boolUtf8 );
 		$this->setCharset( $strCharset );
 		$this->setAutoCommit( $boolAutoCommit );
 	}
 
-	//----------------------------------------------------------------------------------
-	/**
-	* Define o tipo do banco de dados que será acessado.
-	* Os tipos de banco de dados suportados atualmente são:
-	* 
-	* 1) define('DBMS_MYSQL','MYSQL');
-	* 2) define('DBMS_POSTGRES','POSTGRES');
-	* 3) define('DBMS_FIREBIRD','FIREBIRD');
-	* 4) define('DBMS_SQLITE','SQLITE');
-	* 5) define('DBMS_ORACLE','ORACLE');
-	* 6) define('DBMS_SQLSERVER','SQLSERVER');
-	* 
-	* Obs: todos utilizam a extensão PDO exceto o Oracle que utiliza as funções OCI diretamente
-	*
-	* @param string $strNewValue
-	*/
-	public function setDbType( $strNewValue = null ){
-		$this->dbType=$strNewValue;
+    public function getHost()
+    {
+        return $this->host;
+    }
+    public function setHost($host)
+    {
+        $this->host = $host;
+    }
+    
+    public function getPort()
+    {
+        return $this->port;
+    }
+    public function setPort($port)
+    {
+        $this->port = $port;
+    }
+    
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    
+    public function getUser()
+    {
+        return $this->user;
+    }
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+    
+    public function getPass()
+    {
+        return $this->pass;
+    }
+    public function setPass($pass)
+    {
+        $this->pass = $pass;
+    }
+    
+    public function getType()
+    {
+        return $this->type;
 	}
-
 	/**
-	* Retorna o tipo do banco de dados que será acessado
-	*
-	* @return string;
-	*/
-	public function getDbType(){
-		if( $this->conn ){
-			//return $this->getConnDbType();
-		}
-		return $this->dbType;
-	}
+	 * Define o tipo do banco de dados que será acessado.
+	 * Os tipos de banco de dados suportados atualmente estão em
+	 * TFormDinPdoConnection::getListDBMS()
+	 * 
+	 * @param string $type
+	 * @return void
+	 */
+    public function setType($type)
+    {
+        $listType = TFormDinPdoConnection::getListDBMS();
+        $inArray = ArrayHelper::has($type,$listType);
+        if (!$inArray) {
+            throw new InvalidArgumentException('Type DBMS is not value valid');
+        }
+        $this->type = $type;
+    }
 
 	/**
 	* Define o nome do usuário que será utilizado para fazer a conexão com o banco de dados
