@@ -42,12 +42,7 @@
 
 class TFormDinDaoDbms
 {
-    private $host = null;
-    private $port = null;
-    private $name = null;
-    private $user = null;
-    private $pass = null;
-    private $type = null;
+    private $connection = null;
 	private $schema      = null;
 	private $utf8        = null;
 	private $error		= null;
@@ -70,41 +65,15 @@ class TFormDinDaoDbms
 	/**
 	* Classe para pegar metadatos sobre diversos banco de dados.
 	*
+	* @param [type] $tableName - 1: nome da tabela
+	* @param [type] $type      - 2: Tipo de banco de dados conforme TFormDinPdoConnection
+	* @param [type] $user      - 3: 
+	* @param [type] $pass
+	* @param [type] $name
+	* @param [type] $host
+	* @param [type] $port
+	* @param [type] $strSchema
 	*/
-
-	/**
-	* @param string $strTableName
-	* @param string $strDbType
-	* @param string $strUsername
-	* @param string $strPassword
-	* @param string $strDatabase
-	* @param string $strHost
-	* @param string $strPort
-	* @param string $strSchema
-	* @param boolean$boolUtf8
-	* @param string $strCharset
-	* @param boolean $boolAutoCommit
-	* @param string $strMetadataDir
-	* @return object TDAO
-	*/
-
-
-	/**
-	 * Undocumented function
-	 *
-	 * @param string $strTableName  - 1: nome da tabela
-	 * @param string $strDbType     - 2: Tipo de banco de dados conforme TFormDinPdoConnection
-	 * @param string $strUsername   - 3: 
-	 * @param [type] $strPassword
-	 * @param [type] $strDatabase
-	 * @param [type] $strHost
-	 * @param [type] $strPort
-	 * @param [type] $strSchema
-	 * @param [type] $boolUtf8
-	 * @param [type] $strCharset
-	 * @param [type] $boolAutoCommit
-	 * @param [type] $strMetadataDir
-	 */
 	public function __construct(  $tableName = null
 								, $type = null
 								, $user = null
@@ -116,68 +85,19 @@ class TFormDinDaoDbms
 	{
 		$this->setTableName( $tableName );
 		$this->setType($type);
-		$this->setUser($user);
-		$this->setPass($pass);
-		$this->setName($name);
-		$this->setHost($host);
-		$this->setPort($port);
 		$this->setSchema( $strSchema );
+
+		$connection = new TFormDinPdoConnection();
+		$connection->setType($type);
+		$connection->setUser($user);
+		$connection->setPass($pass);
+		$connection->setName($name);
+		$connection->setHost($host);
+		$connection->setPort($port);
+		$this->setConnection($connection);
 	}
 
-
-    public function getHost()
-    {
-        return $this->host;
-	}
-
-	/**
-	 * Define o nome ou endereço IP do computador onde está instalado o banco de dados
-	 *
-	 * @param string $host
-	 * @return void
-	 */
-    public function setHost($host)
-    {
-        $this->host = $host;
-    }
-    
-    public function getPort()
-    {
-        return $this->port;
-    }
-    public function setPort($port)
-    {
-        $this->port = $port;
-    }
-    
-    public function getName()
-    {
-        return $this->name;
-    }
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-    
-    public function getUser()
-    {
-        return $this->user;
-    }
-    public function setUser($user)
-    {
-        $this->user = $user;
-    }
-    
-    public function getPass()
-    {
-        return $this->pass;
-    }
-    public function setPass($pass)
-    {
-        $this->pass = $pass;
-    }
-    
-    public function getType()
+	public function getType()
     {
         return $this->type;
 	}
@@ -197,6 +117,15 @@ class TFormDinDaoDbms
             throw new InvalidArgumentException('Type DBMS is not value valid');
         }
         $this->type = $type;
+    }
+
+    public function getConnection()
+    {
+        return $this->connection;
+	}
+    public function setConnection($connection)
+    {
+        $this->connection = $connection;
     }
 
 	/**
@@ -226,50 +155,6 @@ class TFormDinDaoDbms
 			return $this->getConnSchema();
 		}
 		return $this->schema;
-	}
-
-	/**
-	* Tenta fazer a conexão com o banco de dados retornando verdadeiro o falso
-	*
-	* @return boolean
-	*/
-	public function connect() {
-		try {
-			if( ! $this->conn ){
-				$this->conn = TConnectionPool::connect( $this->getDbType()
-													  , $this->getUsername()
-													  , $this->getPassword()
-													  , $this->getDatabase()
-													  , $this->getHost()
-													  , $this->getPort()
-													  , $this->getSchema()
-													  , $this->getUtf8() );
-			}
-		}
-		catch( Exception $e ) {
-			$this->setError( $e->getMessage() );
-			return false;
-		}
-
-        if( $this->getMetadataDir())
-        {
-			if ( !is_array( $this->getFields() ) )
-			{
-				if ( !$this->unserializeFields() )
-				{
-					$this->loadFieldsFromDatabase();
-				}
-			}
-			if( is_array($this->primaryKeys ) )
-			{
-				foreach($this->primaryKeys as $fieldName=>$boolTemp)
-				{
-					$this->getField($fieldName)->primaryKey = 1;
-				}
-			}
-		}
-
-		return true;
 	}
 
 	/**
@@ -1439,7 +1324,7 @@ class TFormDinDaoDbms
 			default:
 				throw new DomainException('Database '.$DbType.' not implemented ! TDAO->loadTablesFromDatabase. Contribute to the project https://github.com/bjverde/sysgen !');
 		}
-		$result = $this->executeSql($sql);
+		$result = $this->getConnection()->executeSql($sql);
 		return $result;
 	}
 	
