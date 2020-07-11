@@ -125,7 +125,7 @@ class TFormDinDaoDbms
 	}
     public function setConnection($connection)
 	{
-		if($connection instanceof TFormDinPdoConnection){
+		if(!($connection instanceof TFormDinPdoConnection)){
 			throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG);
 		}
         $this->connection = $connection;
