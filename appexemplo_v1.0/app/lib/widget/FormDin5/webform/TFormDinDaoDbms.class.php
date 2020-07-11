@@ -1296,7 +1296,7 @@ class TFormDinDaoDbms
 				order by qtd.TABLE_SCHEMA, qtd.TABLE_NAME";
 		return $sql;
 	}
-	
+
 	public function loadTablesFromDatabase() {
 		$DbType = $this->getType();
 		$sql = null;
@@ -1417,18 +1417,18 @@ class TFormDinDaoDbms
 	public function loadFieldsOneStoredProcedureFromDatabase() {
 	    $DbType = $this->getType();
 	    if ( !$this->getTableName() ) {
-	        throw new InvalidArgumentException('Table Name is empty');
+	        throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_STORED_PROC);
 	    }
 	    $result = $this->getSqlToFieldsOneStoredProcedureFromDatabase();
 	    $sql    = $result['sql'];
 	    switch( $DbType ) {
 	        case TFormDinPdoConnection::DBMS_MYSQL:
 	        case TFormDinPdoConnection::DBMS_SQLSERVER:
-	            $result = $this->executeSql($sql);
+	            $result = $this->getConnection()->executeSql($sql);
 	        break;
 	        //--------------------------------------------------------------------------------
 	        default:
-	            throw new DomainException('Database '.$DbType.' not implemented ! Contribute to the project https://github.com/bjverde/sysgen !');
+	            throw new DomainException('Database '.$DbType.' not implemented ! '.TFormDinMessage::MSG_CONTRIB_PROJECT);
 	    }
 	    return $result;
 	}
@@ -1693,7 +1693,7 @@ class TFormDinDaoDbms
 	public function loadFieldsOneTableFromDatabase() {
 		$DbType = $this->getType();
 		if ( !$this->getTableName() ) {
-			throw new InvalidArgumentException('Table Name is empty');
+			throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TABLE);
 		}
 		$result = $this->getSqlToFieldsFromDatabase();
 		$sql    = $result['sql'];
@@ -1706,11 +1706,11 @@ class TFormDinDaoDbms
 			case TFormDinPdoConnection::DBMS_MYSQL:
 			case TFormDinPdoConnection::DBMS_SQLSERVER:
 			case TFormDinPdoConnection::DBMS_POSTGRES:
-				$result = $this->executeSql($sql);
+				$result = $this->getConnection()->executeSql($sql);
 		    break;
 			//--------------------------------------------------------------------------------
 			default:
-				throw new DomainException('Database '.$DbType.' not implemented ! Contribute to the project https://github.com/bjverde/sysgen !');
+			throw new DomainException('Database '.$DbType.' not implemented ! '.TFormDinMessage::MSG_CONTRIB_PROJECT);
 		}		
 		return $result;
 	}
