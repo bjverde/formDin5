@@ -67,11 +67,11 @@ class TFormDinDaoDbms
 	*
 	* @param [type] $tableName - 1: nome da tabela
 	* @param [type] $type      - 2: Tipo de banco de dados conforme TFormDinPdoConnection
-	* @param [type] $user      - 3: 
-	* @param [type] $pass
-	* @param [type] $name
-	* @param [type] $host
-	* @param [type] $port
+	* @param [type] $user      - 3: usuario do banco
+	* @param [type] $pass      - 4: senha do usuario no SGBD
+	* @param [type] $name      - 5: nome da bando de dados ou arquivo
+	* @param [type] $host      - 6: nome ou ip do servidor
+	* @param [type] $port      - 7: porta padrão
 	* @param [type] $strSchema
 	*/
 	public function __construct(  $tableName = null
