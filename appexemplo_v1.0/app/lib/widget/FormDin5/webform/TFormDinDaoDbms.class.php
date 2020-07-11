@@ -343,7 +343,7 @@ class TFormDinDaoDbms
 		{
 			$conn=$this->getConn()->connection;
 
-			if ( $this->getDbType() == DBMS_ORACLE )
+			if ( $this->getType() == DBMS_ORACLE )
 			{
 				if ( is_null( $fetchMode ) || ( $fetchMode != 'FETCH_ASSOC' && $fetchMode != 'FETCH_CLASS' ) )
 				{
@@ -692,7 +692,7 @@ class TFormDinDaoDbms
 						$fieldType=$this->getValidFieldType( $objField->fieldType );
 						if ( $fieldType == 'date' )
 						{
-							if ( $this->getDbType() == DBMS_ORACLE )
+							if ( $this->getType() == DBMS_ORACLE )
 							{
 								$item = $this->parseDMY( $item );
 							}
@@ -813,7 +813,7 @@ class TFormDinDaoDbms
 			}
 		}
 
-		if ( $this->getDbType() == DBMS_ORACLE )
+		if ( $this->getType() == DBMS_ORACLE )
 		{
 			$strValue = preg_replace( '/\./', ',', $strValue );
 		}
@@ -1220,6 +1220,83 @@ class TFormDinDaoDbms
 		return $sql;
 	}
 
+	public function loadTablesFromDatabaseSqlServer() {
+		$sql = "select 
+				TABLE_SCHEMA
+				,TABLE_NAME
+				,COLUMN_QTD
+				,TABLE_TYPE
+				from (
+				SELECT qtd.TABLE_SCHEMA
+						,qtd.TABLE_NAME
+						,qtd.COLUMN_QTD
+						,case ty.TABLE_TYPE WHEN 'BASE TABLE' THEN 'TABLE' ELSE ty.TABLE_TYPE end as TABLE_TYPE
+				FROM
+					(SELECT TABLE_SCHEMA
+							,TABLE_NAME
+							,COUNT(TABLE_NAME) COLUMN_QTD
+					FROM INFORMATION_SCHEMA.COLUMNS c
+					where c.TABLE_SCHEMA <> 'METADADOS'
+					group by TABLE_SCHEMA, TABLE_NAME
+					) as qtd
+					,(SELECT TABLE_SCHEMA
+							, TABLE_NAME
+							, TABLE_TYPE
+					FROM INFORMATION_SCHEMA.TABLES i
+					where I.TABLE_SCHEMA <> 'METADADOS'
+					) as ty
+				where qtd.TABLE_SCHEMA = ty.TABLE_SCHEMA
+				and qtd.TABLE_NAME = ty.TABLE_NAME
+				
+				UNION
+				
+				SELECT Schema_name(schema_id)   AS TABLE_SCHEMA,
+					SO.NAME                   AS TABLE_NAME,       
+					count(*)                  AS COLUMN_QTD,
+					CASE SO.type_desc 
+					WHEN  'SQL_STORED_PROCEDURE' THEN 'PROCEDURE'
+					ELSE 'FUNCTION' 
+					END AS TABLE_TYPE	   
+				FROM   sys.objects AS SO
+					INNER JOIN sys.parameters AS P
+							ON SO.object_id = P.object_id
+				WHERE  SO.object_id IN (SELECT object_id
+										FROM   sys.objects
+										WHERE  type IN ( 'P', 'FN' ))
+				group by schema_id, SO.NAME, SO.type_desc
+				) as res
+				order by res.TABLE_SCHEMA
+					, res.TABLE_TYPE
+					, res.TABLE_NAME";		
+		return $sql;
+	}
+
+	public function loadTablesFromDatabasePostGres() {
+		$sql = "SELECT qtd.TABLE_SCHEMA
+						,qtd.TABLE_NAME
+						,qtd.COLUMN_QTD
+						,ty.TABLE_TYPE
+						,case ty.TABLE_TYPE WHEN 'BASE TABLE' THEN 'TABLE' ELSE ty.TABLE_TYPE end as TABLE_TYPE
+				FROM
+					(SELECT TABLE_SCHEMA
+							,TABLE_NAME
+							,COUNT(TABLE_NAME) COLUMN_QTD
+					FROM INFORMATION_SCHEMA.COLUMNS c
+					where c.TABLE_SCHEMA <> 'pg_catalog' and c.TABLE_SCHEMA <> 'information_schema'
+					group by TABLE_SCHEMA, TABLE_NAME
+					) as qtd
+					,(SELECT TABLE_SCHEMA
+							, TABLE_NAME
+							, TABLE_TYPE
+					FROM INFORMATION_SCHEMA.TABLES i
+					where I.TABLE_SCHEMA <> 'pg_catalog' and I.TABLE_SCHEMA <> 'information_schema'
+					) as ty
+				where qtd.TABLE_SCHEMA = ty.TABLE_SCHEMA
+				and qtd.TABLE_NAME = ty.TABLE_NAME
+				order by qtd.TABLE_SCHEMA, qtd.TABLE_NAME";
+		return $sql;
+	}
+	
 	public function loadTablesFromDatabase() {
 		$DbType = $this->getType();
 		$sql = null;
@@ -1233,79 +1310,12 @@ class TFormDinDaoDbms
 			break;
 			//--------------------------------------------------------------------------------
 			case TFormDinPdoConnection::DBMS_SQLSERVER:
-			    $sql = "select 
-                        TABLE_SCHEMA
-                        ,TABLE_NAME
-                        ,COLUMN_QTD
-                        ,TABLE_TYPE
-                        from (
-                        SELECT qtd.TABLE_SCHEMA
-                        		,qtd.TABLE_NAME
-                        		,qtd.COLUMN_QTD
-                        		,case ty.TABLE_TYPE WHEN 'BASE TABLE' THEN 'TABLE' ELSE ty.TABLE_TYPE end as TABLE_TYPE
-                        FROM
-                        	(SELECT TABLE_SCHEMA
-                        			,TABLE_NAME
-                        			,COUNT(TABLE_NAME) COLUMN_QTD
-                        	FROM INFORMATION_SCHEMA.COLUMNS c
-                        	where c.TABLE_SCHEMA <> 'METADADOS'
-                        	group by TABLE_SCHEMA, TABLE_NAME
-                        	) as qtd
-                        	,(SELECT TABLE_SCHEMA
-                        			, TABLE_NAME
-                        			, TABLE_TYPE
-                        	FROM INFORMATION_SCHEMA.TABLES i
-                        	where I.TABLE_SCHEMA <> 'METADADOS'
-                        	) as ty
-                        where qtd.TABLE_SCHEMA = ty.TABLE_SCHEMA
-                        and qtd.TABLE_NAME = ty.TABLE_NAME
-                        
-                        UNION
-                        
-                         SELECT Schema_name(schema_id)   AS TABLE_SCHEMA,
-                               SO.NAME                   AS TABLE_NAME,       
-                        	   count(*)                  AS COLUMN_QTD,
-                        	   CASE SO.type_desc 
-                        	   WHEN  'SQL_STORED_PROCEDURE' THEN 'PROCEDURE'
-                        	   ELSE 'FUNCTION' 
-                        	   END AS TABLE_TYPE	   
-                        FROM   sys.objects AS SO
-                               INNER JOIN sys.parameters AS P
-                                       ON SO.object_id = P.object_id
-                        WHERE  SO.object_id IN (SELECT object_id
-                                                FROM   sys.objects
-                                                WHERE  type IN ( 'P', 'FN' ))
-                        group by schema_id, SO.NAME, SO.type_desc
-                        ) as res
-                        order by res.TABLE_SCHEMA
-                               , res.TABLE_TYPE
-                               , res.TABLE_NAME";
+				$sql = $this->loadTablesFromDatabaseSqlServer();
 			break;
 			//--------------------------------------------------------------------------------
 			case TFormDinPdoConnection::DBMS_POSTGRES:
-			    $sql = "SELECT qtd.TABLE_SCHEMA
-                              ,qtd.TABLE_NAME
-                        	  ,qtd.COLUMN_QTD
-                        	  ,ty.TABLE_TYPE
-							  ,case ty.TABLE_TYPE WHEN 'BASE TABLE' THEN 'TABLE' ELSE ty.TABLE_TYPE end as TABLE_TYPE
-                        FROM
-                        	(SELECT TABLE_SCHEMA
-                        		  ,TABLE_NAME
-                        		  ,COUNT(TABLE_NAME) COLUMN_QTD
-                        	FROM INFORMATION_SCHEMA.COLUMNS c
-                        	where c.TABLE_SCHEMA <> 'pg_catalog' and c.TABLE_SCHEMA <> 'information_schema'
-                        	group by TABLE_SCHEMA, TABLE_NAME
-                        	) as qtd
-                        	,(SELECT TABLE_SCHEMA
-                        	       , TABLE_NAME
-                        		   , TABLE_TYPE
-                        	FROM INFORMATION_SCHEMA.TABLES i
-                        	where I.TABLE_SCHEMA <> 'pg_catalog' and I.TABLE_SCHEMA <> 'information_schema'
-                        	) as ty
-                        where qtd.TABLE_SCHEMA = ty.TABLE_SCHEMA
-                        and qtd.TABLE_NAME = ty.TABLE_NAME
-                        order by qtd.TABLE_SCHEMA, qtd.TABLE_NAME";
-			    break;
+				$sql = $this->loadTablesFromDatabasePostGres();
+			break;
 			//--------------------------------------------------------------------------------
 			default:
 				throw new DomainException('Database '.$DbType.' not implemented ! TDAO->loadTablesFromDatabase. Contribute to the project https://github.com/bjverde/sysgen !');
@@ -1380,16 +1390,16 @@ class TFormDinDaoDbms
 	
 	public function getSqlToFieldsOneStoredProcedureFromDatabase() {
 	    //$DbType = $this->getConnDbType();
-	    $DbType = $this->getDbType();
+	    $DbType = $this->getType();
 	    $sql    = null;
 	    $params = null;
 	    $data   = null;
 	    
 	    // ler os campos do banco de dados
-	    if ( $DbType == DBMS_MYSQL ){
+	    if ( $DbType == TFormDinPdoConnection::DBMS_MYSQL ){
 	        $sql   = $this->getSqlToFieldsFromOneStoredProcedureMySQL();
 	    }
-	    else if( $DbType == DBMS_SQLSERVER ) {
+	    else if( $DbType == TFormDinPdoConnection::DBMS_SQLSERVER ) {
 	        $sql   = $this->getSqlToFieldsFromOneStoredProcedureSqlServer();
 	        $params=array($this->getTableName());
 	    }
@@ -1405,15 +1415,15 @@ class TFormDinDaoDbms
 	 * @return null
 	 */
 	public function loadFieldsOneStoredProcedureFromDatabase() {
-	    $DbType = $this->getDbType();
+	    $DbType = $this->getType();
 	    if ( !$this->getTableName() ) {
 	        throw new InvalidArgumentException('Table Name is empty');
 	    }
 	    $result = $this->getSqlToFieldsOneStoredProcedureFromDatabase();
 	    $sql    = $result['sql'];
 	    switch( $DbType ) {
-	        case DBMS_MYSQL:
-	        case DBMS_SQLSERVER:
+	        case TFormDinPdoConnection::DBMS_MYSQL:
+	        case TFormDinPdoConnection::DBMS_SQLSERVER:
 	            $result = $this->executeSql($sql);
 	        break;
 	        //--------------------------------------------------------------------------------
@@ -1578,21 +1588,21 @@ class TFormDinDaoDbms
 	
 	public function getSqlToFieldsFromDatabase() {
 		//$DbType = $this->getConnDbType();
-		$DbType = $this->getDbType();
+		$DbType = $this->getType();
 		$sql    = null;
 		$params = null;
 		$data   = null;
 		
 		// ler os campos do banco de dados
-		if ( $DbType == DBMS_MYSQL ){
+		if ( $DbType == TFormDinPdoConnection::DBMS_MYSQL ){
 		    $sql   = $this->getSqlToFieldsFromDatabaseMySQL();
 			$params=null;
 		}
-		else if( $DbType == DBMS_SQLSERVER ) {
+		else if( $DbType == TFormDinPdoConnection::DBMS_SQLSERVER ) {
 		    $sql   = $this->getSqlToFieldsFromDatabaseSqlServer();
 		    $params=array($this->getTableName());
 		}
-		else if( $DbType == DBMS_ORACLE ) {
+		else if( $DbType == TFormDinPdoConnection::DBMS_ORACLE ) {
 			$sql="select a.column_name COLUMN_NAME
 					, a.data_type DATA_TYPE
 					, data_default as COLUMN_DEFAULT
@@ -1606,12 +1616,12 @@ class TFormDinDaoDbms
 			
 			$params=array($this->getTableName());
 		}
-		else if( $DbType == DBMS_POSTGRES ) {
+		else if( $DbType == TFormDinPdoConnection::DBMS_POSTGRES ) {
 		    $schema=( is_null( $this->getSchema() ) ? 'public' : $this->getSchema());
 		    $sql   = $this->getSqlToFieldsFromDatabasePostGres();			
 			$params=array( $schema ,$this->getTableName() );
 		}
-		else if( $DbType == DBMS_FIREBIRD ) {
+		else if( $DbType == TFormDinPdoConnection::DBMS_FIREBIRD ) {
 			$sql='SELECT
 					RDB$RELATION_FIELDS.RDB$FIELD_NAME COLUMN_NAME,
 					\'\' as COLUMN_DEFAULT,
@@ -1633,7 +1643,7 @@ class TFormDinDaoDbms
 			
 			$params=array($this->getTableName());
 		}
-		else if( $DbType == DBMS_SQLITE) {
+		else if( $DbType == TFormDinPdoConnection::DBMS_SQLITE) {
 			$stmt = $this->getConn()->query( "PRAGMA table_info(".$this->getTableName().")");
 			$res  = $stmt->fetchAll();
 			$data = null;
@@ -1681,7 +1691,7 @@ class TFormDinDaoDbms
 	 * @return null
 	 */
 	public function loadFieldsOneTableFromDatabase() {
-		$DbType = $this->getDbType();
+		$DbType = $this->getType();
 		if ( !$this->getTableName() ) {
 			throw new InvalidArgumentException('Table Name is empty');
 		}
@@ -1689,13 +1699,13 @@ class TFormDinDaoDbms
 		$sql    = $result['sql'];
 		$data   = $result['data'];
 		switch( $DbType ) {
-			case DBMS_SQLITE:
+			case TFormDinPdoConnection::DBMS_SQLITE:
 				$result = ArrayHelper::convertArrayPdo2FormDin($data);
 			break;
 			//--------------------------------------------------------------------------------
-			case DBMS_MYSQL:
-			case DBMS_SQLSERVER:
-			case DBMS_POSTGRES:
+			case TFormDinPdoConnection::DBMS_MYSQL:
+			case TFormDinPdoConnection::DBMS_SQLSERVER:
+			case TFormDinPdoConnection::DBMS_POSTGRES:
 				$result = $this->executeSql($sql);
 		    break;
 			//--------------------------------------------------------------------------------
@@ -1816,7 +1826,7 @@ class TFormDinDaoDbms
 		$bindTypes[ 'oracle' ][ 'date' ]        =SQLT_LNG;
 		$bindTypes[ 'oracle' ][ 'timestamp(6)' ]=SQLT_LNG;
 		$strFieldType                           =strtolower( $strFieldType );
-		$dbType                                 =strtolower( $this->getDbType() );
+		$dbType                                 =strtolower( $this->getType() );
 		$result                                 =null;
 
 		if ( isset( $bindTypes[ $dbType ][ $strFieldType ] ) )
@@ -1877,7 +1887,7 @@ class TFormDinDaoDbms
 		$this->hasActiveTransaction=false;
 		if ( $this->getConn() )
 		{
-			if ( $this->getDbType() == DBMS_ORACLE )
+			if ( $this->getType() == DBMS_ORACLE )
 			{
 				oci_commit( $this->getConn()->connection );
 			}
