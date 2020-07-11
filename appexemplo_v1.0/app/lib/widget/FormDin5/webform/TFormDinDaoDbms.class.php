@@ -161,24 +161,6 @@ class TFormDinDaoDbms
 	}
 
 	/**
-	* Retorna a instância do objeto da conexão com o banco de dados
-	*
-	* @return object
-	*/
-	public function getConn()
-	{
-		if ( is_null( $this->conn ) )
-		{
-			if ( !$this->connect() )
-			{
-				return false;
-			}
-		}
-
-		return $this->conn;
-	}
-
-	/**
 	* Adiciona campos da tabela ao array de campos que serão utilizados
 	* nos binds e nos métodos save, insert e delete da classe
 	*
@@ -253,48 +235,6 @@ class TFormDinDaoDbms
 	public function getError()
 	{
 		return $this->error;
-	}
-
-	/**
-	* Retorna a string dsn utilizada na conexão PDO
-	*
-	* @return string
-	*/
-	public function getConnDsn()
-	{
-		if ( $this->getConn() )
-		{
-			return $this->getConn()->dsn;
-		}
-
-		return null;
-	}
-	
-	/**
-	* Retorna o tipo de banco de dados que está sendo utilizado.
-	* Ex: mysql, postgres, oracle...
-	*
-	* @return string
-	*/
-	public function getConnDbType(){
-		if ( $this->getConn() ) {
-			return $this->getConn()->dbType;
-		}
-		return null;
-	}
-
-	/**
-	* Retorna o nome do esquema utilizado pela conexão postgres somente
-	* @return string
-	*/
-	public function getConnSchema()
-	{
-		if ( $this->getConn() )
-		{
-			return $this->getConn()->schema;
-		}
-
-		return null;
 	}
 
 	/**
