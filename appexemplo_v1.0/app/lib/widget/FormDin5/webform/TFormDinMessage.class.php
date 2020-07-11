@@ -83,6 +83,8 @@ class TFormDinMessage {
     const ERROR_FD5_PARAM_MIGRA  = 'Falha na migração do FormDin 4 para 5.';
     const ERROR_FD5_OBJ_ADI  = 'Erro objeto Adianti Fieald não pode ficar em branco.';
     const ERROR_FD5_OBJ_BUILDER  = 'Erro objeto não é um Adianti BootstrapFormBuilder.';
+    
+    const ERROR_OBJ_TYPE_WRONG  = 'type object is wrong';
 
     //------------  Adianti Mensage Type -------------------------
     const TYPE_INFO   = 'info';

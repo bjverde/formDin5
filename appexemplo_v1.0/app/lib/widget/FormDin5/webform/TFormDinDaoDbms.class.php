@@ -124,7 +124,10 @@ class TFormDinDaoDbms
         return $this->connection;
 	}
     public function setConnection($connection)
-    {
+	{
+		if($connection instanceof TFormDinPdoConnection){
+			throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG);
+		}
         $this->connection = $connection;
     }
 
@@ -1151,72 +1154,82 @@ class TFormDinDaoDbms
 		}
 	}
 	
+	public function loadTablesFromDatabaseSqLite() {
+		$sql = 'SELECT 
+				\'\' as TABLE_SCHEMA
+				,name as TABLE_NAME 
+				,\'\' as COLUMN_QTD
+				,upper(type) as TABLE_TYPE
+			FROM sqlite_master where type in (\'table\', \'view\')';
+		return $sql;
+	}
+
+	public function loadTablesFromDatabaseMySql() {
+		$sql = "select vg.TABLE_SCHEMA
+						,vg.TABLE_NAME
+						,vg.COLUMN_QTD
+						,vg.TABLE_TYPE
+				from
+				(
+					select vt.TABLE_SCHEMA
+							,vt.TABLE_NAME
+							,count(*) as COLUMN_QTD
+							,vt.TABLE_TYPE
+					from
+					(
+						SELECT t.TABLE_SCHEMA
+								,t.TABLE_NAME
+								,case when upper(t.TABLE_TYPE) = 'BASE TABLE' then 'TABLE' else upper(t.TABLE_TYPE) end  as TABLE_TYPE
+						FROM INFORMATION_SCHEMA.TABLES as t
+							,INFORMATION_SCHEMA.COLUMNS as c
+						WHERE t.TABLE_NAME = c.TABLE_NAME 
+						and  t.TABLE_SCHEMA = c.TABLE_SCHEMA
+						and (t.TABLE_TYPE = 'BASE TABLE' OR t.TABLE_TYPE = 'VIEW')
+						and t.TABLE_SCHEMA not in ('sys','phpmyadmin','performance_schema','mysql','information_schema')
+					) as vt
+					group by vt.TABLE_SCHEMA
+							,vt.TABLE_NAME
+							,vt.TABLE_TYPE
+							
+					union
+				
+					select vp.TABLE_SCHEMA
+							,vp.TABLE_NAME
+							,count(*) as COLUMN_QTD
+							,'PROCEDURE' as TABLE_TYPE
+					from
+					(
+						select p.SPECIFIC_SCHEMA as TABLE_SCHEMA
+								,p.SPECIFIC_NAME as TABLE_NAME
+								,p.routine_type as TABLE_TYPE
+						from information_schema.routines as r
+						left join information_schema.parameters as p
+									on p.specific_schema = r.routine_schema
+									and p.specific_name = r.specific_name
+						where r.routine_schema not in ('sys','phpmyadmin','information_schema','mysql', 'performance_schema')
+						and p.routine_type = 'PROCEDURE'
+					) as vp
+					group by vp.TABLE_SCHEMA
+							,vp.TABLE_NAME
+							,vp.TABLE_TYPE
+				) as vg
+				order by 
+						vg.TABLE_SCHEMA
+						,vg.TABLE_TYPE
+						,vg.TABLE_NAME";
+		return $sql;
+	}
+
 	public function loadTablesFromDatabase() {
 		$DbType = $this->getType();
 		$sql = null;
 		switch( $DbType ) {
 			case TFormDinPdoConnection::DBMS_SQLITE:
-				$sql = 'SELECT 
-							\'\' as TABLE_SCHEMA
-							,name as TABLE_NAME 
-							,\'\' as COLUMN_QTD
-							,upper(type) as TABLE_TYPE
-						FROM sqlite_master where type in (\'table\', \'view\')';
+				$sql = $this->loadTablesFromDatabaseSqLite();
 			break;
 			//--------------------------------------------------------------------------------
 			case TFormDinPdoConnection::DBMS_MYSQL:
-				$sql = "select vg.TABLE_SCHEMA
-                        	  ,vg.TABLE_NAME
-                              ,vg.COLUMN_QTD
-                              ,vg.TABLE_TYPE
-                        from
-                        (                        
-                        	select vt.TABLE_SCHEMA
-                        		  ,vt.TABLE_NAME
-                        		  ,count(*) as COLUMN_QTD
-                        		  ,vt.TABLE_TYPE
-                        	from
-                        	(
-                        		SELECT t.TABLE_SCHEMA
-                        			  ,t.TABLE_NAME
-                        			  ,case when upper(t.TABLE_TYPE) = 'BASE TABLE' then 'TABLE' else upper(t.TABLE_TYPE) end  as TABLE_TYPE
-                        		FROM INFORMATION_SCHEMA.TABLES as t
-                        			,INFORMATION_SCHEMA.COLUMNS as c
-                        		WHERE t.TABLE_NAME = c.TABLE_NAME 
-                        		 and  t.TABLE_SCHEMA = c.TABLE_SCHEMA
-                        		 and (t.TABLE_TYPE = 'BASE TABLE' OR t.TABLE_TYPE = 'VIEW')
-                        		 and t.TABLE_SCHEMA not in ('sys','phpmyadmin','performance_schema','mysql','information_schema')
-                        	 ) as vt
-                        	 group by vt.TABLE_SCHEMA
-                        			 ,vt.TABLE_NAME
-                        			 ,vt.TABLE_TYPE
-                        			 
-                        	union
-                        
-                        	select vp.TABLE_SCHEMA
-                                  ,vp.TABLE_NAME
-                                  ,count(*) as COLUMN_QTD
-                                  ,'PROCEDURE' as TABLE_TYPE
-                        	from
-                        	(
-                        		select p.SPECIFIC_SCHEMA as TABLE_SCHEMA
-                        			  ,p.SPECIFIC_NAME as TABLE_NAME
-                        			  ,p.routine_type as TABLE_TYPE
-                        		from information_schema.routines as r
-                        		left join information_schema.parameters as p
-                        				  on p.specific_schema = r.routine_schema
-                        				  and p.specific_name = r.specific_name
-                        		where r.routine_schema not in ('sys','phpmyadmin','information_schema','mysql', 'performance_schema')
-                        		and p.routine_type = 'PROCEDURE'
-                        	) as vp
-                        	group by vp.TABLE_SCHEMA
-                        			,vp.TABLE_NAME
-                        			,vp.TABLE_TYPE
-                        ) as vg
-                        order by 
-                                 vg.TABLE_SCHEMA
-                        		,vg.TABLE_TYPE
-                        		,vg.TABLE_NAME";
+				$sql = $this->loadTablesFromDatabaseMySql();
 			break;
 			//--------------------------------------------------------------------------------
 			case TFormDinPdoConnection::DBMS_SQLSERVER:
