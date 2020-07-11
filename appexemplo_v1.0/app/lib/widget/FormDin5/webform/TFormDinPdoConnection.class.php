@@ -93,6 +93,11 @@ class TFormDinPdoConnection
         return $this->fech;
     }
 
+    /**
+     * Retorna um array com o tipo de SGBD e descrição
+     *
+     * @return array
+     */
     public static function getListDBMS()
     {
         $list = array();
@@ -193,6 +198,11 @@ class TFormDinPdoConnection
         return $result;
     }
 
+    /**
+     * Retorna o valor Default da porta do SGBD
+     *
+     * @return string
+     */
     public function getDefaulPort() {
         $result = null;
         switch( $this->getType() ) {
@@ -212,6 +222,14 @@ class TFormDinPdoConnection
 		return $result;
 	}
 
+    /**
+     * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
+     * se a operação foi bem sucedida.
+     *
+     * @param string $sql
+     * @param array $values
+     * @return mixed
+     */
     public function executeSql($sql, $values = null)
     {
         try {
