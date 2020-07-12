@@ -58,6 +58,7 @@
 class TFormDinGrid
 {
     protected $adiantiObj;
+    protected $panelGroupGrid;
 
     protected $action;
     protected $idGrid;
@@ -136,6 +137,8 @@ class TFormDinGrid
         $bootgrid->width = '100%';
         $this->setAdiantiObj($bootgrid);
         $this->setId($strName);
+        $panel = new TPanelGroup($strTitle);
+        $this->setPanelGroupGrid($panel);
     }
 
     public function validateDeprecated($strHeigh,$strWidth)
@@ -166,6 +169,13 @@ class TFormDinGrid
         return $this->adiantiObj;
     }
 
+    public function show()
+    {
+        $this->getAdiantiObj()->createModel();
+        $this->getPanelGroupGrid()->add($this->getAdiantiObj())->style = 'overflow-x:auto';
+        return $this->getAdiantiObj();
+    }
+
     public function getAction(){
         return $this->action;
     }
@@ -191,6 +201,7 @@ class TFormDinGrid
     }
 
     public function setTitle(string $title){
+        $this->getPanelGroupGrid()->setTitle($title);
         $this->title = $title;
     }
 
@@ -200,6 +211,25 @@ class TFormDinGrid
 
     public function setKey(string $key){
         $this->key = $key;
+    }
+
+    public function getPanelGroupGrid(){
+        return $this->panelGroupGrid;
+    }
+
+    public function setPanelGroupGrid($panel){
+        if( !($panel instanceof TPanelGroup) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TPanelGroup');
+        }
+        $this->panelGroupGrid = $panel;
+    }
+
+    public function getFooter(){
+        return $this->getPanelGroupGrid()->getFooter();
+    }
+
+    public function addFooter($footer){
+        return $this->getPanelGroupGrid()->addFooter($footer);
     }
 
     public function enableDataTable(){

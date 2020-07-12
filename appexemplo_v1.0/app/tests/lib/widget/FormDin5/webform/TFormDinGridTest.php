@@ -70,12 +70,12 @@ class TFormDinGridTest extends TestCase
 
     public function testConstruct_Height()
     {
-        $this->expectException(InvalidArgumentException::class);        
+        $this->expectWarning();
         $grid = new TFormDinGrid('grid',null,null,700);
     }
     public function testConstruct_Width()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectWarning();
         $grid = new TFormDinGrid('grid',null,null,null,700);
     }
 
