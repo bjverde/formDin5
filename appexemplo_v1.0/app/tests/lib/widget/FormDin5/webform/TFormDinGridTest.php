@@ -40,8 +40,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../../../';
-//require_once $path.'tests/initTest.php';
+require_once  __DIR__.'/../../mockFormAdianti.php';
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Notice;
@@ -93,6 +92,32 @@ class TFormDinGridTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $item = new StdClass;
         $result = $this->classTest->setPanelGroupGrid($item);
+    }
+
+    public function testSetObjForm_empty()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm(null);
+    }
+
+    public function testSetObjForm_noObjectString()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm('xxx');
+    }
+
+    public function testSetObjForm_noObjectArray()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm(array('a'=>1));
+    }
+
+    public function testGetObjForm()
+    {
+        $objEntradaz = new mockFormDinComAdianti();
+        $this->classTest->setObjForm($objEntradaz);
+        $objResult = $this->classTest->getObjForm();
+        $this->assertInstanceOf(mockFormDinComAdianti::class, $objResult);
     }
 
     public function testFooter()

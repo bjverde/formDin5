@@ -59,6 +59,7 @@ class TFormDinGrid
 {
     protected $adiantiObj;
     protected $panelGroupGrid;
+    protected $objForm;
 
     protected $action;
     protected $idGrid;
@@ -145,6 +146,7 @@ class TFormDinGrid
                                         );
         }else{
             $this->validateDeprecated($strHeight,$strWidth);
+            $this->setObjForm($objForm);
 
             $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
             $bootgrid->width = '100%';
@@ -166,6 +168,20 @@ class TFormDinGrid
                                      ,ValidateHelper::WARNING
                                      ,ValidateHelper::MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
+    }
+
+    public function setObjForm($objForm)
+    {
+        if( empty($objForm) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }
+        if( !is_object($objForm) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }        
+        return $this->objForm=$objForm;
+    }
+    public function getObjForm(){
+        return $this->objForm;
     }
 
     public function setAdiantiObj( $bootgrid )
