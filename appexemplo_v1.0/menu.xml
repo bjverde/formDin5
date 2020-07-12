@@ -279,7 +279,33 @@
     </menuitem>
     <menuitem label='Gride'>
         <icon>fas:th fa-fw #2965f1</icon>
-        <action>CnaesSecundarioForm</action>
+        <menu>
+            <menuitem label='Grides simples'>
+                <icon>fas:th fa-fw #2965f1</icon>
+                <menu>
+                    <menuitem label='Grides simples - Bootstrap'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_grid17</action>
+                    </menuitem>
+                    <menuitem label='Grides com campos internos'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>SystemModulesCheckView</action>
+                    </menuitem>
+                    <menuitem label='Grides Draw - desenhando Dinamicamente'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>SystemPHPInfoView</action>
+                    </menuitem>
+                </menu> 
+            </menuitem>      
+            <menuitem label='Grides com campos internos'>
+                <icon>fas:th fa-fw #2965f1</icon>
+                <action>SystemModulesCheckView</action>
+            </menuitem>
+            <menuitem label='Grides Draw - desenhando Dinamicamente'>
+                <icon>fas:th fa-fw #2965f1</icon>
+                <action>SystemPHPInfoView</action>
+            </menuitem>
+        </menu>        
     </menuitem>
     <menuitem label='Banco e PDO'>
         <icon>fas:database fa-fw</icon>
