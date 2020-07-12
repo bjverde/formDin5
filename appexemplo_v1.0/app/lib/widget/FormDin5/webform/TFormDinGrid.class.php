@@ -274,22 +274,22 @@ class TFormDinGrid
      * Coluna do Grid Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7.1
      *
-     * @param  string $name  = Name of the column in the database
-     * @param  string $label = Text label that will be shown in the header
-     * @param  string $width = Column Width (pixels)
-     * @param  string $align = Column align (left|right|center|justify)     
+     * @param  string $name  - 1: Name of the column in the database
+     * @param  string $label - 2: Text label that will be shown in the header
+     * @param  string $width - 3: Column Width (pixels)
+     * @param  string $align - 4: Column align (left|right|center|justify)
      * @return TDataGridColumn
      */
     public function addColumn(string $name
                             , string $label
                             , string $width = NULL
-                            , string $align='left' ){
-        $action = $this->getAction();
-        $formDinGridColumn = new TFormDinGridColumn($action, $name, $label,$align,$width);
+                            , string $align='left' )
+    {
+        $formDinGridColumn = new TFormDinGridColumn( $name,$label,$align,$width);
         $column = $formDinGridColumn->getAdiantiObj();
-        $this->adiantiObj->addColumn($column);
+        $this->getAdiantiObj()->addColumn($column);
         return $column;
-    }    
+    }
 
     //---------------------------------------------------------------------------------------
     /**
@@ -312,8 +312,7 @@ class TFormDinGrid
                                 , $boolReadOnly = null
                                 , $boolAllowCheckAll = null )
     {
-        if ( !$strKeyField )
-        {
+        if ( !$strKeyField ){
             $strKeyField = strtoupper( $strName );
         }
         $this->getAdiantiObj()->disableDefaultClick(); //IMPORTANTE DESATIVAR
@@ -321,7 +320,6 @@ class TFormDinGrid
         $this->columns[ strtolower( $strName )] = $col;
         return $col;
     }
-
 
     //------------------------------------------------------------------------------------
     /**
