@@ -125,38 +125,37 @@ class TFormDinGridTest extends TestCase
         $this->classTest->addFooter('xxx');
         $result = $this->classTest->getFooter();
         $this->assertInstanceOf(TElement::class, $result);
-        //$this->assertEquals('xxx',$result);
     }
 
     public function testSetAdiantiObj_fail()
     {
         $this->expectException(InvalidArgumentException::class);
         $item = new StdClass;
-        $result = $this->classTest->setAdiantiObj($item);
+        $this->classTest->setAdiantiObj($item);
     }
 
     public function testGetWidth_fail()
     {
         $this->expectWarning();
-        $result = $this->classTest->getWidth();
+        $this->classTest->getWidth();
     }
 
     public function testSetWidth_fail()
     {
         $this->expectWarning();
-        $result = $this->classTest->setWidth(100);
+        $this->classTest->setWidth(100);
     }
 
     public function testGetHeight_fail()
     {
         $this->expectWarning();
-        $result = $this->classTest->getHeight();
+        $this->classTest->getHeight();
     }
 
     public function testSetHeight_fail()
     {
         $this->expectWarning();
-        $result = $this->classTest->setHeight(100);
+        $this->classTest->setHeight(100);
     }
 
 }
