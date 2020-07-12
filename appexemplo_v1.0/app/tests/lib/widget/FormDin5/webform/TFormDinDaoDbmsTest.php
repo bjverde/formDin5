@@ -46,7 +46,7 @@ $path =  __DIR__.'/../../../../../';
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
 
-class TFormDinGridTest extends TestCase
+class TFormDinDaoDbmsTest extends TestCase
 {
 
     private $classTest;
@@ -56,7 +56,7 @@ class TFormDinGridTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinGrid('grid');
+        $this->classTest = new TFormDinDaoDbms(null,TFormDinPdoConnection::DBMS_SQLITE);
     }
     
     /**
@@ -67,62 +67,24 @@ class TFormDinGridTest extends TestCase
         parent::tearDown();
     }
     
-
-    public function testConstruct_Height()
-    {
-        $this->expectWarning();
-        $grid = new TFormDinGrid('grid',null,null,700);
-    }
-    public function testConstruct_Width()
-    {
-        $this->expectWarning();
-        $grid = new TFormDinGrid('grid',null,null,null,700);
-    }
-
-    public function testSetPanelGroupGrid_fail()
+    public function testSetType_fail()
     {
         $this->expectException(InvalidArgumentException::class);
-        $item = new StdClass;
-        $result = $this->classTest->setPanelGroupGrid($item);
+        $this->classTest->setType('xxx');
     }
 
-    public function testFooter()
+    public function testGetType()
     {
-        $this->classTest->addFooter('xxx');
-        $result = $this->classTest->getFooter();
-        $this->assertInstanceOf(TElement::class, $result);
-        //$this->assertEquals('xxx',$result);
+        $type = TFormDinPdoConnection::DBMS_ORACLE;
+        $this->classTest->setType($type);
+        $result = $this->classTest->getType();
+        $this->assertEquals($type, $result);
     }
 
-    public function testSetAdiantiObj_fail()
+    public function testSetConnection_fail()
     {
         $this->expectException(InvalidArgumentException::class);
-        $item = new StdClass;
-        $result = $this->classTest->setAdiantiObj($item);
-    }
-
-    public function testGetWidth_fail()
-    {
-        $this->expectWarning();
-        $result = $this->classTest->getWidth();
-    }
-
-    public function testSetWidth_fail()
-    {
-        $this->expectWarning();
-        $result = $this->classTest->setWidth(100);
-    }
-
-    public function testGetHeight_fail()
-    {
-        $this->expectWarning();
-        $result = $this->classTest->getHeight();
-    }
-
-    public function testSetHeight_fail()
-    {
-        $this->expectWarning();
-        $result = $this->classTest->setHeight(100);
+        $this->classTest->setConnection('xxx');
     }
 
 }

@@ -222,13 +222,16 @@ class FormDinHelper
         return $result;
     }
 
-
+    /**
+     * @codeCoverageIgnore
+     */
     public static function d( $mixExpression,$strComentario='Debug', $boolExit=FALSE )
     {        
         return self::debug($mixExpression,$strComentario,$boolExit);
     }
 
-    /***
+    /**
+     * @codeCoverageIgnore
      * função para depuração. Exibe o modulo a linha e a variável/objeto solicitado
      * Retirado do FormDin 4.9.0
      * https://github.com/bjverde/formDin/blob/master/base/includes/funcoes.inc
