@@ -44,6 +44,7 @@ $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
 
 class TFormDinGridTest extends TestCase
@@ -56,7 +57,8 @@ class TFormDinGridTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinGrid('grid');
+        $mock = new StdClass;
+        $this->classTest = new TFormDinGrid($mock,'grid');
     }
     
     /**
@@ -71,12 +73,19 @@ class TFormDinGridTest extends TestCase
     public function testConstruct_Height()
     {
         $this->expectWarning();
-        $grid = new TFormDinGrid('grid',null,null,700);
+        $mock = new StdClass;
+        $grid = new TFormDinGrid($mock,'grid',null,null,700);
     }
     public function testConstruct_Width()
     {
         $this->expectWarning();
-        $grid = new TFormDinGrid('grid',null,null,null,700);
+        $mock = new StdClass;
+        $grid = new TFormDinGrid($mock,'grid',null,null,null,700);
+    }
+    public function testConstruct_FailOldScript()
+    {
+        $this->expectError();
+        $grid = new TFormDinGrid('grid','grid');
     }
 
     public function testSetPanelGroupGrid_fail()

@@ -101,23 +101,24 @@ class TFormDinGrid
      * 	3) $cell		- objeto TTableCell
      * 	4) $objColumn	- objeto TGrideColum
      *
-     *
-     * @param string $strName          - 1: ID da grid
-     * @param string $strTitle         - 2: Titulo da grip
-     * @param array $mixData           - 3: Array de dados. Pode ser form formato Adianti, FormDin ou PDO
-     * @param mixed $strHeight         - 4: DEPRECATED Altura 
-     * @param mixed $strWidth          - 5: DEPRECATED Largura
-     * @param mixed $strKeyField       - 6: NOT_IMPLEMENTED Chave primaria
-     * @param array $mixUpdateFields   - 7: NOT_IMPLEMENTED Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
-     * @param mixed $intMaxRows        - 8: NOT_IMPLEMENTED Qtd Max de linhas
-     * @param mixed $strRequestUrl     - 9: NOT_IMPLEMENTED Url request do form
-     * @param mixed $strOnDrawCell     -10: NOT_IMPLEMENTED
-     * @param mixed $strOnDrawRow      -11: NOT_IMPLEMENTED
-     * @param mixed $strOnDrawHeaderCell   -12: NOT_IMPLEMENTED
-     * @param mixed $strOnDrawActionButton -13: NOT_IMPLEMENTED
+     * @param object $objForm             - 1: FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
+     * @param string $strName             - 2: ID da grid
+     * @param string $strTitle            - 3: Titulo da grip
+     * @param array $mixData              - 4: Array de dados. Pode ser form formato Adianti, FormDin ou PDO
+     * @param mixed $strHeight            - 5: DEPRECATED Altura 
+     * @param mixed $strWidth             - 6: DEPRECATED Largura
+     * @param mixed $strKeyField          - 7: NOT_IMPLEMENTED Chave primaria
+     * @param array $mixUpdateFields      - 8: NOT_IMPLEMENTED Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * @param mixed $intMaxRows           - 9: NOT_IMPLEMENTED Qtd Max de linhas
+     * @param mixed $strRequestUrl        -10: NOT_IMPLEMENTED Url request do form
+     * @param mixed $strOnDrawCell        -11: NOT_IMPLEMENTED
+     * @param mixed $strOnDrawRow         -13: NOT_IMPLEMENTED
+     * @param mixed $strOnDrawHeaderCell  -14: NOT_IMPLEMENTED
+     * @param mixed $strOnDrawActionButton-15: NOT_IMPLEMENTED
      * @return TGrid
      */     
-    public function __construct( $strName
+    public function __construct( $objForm
+                               , string $strName
                                , string $strTitle = null
                                , $mixData = null
                                , $strHeight = null
@@ -131,14 +132,27 @@ class TFormDinGrid
                                , $strOnDrawHeaderCell = null
                                , $strOnDrawActionButton = null )
     {
-        $this->validateDeprecated($strHeight,$strWidth);
+        if( !is_object($objForm) ){
+            $track = debug_backtrace();
+            $msg = 'A classe GRID MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
+            ValidateHelper::migrarMensage($msg
+                                         ,ValidateHelper::ERROR
+                                         ,ValidateHelper::MSG_CHANGE
+                                         ,$track[0]['class']
+                                         ,$track[0]['function']
+                                         ,$track[0]['line']
+                                         ,$track[0]['file']
+                                        );
+        }else{
+            $this->validateDeprecated($strHeight,$strWidth);
 
-        $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
-        $bootgrid->width = '100%';
-        $this->setAdiantiObj($bootgrid);
-        $this->setId($strName);
-        $panel = new TPanelGroup($strTitle);
-        $this->setPanelGroupGrid($panel);
+            $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
+            $bootgrid->width = '100%';
+            $this->setAdiantiObj($bootgrid);
+            $this->setId($strName);
+            $panel = new TPanelGroup($strTitle);
+            $this->setPanelGroupGrid($panel);
+        }
     }
 
     public function validateDeprecated($strHeigh,$strWidth)
@@ -246,14 +260,14 @@ class TFormDinGrid
      *
      * @param  string $name  = Name of the column in the database
      * @param  string $label = Text label that will be shown in the header
-     * @param  string $align = Column align (left, center, right)
      * @param  string $width = Column Width (pixels)
+     * @param  string $align = Column align (left|right|center|justify)     
      * @return TDataGridColumn
      */
     public function addColumn(string $name
                             , string $label
-                            , string $align='left'
-                            , string $width = NULL){
+                            , string $width = NULL
+                            , string $align='left' ){
         $action = $this->getAction();
         $formDinGridColumn = new TFormDinGridColumn($action, $name, $label,$align,$width);
         $column = $formDinGridColumn->getAdiantiObj();
