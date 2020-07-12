@@ -40,6 +40,21 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+/**
+ * Classe para criação de Grid para apresentar os dados
+ * ------------------------------------------------------------------------
+ * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+ * os parâmetros do metodos foram marcados com:
+ * 
+ * NOT_IMPLEMENTED = Parâmetro não implementados, talvez funcione em 
+ *                   verões futuras do FormDin. Não vai fazer nada
+ * DEPRECATED = Parâmetro que não vai funcionar no Adianti e foi mantido
+ *              para diminuir o impacto sobre as migrações. Vai gerar um Warning
+ * FORMDIN5 = Parâmetro novo disponivel apenas na nova versão
+ * ------------------------------------------------------------------------
+ * 
+ * @author Reinaldo A. Barrêto Junior
+ */
 class TFormDinGrid
 {
     protected $adiantiObj;
@@ -48,40 +63,79 @@ class TFormDinGrid
     protected $idGrid;
     protected $title;
     protected $key;
-    
-    /**
-     * Grid Padronizado em BoorStrap
-     * Reconstruido FormDin 4 Sobre o Adianti 7
-     *
-     * @param $action Callback to be executed
-     * @param string $strName       - 1: ID do Grid
-     * @param string $strTitle      - 2: Titulo do Grid
-     * @param string $strKeyField   - 3: Id da chave primaria
-     * 
-     * @return BootstrapFormBuilder
-     */
 
     /**
-     * Grid Padronizado em BoorStrap
+     * Classe para criação de grides, Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7
+     * 
+     * Parametros do evento onDrawHeaderCell
+     * 	1) $th			- objeto TElement
+     * 	2) $objColumn 	- objeto TGridColum
+     * 	3) $objHeader 	- objeto TElement
      *
-     * @param [type] $action         - 1: função callback $this na classe origem
-     * @param string $idGrid         - 2: ID do Grid recebe __CLASS__
-     * @param string $title          - 3: Titulo do Grid
-     * @param string $key            - 4: Id da chave primaria
-     * @param boolean $boolDataTable
-     * @param boolean $boolDefaultClick
-     */
-    public function __construct($action
-                               ,string $idGrid
-                               ,string $title
-                               ,string $key
-                               ,$boolDataTable = false
-                               ,$boolDefaultClick = true
-                               )
+     * Parametros do envento onDrawRow
+     * 	1) $row 		- objeto TGridRow
+     * 	2) $rowNum 		- número da linha corrente
+     * 	3) $aData		- o array de dados da linha ex: $res[''][n]
+     *
+     * Parametros do envento onDrawCell
+     * 	1) $rowNum 		- número da linha corrente
+     * 	2) $cell		- objeto TTableCell
+     * 	3) $objColumn	- objeto TGrideColum
+     * 	4) $aData		- o array de dados da linha ex: $res[''][n]
+     * 	5) $edit		- o objeto campo quando a coluna for um campo de edição
+     *   ex: function ondrawCell($rowNum=null,$cell=null,$objColumn=null,$aData=null,$edit=null)
+     *
+     * Parametros do evento onDrawActionButton
+     * 	1) $rowNum 		- número da linha corrente
+     * 	2) $button 		- objeto TButton
+     * 	3) $objColumn	- objeto TGrideColum
+     * 	4) $aData		- o array de dados da linha ex: $res[''][n]
+     *   Ex: function tratarBotoes($rowNum,$button,$objColumn,$aData);
+     *
+     * Parametros do evento onGetAutocompleteParameters
+     * 	1) $ac 			- classe TAutocomplete
+     * 	2) $aData		- o array de dados da linha ex: $res[''][n]
+     * 	3) $rowNum 		- número da linha corrente
+     * 	3) $cell		- objeto TTableCell
+     * 	4) $objColumn	- objeto TGrideColum
+     *
+     *
+     * @param string $strName          - 1: ID da grid
+     * @param string $strTitle         - 2: Titulo da grip
+     * @param array $mixData           - 3: Array de dados. Pode ser form formato Adianti, FormDin ou PDO
+     * @param mixed $strHeight         - 4: DEPRECATED Altura 
+     * @param mixed $strWidth          - 5: DEPRECATED Largura
+     * @param mixed $strKeyField       - 6: NOT_IMPLEMENTED Chave primaria
+     * @param array $mixUpdateFields   - 7: NOT_IMPLEMENTED Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * @param mixed $intMaxRows        - 8: NOT_IMPLEMENTED Qtd Max de linhas
+     * @param mixed $strRequestUrl     - 9: NOT_IMPLEMENTED Url request do form
+     * @param mixed $strOnDrawCell     -10: NOT_IMPLEMENTED
+     * @param mixed $strOnDrawRow      -11: NOT_IMPLEMENTED
+     * @param mixed $strOnDrawHeaderCell   -12: NOT_IMPLEMENTED
+     * @param mixed $strOnDrawActionButton -13: NOT_IMPLEMENTED
+     * @return TGrid
+     */     
+    public function __construct( $strName
+                               , string $strTitle = null
+                               , $mixData = null
+                               , $strHeight = null
+                               , $strWidth = null
+                               , string $strKeyField = null
+                               , $mixUpdateFields = null
+                               , $intMaxRows = null
+                               , $strRequestUrl = null
+                               , $strOnDrawCell = null
+                               , $strOnDrawRow = null
+                               , $strOnDrawHeaderCell = null
+                               , $strOnDrawActionButton = null )
     {
-        $this->adiantiObj = new BootstrapDatagridWrapper(new TDataGrid);
-        $this->adiantiObj->width = '100%';
+        $this->validateDeprecated($strHeight,$strWidth);
+
+        $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
+        $bootgrid->width = '100%';
+        $this->setAdiantiObj($bootgrid);
+        $this->setId($strName);
         if($boolDataTable){
             $this->adiantiObj->datatable = 'true';
         }
@@ -89,9 +143,30 @@ class TFormDinGrid
             $this->adiantiObj->disableDefaultClick();
         }
         $this->setAction($action);
-        $this->setIdGrid($idGrid);
+        
         $this->setTitle($title);
         $this->setKey($key);
+    }
+
+    public function validateDeprecated($strHeigh,$strWidth)
+    {
+        ValidateHelper::validadeParam('strHeigh',$strHeigh
+                                     ,ValidateHelper::WARNING
+                                     ,ValidateHelper::MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
+
+        ValidateHelper::validadeParam('strWidth',$strWidth
+                                     ,ValidateHelper::WARNING
+                                     ,ValidateHelper::MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);                                     
+    }
+
+    public function setAdiantiObj( $bootgrid )
+    {
+        if( !($bootgrid instanceof BootstrapFormBuilder) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_BOOTGRID);
+        }
+        $this->adiantiObj = $bootgrid;
     }
 
     public function getAdiantiObj(){
@@ -152,5 +227,56 @@ class TFormDinGrid
 
     public function setKey(string $key){
         $this->key = $key;
+    }
+
+
+
+    //------------------------------------------------------------------------------------
+    /**
+     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
+     * @return void
+     */
+    public function getWidth()
+    {
+        ValidateHelper::validadeParam('strWidth','deprecated'
+                                    ,ValidateHelper::WARNING
+                                    ,ValidateHelper::MSG_DECREP
+                                    ,__CLASS__,__METHOD__,__LINE__);
+    }
+
+    /**
+     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
+     * @return void
+     */    
+    public function setWidth( $strNewValue = null )
+    {
+        ValidateHelper::validadeParam('strWidth',$strNewValue
+                                     ,ValidateHelper::WARNING
+                                     ,ValidateHelper::MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
+    }
+
+    /**
+     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
+     * @return void
+     */
+    public function getHeight()
+    {
+        ValidateHelper::validadeParam('strWidth','deprecated'
+                                    ,ValidateHelper::WARNING
+                                    ,ValidateHelper::MSG_DECREP
+                                    ,__CLASS__,__METHOD__,__LINE__);
+    }
+
+    /**
+     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
+     * @return void
+     */    
+    public function setHeight( $strNewValue = null )
+    {
+        ValidateHelper::validadeParam('strHeight',$strNewValue
+                                     ,ValidateHelper::WARNING
+                                     ,ValidateHelper::MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
     }
 }
