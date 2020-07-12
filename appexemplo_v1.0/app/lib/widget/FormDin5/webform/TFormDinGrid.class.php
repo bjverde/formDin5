@@ -136,16 +136,6 @@ class TFormDinGrid
         $bootgrid->width = '100%';
         $this->setAdiantiObj($bootgrid);
         $this->setId($strName);
-        if($boolDataTable){
-            $this->adiantiObj->datatable = 'true';
-        }
-        if(!$boolDefaultClick){
-            $this->adiantiObj->disableDefaultClick();
-        }
-        $this->setAction($action);
-        
-        $this->setTitle($title);
-        $this->setKey($key);
     }
 
     public function validateDeprecated($strHeigh,$strWidth)
@@ -163,7 +153,7 @@ class TFormDinGrid
 
     public function setAdiantiObj( $bootgrid )
     {
-        if( !($bootgrid instanceof BootstrapFormBuilder) ){
+        if( !($bootgrid instanceof BootstrapDatagridWrapper) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_BOOTGRID);
         }
         $this->adiantiObj = $bootgrid;
@@ -174,6 +164,50 @@ class TFormDinGrid
         //$panel = new TPanelGroup($title);
         //$panel->add( $this->adiantiObj );
         return $this->adiantiObj;
+    }
+
+    public function getAction(){
+        return $this->action;
+    }
+
+    public function setAction($action){
+        $this->action = $action;
+    }
+
+    public function getId(){
+        return $this->idGrid;
+    }
+
+    public function setId(string $idGrid){
+        if(empty($idGrid)){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
+        }
+        $this->getAdiantiObj()->setId($idGrid);
+        $this->idGrid = $idGrid;
+    }
+
+    public function getTitle(){
+        return $this->title;
+    }
+
+    public function setTitle(string $title){
+        $this->title = $title;
+    }
+
+    public function getKey(){
+        return $this->key;
+    }
+
+    public function setKey(string $key){
+        $this->key = $key;
+    }
+
+    public function enableDataTable(){
+        $this->getAdiantiObj()->datatable = 'true';
+    }
+
+    public function disableDataTable(){
+        $this->getAdiantiObj()->datatable = 'false';
     }
 
     /**
@@ -195,40 +229,38 @@ class TFormDinGrid
         $column = $formDinGridColumn->getAdiantiObj();
         $this->adiantiObj->addColumn($column);
         return $column;
-    }
+    }    
 
-    public function getAction(){
-        return $this->action;
+    //---------------------------------------------------------------------------------------
+    /**
+     * coluna tipo checkbox. Irá criar no gride uma coluno do tipo checkbox. Quando é feito o POST
+     * será criado uma nova variavel com valor de strName
+     *
+     *
+     * @param string $strName       - Nome do variavel no POST
+     * @param string $strTitle      - Titulo que aparece no grid
+     * @param string $strKeyField   - Valor que será passado no POST
+     * @param string $strDescField  - Descrição do campo, valor que irá aparecer o gride
+     * @param boolean $boolReadOnly
+     * @param boolean $boolAllowCheckAll  - TRUE = pode selecionar todos , FALSE = não permite multiplas seleções
+     * @return TGridCheckColumn
+     */
+    public function addCheckColumn( $strName
+                                , $strTitle = null
+                                , $strKeyField
+                                , $strDescField = null
+                                , $boolReadOnly = null
+                                , $boolAllowCheckAll = null )
+    {
+        if ( !$strKeyField )
+        {
+            $strKeyField = strtoupper( $strName );
+        }
+        $this->getAdiantiObj()->disableDefaultClick(); //IMPORTANTE DESATIVAR
+        $col = new TGridCheckColumn( $strName, $strTitle, $strKeyField, $strDescField, $boolReadOnly, $boolAllowCheckAll );
+        $this->columns[ strtolower( $strName )] = $col;
+        return $col;
     }
-
-    public function setAction($action){
-        $this->action = $action;
-    }
-
-    public function getIdGrid(){
-        return $this->idGrid;
-    }
-
-    public function setIdGrid(string $idGrid){
-        $this->idGrid = $idGrid;
-    }
-
-    public function getTitle(){
-        return $this->title;
-    }
-
-    public function setTitle(string $title){
-        $this->title = $title;
-    }
-
-    public function getKey(){
-        return $this->key;
-    }
-
-    public function setKey(string $key){
-        $this->key = $key;
-    }
-
 
 
     //------------------------------------------------------------------------------------
