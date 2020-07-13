@@ -144,5 +144,30 @@ class TFormDinMessage {
         }
         return $result;
     }
+
+    public static function logRecord(Exception $exception)
+    {
+        $app = $_SESSION[APLICATIVO];
+        $login = null;
+        $grupo = null;
+        if( ArrayHelper::has('USER',$_SESSION[APLICATIVO]) ) {
+            $login = ( ArrayHelper::has('LOGIN', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['LOGIN']:null );
+            $grupo = ( ArrayHelper::has('GRUPO_NOME', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['GRUPO_NOME']:null );
+        }
+        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION.' ,usuario: '.$login
+        .PHP_EOL.'type: '.get_class($exception).' ,Code: '.$exception->getCode().' ,file: '.$exception->getFile().' ,line: '.$exception->getLine()
+        .PHP_EOL.'mensagem: '.$exception->getMessage()
+        .PHP_EOL."Stack trace:"
+        .PHP_EOL.$exception->getTraceAsString();
+        
+        error_log($log);
+    }
+    
+    public static function logRecordSimple($message)
+    {
+        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION
+        .PHP_EOL.TAB.'mensagem: '.$message;
+        error_log($log);
+    }
 }
 ?>
