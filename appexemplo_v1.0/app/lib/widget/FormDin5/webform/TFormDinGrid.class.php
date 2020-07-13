@@ -57,9 +57,14 @@
  */
 class TFormDinGrid
 {
-    protected $adiantiObj;
-    protected $panelGroupGrid;
-    protected $objForm;
+
+    const TYPE_SIMPLE   = 'simple';
+    const TYPE_CHECKOUT = 'checkout';
+
+    private $adiantiObj;
+    private $panelGroupGrid;
+    private $objForm;
+    private $listColumn = array();
 
     protected $action;
     protected $idGrid;
@@ -199,6 +204,32 @@ class TFormDinGrid
         return $this->adiantiObj;
     }
 
+    /**
+     * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
+     * 
+     * @param string $type    - 1: Type column constante
+     * @param string $idcolumn- 2: idcolumn
+     * @param string $label   - 3: Label da coluna
+     * @param string $width   - 4: 
+     * @param string $align   - 5: 
+     * @return void
+     */
+    public function addElementColumnList($type = self::TYPE_SIMPLE
+                                        , string $idcolumn
+                                        , string $label
+                                        , string $width = NULL
+                                        , string $align = 'left'                                        
+                                        )
+    {
+        $element = array();
+        $element['type']=$type;
+        $element['idcolumn']=$idcolumn;
+        $element['label']=$label;
+        $element['align']=$align;
+        $element['width']=$width;
+        $this->listColumn[]=$element;
+    }
+
     public function show()
     {
         $this->getAdiantiObj()->createModel();
@@ -285,7 +316,7 @@ class TFormDinGrid
                             , string $width = NULL
                             , string $align='left' )
     {
-        $formDinGridColumn = new TFormDinGridColumn( $name,$label,$align,$width);
+        $formDinGridColumn = new TFormDinGridColumn( $name,$label,$width,$align);
         $column = $formDinGridColumn->getAdiantiObj();
         $this->getAdiantiObj()->addColumn($column);
         return $column;
