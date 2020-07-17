@@ -15,9 +15,9 @@ class exe_grid17 extends TPage
     {
         parent::__construct();
 
+        /*
         // creates one datagrid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
-        $this->datagrid->enablePopover('Details', '<b>Code:</b> {code} <br> <b>Name:</b> {name} <br> <b>City:</b> {city} <br> <b>State:</b> {state}');
         
         // create the datagrid columns
         $code       = new TDataGridColumn('code',    'Code',    'center', '10%');
@@ -26,15 +26,11 @@ class exe_grid17 extends TPage
         $state      = new TDataGridColumn('state',   'State',   'left',   '30%');
         
         // add the columns to the datagrid, with actions on column titles, passing parameters
-        $this->datagrid->addColumn($code,   new TAction([$this, 'onColumnAction'], ['column' => 'code']) );
-        $this->datagrid->addColumn($name,   new TAction([$this, 'onColumnAction'], ['column' => 'name']) );
-        $this->datagrid->addColumn($city,   new TAction([$this, 'onColumnAction'], ['column' => 'city']) );
-        $this->datagrid->addColumn($state,  new TAction([$this, 'onColumnAction'], ['column' => 'state']) );
-        
-        $code->title  = 'Here is the code';
-        $name->title  = 'Here is the name';
-        $city->title  = 'Here is the city';
-        $state->title = 'Here is the state';
+        $this->datagrid->addColumn($code);
+        $this->datagrid->addColumn($name);
+        $this->datagrid->addColumn($city);
+        $this->datagrid->addColumn($state);
+
         
         // creates two datagrid actions
         $action1 = new TDataGridAction([$this, 'onView'],   ['code'=>'{code}',  'name' => '{name}'] );
@@ -53,7 +49,19 @@ class exe_grid17 extends TPage
         
         $panel = new TPanelGroup(_t('Bootstrap Datagrid'));
         $panel->add($this->datagrid)->style = 'overflow-x:auto';
-        $panel->addFooter('footer');        
+        $panel->addFooter('footer');
+        */
+        
+        
+
+        $grid = new TFormDinGrid($this,'grid','Exemplo Grid Simples 17');
+        $grid->addColumn('code',  'Code', '10%', 'center');
+        $grid->addColumn('name',  'Name', '30%', 'left');
+        $grid->addColumn('city',  'City', '30%', 'left');
+        $grid->addColumn('state','State', '30%', 'left');
+        $this->datagrid = $grid->show();
+        $panel = $grid->getPanelGroupGrid();
+
 
         //$this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
         // creates the page structure using a table
