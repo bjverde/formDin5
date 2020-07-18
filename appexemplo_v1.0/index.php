@@ -12,7 +12,7 @@ $menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
 $content     = str_replace('{MENU}', $menu_string, $content);
 
 $content     = str_replace('{head_title}', $ini['general']['application'], $content);
-$content     = str_replace('{formdin_min_version}', $ini['system']['formdin_min_version'], $content);
+$content     = str_replace('{formdin_version}', FormDinHelper::version(), $content);
 $content     = str_replace('{system_version}', $ini['system']['version'], $content);
 $content     = str_replace('{system_name}', $ini['system']['system_name'], $content);
 $content     = str_replace('{system_name_sub}', $ini['system']['system_name_sub'], $content);
