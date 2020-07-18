@@ -71,6 +71,9 @@ class TFormDinGrid
     protected $title;
     protected $key;
 
+    protected $data;
+
+
     /**
      * Classe para criação de grides, Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7
@@ -204,6 +207,15 @@ class TFormDinGrid
         return $this->adiantiObj;
     }
 
+    public function setData( $data )
+    {
+        $this->data = $data;
+    }
+    public function getData()
+    {
+        return $this->data;
+    }
+
     /**
      * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
      * 
@@ -233,6 +245,9 @@ class TFormDinGrid
     public function show()
     {
         $this->getAdiantiObj()->createModel();
+        if( !empty($this->getData()) ){
+            $this->getAdiantiObj()->addItems( $this->getData() );
+        }
         $this->getPanelGroupGrid()->add($this->getAdiantiObj())->style = 'overflow-x:auto';
         return $this->getAdiantiObj();
     }
