@@ -215,6 +215,7 @@ class TFormDinGrid
 
     public function setHeight($Height){
         $this->getAdiantiObj()->setHeight($Height);
+        $this->datagrid->makeScrollable();
     }
 
 
