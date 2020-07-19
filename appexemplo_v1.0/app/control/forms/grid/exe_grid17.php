@@ -55,10 +55,11 @@ class exe_grid17 extends TPage
         
 
         $grid = new TFormDinGrid($this,'grid','Exemplo Grid Simples 17');
-        $grid->addColumn('code',  'Code', '10%', 'center');
-        $grid->addColumn('name',  'Name', '30%', 'left');
-        $grid->addColumn('city',  'City', '30%', 'left');
-        $grid->addColumn('state','State', '30%', 'left');
+        //$grid->setHeight(2500);
+        $grid->addColumn('code',  'Code', null, 'center');
+        $grid->addColumn('name',  'Name', null, 'left');
+        $grid->addColumn('city',  'City', null, 'left');
+        $grid->addColumn('state','State', null, 'left');
         $this->datagrid = $grid->show();
         $panel = $grid->getPanelGroupGrid();
 
