@@ -71,13 +71,13 @@ class TFormDinGridTest extends TestCase
 
     public function testConstruct_Height()
     {
-        $this->expectWarning();
+        $this->expectNotToPerformAssertions();
         $mock = new StdClass;
         $grid = new TFormDinGrid($mock,'grid',null,null,700);
     }
     public function testConstruct_Width()
     {
-        $this->expectWarning();
+        $this->expectNotToPerformAssertions();
         $mock = new StdClass;
         $grid = new TFormDinGrid($mock,'grid',null,null,null,700);
     }
@@ -136,25 +136,25 @@ class TFormDinGridTest extends TestCase
 
     public function testGetWidth_fail()
     {
-        $this->expectWarning();
+        $this->expectNotToPerformAssertions();
         $this->classTest->getWidth();
     }
 
     public function testSetWidth_fail()
     {
-        $this->expectWarning();
+        $this->expectNotToPerformAssertions();
         $this->classTest->setWidth(100);
     }
 
     public function testGetHeight_fail()
     {
-        $this->expectWarning();
+        $this->expectNotToPerformAssertions();
         $this->classTest->getHeight();
     }
 
     public function testSetHeight_fail()
     {
-        $this->expectWarning();
+        $this->expectNotToPerformAssertions();
         $this->classTest->setHeight(100);
     }
 

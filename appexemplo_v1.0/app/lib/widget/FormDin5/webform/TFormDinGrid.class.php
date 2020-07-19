@@ -114,8 +114,8 @@ class TFormDinGrid
      * @param string $strName             - 2: ID da grid
      * @param string $strTitle            - 3: Titulo da grip
      * @param array $mixData              - 4: Array de dados. Pode ser form formato Adianti, FormDin ou PDO
-     * @param mixed $strHeight            - 5: DEPRECATED Altura 
-     * @param mixed $strWidth             - 6: DEPRECATED Largura
+     * @param mixed $strHeight            - 5: Altura 
+     * @param mixed $strWidth             - 6: NOT_IMPLEMENTED Largura
      * @param mixed $strKeyField          - 7: NOT_IMPLEMENTED Chave primaria
      * @param array $mixUpdateFields      - 8: NOT_IMPLEMENTED Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
      * @param mixed $intMaxRows           - 9: NOT_IMPLEMENTED Qtd Max de linhas
@@ -153,30 +153,20 @@ class TFormDinGrid
                                          ,$track[0]['file']
                                         );
         }else{
-            $this->validateDeprecated($strHeight,$strWidth);
             $this->setObjForm($objForm);
 
             $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
             $bootgrid->width = '100%';
             $this->setAdiantiObj($bootgrid);
             $this->setId($strName);
+            $this->setHeight($strHeight);
+            //$this->setWidth($strWidth);
+
             $panel = new TPanelGroup($strTitle);
             $this->setPanelGroupGrid($panel);
         }
     }
 
-    public function validateDeprecated($strHeigh,$strWidth)
-    {
-        ValidateHelper::validadeParam('strHeigh',$strHeigh
-                                     ,ValidateHelper::WARNING
-                                     ,ValidateHelper::MSG_DECREP
-                                     ,__CLASS__,__METHOD__,__LINE__);
-
-        ValidateHelper::validadeParam('strWidth',$strWidth
-                                     ,ValidateHelper::WARNING
-                                     ,ValidateHelper::MSG_DECREP
-                                     ,__CLASS__,__METHOD__,__LINE__);                                     
-    }
 
     public function setObjForm($objForm)
     {
@@ -205,6 +195,37 @@ class TFormDinGrid
         //$panel = new TPanelGroup($title);
         //$panel->add( $this->adiantiObj );
         return $this->adiantiObj;
+    }
+
+    public function getId(){
+        return $this->idGrid;
+    }
+
+    public function setId(string $idGrid){
+        if(empty($idGrid)){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
+        }
+        $this->getAdiantiObj()->setId($idGrid);
+        $this->idGrid = $idGrid;
+    }
+
+    public function getHeight(){
+        return $this->getAdiantiObj()->height;
+    }
+
+    public function setHeight($Height){
+        $this->getAdiantiObj()->setHeight($Height);
+    }
+
+
+    public function getWidth()
+    {
+        //return $this->getAdiantiObj()->getWidth();
+        return null;
+    }   
+    public function setWidth( $width )
+    {
+        //$this->getAdiantiObj()->setWidth($width);
     }
 
     public function setData( $data )
@@ -260,17 +281,7 @@ class TFormDinGrid
         $this->action = $action;
     }
 
-    public function getId(){
-        return $this->idGrid;
-    }
 
-    public function setId(string $idGrid){
-        if(empty($idGrid)){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
-        }
-        $this->getAdiantiObj()->setId($idGrid);
-        $this->idGrid = $idGrid;
-    }
 
     public function getTitle(){
         return $this->title;
@@ -365,54 +376,5 @@ class TFormDinGrid
         $col = new TGridCheckColumn( $strName, $strTitle, $strKeyField, $strDescField, $boolReadOnly, $boolAllowCheckAll );
         $this->columns[ strtolower( $strName )] = $col;
         return $col;
-    }
-
-    //------------------------------------------------------------------------------------
-    /**
-     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
-     * @return void
-     */
-    public function getWidth()
-    {
-        ValidateHelper::validadeParam('strWidth','deprecated'
-                                    ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_DECREP
-                                    ,__CLASS__,__METHOD__,__LINE__);
-    }
-
-    /**
-     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
-     * @return void
-     */    
-    public function setWidth( $strNewValue = null )
-    {
-        ValidateHelper::validadeParam('strWidth',$strNewValue
-                                     ,ValidateHelper::WARNING
-                                     ,ValidateHelper::MSG_DECREP
-                                     ,__CLASS__,__METHOD__,__LINE__);
-    }
-
-    /**
-     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
-     * @return void
-     */
-    public function getHeight()
-    {
-        ValidateHelper::validadeParam('strWidth','deprecated'
-                                    ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_DECREP
-                                    ,__CLASS__,__METHOD__,__LINE__);
-    }
-
-    /**
-     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
-     * @return void
-     */    
-    public function setHeight( $strNewValue = null )
-    {
-        ValidateHelper::validadeParam('strHeight',$strNewValue
-                                     ,ValidateHelper::WARNING
-                                     ,ValidateHelper::MSG_DECREP
-                                     ,__CLASS__,__METHOD__,__LINE__);
     }
 }
