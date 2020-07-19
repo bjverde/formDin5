@@ -58,7 +58,7 @@
 class FormDinHelper
 {
 
-    const FORMDIN_VERSION = '5.0.0-alpha7';
+    const FORMDIN_VERSION = '5.0.0-alpha8';
 
     /**
      * Return FormDin version

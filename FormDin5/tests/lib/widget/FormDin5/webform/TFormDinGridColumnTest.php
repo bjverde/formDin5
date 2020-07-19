@@ -29,9 +29,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -40,39 +40,52 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TFormDinGridColumn
+require_once  __DIR__.'/../../mockFormAdianti.php';
+
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\Error\Warning;
+
+class TFormDinGridColumnTest extends TestCase
 {
-    protected $adiantiObj;
-    protected $action;
+
+    private $classTest;
     
     /**
-     * Coluna do Grid Padronizado em BoorStrap
-     * Reconstruido FormDin 4 Sobre o Adianti 7.1
-     *
-     * @param  string $name      - 1: Name of the column in the database
-     * @param  string $label     - 2: Text label that will be shown in the header
-     * @param  string $width     - 3: Column Width (pixels)
-     * @param  string $align     - 4: Column align (left|right|center|justify)
-     * @return BootstrapFormBuilder
+     * Prepares the environment before running a test.
      */
-    public function __construct(string $name
-                              , string $label
-                              , string $width = NULL
-                              , string $align = 'left'
-                              )
-    {
-        $column = new TDataGridColumn($name, $label,$align,$width);
-        $this->setAdiantiObj($column);
-        return $this->getAdiantiObj();
+    protected function setUp(): void {
+        parent::setUp();
+        $this->classTest = new TFormDinGridColumn('TEST', 'TEST');
+    }
+    
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown(): void {
+        $this->classTest = null;
+        parent::tearDown();
     }
 
-    public function setAdiantiObj($adiantiObj){
-        if( empty($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }        
-        return $this->adiantiObj=$adiantiObj;
+    public function testTypeObje()
+    {
+        $result = $this->classTest->getAdiantiObj();
+        $this->assertInstanceOf(TDataGridColumn::class, $result);
     }
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
+
+    public function testAlignCenter()
+    {
+        $column = new TFormDinGridColumn('TEST', 'TEST',null,'center');
+        $result =  $column->getAdiantiObj();
+        $this->assertInstanceOf(TDataGridColumn::class, $result);
+        $this->assertEquals('center', $result->getAlign());
+    }
+
+    public function testAlignRight()
+    {
+        $column = new TFormDinGridColumn('TEST', 'TEST',null,'right');
+        $result =  $column->getAdiantiObj();
+        $this->assertInstanceOf(TDataGridColumn::class, $result);
+        $this->assertEquals('right', $result->getAlign());
     }
 }
