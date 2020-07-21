@@ -61,6 +61,10 @@
                 <icon>fa:check-square fa-fw</icon>
                 <action>AjudaView</action>
             </menuitem>
+            <menuitem label='Switch'>
+                <icon>fa:check-square fa-fw</icon>
+                <action>exe_switch</action>
+            </menuitem>            
             <menuitem label='Arquivo ou Blob'>
                 <icon>fa:check-square fa-fw</icon>
                 <action>AjudaView</action>

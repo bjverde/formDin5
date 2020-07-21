@@ -739,19 +739,23 @@ class TFormDin
      * @param string $strLabel       - 2: Label do campo
      * @param boolean $boolRequired  - 3: Obrigatorio
      * @param array $itens           - 4: Informe um array do tipo "chave=>valor", com maximo de 2 elementos
-     * @param boolean $boolLabelAbove- 5: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolNewLine   - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+     * @param boolean $boolLabelAbove- 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @return TRadioGroup
      */
     public function addSwitchField(string $id
                                   ,string $strLabel
                                   ,$boolRequired = false
-                                  ,array $itens= null
-                                  ,$boolLabelAbove=false)
+                                  ,array $itens=null
+                                  ,$boolNewLine=null
+                                  ,$boolLabelAbove=null)
     {
         $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($strLabel,$boolRequired);
-        $this->addFields($label ,$objField ,$boolLabelAbove);
+        $label = $formField->getLabel();
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+
         return $formField;
     }
     /**
