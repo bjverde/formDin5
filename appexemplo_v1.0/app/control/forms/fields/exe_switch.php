@@ -25,17 +25,16 @@ class exe_switch extends TPage
         $x = $frm->addSwitchField('id3','Label Switch 3 ReadOnly');
         $x->setReadOnly(true);
 
-        $this->form = $frm->show();
-
-
-        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
-
-        // add form actions
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
-        $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
-        $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
+        $frm->setAction( _t('Save'), 'onSave', $this, null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', $this, null, 'fa:eraser', 'red');
+
+        $this->form = $frm->show();
+
+        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
+
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
@@ -49,7 +48,7 @@ class exe_switch extends TPage
     /**
      * Clear filters
      */
-    public function clear()
+    public function onClear()
     {
         $this->clearFilters();
         $this->onReload();

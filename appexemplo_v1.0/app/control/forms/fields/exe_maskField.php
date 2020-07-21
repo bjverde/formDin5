@@ -20,17 +20,17 @@ class exe_maskField extends TPage
         $frm->addMaskField('c1', 'Código:', false, '99.99.99', null, null, null, null, '99.99.99');
         $frm->addMaskField('c2', 'Placa do Carro:', false, 'aaa-9999')->setExampleText('aaa-9999');
         $frm->addMaskField('c3', 'Código de Barras:', false, '9 999999 999999')->setExampleText('9 999999 999999');
+        
+        // O Adianti permite a Internacionalização - A função _t('string') serve
+        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
+        //primeiro em ingles e depois traduzindo
+        $frm->setAction( _t('Save'), 'onSave', $this, null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', $this, null, 'fa:eraser', 'red');
 
         $this->form = $frm->show();
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
-        // add form actions
-        // O Adianti permite a Internacionalização - A função _t('string') serve
-        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
-        //primeiro em ingles e depois traduzindo
-        $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
-        $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
@@ -44,7 +44,7 @@ class exe_maskField extends TPage
     /**
      * Clear filters
      */
-    public function clear()
+    public function onClear()
     {
         $this->clearFilters();
         $this->onReload();
