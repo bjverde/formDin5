@@ -76,6 +76,20 @@ class TFormDinSwitchTest extends TestCase
         $this->assertEquals( $items,$adiantiObj->getItems());
     }
 
+    public function testSetAdiantiObj_null()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $classTest = new TFormDinSwitch('p1','escolha');
+        $classTest->setAdiantiObj(null);
+    }
+
+    public function testSetAdiantiObj_wrongString()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $classTest = new TFormDinSwitch('p1','escolha');
+        $classTest->setAdiantiObj('string');
+    }
+
     public function test_UseButton()
     {
         $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'useButton');
@@ -85,6 +99,20 @@ class TFormDinSwitchTest extends TestCase
         $useButton = $reflectionProperty->getValue($adiantiObj);
         
         $this->assertEquals(true,$useButton);
+    }
+
+    public function test_readOnly()
+    {
+        $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'editable');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setReadOnly(true);
+        $readOnly = $this->classTest->getReadOnly();
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $editable = $reflectionProperty->getValue($adiantiObj);
+        
+        $this->assertEquals(false,$editable);
+        $this->assertEquals(true,$readOnly);
     }
 
 }
