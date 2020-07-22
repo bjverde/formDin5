@@ -97,7 +97,7 @@ class TFormDinButtonTest extends TestCase
 
     public function testSetAdiantiObj_failArrayName()
     {
-        $this->expectError();;
+        $this->expectError();
         
         $classForm = new mockFormDinComAdianti();
         $list = array('Salvar','Buscar');
