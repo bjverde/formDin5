@@ -460,7 +460,7 @@ class TFormDin
     {
         $objForm =  $this->getObjForm();
         if($boolFooter){
-            return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
+            return $this->setAction($mixValue,$strName,false,$strImage);
         }else{
             $formField = new TFormDinButton($objForm
                                             , $mixValue
@@ -497,7 +497,6 @@ class TFormDin
     *
     * @param mixed $actionsLabel- 1: Texto ações.
     * @param object $actionsName- 2: FORMDIN5 Nome da ação
-    * @param object $objForm    - 2: FORMDIN5 Objeto do Form, é só informar $this
     * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=false, mostra no rodapé. TRUE = mostra no Título
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
@@ -506,7 +505,6 @@ class TFormDin
     */
     public function setAction( $actionsLabel
                              , $actionsName=null
-                             , $objForm=null
                              , $header=false
                              , $iconImagem=null
                              , $color=null 
@@ -524,6 +522,7 @@ class TFormDin
                                          ,$track[0]['file']
                                         );
         }else{
+            $objForm = $this->getObjForm();
             ValidateHelper::isSet($actionsName,__METHOD__,__LINE__);
             ValidateHelper::isSet($objForm,__METHOD__,__LINE__);
 
@@ -557,18 +556,18 @@ class TFormDin
     *
     * @param mixed $actionsLabel- 1: Texto ações.
     * @param object $actionsName- 2: FORMDIN5 Nome da ação
-    * @param object $objForm    - 2: FORMDIN5 Objeto do Form, é só informar $this
     * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=TRUE, mostra no Título. false, mostra no rodapé. 
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
     * @param string $methodPost - 6: FORMDIN5 Metodo da ação fas um Post. DEFAULT=true, POST. FALSE, GET
     * @return TButton
     */
-    public function setActionHeader( $actionsLabel, $actionsName=null, $objForm=null
+    public function setActionHeader( $actionsLabel
+                                   , $actionsName=null                                   
                                    , $header=true, $iconImagem=null, $color=null
                                    , $methodPost=true)
     {
-        return $this->setAction($actionsLabel, $actionsName, $objForm, $header, $iconImagem, $color,$methodPost);
+        return $this->setAction($actionsLabel, $actionsName, $header, $iconImagem, $color,$methodPost);
     }
 
    /**
@@ -583,7 +582,6 @@ class TFormDin
     *
     * @param mixed $actionsLabel- 1: Texto ações.
     * @param object $actionsName- 2: FORMDIN5 Nome da ação
-    * @param object $objForm    - 2: FORMDIN5 Objeto do Form, é só informar $this
     * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=false, mostra no rodapé. TRUE = mostra no Título
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
@@ -591,12 +589,11 @@ class TFormDin
     */
     public function setActionLink( $actionsLabel
                                  , $actionsName=null
-                                 , $objForm=null
                                  , $header=false
                                  , $iconImagem=null
                                  , $color=null)
     {
-        return $this->setAction($actionsLabel, $actionsName, $objForm, $header, $iconImagem, $color,false);
+        return $this->setAction($actionsLabel, $actionsName, $header, $iconImagem, $color,false);
     } 
 
    /**
@@ -610,16 +607,16 @@ class TFormDin
     *
     * @param mixed $actionsLabel- 1: Texto ações.
     * @param object $actionsName- 2: FORMDIN5 Nome da ação
-    * @param object $objForm    - 2: FORMDIN5 Objeto do Form, é só informar $this
     * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=TRUE, mostra no Título. false, mostra no rodapé. 
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
     * @return TButton
     */
-    public function setActionHeaderLink( $actionsLabel, $actionsName=null, $objForm=null
+    public function setActionHeaderLink( $actionsLabel
+                                       , $actionsName=null
                                        , $header=true, $iconImagem=null, $color=null)
     {
-        return $this->setAction($actionsLabel, $actionsName, $objForm, $header, $iconImagem, $color,false);
+        return $this->setAction($actionsLabel, $actionsName, $header, $iconImagem, $color,false);
     }
 
 
