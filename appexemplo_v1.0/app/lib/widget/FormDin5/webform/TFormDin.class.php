@@ -427,25 +427,23 @@ class TFormDin
     * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
     * definir o parametro boolLabelAbove do botão para true tambem.
     *
-    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
-    * @param mixed   $mixValue          - 2 : Label do Botão ou array('Gravar', 'Limpar') com nomes
-    * @param string  $strAction         - 3 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
-    * @param string  $strName           - 4 : Nome da ação com submit
-    * @param string  $strOnClick        - 5 : NOT_IMPLEMENTED Nome da função javascript
-    * @param string  $strConfirmMessage - 6 : NOT_IMPLEMENTED Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
-    * @param boolean $boolNewLine       - 7 : Em nova linha. DEFAULT = true
-    * @param boolean $boolFooter        - 8 : Mostrar o botão no rodapé do form. DEFAULT = true
-    * @param string  $strImage          - 9 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
-    * @param string  $strImageDisabled  -10 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
-    * @param string  $strHint           -11 : NOT_IMPLEMENTED Texto hint para explicar
-    * @param string  $strVerticalAlign  -12 : NOT_IMPLEMENTED
-    * @param boolean $boolLabelAbove    -13 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
-    * @param string  $strLabel          -14 : NOT_IMPLEMENTED Text label 
-    * @param string  $strHorizontalAlign-15 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Valeus center, left, right
+    * @param mixed   $mixValue          - 1 : Label do Botão ou array('Gravar', 'Limpar') com nomes
+    * @param string  $strAction         - 2 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
+    * @param string  $strName           - 3 : Nome da ação com submit
+    * @param string  $strOnClick        - 4 : NOT_IMPLEMENTED Nome da função javascript
+    * @param string  $strConfirmMessage - 5 : NOT_IMPLEMENTED Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
+    * @param boolean $boolNewLine       - 6 : Em nova linha. DEFAULT = true
+    * @param boolean $boolFooter        - 7 : Mostrar o botão no rodapé do form. DEFAULT = true
+    * @param string  $strImage          - 8 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
+    * @param string  $strImageDisabled  - 9 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
+    * @param string  $strHint           -10 : NOT_IMPLEMENTED Texto hint para explicar
+    * @param string  $strVerticalAlign  -11 : NOT_IMPLEMENTED
+    * @param boolean $boolLabelAbove    -12 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
+    * @param string  $strLabel          -13 : NOT_IMPLEMENTED Text label 
+    * @param string  $strHorizontalAlign-14 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Valeus center, left, right
     * @return TButton|string|array
     */
-    public function addButton( $objForm
-                            , $mixValue
+    public function addButton( $mixValue
 				       		, $strAction=null
 				       		, $strName=null
 				       		, $strOnClick=null
@@ -460,45 +458,31 @@ class TFormDin
 				       		, $strLabel=null
                             , $strHorizontalAlign=null)
     {
-        if( !is_object($objForm) ){
-            $track = debug_backtrace();
-            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
-            ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::ERROR
-                                         ,ValidateHelper::MSG_CHANGE
-                                         ,$track[0]['class']
-                                         ,$track[0]['function']
-                                         ,$track[0]['line']
-                                         ,$track[0]['file']
-                                        );
+        $objForm =  $this->getObjForm();
+        if($boolFooter){
+            return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
         }else{
-
-            if($boolFooter){
-                return $this->setAction($mixValue,$strName,$objForm,false,$strImage);
-            }else{
-                $formField = new TFormDinButton($objForm
-                                                , $mixValue
-                                                , $strAction
-                                                , $strName
-                                                , $strOnClick
-                                                , $strConfirmMessage
-                                                , $boolNewLine
-                                                , $boolFooter
-                                                , $strImage
-                                                , $strImageDisabled
-                                                , $strHint
-                                                , $strVerticalAlign
-                                                , $boolLabelAbove
-                                                , $strLabel
-                                                , $strHorizontalAlign
-                                            );
-                $objField = $formField->getAdiantiObj();
-                //$this->adiantiObj->addFields([$objField]);
-                $this->addElementFormList($objField,self::TYPE_FIELD,null,$boolNewLine);
-                //$this->addElementFormList($objField,self::TYPE_LAYOUT,null,$boolNewLine);
-                return $formField;
-            }
-        }
+            $formField = new TFormDinButton($objForm
+                                            , $mixValue
+                                            , $strAction
+                                            , $strName
+                                            , $strOnClick
+                                            , $strConfirmMessage
+                                            , $boolNewLine
+                                            , $boolFooter
+                                            , $strImage
+                                            , $strImageDisabled
+                                            , $strHint
+                                            , $strVerticalAlign
+                                            , $boolLabelAbove
+                                            , $strLabel
+                                            , $strHorizontalAlign
+                                        );
+            $objField = $formField->getAdiantiObj();
+            $this->addElementFormList($objField,self::TYPE_FIELD,null,$boolNewLine);
+            //$this->addElementFormList($objField,self::TYPE_LAYOUT,null,$boolNewLine);
+            return $formField;
+        } //FIM else $boolFooter
     }
 
    /**
