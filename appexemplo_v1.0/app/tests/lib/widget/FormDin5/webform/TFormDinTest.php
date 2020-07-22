@@ -56,7 +56,8 @@ class TFormDinTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDin('Phpunit');
+        $classForm = new stdClass();
+        $this->classTest = new TFormDin($classForm,'Phpunit');
     }
     
     /**
@@ -585,7 +586,8 @@ class TFormDinTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formDin = new TFormDin('Phpunit');        
+        $classForm = new stdClass();
+        $formDin = new TFormDin($classForm,'Phpunit');        
         $WrongObj = new stdClass();
         $formDin->setAdiantiObj($WrongObj);
     }
@@ -593,7 +595,8 @@ class TFormDinTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formDin = new TFormDin('Phpunit');
+        $classForm = new stdClass();
+        $formDin = new TFormDin($classForm,'Phpunit');
         $formDin->setAdiantiObj('string');
     }
     public function testSetAdiantiObj_setNull()
