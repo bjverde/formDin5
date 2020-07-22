@@ -60,6 +60,8 @@ class TFormDin
     const TYPE_FIELD  = 'feild';
     const TYPE_LAYOUT = 'layout';
     const TYPE_HIDDEN = 'hidden';
+    
+    private $objForm;
     protected $adiantiObj;
     private $listFormElements = array();
 
@@ -75,18 +77,20 @@ class TFormDin
      * 	$frm->show();
      * </code>
      *
-     * @param string $strName   - 01: Titulo que irá aparecer no Form
-     * @param string $strHeight - 02: DEPRECATED: INFORME NULL para remover o Warning
-     * @param string $strWidth  - 03: DEPRECATED: INFORME NULL para remover o Warning
-     * @param bool $strFormName - 04: ID nome do formulario para criação da tag form. Padrão=formdin
-     * @param string $strMethod - 05: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
-     * @param string $strAction - 06: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
-     * @param boolean $boolPublicMode - 07: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
-     * @param boolean $boolRequired   - 08: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
+     * @param object $objForm   - 01: FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
+     * @param string $strName   - 02: Titulo que irá aparecer no Form
+     * @param string $strHeight - 03: DEPRECATED: INFORME NULL para remover o Warning
+     * @param string $strWidth  - 04: DEPRECATED: INFORME NULL para remover o Warning
+     * @param bool $strFormName - 05: ID nome do formulario para criação da tag form. Padrão=formdin
+     * @param string $strMethod - 06: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
+     * @param string $strAction - 07: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
+     * @param boolean $boolPublicMode - 08: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
+     * @param boolean $boolRequired   - 09: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
      *
      * @return BootstrapFormBuilder
      */    
-    public function __construct(string $strTitle
+    public function __construct($objForm
+                               ,string $strTitle
                                ,$strHeigh = null
                                ,$strWidth = null
                                ,string $strName = 'formdin'
@@ -95,10 +99,26 @@ class TFormDin
                                ,$boolPublicMode  = null
                                ,$boolClientValidation = true)
     {
-        $this->validateDeprecated($strHeigh,$strWidth);
-        $bootForm = new BootstrapFormBuilder($strName);
-        $this->setAdiantiObj( $bootForm, $strName,$strTitle, $boolClientValidation);
-        return $this->getAdiantiObj();
+
+        if( !is_object($objForm) ){
+            $track = debug_backtrace();
+            $msg = TFormDinMessage::ERROR_FD5_FORM_MIGRAT;
+            ValidateHelper::migrarMensage($msg
+                                         ,ValidateHelper::ERROR
+                                         ,ValidateHelper::MSG_CHANGE
+                                         ,$track[0]['class']
+                                         ,$track[0]['function']
+                                         ,$track[0]['line']
+                                         ,$track[0]['file']
+                                        );
+        }else{
+            $this->setObjForm($objForm);
+
+            $this->validateDeprecated($strHeigh,$strWidth);
+            $bootForm = new BootstrapFormBuilder($strName);
+            $this->setAdiantiObj( $bootForm, $strName,$strTitle, $boolClientValidation);
+            return $this->getAdiantiObj();
+        }
     }
 
     public function validateDeprecated($strHeigh,$strWidth)
@@ -113,6 +133,21 @@ class TFormDin
                                      ,ValidateHelper::MSG_DECREP
                                      ,__CLASS__,__METHOD__,__LINE__);                                     
     }
+
+    public function setObjForm($objForm)
+    {
+        if( empty($objForm) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }
+        if( !is_object($objForm) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }        
+        return $this->objForm=$objForm;
+    }
+    public function getObjForm(){
+        return $this->objForm;
+    }
+
 
     /**
      * Recebe a chave da posição do elemento e verifica se o proximo elemento
