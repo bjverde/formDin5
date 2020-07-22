@@ -15,7 +15,7 @@ class exe_GroupField01 extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin('Exemplo de Grupos');
+        $frm = new TFormDin($this,'Exemplo de Grupos');
         $frm->addGroupField('gpx1', 'Teste Novo Grupo 1');
         //$frm->addGroupField('gpx1', 'Teste Novo Grupo 1')->setLabelsAlign('center');
             $frm->addTextField('nome1', 'Nome 1:', 40, true);
@@ -28,8 +28,8 @@ class exe_GroupField01 extends TPage
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
-        $frm->setAction(_t('Save'),'onSave',$this,null,'far:check-circle','green');
-        $frm->setActionLink(_t('Clear'),'clear',$this,null,'fa:eraser','red');
+        $frm->setAction(_t('Save'),'onSave',null,'far:check-circle','green');
+        $frm->setActionLink(_t('Clear'),'clear',null,'fa:eraser','red');
         $this->form = $frm->show();
         
 

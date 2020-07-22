@@ -15,19 +15,19 @@ class exe_TButton extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin('Exemplo Mensagem apenas PHP');
+        $frm = new TFormDin($this,'Exemplo Mensagem apenas PHP');
         //$frm->setAction('Nome Botão','onSave',$this);
-        $frm->setAction(_t('Save'), 'onSave',$this, false,'far:check-circle green');
-        $frm->setAction(_t('Clear'), 'clear',$this, false,'fa:eraser red');
-        $frm->setAction('YYYY','onSave',$this,true,null,'green');
+        $frm->setAction(_t('Save'), 'onSave', false,'far:check-circle green');
+        $frm->setAction(_t('Clear'), 'clear', false,'fa:eraser red');
+        $frm->setAction('YYYY','onSave',true,null,'green');
         
         
         $frm->addTextField('entry2','TEntry', 10);
-        $frm->addButton($this,'Success1',null,'onSave3',null,null,false,false);
+        $frm->addButton('Success1',null,'onSave3',null,null,false,false);
 
         $frm->addTextField('txt','Text1', 10);
-        $frm->addButton($this,'Nova linha',null,'onSave1',null,null,true,false,'far:check-circle green');
-        $frm->addButton($this,'mesma linha',null,'onSave2',null,null,false,false);
+        $frm->addButton('Nova linha',null,'onSave1',null,null,true,false,'far:check-circle green');
+        $frm->addButton('mesma linha',null,'onSave2',null,null,false,false);
 
 
         //$frm->addButton($this,'Limpar', null, 'Limpar', null, null, false, false);

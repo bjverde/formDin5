@@ -15,7 +15,7 @@ class exe_HtmlField extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin('Exemplo do Campo HTML');
+        $frm = new TFormDin($this,'Exemplo do Campo HTML');
         $frm->addHtmlField('html1', '<b>O campo html é um campo livre</b>. Você poderá adicionar qualquer conteúdo na página.', null, 'Dica:', null, 200);
         $frm->addHtmlField('html2', null, 'ajuda/texto.txt', 'Arquivo: texto.txt:', 200, 650);
         $frm->addHtmlField('html3', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100);

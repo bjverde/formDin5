@@ -15,7 +15,7 @@ class exe_mensagem extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin('Exemplo Campo Memo');
+        $frm = new TFormDin($this,'Exemplo Campo Memo');
         $frm->addMemoField('campo_memo_simples', 'Descrição:', 1000, true, 80, 5);
         $frm->addMemoField('memo2', 'Descrição:', 400, false, 120, 30);
         $frm->addMemoField('memo3', 'Memo3:', 400, false,'30%', '10%')->setPlaceHolder('Texto de exemplo 30% largura com 10% de altura');

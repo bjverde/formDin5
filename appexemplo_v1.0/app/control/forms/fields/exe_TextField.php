@@ -17,7 +17,7 @@ class exe_TextField extends TPage
 
 
 
-        $frm = new TFormDin('Exemplo do Campo Texto');
+        $frm = new TFormDin($this,'Exemplo do Campo Texto');
 
         $frm->addTextField('TEXT01','Texto tam 10', 10);
         $frm->addTextField('TEXT02','Texto obrigatorio', 10,true,null,'inicial',true,null,null,false);
@@ -31,8 +31,8 @@ class exe_TextField extends TPage
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
-        $frm->setAction( _t('Save'), 'onSave', $this, null, 'fa:save', 'green' );
-        $frm->setActionLink( _t('Clear'), 'onClear', $this, null, 'fa:eraser', 'red');
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
 
         $this->form = $frm->show();
 

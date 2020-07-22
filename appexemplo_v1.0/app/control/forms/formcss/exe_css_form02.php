@@ -18,7 +18,7 @@ class exe_css_form02 extends TPage
         // load the styles
         TPage::include_css('app/resources/css_form02.css');
 
-        $frm = new TFormDin('CSS Form 02 - Exemplo de uso do CSS ');
+        $frm = new TFormDin($this,'CSS Form 02 - Exemplo de uso do CSS ');
 
         $html ='Esse form mostra o exemplo do uso de um css separado sobre alguns elmentos.<br>Evite usar a funão setCSS ! O melhor é utilizar setClass com o addCssFile.';
         $frm->addHtmlField('html1', $html, null, 'Dica:', null, 300)->setClass('notice');

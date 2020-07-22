@@ -18,7 +18,7 @@ class exe_TForm3 extends TPage
         // load the styles
         TPage::include_css('app/resources/exe_tform3.css');
 
-        $frm = new TFormDin('Form com CSS customizado');
+        $frm = new TFormDin($this,'Form com CSS customizado');
 
         $frm->addTextField('TEXT01','Texto tam 10', 10);
         $frm->addTextField('TEXT02','Texto obrigatorio', 10,true);

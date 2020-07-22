@@ -15,7 +15,7 @@ class exe_campo_hora extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin('Exemplo de Entrada de Dados com Máscara');
+        $frm = new TFormDin($this,'Exemplo de Entrada de Dados com Máscara');
 
         $frm->addMaskField('c1', 'Código:', false, '99.99.99', null, null, null, null, '99.99.99');
         $frm->addMaskField('c2', 'Placa do Carro:', false, 'aaa-9999')->setExampleText('aaa-9999');

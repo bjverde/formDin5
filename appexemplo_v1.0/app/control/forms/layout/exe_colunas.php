@@ -17,7 +17,7 @@ class exe_colunas extends TPage
 
 
 
-        $frm = new TFormDin('Exemplo Layout - Campos');
+        $frm = new TFormDin($this,'Exemplo Layout - Campos');
 
         $frm->addGroupField('fdl1', 'FormDin - 1 campo');
         $frm->addTextField('fdl1id1', 'fdl1id1:', 20);

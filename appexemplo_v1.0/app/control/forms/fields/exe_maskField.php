@@ -15,7 +15,7 @@ class exe_maskField extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin('Exemplo de Entrada de Dados com Máscara');
+        $frm = new TFormDin($this,'Exemplo de Entrada de Dados com Máscara');
 
         $frm->addMaskField('c1', 'Código:', false, '99.99.99', null, null, null, null, '99.99.99');
         $frm->addMaskField('c2', 'Placa do Carro:', false, 'aaa-9999')->setExampleText('aaa-9999');
@@ -24,8 +24,8 @@ class exe_maskField extends TPage
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
-        $frm->setAction( _t('Save'), 'onSave', $this, null, 'fa:save', 'green' );
-        $frm->setActionLink( _t('Clear'), 'onClear', $this, null, 'fa:eraser', 'red');
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
 
         $this->form = $frm->show();
 
