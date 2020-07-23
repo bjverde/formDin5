@@ -48,4 +48,24 @@ class mockFormDinArray
         
         return $dadosPessoa;
     }
+
+    public function incluirPessoaAdianti($id, $nome, $tipo, $cpf, $cnpj){
+        $dadosPessoa = new StdClass;
+        $dadosPessoa->IDPESSOA = $id;
+        $dadosPessoa->NMPESSOA = $nome;
+        $dadosPessoa->TPPESSOA = $tipo;
+        $dadosPessoa->NMCPF    = $cpf;
+        $dadosPessoa->NMCNPJ   = $cnpj;
+        return $dadosPessoa;
+    }
+
+    public function generateTablePessoaAdianti(){
+        $dadosPessoa = array();
+        $dadosPessoa[] = $this->incluirPessoaAdianti(1, 'Joao Silva', 'F', '123456789', null);
+        $dadosPessoa[] = $this->incluirPessoaAdianti(2, 'Maria Laranja', 'F', '52798074002', null);
+        $dadosPessoa[] = $this->incluirPessoaAdianti(3, 'Dell', 'J', null, '72381189000110');
+        $dadosPessoa[] = $this->incluirPessoaAdianti(4, 'Microsoft', 'J', null, '72381189000110');
+        
+        return $dadosPessoa;
+    }
 }
