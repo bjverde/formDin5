@@ -42,7 +42,10 @@
 
 class ArrayHelper
 {
-    
+    const TYPE_FORMDIN = 'ARRAY_TYPE_FORMDIN';
+    const TYPE_PDO     = 'ARRAY_TYPE_PDO';
+    const TYPE_ADIANTI = 'ARRAY_TYPE_ADIANTI';
+
     public static function validateUndefined($array,$atributeName) 
     {
         if(!isset($array[$atributeName])) {
@@ -133,6 +136,28 @@ class ArrayHelper
     {
         return self::formDinGetValue($array, $atributeName, $key);
     }
+    //--------------------------------------------------------------------------------
+    public static function getArrayType($array)
+    {
+        ValidateHelper::isArray($array, __METHOD__, __LINE__);
+        $type = self::TYPE_ADIANTI;
+        $qtd = CountHelper::count($array);
+        if ( $qtd > 0 ){
+            //$listKey = array_keys($array);
+            $first = array_key_first($array);
+            $last  = array_key_last($array);
+            if( is_int($first) && is_int($last) ){
+                if( is_object($array[$first]) && is_int($array[$last]) ){
+                    $type = self::TYPE_ADIANTI;
+                }else{
+                    $type = self::TYPE_PDO;
+                }
+            }else{
+                $type = self::TYPE_FORMDIN;
+            }
+        }
+        return $type;
+    }    
     //--------------------------------------------------------------------------------
     /**
      * Convert Array PDO Format to FormDin format
@@ -254,7 +279,8 @@ class ArrayHelper
      * @return NULL|mixed|array
      */
     public static function formDinGetValue($array,$atributeName,$key)
-    {        
+    {
+        ValidateHelper::isArray($array, __METHOD__, __LINE__);
         $value = null;
         if( self::has($atributeName, $array) ) {
             $arrayResult = self::getArray($array, $atributeName);
@@ -278,7 +304,7 @@ class ArrayHelper
      * @return NULL|array
      */
     public static function formDinDeleteRowByKeyIndex($array,$keyIndex){
-        self::validateIsArray($array, __METHOD__, __LINE__);
+        ValidateHelper::isArray($array, __METHOD__, __LINE__);
         $attributeName = array_key_first($array);
         return self::formDinDeleteRowByColumnNameAndKeyIndex($array, $attributeName, $keyIndex);
     }    
@@ -298,7 +324,7 @@ class ArrayHelper
      */
     public static function formDinDeleteRowByColumnNameAndKeyIndex($array,$attributeName,$keyIndex)
     {
-        self::validateIsArray($array, __METHOD__, __LINE__);
+        ValidateHelper::isArray($array, __METHOD__, __LINE__);
         
         $result = array();
         $result['result'] = false;
