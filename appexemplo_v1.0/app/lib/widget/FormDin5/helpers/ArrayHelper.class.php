@@ -144,10 +144,12 @@ class ArrayHelper
         $qtd = CountHelper::count($array);
         if ( $qtd > 0 ){
             //$listKey = array_keys($array);
-            $first = array_key_first($array);
-            $last  = array_key_last($array);
-            if( is_int($first) && is_int($last) ){
-                if( is_object($array[$first]) && is_int($array[$last]) ){
+            $keyFirst = array_key_first($array);
+            $KeyLast  = array_key_last($array);
+            if( is_int($keyFirst) && is_int($KeyLast) ){
+                $firstType = is_object($array[$keyFirst]);
+                $lastType  = is_object($array[$KeyLast]);
+                if( $firstType &&  $lastType ){
                     $type = self::TYPE_ADIANTI;
                 }else{
                     $type = self::TYPE_PDO;
