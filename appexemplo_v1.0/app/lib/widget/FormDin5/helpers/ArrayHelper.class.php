@@ -139,7 +139,7 @@ class ArrayHelper
     //--------------------------------------------------------------------------------
     public static function getArrayType($array)
     {
-        ValidateHelper::isArray($array, __METHOD__, __LINE__);
+        ValidateHelper::isArray($array, __METHOD__, __LINE__,false);
         $type = self::TYPE_ADIANTI;
         $qtd = CountHelper::count($array);
         if ( $qtd > 0 ){
@@ -157,7 +157,7 @@ class ArrayHelper
             }
         }
         return $type;
-    }    
+    }
     //--------------------------------------------------------------------------------
     /**
      * Convert Array PDO Format to FormDin format
