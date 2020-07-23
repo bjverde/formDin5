@@ -162,6 +162,25 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
+     * Convert Array FormDin,PDO ou Adianti para Adianti Format
+     *
+     * @param  array $array        - 1: Array
+     * @param  boolean $changeCase - 2: Altera String Case. DEFAULT = FALSE não vai alterar.
+     * @param  boolean $upperCase  - 3: DEFAULT = TRUE = UpperCase. False = LowerCase
+     * @return array
+     */
+    public static function convertArray2Adianti($dataArray,$changeCase = false,$upperCase = false) 
+    {
+        $typeArray = self::getArrayType($dataArray);
+        if($typeArray == self::TYPE_FORMDIN){
+            $dataArray = self::convertArrayFormDin2Adianti($dataArray,$changeCase,$upperCase);
+        }elseif($typeArray == self::TYPE_PDO){
+            $dataArray = self::convertArrayPDO2Adianti($dataArray);
+        }
+        return $dataArray;
+    }    
+    //--------------------------------------------------------------------------------
+    /**
      * Convert Array PDO Format to FormDin format
      *
      * @param  array $array
