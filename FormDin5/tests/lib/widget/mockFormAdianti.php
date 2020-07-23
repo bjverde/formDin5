@@ -6,5 +6,9 @@
 class mockFormDinComAdianti extends TPage
 {
     
+    public function onSave()
+    {
+
+    }
 
 }

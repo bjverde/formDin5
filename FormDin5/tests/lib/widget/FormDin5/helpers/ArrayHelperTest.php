@@ -175,7 +175,7 @@ class ArrayHelperTest extends TestCase
         $array = $mock->generateTable();
         $atributeName = 'NMPESSOA';
         $key = 1;
-        $retorno = ArrayHelper::getArrayFormKey($array,$atributeName,$key);
+        $retorno = ArrayHelper::formDinGetValue($array,$atributeName,$key);
         $this->assertEquals($esperado, $retorno);
     }
     
@@ -185,7 +185,7 @@ class ArrayHelperTest extends TestCase
         $array = $mock->generateTable();
         $atributeName = 'TIA';
         $key = 1;
-        $retorno = ArrayHelper::getArrayFormKey($array,$atributeName,$key);
+        $retorno = ArrayHelper::formDinGetValue($array,$atributeName,$key);
         $this->assertEquals($esperado, $retorno);
     }
 
@@ -205,6 +205,22 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,true);
         $this->assertEquals($esperado, $retorno);
     }
+
+    public function testConvertArrayFormDin2Adianti_NoChangeCase() {
+        $mock = new mockFormDinArray();
+        $esperado  = $mock->generateTablePessoaAdianti();
+        $array = $mock->generateTable();
+        $retorno = ArrayHelper::convertArrayFormDin2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+
+    public function testConvertArrayPDOAdianti() {
+        $mock = new mockFormDinArray();
+        $esperado  = $mock->generateTablePessoaAdianti();
+        $array = $mock->generateTablePessoaPDO();
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    } 
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
@@ -215,18 +231,18 @@ class ArrayHelperTest extends TestCase
     public function testValidateIsArray_FailArrayEmpty(){
         $this->expectException(InvalidArgumentException::class);
         $listArray = array();
-        $this->assertNull( ArrayHelper::validateIsArray($listArray,__METHOD__,__LINE__) );
+        $this->assertNull( ValidateHelper::isArray($listArray,__METHOD__,__LINE__) );
     }
     public function testValidateIsArray_FailString(){
         $this->expectException(InvalidArgumentException::class);
         $listArray = 'xxx';
-        $this->assertNull( ArrayHelper::validateIsArray($listArray,__METHOD__,__LINE__) );
+        $this->assertNull( ValidateHelper::isArray($listArray,__METHOD__,__LINE__) );
     }
     public function testValidateIdIsNumeric_OKArrayNotEmpty(){
         $listArray = array();
         $listArray[]=1;
         $listArray[]=2;
-        $this->assertNull( ArrayHelper::validateIsArray($listArray,__METHOD__,__LINE__) );
+        $this->assertNull( ValidateHelper::isArray($listArray,__METHOD__,__LINE__) );
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------

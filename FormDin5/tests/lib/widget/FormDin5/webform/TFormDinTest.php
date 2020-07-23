@@ -40,6 +40,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+require_once  __DIR__.'/../../mockFormAdianti.php';
 $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
 
@@ -56,7 +57,8 @@ class TFormDinTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDin('Phpunit');
+        $classForm = new mockFormDinComAdianti();
+        $this->classTest = new TFormDin($classForm,'Phpunit');
     }
     
     /**
@@ -585,7 +587,8 @@ class TFormDinTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formDin = new TFormDin('Phpunit');        
+        $classForm = new stdClass();
+        $formDin = new TFormDin($classForm,'Phpunit');        
         $WrongObj = new stdClass();
         $formDin->setAdiantiObj($WrongObj);
     }
@@ -593,7 +596,8 @@ class TFormDinTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $formDin = new TFormDin('Phpunit');
+        $classForm = new stdClass();
+        $formDin = new TFormDin($classForm,'Phpunit');
         $formDin->setAdiantiObj('string');
     }
     public function testSetAdiantiObj_setNull()
@@ -724,4 +728,18 @@ class TFormDinTest extends TestCase
         $this->assertEquals('fields' , $list[1]->type);
         $this->assertEquals('content', $list[2]->type);
     }
+    //-------------------------------------------------------------------------
+    public function testSetAction_failArrayLabel(){
+        $this->expectError();
+
+        $actionsLabel = array('action01','action02');
+        $this->classTest->setAction( $actionsLabel);
+    }
+    //-------------------------------------------------------------------------
+    public function testSetAction_failActionsName(){
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->classTest->setAction( 't1');
+    }    
+
 }
