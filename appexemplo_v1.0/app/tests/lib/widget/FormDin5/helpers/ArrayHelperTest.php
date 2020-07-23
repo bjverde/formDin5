@@ -233,8 +233,32 @@ class ArrayHelperTest extends TestCase
 
         $retorno = ArrayHelper::getArrayType($array);
         $this->assertEquals($esperado, $retorno);
-    }    
+    }
+    //-----------------------------------------------------------------------------------
+    public function testConvertArray2Adianti_FormDin2Adianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTablePessoaAdianti();
 
+        $retorno = ArrayHelper::convertArray2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2Adianti_Pdo2Adianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaPDO();
+        $esperado = $mock->generateTablePessoaAdianti();
+
+        $retorno = ArrayHelper::convertArray2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2Adianti_Adianti2Adianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTablePessoaAdianti();
+
+        $retorno = ArrayHelper::convertArray2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    }    
     //-----------------------------------------------------------------------------------
     public function testConvertArrayPdo2FormDin_Upcase() {
         $mock = new mockFormDinArray();
