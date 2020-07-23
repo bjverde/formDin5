@@ -212,7 +212,15 @@ class ArrayHelperTest extends TestCase
         $array = $mock->generateTable();
         $retorno = ArrayHelper::convertArrayFormDin2Adianti($array);
         $this->assertEquals($esperado, $retorno);
-    }    
+    }
+
+    public function testConvertArrayPDOAdianti() {
+        $mock = new mockFormDinArray();
+        $esperado  = $mock->generateTablePessoaAdianti();
+        $array = $mock->generateTablePessoaPDO();
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    } 
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------

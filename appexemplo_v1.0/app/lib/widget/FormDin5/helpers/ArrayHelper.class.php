@@ -201,7 +201,7 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
-     * Convert Array FormDin Format to PDO format
+     * Convert Array FormDin Format to Adianti format
      *
      * @param  array $array        - 1: Array FormDin4 
      * @param  boolean $changeCase - 2: Altera String Case. DEFAULT = FALSE não vai alterar.
@@ -215,6 +215,20 @@ class ArrayHelper
             $result[$keyNumber] = (object)$value;
         }
         return $result;
+    }
+    //--------------------------------------------------------------------------------
+    /**
+     * Convert Array PDO format to Adianti format
+     *
+     * @param  array $array        - 1: Array FormDin4 
+     * @return array
+     */
+    public static function convertArrayPDO2Adianti($dataArray) 
+    {
+        foreach( $dataArray as $keyNumber => $value ) {
+            $dataArray[$keyNumber] = (object)$value;
+        }
+        return $dataArray;
     }
     //--------------------------------------------------------------------------------
     /**
