@@ -178,9 +178,17 @@ class TFormDin
         $label = $element['label'];
         $obj   = $element['obj'];
         if($element['boolLabelAbove']==true){
-            $result = array([$label, $obj]);
+            if( empty($label) ){
+                $result = array([$obj]);
+            }else{
+                $result = array([$label, $obj]);
+            }
         }else{
-            $result = array([$label], [$obj]);
+            if( empty($label) ){
+                $result = array([$obj]);
+            }else{
+                $result = array([$label], [$obj]);
+            }
         }
         return $result;
     }
@@ -190,10 +198,18 @@ class TFormDin
         $label = $element['label'];
         $obj   = $element['obj'];
         if($element['boolLabelAbove']==true){
-            $row[]=[$label, $obj];
+            if( empty($label) ){
+                $row[]=[$obj];
+            }else{
+                $row[]=[$label, $obj];
+            }            
         }else{
-            $row[]=[$label];
-            $row[]=[$obj];
+            if( empty($label) ){
+                $row[]=[$obj];
+            }else{
+                $row[]=[$label];
+                $row[]=[$obj];
+            }
         }
         return $row;
     }

@@ -100,8 +100,10 @@ class TFormDinGenericField
     }
 
     protected function setLabel($label,$boolRequired){
-        $formDinLabelField = new TFormDinLabelField($label,$boolRequired);
-        $label = $formDinLabelField->getAdiantiObj();
+        if(!empty($label)){
+            $formDinLabelField = new TFormDinLabelField($label,$boolRequired);
+            $label = $formDinLabelField->getAdiantiObj();
+        }
         $this->labelObj = $label;
     }
     public function getLabel(){
