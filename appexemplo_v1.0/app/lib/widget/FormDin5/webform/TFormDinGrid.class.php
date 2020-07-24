@@ -234,7 +234,9 @@ class TFormDinGrid
 
     public function setData( $data )
     {
-        $data = ArrayHelper::convertArray2Adianti($data);
+        if(!empty($data)){
+            $data = ArrayHelper::convertArray2Adianti($data);
+        }
         $this->data = $data;
     }
     public function getData()
