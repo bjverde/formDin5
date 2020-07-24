@@ -20,6 +20,7 @@ class exe_HtmlField extends TPage
         $frm->addHtmlField('html1', '<b>O campo html é um campo livre</b>. Você poderá adicionar qualquer conteúdo na página.', null, 'Dica:', null, 200);
         $frm->addHtmlField('html2', null, 'ajuda/texto.txt', 'Arquivo: texto.txt:', 200, 650);
         $frm->addHtmlField('html3', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100);
+        $frm->addHtmlField('html4', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100,null,false);
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
