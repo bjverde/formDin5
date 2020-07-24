@@ -16,12 +16,19 @@ class exe_TMemo extends TPage
         parent::__construct();
 
         $frm = new TFormDin($this,'Exemplo Campo Memo');
+        $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $frm->addMemoField('campo_memo_simples', 'Descrição:', 1000, true, 80, 5);
-        $frm->addMemoField('memo2', 'Descrição:', 400, false, 120, 30);
+        $frm->addMemoField('memo2', 'Descrição:', 400, false, 120, 30,true);
         $frm->addMemoField('memo3', 'Memo3:', 400, false,'30%', '10%')->setPlaceHolder('Texto de exemplo 30% largura com 10% de altura');
         $frm->addMemoField('memo4', 'Memo4:', 400, false,'30%', '10%')->setReadOnly(true);
         $frm->addMemoField('memo5', 'Memo5:', 400, false,'30%', '10%',null,true,null,'Texto já preenchido');
         
+        // O Adianti permite a Internacionalização - A função _t('string') serve
+        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
+        //primeiro em ingles e depois traduzindo
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
+
         $this->form = $frm->show();
 
         $idField = 'text01';
@@ -77,13 +84,6 @@ class exe_TMemo extends TPage
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
-        // add form actions
-        // O Adianti permite a Internacionalização - A função _t('string') serve
-        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
-        //primeiro em ingles e depois traduzindo
-        $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
-        $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
-
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
         $vbox = $formDinBreadCrumb->getAdiantiObj();
@@ -96,7 +96,7 @@ class exe_TMemo extends TPage
     /**
      * Clear filters
      */
-    public function clear()
+    public function onClear()
     {
         $this->clearFilters();
         $this->onReload();
