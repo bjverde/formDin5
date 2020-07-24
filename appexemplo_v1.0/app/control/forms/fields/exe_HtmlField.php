@@ -16,22 +16,21 @@ class exe_HtmlField extends TPage
         parent::__construct();
 
         $frm = new TFormDin($this,'Exemplo do Campo HTML');
+        $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $frm->addHtmlField('html1', '<b>O campo html é um campo livre</b>. Você poderá adicionar qualquer conteúdo na página.', null, 'Dica:', null, 200);
         $frm->addHtmlField('html2', null, 'ajuda/texto.txt', 'Arquivo: texto.txt:', 200, 650);
         $frm->addHtmlField('html3', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100);
-                
+
+        // O Adianti permite a Internacionalização - A função _t('string') serve
+        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
+        //primeiro em ingles e depois traduzindo
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
 
         $this->form = $frm->show();
 
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
-
-        // add form actions
-        // O Adianti permite a Internacionalização - A função _t('string') serve
-        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
-        //primeiro em ingles e depois traduzindo
-        $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
-        $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
@@ -45,7 +44,7 @@ class exe_HtmlField extends TPage
     /**
      * Clear filters
      */
-    public function clear()
+    public function onClear()
     {
         $this->clearFilters();
         $this->onReload();
