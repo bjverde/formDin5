@@ -303,7 +303,12 @@
             </menuitem>      
             <menuitem label='Grides com campos internos'>
                 <icon>fas:th fa-fw #2965f1</icon>
-                <action>SystemModulesCheckView</action>
+                <menu>
+                    <menuitem label='Gride Campos 01 - CheckColumn'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride_field01_check</action>
+                    </menuitem>
+                </menu>
             </menuitem>
             <menuitem label='Grides Draw - desenhando Dinamicamente'>
                 <icon>fas:th fa-fw #2965f1</icon>
