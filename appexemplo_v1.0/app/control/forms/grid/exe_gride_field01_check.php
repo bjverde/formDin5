@@ -15,16 +15,19 @@ class exe_gride_field01_check extends TPage
     {
         parent::__construct();
         
-        $this->form = new TForm;
+        //$this->form = new TForm;
+
+        $frm = new TFormDin($this,'Exemplo do Campo Texto');
+
+        $frm->addTextField('TEXT01','Texto tam 10', 10);
+
+        $this->form = $frm->show();
         
         // creates one datagrid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
         $this->datagrid->style = 'width: 100%';
         $this->datagrid->disableDefaultClick(); // important!
-        
-        $panel = new TPanelGroup(_t('Datagrids with Checkbutton'));
-        $panel->add($this->datagrid)->style = 'overflow-x:auto';
-        $this->form->add($panel);
+       
         
         // add the columns
         $this->datagrid->addColumn( new TDataGridColumn('check',   'Check',   'right',  '70') );
@@ -35,6 +38,10 @@ class exe_gride_field01_check extends TPage
         
         // creates the datagrid model
         $this->datagrid->createModel();
+
+        $panel = new TPanelGroup(_t('Datagrids with Checkbutton'));
+        $panel->add($this->datagrid)->style = 'overflow-x:auto';
+        $this->form->addContent([$panel]);
         
         // creates the action button
         $button = TButton::create('action1', [$this, 'onSave'], 'Save', 'fa:save green');
@@ -153,15 +160,9 @@ class exe_gride_field01_check extends TPage
         
         // put the data back to the form
         $this->form->setData($data);
-        
-        // creates a string with the form element's values
-        $message = 'Check 1 : ' . $data->check1 . '<br>';
-        $message.= 'Check 2 : ' . $data->check2 . '<br>';
-        $message.= 'Check 3 : ' . $data->check3 . '<br>';
-        $message.= 'Check 4 : ' . $data->check4 . '<br>';
-        
-        // show the message
-        new TMessage('info', $message);
+
+        FormDinHelper::debug($param,'$param');
+        FormDinHelper::debug($data,'$data');
     }
 
     /**
