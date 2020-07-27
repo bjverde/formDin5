@@ -15,3 +15,5 @@
 appexemplo_v1.0/.phpunit.result.cache
 /sysgen/
 /sysgenad/
+/phpunit-code-coverage/
+!/phpunit-code-coverage/phpunit-code-coverage.zip
