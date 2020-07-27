@@ -41,7 +41,7 @@ Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.
     1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
     1. Copiar o arquivo `lib/lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
 
-## Aplicações de Exemplo
+## Aplicações de Exemplo usando FormDin 5
 * appexemplo_v1.0 - está neste projeto
 * appexemplo_v2.0 - https://github.com/bjverde/appexemplo_v2
 
