@@ -188,7 +188,78 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::formDinGetValue($array,$atributeName,$key);
         $this->assertEquals($esperado, $retorno);
     }
+    //-----------------------------------------------------------------------------------
+    public function testGetArrayType_FailWrongTypeNull(){
+        $this->expectException(InvalidArgumentException::class);
+        $array = null;
+        ArrayHelper::getArrayType($array);
+    }
+    public function testGetArrayType_FailWrongTypeString(){
+        $this->expectException(InvalidArgumentException::class);
+        $array = 'xxx';
+        ArrayHelper::getArrayType($array);
+    }
+    public function testGetArrayType_FailWrongTypeObjetc(){
+        $this->expectException(InvalidArgumentException::class);
+        $array = new stdClass();
+        ArrayHelper::getArrayType($array);
+    }
+    public function testGetArrayType_arrayNull(){
+        $array = array();
+        $retorno = ArrayHelper::getArrayType($array);
+        $esperado = ArrayHelper::TYPE_ADIANTI;
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testGetArrayType_FormDin(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTable();
+        $esperado = ArrayHelper::TYPE_FORMDIN;
 
+        $retorno = ArrayHelper::getArrayType($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testGetArrayType_PDO(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaPDO();
+        $esperado = ArrayHelper::TYPE_PDO;
+
+        $retorno = ArrayHelper::getArrayType($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testGetArrayType_Adianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaAdianti();
+        $esperado = ArrayHelper::TYPE_ADIANTI;
+
+        $retorno = ArrayHelper::getArrayType($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+    //-----------------------------------------------------------------------------------
+    public function testConvertArray2Adianti_FormDin2Adianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTablePessoaAdianti();
+
+        $retorno = ArrayHelper::convertArray2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2Adianti_Pdo2Adianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaPDO();
+        $esperado = $mock->generateTablePessoaAdianti();
+
+        $retorno = ArrayHelper::convertArray2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2Adianti_Adianti2Adianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTablePessoaAdianti();
+
+        $retorno = ArrayHelper::convertArray2Adianti($array);
+        $this->assertEquals($esperado, $retorno);
+    }    
+    //-----------------------------------------------------------------------------------
     public function testConvertArrayPdo2FormDin_Upcase() {
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTable();
@@ -196,8 +267,7 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::convertArrayPdo2FormDin($array,true);
         $this->assertEquals($esperado, $retorno);
     }
-    
-    
+        
     public function testConvertArrayFormDin2Pdo_Upcase() {
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTablePessoaPDO();
@@ -226,7 +296,7 @@ class ArrayHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     public function testValidateIsArray_FailNull(){
         $this->expectException(InvalidArgumentException::class);
-        ArrayHelper::validateIsArray(null,__METHOD__,__LINE__);
+        ValidateHelper::isArray(null,__METHOD__,__LINE__);
     }
     public function testValidateIsArray_FailArrayEmpty(){
         $this->expectException(InvalidArgumentException::class);
