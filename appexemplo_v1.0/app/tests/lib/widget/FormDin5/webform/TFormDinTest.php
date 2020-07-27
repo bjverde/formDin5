@@ -86,7 +86,36 @@ class TFormDinTest extends TestCase
         $this->expectWarning();
         $this->classTest->validateDeprecated(null,200);
     }
-
+    //-----------------------------------------------------------------------
+    public function testConstruct_failNotObject()
+    {
+        $this->expectError();
+        $classTest = new TFormDin('xx','Phpunit');
+    }    
+    public function testSetObjForm_FailNull()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm(null);
+    }
+    public function testSetObjForm_FailNotObjectString()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm('string');
+    }
+    public function testSetObjForm_FailNotObjectInt()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm(11);
+    }
+    public function testGetObjForm()
+    {
+        $objForm = new mockFormDinComAdianti();
+        $this->classTest->setObjForm($objForm);
+        $objResult = $this->classTest->getObjForm();
+        $this->assertInstanceOf(TPage::class, $objResult);
+        $this->assertInstanceOf(mockFormDinComAdianti::class, $objResult);
+    }    
+    //-----------------------------------------------------------------------
     public function mockAddElementFormList($listFormElements
                                          ,$obj
                                          ,$type = TFormDin::TYPE_FIELD
