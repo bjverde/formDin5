@@ -17,7 +17,7 @@ class exe_formdinMaisAdianti extends TPage
 
 
 
-        $frm = new TFormDin($this,'Exemplo Layout - Campos');
+        $frm = new TFormDin($this,'Exemplo Layout - Campos FormDin e Adinati Nativos Juntos');
 
 
         $frm->addGroupField('fdl8', 'FormDin - 4 campo, label sobre');
