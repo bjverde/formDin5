@@ -344,6 +344,10 @@
                 <icon>fa:code fa-fw</icon>
                 <action>exe_colunas</action>
             </menuitem>
+            <menuitem label='FormDin + Adianti Nativos'>
+                <icon>fa:code fa-fw</icon>
+                <action>exe_formdinMaisAdianti</action>
+            </menuitem>            
         </menu>
     </menuitem>
     <menuitem label='Gerador de Código'>
