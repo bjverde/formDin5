@@ -23,17 +23,23 @@ class exe_formdinMaisAdianti extends TPage
         $frm->addGroupField('fdl8', 'FormDin - 4 campo, label sobre');
         $frm->addTextField('fdl8id1', 'fdl8d1:', 20, false, 20, 'FormDin',false, null, null, true);
         $frm->addTextField('fdl8id2', 'fdl8d2:', 20, false, 20, 'FormDin',false, null, null, true);
-        $frm->addTextField('fdl8id3', 'fdl8d3:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fdl8id3', 'fdl8d3:', 20, true, 20, 'Texto inicial',false, null, null, true);
         $frm->addTextField('fdl8id4', 'fdl8d4:', 20, false, 20, 'FormDin',false, null, null, true);
 
         $frm->addFields( [ new TLabel('slider'),  new TSlider('slider') ] );
 
-        $frm->addContent( [new TLabel('Adianti - 4 campos, label sobre', '#5A73DB', 12, '')] );
+        $txtLabelAdl8id3 = 'adl8id2';
+        $adl8id3 = new TEntry('adl8id2');
+        $adl8id3->addValidation($txtLabelAdl8id3, new TRequiredValidator);
+        $adl8id3->addValidation($txtLabelAdl8id3, new TMaxLengthValidator, array(20));
+        $adl8id3->setValue('Texto inicial');
+        
+        $frm->addContent( [new TLabel('Adianti - 4 campos, label sobre')] );
         $frm->addFields( [ new TLabel('adl8id1'), new TEntry('adl8id1') ] 
-                                , [ new TLabel('adl8id2'), new TEntry('adl8id2') ] 
-                                , [ new TLabel('adl8id3'), new TEntry('adl8id3') ] 
-                                , [ new TLabel('adl8id4'), new TEntry('adl8id4') ] 
-                            );
+                       , [ new TLabel('adl8id2'), new TEntry('adl8id2') ] 
+                       , [ new TLabel('adl8id3', 'red'), new TEntry('adl8id3') ] 
+                       , [ new TLabel('adl8id4'), new TEntry('adl8id4') ] 
+                       );
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
