@@ -20,25 +20,25 @@ class exe_formdinMaisAdianti extends TPage
         $frm = new TFormDin($this,'Exemplo Layout - Campos FormDin e Adinati Nativos Juntos');
 
 
-        $frm->addGroupField('fdl8', 'FormDin - 4 campo, label sobre');
-        $frm->addTextField('fdl8id1', 'fdl8d1:', 20, false, 20, 'FormDin',false, null, null, true);
-        $frm->addTextField('fdl8id2', 'fdl8d2:', 20, false, 20, 'FormDin',false, null, null, true);
-        $frm->addTextField('fdl8id3', 'fdl8d3:', 20, true, 20, 'Texto inicial',false, null, null, true);
-        $frm->addTextField('fdl8id4', 'fdl8d4:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addGroupField('fl8', 'FormDin - 4 campo, label sobre');
+        $frm->addTextField('fl81', 'fl81:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fl82', 'fl82:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fl83', 'fl83:', 20, true, 20, 'Texto inicial',false, null, null, true);
+        $frm->addTextField('fl84', 'fl84:', 20, false, 20, 'FormDin',false, null, null, true);
 
         $frm->addFields( [ new TLabel('slider'),  new TSlider('slider') ] );
 
-        $txtLabelAdl8id3 = 'adl8id2';
-        $adl8id3 = new TEntry('adl8id2');
-        $adl8id3->addValidation($txtLabelAdl8id3, new TRequiredValidator);
-        $adl8id3->addValidation($txtLabelAdl8id3, new TMaxLengthValidator, array(20));
-        $adl8id3->setValue('Texto inicial');
+        $txtLabelAl83 = 'al83';
+        $al83 = new TEntry('al83');
+        $al83->addValidation($txtLabelAl83, new TRequiredValidator);
+        $al83->addValidation($txtLabelAl83, new TMaxLengthValidator, array(20));
+        $al83->setValue('Texto inicial');
         
         $frm->addContent( [new TLabel('Adianti - 4 campos, label sobre')] );
-        $frm->addFields( [ new TLabel('adl8id1'), new TEntry('adl8id1') ] 
-                       , [ new TLabel('adl8id2'), new TEntry('adl8id2') ] 
-                       , [ new TLabel('adl8id3', 'red'), new TEntry('adl8id3') ] 
-                       , [ new TLabel('adl8id4'), new TEntry('adl8id4') ] 
+        $frm->addFields( [ new TLabel('al81'), new TEntry('al81') ] 
+                       , [ new TLabel('al82'), new TEntry('al82') ] 
+                       , [ new TLabel('al83', 'red'), $al83 ] 
+                       , [ new TLabel('al84'), new TEntry('al84') ] 
                        );
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
