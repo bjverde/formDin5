@@ -1058,14 +1058,21 @@ class TFormDin
 				           		, $strHint=null )
 	{
 		$formField = new TFormDinNumericField( $strName
-							, $strValue
-							, $intMaxLength
-							, $boolRequired
-							, $intDecimalPlaces
-							, $strMinValue
-							, $strMaxValue
-							, $boolFormatInteger
-							, $strDirection, $boolAllowZero, $boolAllowNull );
+                                            , $strLabel
+                                            , $intMaxLength
+                                            , $boolRequired
+                                            , $intDecimalPlaces
+                                            , $boolNewLine
+                                            , $strValue
+                                            , $strMinValue
+                                            , $strMaxValue
+                                            , $boolFormatInteger
+                                            , $strDirection
+                                            , $boolAllowZero
+                                            , $boolAllowNull
+                                            , $boolLabelAbove
+                                            , $boolNoWrapLabel
+                                            , $strHint);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);

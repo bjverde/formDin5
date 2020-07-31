@@ -87,7 +87,7 @@ class TFormDinNumericField extends TFormDinGenericField
                                ,$boolAllowNull=null
                                ,$boolLabelAbove=null
                                ,$boolNoWrapLabel=null
-                               ,$strHint=null
+                               ,$placeholder=null
                                ,string $strExampleText =null)
     {
         $decimalsSeparator = $this->getDecimalsSeparator();
