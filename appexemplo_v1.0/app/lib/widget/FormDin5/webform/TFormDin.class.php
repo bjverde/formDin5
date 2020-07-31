@@ -1032,12 +1032,12 @@ class TFormDin
      * @param string $strMinValue        - 8: valor minimo permitido. Null = não tem limite.
      * @param string $strMaxValue        - 9: valor maxima permitido. Null = não tem limite.
      * @param boolean $boolFormatInteger -10: Inteiros com ou sem ponto de separação
-     * @param string $strDirection
-     * @param boolean $boolAllowZero
-     * @param boolean $boolAllowNull
-     * @param boolean $boolLabelAbove
-     * @param boolean $boolNoWrapLabel
-     * @param string $strHint
+     * @param string $strDirection       -11:
+     * @param boolean $boolAllowZero     -12:
+     * @param boolean $boolAllowNull     -13:
+     * @param boolean $boolLabelAbove    -14:
+     * @param boolean $boolNoWrapLabel   -15:
+     * @param string $strHint            -16:
      * @return TNumber
      */       
 	public function addNumberField( $strName
@@ -1066,9 +1066,6 @@ class TFormDin
 							, $strMaxValue
 							, $boolFormatInteger
 							, $strDirection, $boolAllowZero, $boolAllowNull );
-		if( $strHint ) {
-			$field->setHint( $strHint );
-		}
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
