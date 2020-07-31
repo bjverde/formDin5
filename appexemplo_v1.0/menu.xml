@@ -71,7 +71,7 @@
             </menuitem>
             <menuitem label='Númerico'>
                 <icon>fa:check-square fa-fw</icon>
-                <action>AjudaView</action>
+                <action>exe_NumberField</action>
             </menuitem>
             <menuitem label='Brasil'>
                 <icon>fa:flag fa-fw green</icon>
