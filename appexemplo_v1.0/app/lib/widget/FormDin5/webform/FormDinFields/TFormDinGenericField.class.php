@@ -88,13 +88,33 @@ class TFormDinGenericField
         }        
         return $this->adiantiObj=$adiantiObj;
     }
+    /**
+     * Retorna um campo do Adianti
+     * @return object 
+     */    
     public function getAdiantiObj(){
         return $this->adiantiObj;
     }
+    /**
+     * Retorna objeto do tipo campo do Adianti
+     * @return object 
+     */
+    public function getAdiantiField(){
+        return $this->getAdiantiObj();
+    }
 
+    /**
+     * Seta o texto do Label do campo
+     * @param string $label
+     */
     protected function setLabelTxt($label){
         $this->labelTxt = $label;
     }
+
+    /**
+     * Retorna o texto do Label do campo
+     * @return string
+     */
     public function getLabelTxt(){
         return $this->labelTxt;
     }
@@ -107,6 +127,11 @@ class TFormDinGenericField
         }
         $this->labelObj = $label;
     }
+    
+    /**
+     * Retorna objeto do tipo campo do Adianti
+     * @return object
+     */
     public function getLabel(){
         return $this->labelObj;
     }
