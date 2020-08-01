@@ -191,6 +191,7 @@ class TFormDinGenericField
 	 */
 	public function setTooltip($strTitle=null,$strText=null,$strImagem=null)
 	{
+        $strText = is_null($strText)?$strTitle:$strText;
         $this->tooltip = $strText;
 		$this->getAdiantiObj()->setTip($strText);
 	}
@@ -199,14 +200,13 @@ class TFormDinGenericField
 		return $this->tooltip;
     }
     //------------------------------------------------------------------------------
-	public function setExampleText($strNewValue=null)
+    public function setExampleText($strNewValue=null)
 	{
-        $this->tooltip = $strNewValue;
 		$this->getAdiantiObj()->setTip($strNewValue);
 	}
 	public function getExampleText()
 	{
-		return $this->tooltip;
+		return $this->getTooltip();
     }    
 	//------------------------------------------------------------------------------    
 	public function setReadOnly($boolNewValue=null)
