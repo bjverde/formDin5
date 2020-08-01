@@ -40,12 +40,23 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-
- /**
-  * Classe generica de campos do Adianti
-  *
-  * Junta parte das classes FormDin TControl e TElement
-  */
+/**
+ * Classe generica de campos do Adianti
+ *
+ * Junta parte das classes FormDin TControl e TElement
+ * ------------------------------------------------------------------------
+ * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+ * os parâmetros do metodos foram marcados com:
+ * 
+ * NOT_IMPLEMENTED = Parâmetro não implementados, talvez funcione em 
+ *                   verões futuras do FormDin. Não vai fazer nada
+ * DEPRECATED = Parâmetro que não vai funcionar no Adianti e foi mantido
+ *              para o impacto sobre as migrações. Vai gerar um Warning
+ * FORMDIN5 = Parâmetro novo disponivel apenas na nova versão
+ * ------------------------------------------------------------------------
+ * 
+ * @author Reinaldo A. Barrêto Junior
+ */
 class TFormDinGenericField
 {
     protected $adiantiObj;
@@ -169,13 +180,13 @@ class TFormDinGenericField
     public function getPlaceHolder(){
         return $this->getAdiantiObj()->placeholder;
     }
-
     //------------------------------------------------------------------------------
 	/**
-	 * Set um Toolpit em um determinado campo pode ser usado com
-	 * @param string $strTitle - Titulo
-	 * @param string $strText - Texto que irá aparecer
-	 * @param string $strImagem
+	 * Set um Toolpit do FormDin para funcionar com Adianti 
+     * em um determinado campo pode ser usado com
+	 * @param string $strTitle - 1: Titulo
+	 * @param string $strText  - 2: Texto que irá aparecer
+	 * @param string $strImagem- 3: NOT_IMPLEMENTED
 	 * @return TControl
 	 */
 	public function setTooltip($strTitle=null,$strText=null,$strImagem=null)
