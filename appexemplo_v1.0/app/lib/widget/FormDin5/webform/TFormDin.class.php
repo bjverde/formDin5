@@ -520,9 +520,9 @@ class TFormDin
     * saber o que cada marca singinifica.
     * ------------------------------------------------------------------------
     *
-    * @param mixed $actionsLabel- 1: Texto ações.
-    * @param object $actionsName- 2: FORMDIN5 Nome da ação
-    * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=false, mostra no rodapé. TRUE = mostra no Título
+    * @param mixed $actionsLabel- 1: Label do Botão
+    * @param object $actionsName- 2: FORMDIN5 Nome do metodo da ação
+    * @param boolean $header    - 3: FORMDIN5 mostrar ação no Título (Header). DEFAULT=false, mostra no rodapé. TRUE = mostra no Título
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
     * @param string $methodPost - 6: FORMDIN5 Metodo da ação pode ser POST ou GET. DEFAULT=true, POST. FALSE, GET
