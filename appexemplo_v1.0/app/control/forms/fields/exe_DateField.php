@@ -15,22 +15,25 @@ class exe_DateField extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin($this,'Exemplo de Entrada de Dados com Máscara');
+        $frm = new TFormDin($this,'Exemplo Campo Data');
 
-        $frm->addMaskField('c1', 'Código:', false, '99.99.99', null, null, null, null, '99.99.99');
-        $frm->addMaskField('c2', 'Placa do Carro:', false, 'aaa-9999')->setExampleText('aaa-9999');
-        $frm->addMaskField('c3', 'Código de Barras:', false, '9 999999 999999')->setExampleText('9 999999 999999');
+        $frm->addDateField('dat_nascimento', 'Data:', true);
 
-        $this->form = $frm->show();
+        $dt2 = $frm->addDateField('dat_nascimento2', 'Data no ano 1990:', null,null,null,'01/01/1990','31/12/1990');
+        $dt2->setToolTip(null, 'Aceita somente Datas entre 01/01/1990 e 31/12/1990');
+        
+        $dt3 = $frm->addDateField('dat_nascimento3', 'Data mais novos que 2000:', null,null,null,'01/01/2000');
+        $dt3->setToolTip(null, 'Aceita somente mais novas que 01/01/2000');
+        
+        $frm->addDateField('dat_nascimento4', 'Data até 1800:', null,null,null, null, '31/12/1800')->setToolTip(null, 'Aceita somente mais novas que 31/12/1800');
 
-        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
-
-        // add form actions
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
-        $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
-        $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
+
+        $this->form = $frm->show();
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
@@ -44,7 +47,7 @@ class exe_DateField extends TPage
     /**
      * Clear filters
      */
-    public function clear()
+    public function onClear()
     {
         $this->clearFilters();
         $this->onReload();
