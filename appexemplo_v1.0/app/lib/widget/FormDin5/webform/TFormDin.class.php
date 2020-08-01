@@ -754,17 +754,73 @@ class TFormDin
                                , $boolShowCountChar=true)
     {
         $formField = new TFormDinMemoField( $strName, $strLabel, $intMaxLength
-                                      , $boolRequired, $intColumns, $intRows
-                                      , $boolNewLine, $boolLabelAbove
-                                      , $boolShowCounter, $strValue
+                                      , $boolRequired
+                                      , $intColumns
+                                      , $intRows
+                                      , $boolNewLine
+                                      , $boolLabelAbove
+                                      , $boolShowCounter
+                                      , $strValue
                                       , $boolNoWrapLabel
                                       , $placeholder 
-                                      , $boolShowCountChar);
+                                      , $boolShowCountChar
+                                    );
         $objField = $formField->getFullComponent();
         //$objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+    	return $formField;
+    }
+
+    /****
+     * Adicona um campo data ou mes/ano ou dia/mes de acordo com o parametro strMaxType
+     * Tipo de máscara: DMY, DM, MY
+     *  
+     * @param string  $strName         - 1: Id do Campo
+     * @param string  $strLabel        - 2: Label do Campo
+     * @param boolean $boolRequired    - 3: DEFAULT = flase não obrigatório
+     * @param boolean $boolNewLine     - 4: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param string  $strValue        - 5: Valor inicial
+     * @param string  $strMinValue     - 6: Menor data que o campo aceita
+     * @param string  $strMaxValue     - 7: Maior data que o campo aceita
+     * @param string  $strMaskType     - 8: DEFAULT = DMY. Tipo de Mascara DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
+     * @param boolean $boolButtonVisible - 9: Exibe ou não o botão do calendario.
+     * @param string  $strExampleText  - 10: Texto de exmplo
+     * @param boolean $boolLabelAbove  - 11: DEFAULT = flase. Label acima do campo = true
+     * @param string  $boolNoWrapLabel - 12: NOT_IMPLEMENTED
+     * @return TDate
+     */
+    public function addDateField( $strName
+                            , $strLabel=null
+                            , $boolRequired=false
+                            , $boolNewLine=null
+                            , $strValue=null
+                            , $strMinValue=null
+                            , $strMaxValue=null
+                            , $strMaskType=null
+                            , $boolButtonVisible=null
+                            , $strExampleText=null
+                            , $boolLabelAbove=null
+                            , $boolNoWrapLabel=null
+                            )
+    {        
+        $formField = new TFormDinDate( $strName
+                                     , $strLabel
+                                     , $boolRequired
+                                     , $boolNewLine
+                                     , $strValue
+                                     , $strMinValue
+                                     , $strMaxValue
+                                     , $strMaskType
+                                     , $boolButtonVisible
+                                     , $strExampleText
+                                     , $boolLabelAbove
+                                     , $boolNoWrapLabel
+                                    );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+    	$this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
     	return $formField;
     }
 
