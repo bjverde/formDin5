@@ -57,7 +57,6 @@
  */
 class TFormDinDate extends TFormDinGenericField
 {
-    protected $adiantiObj;
     
     /****
      * Adicona um campo data ou mes/ano ou dia/mes de acordo com o parametro strMaxType
@@ -92,7 +91,12 @@ class TFormDinDate extends TFormDinGenericField
                               )
     {
         $adiantiObj = new TDate($id);
-        parent::__construct($adiantiObj,$id,$label,$boolRequired,null,null);       
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,null);
+        $this->setMask($strMaskType);
         return $this->getAdiantiObj();
+    }
+
+    public function setMask($strMaskType){
+        $this->getAdiantiObj()->setMask($strMaskType);
     }
 }
