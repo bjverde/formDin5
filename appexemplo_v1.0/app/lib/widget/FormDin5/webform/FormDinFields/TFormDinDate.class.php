@@ -79,7 +79,7 @@ class TFormDinDate extends TFormDinGenericField
     public function __construct(string $id
                               , string $label=null
                               , $boolRequired=false
-                              , $boolNewLine=null
+                              , $boolNewLine=true
                               , $strValue=null
                               , $strMinValue=null
                               , $strMaxValue=null
@@ -97,6 +97,9 @@ class TFormDinDate extends TFormDinGenericField
     }
 
     public function setMask($strMaskType){
+        if( is_null($strMaskType) ){
+            $strMaskType = 'dd/mm/yyyy';
+        }
         $this->getAdiantiObj()->setMask($strMaskType);
     }
 }
