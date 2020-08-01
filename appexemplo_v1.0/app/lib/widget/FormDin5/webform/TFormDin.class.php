@@ -352,10 +352,10 @@ class TFormDin
     {
         $element = array();
         $element['obj']=$obj;
-        $element['type']=$type;
+        $element['type']=is_null($type)?self::TYPE_FIELD:$type;
         $element['label']=$label;
-        $element['boolNewLine']=$boolNewLine;
-        $element['boolLabelAbove']=$boolLabelAbove;
+        $element['boolNewLine']=is_null($boolNewLine)?true:$boolNewLine;
+        $element['boolLabelAbove']=is_null($boolLabelAbove)?false:$boolLabelAbove;
         $this->listFormElements[]=$element;
     }
 
