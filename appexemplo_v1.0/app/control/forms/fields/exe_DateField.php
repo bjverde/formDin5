@@ -17,7 +17,13 @@ class exe_DateField extends TPage
 
         $frm = new TFormDin($this,'Exemplo Campo Data');
 
-        $frm->addDateField('dat_nascimento', 'Data:', true);
+        $frm->addGroupField('gpx1', 'Formato da Data');
+        $frm->addDateField('dat01', 'Data Br:', true);
+        $frm->addDateField('dat02', 'Data ISO:', false,false,null,null,null,'yyyy-mm-dd')->setToolTip(null, 'Mascara yyyy-mm-dd');
+
+        $frm->addGroupField('gpx2', 'Valor inicial');
+        $frm->addDateField('dat03', 'Data Br:', null,null,'01/08/2020');
+        $frm->addDateField('dat04', 'Data ISO:', false,false,'2020/08/01',null,null,'yyyy-mm-dd')->setToolTip(null, 'Mascara yyyy-mm-dd');
 
         $dt2 = $frm->addDateField('dat_nascimento2', 'Data no ano 1990:', null,null,null,'01/01/1990','31/12/1990');
         $dt2->setToolTip(null, 'Aceita somente Datas entre 01/01/1990 e 31/12/1990');
@@ -26,6 +32,13 @@ class exe_DateField extends TPage
         $dt3->setToolTip(null, 'Aceita somente mais novas que 01/01/2000');
         
         $frm->addDateField('dat_nascimento4', 'Data até 1800:', null,null,null, null, '31/12/1800')->setToolTip(null, 'Aceita somente mais novas que 31/12/1800');
+
+        $expires = new TDate('expires');
+        $expires->setMask('dd/mm/yyyy');
+        $expires->setDatabaseMask('yyyy-mm-dd');
+        $expires->setValue( date('Y-m-d', strtotime("+1 days")) );
+
+        $frm->addFields( [new TLabel('Expires at')], [$expires]);
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
