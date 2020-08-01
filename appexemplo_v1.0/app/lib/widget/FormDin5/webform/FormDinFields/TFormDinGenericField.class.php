@@ -200,10 +200,16 @@ class TFormDinGenericField
 		return $this->tooltip;
     }
     //------------------------------------------------------------------------------
+    /**
+     * Metodo criado para melhorar a retrocompatibilidade com Formdi4s
+     */
     public function setExampleText($strNewValue=null)
 	{
 		$this->getAdiantiObj()->setTip($strNewValue);
-	}
+    }
+    /**
+     * Metodo criado para melhorar a retrocompatibilidade com Formdi4s
+     */    
 	public function getExampleText()
 	{
 		return $this->getTooltip();
