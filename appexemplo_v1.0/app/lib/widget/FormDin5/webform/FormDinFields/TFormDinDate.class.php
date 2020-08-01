@@ -91,7 +91,7 @@ class TFormDinDate extends TFormDinGenericField
                               )
     {
         $adiantiObj = new TDate($id);
-        parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,null);
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,$strExampleText);
         $this->setMask($strMaskType);
         return $this->getAdiantiObj();
     }
