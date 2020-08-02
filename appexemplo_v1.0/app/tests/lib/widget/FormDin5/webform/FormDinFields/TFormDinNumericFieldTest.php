@@ -73,6 +73,40 @@ class TFormDinNumericFieldTest extends TestCase
         $this->assertInstanceOf(TNumeric::class, $adiantiObj);
     }
 
+    public function testThousandSeparator_null()
+    {
+        $thousandSeparatorReturn = $this->classTest->getThousandSeparator();
+        $this->assertEquals(null, $thousandSeparatorReturn);
+    }
+
+    public function testThousandSeparator_FalseNull()
+    {
+        $test = new TFormDinNumericField('testN','Test Numeric',null,null,null,null,null,null,null,false);
+        $thousandSeparatorReturn = $test->getThousandSeparator();
+        $this->assertEquals(null, $thousandSeparatorReturn);
+    }
+
+    public function testThousandSeparator_TrueDot()
+    {
+        $test = new TFormDinNumericField('testN','Test Numeric',null,null,null,null,null,null,null,true);
+        $thousandSeparatorReturn = $test->getThousandSeparator();
+        $this->assertEquals(TFormDinNumericField::DOT, $thousandSeparatorReturn);
+    }
+
+    public function testThousandSeparator_Dot()
+    {
+        $test = new TFormDinNumericField('testN','Test Numeric',null,null,null,null,null,null,null,'.');
+        $thousandSeparatorReturn = $test->getThousandSeparator();
+        $this->assertEquals(TFormDinNumericField::DOT, $thousandSeparatorReturn);
+    }
+
+    public function testThousandSeparator_Comma()
+    {
+        $test = new TFormDinNumericField('testN','Test Numeric',null,null,null,null,null,null,null,',');
+        $thousandSeparatorReturn = $test->getThousandSeparator();
+        $this->assertEquals(TFormDinNumericField::COMMA, $thousandSeparatorReturn);
+    }
+
     public function test_readOnly()
     {
         $reflectionProperty = new \ReflectionProperty(TNumeric::class, 'editable');
