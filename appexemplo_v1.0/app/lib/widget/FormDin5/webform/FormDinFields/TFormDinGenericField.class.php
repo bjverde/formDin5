@@ -194,9 +194,9 @@ class TFormDinGenericField
 	 */
 	public function setTooltip($strTitle=null,$strText=null,$strImagem=null)
 	{
-        $strText = is_null($strText)?$strTitle:$strText;
-        $this->tooltip = $strText;
-		$this->getAdiantiObj()->setTip($strText);
+        $text = is_null($strTitle)?$strText:$strTitle;
+        $this->tooltip = $text;
+		$this->getAdiantiObj()->setTip($text);
 	}
 	public function getTooltip()
 	{

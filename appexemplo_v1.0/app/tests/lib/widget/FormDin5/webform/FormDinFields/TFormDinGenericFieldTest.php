@@ -128,4 +128,30 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertInstanceOf(TLabel::class, $labelAdiantiObj);
         $this->assertEquals($labelTxtEsperado, $label);
     }
+
+
+    public function testSetTooltip_title()
+    {
+        $tooltip = 'aaa';
+        $this->classTest->setTooltip($tooltip);
+        $restut = $this->classTest->getTooltip();
+        $this->assertEquals($tooltip, $restut);
+    }
+
+    public function testSetTooltip_text()
+    {
+        $tooltip = 'bbb';
+        $this->classTest->setTooltip(null,$tooltip);
+        $restut = $this->classTest->getTooltip();
+        $this->assertEquals($tooltip, $restut);
+    }
+
+    public function testSetTooltip_TitleAndText()
+    {
+        $title = 'aaa';
+        $text = 'bbb';
+        $this->classTest->setTooltip($title,$text);
+        $restut = $this->classTest->getTooltip();
+        $this->assertEquals($title, $restut);
+    }
 }
