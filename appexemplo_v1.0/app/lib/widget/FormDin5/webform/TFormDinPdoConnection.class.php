@@ -237,6 +237,7 @@ class TFormDinPdoConnection
 	}
 
     /**
+     * @codeCoverageIgnore
      * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
      * se a operação foi bem sucedida.
      *
@@ -285,6 +286,13 @@ class TFormDinPdoConnection
         return $result;
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param TCriteria $criteria
+     * @param string $repositoryName
+     * @return array Adianti
+     */    
     public function selectByTCriteria(TCriteria $criteria, $repositoryName)
     {
         try {
@@ -304,6 +312,13 @@ class TFormDinPdoConnection
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param TCriteria $criteria
+     * @param string $repositoryName
+     * @return array Adianti
+     */
     public function selectCountByTCriteria(TCriteria $criteria, $repositoryName)
     {
         try {
