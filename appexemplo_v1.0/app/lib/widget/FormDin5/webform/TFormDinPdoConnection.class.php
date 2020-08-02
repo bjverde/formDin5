@@ -42,13 +42,13 @@
 
 class TFormDinPdoConnection
 {
-    const DBMS_ACCESS = 'ACCESS';
+    const DBMS_ACCESS   = 'ACCESS';
     const DBMS_FIREBIRD = 'ibase';
     const DBMS_MYSQL    = 'mysql';
     const DBMS_ORACLE   = 'oracle';
     const DBMS_POSTGRES = 'pgsql';
     const DBMS_SQLITE   = 'sqlite';
-    const DBMS_SQLSERVER = 'sqlsrv';
+    const DBMS_SQLSERVER= 'sqlsrv';
 
     private $database = null;
     private $fech = null;
