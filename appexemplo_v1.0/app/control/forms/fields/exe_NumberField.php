@@ -20,8 +20,16 @@ class exe_NumberField extends TPage
         $frm = new TFormDin($this,'Campo Numérico');
 
         $frm->addNumberField('num_pessoa', 'Quantidade de pessoas:', 9, false, 0, true, null, 5, null, null, null, true, true);
-        $frm->addNumberField('num_peso', 'Peso Unitário:', 5, true, 2, true)->setExampleText('Kg');
-        $frm->addNumberField('num_preco', 'Preço Unitário:', 9, true, 2, false)->setExampleText('R$');
+        $frm->addNumberField('num_peso', 'Peso Unitário:', 5, false, 2, true)->setExampleText('Kg');
+        $frm->addNumberField('num_preco', 'Preço Unitário:', 9, false, 2, false)->setExampleText('R$');
+
+        $frm->addNumberField('num01', 'inteiros até 100', 3, false, 0, null,0,100);
+        $frm->addNumberField('num02', 'num real até 100', 6, false, 2, false,0,100)->setExampleText('Num max caractes conta . e ,');
+
+        $numericLabel = 'Adianti Numeric:';
+        $numeric = new TNumeric('numeric', 2, ',', '.', true);
+        $numeric->addValidation($numericLabel, new TMaxValueValidator, array(100));
+        $frm->addFields( [new TLabel($numericLabel)],[$numeric] );
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
@@ -55,12 +63,23 @@ class exe_NumberField extends TPage
 
     public function onSave($param)
     {
-        $data = $this->form->getData();
-        $this->form->setData($data);
-
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
+        try
+        {
+            $data = $this->form->getData();
+            $this->form->setData($data);
+            $this->form->validate();
+            
+    
+            //Função do FormDin para Debug
+            FormDinHelper::d($param,'$param');
+            FormDinHelper::debug($data,'$data');
+            FormDinHelper::debug($_REQUEST,'$_REQUEST');
+            
+            new TMessage('info', $message);
+        }
+        catch (Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+        }
     }
 }
