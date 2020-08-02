@@ -74,6 +74,15 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
 
+    public function test_SetValeu()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TText($id);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'abc');
+        $result = $test->getValue();
+        $this->assertEquals('abc', $result);
+    }
+
     public function testSetAdiantiObj_failNullLavel()
     {
         $this->expectNotToPerformAssertions();

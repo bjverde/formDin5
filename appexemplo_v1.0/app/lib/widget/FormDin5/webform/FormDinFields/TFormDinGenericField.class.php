@@ -170,6 +170,9 @@ class TFormDinGenericField
             $this->getAdiantiObj()->setValue($value);
         }
     }
+    public function getValue(){
+        return $this->getAdiantiObj()->getValue();
+    }
 
     public function setPlaceHolder($placeholder){
         if(!empty($placeholder)){
