@@ -60,7 +60,7 @@ class TFormDinNumericField extends TFormDinGenericField
      * @param boolean $boolRequired      - 4: Obrigatorio
      * @param integer $decimalPlaces     - 5: Quantidade de casas decimais.
      * @param boolean $boolNewLine       - 6: Campo em nova linha. Default = true = inicia em nova linha, false = continua na linha anterior 
-     * @param string $strValue           - 7: valor inicial do campo
+     * @param string $value              - 7: valor inicial do campo
      * @param string $strMinValue        - 8: valor minimo permitido. Null = não tem limite.
      * @param string $strMaxValue        - 9: valor maxima permitido. Null = não tem limite.
      * @param boolean $boolFormatInteger -10: Inteiros com ou sem ponto de separação. Recebe: (virgula), (ponto), true = ponto, false = sem nada
@@ -70,9 +70,10 @@ class TFormDinNumericField extends TFormDinGenericField
      * @param boolean $boolLabelAbove    -14: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel   -15: NOT_IMPLEMENTED
      * @param string $strHint            -16: Texto Tooltip
-     * @param string $placeholder        -17: FORMDIN5: Texto do Place Holder
-     * @param string $decimalsSeparator  -18: FORMDIN5: separador decimal
-     * @return TNumber
+     * @param boolean $replaceOnPost     -17: FORMDIN5: TRUE: process mask when editing and saving
+     * @param string $placeholder        -18: FORMDIN5: Texto do Place Holder
+     * @param string $decimalsSeparator  -19: FORMDIN5: separador decimal
+     * @return TFormDinNumericField
      */
     public function __construct(string $id
                                ,string $label
@@ -89,8 +90,9 @@ class TFormDinNumericField extends TFormDinGenericField
                                ,$boolAllowNull=null
                                ,$boolLabelAbove=null
                                ,$boolNoWrapLabel=null
+                               ,string $strHint=null
+                               ,$replaceOnPost=true
                                ,$placeholder=null
-                               ,string $strExampleText=null
                                ,string $decimalsSeparator=null
                                )
     {
@@ -99,13 +101,13 @@ class TFormDinNumericField extends TFormDinGenericField
         $decimalsSeparator = $this->getDecimalsSeparator();
         $thousandSeparator = $this->getThousandSeparator();
 
-        $adiantiObj = new TNumeric($id, $decimalPlaces, $decimalsSeparator, $thousandSeparator, $replaceOnPost = true);
+        $adiantiObj = new TNumeric($id, $decimalPlaces, $decimalsSeparator, $thousandSeparator, $replaceOnPost);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
 
         $this->setMaxLength($intMaxLength);
         $this->setMinValue($strMinValue);
         $this->setMaxValue($strMaxValue);
-        $this->setExampleText($strExampleText);
+        $this->setExampleText($strHint);
         return $this->getAdiantiObj();
     }
 
@@ -116,7 +118,7 @@ class TFormDinNumericField extends TFormDinGenericField
     public function setDecimalsSeparator($decimalsSeparator){
         $separator = null;
         if(empty($decimalsSeparator)){
-            $decimalsSeparator = self::COMMA;
+            $separator = self::COMMA;
         }elseif($decimalsSeparator === true){
             $separator = self::COMMA;
         }elseif($decimalsSeparator == self::DOT){

@@ -1097,8 +1097,9 @@ class TFormDin
      * @param boolean $boolLabelAbove    -14: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel   -15: NOT_IMPLEMENTED
      * @param string $tooltip            -16: Texto Tooltip
-     * @param string $placeholder        -17: FORMDIN5: Texto do Place Holder
-     * @param string $decimalsSeparator  -18: FORMDIN5: separador decimal
+     * @param boolean $replaceOnPost     -17: FORMDIN5: TRUE: process mask when editing and saving
+     * @param string $placeholder        -18: FORMDIN5: Texto do Place Holder
+     * @param string $decimalsSeparator  -19: FORMDIN5: separador decimal
      * @return TNumber
      */       
 	public function addNumberField( $strName
@@ -1117,6 +1118,7 @@ class TFormDin
 				           		, $boolLabelAbove=null
 				           		, $boolNoWrapLabel=null
                                 , $strHint=null 
+                                , $replaceOnPost=true
                                 , $placeholder=null
                                 , $decimalsSeparator=null
                                 )
@@ -1137,6 +1139,7 @@ class TFormDin
                                             , $boolLabelAbove
                                             , $boolNoWrapLabel
                                             , $strHint
+                                            , $replaceOnPost
                                             , $placeholder
                                             , $decimalsSeparator
                                             );

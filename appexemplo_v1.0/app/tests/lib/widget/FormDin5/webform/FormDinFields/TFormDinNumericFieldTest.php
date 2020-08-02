@@ -107,14 +107,14 @@ class TFormDinNumericFieldTest extends TestCase
     public function testDecimalsSeparator_null()
     {
         $decimalsSeparator = $this->classTest->getDecimalsSeparator();
-        $this->assertEquals(null, $decimalsSeparator);
+        $this->assertEquals(TFormDinNumericField::COMMA, $decimalsSeparator);
     }
     public function testDecimalsSeparator_FalseNull()
     {
         $test = new TFormDinNumericField('testN','Test Numeric');
         $test->setDecimalsSeparator(false);
         $decimalsSeparator = $test->getDecimalsSeparator();
-        $this->assertEquals(null, $decimalsSeparator);
+        $this->assertEquals(TFormDinNumericField::COMMA, $decimalsSeparator);
     }
     public function testDecimalsSeparator_TrueComma()
     {
