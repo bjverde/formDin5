@@ -19,12 +19,13 @@ class exe_NumberField extends TPage
 
         $frm = new TFormDin($this,'Campo Numérico');
 
-        $frm->addNumberField('num_pessoa', 'Quantidade de pessoas:', 9, false, 0, true, null, 5, null, null, null, true, true);
+        $np = $frm->addNumberField('num_pessoa', 'Quantidade de pessoas:', 9, true, 0, true, null, 5, null, null, null, true, true);
+        $np->setExampleText('Minimo de 5');
         $frm->addNumberField('num_peso', 'Peso Unitário:', 5, false, 2, true)->setExampleText('Kg');
         $frm->addNumberField('num_preco', 'Preço Unitário:', 9, false, 2, false)->setExampleText('R$');
 
-        $frm->addNumberField('num01', 'inteiros até 100', 3, false, 0, null,0,100);
-        $frm->addNumberField('num02', 'num real até 100', 6, false, 2, false,0,100)->setExampleText('Num max caractes conta . e ,');
+        $frm->addNumberField('num01', 'inteiros até 100', 3, false, 0, null,null,3,100);
+        $frm->addNumberField('num02', 'num real até 100', 6, false, 2,false,null,3,100)->setExampleText('Num max caractes conta . e ,');
 
         $numericLabel = 'Adianti Numeric:';
         $numeric = new TNumeric('numeric', 2, ',', '.', true);
@@ -74,8 +75,8 @@ class exe_NumberField extends TPage
             FormDinHelper::d($param,'$param');
             FormDinHelper::debug($data,'$data');
             FormDinHelper::debug($_REQUEST,'$_REQUEST');
-            
-            new TMessage('info', $message);
+
+            new TMessage('info', 'Tudo OK!');
         }
         catch (Exception $e)
         {
