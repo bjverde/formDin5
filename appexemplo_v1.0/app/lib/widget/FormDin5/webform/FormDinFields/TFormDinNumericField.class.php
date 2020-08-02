@@ -114,10 +114,17 @@ class TFormDinNumericField extends TFormDinGenericField
     }
 
     public function setDecimalsSeparator($decimalsSeparator){
+        $separator = null;
         if(empty($decimalsSeparator)){
             $decimalsSeparator = self::COMMA;
+        }elseif($decimalsSeparator === true){
+            $separator = self::COMMA;
+        }elseif($decimalsSeparator == self::DOT){
+            $separator = self::DOT;
+        }elseif($decimalsSeparator == self::COMMA){
+            $separator = self::COMMA;
         }
-        $this->decimalsSeparator = $decimalsSeparator;
+        $this->decimalsSeparator = $separator;
     }
 
     public function getThousandSeparator(){
