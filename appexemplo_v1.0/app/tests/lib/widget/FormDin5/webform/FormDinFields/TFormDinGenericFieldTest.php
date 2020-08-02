@@ -74,13 +74,40 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
 
-    public function test_SetValeu()
+    public function test_SetValeuTText()
     {
         $id = 'idTest';
         $adiantiObj = new TText($id);
         $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'abc');
         $result = $test->getValue();
         $this->assertEquals('abc', $result);
+    }
+
+    public function test_SetValeuTEntry()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TEntry($id);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'abc');
+        $result = $test->getValue();
+        $this->assertEquals('abc', $result);
+    }
+
+    public function test_SetValeuTNumericInt()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TNumeric('numeric', 2, ',', '.', true);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,123);
+        $result = $test->getValue();
+        $this->assertEquals('123,00', $result);
+    }
+
+    public function test_SetValeuTNumericString()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TNumeric('numeric', 2, ',', '.', true);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'123,00');
+        $result = $test->getValue();
+        $this->assertEquals('123,00', $result);
     }
 
     public function testSetAdiantiObj_failNullLavel()
