@@ -1094,9 +1094,11 @@ class TFormDin
      * @param string $strDirection       -11: NOT_IMPLEMENTED
      * @param boolean $boolAllowZero     -12: NOT_IMPLEMENTED
      * @param boolean $boolAllowNull     -13: NOT_IMPLEMENTED
-     * @param boolean $boolLabelAbove    -14:
+     * @param boolean $boolLabelAbove    -14: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel   -15: NOT_IMPLEMENTED
-     * @param string $strHint            -16:
+     * @param string $tooltip            -16: Texto Tooltip
+     * @param string $placeholder        -17: FORMDIN5: Texto do Place Holder
+     * @param string $decimalsSeparator  -18: FORMDIN5: separador decimal
      * @return TNumber
      */       
 	public function addNumberField( $strName
@@ -1114,7 +1116,10 @@ class TFormDin
 				           		, $boolAllowNull=null
 				           		, $boolLabelAbove=null
 				           		, $boolNoWrapLabel=null
-				           		, $strHint=null )
+                                , $strHint=null 
+                                , $placeholder=null
+                                , $decimalsSeparator=null
+                                )
 	{
 		$formField = new TFormDinNumericField( $strName
                                             , $strLabel
@@ -1131,7 +1136,10 @@ class TFormDin
                                             , $boolAllowNull
                                             , $boolLabelAbove
                                             , $boolNoWrapLabel
-                                            , $strHint);
+                                            , $strHint
+                                            , $placeholder
+                                            , $decimalsSeparator
+                                            );
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
