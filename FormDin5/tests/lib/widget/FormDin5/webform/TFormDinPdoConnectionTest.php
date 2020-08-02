@@ -134,8 +134,9 @@ class TFormDinPdoConnectionTest extends TestCase
         $result = $this->classTest->executeSql($sql);
 
         $this->assertCount(3, $result);
-        $this->assertEquals(1, $result[0]['seq_dado_apoio']);
-        $this->assertEquals('Metro', $result[1]['tip_dado_apoio']);
+        $this->assertEquals(1, $result[0]['SEQ_DADO_APOIO']);
+        $this->assertEquals('Metro', $result[1]['TIP_DADO_APOIO']);
+        $this->assertEquals('KM', $result[2]['SIG_DADO_APOIO']);
     }
 
 

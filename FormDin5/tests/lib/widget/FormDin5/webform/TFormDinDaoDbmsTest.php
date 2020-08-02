@@ -50,6 +50,13 @@ class TFormDinDaoDbmsTest extends TestCase
 {
 
     private $classTest;
+    const SQL_SIZE_ACCESS   = 'ACCESS';
+    const SQL_SIZE_FIREBIRD = 'ibase';
+    const SQL_SIZE_MYSQL    = 1597;
+    const SQL_SIZE_ORACLE   = 'oracle';
+    const SQL_SIZE_POSTGRES = 783;
+    const SQL_SIZE_SQLITE   = 162;
+    const SQL_SIZE_SQLSERVER= 1361;
     
     /**
      * Prepares the environment before running a test.
@@ -65,6 +72,26 @@ class TFormDinDaoDbmsTest extends TestCase
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
+    }
+
+    public function testSchema()
+    {
+        $expect = 'lalala';
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setSchema($expect);
+        $result = $this->classTest->getSchema();
+        $this->assertEquals($expect, $result);
+    }
+
+    public function testTableName()
+    {
+        $expect = 'lalala';
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setTableName($expect);
+        $result = $this->classTest->getTableName();
+        $this->assertEquals($expect, $result);
     }
     
     public function testSetType_fail()
@@ -87,4 +114,178 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setConnection('xxx');
     }
 
+    public function testGetConnection()
+    {
+        $connectionResult = $this->classTest->getConnection();
+        $this->assertInstanceOf(TFormDinPdoConnection::class, $connectionResult);
+    }
+
+    public function test_loadTablesFromDatabaseSqLite()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabaseSqLite();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_SQLITE, $length);
+    }
+
+    public function test_loadTablesFromDatabaseMySql()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabaseMySql();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_MYSQL, $length);
+    }
+
+    public function test_loadTablesFromDatabaseSqlServer()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabaseSqlServer();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_SQLSERVER, $length);
+    }
+
+    public function test_loadTablesFromDatabasePostGres()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabasePostGres();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_POSTGRES, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_access()
+    {
+        $this->expectException(DomainException::class);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_ACCESS);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+    }
+
+    public function testLoadSqlTablesFromDatabase_oracle()
+    {
+        $this->expectException(DomainException::class);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_ORACLE);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+    }
+
+    public function testLoadSqlTablesFromDatabase_sqlLite()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_SQLITE, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_mysql()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_MYSQL);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_MYSQL, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_sqlserver()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_SQLSERVER, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_postgres()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_POSTGRES);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_POSTGRES, $length);
+    }
+
+    public function testGetMsSqlShema_ShemaNull()
+    {
+        $expect = 'lalala';
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setSchema(null);
+        $result = $this->classTest->getMsSqlShema();
+        $length = mb_strlen($result);
+
+        $this->assertEquals(null, $result);
+        $this->assertEquals(0, $length);
+    }
+
+    public function testGetMsSqlShema_SetString()
+    {
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setSchema('lalala');
+        $result = $this->classTest->getMsSqlShema();
+        $length = mb_strlen($result);
+
+        $this->assertEquals(" AND upper(c.TABLE_SCHEMA) = upper('lalala') ", $result);
+        $this->assertEquals(45, $length);
+    }
+
+    public function testGetSqlToFieldsFromOneStoredProcedureMySQL_mysql()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_MYSQL);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $stringSql = $this->classTest->getSqlToFieldsFromOneStoredProcedureMySQL();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(1259, $length);
+    }
+
+    public function testGetSqlToFieldsFromOneStoredProcedureMySQL_sqlserver()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $stringSql = $this->classTest->getSqlToFieldsFromOneStoredProcedureSqlServer();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(1228, $length);
+    }
+
+    public function testGetSqlToFieldsOneStoredProcedureFromDatabase_mysql()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_MYSQL);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $result = $this->classTest->getSqlToFieldsOneStoredProcedureFromDatabase();
+        $length = mb_strlen($result['sql']);
+        $this->assertEquals(1259, $length);
+    }
+
+    public function testGetSqlToFieldsOneStoredProcedureFromDatabase_sqlserver()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $result = $this->classTest->getSqlToFieldsOneStoredProcedureFromDatabase();
+        $length = mb_strlen($result['sql']);
+        $this->assertEquals(1228, $length);
+    }
+
+    public function testGetSqlToFieldsFromDatabaseMySQL()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $result = $this->classTest->getSqlToFieldsFromDatabaseMySQL();
+        $length = mb_strlen($result);
+        $this->assertEquals(1032, $length);
+    }
+
+    public function testGetSqlToFieldsFromDatabaseSqlServer()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $result = $this->classTest->getSqlToFieldsFromDatabaseSqlServer();
+        $length = mb_strlen($result);
+        $this->assertEquals(3799, $length);
+    }
+
+    public function testGetSqlToFieldsFromDatabasePostGres()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_POSTGRES);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $result = $this->classTest->getSqlToFieldsFromDatabasePostGres();
+        $length = mb_strlen($result);
+        $this->assertEquals(2408, $length);
+    }
 }

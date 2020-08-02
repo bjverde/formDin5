@@ -29,9 +29,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -66,12 +66,76 @@ class TFormDinGenericFieldTest extends TestCase
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
-    }     
+    }
+
+    public function testSetAdiantiObj_failNull()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $id = 'idTest';
+        $adiantiObj = null;
+        new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'abc');
+    }
     
-    public function test_instanceOff()
+    public function testGetAdiantiObj_instanceOff()
     {
         $adiantiObj = $this->classTest->getAdiantiObj();
         $this->assertInstanceOf(TText::class, $adiantiObj);
+    }
+
+    public function testGetAdiantiField_instanceOff()
+    {
+        $adiantiObj = $this->classTest->getAdiantiField();
+        $this->assertInstanceOf(TText::class, $adiantiObj);
+    }
+
+    public function testRequired_false()
+    {
+        $result = $this->classTest->isRequired();
+        $this->assertEquals(false, $result);
+    }
+
+    public function testRequired_true()
+    {
+        $this->classTest->setRequired(true);
+        $array = $this->classTest->getValidations();
+        $result = $this->classTest->isRequired();
+        $this->assertEquals(true, $result);
+    }    
+
+    public function test_SetValeuTText()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TText($id);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'abc');
+        $result = $test->getValue();
+        $this->assertEquals('abc', $result);
+    }
+
+    public function test_SetValeuTEntry()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TEntry($id);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'abc');
+        $result = $test->getValue();
+        $this->assertEquals('abc', $result);
+    }
+
+    public function test_SetValeuTNumericInt()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TNumeric('numeric', 2, ',', '.', true);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,123);
+        $result = $test->getValue();
+        $this->assertEquals('123,00', $result);
+    }
+
+    public function test_SetValeuTNumericString()
+    {
+        $id = 'idTest';
+        $adiantiObj = new TNumeric('numeric', 2, ',', '.', true);
+        $test = new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'123,00');
+        $result = $test->getValue();
+        $this->assertEquals('123,00', $result);
     }
 
     public function testSetAdiantiObj_failNullLavel()
@@ -91,5 +155,55 @@ class TFormDinGenericFieldTest extends TestCase
         $label = $this->classTest->getLabelTxt();
         $this->assertInstanceOf(TLabel::class, $labelAdiantiObj);
         $this->assertEquals($labelTxtEsperado, $label);
+    }
+
+    public function testPlaceHolder()
+    {
+        $expect = 'Texto Exemplo';
+        $this->classTest->setPlaceHolder($expect);
+        $result = $this->classTest->getPlaceHolder();
+        $this->assertEquals($expect, $result);
+    }
+
+
+    public function testSetTooltip_title()
+    {
+        $tooltip = 'aaa';
+        $this->classTest->setTooltip($tooltip);
+        $restut = $this->classTest->getTooltip();
+        $this->assertEquals($tooltip, $restut);
+    }
+
+    public function testSetTooltip_text()
+    {
+        $tooltip = 'bbb';
+        $this->classTest->setTooltip(null,$tooltip);
+        $restut = $this->classTest->getTooltip();
+        $this->assertEquals($tooltip, $restut);
+    }
+
+    public function testSetTooltip_TitleAndText()
+    {
+        $title = 'aaa';
+        $text = 'bbb';
+        $this->classTest->setTooltip($title,$text);
+        $restut = $this->classTest->getTooltip();
+        $this->assertEquals($title, $restut);
+    }
+
+    public function testReadOnly_True()
+    {
+        $expect = true;
+        $this->classTest->setReadOnly($expect);
+        $result = $this->classTest->getReadOnly();
+        $this->assertEquals($expect, $result);
+    }
+
+    public function testReadOnly_False()
+    {
+        $expect = false;
+        $this->classTest->setReadOnly($expect);
+        $result = $this->classTest->getReadOnly();
+        $this->assertEquals($expect, $result);
     }
 }

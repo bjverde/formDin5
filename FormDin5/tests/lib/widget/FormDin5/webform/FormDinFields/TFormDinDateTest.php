@@ -29,9 +29,9 @@
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
  *
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * Este programa é distribuí1do na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * APLICAÇÃO EM PARTICULAR. Veja a Licen?a Pública Geral GNU/LGPL em portugu?s
  * para maiores detalhes.
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
@@ -40,68 +40,51 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+$path =  __DIR__.'/../../../../../';
+//require_once $path.'tests/initTest.php';
 
 use PHPUnit\Framework\TestCase;
-/**
- * GetHelper test case.
- */
-class RequestHelperTest extends TestCase
+use PHPUnit\Framework\Error\Warning;
+
+class TFormDinDateTest extends TestCase
 {
 
-    public function testGet_tem() {
-        $esperado = 10;
-        $_REQUEST['x']= $esperado;
-        $retorno = RequestHelper::get('x');        
-        $this->assertEquals($esperado, $retorno);
+    private $classTest;
+    
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->classTest = new TFormDinDate('t1','Data Test');
     }
     
-    public function testGet_Naotem() {
-        $esperado = '';
-        $_REQUEST['x']= 123;
-        $retorno = RequestHelper::get('z');
-        $this->assertEquals($esperado, $retorno);
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown(): void {
+        $this->classTest = null;
+        parent::tearDown();
+    }     
+    
+    public function test_instanceOff()
+    {
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $this->assertInstanceOf(TDate::class, $adiantiObj);
     }
     
-    public function testGet_Branco() {
-    	$esperado = '';
-    	$_REQUEST['x']= '';
-    	$retorno = RequestHelper::get('x');
-    	$this->assertEquals($esperado, $retorno);
-    }
-    
-    public function testGet_null() {
-    	$esperado = '';
-    	$_REQUEST['x']= null;
-    	$retorno = RequestHelper::get('x');
-    	$this->assertEquals($esperado, $retorno);
-    }
-    
-    public function testGetDefaultValeu_temValor(){
-        $esperado = 10;
-        $_REQUEST['x']= $esperado;
-        $retorno = RequestHelper::getDefaultValeu('x','padrao');        
-        $this->assertEquals($esperado, $retorno);
+    public function test_readOnly()
+    {
+        $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'editable');
+        $reflectionProperty->setAccessible(true);
+
+        $this->classTest->setReadOnly(true);
+        $readOnly = $this->classTest->getReadOnly();
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $editable = $reflectionProperty->getValue($adiantiObj);
+        
+        $this->assertEquals(false,$editable);
+        $this->assertEquals(true,$readOnly);
     }
 
-    public function testGetDefaultValeu_NaoValor(){
-        $esperado = 'padrao';
-        $_REQUEST['x']= 10;
-        $retorno = RequestHelper::getDefaultValeu('y','padrao');
-        $this->assertEquals($esperado, $retorno);
-    }
-    
-    public function testGetDefaultValeu_Branco(){
-    	$esperado = 'padrao';
-    	$_REQUEST['x']= '';
-    	$retorno = RequestHelper::getDefaultValeu('x','padrao');
-    	$this->assertEquals($esperado, $retorno);
-    }
-    
-    public function testGetDefaultValeu_GetNull(){
-    	$esperado = 'padrao';
-    	$_REQUEST['x']= null;
-    	$retorno = RequestHelper::getDefaultValeu('x','padrao');
-    	$this->assertEquals($esperado, $retorno);
-    }
 }
-
