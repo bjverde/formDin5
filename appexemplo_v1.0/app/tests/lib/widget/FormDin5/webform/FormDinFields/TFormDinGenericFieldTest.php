@@ -66,11 +66,25 @@ class TFormDinGenericFieldTest extends TestCase
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
-    }     
+    }
+
+    public function testSetAdiantiObj_failNull()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $id = 'idTest';
+        $adiantiObj = null;
+        new TFormDinGenericField($adiantiObj,$id,'Texto1',null,'abc');
+    }
     
-    public function test_instanceOff()
+    public function testGetAdiantiObj_instanceOff()
     {
         $adiantiObj = $this->classTest->getAdiantiObj();
+        $this->assertInstanceOf(TText::class, $adiantiObj);
+    }
+
+    public function testGetAdiantiField_instanceOff()
+    {
+        $adiantiObj = $this->classTest->getAdiantiField();
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
 
@@ -129,6 +143,14 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertEquals($labelTxtEsperado, $label);
     }
 
+    public function testPlaceHolder()
+    {
+        $expect = 'Texto Exemplo';
+        $this->classTest->setPlaceHolder($expect);
+        $result = $this->classTest->getPlaceHolder();
+        $this->assertEquals($expect, $result);
+    }
+
 
     public function testSetTooltip_title()
     {
@@ -153,5 +175,21 @@ class TFormDinGenericFieldTest extends TestCase
         $this->classTest->setTooltip($title,$text);
         $restut = $this->classTest->getTooltip();
         $this->assertEquals($title, $restut);
+    }
+
+    public function testReadOnly_True()
+    {
+        $expect = true;
+        $this->classTest->setReadOnly($expect);
+        $result = $this->classTest->getReadOnly();
+        $this->assertEquals($expect, $result);
+    }
+
+    public function testReadOnly_False()
+    {
+        $expect = false;
+        $this->classTest->setReadOnly($expect);
+        $result = $this->classTest->getReadOnly();
+        $this->assertEquals($expect, $result);
     }
 }
