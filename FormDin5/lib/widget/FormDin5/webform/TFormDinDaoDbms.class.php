@@ -161,6 +161,24 @@ class TFormDinDaoDbms
 	}
 
 	/**
+	 * @codeCoverageIgnore
+	 * Retorna um array com os dados
+	 *
+	 * @return void
+	 */
+	public function executeSql($sql,$arrayTypeReturn = ArrayHelper::TYPE_PDO)
+	{
+		//O result vem no padrão PDO
+		$result  = $this->getConnection()->executeSql($sql);
+		if($arrayTypeReturn == ArrayHelper::TYPE_FORMDIN){
+			$result = ArrayHelper::convertArrayPdo2FormDin($result,TRUE);
+		}else if($arrayTypeReturn == ArrayHelper::TYPE_ADIANTI){
+			$result = ArrayHelper::convertArray2Adianti($result);
+		}
+		return $result;
+	}
+
+	/**
 	* Adiciona campos da tabela ao array de campos que serão utilizados
 	* nos binds e nos métodos save, insert e delete da classe
 	*
@@ -450,12 +468,11 @@ class TFormDinDaoDbms
 	}
 
 	/**
-	 * @codeCoverageIgnore
-	 * Retorna a lista de tabela de banco de dados
+	 * Retorna a string do SQL com a lista de tabela de banco de dados
 	 *
-	 * @return void
+	 * @return string
 	 */
-	public function loadTablesFromDatabase() {
+	public function loadSqlTablesFromDatabase() {
 		$DbType = $this->getType();
 		$sql = null;
 		switch( $DbType ) {
@@ -478,11 +495,21 @@ class TFormDinDaoDbms
 			default:
 				throw new DomainException('Database '.$DbType.' not implemented ! TDAO->loadTablesFromDatabase. Contribute to the project https://github.com/bjverde/sysgen !');
 		}
-		$result = $this->getConnection()->executeSql($sql);
+		return $sql;
+	}
+
+	/**
+	 * @codeCoverageIgnore
+	 * Retorna array com a lista de tabelas do banco de dados
+	 * @return array
+	 */
+	public function loadTablesFromDatabase() {
+		$sql    = $this->loadSqlTablesFromDatabase();
+		$result = $this->executeSql($sql);
 		return $result;
 	}
 	
-	private function getMsSqlShema() {
+	public function getMsSqlShema() {
 	    $result = '';
 	    if($this->getSchema()){
 	        $result = " AND upper(c.TABLE_SCHEMA) = upper('".$this->getSchema()."') ";
@@ -582,7 +609,7 @@ class TFormDinDaoDbms
 	    switch( $DbType ) {
 	        case TFormDinPdoConnection::DBMS_MYSQL:
 	        case TFormDinPdoConnection::DBMS_SQLSERVER:
-	            $result = $this->getConnection()->executeSql($sql);
+	            $result = $this->executeSql($sql);
 	        break;
 	        //--------------------------------------------------------------------------------
 	        default:
@@ -802,8 +829,8 @@ class TFormDinDaoDbms
 			$params=array($this->getTableName());
 		}
 		else if( $DbType == TFormDinPdoConnection::DBMS_SQLITE) {
-			$stmt = $this->getConn()->query( "PRAGMA table_info(".$this->getTableName().")");
-			$res  = $stmt->fetchAll();
+			$sql  = "PRAGMA table_info(".$this->getTableName().")";
+			$res  = $this->executeSql($sql);
 			$data = null;
 			$sql  = null;
 			foreach($res as $rownum => $row)
@@ -864,7 +891,7 @@ class TFormDinDaoDbms
 			case TFormDinPdoConnection::DBMS_MYSQL:
 			case TFormDinPdoConnection::DBMS_SQLSERVER:
 			case TFormDinPdoConnection::DBMS_POSTGRES:
-				$result = $this->getConnection()->executeSql($sql);
+				$result = $this->executeSql($sql);
 		    break;
 			//--------------------------------------------------------------------------------
 			default:

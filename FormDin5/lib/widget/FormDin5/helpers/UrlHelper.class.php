@@ -1,11 +1,10 @@
 <?php
 /*
- * ----------------------------------------------------------------------------
- * Formdin 5 Framework
- * SourceCode https://github.com/bjverde/formDin5
- * @author Reinaldo A. Barrêto Junior
- * 
- * É uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+ * Formdin Framework
+ * Copyright (C) 2012 Ministério do Planejamento
+ * Criado por Luís Eugênio Barbosa
+ * Essa versão é um Fork https://github.com/bjverde/formDin
+ *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -40,32 +39,30 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class MessageHelper
+class UrlHelper
 {
     
-    public static function logRecord(Exception $exception)
+    static public function curPageURL() 
     {
-        $app = $_SESSION[APLICATIVO];
-        $login = null;
-        $grupo = null;
-        if( ArrayHelper::has('USER',$_SESSION[APLICATIVO]) ) {
-            $login = ( ArrayHelper::has('LOGIN', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['LOGIN']:null );
-            $grupo = ( ArrayHelper::has('GRUPO_NOME', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['GRUPO_NOME']:null );
+        $pageURL = 'http';        
+        $https = ServerHelper::get('HTTPS');
+        if ($https == "on") {$pageURL .= "s";
         }
-        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION.' ,usuario: '.$login
-        .PHP_EOL.'type: '.get_class($exception).' ,Code: '.$exception->getCode().' ,file: '.$exception->getFile().' ,line: '.$exception->getLine()
-        .PHP_EOL.'mensagem: '.$exception->getMessage()
-        .PHP_EOL."Stack trace:"
-        .PHP_EOL.$exception->getTraceAsString();
-        
-        error_log($log);
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+        }
+        return $pageURL;
     }
     
-    public static function logRecordSimple($message)
+    static public function homeUrl() 
     {
-        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION
-        .PHP_EOL.TAB.'mensagem: '.$message;
-        error_log($log);
+        $curPageURL = self::curPageURL();
+        $res = explode('index.php', $curPageURL);
+        return $res[0];
     }
+
 }
 ?>

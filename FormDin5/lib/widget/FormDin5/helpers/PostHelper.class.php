@@ -1,11 +1,10 @@
 <?php
 /*
- * ----------------------------------------------------------------------------
- * Formdin 5 Framework
- * SourceCode https://github.com/bjverde/formDin5
- * @author Reinaldo A. Barrêto Junior
- * 
- * É uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+ * Formdin Framework
+ * Copyright (C) 2012 Ministério do Planejamento
+ * Criado por Luís Eugênio Barbosa
+ * Essa versão é um Fork https://github.com/bjverde/formDin
+ *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -40,26 +39,40 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TFormDinHiddenField  extends TFormDinGenericField
+class PostHelper
 {
-    protected $adiantiObj;
-    
-
-    /**
-    * Adiciona um campo oculto ao layout
-    * Reconstruido FormDin 4 Sobre o Adianti 7
-    *
-    * @param string $strName       - 1: Id do Campo
-    * @param string $strValue      - 2: Valor inicial
-    * @param boolean $boolRequired - 3: True = Obrigatorio; False (Defalt) = Não Obrigatorio  
-    * @return THidden
-    */
-    public function __construct(string $id
-                               ,string $strValue=null
-                               ,$boolRequired = false)
+    public static function getArray($atributeName) 
     {
-        $adiantiObj = new THidden($id);
-        parent::__construct($adiantiObj,$id,null,$boolRequired,$strValue,null);
-        return $this->getAdiantiObj();
+        $result = ArrayHelper::getArray($_POST, $atributeName);
+        return $result;
+    }
+
+    public static function get($atributeName) 
+    {        
+        $result = ArrayHelper::get($_POST, $atributeName);
+        return $result;
+    }
+    
+    public static function getDefaultValeu($atributeName,$DefaultValue) 
+    {        
+        $result = ArrayHelper::getDefaultValeu($_POST, $atributeName, $DefaultValue);
+        return $result;
+    }
+
+    public static function getInt($atributeName) 
+    {
+        if(!isset($_POST[$atributeName])) {
+            $_POST[$atributeName]="";
+        }
+        return is_null($_POST[$atributeName])?"":trim((int)$_POST[$atributeName]);
+    }
+    
+    public static function getBool($atributeName) 
+    {
+        if(!isset($_POST[$atributeName]) || is_null($_POST[$atributeName])) {
+            $_POST[$atributeName] = false;
+        }
+        return strtoupper($_POST[$atributeName]) == "S" ? true : false;
     }
 }
+?>

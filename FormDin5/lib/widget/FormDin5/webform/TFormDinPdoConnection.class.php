@@ -42,16 +42,17 @@
 
 class TFormDinPdoConnection
 {
-    const DBMS_ACCESS = 'ACCESS';
+    const DBMS_ACCESS   = 'ACCESS';
     const DBMS_FIREBIRD = 'ibase';
     const DBMS_MYSQL    = 'mysql';
     const DBMS_ORACLE   = 'oracle';
     const DBMS_POSTGRES = 'pgsql';
     const DBMS_SQLITE   = 'sqlite';
-    const DBMS_SQLSERVER = 'sqlsrv';
+    const DBMS_SQLSERVER= 'sqlsrv';
 
     private $database = null;
     private $fech = null;
+    private $case = null;
 
 
     private $host;
@@ -61,12 +62,13 @@ class TFormDinPdoConnection
     private $pass;
     private $type;
 
-    public function __construct($database = null,$fech = null)
+    public function __construct($database = null,$fech = null,$case = null)
     {
         if(!empty($database)){
             $this->setDatabase($database);
         }
         $this->setFech($fech);
+        $this->setCase($case);
     }
 
     public function setDatabase($database)
@@ -93,6 +95,18 @@ class TFormDinPdoConnection
         return $this->fech;
     }
 
+    public function setCase($case)
+    {
+        if(empty($case)){
+            $case = PDO::CASE_UPPER;
+        }
+        $this->case = $case;
+    }
+    public function getCase()
+    {
+        return $this->case;
+    }
+
     /**
      * Retorna um array com o tipo de SGBD e descrição
      *
@@ -101,8 +115,8 @@ class TFormDinPdoConnection
     public static function getListDBMS()
     {
         $list = array();
-        //$list[self::DBMS_ACCESS]='Access';
-        //$list[self::DBMS_FIREBIRD]='FIREBIRD';
+        $list[self::DBMS_ACCESS]='Access';
+        $list[self::DBMS_FIREBIRD]='FIREBIRD';
         $list[self::DBMS_MYSQL]='MariaDB ou MySQL';
         $list[self::DBMS_ORACLE]='Oracle';
         $list[self::DBMS_POSTGRES]='PostgreSQL';
@@ -223,6 +237,7 @@ class TFormDinPdoConnection
 	}
 
     /**
+     * @codeCoverageIgnore
      * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
      * se a operação foi bem sucedida.
      *
@@ -236,11 +251,13 @@ class TFormDinPdoConnection
             $configConnect = $this->getConfigConnect();
             $database = $configConnect['database'];
             $db = $configConnect['db'];
+            $case     = $this->getCase();
             $fech     = $this->getFech();
             
             TTransaction::open($database,$db); // abre uma transação
             $conn = TTransaction::get();   // obtém a conexão  
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn->setAttribute(PDO::ATTR_CASE, $case);
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
             $stmt = $conn->query($sql);    // realiza a consulta
             $result = $stmt->fetchall();
@@ -269,6 +286,13 @@ class TFormDinPdoConnection
         return $result;
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param TCriteria $criteria
+     * @param string $repositoryName
+     * @return array Adianti
+     */    
     public function selectByTCriteria(TCriteria $criteria, $repositoryName)
     {
         try {
@@ -288,6 +312,13 @@ class TFormDinPdoConnection
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param TCriteria $criteria
+     * @param string $repositoryName
+     * @return array Adianti
+     */
     public function selectCountByTCriteria(TCriteria $criteria, $repositoryName)
     {
         try {
