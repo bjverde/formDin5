@@ -88,6 +88,20 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
 
+    public function testRequired_false()
+    {
+        $result = $this->classTest->isRequired();
+        $this->assertEquals(false, $result);
+    }
+
+    public function testRequired_true()
+    {
+        $this->classTest->setRequired(true);
+        $array = $this->classTest->getValidations();
+        $result = $this->classTest->isRequired();
+        $this->assertEquals(true, $result);
+    }    
+
     public function test_SetValeuTText()
     {
         $id = 'idTest';

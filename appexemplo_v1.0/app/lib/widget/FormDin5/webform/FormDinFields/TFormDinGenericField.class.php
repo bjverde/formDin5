@@ -165,6 +165,14 @@ class TFormDinGenericField
         }
     }
 
+    public function isRequired(){
+        $this->getAdiantiObj()->isRequired();
+    }
+
+    public function getValidations(){
+        $this->getAdiantiObj()->getValidations();
+    }
+
     public function setValue($value){
         if(!empty($value)){
             $this->getAdiantiObj()->setValue($value);
