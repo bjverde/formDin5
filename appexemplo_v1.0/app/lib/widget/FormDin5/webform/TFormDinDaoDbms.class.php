@@ -509,7 +509,7 @@ class TFormDinDaoDbms
 		return $result;
 	}
 	
-	private function getMsSqlShema() {
+	public function getMsSqlShema() {
 	    $result = '';
 	    if($this->getSchema()){
 	        $result = " AND upper(c.TABLE_SCHEMA) = upper('".$this->getSchema()."') ";

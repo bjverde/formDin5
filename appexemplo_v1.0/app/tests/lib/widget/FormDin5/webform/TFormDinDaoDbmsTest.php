@@ -73,6 +73,26 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest = null;
         parent::tearDown();
     }
+
+    public function testSchema()
+    {
+        $expect = 'lalala';
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setSchema($expect);
+        $result = $this->classTest->getSchema();
+        $this->assertEquals($expect, $result);
+    }
+
+    public function testTableName()
+    {
+        $expect = 'lalala';
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setTableName($expect);
+        $result = $this->classTest->getTableName();
+        $this->assertEquals($expect, $result);
+    }
     
     public function testSetType_fail()
     {
@@ -174,4 +194,68 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->assertEquals(self::SQL_SIZE_POSTGRES, $length);
     }
 
+    public function testGetMsSqlShema_ShemaNull()
+    {
+        $expect = 'lalala';
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setSchema(null);
+        $result = $this->classTest->getMsSqlShema();
+        $length = mb_strlen($result);
+
+        $this->assertEquals(null, $result);
+        $this->assertEquals(0, $length);
+    }
+
+    public function testGetMsSqlShema_SetString()
+    {
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
+        $this->classTest->setType($type);        
+        $this->classTest->setSchema('lalala');
+        $result = $this->classTest->getMsSqlShema();
+        $length = mb_strlen($result);
+
+        $this->assertEquals(" AND upper(c.TABLE_SCHEMA) = upper('lalala') ", $result);
+        $this->assertEquals(45, $length);
+    }
+
+    public function testGetSqlToFieldsFromOneStoredProcedureMySQL_mysql()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_MYSQL);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $stringSql = $this->classTest->getSqlToFieldsFromOneStoredProcedureMySQL();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(1259, $length);
+    }
+
+    public function testGetSqlToFieldsFromOneStoredProcedureMySQL_sqlserver()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $stringSql = $this->classTest->getSqlToFieldsFromOneStoredProcedureSqlServer();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(1228, $length);
+    }
+
+    public function testGetSqlToFieldsOneStoredProcedureFromDatabase_mysql()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_MYSQL);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $result = $this->classTest->getSqlToFieldsOneStoredProcedureFromDatabase();
+        $length = mb_strlen($result['sql']);
+        $this->assertEquals(1259, $length);
+    }
+
+    public function testGetSqlToFieldsOneStoredProcedureFromDatabase_sqlserver()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $this->classTest->setSchema('lalala');
+        $this->classTest->setTableName('xxx');
+        $result = $this->classTest->getSqlToFieldsOneStoredProcedureFromDatabase();
+        $length = mb_strlen($result['sql']);
+        $this->assertEquals(1228, $length);
+    }
 }
