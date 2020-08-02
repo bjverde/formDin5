@@ -468,12 +468,11 @@ class TFormDinDaoDbms
 	}
 
 	/**
-	 * @codeCoverageIgnore
-	 * Retorna a lista de tabela de banco de dados
+	 * Retorna a string do SQL com a lista de tabela de banco de dados
 	 *
-	 * @return void
+	 * @return string
 	 */
-	public function loadTablesFromDatabase() {
+	public function loadSqlTablesFromDatabase() {
 		$DbType = $this->getType();
 		$sql = null;
 		switch( $DbType ) {
@@ -496,6 +495,16 @@ class TFormDinDaoDbms
 			default:
 				throw new DomainException('Database '.$DbType.' not implemented ! TDAO->loadTablesFromDatabase. Contribute to the project https://github.com/bjverde/sysgen !');
 		}
+		return $sql;
+	}
+
+	/**
+	 * @codeCoverageIgnore
+	 * Retorna array com a lista de tabelas do banco de dados
+	 * @return array
+	 */
+	public function loadTablesFromDatabase() {
+		$sql    = $this->loadSqlTablesFromDatabase();
 		$result = $this->executeSql($sql);
 		return $result;
 	}
