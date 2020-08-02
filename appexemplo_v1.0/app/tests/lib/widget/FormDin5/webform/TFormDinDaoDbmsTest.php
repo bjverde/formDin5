@@ -50,6 +50,13 @@ class TFormDinDaoDbmsTest extends TestCase
 {
 
     private $classTest;
+    const SQL_SIZE_ACCESS   = 'ACCESS';
+    const SQL_SIZE_FIREBIRD = 'ibase';
+    const SQL_SIZE_MYSQL    = 'mysql';
+    const SQL_SIZE_ORACLE   = 'oracle';
+    const SQL_SIZE_POSTGRES = 'pgsql';
+    const SQL_SIZE_SQLITE   = 162;
+    const SQL_SIZE_SQLSERVER= 'sqlsrv';
     
     /**
      * Prepares the environment before running a test.
@@ -85,6 +92,48 @@ class TFormDinDaoDbmsTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->classTest->setConnection('xxx');
+    }
+
+    public function testGetConnection()
+    {
+        $connectionResult = $this->classTest->getConnection();
+        $this->assertInstanceOf(TFormDinPdoConnection::class, $connectionResult);
+    }
+
+    public function test_loadTablesFromDatabaseSqLite()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabaseSqLite();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_SQLITE, $length);
+    }
+
+    public function test_loadTablesFromDatabaseMySql()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabaseMySql();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(1597, $length);
+    }
+
+    public function test_loadTablesFromDatabaseSqlServer()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabaseSqlServer();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(1361, $length);
+    }
+
+    public function test_loadTablesFromDatabasePostGres()
+    {
+        $stringSql = $this->classTest->loadTablesFromDatabasePostGres();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(783, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_sqlLite()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_SQLITE, $length);
     }
 
 }
