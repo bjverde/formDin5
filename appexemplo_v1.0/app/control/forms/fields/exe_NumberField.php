@@ -27,10 +27,12 @@ class exe_NumberField extends TPage
         $frm->addNumberField('num01', 'inteiros até 100', 3, false, 0, null,null,3,100);
         $frm->addNumberField('num02', 'num real até 100', 6, false, 2,false,null,3,100)->setExampleText('Num max caractes conta . e ,');
 
-        $numericLabel = 'Adianti Numeric:';
-        $numeric = new TNumeric('numeric', 2, ',', '.', true);
-        $numeric->addValidation($numericLabel, new TMaxValueValidator, array(100));
-        $frm->addFields( [new TLabel($numericLabel)],[$numeric] );
+        $num03 = $frm->addNumberField('num03', 'Milhar Ponto'   , 10,false,2,true,null,null,null,true);
+        $num03->setPlaceHolder('Número');
+        $num04 = $frm->addNumberField('num04', 'Milhar Virgular', 10,false,2,false,'12345678',null,null,',');
+
+        $frm->addNumberField('num05', 'Num Brasil', 10,false,2,true,'12345678',null,null,'.');
+        $frm->addNumberField('num06', 'Num EUA'   , 10,false,2,false,'12345678',null,null,',');
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
@@ -39,6 +41,29 @@ class exe_NumberField extends TPage
         $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
 
         $this->form = $frm->show();
+
+
+        $numericLabel = 'TNumeric1';
+        $numeric = new TNumeric('numeric1', 2, ',', '.', true);
+        $numeric->setValue('123456');
+        $this->form->addFields( [new TLabel($numericLabel)],[$numeric] );
+
+        $numericLabel = 'TNumeric2';
+        $numeric = new TNumeric('numeric2', 2, '.', ',', true);
+        $numeric->setValue('123456');
+        $this->form->addFields( [new TLabel($numericLabel)],[$numeric] );
+
+        /*
+        $entryLabel = 'TEntry';
+        $entry = new TEntry('entry');
+        $entry->setValue('123,00');
+        $this->form->addFields( [new TLabel($entryLabel)],[$entry] );
+
+        $entryLabel = 'TText';
+        $entry = new TText('ttext');
+        $entry->setValue('123,00');
+        $this->form->addFields( [new TLabel($entryLabel)],[$entry] );
+*/        
 
 
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
