@@ -52,11 +52,11 @@ class TFormDinDaoDbmsTest extends TestCase
     private $classTest;
     const SQL_SIZE_ACCESS   = 'ACCESS';
     const SQL_SIZE_FIREBIRD = 'ibase';
-    const SQL_SIZE_MYSQL    = 'mysql';
+    const SQL_SIZE_MYSQL    = 1597;
     const SQL_SIZE_ORACLE   = 'oracle';
-    const SQL_SIZE_POSTGRES = 'pgsql';
+    const SQL_SIZE_POSTGRES = 783;
     const SQL_SIZE_SQLITE   = 162;
-    const SQL_SIZE_SQLSERVER= 'sqlsrv';
+    const SQL_SIZE_SQLSERVER= 1361;
     
     /**
      * Prepares the environment before running a test.
@@ -111,21 +111,35 @@ class TFormDinDaoDbmsTest extends TestCase
     {
         $stringSql = $this->classTest->loadTablesFromDatabaseMySql();
         $length = mb_strlen($stringSql);
-        $this->assertEquals(1597, $length);
+        $this->assertEquals(self::SQL_SIZE_MYSQL, $length);
     }
 
     public function test_loadTablesFromDatabaseSqlServer()
     {
         $stringSql = $this->classTest->loadTablesFromDatabaseSqlServer();
         $length = mb_strlen($stringSql);
-        $this->assertEquals(1361, $length);
+        $this->assertEquals(self::SQL_SIZE_SQLSERVER, $length);
     }
 
     public function test_loadTablesFromDatabasePostGres()
     {
         $stringSql = $this->classTest->loadTablesFromDatabasePostGres();
         $length = mb_strlen($stringSql);
-        $this->assertEquals(783, $length);
+        $this->assertEquals(self::SQL_SIZE_POSTGRES, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_access()
+    {
+        $this->expectException(DomainException::class);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_ACCESS);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+    }
+
+    public function testLoadSqlTablesFromDatabase_oracle()
+    {
+        $this->expectException(DomainException::class);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_ORACLE);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
     }
 
     public function testLoadSqlTablesFromDatabase_sqlLite()
@@ -134,6 +148,30 @@ class TFormDinDaoDbmsTest extends TestCase
         $stringSql = $this->classTest->loadSqlTablesFromDatabase();
         $length = mb_strlen($stringSql);
         $this->assertEquals(self::SQL_SIZE_SQLITE, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_mysql()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_MYSQL);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_MYSQL, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_sqlserver()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_SQLSERVER, $length);
+    }
+
+    public function testLoadSqlTablesFromDatabase_postgres()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_POSTGRES);
+        $stringSql = $this->classTest->loadSqlTablesFromDatabase();
+        $length = mb_strlen($stringSql);
+        $this->assertEquals(self::SQL_SIZE_POSTGRES, $length);
     }
 
 }
