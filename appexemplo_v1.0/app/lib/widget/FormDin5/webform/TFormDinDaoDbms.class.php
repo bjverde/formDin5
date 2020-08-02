@@ -160,6 +160,12 @@ class TFormDinDaoDbms
 		return $this->schema;
 	}
 
+	/**
+	 * @codeCoverageIgnore
+	 * Retorna um array com os dados
+	 *
+	 * @return void
+	 */
 	public function executeSql($sql,$arrayTypeReturn = ArrayHelper::TYPE_PDO)
 	{
 		//O result vem no padrão PDO
@@ -490,7 +496,7 @@ class TFormDinDaoDbms
 			default:
 				throw new DomainException('Database '.$DbType.' not implemented ! TDAO->loadTablesFromDatabase. Contribute to the project https://github.com/bjverde/sysgen !');
 		}
-		$result = $this->getConnection()->executeSql($sql);
+		$result = $this->executeSql($sql);
 		return $result;
 	}
 	
@@ -594,7 +600,7 @@ class TFormDinDaoDbms
 	    switch( $DbType ) {
 	        case TFormDinPdoConnection::DBMS_MYSQL:
 	        case TFormDinPdoConnection::DBMS_SQLSERVER:
-	            $result = $this->getConnection()->executeSql($sql);
+	            $result = $this->executeSql($sql);
 	        break;
 	        //--------------------------------------------------------------------------------
 	        default:
@@ -876,7 +882,7 @@ class TFormDinDaoDbms
 			case TFormDinPdoConnection::DBMS_MYSQL:
 			case TFormDinPdoConnection::DBMS_SQLSERVER:
 			case TFormDinPdoConnection::DBMS_POSTGRES:
-				$result = $this->getConnection()->executeSql($sql);
+				$result = $this->executeSql($sql);
 		    break;
 			//--------------------------------------------------------------------------------
 			default:
