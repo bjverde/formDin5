@@ -1090,12 +1090,12 @@ class TFormDin
      * @param string $strValue           - 7: valor inicial do campo
      * @param string $strMinValue        - 8: valor minimo permitido. Null = não tem limite.
      * @param string $strMaxValue        - 9: valor maxima permitido. Null = não tem limite.
-     * @param boolean $boolFormatInteger -10: Inteiros com ou sem ponto de separação
-     * @param string $strDirection       -11:
-     * @param boolean $boolAllowZero     -12:
-     * @param boolean $boolAllowNull     -13:
+     * @param boolean $boolFormatInteger -10: Inteiros com ou sem ponto de separação. Recebe: (virgula), (ponto), true = ponto, false = sem nada
+     * @param string $strDirection       -11: NOT_IMPLEMENTED
+     * @param boolean $boolAllowZero     -12: NOT_IMPLEMENTED
+     * @param boolean $boolAllowNull     -13: NOT_IMPLEMENTED
      * @param boolean $boolLabelAbove    -14:
-     * @param boolean $boolNoWrapLabel   -15:
+     * @param boolean $boolNoWrapLabel   -15: NOT_IMPLEMENTED
      * @param string $strHint            -16:
      * @return TNumber
      */       
