@@ -63,6 +63,7 @@ class TFormDinGrid
 
     private $adiantiObj;
     private $panelGroupGrid;
+    private $pageNavigation;
     private $objForm;
     private $listColumn = array();
 
@@ -277,6 +278,14 @@ class TFormDinGrid
             $this->getAdiantiObj()->addItems( $this->getData() );
         }
         $this->getPanelGroupGrid()->add($this->getAdiantiObj())->style = 'overflow-x:auto';
+
+
+        // the creation of the navigation page must come after createModel
+        $pageNavigation = new TPageNavigation;
+        $pageNavigation->setAction(new TAction(array($this->getObjForm(), 'onReload')));
+        $this->setPageNavigation($pageNavigation);
+        $this->getPanelGroupGrid()->addFooter($pageNavigation);
+
         return $this->getAdiantiObj();
     }
 
@@ -316,6 +325,17 @@ class TFormDinGrid
             throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TPanelGroup');
         }
         $this->panelGroupGrid = $panel;
+    }
+
+    public function getPageNavigation(){
+        return $this->pageNavigation ;
+    }
+
+    public function setPageNavigation($pageNavigation){
+        if( !($pageNavigation instanceof TPageNavigation) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TPanelGroup');
+        }
+        $this->pageNavigation = $pageNavigation;
     }
 
     public function getFooter(){
