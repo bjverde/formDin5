@@ -15,22 +15,29 @@ class exe_gride05_paginacao extends TPage
     {
         parent::__construct();
 
-        $this->setDatabase('dbapoio');        // defines the database
-        $this->setActiveRecord('tb_paginacao');       // defines the active record
-        $this->setDefaultOrder('id', 'asc');  // define the default order
+        $this->setDatabase('dbapoio');         // defines the database
+        $this->setActiveRecord('tb_paginacao');// defines the active record
+        $this->setDefaultOrder('id', 'asc');   // define the default order
 
         $frm = new TFormDin($this,'Exemplo Paginação do Gride');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
-        $frm->addHtmlField('mensagem', "<h3>Este exemplo utiliza a tabela tb_paginacao do banco de dados bdApoio.s3db (sqlite).</h3>");
+        $frm->addHtmlField('mensagem', "<h3>Este exemplo utiliza a tabela tb_paginacao do banco de dados app/database/bdApoio.s3db (sqlite).</h3>");
+
+        // O Adianti permite a Internacionalização - A função _t('string') serve
+        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
+        //primeiro em ingles e depois traduzindo
+        //$frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
+        
         $this->form = $frm->show();
 
-        $grid = new TFormDinGrid($this,'grid','Exemplo Paginação do Gride');
+        $grid = new TFormDinGrid($this,'grid','Gride com Paginação');
         //$grid->setHeight(2500);
         $grid->addColumn('id',  'id', null, 'center');
         $grid->addColumn('descricao',  'Descrição', null, 'left');
 
         $this->datagrid = $grid->show();
-        $this->datagrid = $grid->getPageNavigation();
+        $this->pageNavigation = $grid->getPageNavigation();
         $panelGroupGrid = $grid->getPanelGroupGrid();
 
 
