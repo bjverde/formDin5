@@ -291,13 +291,9 @@
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_grid17</action>
                     </menuitem>
-                    <menuitem label='Grides com campos internos'>
+                    <menuitem label='Gride 05 - Paginação'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>SystemModulesCheckView</action>
-                    </menuitem>
-                    <menuitem label='Grides Draw - desenhando Dinamicamente'>
-                        <icon>fas:th fa-fw #2965f1</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>exe_gride05_paginacao</action>
                     </menuitem>
                 </menu> 
             </menuitem>      
