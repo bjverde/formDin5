@@ -48,7 +48,39 @@ use PHPUnit\Framework\Error\Warning;
 
 class ValidateHelperTest extends TestCase
 {
-        
+
+    public function testObjTypeTFormDinPdoConnection_FailMethod() {
+        $this->expectException(InvalidArgumentException::class);
+        $tpdo = null;
+        $method = null;
+        $line = null;
+        ValidateHelper::objTypeTFormDinPdoConnection($tpdo,$method,$line);
+    }
+
+    public function testObjTypeTFormDinPdoConnection_FailLine() {
+        $this->expectException(InvalidArgumentException::class);
+        $tpdo = null;
+        $method = 'testConnect';
+        $line = null;
+        ValidateHelper::objTypeTFormDinPdoConnection($tpdo,$method,$line);
+    }
+
+    public function testObjTypeTFormDinPdoConnection_FailObj() {
+        $this->expectException(InvalidArgumentException::class);
+        $tpdo = new stdClass();
+        $method = 'testConnect';
+        $line = 1;
+        ValidateHelper::objTypeTFormDinPdoConnection($tpdo,$method,$line);
+    }
+
+    public function testObjTypeTPDOConnectionObj_ok() {
+        $this->expectNotToPerformAssertions();
+        $tpdo = new TFormDinPdoConnection();
+        $method = 'testConnect';
+        $line = 1;
+        ValidateHelper::objTypeTFormDinPdoConnection($tpdo,$method,$line);
+    }
+
     public function testTriggerError_msgNull_typeErrosNull() {
         $this->expectNotice();
         $msg = null;
