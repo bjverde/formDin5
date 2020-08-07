@@ -444,4 +444,78 @@ class TFormDinGrid
             $this->enableDefaultButtons( false );
             return $this->buttons[ $strName ];
     }
+
+    //------------------------------------------------------------------------------------
+    /**
+     * Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * @param string $mixUpdateFields
+     */
+    public function setUpdateFields( $mixUpdateFields = null )
+    {
+        if ( $mixUpdateFields )
+        {
+            if ( is_array( $mixUpdateFields ) )
+            {
+                foreach( $mixUpdateFields as $k => $v )
+                {
+                    if ( is_numeric( $k ) )
+                    {
+                        $k = $v;
+                        $v = strtolower( $v );
+                    }
+                    $this->setUpdateFields( $k . '|' . $v );
+                }
+            }
+            else if( strpos( $mixUpdateFields, ',' ) !== false )
+            {
+                $a = explode( ',', $mixUpdateFields );
+                $this->setUpdateFields( $a );
+            }
+            else
+            {
+                $aFields = explode( '|', $mixUpdateFields );
+                
+                if ( !isset( $aFields[ 1 ] ) )
+                {
+                    $aFields[ 0 ] = strtoupper( $aFields[ 0 ] );
+                    $aFields[ 1 ] = strtolower( $aFields[ 0 ] );
+                }
+                
+                if ( $aFields[ 0 ] != '' )
+                {
+                    $this->updateFields[ $aFields[ 0 ] ] = $aFields[ 1 ];
+                }
+            }
+        }
+    }
+    
+    //------------------------------------------------------------------------------------
+    public function getUpdateFields()
+    {
+        $arrResult = $this->updateFields;
+        
+        if ( $arrResult )
+        {
+            // adicionar o campo chave na lista de campos a serem atualizados
+            if ( $this->getKeyField() )
+            {
+                $keyValue = '';
+                
+                foreach( $this->getKeyField() as $key => $fieldName )
+                {
+                    if ( !in_array( $fieldName, $arrResult ) )
+                    {
+                        $this->setUpdateFields( $fieldName );
+                    }
+                }
+            }
+        }
+        return $arrResult;
+    }
+    
+    //------------------------------------------------------------------------------------
+    public function clearUpdateFields()
+    {
+        $this->updateFields = null;
+    }
 }
