@@ -404,4 +404,44 @@ class TFormDinGrid
         $this->columns[ strtolower( $strName )] = $col;
         return $col;
     }
+
+    //------------------------------------------------------------------------------------
+    /**
+     * Adicionar botão na linha do gride
+     *
+     * $boolSubmitAction = adicionar/remover a função fwFazerAcao(). Padrão=true
+     *
+     * @param string $strRotulo         - 1: Nome do Label do Botão ou Hint que irá aparecer na imagem se o Hint estiver em branco
+     * @param string $strAction         - 2: Nome da ação capitura no formDinAcao
+     * @param string $strName           - 3: NOT_IMPLEMENTED Nome
+     * @param string $strOnClick        - 4: NOT_IMPLEMENTED JavaScript que será chamado no evento OnClick
+     * @param string $strConfirmMessage - 5: NOT_IMPLEMENTED Mensagem com caixa de confirmação
+     * @param string $strImage          - 6: Imagem que irá aparecer
+     * @param string $strImageDisabled  - 7: NOT_IMPLEMENTED Imagem quado desabilitado
+     * @param string $strHint           - 8: NOT_IMPLEMENTED
+     * @param boolean $boolSubmitAction - 9: NOT_IMPLEMENTED
+     * @param boolean $mixUpdateButton  -10: FORMDIN5:
+     * @return object> TButton
+     */
+    public function addButton( $strRotulo
+                             , $strAction = null
+                             , $strName = null
+                             , $strOnClick = null
+                             , $strConfirmMessage = null
+                             , $strImage = null
+                             , $strImageDisabled = null
+                             , $strHint = null
+                             , $boolSubmitAction = null
+                             ){
+            if ( is_null( $strName ) ){
+                $strName = $this->getId() . ucwords( $this->removeIllegalChars( $strRotulo ) );
+            }
+            if ( is_null( $strAction ) && is_null( $strOnClick ) ){
+                $strAction = strtolower( $this->getId() . '_' . $strRotulo );
+            }
+            $this->buttons[ $strName ] = new TButton( $strName, $strRotulo, $strAction, $strOnClick, $strConfirmMessage, $strImage, $strImageDisabled, $strHint, $boolSubmitAction );
+            // se o usuário adicionar um botão, cancelar a criação dos botões padrão de alterar e excluir
+            $this->enableDefaultButtons( false );
+            return $this->buttons[ $strName ];
+    }
 }
