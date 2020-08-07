@@ -447,7 +447,9 @@ class TFormDinGrid
 
     //------------------------------------------------------------------------------------
     /**
-     * Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * Campos do form origem que serão atualizados ao selecionar o item desejado. Separados
+     * por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * ou array PHP simples
      * @param string $mixUpdateFields
      */
     public function setUpdateFields( $mixUpdateFields = null )
@@ -487,8 +489,7 @@ class TFormDinGrid
                 }
             }
         }
-    }
-    
+    }    
     //------------------------------------------------------------------------------------
     public function getUpdateFields()
     {
@@ -511,8 +512,7 @@ class TFormDinGrid
             }
         }
         return $arrResult;
-    }
-    
+    }    
     //------------------------------------------------------------------------------------
     public function clearUpdateFields()
     {
