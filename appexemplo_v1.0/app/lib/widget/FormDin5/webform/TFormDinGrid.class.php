@@ -118,7 +118,7 @@ class TFormDinGrid
      * @param mixed $strHeight            - 5: Altura 
      * @param mixed $strWidth             - 6: NOT_IMPLEMENTED Largura
      * @param mixed $strKeyField          - 7: NOT_IMPLEMENTED Chave primaria
-     * @param array $mixUpdateFields      - 8: NOT_IMPLEMENTED Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * @param array $mixUpdateFields      - 8: Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
      * @param mixed $intMaxRows           - 9: NOT_IMPLEMENTED Qtd Max de linhas
      * @param mixed $strRequestUrl        -10: NOT_IMPLEMENTED Url request do form
      * @param mixed $strOnDrawCell        -11: NOT_IMPLEMENTED
@@ -164,6 +164,7 @@ class TFormDinGrid
             $this->setHeight($strHeight);
             //$this->setWidth($strWidth);
             $this->setData($mixData);
+            $this->setUpdateFields( $mixUpdateFields );
 
             $panel = new TPanelGroup($this->getTitle());
             $this->setPanelGroupGrid($panel);
@@ -449,7 +450,7 @@ class TFormDinGrid
     /**
      * Campos do form origem que serão atualizados ao selecionar o item desejado. Separados
      * por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
-     * ou array PHP simples
+     * ou array PHP ( <campo_tabela>=><campo_formulario>,  <campo_tabela>=><campo_formulario>)
      * @param string $mixUpdateFields
      */
     public function setUpdateFields( $mixUpdateFields = null )
