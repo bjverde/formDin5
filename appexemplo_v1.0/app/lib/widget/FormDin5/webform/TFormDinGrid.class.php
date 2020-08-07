@@ -155,6 +155,7 @@ class TFormDinGrid
                                         );
         }else{
             $this->setObjForm($objForm);
+            $this->setTitle($strTitle);
 
             $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
             $bootgrid->width = '100%';
@@ -164,7 +165,7 @@ class TFormDinGrid
             //$this->setWidth($strWidth);
             $this->setData($mixData);
 
-            $panel = new TPanelGroup($strTitle);
+            $panel = new TPanelGroup($this->getTitle());
             $this->setPanelGroupGrid($panel);
         }
     }
@@ -221,7 +222,6 @@ class TFormDinGrid
             $this->getAdiantiObj()->makeScrollable();
         }
     }
-
 
     public function getWidth()
     {
