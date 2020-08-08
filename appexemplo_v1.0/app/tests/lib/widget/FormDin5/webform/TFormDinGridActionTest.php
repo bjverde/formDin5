@@ -166,14 +166,14 @@ class TFormDinGridActionTest extends TestCase
     public function testGetTypeArrayMixUpdateFields_null()
     {
         $result = $this->classTest->getTypeArrayMixUpdateFields(null);
-        $this->assertEquals(null, $result);
+        $this->assertFalse($result);
     }
 
     public function testGetTypeArrayMixUpdateFields_ArrayNull()
     {
         $arrayData = array();
         $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(null, $result);
+        $this->assertFalse($result);
     }
 
     public function testGetTypeArrayMixUpdateFields_Adianti()
