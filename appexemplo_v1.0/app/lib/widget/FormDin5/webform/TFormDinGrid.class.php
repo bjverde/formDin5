@@ -114,7 +114,7 @@ class TFormDinGrid
      *
      * @param object $objForm             - 1: FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
      * @param string $strName             - 2: ID da grid
-     * @param string $strTitle            - 3: Titulo da grip
+     * @param string $strTitle            - 3: Titulo da grid
      * @param array $mixData              - 4: Array de dados. Pode ser form formato Adianti, FormDin ou PDO
      * @param mixed $strHeight            - 5: Altura 
      * @param mixed $strWidth             - 6: NOT_IMPLEMENTED Largura
@@ -156,7 +156,6 @@ class TFormDinGrid
                                         );
         }else{
             $this->setObjForm($objForm);
-            //$this->setTitle($strTitle);
 
             $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
             $bootgrid->width = '100%';
@@ -167,6 +166,7 @@ class TFormDinGrid
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
 
+            $this->setTitle($strTitle);
             $panel = new TPanelGroup($this->getTitle());
             $this->setPanelGroupGrid($panel);
         }
@@ -290,30 +290,24 @@ class TFormDinGrid
 
         return $this->getAdiantiObj();
     }
-
+    //----------------------------------
     public function getAction(){
         return $this->action;
     }
-
     public function setAction($action){
         $this->action = $action;
     }
-
-
-
+    //----------------------------------
     public function getTitle(){
         return $this->title;
     }
-
-    public function setTitle(string $title){
-        $this->getPanelGroupGrid()->setTitle($title);
+    public function setTitle($title){
         $this->title = $title;
     }
-
+    //----------------------------------
     public function getKey(){
         return $this->key;
     }
-
     public function setKey(string $key){
         $this->key = $key;
     }
