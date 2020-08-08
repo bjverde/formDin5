@@ -48,6 +48,7 @@ class TFormDinGridAction
 
     protected $adiantiObj;
     protected $actionLabel;
+    protected $actionName;
     protected $action;
     protected $image;
     
@@ -71,6 +72,7 @@ class TFormDinGridAction
         $adiantiObj = new TDataGridAction($arrayAction, $parameters);
         $this->setAdiantiObj($adiantiObj);
         $this->setActionLabel($actionLabel);
+        $this->setActionName($actionName);
         $this->setImage($image);
         return $this->getAdiantiObj();
     }
@@ -91,6 +93,13 @@ class TFormDinGridAction
     public function setActionLabel($actionLabel){
         $this->actionLabel = $actionLabel;
     }
+    //-------------------------------------------------------------------------
+    public function getActionName(){
+        return $this->actionName;
+    }
+    public function setActionName($actionName){
+        $this->actionName = $actionName;
+    }    
     //-------------------------------------------------------------------------
     public function getImage(){
         return $this->image;
