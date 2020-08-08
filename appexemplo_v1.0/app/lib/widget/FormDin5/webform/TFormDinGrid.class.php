@@ -75,7 +75,7 @@ class TFormDinGrid
 
     protected $data;
 
-    protected $listGridAction;
+    protected $listGridAction = array();
     protected $createDefaultButtons;
     protected $createDefaultEditButton;
     protected $createDefaultDeleteButton;
@@ -191,7 +191,7 @@ class TFormDinGrid
     public function getObjForm(){
         return $this->objForm;
     }
-
+    //---------------------------------------------------------------
     public function setAdiantiObj( $bootgrid )
     {
         if( !($bootgrid instanceof BootstrapDatagridWrapper) ){
@@ -199,18 +199,13 @@ class TFormDinGrid
         }
         $this->adiantiObj = $bootgrid;
     }
-
     public function getAdiantiObj(){
-        //$title = $this->getTitle();
-        //$panel = new TPanelGroup($title);
-        //$panel->add( $this->adiantiObj );
         return $this->adiantiObj;
     }
-
+    //---------------------------------------------------------------
     public function getId(){
         return $this->idGrid;
     }
-
     public function setId($idGrid){
         if(empty($idGrid)){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
@@ -218,18 +213,17 @@ class TFormDinGrid
         $this->getAdiantiObj()->setId($idGrid);
         $this->idGrid = $idGrid;
     }
-
+    //---------------------------------------------------------------
     public function getHeight(){
         return $this->getAdiantiObj()->height;
     }
-
     public function setHeight($height){
         if( !empty($height) ){
             $this->getAdiantiObj()->setHeight($height);
             $this->getAdiantiObj()->makeScrollable();
         }
     }
-
+    //---------------------------------------------------------------
     public function getWidth()
     {
         //return $this->getAdiantiObj()->getWidth();
@@ -239,7 +233,7 @@ class TFormDinGrid
     {
         //$this->getAdiantiObj()->setWidth($width);
     }
-
+    //---------------------------------------------------------------
     public function setData( $data )
     {
         if(!empty($data)){
@@ -251,7 +245,7 @@ class TFormDinGrid
     {
         return $this->data;
     }
-
+    //---------------------------------------------------------------
     /**
      * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
      * 
@@ -336,28 +330,28 @@ class TFormDinGrid
 
         return $this->getAdiantiObj();
     }
-    //----------------------------------
+    //---------------------------------------------------------------
     public function getAction(){
         return $this->action;
     }
     public function setAction($action){
         $this->action = $action;
     }
-    //----------------------------------
+    //---------------------------------------------------------------
     public function getTitle(){
         return $this->title;
     }
     public function setTitle($title){
         $this->title = $title;
     }
-    //----------------------------------
+    //---------------------------------------------------------------
     public function getKey(){
         return $this->key;
     }
     public function setKey(string $key){
         $this->key = $key;
     }
-    //----------------------------------
+    //---------------------------------------------------------------
     public function getListGridAction(){
         return $this->listGridAction;
     }
@@ -365,47 +359,43 @@ class TFormDinGrid
         $this->listGridAction = $listGridAction;
     }
     public function addListGridAction($itemGridAction){
-        $this->listGridAction[] = $itemGridAction;
-    }    
-    //----------------------------------    
+        $this->listGridAction[$itemGridAction->getActionName()] = $itemGridAction;
+    }
+    //---------------------------------------------------------------
     public function getPanelGroupGrid(){
         return $this->panelGroupGrid;
     }
-
     public function setPanelGroupGrid($panel){
         if( !($panel instanceof TPanelGroup) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TPanelGroup');
         }
         $this->panelGroupGrid = $panel;
     }
-
+    //---------------------------------------------------------------
     public function getPageNavigation(){
         return $this->pageNavigation ;
     }
-
     public function setPageNavigation($pageNavigation){
         if( !($pageNavigation instanceof TPageNavigation) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TPanelGroup');
         }
         $this->pageNavigation = $pageNavigation;
     }
-
+    //---------------------------------------------------------------
     public function getFooter(){
         return $this->getPanelGroupGrid()->getFooter();
     }
-
     public function addFooter($footer){
         return $this->getPanelGroupGrid()->addFooter($footer);
     }
-
+    //---------------------------------------------------------------
     public function enableDataTable(){
         $this->getAdiantiObj()->datatable = 'true';
     }
-
     public function disableDataTable(){
         $this->getAdiantiObj()->datatable = 'false';
     }
-
+    //---------------------------------------------------------------
     /**
      * Coluna do Grid Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7.1
