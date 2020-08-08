@@ -68,6 +68,13 @@ class TFormDinGridTest extends TestCase
         parent::tearDown();
     }
     
+    public function testGetId()
+    {
+        $expected  = 'gdxy';
+        $this->classTest->setId('gdxy');
+        $result = $this->classTest->getId();
+        $this->assertEquals($expected, $result);
+    }
 
     public function testConstruct_Height()
     {
@@ -156,6 +163,25 @@ class TFormDinGridTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
         $this->classTest->setHeight(100);
+    }
+
+    public function testGetUpdateFields_formDin()
+    {
+        $expected  = ['code'=>'{code}','nome'=>'{nome}'];
+        $arrayData = 'code|code,nome|nome';
+        $this->classTest->setUpdateFields($arrayData);
+        $result = $this->classTest->getUpdateFields();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testClearUpdateFields_formDin()
+    {
+        $expected  = null;
+        $arrayData = 'code|code,nome|nome';
+        $this->classTest->setUpdateFields($arrayData);
+        $this->classTest->clearUpdateFields();
+        $result = $this->classTest->getUpdateFields();
+        $this->assertEquals($expected, $result);
     }
 
 }
