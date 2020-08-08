@@ -138,7 +138,7 @@ class TFormDinGridAction
     private static function convertArrayParametersPHP2FormDin($arrayData){
         $result = null;
         foreach( $arrayData as $k => $v ) {
-            $result = ','.$k.'|'.$v;
+            $result = $result.','.$k.'|'.$v;
         }
         $result  = mb_substr($result, 1, mb_strlen($result,'utf-8'), 'utf-8');
         return $result;
