@@ -70,6 +70,7 @@ class TFormDinGrid
     protected $action;
     protected $idGrid;
     protected $title;
+    protected $updateFields;
     protected $key;
 
     protected $data;
@@ -492,7 +493,7 @@ class TFormDinGrid
         }
     }    
     //------------------------------------------------------------------------------------
-    public function getUpdateFields()
+    public function getUpdateFields($outputFormat = TFormDinGridAction::TYPE_ADIANTI)
     {
         $arrResult = $this->updateFields;
         
