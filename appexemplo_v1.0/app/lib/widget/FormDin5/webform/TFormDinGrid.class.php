@@ -330,6 +330,19 @@ class TFormDinGrid
         return $this->getAdiantiObj();
     }
     //---------------------------------------------------------------
+    public function getListColumn(){
+        return $this->listColumn;
+    }
+    public function setListColumn($listColumn){
+        $this->listColumn = $listColumn;
+    }
+    public function addListColumn($itemColumn){
+        if ( !($itemColumn instanceof TFormDinGridColumn)) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TFormDinGridColumn');
+         }
+        $this->listGridAction[$itemColumn->getName()] = $itemColumn;
+    }
+    //---------------------------------------------------------------
     public function getTitle(){
         return $this->title;
     }
@@ -351,6 +364,9 @@ class TFormDinGrid
         $this->listGridAction = $listGridAction;
     }
     public function addListGridAction($itemGridAction){
+        if ( !($itemGridAction instanceof TFormDinGridAction)) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TFormDinGridAction');
+         }
         $this->listGridAction[$itemGridAction->getActionName()] = $itemGridAction;
     }
     //---------------------------------------------------------------
