@@ -56,7 +56,8 @@ class TFormDinGridTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $mock = new StdClass;
+        //$mock = new StdClass;
+        $mock = new mockFormDinComAdianti();
         $this->classTest = new TFormDinGrid($mock,'grid');
     }
     
@@ -74,6 +75,12 @@ class TFormDinGridTest extends TestCase
         $this->classTest->setId('gdxy');
         $result = $this->classTest->getId();
         $this->assertEquals($expected, $result);
+    }
+
+    public function testSetId_null()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setId(null);
     }
 
     public function testConstruct_Height()
@@ -125,6 +132,12 @@ class TFormDinGridTest extends TestCase
         $this->classTest->setObjForm($objEntradaz);
         $objResult = $this->classTest->getObjForm();
         $this->assertInstanceOf(mockFormDinComAdianti::class, $objResult);
+    }
+
+    public function testShow()
+    {
+        $objResult = $this->classTest->show();
+        $this->assertInstanceOf(BootstrapDatagridWrapper::class, $objResult);
     }
 
     public function testFooter()

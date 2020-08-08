@@ -11,4 +11,9 @@ class mockFormDinComAdianti extends TPage
 
     }
 
+    public function onReload()    
+    {
+
+    }
+
 }

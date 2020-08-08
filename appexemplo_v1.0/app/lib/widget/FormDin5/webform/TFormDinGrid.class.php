@@ -206,7 +206,7 @@ class TFormDinGrid
         return $this->idGrid;
     }
 
-    public function setId(string $idGrid){
+    public function setId($idGrid){
         if(empty($idGrid)){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
         }
