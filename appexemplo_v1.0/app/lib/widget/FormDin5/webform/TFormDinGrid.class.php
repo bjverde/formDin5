@@ -289,17 +289,25 @@ class TFormDinGrid
             foreach( $listGridAction as $itemGridAction ) {
                 $this->getAdiantiObj()->addAction($itemGridAction->getAdiantiObj()
                                                  ,$itemGridAction->getActionLabel()
-                                                 ,$itemGridAction->getActionLabel()
+                                                 ,$itemGridAction->getImage()
                                                  );
             }
         }else{
             if( $this->getCreateDefaultButtons() ){
                 if( $this->getCreateDefaultEditButton() ){
-                    $this->addButton(_t('Edit'),'onEdit',null,null,null,'far:edit blue');
+                    $itemGridAction = $this->addButton(_t('Edit'),'onEdit',null,null,null,'far:edit blue');
+                    $this->getAdiantiObj()->addAction($itemGridAction->getAdiantiObj()
+                                                     ,$itemGridAction->getActionLabel()
+                                                     ,$itemGridAction->getImage()
+                                                     );
                 }
 
                 if( $this->getCreateDefaultDeleteButton() ){
-                    $this->addButton(_t('Delete'),'onDelete',null,null,null,'far:trash-alt red');
+                    $itemGridAction = $this->addButton(_t('Delete'),'onDelete',null,null,null,'far:trash-alt red');
+                    $this->getAdiantiObj()->addAction($itemGridAction->getAdiantiObj()
+                                                     ,$itemGridAction->getActionLabel()
+                                                     ,$itemGridAction->getImage()
+                                                     );
                 }
             }
         }
@@ -465,8 +473,9 @@ class TFormDinGrid
      * @param string $strImageDisabled  - 7: NOT_IMPLEMENTED Imagem quado desabilitado
      * @param string $strHint           - 8: NOT_IMPLEMENTED
      * @param boolean $boolSubmitAction - 9: NOT_IMPLEMENTED
-     * @param boolean $mixUpdateButton  -10: FORMDIN5:
-     * @return object> TButton
+     * @param mixed   $mixUpdateButton  -10: FORMDIN5: MixUpdateFields do Botão 
+     * @param string $classDestiny      -11: FORMDIN5: nome da classe que vai tratar ação. o Valor Defualt é propria classe
+     * @return object TFormDinGridAction
      */
     public function addButton( $strRotulo
                              , $strAction = null
@@ -478,9 +487,14 @@ class TFormDinGrid
                              , $strHint = null
                              , $boolSubmitAction = null
                              , $mixUpdateButton = null
+                             , $classDestiny    = null
                              ){
             $mixUpdateButton = empty($mixUpdateButton)?$this->getUpdateFields():$mixUpdateButton;
-            $itemGridAction = new TFormDinGridAction($this->getObjForm()
+            if( empty($mixUpdateButton) ){
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_GRID_UPDATEFIELD.$strAction);
+            }
+            $classDestiny    = empty($classDestiny)?$this->getObjForm():$classDestiny;
+            $itemGridAction = new TFormDinGridAction($classDestiny
                                                     ,$strRotulo
                                                     ,$strAction
                                                     ,$mixUpdateButton
