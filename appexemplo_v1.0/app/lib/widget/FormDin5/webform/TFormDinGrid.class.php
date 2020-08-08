@@ -428,6 +428,7 @@ class TFormDinGrid
                              , $strImageDisabled = null
                              , $strHint = null
                              , $boolSubmitAction = null
+                             , $mixUpdateButton = null
                              ){
             if ( is_null( $strName ) ){
                 $strName = $this->getId() . ucwords( $this->removeIllegalChars( $strRotulo ) );

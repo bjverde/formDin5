@@ -50,18 +50,16 @@ class TFormDinGridAction
     protected $action;
     
     /**
-     * Coluna do Grid Padronizado em BoorStrap
-     * Reconstruido FormDin 4 Sobre o Adianti 7.1
+     * Acões do botão da Grid
      *
-     * @param  string $name      - 1: Name of the column in the database
-     * @param  string $label     - 2: Text label that will be shown in the header
-     * @param  string $width     - 3: Column Width (pixels)
-     * @param  string $align     - 4: Column align (left|right|center|justify)
-     * @return TDataGridAction
+     * @param [type] $objForm     - 1: FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
+     * @param [type] $actionName  - 2: Text nome da ação deve ter um metodo com o mesmo nome. 
+     * @param [type] $parameters  - 3: parametro do mixupdate fileds
      */
-    public function __construct($action, $parameters = null)
+    public function __construct($objForm, string $actionName, $parameters = null)
     {
-        $adiantiObj = new TDataGridAction($action, $parameters);
+        $arrayAction = [$objForm, $actionName];
+        $adiantiObj = new TDataGridAction($arrayAction, $parameters);
         $this->setAdiantiObj($adiantiObj);
         return $this->getAdiantiObj();
     }
