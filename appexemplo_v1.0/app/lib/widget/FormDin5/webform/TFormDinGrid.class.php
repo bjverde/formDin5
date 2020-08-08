@@ -156,7 +156,7 @@ class TFormDinGrid
                                         );
         }else{
             $this->setObjForm($objForm);
-            $this->setTitle($strTitle);
+            //$this->setTitle($strTitle);
 
             $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
             $bootgrid->width = '100%';
