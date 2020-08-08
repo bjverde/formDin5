@@ -271,6 +271,17 @@ class TFormDinGrid
         $this->listColumn[]=$element;
     }
 
+    public function showGridColumn()
+    {
+        $listColumn = $this->getListColumn();
+        if( ArrayHelper::isArrayNotEmpty($listColumn) ){
+            foreach( $listColumn as $formDinGridColumn ) {
+                $column = $formDinGridColumn->getAdiantiObj();
+                $this->getAdiantiObj()->addColumn($column);
+            }
+        }
+    }
+
     /**
      * Monta as ações no grid
      * @return void
@@ -312,7 +323,8 @@ class TFormDinGrid
      */
     public function show()
     {
-        $this->showGridAction();
+        $this->showGridColumn();
+        //$this->showGridAction();
 
         $this->getAdiantiObj()->createModel();
         if( !empty($this->getData()) ){
@@ -340,7 +352,7 @@ class TFormDinGrid
         if ( !($itemColumn instanceof TFormDinGridColumn)) {
             throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG.' use TFormDinGridColumn');
          }
-        $this->listGridAction[$itemColumn->getName()] = $itemColumn;
+        $this->listColumn[$itemColumn->getName()] = $itemColumn;
     }
     //---------------------------------------------------------------
     public function getTitle(){
@@ -420,9 +432,11 @@ class TFormDinGrid
                             , string $align='left' )
     {
         $formDinGridColumn = new TFormDinGridColumn( $name,$label,$width,$align);
-        $column = $formDinGridColumn->getAdiantiObj();
-        $this->getAdiantiObj()->addColumn($column);
-        return $column;
+        $this->addListColumn($formDinGridColumn);
+        return $formDinGridColumn;
+        //$column = $formDinGridColumn->getAdiantiObj();
+        //$this->getAdiantiObj()->addColumn($column);
+        //return $column;
     }
 
     //---------------------------------------------------------------------------------------
