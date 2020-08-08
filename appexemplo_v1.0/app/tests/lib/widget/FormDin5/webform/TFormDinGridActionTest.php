@@ -59,7 +59,7 @@ class TFormDinGridActionTest extends TestCase
         $objForm = new mockFormDinComAdianti();
         $actionName = 'onSave';
         $arrayMixUpdateFields = ['code'=>'{code}'];
-        $this->classTest = new TFormDinGridAction($objForm,$actionName, $arrayMixUpdateFields);
+        $this->classTest = new TFormDinGridAction($objForm,'Salvar',$actionName, $arrayMixUpdateFields);
     }
     
     /**

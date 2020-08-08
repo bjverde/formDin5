@@ -47,23 +47,34 @@ class TFormDinGridAction
     const TYPE_ADIANTI = 'TYPE_ADIANTI';
 
     protected $adiantiObj;
+    protected $actionLabel;
     protected $action;
+    protected $image;
     
     /**
      * Acões do botão da Grid
      *
-     * @param [type] $objForm     - 1: FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
-     * @param [type] $actionName  - 2: Text nome da ação deve ter um metodo com o mesmo nome. 
-     * @param [type] $parameters  - 3: parametro do mixupdate fileds
+     * @param object $objForm     - 1: FORMDIN5 Objeto do Adianti da classe do Form, é só informar $this
+     * @param string $actionLabel - 2: Text do Label que aparece para o usuário. 
+     * @param string $actionName  - 3: Text nome da ação deve ter um metodo com o mesmo nome. 
+     * @param array $parameters   - 4: parametro do mixupdate fileds
+     * @param array $image        - 5: imagem que irá aparecer
      */
-    public function __construct($objForm, string $actionName, $parameters = null)
+    public function __construct($objForm
+                               ,$actionLabel
+                               ,$actionName
+                               ,$parameters = null
+                               ,$image = null
+                               )
     {
         $arrayAction = [$objForm, $actionName];
         $adiantiObj = new TDataGridAction($arrayAction, $parameters);
         $this->setAdiantiObj($adiantiObj);
+        $this->setActionLabel($actionLabel);
+        $this->setImage($image);
         return $this->getAdiantiObj();
     }
-
+    //-------------------------------------------------------------------------
     public function setAdiantiObj($adiantiObj){
         if( empty($adiantiObj) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
@@ -73,7 +84,21 @@ class TFormDinGridAction
     public function getAdiantiObj(){
         return $this->adiantiObj;
     }
-
+    //-------------------------------------------------------------------------
+    public function getActionLabel(){
+        return $this->actionLabel;
+    }
+    public function setActionLabel($actionLabel){
+        $this->actionLabel = $actionLabel;
+    }
+    //-------------------------------------------------------------------------
+    public function getImage(){
+        return $this->image;
+    }
+    public function setImage($image){
+        $this->image = $image;
+    }
+    //-------------------------------------------------------------------------
     private static function convertArrayParametersAdianti2FormDin($arrayData){
         $arrayData = self::convertArrayParametersAdianti2PHP($arrayData);
         $arrayData = self::convertArrayParametersPHP2FormDin($arrayData);

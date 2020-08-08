@@ -75,6 +75,8 @@ class TFormDinGrid
 
     protected $data;
 
+    protected $listGridAction;
+
 
     /**
      * Classe para criação de grides, Padronizado em BoorStrap
@@ -273,8 +275,33 @@ class TFormDinGrid
         $this->listColumn[]=$element;
     }
 
+    /**
+     * Monta as ações no grid
+     * @return void
+     */
+    public function showGridAction()
+    {
+        $listGridAction = $this->getListGridAction();
+        if( ArrayHelper::isArrayNotEmpty($listGridAction) ){
+            foreach( $listGridAction as $itemGridAction ) {
+                $this->getAdiantiObj()->addAction($itemGridAction->getAdiantiObj()
+                                                 ,$itemGridAction->getActionLabel()
+                                                 ,$itemGridAction->getActionLabel()
+                                                 );
+            }
+        }else{
+
+        }
+    }
+
+    /**
+     * Monta o objeto do Grid Adianti com tudo que precisa
+     * @return void
+     */
     public function show()
     {
+        $this->showGridAction();
+
         $this->getAdiantiObj()->createModel();
         if( !empty($this->getData()) ){
             $this->getAdiantiObj()->addItems( $this->getData() );
@@ -311,7 +338,17 @@ class TFormDinGrid
     public function setKey(string $key){
         $this->key = $key;
     }
-
+    //----------------------------------
+    public function getListGridAction(){
+        return $this->listGridAction;
+    }
+    public function setListGridAction($listGridAction){
+        $this->listGridAction = $listGridAction;
+    }
+    public function addListGridAction($itemGridAction){
+        $this->listGridAction[] = $itemGridAction;
+    }    
+    //----------------------------------    
     public function getPanelGroupGrid(){
         return $this->panelGroupGrid;
     }
