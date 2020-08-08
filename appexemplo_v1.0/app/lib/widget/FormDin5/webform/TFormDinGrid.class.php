@@ -449,71 +449,30 @@ class TFormDinGrid
 
     //------------------------------------------------------------------------------------
     /**
-     * Campos do form origem que serão atualizados ao selecionar o item desejado. Separados
-     * por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
-     * ou array PHP ( <campo_tabela>=><campo_formulario>,  <campo_tabela>=><campo_formulario>)
+     * Campos do form origem que serão atualizados ao selecionar o item desejado.
+     * Pode receber 3 tipos de entrada
+     *   - FormDin: Separados por pipe e virgulas seguindo o padrão 
+     *      <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     *   - PHP array ( <campo_tabela>=><campo_formulario>,  <campo_tabela>=><campo_formulario>)
+     *   - Adianti ['key0'=>'{value0}','key1' => '{value1}']
      * @param string $mixUpdateFields
      */
     public function setUpdateFields( $mixUpdateFields = null )
     {
-        if ( $mixUpdateFields )
-        {
-            if ( is_array( $mixUpdateFields ) )
-            {
-                foreach( $mixUpdateFields as $k => $v )
-                {
-                    if ( is_numeric( $k ) )
-                    {
-                        $k = $v;
-                        $v = strtolower( $v );
-                    }
-                    $this->setUpdateFields( $k . '|' . $v );
-                }
-            }
-            else if( strpos( $mixUpdateFields, ',' ) !== false )
-            {
-                $a = explode( ',', $mixUpdateFields );
-                $this->setUpdateFields( $a );
-            }
-            else
-            {
-                $aFields = explode( '|', $mixUpdateFields );
-                
-                if ( !isset( $aFields[ 1 ] ) )
-                {
-                    $aFields[ 0 ] = strtoupper( $aFields[ 0 ] );
-                    $aFields[ 1 ] = strtolower( $aFields[ 0 ] );
-                }
-                
-                if ( $aFields[ 0 ] != '' )
-                {
-                    $this->updateFields[ $aFields[ 0 ] ] = $aFields[ 1 ];
-                }
-            }
-        }
+        $mixUpdateFields = TFormDinGridAction::convertArray2OutputFormat($mixUpdateFields);
+        $this->updateFields = $mixUpdateFields;
     }    
     //------------------------------------------------------------------------------------
+    /**
+     * Retorna a lista de campos que serão atualizados
+     *
+     * @param const $outputFormat - Formato de saída conforme TFormDinGridAction
+     * @return mix
+     */
     public function getUpdateFields($outputFormat = TFormDinGridAction::TYPE_ADIANTI)
     {
-        $arrResult = $this->updateFields;
-        
-        if ( $arrResult )
-        {
-            // adicionar o campo chave na lista de campos a serem atualizados
-            if ( $this->getKeyField() )
-            {
-                $keyValue = '';
-                
-                foreach( $this->getKeyField() as $key => $fieldName )
-                {
-                    if ( !in_array( $fieldName, $arrResult ) )
-                    {
-                        $this->setUpdateFields( $fieldName );
-                    }
-                }
-            }
-        }
-        return $arrResult;
+        $mixUpdateFields = TFormDinGridAction::convertArray2OutputFormat($this->updateFields,$outputFormat);
+        return $mixUpdateFields;
     }    
     //------------------------------------------------------------------------------------
     public function clearUpdateFields()

@@ -202,8 +202,10 @@ class TFormDinGridAction
      * @return mix
      */
     public static function getTypeArrayMixUpdateFields($arrayData){
-        $result = false;
-        if( ArrayHelper::isArrayNotEmpty($arrayData) ){
+        $result = null;
+        if( empty($arrayData) ){
+            $result = null;
+        }elseif( ArrayHelper::isArrayNotEmpty($arrayData) ){
             $lastElement = end($arrayData);;
             $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
             $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
@@ -214,6 +216,8 @@ class TFormDinGridAction
             }
         }elseif( is_string($arrayData) && (strpos( $arrayData,'|')!== false) ){
             $result = self::TYPE_FORMDIN;
+        }else{
+            $result = false;
         }
         return $result;
     }

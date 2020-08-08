@@ -86,14 +86,25 @@ class TFormDinGridActionTest extends TestCase
     //-----------------------------------------------------------------------
     public function testConvertArray2OutputFormat_null()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectNotToPerformAssertions();
         $result = $this->classTest->convertArray2OutputFormat(null);
     }
     public function testConvertArray2OutputFormat_arrayEmpty()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $result = $this->classTest->convertArray2OutputFormat(array());
+        $this->expectNotToPerformAssertions();
+        $this->classTest->convertArray2OutputFormat(array());
     }
+    public function testConvertArray2OutputFormat_string()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $result = $this->classTest->convertArray2OutputFormat('xxx');
+    }
+    public function testConvertArray2OutputFormat_obj()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $obj = new stdClass();
+        $result = $this->classTest->convertArray2OutputFormat($obj);
+    }    
     public function testConvertArray2OutputFormat_inputFormDinOutPutAdianti()
     {
         $expected = ['code'=>'{code}','nome'=>'{nome}'];
@@ -165,14 +176,14 @@ class TFormDinGridActionTest extends TestCase
     public function testGetTypeArrayMixUpdateFields_null()
     {
         $result = $this->classTest->getTypeArrayMixUpdateFields(null);
-        $this->assertFalse($result);
+        $this->assertEquals(null,$result);
     }
 
     public function testGetTypeArrayMixUpdateFields_ArrayNull()
     {
         $arrayData = array();
         $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertFalse($result);
+        $this->assertEquals(null,$result);
     }
 
     public function testGetTypeArrayMixUpdateFields_Adianti()
