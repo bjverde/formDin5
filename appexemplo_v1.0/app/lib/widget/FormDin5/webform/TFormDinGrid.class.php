@@ -76,6 +76,9 @@ class TFormDinGrid
     protected $data;
 
     protected $listGridAction;
+    protected $createDefaultButtons;
+    protected $createDefaultEditButton;
+    protected $createDefaultDeleteButton;
 
 
     /**
@@ -290,7 +293,15 @@ class TFormDinGrid
                                                  );
             }
         }else{
+            if( $this->getCreateDefaultButtons() ){
+                if( $this->getCreateDefaultEditButton() ){
+                    $this->addButton(_t('Edit'),'onEdit',null,null,null,'far:edit blue');
+                }
 
+                if( $this->getCreateDefaultDeleteButton() ){
+                    $this->addButton(_t('Delete'),'onDelete',null,null,null,'far:trash-alt red');
+                }
+            }
         }
     }
 
@@ -440,7 +451,8 @@ class TFormDinGrid
 
     //------------------------------------------------------------------------------------
     /**
-     * Adicionar botão na linha do gride
+     * Adicionar botão na linha do gride. Se o usuário adicionar um botão, 
+     * cancelar a criação dos botões padrão de alterar e excluir
      *
      * $boolSubmitAction = adicionar/remover a função fwFazerAcao(). Padrão=true
      *
@@ -467,16 +479,15 @@ class TFormDinGrid
                              , $boolSubmitAction = null
                              , $mixUpdateButton = null
                              ){
-            if ( is_null( $strName ) ){
-                $strName = $this->getId() . ucwords( $this->removeIllegalChars( $strRotulo ) );
-            }
-            if ( is_null( $strAction ) && is_null( $strOnClick ) ){
-                $strAction = strtolower( $this->getId() . '_' . $strRotulo );
-            }
-            $this->buttons[ $strName ] = new TButton( $strName, $strRotulo, $strAction, $strOnClick, $strConfirmMessage, $strImage, $strImageDisabled, $strHint, $boolSubmitAction );
-            // se o usuário adicionar um botão, cancelar a criação dos botões padrão de alterar e excluir
-            $this->enableDefaultButtons( false );
-            return $this->buttons[ $strName ];
+            $mixUpdateButton = empty($mixUpdateButton)?$this->getUpdateFields():$mixUpdateButton;
+            $itemGridAction = new TFormDinGridAction($this->getObjForm()
+                                                    ,$strRotulo
+                                                    ,$strAction
+                                                    ,$mixUpdateButton
+                                                    ,$strImage
+                                                    );
+            $this->addListGridAction($itemGridAction);
+            return $itemGridAction;
     }
 
     //------------------------------------------------------------------------------------
@@ -511,4 +522,38 @@ class TFormDinGrid
     {
         $this->updateFields = null;
     }
+    //---------------------------------------------------------------------------------------
+    public function getCreateDefaultButtons()
+    {
+        return is_null( $this->createDefaultButtons ) ? true : $this->createDefaultButtons;
+    }
+    /**
+     * Define se os botoes Alterar e Excluir serão exibidos quando não for
+     * adicionado nenhum botão
+     *
+     * @param mixed $boolNewValue
+     */
+    public function enableDefaultButtons( $boolNewValue = null )
+    {
+        $this->createDefaultButtons = is_null( $boolNewValue ) ? true : $boolNewValue;
+    }
+    //------------------------------------------------------------------------------------
+    public function setCreateDefaultEditButton( $boolNewValue = null )
+    {
+        $this->createDefaultEditButton = is_null( $boolNewValue ) ? true : $boolNewValue;
+    }    
+    public function getCreateDefaultEditButton( $boolNewValue = null )
+    {
+        return is_null( $this->createDefaultEditButton ) ? true : $this->createDefaultEditButton;
+    }    
+    //------------------------------------------------------------------------------------
+    public function setCreateDefaultDeleteButton( $boolNewValue = null )
+    {
+        $this->createDefaultDeleteButton = is_null( $boolNewValue ) ? true : $boolNewValue;
+    }
+    
+    public function getCreateDefaultDeleteButton( $boolNewValue = null )
+    {
+        return is_null( $this->createDefaultDeleteButton ) ? true : $this->createDefaultDeleteButton;
+    }    
 }
