@@ -57,7 +57,7 @@ class TFormDinGridActionTest extends TestCase
     protected function setUp(): void {
         parent::setUp();
         $classForm = new mockFormDinComAdianti();
-        $arrayAction = [$$classForm, 'onSave'];
+        $arrayAction = [$classForm, 'onSave'];
         $arrayMixUpdateFields = ['code'=>'{code}'];
         $this->classTest = new TFormDinGridAction($arrayAction, $arrayMixUpdateFields);
     }
