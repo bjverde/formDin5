@@ -67,7 +67,6 @@ class TFormDinGrid
     private $objForm;
     private $listColumn = array();
 
-    protected $action;
     protected $idGrid;
     protected $title;
     protected $updateFields;
@@ -329,13 +328,6 @@ class TFormDinGrid
         $this->getPanelGroupGrid()->addFooter($pageNavigation);
 
         return $this->getAdiantiObj();
-    }
-    //---------------------------------------------------------------
-    public function getAction(){
-        return $this->action;
-    }
-    public function setAction($action){
-        $this->action = $action;
     }
     //---------------------------------------------------------------
     public function getTitle(){
