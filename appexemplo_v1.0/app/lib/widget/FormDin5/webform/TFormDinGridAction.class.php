@@ -76,6 +76,57 @@ class TFormDinGridAction
         return $this->adiantiObj;
     }
 
+    private static function convertArrayParametersAdianti2FormDin($arrayData){
+        $arrayData = self::convertArrayParametersAdianti2PHP($arrayData);
+        $arrayData = self::convertArrayParametersPHP2FormDin($arrayData);
+        return $arrayData;
+    }
+
+    private static function convertArrayParametersAdianti2PHP($arrayData){
+        foreach( $arrayData as $k => $v ) {
+            $v = mb_substr($v, 0, mb_strlen($v,'utf-8')-1, 'utf-8');
+            $v = mb_substr($v, 1, mb_strlen($v,'utf-8'), 'utf-8');
+            $arrayData[$k] = $v;
+        }
+        return $arrayData;
+    }    
+
+    /**
+     * Converte uma string no formato FormDin
+     * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * para um array Adianti ['key0'=>'{value0}','key1' => '{value1}']
+     *
+     * @param array $arrayData
+     * @return array 
+     */
+    private static function convertArrayParametersFormDin2Adianti($arrayData){
+        $result = array();
+        $listFields = explode( ',', $arrayData );
+        foreach( $listFields as $k => $field ) {
+            $field = explode('|',$field);
+            $result[ $field[0] ] = '{'.$field[1].'}';
+        }
+        return $result;
+    }
+
+    /**
+     * Converte uma string no formato FormDin
+     * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * para um array PHP (key0=>value0,key1=>value1)
+     *
+     * @param array $arrayData
+     * @return array 
+     */
+    private static function convertArrayParametersFormDin2PHP($arrayData){
+        $result = array();
+        $listFields = explode( ',', $arrayData );
+        foreach( $listFields as $k => $field ) {
+            $field = explode('|',$field);
+            $result[ $field[0] ] = $field[1];
+        }
+        return $result;
+    }
+
     /**
      * Converte um array comum PHP (key0=>value0,key1=>value1) para um
      * string no formato FormDin Grid Actiion Parameters 
@@ -84,12 +135,12 @@ class TFormDinGridAction
      * @param array $arrayData
      * @return array 
      */
-    private static function convertArrayPHP2FormDin($arrayData){
+    private static function convertArrayParametersPHP2FormDin($arrayData){
         $result = null;
         foreach( $arrayData as $k => $v ) {
             $result = ','.$k.'|'.$v;
         }
-        $result  = mb_substr($result, -1, 1, 'utf-8');
+        $result  = mb_substr($result, 1, mb_strlen($result,'utf-8'), 'utf-8');
         return $result;
     }
 
@@ -101,7 +152,7 @@ class TFormDinGridAction
      * @param array $arrayData
      * @return array 
      */
-    private static function convertArrayPHP2AdianitParameters($arrayData){
+    private static function convertArrayParametersPHP2Adianit($arrayData){
         foreach( $arrayData as $k => $v ) {
             $arrayData[$k] = '{'.$v.'}';
         }
@@ -124,21 +175,21 @@ class TFormDinGridAction
         
         if($inputFormt == TFormDinGridAction::TYPE_PHP){
             if($outputFormat == TFormDinGridAction::TYPE_FORMDIN){
-                $result = self::convertArrayPHP2FormDin($arrayData);
+                $result = self::convertArrayParametersPHP2FormDin($arrayData);
             }elseif($outputFormat == TFormDinGridAction::TYPE_ADIANTI){
-                $result = self::convertArrayPHP2AdianitParameters($arrayData);
+                $result = self::convertArrayParametersPHP2Adianit($arrayData);
             }
         }elseif($inputFormt == TFormDinGridAction::TYPE_FORMDIN){
             if($outputFormat == TFormDinGridAction::TYPE_PHP){
-                $result = self::convertArrayPHP2FormDin($arrayData);
+                $result = self::convertArrayParametersFormDin2PHP($arrayData);
             }elseif($outputFormat == TFormDinGridAction::TYPE_ADIANTI){
-
+                $result = self::convertArrayParametersFormDin2Adianti($arrayData);
             }
         }else{
             if($outputFormat == TFormDinGridAction::TYPE_PHP){
-                
+                $result = self::convertArrayParametersAdianti2PHP($arrayData);
             }elseif($outputFormat == TFormDinGridAction::TYPE_FORMDIN){
-
+                $result = self::convertArrayParametersAdianti2FormDin($arrayData);
             }
         }
         return $result;
