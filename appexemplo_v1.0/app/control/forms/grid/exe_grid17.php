@@ -9,7 +9,7 @@ class exe_grid17 extends TPage
     protected $pageNavigation;
     
     // trait com onReload, onSearch, onDelete...
-    use Adianti\Base\AdiantiStandardListTrait;
+    use Adianti\Base\AdiantiStandardFormListTrait;
 
     public function __construct()
     {
@@ -60,7 +60,7 @@ class exe_grid17 extends TPage
         $grid->addColumn('name',  'Name', null, 'left');
         $grid->addColumn('city',  'City', null, 'left');
         $grid->addColumn('state','State', null, 'left');
-        $grid->enableDefaultButtons(false);
+        //$grid->enableDefaultButtons(false);
         $this->datagrid = $grid->show();
         $panel = $grid->getPanelGroupGrid();
 
