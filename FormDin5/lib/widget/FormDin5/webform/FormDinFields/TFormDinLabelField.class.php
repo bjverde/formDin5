@@ -52,7 +52,7 @@ class TFormDinLabelField
      *
      * @param string $strLabel      - 1: Label do campo, usado para validações
      * @param boolean $boolRequired - 2: Obrigatorio. DEFAULT = False.
-     * @return TEntry
+     * @return TLabel
      */
     public function __construct(string $strLabel
                                ,$boolRequired = false)
