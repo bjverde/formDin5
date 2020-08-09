@@ -24,11 +24,11 @@
                     </menuitem>            
                     <menuitem label='Rico'>
                         <icon>fa:align-left fa-fw</icon>
-                        <action>exe_maskField</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Funções'>
                         <icon>fa:align-left fa-fw</icon>
-                        <action>exe_TMemo</action>
+                        <action>comingSoonView</action>
                     </menuitem>          
                 </menu>
             </menuitem>            
@@ -47,19 +47,19 @@
             </menuitem>
             <menuitem label='Coord GMS'>
                 <icon>fa:map-marker fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Select'>
                 <icon>fa:sort-down fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Radio'>
                 <icon>fa:table fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Check'>
                 <icon>fa:check-square fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Switch'>
                 <icon>fa:check-square fa-fw</icon>
@@ -67,7 +67,7 @@
             </menuitem>            
             <menuitem label='Arquivo ou Blob'>
                 <icon>fa:check-square fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Númerico'>
                 <icon>fa:check-square fa-fw</icon>
@@ -75,7 +75,7 @@
             </menuitem>
             <menuitem label='Brasil'>
                 <icon>fa:flag fa-fw green</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Data e hora'>
                 <icon>fas:calendar-alt fa-fw</icon>
@@ -86,53 +86,53 @@
                     </menuitem>
                     <menuitem label='Hora'>
                         <icon>fas:calendar-alt fa-fw</icon>
-                        <action>exe_campo_hora</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Agenda'>
                         <icon>fas:calendar-alt fa-fw</icon>
-                        <action>exe_TCalendar</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Data hora'>
                         <icon>fas:calendar-alt fa-fw</icon>
-                        <action>exe_DateTimeField</action>
+                        <action>comingSoonView</action>
                     </menuitem>                    
                 </menu>
             </menuitem>
             <menuitem label='Select Diretorio/Pasta'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>            
             <menuitem label='Campo Senha'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Campo Captcha'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Campo Cor'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Tecla de Atalho'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Campo Link'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Redirect'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='TZip'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='E-mail'>
                 <icon>fa:flag fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Button'>
                 <icon>fa:flag fa-fw</icon>
@@ -152,11 +152,11 @@
                     </menuitem>
                     <menuitem label='Grupo 02 Combinados, ( Efeito Sanfona )'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>exe_GroupField02</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Grupo 03 Combinados, muda cor fundo'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>exe_GroupField03</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                 </menu>
             </menuitem>      
@@ -165,23 +165,23 @@
                 <menu>
                     <menuitem label='Aba - com tecla de atalha'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>AjudaView</action>
+                        <action>comingSoonView</action>
                     </menuitem>      
                     <menuitem label='Aba2 - Botão ligando aba'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemModulesCheckView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Aba3 - select chamando aba'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Aba4'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Aba5'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>comingSoonView</action>
                     </menuitem>                                        
                 </menu>
             </menuitem>
@@ -190,15 +190,15 @@
                 <menu>
                     <menuitem label='Dentro do Formulário'>
                         <icon>fa:life-ring fa-fw</icon>
-                        <action>AjudaView</action>
+                        <action>comingSoonView</action>
                     </menuitem>      
                     <menuitem label='Fora do Formulário'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemModulesCheckView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='User Data - Array'>
                         <icon>fa:code fa-fw</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                 </menu>
             </menuitem>
@@ -224,7 +224,7 @@
                     </menuitem>
                     <menuitem label='Caixa de Confirmação'>
                         <icon>fa:life-ring fa-fw</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                 </menu>
             </menuitem>
@@ -233,15 +233,15 @@
                 <menu>
                     <menuitem label='Ajuda com arquivo HTM'>
                         <icon>fa:life-ring fa-fw</icon>
-                        <action>AjudaView</action>
+                        <action>comingSoonView</action>
                     </menuitem>      
                     <menuitem label='Ajuda On-line (sqlite)'>
                         <icon>fa:cube fa-fw</icon>
-                        <action>SystemModulesCheckView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Ajuda'>
                         <icon>fa:code fa-fw</icon>
-                        <action>SystemPHPInfoView</action>
+                        <action>comingSoonView</action>
                     </menuitem>
                 </menu>
             </menuitem>
@@ -252,15 +252,15 @@
         <menu>
             <menuitem label='Ajuda'>
                 <icon>fa:life-ring fa-fw</icon>
-                <action>AjudaView</action>
+                <action>comingSoonView</action>
             </menuitem>      
             <menuitem label='Ver módulos'>
                 <icon>fa:cube fa-fw</icon>
-                <action>SystemModulesCheckView</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Setup PHP'>
                 <icon>fa:code fa-fw</icon>
-                <action>SystemPHPInfoView</action>
+                <action>comingSoonView</action>
             </menuitem>
         </menu>
     </menuitem>
@@ -270,14 +270,6 @@
             <menuitem label='PDF e HTML Simples'>
                 <icon>fa:file-pdf fa-fw red</icon>
                 <action>pdf_html</action>
-            </menuitem>      
-            <menuitem label='Ver módulos'>
-                <icon>fa:cube fa-fw</icon>
-                <action>SystemModulesCheckView</action>
-            </menuitem>
-            <menuitem label='Setup PHP'>
-                <icon>fa:code fa-fw</icon>
-                <action>SystemPHPInfoView</action>
             </menuitem>
         </menu>
     </menuitem>
@@ -308,17 +300,17 @@
             </menuitem>
             <menuitem label='Grides Draw - desenhando Dinamicamente'>
                 <icon>fas:th fa-fw #2965f1</icon>
-                <action>SystemPHPInfoView</action>
+                <action>comingSoonView</action>
             </menuitem>
         </menu>        
     </menuitem>
     <menuitem label='Banco e PDO'>
         <icon>fas:database fa-fw</icon>
-        <action>CnaesSecundarioForm</action>
+        <action>comingSoonView</action>
     </menuitem>
     <menuitem label='Formulário'>
         <icon>far:edit fa-fw green</icon>
-        <action>CnaesSecundarioForm</action>
+        <action>comingSoonView</action>
     </menuitem>
     <menuitem label='Layout e CSS'>
         <icon>fas:exclamation-triangle fa-fw #264de4</icon>
@@ -351,15 +343,15 @@
         <menu>
             <menuitem label='Gerador VO/DAO'>
                 <icon>fas:cog fa-fw</icon>
-                <action>GeraGrafoForm</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Gerador Form VO/DAO'>
                 <icon>fas:cog fa-fw</icon>
-                <action>GeraGrafoForm</action>
+                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Gerador de Sistemas'>
                 <icon>fa:magic fa-fw #f0db4f</icon>
-                <action>GeraGrafoForm</action>
+                <action>sysgenView</action>
             </menuitem>            
         </menu>
     </menuitem>    
