@@ -324,7 +324,7 @@ class TFormDinGrid
     public function show()
     {
         $this->showGridColumn();
-        //$this->showGridAction();
+        $this->showGridAction();
 
         $this->getAdiantiObj()->createModel();
         if( !empty($this->getData()) ){
@@ -470,6 +470,21 @@ class TFormDinGrid
     }
 
     //------------------------------------------------------------------------------------
+    public function getMixUpdateButton($mixUpdateButton){
+        $mixUpdateButton = empty($mixUpdateButton)?$this->getUpdateFields():$mixUpdateButton;
+
+        if( empty($mixUpdateButton) ){
+            $listKeyColumnId = array_keys($this->getListColumn());            
+            $mixUpdateButton = null;
+            if( ArrayHelper::isArrayNotEmpty($listKeyColumnId) ){
+                foreach(  $listKeyColumnId as $id) {
+                    $mixUpdateButton[$id] = $id;
+                }                
+                $mixUpdateButton = TFormDinGridAction::convertArray2OutputFormat($mixUpdateButton);
+            }            
+        }
+        return $mixUpdateButton;
+    }    
     /**
      * Adicionar botão na linha do gride. Se o usuário adicionar um botão, 
      * cancelar a criação dos botões padrão de alterar e excluir
@@ -501,7 +516,7 @@ class TFormDinGrid
                              , $mixUpdateButton = null
                              , $classDestiny    = null
                              ){
-            $mixUpdateButton = empty($mixUpdateButton)?$this->getUpdateFields():$mixUpdateButton;
+            $mixUpdateButton = $this->getMixUpdateButton($mixUpdateButton);
             if( empty($mixUpdateButton) ){
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_GRID_UPDATEFIELD.$strAction);
             }
