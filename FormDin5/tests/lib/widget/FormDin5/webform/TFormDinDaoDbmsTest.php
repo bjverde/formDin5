@@ -52,11 +52,11 @@ class TFormDinDaoDbmsTest extends TestCase
     private $classTest;
     const SQL_SIZE_ACCESS   = 'ACCESS';
     const SQL_SIZE_FIREBIRD = 'ibase';
-    const SQL_SIZE_MYSQL    = 1597;
+    const SQL_SIZE_MYSQL    = 1648;
     const SQL_SIZE_ORACLE   = 'oracle';
-    const SQL_SIZE_POSTGRES = 783;
-    const SQL_SIZE_SQLITE   = 162;
-    const SQL_SIZE_SQLSERVER= 1361;
+    const SQL_SIZE_POSTGRES = 804;
+    const SQL_SIZE_SQLITE   = 167;
+    const SQL_SIZE_SQLSERVER= 1407;
     
     /**
      * Prepares the environment before running a test.
@@ -102,7 +102,7 @@ class TFormDinDaoDbmsTest extends TestCase
 
     public function testGetType()
     {
-        $type = TFormDinPdoConnection::DBMS_ORACLE;
+        $type = TFormDinPdoConnection::DBMS_MYSQL;
         $this->classTest->setType($type);
         $result = $this->classTest->getType();
         $this->assertEquals($type, $result);
@@ -150,14 +150,14 @@ class TFormDinDaoDbmsTest extends TestCase
 
     public function testLoadSqlTablesFromDatabase_access()
     {
-        $this->expectException(DomainException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->classTest->setType(TFormDinPdoConnection::DBMS_ACCESS);
         $stringSql = $this->classTest->loadSqlTablesFromDatabase();
     }
 
     public function testLoadSqlTablesFromDatabase_oracle()
     {
-        $this->expectException(DomainException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->classTest->setType(TFormDinPdoConnection::DBMS_ORACLE);
         $stringSql = $this->classTest->loadSqlTablesFromDatabase();
     }
@@ -226,7 +226,7 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('xxx');
         $stringSql = $this->classTest->getSqlToFieldsFromOneStoredProcedureMySQL();
         $length = mb_strlen($stringSql);
-        $this->assertEquals(1259, $length);
+        $this->assertEquals(1282, $length);
     }
 
     public function testGetSqlToFieldsFromOneStoredProcedureMySQL_sqlserver()
@@ -236,7 +236,7 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('xxx');
         $stringSql = $this->classTest->getSqlToFieldsFromOneStoredProcedureSqlServer();
         $length = mb_strlen($stringSql);
-        $this->assertEquals(1228, $length);
+        $this->assertEquals(1249, $length);
     }
 
     public function testGetSqlToFieldsOneStoredProcedureFromDatabase_mysql()
@@ -246,7 +246,7 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('xxx');
         $result = $this->classTest->getSqlToFieldsOneStoredProcedureFromDatabase();
         $length = mb_strlen($result['sql']);
-        $this->assertEquals(1259, $length);
+        $this->assertEquals(1282, $length);
     }
 
     public function testGetSqlToFieldsOneStoredProcedureFromDatabase_sqlserver()
@@ -256,7 +256,7 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('xxx');
         $result = $this->classTest->getSqlToFieldsOneStoredProcedureFromDatabase();
         $length = mb_strlen($result['sql']);
-        $this->assertEquals(1228, $length);
+        $this->assertEquals(1249, $length);
     }
 
     public function testGetSqlToFieldsFromDatabaseMySQL()
@@ -266,7 +266,7 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('xxx');
         $result = $this->classTest->getSqlToFieldsFromDatabaseMySQL();
         $length = mb_strlen($result);
-        $this->assertEquals(1032, $length);
+        $this->assertEquals(1054, $length);
     }
 
     public function testGetSqlToFieldsFromDatabaseSqlServer()
@@ -276,7 +276,7 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('xxx');
         $result = $this->classTest->getSqlToFieldsFromDatabaseSqlServer();
         $length = mb_strlen($result);
-        $this->assertEquals(3799, $length);
+        $this->assertEquals(3865, $length);
     }
 
     public function testGetSqlToFieldsFromDatabasePostGres()
@@ -286,6 +286,6 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('xxx');
         $result = $this->classTest->getSqlToFieldsFromDatabasePostGres();
         $length = mb_strlen($result);
-        $this->assertEquals(2408, $length);
+        $this->assertEquals(2457, $length);
     }
 }

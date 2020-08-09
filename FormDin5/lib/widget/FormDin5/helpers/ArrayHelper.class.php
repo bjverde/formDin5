@@ -53,6 +53,15 @@ class ArrayHelper
         }
         return is_null($array[$atributeName])?null:trim($array[$atributeName]);
     }
+
+    public static function isArrayNotEmpty($array) 
+    {
+        $value = false;
+        if (is_array($array) && !empty($array)) {
+            $value = true;
+        }
+        return $value;
+    }
     
     /**
      * Similar to array_key_exists. But it does not generate an error message
@@ -256,9 +265,12 @@ class ArrayHelper
      */
     public static function convertArrayFormDin2Adianti($dataArray,$changeCase = false,$upperCase = false) 
     {
-        $result = self::convertArrayFormDin2PdoV2($dataArray,$changeCase,$upperCase);
-        foreach( $result as $keyNumber => $value ) {
-            $result[$keyNumber] = (object)$value;
+        $result = array();
+        if(self::isArrayNotEmpty($dataArray)){
+            $result = self::convertArrayFormDin2PdoV2($dataArray,$changeCase,$upperCase);
+            foreach( $result as $keyNumber => $value ) {
+                $result[$keyNumber] = (object)$value;
+            }
         }
         return $result;
     }

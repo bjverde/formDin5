@@ -67,6 +67,30 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals($esperado, $retorno);
     }    
     
+    public function testAsArrayNotEmpty_falseString() {
+    	$esperado = FALSE;
+    	$retorno = ArrayHelper::isArrayNotEmpty('x');
+    	$this->assertEquals($esperado, $retorno);
+    }
+
+    public function testAsArrayNotEmpty_falseNull() {
+    	$esperado = FALSE;
+    	$retorno = ArrayHelper::isArrayNotEmpty(null);
+    	$this->assertEquals($esperado, $retorno);
+    }
+
+    public function testAsArrayNotEmpty_falseArrayEmpty() {
+    	$esperado = FALSE;
+    	$retorno = ArrayHelper::isArrayNotEmpty(array());
+    	$this->assertEquals($esperado, $retorno);
+    }
+
+    public function testAsArrayNotEmpty_true() {
+    	$esperado = true;
+    	$retorno = ArrayHelper::isArrayNotEmpty(array('xx'=>'aa'));
+    	$this->assertEquals($esperado, $retorno);
+    }
+
     public function testHas_notArray() {
     	$esperado = FALSE;
     	$arrayTest = null;

@@ -56,7 +56,8 @@ class TFormDinGridTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $mock = new StdClass;
+        //$mock = new StdClass;
+        $mock = new mockFormDinComAdianti();
         $this->classTest = new TFormDinGrid($mock,'grid');
     }
     
@@ -68,6 +69,19 @@ class TFormDinGridTest extends TestCase
         parent::tearDown();
     }
     
+    public function testGetId()
+    {
+        $expected  = 'gdxy';
+        $this->classTest->setId('gdxy');
+        $result = $this->classTest->getId();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSetId_null()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setId(null);
+    }
 
     public function testConstruct_Height()
     {
@@ -120,6 +134,21 @@ class TFormDinGridTest extends TestCase
         $this->assertInstanceOf(mockFormDinComAdianti::class, $objResult);
     }
 
+    public function testShow_semColunas()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $objResult = $this->classTest->show();
+        $this->assertInstanceOf(BootstrapDatagridWrapper::class, $objResult);
+    }
+
+    public function testShow_comColunas()
+    {
+        $this->classTest->addColumn('id',  'id', null, 'center');
+        $this->classTest->addColumn('descricao',  'Descrição', null, 'left');
+        $objResult = $this->classTest->show();
+        $this->assertInstanceOf(BootstrapDatagridWrapper::class, $objResult);
+    }
+
     public function testFooter()
     {
         $this->classTest->addFooter('xxx');
@@ -156,6 +185,25 @@ class TFormDinGridTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
         $this->classTest->setHeight(100);
+    }
+
+    public function testGetUpdateFields_formDin()
+    {
+        $expected  = ['code'=>'{code}','nome'=>'{nome}'];
+        $arrayData = 'code|code,nome|nome';
+        $this->classTest->setUpdateFields($arrayData);
+        $result = $this->classTest->getUpdateFields();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testClearUpdateFields_formDin()
+    {
+        $expected  = null;
+        $arrayData = 'code|code,nome|nome';
+        $this->classTest->setUpdateFields($arrayData);
+        $this->classTest->clearUpdateFields();
+        $result = $this->classTest->getUpdateFields();
+        $this->assertEquals($expected, $result);
     }
 
 }
