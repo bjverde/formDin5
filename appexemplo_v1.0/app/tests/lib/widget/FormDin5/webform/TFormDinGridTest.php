@@ -134,8 +134,17 @@ class TFormDinGridTest extends TestCase
         $this->assertInstanceOf(mockFormDinComAdianti::class, $objResult);
     }
 
-    public function testShow()
+    public function testShow_semColunas()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $objResult = $this->classTest->show();
+        $this->assertInstanceOf(BootstrapDatagridWrapper::class, $objResult);
+    }
+
+    public function testShow_comColunas()
+    {
+        $this->classTest->addColumn('id',  'id', null, 'center');
+        $this->classTest->addColumn('descricao',  'Descrição', null, 'left');
         $objResult = $this->classTest->show();
         $this->assertInstanceOf(BootstrapDatagridWrapper::class, $objResult);
     }
