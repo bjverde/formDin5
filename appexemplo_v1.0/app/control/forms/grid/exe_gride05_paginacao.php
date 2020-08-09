@@ -35,6 +35,7 @@ class exe_gride05_paginacao extends TPage
         //$grid->setHeight(2500);
         $grid->addColumn('id',  'id', null, 'center');
         $grid->addColumn('descricao',  'Descrição', null, 'left');
+        $grid->enableDefaultButtons(false);
 
         $this->datagrid = $grid->show();
         $this->pageNavigation = $grid->getPageNavigation();

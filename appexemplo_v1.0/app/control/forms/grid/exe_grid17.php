@@ -60,6 +60,7 @@ class exe_grid17 extends TPage
         $grid->addColumn('name',  'Name', null, 'left');
         $grid->addColumn('city',  'City', null, 'left');
         $grid->addColumn('state','State', null, 'left');
+        $grid->enableDefaultButtons(false);
         $this->datagrid = $grid->show();
         $panel = $grid->getPanelGroupGrid();
 
