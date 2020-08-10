@@ -25,7 +25,9 @@ Used libraries
 
 FormDin ou Formulário Dinâmico é um Framework php simples para criar sistema web de forma rápida e fácil.
 
-Esta versão tem a proposta de ser a próxima versão do **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. O FormDin 5 é um meta FrameWork, por ser conconstruido sobre o [Adinati FrameWork 7.X](https://www.adianti.com.br/) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total depencendia do [Adinati](https://www.adianti.com.br/). É um Framework de transição do FormDin 4 para o Adianti FrameWork, facilitando a migração. É uma abastração das chamadas do FormDin no Adianti
+O FormDin 5 é um meta FrameWork ou um adaptador ou uma extensão, por ser construído sobre o [Adinati FrameWork 7.X](https://www.adianti.com.br/) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total dependência do [Adinati](https://www.adianti.com.br/). É um Framework de transição do [FormDin 4](https://github.com/bjverde/formDin) para o Adianti FrameWork, facilitando a migração. É uma abstração das chamadas do FormDin 4 no Adianti. 
+
+O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais recursos e uma comunidade muito maior. Logo o ideal é juntar forçar pegando o que tem de melhor dos dois.
 
 # Sobre
 
