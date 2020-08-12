@@ -26,7 +26,9 @@ class exe_formdinMaisAdianti extends TPage
         $frm->addTextField('fl83', 'fl83:', 20, true, 20, 'Texto inicial',false, null, null, true);
         $frm->addTextField('fl84', 'fl84:', 20, false, 20, 'FormDin',false, null, null, true);
 
-        $frm->addFields( [ new TLabel('slider'),  new TSlider('slider') ] );
+        $label = new TLabel('slider');
+        $label->setTip('ToolTip no label');
+        $frm->addFields( [ $label,  new TSlider('slider') ] );
 
         $txtLabelAl83 = 'al83';
         $al83 = new TEntry('al83');
