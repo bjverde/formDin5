@@ -1083,7 +1083,7 @@ class TFormDin
      * 
      * @param string $strName            - 1: ID do campo
      * @param string $strLabel           - 2: Label do campo, que irá aparecer na tela do usuario
-     * @param integer $intMaxLength      - 3: Quantidade maxima de digitos.
+     * @param integer $intMaxLength      - 3: Quantidade maxima de digitos, considerando ponto e virgula
      * @param boolean $boolRequired      - 4: Obrigatorio
      * @param integer $intDecimalPlaces  - 5: Quantidade de casas decimais.
      * @param boolean $boolNewLine       - 6: Campo em nova linha. Default = true = inicia em nova linha, false = continua na linha anterior 
@@ -1099,7 +1099,7 @@ class TFormDin
      * @param string $tooltip            -16: Texto Tooltip
      * @param boolean $replaceOnPost     -17: FORMDIN5: TRUE: process mask when editing and saving
      * @param string $placeholder        -18: FORMDIN5: Texto do Place Holder
-     * @param string $decimalsSeparator  -19: FORMDIN5: separador decimal
+     * @param string $decimalsSeparator  -19: FORMDIN5: separador decimal. Não pode ser chamado por metodo
      * @return TNumber
      */       
 	public function addNumberField( $strName
