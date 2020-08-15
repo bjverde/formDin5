@@ -6,7 +6,7 @@
  * @package    validator
  * @author     Reinaldo A. Barreto Jr
  */
-class TDateValidatorMax extends TFieldValidator
+class TFormDinDateValidatorMax extends TFieldValidator
 {
     /**
      * Validate a given value
@@ -23,9 +23,12 @@ class TDateValidatorMax extends TFieldValidator
         $dateValue    = TDateTime::convertToMask($value, $maskDat, $defaultMask);
         $maxLimitDate = TDateTime::convertToMask($maxLimitDate, $maskDat, $defaultMask);
 
+        $dateValue = new DateTime($dateValue);
+        $maxLimitDate = new DateTime($maxLimitDate);
+
         $interval = $dateValue->diff($maxLimitDate); //If Date is in past then invert will 1
         if($interval->invert == 1){
-            throw new Exception("The field $label is not a valid date ($mask)");
+            throw new Exception("A data do campo $label não pode ser posterior a data $parameters[1]");
         }
         
         /*
