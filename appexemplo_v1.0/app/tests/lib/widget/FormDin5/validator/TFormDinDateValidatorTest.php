@@ -211,5 +211,23 @@ class TFormDinDateValidatorTest extends TestCase
         $parameters[1]='2020-07';
         $this->classTest->validate($label, $value, $parameters);
     }
+
+    public function testEua_date202008152333limit202008152334() {
+        $this->expectNotToPerformAssertions();
+        $label = 'Teste';
+        $value = '08/15/2020 23:33';
+        $parameters[0]='mm/dd/yyyy hh:ii';
+        $parameters[1]='08/15/2020 23:34';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testEua_date202008152333limit202008152332() {
+        $this->expectException(InvalidArgumentException::class);
+        $label = 'Teste';
+        $value = '08/15/2020 23:33';
+        $parameters[0]='mm/dd/yyyy hh:ii';
+        $parameters[1]='08/15/2020 23:32';
+        $this->classTest->validate($label, $value, $parameters);
+    }
     
 }
