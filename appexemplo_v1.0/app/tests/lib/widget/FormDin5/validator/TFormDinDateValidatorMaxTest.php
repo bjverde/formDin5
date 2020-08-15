@@ -44,7 +44,7 @@ require_once  __DIR__.'/../../mockFormDinArray.php';
 
 use PHPUnit\Framework\TestCase;
 
-class TFormDinDateValidatorTest extends TestCase
+class TFormDinDateValidatorMaxTest extends TestCase
 {
 
     private $classTest;
