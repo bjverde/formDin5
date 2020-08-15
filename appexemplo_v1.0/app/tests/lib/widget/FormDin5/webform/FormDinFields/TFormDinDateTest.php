@@ -114,7 +114,7 @@ class TFormDinDateTest extends TestCase
         $result = $this->classTest->getMinValue();
         $this->assertEquals('2020-04-01',$result);
     }
-
+    //-----------------------------------------------------
     public function testSetButtonVisible()
     {
         $this->expectWarning();
