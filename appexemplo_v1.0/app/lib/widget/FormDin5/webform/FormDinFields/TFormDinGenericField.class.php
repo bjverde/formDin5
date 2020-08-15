@@ -228,7 +228,7 @@ class TFormDinGenericField
      */
     public function setExampleText($strNewValue=null)
 	{
-		$this->getAdiantiObj()->setTip($strNewValue);
+		$this->setTooltip($strNewValue);
     }
     /**
      * Metodo criado para melhorar a retrocompatibilidade com Formdi4s

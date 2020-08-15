@@ -197,6 +197,13 @@ class TFormDinGenericFieldTest extends TestCase
         $restut = $this->classTest->getTooltip();
         $this->assertEquals($title, $restut);
     }
+    public function testExampleText()
+    {
+        $text = 'bbb';
+        $this->classTest->setExampleText($text);
+        $restut = $this->classTest->getExampleText();
+        $this->assertEquals($text, $restut);
+    }
 
     public function testReadOnly_True()
     {
@@ -212,5 +219,13 @@ class TFormDinGenericFieldTest extends TestCase
         $this->classTest->setReadOnly($expect);
         $result = $this->classTest->getReadOnly();
         $this->assertEquals($expect, $result);
+    }
+
+    public function testClass()
+    {
+        $this->classTest->setClass('formdin5');
+        $this->classTest->setClass('btn');
+        $result = $this->classTest->getClass();
+        $this->assertEquals('formdin5 btn', $result);
     }
 }
