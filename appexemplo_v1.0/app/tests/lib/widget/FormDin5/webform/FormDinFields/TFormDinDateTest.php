@@ -43,8 +43,10 @@
 $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Deprecated;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
+use PHPUnit\Framework\TestCase;
 
 class TFormDinDateTest extends TestCase
 {
@@ -86,5 +88,16 @@ class TFormDinDateTest extends TestCase
         $this->assertEquals(false,$editable);
         $this->assertEquals(true,$readOnly);
     }
+
+    public function testSetButtonVisible()
+    {
+        $this->expectWarning();
+        $this->classTest->setButtonVisible(true);
+    }
+    public function testGetButtonVisible()
+    {
+        $result = $this->classTest->getButtonVisible();
+        $this->assertEquals(true,$result);
+    }    
 
 }

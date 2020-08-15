@@ -126,16 +126,12 @@ class TFormDinDate extends TFormDinGenericField
         ValidateHelper::validadeParam('setButtonVisible()'
                                     ,$boolValue
                                     ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_DECREP
+                                    ,ValidateHelper::MSG_NOT_IMPLEMENTED
                                     ,__CLASS__,__METHOD__,__LINE__); 
 	}
 	public function getButtonVisible()
 	{
-        ValidateHelper::validadeParam('getButtonVisible()'
-                                    ,null
-                                    ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_DECREP
-                                    ,__CLASS__,__METHOD__,__LINE__); 
+        return true;
 	}    
     //--------------------------------------------------------------------------
 	public function getMaxValue()

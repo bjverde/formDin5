@@ -88,19 +88,28 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
 
+    /*
     public function testRequired_false()
     {
         $result = $this->classTest->isRequired();
         $this->assertSame(false, $result);
     }
-
     public function testRequired_true()
     {
         $this->classTest->setRequired(true);
-        $array = $this->classTest->getValidations();
         $result = $this->classTest->isRequired();
+        $array = $this->classTest->getValidations();
         $this->assertEquals(true, $result);
     }
+    public function testValidationArray_true()
+    {
+        $this->classTest->setRequired(true);
+        $result = $this->classTest->isRequired();
+        $array = $this->classTest->addValidation('xx', new TMaxLengthValidator, array(5));
+        $array = $this->classTest->getValidations();
+        $this->assertEquals(true, $result);
+    }
+    */
 
     public function test_SetValeuTText()
     {
@@ -164,7 +173,6 @@ class TFormDinGenericFieldTest extends TestCase
         $result = $this->classTest->getPlaceHolder();
         $this->assertEquals($expect, $result);
     }
-
 
     public function testSetTooltip_title()
     {
