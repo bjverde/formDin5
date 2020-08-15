@@ -67,19 +67,6 @@ class TFormDinDateTest extends TestCase
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
-    }     
-    
-    public function testMask()
-    {
-        $this->classTest->setMask('yyyy-mm-dd');
-        $result = $this->classTest->getMask();
-        $this->assertEquals('yyyy-mm-dd',$result);
-    }
-    public function testDatabaseMask()
-    {
-        $this->classTest->setDatabaseMask('yyyy-mm-dd');
-        $result = $this->classTest->getDatabaseMask();
-        $this->assertEquals('yyyy-mm-dd',$result);
     }
 
     public function test_instanceOff()
@@ -100,6 +87,32 @@ class TFormDinDateTest extends TestCase
         
         $this->assertEquals(false,$editable);
         $this->assertEquals(true,$readOnly);
+    }    
+    //-----------------------------------------------------    
+    public function testMask()
+    {
+        $this->classTest->setMask('yyyy-mm-dd');
+        $result = $this->classTest->getMask();
+        $this->assertEquals('yyyy-mm-dd',$result);
+    }
+    public function testDatabaseMask()
+    {
+        $this->classTest->setDatabaseMask('yyyy-mm-dd');
+        $result = $this->classTest->getDatabaseMask();
+        $this->assertEquals('yyyy-mm-dd',$result);
+    }
+    //-----------------------------------------------------
+    public function testMaxValue()
+    {
+        $this->classTest->setMaxValue('10/05/2020');
+        $result = $this->classTest->getMaxValue();
+        $this->assertEquals('10/05/2020',$result);
+    }
+    public function testMinValue()
+    {
+        $this->classTest->setMinValue('2020-04-01');
+        $result = $this->classTest->getMinValue();
+        $this->assertEquals('2020-04-01',$result);
     }
 
     public function testSetButtonVisible()
