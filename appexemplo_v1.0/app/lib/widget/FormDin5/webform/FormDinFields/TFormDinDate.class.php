@@ -67,7 +67,7 @@ class TFormDinDate extends TFormDinGenericField
      * @param boolean $boolRequired    - 3: DEFAULT = flase não obrigatório
      * @param boolean $boolNewLine     - 4: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param string  $strValue        - 5: Valor inicial
-     * @param string  $strMinValue     - 6: NOT_IMPLEMENTED Menor data que o campo aceita
+     * @param string  $strMinValue     - 6: Menor data que o campo aceita
      * @param string  $strMaxValue     - 7: Maior data que o campo aceita
      * @param string  $strMaskType     - 8: DEFAULT = dd-mm-yyyy. Tipo de Mascara dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano) 
      * @param boolean $boolButtonVisible - 9: Exibe ou não o botão do calendario.
@@ -96,6 +96,7 @@ class TFormDinDate extends TFormDinGenericField
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,$strExampleText);
         $this->setMask($strMaskType);
         $this->setMaxValue($strMaxValue);
+        $this->setMinValue($strMinValue);
         return $this->getAdiantiObj();
     }
 
@@ -122,6 +123,16 @@ class TFormDinDate extends TFormDinGenericField
             $parameters[0] = $this->getMask();
             $parameters[1] = $strMaxValue;
             $this->getAdiantiObj()->addValidation($strLabel, new TFormDinDateValidatorMax, $parameters);
+        }
+    }
+
+    public function setMinValue($strMinValue)
+    {
+        if( !empty($strMinValue) ){
+            $strLabel = $this->getLabelTxt();
+            $parameters[0] = $this->getMask();
+            $parameters[1] = $strMinValue;
+            $this->getAdiantiObj()->addValidation($strLabel, new TFormDinDateValidatorMin, $parameters);
         }
     }
 }
