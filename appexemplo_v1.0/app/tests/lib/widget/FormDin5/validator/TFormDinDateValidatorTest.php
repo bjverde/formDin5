@@ -65,7 +65,26 @@ class TFormDinDateValidatorTest extends TestCase
         parent::tearDown();
     }
 
+
     public function testBr_date20200815limit20200830() {
+        $this->expectNotToPerformAssertions();
+        $label = 'Teste';
+        $value = '15/08/2020 23:33';
+        $parameters[0]='dd/mm/yyyy hh:ii';
+        $parameters[1]='30/08/2020 23:34';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testBr_date202008152333limit202008152332() {
+        $this->expectException(InvalidArgumentException::class);
+        $label = 'Teste';
+        $value = '15/08/2020 23:33';
+        $parameters[0]='dd/mm/yyyy hh:ii';
+        $parameters[1]='15/08/2020 23:32';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testBr_date202008152333limit202008152334() {
         $this->expectNotToPerformAssertions();
         $label = 'Teste';
         $value = '15/08/2020';
@@ -135,6 +154,61 @@ class TFormDinDateValidatorTest extends TestCase
         $value = '15/08';
         $parameters[0]='dd/mm';
         $parameters[1]='01/08';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testIso_date202008152333limit202008152334() {
+        $this->expectNotToPerformAssertions();
+        $label = 'Teste';
+        $value = '2020-08-15 23:33';
+        $parameters[0]='yyyy-mm-dd hh:ii';
+        $parameters[1]='2020-08-15 23:34';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testIso_date202008152333limit202008152332() {
+        $this->expectException(InvalidArgumentException::class);
+        $label = 'Teste';
+        $value = '2020-08-15 23:33';
+        $parameters[0]='yyyy-mm-dd hh:ii';
+        $parameters[1]='2020-08-15 23:32';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+
+    public function testIso_date20200815limit20200830() {
+        $this->expectNotToPerformAssertions();
+        $label = 'Teste';
+        $value = '2020-08-15';
+        $parameters[0]='yyyy-mm-dd';
+        $parameters[1]='2020-08-30';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testIso_date20200815limit20200801() {
+        $this->expectException(InvalidArgumentException::class);
+        $label = 'Teste';
+        $value = '2020-08-15';
+        $parameters[0]='yyyy-mm-dd';
+        $parameters[1]='2020-08-01';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testIso_date202008limit202009() {
+        $this->expectNotToPerformAssertions();
+        $label = 'Teste';
+        $value = '2020-08';
+        $parameters[0]='yyyy-mm';
+        $parameters[1]='2020-09';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testIso_date202008limit202007() {
+        $this->expectException(InvalidArgumentException::class);
+        $label = 'Teste';
+        $value = '2020-08';
+        $parameters[0]='yyyy-mm';
+        $parameters[1]='2020-07';
         $this->classTest->validate($label, $value, $parameters);
     }
     
