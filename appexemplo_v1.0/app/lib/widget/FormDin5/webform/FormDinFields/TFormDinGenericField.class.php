@@ -166,12 +166,12 @@ class TFormDinGenericField
     }
     public function isRequired()
     {
-        $this->getAdiantiObj()->isRequired();
+        return $this->getAdiantiObj()->isRequired();
     }
     //---------------------------------------------------------------
     public function getValidations()
     {
-        $this->getAdiantiObj()->getValidations();
+        return $this->getAdiantiObj()->getValidations();
     }
     /**
      * Add a field validator of the Adianti 
