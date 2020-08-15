@@ -100,7 +100,7 @@ class TFormDinDate extends TFormDinGenericField
     }
 
     public function getMask(){
-        $this->getAdiantiObj()->getMask();
+        return $this->getAdiantiObj()->getMask();
     }
     public function setMask($strMaskType){
         if( is_null($strMaskType) ){
