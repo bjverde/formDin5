@@ -44,7 +44,7 @@ require_once  __DIR__.'/../../mockFormDinArray.php';
 
 use PHPUnit\Framework\TestCase;
 
-class TFormDinDateValidatorMaxTest extends TestCase
+class TFormDinDateValidatorMinTest extends TestCase
 {
 
     private $classTest;
@@ -54,7 +54,7 @@ class TFormDinDateValidatorMaxTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinDateValidatorMax();
+        $this->classTest = new TFormDinDateValidatorMin();
     }
     
     /**
@@ -72,15 +72,14 @@ class TFormDinDateValidatorMaxTest extends TestCase
         $parameters[0]='dd/mm/yyyy hh:ii';
         $parameters[1]='30/08/2020 23:34';
         $this->classTest->validate($label, $value, $parameters);
-    }
+    }    
 
-
-    public function testBr_date20200815limit20200830() {
+    public function testBr_date202008152334limit202008152333() {
         $this->expectNotToPerformAssertions();
         $label = 'Teste';
-        $value = '15/08/2020 23:33';
+        $value = '15/08/2020 23:34';
         $parameters[0]='dd/mm/yyyy hh:ii';
-        $parameters[1]='30/08/2020 23:34';
+        $parameters[1]='15/08/2020 23:33';
         $this->classTest->validate($label, $value, $parameters);
     }
 
