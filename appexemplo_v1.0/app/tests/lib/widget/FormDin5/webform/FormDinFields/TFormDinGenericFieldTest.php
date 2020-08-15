@@ -87,8 +87,7 @@ class TFormDinGenericFieldTest extends TestCase
         $adiantiObj = $this->classTest->getAdiantiField();
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
-
-    /*
+    //-----------------------------------------------------
     public function testRequired_false()
     {
         $result = $this->classTest->isRequired();
@@ -98,18 +97,18 @@ class TFormDinGenericFieldTest extends TestCase
     {
         $this->classTest->setRequired(true);
         $result = $this->classTest->isRequired();
-        $array = $this->classTest->getValidations();
         $this->assertEquals(true, $result);
     }
+    //-----------------------------------------------------
     public function testValidationArray_true()
     {
-        $this->classTest->setRequired(true);
-        $result = $this->classTest->isRequired();
-        $array = $this->classTest->addValidation('xx', new TMaxLengthValidator, array(5));
-        $array = $this->classTest->getValidations();
-        $this->assertEquals(true, $result);
+        $this->classTest->addValidation('xx', new TMaxLengthValidator, array(5));
+        $arrayValidations = $this->classTest->getValidations();
+        $qtdValidations   = CountHelper::count($arrayValidations);
+        $this->assertEquals(1, $qtdValidations);
+        $this->assertEquals('xx', $arrayValidations[0][0]);
+        $this->assertInstanceOf(TMaxLengthValidator::class, $arrayValidations[0][1]);
     }
-    */
 
     public function test_SetValeuTText()
     {
