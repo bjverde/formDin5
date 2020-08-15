@@ -57,6 +57,8 @@
  */
 class TFormDinDate extends TFormDinGenericField
 {
+    private $minValue;
+    private $maxValue;
     
     /****
      * Adicona um campo data ou mes/ano ou dia/mes de acordo com o parametro strMaxType
@@ -109,13 +111,37 @@ class TFormDinDate extends TFormDinGenericField
         }
         $this->getAdiantiObj()->setMask($strMaskType);
     }
-
+    //--------------------------------------------------------------------------
+    public function getDatabaseMask(){
+        return $this->getAdiantiObj()->getDatabaseMask();
+    }    
     public function setDatabaseMask($databaseMask){
         if( !is_null($databaseMask) ){
             $this->getAdiantiObj()->setDatabaseMask($databaseMask);
         }
     }
-
+	//--------------------------------------------------------------------------
+	public function setButtonVisible($boolValue=null)
+	{
+        ValidateHelper::validadeParam('setButtonVisible()'
+                                    ,$boolValue
+                                    ,ValidateHelper::WARNING
+                                    ,ValidateHelper::MSG_DECREP
+                                    ,__CLASS__,__METHOD__,__LINE__); 
+	}
+	public function getButtonVisible()
+	{
+        ValidateHelper::validadeParam('getButtonVisible()'
+                                    ,null
+                                    ,ValidateHelper::WARNING
+                                    ,ValidateHelper::MSG_DECREP
+                                    ,__CLASS__,__METHOD__,__LINE__); 
+	}    
+    //--------------------------------------------------------------------------
+	public function getMaxValue()
+	{
+		return $this->maxValue;
+	}    
     public function setMaxValue($strMaxValue)
     {
         if( !empty($strMaxValue) ){
@@ -123,9 +149,14 @@ class TFormDinDate extends TFormDinGenericField
             $parameters[0] = $this->getMask();
             $parameters[1] = $strMaxValue;
             $this->getAdiantiObj()->addValidation($strLabel, new TFormDinDateValidatorMax, $parameters);
+            $this->maxValue = $strMaxValue;
         }
     }
-
+    //--------------------------------------------------------------------------
+	public function getMinValue()
+	{
+		return $this->minValue;
+	}
     public function setMinValue($strMinValue)
     {
         if( !empty($strMinValue) ){
@@ -133,6 +164,7 @@ class TFormDinDate extends TFormDinGenericField
             $parameters[0] = $this->getMask();
             $parameters[1] = $strMinValue;
             $this->getAdiantiObj()->addValidation($strLabel, new TFormDinDateValidatorMin, $parameters);
+            $this->minValue = $strMinValue;
         }
     }
 }
