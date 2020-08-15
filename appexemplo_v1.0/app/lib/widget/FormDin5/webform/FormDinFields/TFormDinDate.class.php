@@ -99,6 +99,7 @@ class TFormDinDate extends TFormDinGenericField
         $this->setMask($strMaskType);
         $this->setMaxValue($strMaxValue);
         $this->setMinValue($strMinValue);
+        $this->setDatabaseMask($databaseMask);
         return $this->getAdiantiObj();
     }
 
