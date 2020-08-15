@@ -16,20 +16,23 @@ class TFormDinDateValidatorMax extends TFieldValidator
      */
     public function validate($label, $value, $parameters = NULL)
     {
-        $defaultMask = 'yyyy-mm-dd hh:ii';
-        $maskDat = $parameters[0];
-        $maxLimitDate = $parameters[1];
+        if( !empty($value) ){
+            $defaultMask = 'yyyy-mm-dd hh:ii';
+            $maskDat = $parameters[0];
+            $maxLimitDate = $parameters[1];
 
-        $dateValue    = TDateTime::convertToMask($value, $maskDat, $defaultMask);
-        $maxLimitDate = TDateTime::convertToMask($maxLimitDate, $maskDat, $defaultMask);
+            $dateValue    = TDateTime::convertToMask($value, $maskDat, $defaultMask);
+            $maxLimitDate = TDateTime::convertToMask($maxLimitDate, $maskDat, $defaultMask);
 
-        $dateValue = new DateTime($dateValue);
-        $maxLimitDate = new DateTime($maxLimitDate);
+            $dateValue = new DateTime($dateValue);
+            $maxLimitDate = new DateTime($maxLimitDate);
 
-        $interval = $dateValue->diff($maxLimitDate); //If Date is in past then invert will 1
-        if($interval->invert == 1){
-            throw new InvalidArgumentException("A data do campo $label não pode ser posterior a data $parameters[1]");
-        }    
+            //$maxLimitDate older than $dateValue
+            $interval = $dateValue->diff($maxLimitDate); //If Date is in past then invert will 1
+            if($interval->invert == 1){
+                throw new InvalidArgumentException("A data do campo $label recebeu $value não pode ser posterior a data $parameters[1]");
+            }
+        }
     }
 }
 ?>
