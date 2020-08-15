@@ -68,7 +68,7 @@ class TFormDinDate extends TFormDinGenericField
      * @param boolean $boolNewLine     - 4: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param string  $strValue        - 5: Valor inicial
      * @param string  $strMinValue     - 6: NOT_IMPLEMENTED Menor data que o campo aceita
-     * @param string  $strMaxValue     - 7: NOT_IMPLEMENTED Maior data que o campo aceita
+     * @param string  $strMaxValue     - 7: Maior data que o campo aceita
      * @param string  $strMaskType     - 8: DEFAULT = dd-mm-yyyy. Tipo de Mascara dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano) 
      * @param boolean $boolButtonVisible - 9: Exibe ou não o botão do calendario.
      * @param string  $strExampleText  - 10: Texto de exmplo
@@ -95,9 +95,13 @@ class TFormDinDate extends TFormDinGenericField
         $adiantiObj = new TDate($id);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,$strExampleText);
         $this->setMask($strMaskType);
+        $this->setMaxValue($strMaxValue);
         return $this->getAdiantiObj();
     }
 
+    public function getMask(){
+        $this->getAdiantiObj()->getMask();
+    }
     public function setMask($strMaskType){
         if( is_null($strMaskType) ){
             $strMaskType = 'dd/mm/yyyy';
@@ -109,5 +113,15 @@ class TFormDinDate extends TFormDinGenericField
         if( !is_null($databaseMask) ){
             $this->getAdiantiObj()->setDatabaseMask($databaseMask);
         }
-    }    
+    }
+
+    public function setMaxValue($strMaxValue)
+    {
+        if( !empty($strMaxValue) ){
+            $strLabel = $this->getLabelTxt();
+            $parameters[0] = $this->getMask();
+            $parameters[1] = $strMaxValue;
+            $this->getAdiantiObj()->addValidation($strLabel, new TFormDinDateValidatorMax, $parameters);
+        }
+    }
 }
