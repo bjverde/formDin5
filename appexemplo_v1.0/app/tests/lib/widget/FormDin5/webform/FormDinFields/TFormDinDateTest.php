@@ -69,6 +69,19 @@ class TFormDinDateTest extends TestCase
         parent::tearDown();
     }     
     
+    public function testMask()
+    {
+        $this->classTest->setMask('yyyy-mm-dd');
+        $result = $this->classTest->getMask();
+        $this->assertEquals('yyyy-mm-dd',$result);
+    }
+    public function testDatabaseMask()
+    {
+        $this->classTest->setDatabaseMask('yyyy-mm-dd');
+        $result = $this->classTest->getDatabaseMask();
+        $this->assertEquals('yyyy-mm-dd',$result);
+    }
+
     public function test_instanceOff()
     {
         $adiantiObj = $this->classTest->getAdiantiObj();
