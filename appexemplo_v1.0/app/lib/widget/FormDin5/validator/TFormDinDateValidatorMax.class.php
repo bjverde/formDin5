@@ -28,7 +28,7 @@ class TFormDinDateValidatorMax extends TFieldValidator
 
         $interval = $dateValue->diff($maxLimitDate); //If Date is in past then invert will 1
         if($interval->invert == 1){
-            throw new Exception("A data do campo $label não pode ser posterior a data $parameters[1]");
+            throw new InvalidArgumentException("A data do campo $label não pode ser posterior a data $parameters[1]");
         }
         
         /*

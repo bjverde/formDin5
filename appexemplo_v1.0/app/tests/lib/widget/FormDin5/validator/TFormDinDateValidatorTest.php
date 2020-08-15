@@ -75,12 +75,49 @@ class TFormDinDateValidatorTest extends TestCase
     }
 
     public function testBr_date20200815limit20200801() {
-        $this->expectNotToPerformAssertions();
+        $this->expectException(InvalidArgumentException::class);
         $label = 'Teste';
         $value = '15/08/2020';
         $parameters[0]='dd/mm/yyyy';
         $parameters[1]='01/08/2020';
         $this->classTest->validate($label, $value, $parameters);
-    } 
+    }
+
+    public function testBr_date202008limit202009() {
+        $this->expectNotToPerformAssertions();
+        $label = 'Teste';
+        $value = '08/2020';
+        $parameters[0]='mm/yyyy';
+        $parameters[1]='09/2020';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testBr_date202008limit202007() {
+        $this->expectException(InvalidArgumentException::class);
+        $label = 'Teste';
+        $value = '08/2020';
+        $parameters[0]='mm/yyyy';
+        $parameters[1]='07/2020';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+
+    public function testBr_date2020limit2021() {
+        $this->expectNotToPerformAssertions();
+        $label = 'Teste';
+        $value = '2020';
+        $parameters[0]='yyyy';
+        $parameters[1]='2021';
+        $this->classTest->validate($label, $value, $parameters);
+    }
+
+    public function testBr_date2020limit2019() {
+        $this->expectException(InvalidArgumentException::class);
+        $label = 'Teste';
+        $value = '2020';
+        $parameters[0]='yyyy';
+        $parameters[1]='2019';
+        $this->classTest->validate($label, $value, $parameters);
+    }
     
 }
