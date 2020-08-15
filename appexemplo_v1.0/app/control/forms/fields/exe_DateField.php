@@ -77,6 +77,7 @@ class exe_DateField extends TPage
     {
         $data = $this->form->getData();
         $this->form->setData($data);
+        $this->form->validate();
 
         //Função do FormDin para Debug
         FormDinHelper::d($param,'$param');

@@ -53,7 +53,7 @@ class exe_NumberField extends TPage
             $numad07->addValidation($numad07Label, new TMaxLengthValidator, array(6));
             $numad07->addValidation($numad07Label, new TMinValueValidator, array(10));
             $numad07->addValidation($numad07Label, new TMaxValueValidator, array('80,999'));
-            $numad08->setTip('Termometro Celsius, valor 10,000 a 80,999');
+            $numad07->setTip('Termometro Celsius, valor 10,000 a 80,999');
 
             $numad08Label = 'AD Fahrenheit';
             $numad08 = new TNumeric('numad08', 2, '.', ',', true);
