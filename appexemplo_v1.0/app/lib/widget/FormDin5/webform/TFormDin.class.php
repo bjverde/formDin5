@@ -1016,25 +1016,30 @@ class TFormDin
     }
     //-----------------------------------------------------------------------------
     /**
-    * Adicicionar campo tipo radiobutton
-    * 
-    * 
-    * @param string $strName         - 1: field ID
-    * @param string $strLabel        - 2: Label field
-    * @param boolean $boolRequired   - 3: TRUE = Required, FALSE = not Required
-    * @param array $arrOptions       - 4: Array Options
-    * @param boolean $boolNewLine    - 5: TRUE = new line, FALSE = no, DEFAULT ou NULL = FALSE
-    * @param boolean $boolLabelAbove - 6: TRUE = Titulo em cima das opções, FALSE = titulo lateral
-    * @param string  $strValue       - 7: Valor DEFUALT, informe do id do array
-    * @param integer $intQtdColumns  - 8: Quantidade de colunas, valor DEFAULT = 1;
-    * @param integer $intWidth       - 9:
-    * @param integer $intHeight      -10:
-    * @param integer $intPaddingItems-11:
-    * @param boolean $boolNoWrapLabel-12:
-    * @param boolean $boolNowrapText -13:
-    * @return TRadio
+     * Adicicionar campo tipo radiobutton
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     * 
+     * @param string $strName         - 1: field ID
+     * @param string $strLabel        - 2: Label field
+     * @param boolean $boolRequired   - 3: TRUE = Required, FALSE = not Required
+     * @param array $arrOptions       - 4: Array Options
+     * @param boolean $boolNewLine    - 5: TRUE = new line, FALSE = no, DEFAULT ou NULL = FALSE
+     * @param boolean $boolLabelAbove - 6: TRUE = Titulo em cima das opções, FALSE = titulo lateral
+     * @param string  $strValue       - 7: Valor DEFUALT, informe do id do array
+     * @param integer $intQtdColumns  - 8: Quantidade de colunas, valor DEFAULT = 1;
+     * @param integer $intWidth       - 9: DEPRECATED
+     * @param integer $intHeight      -10: DEPRECATED
+     * @param integer $intPaddingItems-11: NOT_IMPLEMENTED
+     * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED
+     * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED
+     * @param boolean $useButton      -14: FORMDIN5 Default FALSE = estilo radio comum, TRUE = estilo tipo botões
+     * @return TRadio
     */
-    public function addRadioField( $strName
+    public function addRadioField($strName
     			           		, $strLabel=null
     			           		, $boolRequired=null
     			           		, $arrOptions=null
@@ -1046,14 +1051,28 @@ class TFormDin
     			           		, $intHeight=null
     			           		, $intPaddingItems=null
     			           		, $boolNoWrapLabel=null
-    			           		, $boolNowrapText=null
+                                , $boolNowrapText=null
+                                , $useButton=null
     			           		){
-       $field = new TRadio( $strName, $arrOptions, $strValue, $boolRequired, $intQtdColumns, $intWidth, $intHeight, $intPaddingItems,$boolNowrapText);
-       $field->setNoWrapText($boolNowrapText);
-       $displayControl = new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel );
-       $this->addDisplayControl( $displayControl );
-       $field->addEvent('onDblclick','this.checked=false;fwFieldCheckBoxClick(this);');
-       return $field;
+        $formField = new TFormDinRadio($strName
+                                     , $strLabel
+                                     , $boolRequired
+                                     , $arrOptions
+                                     , $boolNewLine
+                                     , $boolLabelAbove
+                                     , $strValue
+                                     , $intQtdColumns
+                                     , $intWidth
+                                     , $intHeight
+                                     , $intPaddingItems
+                                     , $boolNoWrapLabel
+                                     , $boolNowrapText
+                                     , $useButton
+                                     );
+        $objField = $formField->getAdiantiObj();
+        $label = $this->getLabelField($strLabel,$boolRequired);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
     }
 
     /**

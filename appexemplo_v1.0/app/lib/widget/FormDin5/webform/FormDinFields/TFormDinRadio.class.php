@@ -63,52 +63,52 @@ class TFormDinRadio extends TFormDinGenericField
      * Cria um RadioGroup com efeito visual de Switch
      * Reconstruido FormDin 4 Sobre o Adianti 7
      * 
-     * @param string $id            - 1: ID do campo
-     * @param string $strLabel      - 2: Label do campo
-     * @param boolean $boolRequired - 3: Obrigatorio
-     * @param array $itens
+     * @param string $strName         - 1: field ID
+     * @param string $strLabel        - 2: Label field
+     * @param boolean $boolRequired   - 3: TRUE = Required, FALSE = not Required
+     * @param array $arrOptions       - 4: Array Options
+     * @param boolean $boolNewLine    - 5: TRUE = new line, FALSE = no, DEFAULT ou NULL = FALSE
+     * @param boolean $boolLabelAbove - 6: TRUE = Titulo em cima das opções, FALSE = titulo lateral
+     * @param string  $strValue       - 7: Valor DEFUALT, informe do id do array
+     * @param integer $intQtdColumns  - 8: Quantidade de colunas, valor DEFAULT = 1;
+     * @param integer $intWidth       - 9: DEPRECATED
+     * @param integer $intHeight      -10: DEPRECATED
+     * @param integer $intPaddingItems-11: NOT_IMPLEMENTED
+     * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED
+     * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED
+     * @param boolean $useButton      -14: FORMDIN5 Default FALSE = estilo radio comum, TRUE = estilo tipo botões
      * @return mixed TRadioGroup
      */
-    public function __construct($strName
-                               , $strLabel=null
-                               , $boolRequired=null
-                               , $arrOptions=null
-                               , $boolNewLine=null
-                               , $boolLabelAbove=null
-                               , $strValue=null
-                               , $intQtdColumns=null
-                               , $intWidth=null
-                               , $intHeight=null
-                               , $intPaddingItems=null
-                               , $boolNoWrapLabel=null
-                               , $boolNowrapText=null
+    public function __construct($id
+                               ,$label=null
+                               ,$boolRequired=null
+                               ,$arrOptions=null
+                               ,$boolNewLine=null
+                               ,$boolLabelAbove=null
+                               ,$strValue=null
+                               ,$intQtdColumns=null
+                               ,$intWidth=null
+                               ,$intHeight=null
+                               ,$intPaddingItems=null
+                               ,$boolNoWrapLabel=null
+                               ,$boolNowrapText=null
+                               ,$useButton = null
                                )
     {
         $adiantiObj = new TRadioGroup($id);
-        parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,$strExampleText);
-        $adiantiObj = new TRadioGroup($id);
-        $adiantiObj->setLayout('horizontal');
-        $adiantiObj->setUseButton();
-        $items = ['S'=>'Sim', 'N'=>'Não'];
-        $adiantiObj->addItems($items);
-        $this->setAdiantiObj($adiantiObj);
-
-        parent::__construct($this->getAdiantiObj(),$id,$label,$boolRequired,null,null);
-       
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,null);
+        $this->setUseButton($useButton);
+        $this->addItems($arrOptions);       
         return $this->getAdiantiObj();
     }
-    
-    public function setAdiantiObj($adiantiObj)
-    {
-        if( empty($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+
+    public function addItems($arrayItens){
+        $this->getAdiantiObj()->addItems($arrayItens);
+    }    
+
+    public function setUseButton($useButton){
+        if( !empty($useButton) ){
+            $this->getAdiantiObj()->setUseButton();
         }
-        if( !is_object($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        } 
-        return $this->adiantiObj=$adiantiObj;
-    }
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
     }
 }
