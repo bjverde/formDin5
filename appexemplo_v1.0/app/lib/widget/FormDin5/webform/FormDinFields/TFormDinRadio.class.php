@@ -98,6 +98,7 @@ class TFormDinRadio extends TFormDinGenericField
         $adiantiObj = new TRadioGroup($id);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,null);
         $this->setUseButton($useButton);
+        $arrOptions = ArrayHelper::convertString2Array($arrOptions);
         $this->addItems($arrOptions);       
         return $this->getAdiantiObj();
     }
