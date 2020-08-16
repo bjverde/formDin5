@@ -99,7 +99,8 @@ class TFormDinRadio extends TFormDinGenericField
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,null);
         $this->setUseButton($useButton);
         $arrOptions = ArrayHelper::convertString2Array($arrOptions);
-        $this->addItems($arrOptions);       
+        $this->addItems($arrOptions);
+        $this->setBreakItems($intQtdColumns);
         return $this->getAdiantiObj();
     }
 
@@ -111,5 +112,33 @@ class TFormDinRadio extends TFormDinGenericField
         if( !empty($useButton) ){
             $this->getAdiantiObj()->setUseButton();
         }
+    }
+
+    public function setLayout($dir)
+    {
+        $this->getAdiantiObj()->setLayout($dir);
+    }
+    public function getLayout()
+    {
+        return $this->getAdiantiObj()->getLayout();
+    }
+
+    public function setBreakItems($breakItems)
+    {
+        $this->getAdiantiObj()->setBreakItems($breakItems);
+    }
+    public function getItems()
+    {
+        return $this->getAdiantiObj()->getItems();
+    }
+
+    public function getButtons()
+    {
+        return $this->getAdiantiObj()->getButtons();
+    }
+
+    public function getLabels()
+    {
+        return $this->getAdiantiObj()->getLabels();
     }
 }
