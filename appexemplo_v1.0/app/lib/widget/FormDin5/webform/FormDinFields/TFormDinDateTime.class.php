@@ -55,7 +55,7 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinDate extends TFormDinGenericField
+class TFormDinDateTime extends TFormDinGenericField
 {
     private $minValue;
     private $maxValue;
@@ -94,7 +94,7 @@ class TFormDinDate extends TFormDinGenericField
                               , $databaseMask=null
                               )
     {
-        $adiantiObj = new TDate($id);
+        $adiantiObj = new TDateTime($id);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,$strExampleText);
         $this->setMask($strMaskType);
         $this->setMaxValue($strMaxValue);
