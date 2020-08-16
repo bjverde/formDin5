@@ -315,7 +315,45 @@ class ArrayHelperTest extends TestCase
         $array = $mock->generateTablePessoaPDO();
         $retorno = ArrayHelper::convertArrayPDO2Adianti($array);
         $this->assertEquals($esperado, $retorno);
-    } 
+    }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testConvertString2Array_obj() {
+        $this->expectException(InvalidArgumentException::class);
+        $retorno = ArrayHelper::convertString2Array(new StdClass);
+    }    
+    public function testConvertString2Array_null() {
+        $this->expectException(InvalidArgumentException::class);
+        $retorno = ArrayHelper::convertString2Array(null);
+    }
+    public function testConvertString2Array_int() {
+        $this->expectException(InvalidArgumentException::class);
+        $retorno = ArrayHelper::convertString2Array(1);
+    }
+    public function testConvertString2Array_emptyArray() {
+        $this->expectException(InvalidArgumentException::class);
+        $retorno = ArrayHelper::convertString2Array(array());
+    }
+    public function testConvertString2Array_anyString() {
+        $this->expectException(InvalidArgumentException::class);
+        $retorno = ArrayHelper::convertString2Array('xxxx');
+    }
+    public function testConvertString2Array_Array() {
+        $esperado['M']='Maria';
+        $esperado['J']='Jose';
+        $retorno = ArrayHelper::convertString2Array($esperado);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertString2Array_StringFormDin() {
+        $string = 'S=SIM,N=Não,T=Talvez';
+        $esperado['S']='SIM';
+        $esperado['N']='Não';
+        $esperado['T']='Talvez';
+        $retorno = ArrayHelper::convertString2Array($esperado);
+        $this->assertEquals($esperado, $retorno);
+    }    
+
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
