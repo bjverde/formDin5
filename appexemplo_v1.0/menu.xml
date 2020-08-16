@@ -94,7 +94,7 @@
                     </menuitem>
                     <menuitem label='Data hora'>
                         <icon>fas:calendar-alt fa-fw</icon>
-                        <action>comingSoonView</action>
+                        <action>exe_DateTimeField</action>
                     </menuitem>                    
                 </menu>
             </menuitem>

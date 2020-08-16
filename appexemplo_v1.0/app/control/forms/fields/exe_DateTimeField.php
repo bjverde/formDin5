@@ -15,22 +15,45 @@ class exe_DateTimeField extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin($this,'Exemplo de Entrada de Dados com Máscara');
+        $frm = new TFormDin($this,'Exemplo Campo Data Hora');
 
-        $frm->addMaskField('c1', 'Código:', false, '99.99.99', null, null, null, null, '99.99.99');
-        $frm->addMaskField('c2', 'Placa do Carro:', false, 'aaa-9999')->setExampleText('aaa-9999');
-        $frm->addMaskField('c3', 'Código de Barras:', false, '9 999999 999999')->setExampleText('9 999999 999999');
+        $frm->addGroupField('gpx1', 'Formato da Data');
+            $frm->addDateTimeField('dat01', 'Data Br:', true);
+            $frm->addDateTimeField('dat02', 'Data ISO:', false,false,null,null,null,'yyyy-mm-dd')->setToolTip(null, 'Mascara yyyy-mm-dd');
 
-        $this->form = $frm->show();
+        $frm->addGroupField('gpx2', 'Valor inicial');
+            $dt04 = $frm->addDateTimeField('dat03', 'Data Br:');
+            $dt04->setValue('01/08/2020');
+            $frm->addDateTimeField('dat04', 'Data ISO:', false,false,'2020/08/01',null,null,'yyyy-mm-dd')->setToolTip(null, 'Mascara yyyy-mm-dd');
+        
+        $frm->addGroupField('gpx3', 'Texto Exemplo');
+            $dt05 = $frm->addDateTimeField('dat05', 'Data Br:');
+            $dt05->setPlaceHolder('01/08/2020');
+            $frm->addDateTimeField('dat06', 'Data ISO:', false,false,null,null,null,'yyyy-mm-dd',null,'2020/08/01')->setToolTip(null, 'Mascara yyyy-mm-dd');
 
-        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
+        $frm->addGroupField('gpx4', 'Outros Exemplos');
+        $dt2 = $frm->addDateTimeField('dat_nascimento2', 'Data no ano 1990:', null,null,null,'01/01/1990','31/12/1990');
+        $dt2->setToolTip(null, 'Aceita somente Datas entre 01/01/1990 e 31/12/1990');
+        
+        $dt3 = $frm->addDateTimeField('dat_nascimento3', 'Data mais novos que 2000:', null,null,null,'01/01/2000');
+        $dt3->setToolTip(null, 'Aceita somente mais novas que 01/01/2000');
+        
+        $frm->addDateField('dat_nascimento4', 'Data até 1800:', null,null,null, null, '31/12/1800')->setToolTip(null, 'Aceita somente mais novas que 31/12/1800');
 
-        // add form actions
+        $expires = new TDateTime('expires');
+        //$expires->setMask('dd/mm/yyyy');
+        //$expires->setDatabaseMask('yyyy-mm-dd');
+        $expires->setValue( date('Y-m-d', strtotime("+1 days")) );
+
+        $frm->addFields( [new TLabel('Expires at')], [$expires]);
+
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
-        $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
-        $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
+
+        $this->form = $frm->show();
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
@@ -44,7 +67,7 @@ class exe_DateTimeField extends TPage
     /**
      * Clear filters
      */
-    public function clear()
+    public function onClear()
     {
         $this->clearFilters();
         $this->onReload();
@@ -52,13 +75,24 @@ class exe_DateTimeField extends TPage
 
     public function onSave($param)
     {
-        $data = $this->form->getData();
-        $this->form->setData($data);
+        try
+        {
+            $data = $this->form->getData();
+            $this->form->setData($data);
+            $this->form->validate();
+            
+    
+            //Função do FormDin para Debug
+            FormDinHelper::d($param,'$param');
+            FormDinHelper::debug($data,'$data');
+            FormDinHelper::debug($_REQUEST,'$_REQUEST');
 
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
+            new TMessage('info', 'Tudo OK!');
+        }
+        catch (Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+        }
     }
 
 }
