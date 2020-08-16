@@ -55,7 +55,7 @@
             </menuitem>
             <menuitem label='Radio'>
                 <icon>fa:table fa-fw</icon>
-                <action>comingSoonView</action>
+                <action>exe_RadioField</action>
             </menuitem>
             <menuitem label='Check'>
                 <icon>fa:check-square fa-fw</icon>

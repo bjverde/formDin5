@@ -41,7 +41,7 @@
  */
 
  /**
- * Classe para criação campo do tipo Switch
+ * Classe para criação campo do tipo Radio
  * ------------------------------------------------------------------------
  * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
  * os parâmetros do metodos foram marcados com:
