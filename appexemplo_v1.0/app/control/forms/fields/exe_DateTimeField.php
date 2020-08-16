@@ -19,12 +19,12 @@ class exe_DateTimeField extends TPage
 
         $frm->addGroupField('gpx1', 'Formato da Data');
             $frm->addDateTimeField('dat01', 'Data Br:', true);
-            $frm->addDateTimeField('dat02', 'Data ISO:', false,false,null,null,null,'yyyy-mm-dd')->setToolTip(null, 'Mascara yyyy-mm-dd');
+            $frm->addDateTimeField('dat02', 'Data ISO:', false,false,null,null,null,'yyyy-mm-dd hh:ii')->setToolTip(null, 'Mascara yyy-mm-dd hh:ii');
 
         $frm->addGroupField('gpx2', 'Valor inicial');
             $dt04 = $frm->addDateTimeField('dat03', 'Data Br:');
-            $dt04->setValue('01/08/2020');
-            $frm->addDateTimeField('dat04', 'Data ISO:', false,false,'2020/08/01',null,null,'yyyy-mm-dd')->setToolTip(null, 'Mascara yyyy-mm-dd');
+            $dt04->setValue('01/08/2020 23:43');
+            $frm->addDateTimeField('dat04', 'Data ISO:', false,false,'2020-08-01 23:43',null,null,'yyy-mm-dd hh:ii')->setToolTip(null, 'Mascara yyy-mm-dd hh:ii');
         
         $frm->addGroupField('gpx3', 'Texto Exemplo');
             $dt05 = $frm->addDateTimeField('dat05', 'Data Br:');
