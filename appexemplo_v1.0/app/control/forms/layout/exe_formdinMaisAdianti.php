@@ -43,6 +43,12 @@ class exe_formdinMaisAdianti extends TPage
                        , [ new TLabel('al84'), new TEntry('al84') ] 
                        );
 
+
+
+        $radio = new TRadioGroup('radio');
+        $radio->setBooleanMode();
+        $frm->addFields( [ new TLabel('radio'), $radio ] );
+
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
