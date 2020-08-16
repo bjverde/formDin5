@@ -861,7 +861,7 @@ class TFormDin
                             , $databaseMask=null
                             )
     {        
-        $formField = new TFormDinDate( $strName
+        $formField = new TFormDinDateTime( $strName
                                      , $strLabel
                                      , $boolRequired
                                      , $boolNewLine

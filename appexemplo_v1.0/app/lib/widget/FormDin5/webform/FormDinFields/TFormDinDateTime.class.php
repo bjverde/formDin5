@@ -56,9 +56,10 @@
  * @author Reinaldo A. Barrêto Junior
  */
 class TFormDinDateTime extends TFormDinGenericField
-{
+{    
     private $minValue;
     private $maxValue;
+    private $maskType;
     
     /****
      * Adicona um campo data ou mes/ano ou dia/mes de acordo com o parametro strMaxType
@@ -104,12 +105,13 @@ class TFormDinDateTime extends TFormDinGenericField
     }
 
     public function getMask(){
-        return $this->getAdiantiObj()->getMask();
+        return $this->maskType;
     }
     public function setMask($strMaskType){
         if( is_null($strMaskType) ){
-            $strMaskType = 'dd/mm/yyyy';
+            $strMaskType = 'dd/mm/yyyy hh:ii';
         }
+        $this->maskType = $strMaskType;
         $this->getAdiantiObj()->setMask($strMaskType);
     }
     //--------------------------------------------------------------------------
