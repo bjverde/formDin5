@@ -339,6 +339,10 @@ class ArrayHelperTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $retorno = ArrayHelper::convertString2Array('xxxx');
     }
+    public function testConvertString2Array_anyString_NoError() {
+        $retorno = ArrayHelper::convertString2Array('xxxx',false);
+        $this->assertEquals('xxxx', $retorno);
+    }
     public function testConvertString2Array_Array() {
         $esperado['M']='Maria';
         $esperado['J']='Jose';
