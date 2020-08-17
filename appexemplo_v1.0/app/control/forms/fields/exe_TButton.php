@@ -18,7 +18,7 @@ class exe_TButton extends TPage
         $frm = new TFormDin($this,'Exemplo Mensagem apenas PHP');
         //$frm->setAction('Nome Botão','onSave',$this);
         $frm->setAction(_t('Save'), 'onSave', false,'far:check-circle green');
-        $frm->setAction(_t('Clear'), 'clear', false,'fa:eraser red');
+        $frm->setAction(_t('Clear'), 'onClear', false,'fa:eraser red');
         $frm->setAction('YYYY','onSave',true,null,'green');
         
         
@@ -64,7 +64,7 @@ class exe_TButton extends TPage
     /**
      * Clear filters
      */
-    public function clear()
+    public function onClear()
     {
         $this->clearFilters();
         $this->onReload();
@@ -72,46 +72,39 @@ class exe_TButton extends TPage
 
     public function onSave($param)
     {
-        $data = $this->form->getData();
-        $this->form->setData($data);
+        try
+        {
+            $data = $this->form->getData();
+            $this->form->setData($data);
+            $this->form->validate();
+            
+    
+            //Função do FormDin para Debug
+            FormDinHelper::d($param,'$param');
+            FormDinHelper::debug($data,'$data');
+            FormDinHelper::debug($_REQUEST,'$_REQUEST');
 
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
+            new TMessage('info', 'Tudo OK!');
+        }
+        catch (Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+        }
     }
 
     public function onSave1($param)
     {
-        $data = $this->form->getData();
-        $this->form->setData($data);
-
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
+        $this->onSave($param);
     }
 
     public function onSave2($param)
     {
-        $data = $this->form->getData();
-        $this->form->setData($data);
-
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
+        $this->onSave($param);
     }
 
     public function onSave3($param)
     {
-        $data = $this->form->getData();
-        $this->form->setData($data);
-
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
-    }    
+        $this->onSave($param);
+    }
 
 }
