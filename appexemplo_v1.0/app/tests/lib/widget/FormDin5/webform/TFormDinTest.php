@@ -772,8 +772,6 @@ class TFormDinTest extends TestCase
     }
 
     public function testSetAction_methods(){
-        $this->expectException(InvalidArgumentException::class);
-
         $this->classTest->setAction(_t('Save'), 'onSave', false,'far:check-circle green');
         $this->classTest->setAction(_t('Clear'), 'onClear', false,'fa:eraser red');
 
