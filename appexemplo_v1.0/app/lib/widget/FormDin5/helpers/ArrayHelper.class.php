@@ -305,7 +305,7 @@ class ArrayHelper
      * @param  string $array   - 1: string ou array de entrada
      * @return array
      */
-    public static function convertString2Array($string) 
+    public static function convertString2Array($string,$showSimpleStringError=true) 
     {
         $result = null;
         if( self::isArrayNotEmpty($string) ) {
@@ -315,8 +315,10 @@ class ArrayHelper
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
             }else{
                 $pos  = strpos($string, '=');
-                if( empty($pos) ){
+                if( empty($pos) && $showSimpleStringError===true){
                     throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                }elseif( empty($pos) && $showSimpleStringError===false){
+                    $result = $string;
                 }else{
                     //'S=SIM,N=Não,T=Talvez'
                     $string = explode(',',$string);
