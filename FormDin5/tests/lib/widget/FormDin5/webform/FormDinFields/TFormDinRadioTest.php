@@ -43,12 +43,10 @@
 $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
 
-use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Error\Notice;
-use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Warning;
 
-class TFormDinDateTest extends TestCase
+class TFormDinRadioTest extends TestCase
 {
 
     private $classTest;
@@ -58,7 +56,7 @@ class TFormDinDateTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinDate('t1','Data Test');
+        $this->classTest = new TFormDinRadio('p1','escolha', false, 'S=SIM,N=Não');
     }
     
     /**
@@ -67,17 +65,19 @@ class TFormDinDateTest extends TestCase
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
-    }
-
+    }     
+    
     public function test_instanceOff()
     {
+        $items = ['S'=>'SIM', 'N'=>'Não'];
         $adiantiObj = $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TDate::class, $adiantiObj);
+        $this->assertInstanceOf(TRadioGroup::class, $adiantiObj);
+        $this->assertEquals( $items,$adiantiObj->getItems());
     }
-    
+
     public function test_readOnly()
     {
-        $reflectionProperty = new \ReflectionProperty(TDate::class, 'editable');
+        $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'editable');
         $reflectionProperty->setAccessible(true);
 
         $this->classTest->setReadOnly(true);
@@ -87,43 +87,6 @@ class TFormDinDateTest extends TestCase
         
         $this->assertEquals(false,$editable);
         $this->assertEquals(true,$readOnly);
-    }    
-    //-----------------------------------------------------    
-    public function testMask()
-    {
-        $this->classTest->setMask('yyyy-mm-dd');
-        $result = $this->classTest->getMask();
-        $this->assertEquals('yyyy-mm-dd',$result);
     }
-    public function testDatabaseMask()
-    {
-        $this->classTest->setDatabaseMask('yyyy-mm-dd');
-        $result = $this->classTest->getDatabaseMask();
-        $this->assertEquals('yyyy-mm-dd',$result);
-    }
-    //-----------------------------------------------------
-    public function testMaxValue()
-    {
-        $this->classTest->setMaxValue('10/05/2020');
-        $result = $this->classTest->getMaxValue();
-        $this->assertEquals('10/05/2020',$result);
-    }
-    public function testMinValue()
-    {
-        $this->classTest->setMinValue('2020-04-01');
-        $result = $this->classTest->getMinValue();
-        $this->assertEquals('2020-04-01',$result);
-    }
-    //-----------------------------------------------------
-    public function testSetButtonVisible()
-    {
-        $this->expectWarning();
-        $this->classTest->setButtonVisible(true);
-    }
-    public function testGetButtonVisible()
-    {
-        $result = $this->classTest->getButtonVisible();
-        $this->assertEquals(true,$result);
-    }    
 
 }

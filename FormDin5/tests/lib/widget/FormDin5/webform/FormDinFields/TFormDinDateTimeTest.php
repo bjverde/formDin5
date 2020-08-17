@@ -48,7 +48,7 @@ use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
 
-class TFormDinDateTest extends TestCase
+class TFormDinDateTimeTest extends TestCase
 {
 
     private $classTest;
@@ -58,7 +58,7 @@ class TFormDinDateTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinDate('t1','Data Test');
+        $this->classTest = new TFormDinDateTime('t1','Data Test');
     }
     
     /**
@@ -72,12 +72,12 @@ class TFormDinDateTest extends TestCase
     public function test_instanceOff()
     {
         $adiantiObj = $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TDate::class, $adiantiObj);
+        $this->assertInstanceOf(TDateTime::class, $adiantiObj);
     }
     
     public function test_readOnly()
     {
-        $reflectionProperty = new \ReflectionProperty(TDate::class, 'editable');
+        $reflectionProperty = new \ReflectionProperty(TDateTime::class, 'editable');
         $reflectionProperty->setAccessible(true);
 
         $this->classTest->setReadOnly(true);

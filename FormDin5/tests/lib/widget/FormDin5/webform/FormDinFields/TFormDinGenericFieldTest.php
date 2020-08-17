@@ -87,20 +87,28 @@ class TFormDinGenericFieldTest extends TestCase
         $adiantiObj = $this->classTest->getAdiantiField();
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
-
+    //-----------------------------------------------------
     public function testRequired_false()
     {
         $result = $this->classTest->isRequired();
-        $this->assertEquals(false, $result);
+        $this->assertSame(false, $result);
     }
-
     public function testRequired_true()
     {
         $this->classTest->setRequired(true);
-        $array = $this->classTest->getValidations();
         $result = $this->classTest->isRequired();
         $this->assertEquals(true, $result);
-    }    
+    }
+    //-----------------------------------------------------
+    public function testValidationArray_true()
+    {
+        $this->classTest->addValidation('xx', new TMaxLengthValidator, array(5));
+        $arrayValidations = $this->classTest->getValidations();
+        $qtdValidations   = CountHelper::count($arrayValidations);
+        $this->assertEquals(1, $qtdValidations);
+        $this->assertEquals('xx', $arrayValidations[0][0]);
+        $this->assertInstanceOf(TMaxLengthValidator::class, $arrayValidations[0][1]);
+    }
 
     public function test_SetValeuTText()
     {
@@ -165,7 +173,6 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertEquals($expect, $result);
     }
 
-
     public function testSetTooltip_title()
     {
         $tooltip = 'aaa';
@@ -190,6 +197,13 @@ class TFormDinGenericFieldTest extends TestCase
         $restut = $this->classTest->getTooltip();
         $this->assertEquals($title, $restut);
     }
+    public function testExampleText()
+    {
+        $text = 'bbb';
+        $this->classTest->setExampleText($text);
+        $restut = $this->classTest->getExampleText();
+        $this->assertEquals($text, $restut);
+    }
 
     public function testReadOnly_True()
     {
@@ -205,5 +219,13 @@ class TFormDinGenericFieldTest extends TestCase
         $this->classTest->setReadOnly($expect);
         $result = $this->classTest->getReadOnly();
         $this->assertEquals($expect, $result);
+    }
+
+    public function testClass()
+    {
+        $this->classTest->setClass('formdin5');
+        $this->classTest->setClass('btn');
+        $result = $this->classTest->getClass();
+        $this->assertEquals('formdin5 btn', $result);
     }
 }
