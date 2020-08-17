@@ -19,7 +19,7 @@ class exe_TButton extends TPage
         //$frm->setAction('Nome Botão','onSave',$this);
         $frm->setAction(_t('Save'), 'onSave', false,'far:check-circle green');
         $frm->setAction(_t('Clear'), 'onClear', false,'fa:eraser red');
-        $frm->setAction('YYYY','onSave',true,null,'green');
+        $frm->setAction('Vai a tela number',['exe_NumberField','onReload'],true,'fa:chevron-circle-right','black');
         
         
         $frm->addTextField('entry2','TEntry', 10);
@@ -27,7 +27,7 @@ class exe_TButton extends TPage
 
         $frm->addTextField('txt','Text1', 10);
         $frm->addButton('Nova linha',null,'onSave1',null,null,true,false,'far:check-circle green');
-        $frm->addButton('mesma linha',null,'onSave2',null,null,false,false);
+        $frm->addButton('mesma linha -> vai para Number',null,['exe_NumberField','onReload'],null,null,false,false);
 
 
         //$frm->addButton($this,'Limpar', null, 'Limpar', null, null, false, false);
