@@ -558,7 +558,7 @@ class TFormDin
             }
             
             $icon = $iconImagem.' '.$color;
-            if($header){
+            if($header===true){
                 if($methodPost){
                     return $this->getAdiantiObj()->addHeaderAction($actionsLabel,$action,$icon);
                 }else{
@@ -646,6 +646,7 @@ class TFormDin
                                        , $actionsName=null
                                        , $header=true, $iconImagem=null, $color=null)
     {
+        $header = is_null($header)?true:false;
         return $this->setAction($actionsLabel, $actionsName, $header, $iconImagem, $color,false);
     }
 
