@@ -10,6 +10,10 @@ class mockFormDinComAdianti extends TPage
     {
     }
 
+    public function onClear()
+    {
+    }
+
     public function onReload()
     {
     }

@@ -769,6 +769,21 @@ class TFormDinTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $this->classTest->setAction( 't1');
-    }    
+    }
+
+    public function testSetAction_methods(){
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->classTest->setAction(_t('Save'), 'onSave', false,'far:check-circle green');
+        $this->classTest->setAction(_t('Clear'), 'onClear', false,'fa:eraser red');
+
+        $objForm = $this->classTest->show();
+        $listAction = $objForm->getActions();
+        $qtd = CountHelper::count($listAction);
+        $this->assertEquals(2, $qtd);
+        //FormDinHelper::debug($listAction[0]);
+        //$this->assertEquals('Salvar', $listAction[0]->Label);
+        //$this->assertEquals('Limpar', $listAction[0]->Label);
+    }
 
 }

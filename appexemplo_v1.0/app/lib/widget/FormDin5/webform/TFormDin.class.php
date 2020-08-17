@@ -520,8 +520,8 @@ class TFormDin
     * saber o que cada marca singinifica.
     * ------------------------------------------------------------------------
     *
-    * @param mixed $actionsLabel- 1: Label do Botão
-    * @param object $actionsName- 2: FORMDIN5 Nome do metodo da ação
+    * @param string $actionsLabel-1: Label do Botão
+    * @param mixed  $actionsName- 2: FORMDIN5 Nome do metodo da ação (string) ou  Array [FormDestino,actionsName]
     * @param boolean $header    - 3: FORMDIN5 mostrar ação no Título (Header). DEFAULT=false, mostra no rodapé. TRUE = mostra no Título
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
@@ -551,7 +551,12 @@ class TFormDin
             ValidateHelper::isSet($actionsName,__METHOD__,__LINE__);
             ValidateHelper::isSet($objForm,__METHOD__,__LINE__);
 
-            $action = new TAction(array($objForm, $actionsName));
+            if( is_array($actionsLabel) ){
+                $action = new TAction(array($actionsLabel[0], $actionsLabel[1]));
+            }else{
+                $action = new TAction(array($objForm, $actionsName));
+            }
+            
             $icon = $iconImagem.' '.$color;
             if($header){
                 if($methodPost){
@@ -580,7 +585,7 @@ class TFormDin
     * ------------------------------------------------------------------------
     *
     * @param mixed $actionsLabel- 1: Texto ações.
-    * @param object $actionsName- 2: FORMDIN5 Nome da ação
+    * @param mixed  $actionsName- 2: FORMDIN5 Nome do metodo da ação (string) ou  Array [FormDestino,actionsName]
     * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=TRUE, mostra no Título. false, mostra no rodapé. 
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
@@ -606,7 +611,7 @@ class TFormDin
     * ------------------------------------------------------------------------
     *
     * @param mixed $actionsLabel- 1: Texto ações.
-    * @param object $actionsName- 2: FORMDIN5 Nome da ação
+    * @param mixed  $actionsName- 2: FORMDIN5 Nome do metodo da ação (string) ou  Array [FormDestino,actionsName]
     * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=false, mostra no rodapé. TRUE = mostra no Título
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
@@ -631,7 +636,7 @@ class TFormDin
     * ------------------------------------------------------------------------
     *
     * @param mixed $actionsLabel- 1: Texto ações.
-    * @param object $actionsName- 2: FORMDIN5 Nome da ação
+    * @param mixed  $actionsName- 2: FORMDIN5 Nome do metodo da ação (string) ou  Array [FormDestino,actionsName]
     * @param boolean $header    - 3: FORMDIN5 mostrar ação Título. DEFAULT=TRUE, mostra no Título. false, mostra no rodapé. 
     * @param string $iconImagem - 4: FORMDIN5 icone ou imagem do botão.
     * @param string $color      - 5: FORMDIN5 cor do icone.
