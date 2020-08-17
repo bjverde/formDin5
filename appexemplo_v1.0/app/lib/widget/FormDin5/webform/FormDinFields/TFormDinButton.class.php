@@ -109,7 +109,7 @@ class TFormDinButton {
     {
         $adiantiObj = null;
         if( is_array($strName) ){
-            $adiantiObj = new TButton('btn'.$strName[1]);
+            $adiantiObj = new TButton('btn'.$strName[0].$strName[1]);
         }else{
             $adiantiObj = new TButton('btn'.$strName);
         }
