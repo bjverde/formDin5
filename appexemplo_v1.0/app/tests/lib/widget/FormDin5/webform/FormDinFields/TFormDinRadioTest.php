@@ -75,17 +75,6 @@ class TFormDinRadioTest extends TestCase
         $this->assertEquals( $items,$adiantiObj->getItems());
     }
 
-    public function test_UseButton()
-    {
-        $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'useButton');
-        $reflectionProperty->setAccessible(true);
-
-        $adiantiObj = $this->classTest->getAdiantiObj();
-        $useButton = $reflectionProperty->getValue($adiantiObj);
-        
-        $this->assertEquals(true,$useButton);
-    }
-
     public function test_readOnly()
     {
         $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'editable');
