@@ -115,6 +115,24 @@ class StringHelperTest extends TestCase
 	    $this->assertEquals( 'UTF-8' , $result);
 	}
 
+	public function testFormatCnpjCpf_forapadrao() {
+        $expected = '123.456.789-09';
+		$result = StringHelper::formatCnpjCpf('abc 123.456.789-09 flajk') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testFormatCnpjCpf_cpf() {
+        $expected = '123.456.789-09';
+		$result = StringHelper::formatCnpjCpf('12345678909') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testLimpaCnpjCpf_cnpj() {
+        $expected = '09.344.726/0001-16';
+		$result = StringHelper::formatCnpjCpf('09344726000116') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
     public function testTirarAcentos() {
         $expected = 'Voce deve ter recebido uma copia da GNU LGPL versao 3';
 		$result = StringHelper::tirarAcentos(self::STRING_ORIGIN) ;		
