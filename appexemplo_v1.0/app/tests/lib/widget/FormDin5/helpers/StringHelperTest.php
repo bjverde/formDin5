@@ -49,6 +49,30 @@ class StringHelperTest extends TestCase
 {
     const STRING_ORIGIN = 'Você deve ter recebido uma cópia da GNU LGPL versão 3';
 	
+    public function testStr2Lower_nochange() {
+        $expected = 'você deve ter recebido uma cópia da gnu lgpl versão 3';
+		$result = StringHelper::strtolower_utf8($expected) ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testStr2Lower_change() {
+        $expected = 'você deve ter recebido uma cópia da gnu lgpl versão 3';
+		$result = StringHelper::strtolower_utf8(self::STRING_ORIGIN) ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testStr2Upper_nochange() {
+        $expected = 'VOCÊ DEVE TER RECEBIDO UMA CÓPIA DA GNU LGPL VERSÃO 3';
+		$result = StringHelper::strtoupper_utf8($expected) ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testStr2Upper_change() {
+        $expected = 'VOCÊ DEVE TER RECEBIDO UMA CÓPIA DA GNU LGPL VERSÃO 3';
+		$result = StringHelper::strtoupper_utf8(self::STRING_ORIGIN) ;		
+		$this->assertEquals( $expected , $result );
+	}
+
     public function testStr2utf8_notUtf8ISO88591() {
         $str = self::STRING_ORIGIN;
 		$str = mb_convert_encoding($str, "ISO-8859-1");
