@@ -127,9 +127,15 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 
-	public function testLimpaCnpjCpf_cnpj() {
+	public function testFormatCnpjCpf_cnpj() {
         $expected = '09.344.726/0001-16';
 		$result = StringHelper::formatCnpjCpf('09344726000116') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testLimpaCnpjCpf() {
+        $expected = '12345678909';
+		$result = StringHelper::limpaCnpjCpf('abc 123.456.789-09 flajk') ;		
 		$this->assertEquals( $expected , $result );
 	}
 
