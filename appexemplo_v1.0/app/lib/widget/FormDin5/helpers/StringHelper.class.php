@@ -189,8 +189,8 @@ class StringHelper
     }
 
     /**
-     * Recebe uma string "minha string"e converte para o formato KebabCase
-     * "minha-string"
+     * Recebe uma string "minha string"e converte para o formato SnakeCase
+     * "minha_string"
      * https://medium.com/better-programming/string-case-styles-camel-pascal-snake-and-kebab-case-981407998841
      *
      * @param string $string

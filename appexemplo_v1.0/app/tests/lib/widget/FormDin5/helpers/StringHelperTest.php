@@ -127,4 +127,28 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 
+	public function testString2PascalCase() {
+        $expected = 'AcaoDeletarMao';
+		$result = StringHelper::string2PascalCase('ação deLEtar MÃO') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testString2CamelCase() {
+        $expected = 'acaoDeletarMao';
+		$result = StringHelper::string2CamelCase('ação deLEtar MÃO') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testString2KebabCase() {
+        $expected = 'acao-deletar-mao';
+		$result = StringHelper::string2KebabCase('ação deLEtar MÃO') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testString2SnakeCase() {
+        $expected = 'acao_deletar_mao';
+		$result = StringHelper::string2SnakeCase('ação deLEtar MÃO') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
 }
