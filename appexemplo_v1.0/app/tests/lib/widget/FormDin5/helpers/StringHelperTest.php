@@ -114,4 +114,17 @@ class StringHelperTest extends TestCase
 	    $this->assertEquals( self::STRING_ORIGIN ,$str);
 	    $this->assertEquals( 'UTF-8' , $result);
 	}
+
+    public function testTirarAcentos() {
+        $expected = 'Voce deve ter recebido uma copia da GNU LGPL versao 3';
+		$result = StringHelper::tirarAcentos(self::STRING_ORIGIN) ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testTirarAcentos2() {
+        $expected = 'acao ACAO Nao nAo';
+		$result = StringHelper::tirarAcentos('ação AÇÃO Não nÃo') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
 }
