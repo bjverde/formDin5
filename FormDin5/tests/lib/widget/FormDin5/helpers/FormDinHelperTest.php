@@ -103,25 +103,7 @@ class FormDinHelperTest extends TestCase
         $this->assertEquals( $expected , $vo->getCod_uf());
         $this->assertEquals( $expected , $vo->getNom_municipio());
         $this->assertEquals( $expected , $vo->getSit_ativo());
-    }
-    
-    /*
-     public function testSetPropertyVo_setOnlyCodMunicipio_UpperCase(){
-     $bodyRequest = array();
-     $bodyRequest['COD_MUNICIPIO'] = 10;
-     $bodyRequest['NMPESSOA'] = 'Paulo Deleo';
-     
-     $vo = new mockMunicipioVO();
-     
-     $vo =  FormDinHelper::setPropertyVo($bodyRequest,$vo);
-     $expected = 10;
-     $this->assertEquals( $expected , $vo->getCod_municipio());
-     $expected = null;
-     $this->assertEquals( $expected , $vo->getCod_uf());
-     $this->assertEquals( $expected , $vo->getNom_municipio());
-     $this->assertEquals( $expected , $vo->getSit_ativo());
-     }
-     */
+    }    
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
