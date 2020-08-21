@@ -86,7 +86,7 @@
                     </menuitem>
                     <menuitem label='Hora'>
                         <icon>fas:calendar-alt fa-fw</icon>
-                        <action>comingSoonView</action>
+                        <action>exe_campo_hora</action>
                     </menuitem>
                     <menuitem label='Agenda'>
                         <icon>fas:calendar-alt fa-fw</icon>
