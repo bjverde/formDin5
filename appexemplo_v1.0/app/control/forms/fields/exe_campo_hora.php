@@ -22,12 +22,9 @@ class exe_campo_hora extends TPage
 
         //$frm->addHtmlField('texto', $html)->setCss('border', '1px solid red');
         $frm->addHtmlField('texto', $html);
-        //$frm->addTextField('nom_pessoa', 'Nome:', 50, false)->setEnabled(false);
-        $frm->addTextField('nom_pessoa', 'Nome:', 50, false);
-        $fld = $frm->addTimeField('hor_entrada', 'Hora Entrada:', true, '05:00', '23:00', '99:99');
+        $fld = $frm->addTimeField('hor_entrada', 'Hora Entrada:', true, '05:00', '23:00', 'hh:ii');
         $fld->setToolTip('Hora no formato HH:MM entre 05:00 e 23:00');
         $frm->addTimeField('hor_inicio2', 'Hora:', false, '12:00:00', '15:00:00', 'HMS')->setToolTip('Hora no formato HH:MM:SS entre 12:00 e 15:00');
-        $frm->addButton('Validar', 'validar', 'btnValidar');
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo

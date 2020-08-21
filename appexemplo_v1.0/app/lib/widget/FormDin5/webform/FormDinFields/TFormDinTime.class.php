@@ -100,7 +100,6 @@ class TFormDinTime extends TFormDinGenericField
         $this->setMask($strMaskType);
         $this->setMaxValue($strMaxValue);
         $this->setMinValue($strMinValue);
-        $this->setDatabaseMask($databaseMask);
         return $this->getAdiantiObj();
     }
 
@@ -114,29 +113,7 @@ class TFormDinTime extends TFormDinGenericField
         $this->maskType = $strMaskType;
         $this->getAdiantiObj()->setMask($strMaskType);
     }
-    //--------------------------------------------------------------------------
-    public function getDatabaseMask(){
-        return $this->databaseMask;
-    }    
-    public function setDatabaseMask($databaseMask){
-        if( !is_null($databaseMask) ){
-            $this->databaseMask = $databaseMask;
-            $this->getAdiantiObj()->setDatabaseMask($databaseMask);
-        }
-    }
-	//--------------------------------------------------------------------------
-	public function setButtonVisible($boolValue=null)
-	{
-        ValidateHelper::validadeParam('setButtonVisible()'
-                                    ,$boolValue
-                                    ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_NOT_IMPLEMENTED
-                                    ,__CLASS__,__METHOD__,__LINE__); 
-	}
-	public function getButtonVisible()
-	{
-        return true;
-	}    
+	//--------------------------------------------------------------------------   
     //--------------------------------------------------------------------------
 	public function getMaxValue()
 	{
