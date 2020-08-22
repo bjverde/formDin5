@@ -71,6 +71,7 @@ class TFormDinGrid
     protected $title;
     protected $updateFields;
     protected $key;
+    protected $width;
 
     protected $data;
 
@@ -166,7 +167,7 @@ class TFormDinGrid
             $this->setAdiantiObj($bootgrid);
             $this->setId($strName);
             $this->setHeight($strHeight);
-            //$this->setWidth($strWidth);
+            $this->setWidth($strWidth);
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
 
@@ -225,12 +226,12 @@ class TFormDinGrid
     //---------------------------------------------------------------
     public function getWidth()
     {
-        //return $this->getAdiantiObj()->getWidth();
-        return null;
+        return $this->width;
     }   
     public function setWidth( $width )
     {
-        //$this->getAdiantiObj()->setWidth($width);
+        $this->width = $width;
+        $this->getAdiantiObj()->style = 'min-width: '.$width.'px';
     }
     //---------------------------------------------------------------
     public function setData( $data )
