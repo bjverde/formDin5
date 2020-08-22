@@ -287,6 +287,10 @@
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_gride05_paginacao</action>
                     </menuitem>
+                    <menuitem label='Gride 05 - Paginação pequeno'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride05_paginacao_pequeno</action>
+                    </menuitem>                    
                 </menu> 
             </menuitem>      
             <menuitem label='Grides com campos internos'>
