@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_gride05_paginacao_pequeno extends TPage
+class exe_gride05_paginacao_scrollvertical extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing

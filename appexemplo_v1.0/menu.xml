@@ -287,9 +287,13 @@
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_gride05_paginacao</action>
                     </menuitem>
-                    <menuitem label='Gride 05 - Paginação pequeno'>
+                    <menuitem label='Gride 05 - Paginação Scroll Horizontal'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride05_paginacao_pequeno</action>
+                        <action>exe_gride05_paginacao_scrollhorizontal</action>
+                    </menuitem>
+                    <menuitem label='Gride 05 - Paginação Scroll Vertical'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride05_paginacao_scrollvertical</action>
                     </menuitem>                    
                 </menu> 
             </menuitem>      
