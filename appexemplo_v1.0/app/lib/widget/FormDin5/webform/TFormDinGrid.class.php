@@ -79,6 +79,7 @@ class TFormDinGrid
     protected $createDefaultButtons;
     protected $createDefaultEditButton;
     protected $createDefaultDeleteButton;
+    protected $exportExcel;
 
 
     /**
@@ -170,6 +171,7 @@ class TFormDinGrid
             $this->setWidth($strWidth);
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
+            $this->setExportExcel(true);
 
             $this->setTitle($strTitle);
             $panel = new TPanelGroup($this->getTitle());
@@ -570,6 +572,15 @@ class TFormDinGrid
     {
         return is_null( $this->createDefaultButtons ) ? true : $this->createDefaultButtons;
     }
+    //---------------------------------------------------------------------------------------
+    public function setExportExcel( $boolNewValue = null )
+    {
+        $this->exportExcel = is_null( $boolNewValue ) ? true : $boolNewValue;
+    }    
+    public function getExportExcel() {
+        return $this->exportExcel;
+    }
+
     /**
      * Define se os botoes Alterar e Excluir serão exibidos quando não for
      * adicionado nenhum botão
