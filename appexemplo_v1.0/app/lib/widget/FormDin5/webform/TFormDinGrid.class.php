@@ -320,6 +320,15 @@ class TFormDinGrid
         }
     }
 
+    public function showGridExport()
+    {
+        //$panel->addHeaderActionLink( 'Save as PDF', new TAction([$this, 'exportAsPDF'], ['register_state' => 'false']), 'far:file-pdf red' );
+        if( $this->getExportExcel() ){
+            $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false']);
+            $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'fa:table blue' );
+        }
+    }
+
     /**
      * Monta o objeto do Grid Adianti com tudo que precisa
      * @return void
@@ -328,6 +337,7 @@ class TFormDinGrid
     {
         $this->showGridColumn();
         $this->showGridAction();
+        $this->showGridExport();
 
         $this->getAdiantiObj()->createModel();
         if( !empty($this->getData()) ){
