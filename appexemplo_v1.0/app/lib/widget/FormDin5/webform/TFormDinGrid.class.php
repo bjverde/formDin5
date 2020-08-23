@@ -79,6 +79,7 @@ class TFormDinGrid
     protected $createDefaultButtons;
     protected $createDefaultEditButton;
     protected $createDefaultDeleteButton;
+    protected $exportShowGroup;
     protected $exportExcel;
     protected $exportPdf;
     protected $exportXml;
@@ -173,6 +174,7 @@ class TFormDinGrid
             $this->setWidth($strWidth);
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
+            $this->setExportShowGroup(true);
             $this->setExportExcel(true);
             $this->setExportPdf(true);
             $this->setExportXml(true);
@@ -294,18 +296,39 @@ class TFormDinGrid
 
     public function showGridExport()
     {
-        //$panel->addHeaderActionLink( 'Save as PDF', new TAction([$this, 'exportAsPDF'], ['register_state' => 'false']), 'far:file-pdf red' );
-        if( $this->getExportExcel() ){
-            $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
-            $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'fa:table blue' );
-        }
-        if( $this->getExportPdf() ){
-            $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
-            $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'far:file-pdf fa-fw red' );
-        }
-        if( $this->getExportXml() ){
-            $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
-            $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as XML', $taction, 'fa:code fa-fw green' );
+        $showExport = $this->getExportExcel() || $this->getExportPdf() || $this->getExportXml();
+        $showExportGroup = $this->getExportShowGroup();
+
+        if( $showExport && $showExportGroup ){
+            // header actions
+            $dropdown = new TDropDown('Export', 'fa:list');
+            $dropdown->setButtonClass('btn btn-default waves-effect dropdown-toggle');
+            if( $this->getExportExcel() ){
+                $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
+                $dropdown->addAction( 'Save as CSV', $taction, 'fa:table blue' );
+            }
+            if( $this->getExportPdf() ){
+                $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
+                $dropdown->addAction( 'Save as CSV', $taction, 'far:file-pdf fa-fw red' );
+            }
+            if( $this->getExportXml() ){
+                $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
+                $dropdown->addAction( 'Save as XML', $taction, 'fa:code fa-fw green' );
+            }
+            $this->getPanelGroupGrid()->addHeaderWidget( $dropdown );
+        }elseif( $showExport && !$showExportGroup ){
+            if( $this->getExportExcel() ){
+                $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'fa:table blue' );
+            }
+            if( $this->getExportPdf() ){
+                $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'far:file-pdf fa-fw red' );
+            }
+            if( $this->getExportXml() ){
+                $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as XML', $taction, 'fa:code fa-fw green' );
+            }
         }
     }
 
@@ -318,6 +341,8 @@ class TFormDinGrid
         $this->showGridColumn();
         $this->showGridAction();
         $this->showGridExport();
+
+        //TDataGrid::setActionSide('right');
 
         $this->getAdiantiObj()->createModel();
         if( !empty($this->getData()) ){
@@ -595,6 +620,13 @@ class TFormDinGrid
         return $this->data;
     }
     //---------------------------------------------------------------------------------------
+    public function setExportShowGroup( $boolNewValue = null )
+    {
+        $this->exportShowGroup = is_null( $boolNewValue ) ? true : $boolNewValue;
+    }    
+    public function getExportShowGroup() {
+        return $this->exportShowGroup;
+    }    
     public function setExportExcel( $boolNewValue = null )
     {
         $this->exportExcel = is_null( $boolNewValue ) ? true : $boolNewValue;
