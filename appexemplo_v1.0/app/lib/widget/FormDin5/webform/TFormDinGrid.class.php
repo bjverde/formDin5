@@ -337,6 +337,7 @@ class TFormDinGrid
         // the creation of the navigation page must come after createModel
         $pageNavigation = new TPageNavigation;
         $pageNavigation->setAction(new TAction(array($this->getObjForm(), 'onReload')));
+        $pageNavigation->enableCounters();
         $this->setPageNavigation($pageNavigation);
         $this->getPanelGroupGrid()->addFooter($pageNavigation);
 
