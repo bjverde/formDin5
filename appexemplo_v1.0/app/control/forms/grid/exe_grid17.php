@@ -8,9 +8,11 @@ class exe_grid17 extends TPage
     protected $datagrid; // listing
     protected $pageNavigation;
     
+    // trait com onSave, onClear, onEdit...
+    use Adianti\Base\AdiantiStandardFormTrait;
     // trait com onReload, onSearch, onDelete...
-    use Adianti\Base\AdiantiStandardFormListTrait;
-
+    use Adianti\Base\AdiantiStandardListTrait;
+    
     public function __construct()
     {
         parent::__construct();
