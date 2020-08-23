@@ -216,38 +216,6 @@ class TFormDinGrid
         $this->idGrid = $idGrid;
     }
     //---------------------------------------------------------------
-    public function getHeight(){
-        return $this->getAdiantiObj()->height;
-    }
-    public function setHeight($height){
-        if( !empty($height) ){
-            $this->getAdiantiObj()->setHeight($height);
-            $this->getAdiantiObj()->makeScrollable();
-        }
-    }
-    //---------------------------------------------------------------
-    public function getWidth()
-    {
-        return $this->width;
-    }   
-    public function setWidth( $width )
-    {
-        $this->width = $width;
-        $this->getAdiantiObj()->style = 'min-width: '.$width.'px';
-    }
-    //---------------------------------------------------------------
-    public function setData( $data )
-    {
-        if(!empty($data)){
-            $data = ArrayHelper::convertArray2Adianti($data);
-        }
-        $this->data = $data;
-    }
-    public function getData()
-    {
-        return $this->data;
-    }
-    //---------------------------------------------------------------
     /**
      * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
      * 
@@ -581,6 +549,38 @@ class TFormDinGrid
     public function getCreateDefaultButtons()
     {
         return is_null( $this->createDefaultButtons ) ? true : $this->createDefaultButtons;
+    }
+    //---------------------------------------------------------------
+    public function getHeight(){
+        return $this->getAdiantiObj()->height;
+    }
+    public function setHeight($height){
+        if( !empty($height) ){
+            $this->getAdiantiObj()->setHeight($height);
+            $this->getAdiantiObj()->makeScrollable();
+        }
+    }
+    //---------------------------------------------------------------
+    public function getWidth()
+    {
+        return $this->width;
+    }   
+    public function setWidth( $width )
+    {
+        $this->width = $width;
+        $this->getAdiantiObj()->style = 'min-width: '.$width.'px';
+    }
+    //---------------------------------------------------------------
+    public function setData( $data )
+    {
+        if(!empty($data)){
+            $data = ArrayHelper::convertArray2Adianti($data);
+        }
+        $this->data = $data;
+    }
+    public function getData()
+    {
+        return $this->data;
     }
     //---------------------------------------------------------------------------------------
     public function setExportExcel( $boolNewValue = null )
