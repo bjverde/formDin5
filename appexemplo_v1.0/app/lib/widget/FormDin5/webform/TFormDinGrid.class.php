@@ -80,6 +80,8 @@ class TFormDinGrid
     protected $createDefaultEditButton;
     protected $createDefaultDeleteButton;
     protected $exportExcel;
+    protected $exportPdf;
+    protected $exportXml;
 
 
     /**
@@ -172,6 +174,8 @@ class TFormDinGrid
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
             $this->setExportExcel(true);
+            $this->setExportPdf(true);
+            $this->setExportXml(true);
 
             $this->setTitle($strTitle);
             $panel = new TPanelGroup($this->getTitle());
@@ -292,8 +296,16 @@ class TFormDinGrid
     {
         //$panel->addHeaderActionLink( 'Save as PDF', new TAction([$this, 'exportAsPDF'], ['register_state' => 'false']), 'far:file-pdf red' );
         if( $this->getExportExcel() ){
-            $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false']);
+            $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
             $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'fa:table blue' );
+        }
+        if( $this->getExportPdf() ){
+            $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
+            $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'far:file-pdf fa-fw red' );
+        }
+        if( $this->getExportXml() ){
+            $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
+            $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as XML', $taction, 'fa:code fa-fw green' );
         }
     }
 
@@ -590,6 +602,22 @@ class TFormDinGrid
     public function getExportExcel() {
         return $this->exportExcel;
     }
+    //---------------------------------------------------------------------------------------
+    public function setExportPdf( $boolNewValue = null )
+    {
+        $this->exportPdf = is_null( $boolNewValue ) ? true : $boolNewValue;
+    }    
+    public function getExportPdf() {
+        return $this->exportPdf;
+    }
+    //---------------------------------------------------------------------------------------
+    public function setExportXml( $boolNewValue = null )
+    {
+        $this->exportXml = is_null( $boolNewValue ) ? true : $boolNewValue;
+    }    
+    public function getExportXml() {
+        return $this->exportXml;
+    }        
 
     /**
      * Define se os botoes Alterar e Excluir serão exibidos quando não for
