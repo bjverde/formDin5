@@ -19,13 +19,16 @@ class exe_bar_code extends TPage
 
 
         $objLabel = new TLabel('Customer');
-        $idField  = 'barcode';
-        $objText  = new TEntry($idField);
+        $objText  = new TEntry('codigo');
         $currentUrl = $this->getCurrentUrl();
         $objLink  = new TElement('div');
-        $objLink->add('<a href="http://zxing.appspot.com/scan?ret='.$currentUrl.'&'.$idField.'={CODE}">Abrir Barcode Scanner ZXing</a>');
+        $objLink->add('<a href="http://zxing.appspot.com/scan?ret='.$currentUrl.'index.php?class=exe_bar_code&codigo={CODE}">Abrir Barcode Scanner ZXing</a>');
 
         $this->form->addFields( [$objLabel],[$objText],[$objLink]);
+
+        $objLink1  = new TElement('div');
+        $objLink1->add('<a href="http://www.auere.com.br/testes/barcode.php">http://www.auere.com.br/testes/barcode.php</a>');
+        $this->form->addFields( [$objLink1]);
         
         $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
         $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'onClear']), 'fa:eraser red');
@@ -45,7 +48,7 @@ class exe_bar_code extends TPage
         $pageURL = $pageURL.$_SERVER["SERVER_NAME"];
         $pageURL = $pageURL.( ( $_SERVER["SERVER_PORT"] != 80 ) ? ":".$_SERVER["SERVER_PORT"] : "") ;
         $pageURL = $pageURL.$_SERVER["REQUEST_URI"];
-        $url = explode('&', $pageURL);
+        $url = explode('engine.php', $pageURL);
         return $url[0];
     }
 
@@ -54,8 +57,8 @@ class exe_bar_code extends TPage
        var_dump($_REQUEST);
        $code = null;
        //Evita Notices
-       if ( is_array($_REQUEST) && array_key_exists('CODE', $_REQUEST) ) {
-           $code = $_REQUEST['CODE'];
+       if ( is_array($_REQUEST) && array_key_exists('codigo', $_REQUEST) ) {
+           $code = $_REQUEST['codigo'];
        }
 
        // monta um objeto para enviar dados após o GET
