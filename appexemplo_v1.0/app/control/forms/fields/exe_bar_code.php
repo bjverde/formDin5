@@ -1,7 +1,5 @@
 <?php
 
-use Adianti\Registry\TSession;
-
 class exe_bar_code extends TPage
 {
     protected $form; // registration form
@@ -21,9 +19,11 @@ class exe_bar_code extends TPage
 
 
         $objLabel = new TLabel('Customer');
-        $objText  = new TEntry('CODE');
+        $idField  = 'barcode';
+        $objText  = new TEntry($idField);
+        $currentUrl = $this->getCurrentUrl();
         $objLink  = new TElement('div');
-        $objLink->add('<a href="http://zxing.appspot.com/scan?ret=http://www.auere.com.br/testes/barcode.php?codigo={CODE}">Leitor</a>');
+        $objLink->add('<a href="http://zxing.appspot.com/scan?ret='.$currentUrl.'&'.$idField.'={CODE}">Abrir Barcode Scanner ZXing</a>');
 
         $this->form->addFields( [$objLabel],[$objText],[$objLink]);
         
@@ -39,6 +39,16 @@ class exe_bar_code extends TPage
         parent::add($vbox);
     }
 
+    public function getCurrentUrl() 
+    {
+        $pageURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
+        $pageURL = $pageURL.$_SERVER["SERVER_NAME"];
+        $pageURL = $pageURL.( ( $_SERVER["SERVER_PORT"] != 80 ) ? ":".$_SERVER["SERVER_PORT"] : "") ;
+        $pageURL = $pageURL.$_SERVER["REQUEST_URI"];
+        $url = explode('&', $pageURL);
+        return $url[0];
+    }
+
     public function onReload()
     {
        var_dump($_REQUEST);
@@ -50,7 +60,7 @@ class exe_bar_code extends TPage
 
        // monta um objeto para enviar dados após o GET
        $data = new StdClass;
-       $data->CODE = $code;
+       $data->barcode = $code;
        $this->form->setData($data);
     }
 
