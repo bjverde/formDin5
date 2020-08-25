@@ -120,7 +120,7 @@
             </menuitem>
             <menuitem label='Campo Link'>
                 <icon>fa:flag fa-fw</icon>
-                <action>comingSoonView</action>
+                <action>exe_bar_code</action>
             </menuitem>
             <menuitem label='Redirect'>
                 <icon>fa:flag fa-fw</icon>
