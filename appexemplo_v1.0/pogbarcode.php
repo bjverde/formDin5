@@ -1,4 +1,8 @@
 <?php
+/**
+ * POG DOIDAO para fazer funcionar o exemplo do ZXing
+ *
+ */
 
 function getCurrentUrl() {
     $pageURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
