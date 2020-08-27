@@ -1063,9 +1063,36 @@ class TFormDin
                                   ,$boolRequired = false
                                   ,array $mixOptions
                                   ,$boolNewLine = true
-                                  ,$boolLabelAbove = false)
+                                  ,$boolLabelAbove = false
+                                  ,$mixValue = null
+                                  ,$boolMultiSelect = null
+                                  ,$intSize = null
+                                  ,$intWidth = null
+                                  ,$strFirstOptionText = null
+                                  ,$strFirstOptionValue = null
+                                  ,$strKeyColumn = null
+                                  ,$strDisplayColumn = null
+                                  ,$boolNoWrapLabel = null
+                                  ,$strDataColumns = null
+                                  )
     {
-        $formField = new TFormDinSelectField($id,$strLabel,$boolRequired,$mixOptions);
+        $formField = new TFormDinSelectField($id
+                                            ,$strLabel
+                                            ,$boolRequired
+                                            ,$mixOptions
+                                            ,$boolNewLine
+                                            ,$boolLabelAbove
+                                            ,$mixValue
+                                            ,$boolMultiSelect
+                                            ,$intSize
+                                            ,$intWidth
+                                            ,$strFirstOptionText
+                                            ,$strFirstOptionValue
+                                            ,$strKeyColumn
+                                            ,$strDisplayColumn
+                                            ,$boolNoWrapLabel
+                                            ,$strDataColumns
+                                        );
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
         //$this->addFields($label ,$objField ,$boolLabelAbove);
