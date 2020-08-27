@@ -67,7 +67,7 @@ class exe_SelectField_01 extends TPage
         $fg2->setToolTip('Campo com valor DEFAULT pré-selecionado, ATRIBUTO 12');
         
         
-        $frm->addSelectField('estado', 'Estado (todos):', false, 'tb_uf', true, false, null, false, null, null, '-- selecione o Estado --', null, 'COD_UF', 'NOM_UF', null, 'cod_regiao')->addEvent('onChange', 'select_change(this)')->setToolTip('SELECT - esta campo select possui o código da região adicionado em sua tag option. Para adicionar dados extras a um campo select, basta definir as colunas no parâmetro $arrDataColumns.');
+        //$frm->addSelectField('estado', 'Estado (todos):', false, 'tb_uf', true, false, null, false, null, null, '-- selecione o Estado --', null, 'COD_UF', 'NOM_UF', null, 'cod_regiao')->addEvent('onChange', 'select_change(this)')->setToolTip('SELECT - esta campo select possui o código da região adicionado em sua tag option. Para adicionar dados extras a um campo select, basta definir as colunas no parâmetro $arrDataColumns.');
         $frm->closeGroup();
         
         $frm->addGroupField('gp5', 'Selects MultiSelect');
@@ -96,7 +96,7 @@ class exe_SelectField_01 extends TPage
                 ,3  // 7: Valor DEFAULT, informe o ID do array array(0=>3,1=>4)
                                 , true);
         
-        
+            /*
             $frm->addSelectField('estadomultiselect'
                                 , 'Estado (todos):'
                                 , false
@@ -113,6 +113,7 @@ class exe_SelectField_01 extends TPage
                                 , 'NOM_UF'
                                 , null
                                 , 'cod_regiao');
+            */
         $frm->closeGroup();
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
