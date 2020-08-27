@@ -51,7 +51,7 @@
             </menuitem>
             <menuitem label='Select'>
                 <icon>fa:sort-down fa-fw</icon>
-                <action>comingSoonView</action>
+                <action>exe_SelectField_01</action>
             </menuitem>
             <menuitem label='Radio'>
                 <icon>fa:table fa-fw</icon>
