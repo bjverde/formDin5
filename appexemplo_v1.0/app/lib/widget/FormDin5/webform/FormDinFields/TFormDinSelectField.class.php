@@ -103,13 +103,13 @@ class TFormDinSelectField  extends TFormDinGenericField
      * @return TCombo
      */
     public function __construct(string $id
-                                ,string $strLabel
+                                ,string $label
                                 ,$boolRequired = false
                                 ,array $mixOptions
                                 ,$boolNewLine = true
                                 ,$boolLabelAbove = false
                                 ,$mixValue = null
-                                ,$boolMultiSelect = null
+                                ,$boolMultiSelect = false
                                 ,$intSize = null
                                 ,$intWidth = null
                                 ,$strFirstOptionText = null
@@ -120,17 +120,19 @@ class TFormDinSelectField  extends TFormDinGenericField
                                 ,$strDataColumns = null
                                 )
     {
-        $this->adiantiObj = new TCombo($id);
-        $this->adiantiObj->setId($id);
-        $this->adiantiObj->addItems($mixOptions);
-        if($boolRequired){
-            $strLabel = empty($strLabel)?$id:$strLabel;
-            $this->adiantiObj->addValidation($strLabel, new TRequiredValidator);
-        }
+        $adiantiObj = new TCombo($id);
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,$mixValue,null);
+        $this->addItems($mixOptions);
         return $this->getAdiantiObj();
     }
 
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
+    public function addItems($arrayItens){
+        $arrayItens = ArrayHelper::convertString2Array($arrayItens);
+        $this->getAdiantiObj()->addItems($arrayItens);
+    }    
+
+    public function getItems()
+    {
+        return $this->getAdiantiObj()->getItems();
     }
 }
