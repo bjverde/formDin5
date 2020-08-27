@@ -1065,7 +1065,7 @@ class TFormDin
                                   ,$boolNewLine = true
                                   ,$boolLabelAbove = false
                                   ,$mixValue = null
-                                  ,$boolMultiSelect = null
+                                  ,$boolMultiSelect = false
                                   ,$intSize = null
                                   ,$intWidth = null
                                   ,$strFirstOptionText = null

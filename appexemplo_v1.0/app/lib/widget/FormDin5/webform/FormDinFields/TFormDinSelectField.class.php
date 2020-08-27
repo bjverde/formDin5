@@ -120,7 +120,11 @@ class TFormDinSelectField  extends TFormDinGenericField
                                 ,$strDataColumns = null
                                 )
     {
-        $adiantiObj = new TCombo($id);
+        if($boolMultiSelect){
+            $adiantiObj = new TSelect($id);
+        }else{
+            $adiantiObj = new TCombo($id);
+        }        
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$mixValue,null);
         $this->addItems($mixOptions);
         return $this->getAdiantiObj();
