@@ -57,9 +57,8 @@
  */ 
 class TFormDinCheckList {
 
-    protected $adiantiObj;
-    protected $objForm;
-    protected $objAction;
+    protected $objCheck;
+    protected $objSearch;
     protected $label;
 
     /**
@@ -74,46 +73,23 @@ class TFormDinCheckList {
     * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
     * definir o parametro boolLabelAbove do botão para true tambem.
     *
-    * @param object  $objForm           - 1 : FORMDIN5 Objeto do Form, é só informar $this
-    * @param string  $mixValue          - 2 : Label do Botão
-    * @param string  $strAction         - 3 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
-    * @param mixed   $strName           - 4 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
-    * @param string  $strOnClick        - 5 : NOT_IMPLEMENTED Nome da função javascript
-    * @param string  $strConfirmMessage - 6 : NOT_IMPLEMENTED Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
-    * @param boolean $boolNewLine       - 7 : Em nova linha. DEFAULT = true
-    * @param boolean $boolFooter        - 8 : Mostrar o botão no rodapé do form. DEFAULT = true
-    * @param string  $strImage          - 9 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
-    * @param string  $strImageDisabled  -10 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
-    * @param string  $strHint           -11 : Texto hint para explicar
-    * @param string  $strVerticalAlign  -12 : NOT_IMPLEMENTED
-    * @param boolean $boolLabelAbove    -13 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
-    * @param string  $strLabel          -14 : NOT_IMPLEMENTED Text label 
-    * @param string  $strHorizontalAlign-15 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Valeus center, left, right
+    * @param object  $id                - 1 : FORMDIN5 Objeto do Form, é só informar $this
+    * @param string  $label             - 2 : Label do Botão
+    * @param boolean $boolRequired      - 3 : DEFAULT = false não obrigatório
+    * @param boolean $boolEnableSearch  - 4 : DEFAULT = false não faz busca
+    * @param int     $intHeight         - 5 : Altura 
+    * @param boolean $makeScrollable    - 6 : DEFAULT = false lista todos, sem scroll
     * @return TButton|string|array
     */
-    public function __construct($objForm
-                                , $label
-                                , $strAction=null
-                                , $strName=null
-                                , $strOnClick=null
-                                , $strConfirmMessage=null
-                                , $boolNewLine=null
-                                , $boolFooter=null
-                                , $strImage=null
-                                , $strImageDisabled=null
-                                , $strHint=null
-                                , $strVerticalAlign=null
-                                , $boolLabelAbove=null
-                                , $strLabel=null
-                                , $strHorizontalAlign=null)
+    public function __construct($id
+                              , $label
+                              , $boolRequired=false
+                              , $boolEnableSearch=false
+                              , $intHeight=null
+                              , $makeScrollable=null
+                              )
     {
-        $adiantiObj = null;
-        if( is_array($strName) ){
-            $adiantiObj = new TButton('btn'.$strName[0].$strName[1]);
-        }else{
-            $adiantiObj = new TButton('btn'.$strName);
-        }
-        $this->setObjForm($objForm);
+        $this->setObjCheck($id);
         $this->setAdiantiObj($adiantiObj);
         $this->setLabel($label);
         $this->setAction($strName);
@@ -121,18 +97,13 @@ class TFormDinCheckList {
         return $this->getAdiantiObj();
     }
 
-    public function setObjForm($objForm)
+    public function setObjCheck($id)
     {
-        if( empty($objForm) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }
-        if( !is_object($objForm) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }        
-        return $this->objForm=$objForm;
+        $orderlist = new TCheckList($id);
+        return $this->objCheck=$orderlist;
     }
-    public function getObjForm(){
-        return $this->objForm;
+    public function getObjCheck(){
+        return $this->objCheck;
     }
 
     public function setLabel($label)
