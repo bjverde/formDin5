@@ -60,6 +60,7 @@ class TFormDin
     const TYPE_FIELD  = 'feild';
     const TYPE_LAYOUT = 'layout';
     const TYPE_HIDDEN = 'hidden';
+    const TYPE_CHECKLIST = 'check_list';
     const TYPE_ADIANTI_FIELD_NATIVE  = 'adianti_field_native';
     const TYPE_ADIANTI_LAYOUT_NATIVE = 'adianti_layout_native';
     
@@ -1269,6 +1270,21 @@ class TFormDin
         //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
+    }
+
+    /*****
+     * 
+     */
+    public function addCheckList( $objCheckList,$boolNewLine,$boolLabelAbove )
+    {
+        if( empty($objCheckList) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }
+        if ($objCheckList instanceof TFormDinCheckList) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_CHECKLIST);
+        }
+        $label = $objCheckList->getLabel();
+        $this->addElementFormList($objCheckList,self::TYPE_CHECKLIST,$label,$boolNewLine,$boolLabelAbove);
     }
 
     /**
