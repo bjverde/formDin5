@@ -90,10 +90,10 @@ class exe_SelectField_01 extends TPage
             $frm->addSelectField('seq_bioma2'
                                 , 'Bioma:'
                                 , false
-                                , $arrayBiomas  // 4: array dos valores
+                                , $arrayBiomas // 4: array dos valores
                                 , null
                                 , null
-                ,3  // 7: Valor DEFAULT, informe o ID do array array(0=>3,1=>4)
+                                , 3            // 7: Valor DEFAULT, informe o ID do array array(0=>3,1=>4)
                                 , true);
         
             /*
