@@ -59,6 +59,7 @@
 class TFormDinSelectField  extends TFormDinGenericField
 {
     protected $adiantiObj;
+    private $multiSelect;
     
     /**
      * Adicionar campo tipo combobox ou menu select
@@ -100,6 +101,7 @@ class TFormDinSelectField  extends TFormDinGenericField
      * @param string  $strDisplayColumn   - 14: NOT_IMPLEMENTED
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED
+     * @param string  $boolNoWrapLabel    - 17: FORMDIN5 - enableSearch  Default FALSE = SingleSelect, TRUE = MultiSelect
      * @return TCombo
      */
     public function __construct(string $id
@@ -120,7 +122,10 @@ class TFormDinSelectField  extends TFormDinGenericField
                                 ,$strDataColumns = null
                                 )
     {
-        if($boolMultiSelect){
+        $boolMultiSelect = is_null($boolMultiSelect)?false:$boolMultiSelect;
+        $this->setMultiSelect($boolMultiSelect);
+
+        if($this->getMultiSelect()){
             $adiantiObj = new TSelect($id);
             //$adiantiObj->tag->{'size'} = $intSize;
             //$adiantiObj->setProperty('size', $intSize);
@@ -141,5 +146,22 @@ class TFormDinSelectField  extends TFormDinGenericField
     public function getItems()
     {
         return $this->getAdiantiObj()->getItems();
+    }
+    //-----------------------------------------------------------
+    public function getMultiSelect()
+    {
+        return $this->multiSelect;
+    }
+    public function setMultiSelect($boolMultiSelect)
+    {
+        $this->multiSelect = $boolMultiSelect;
+    }
+
+    public function enableSearch()
+    {
+        if($this->getMultiSelect() == false)
+        {
+            $this->getAdiantiObj()->enableSearch();
+        }
     }
 }
