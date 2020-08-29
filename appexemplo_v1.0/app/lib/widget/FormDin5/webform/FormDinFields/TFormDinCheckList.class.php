@@ -106,6 +106,16 @@ class TFormDinCheckList {
         return $this->objCheck;
     }
 
+    public function setRequired($boolRequired)
+    {
+        if($boolRequired==true){            
+            $this->getObjCheck()->addValidation('Order list', new TRequiredValidator);
+        }
+    }
+    public function getRequired(){
+        return $this->objCheck;
+    }
+
     public function setLabel($label)
     {
         if( is_array($label) ){
