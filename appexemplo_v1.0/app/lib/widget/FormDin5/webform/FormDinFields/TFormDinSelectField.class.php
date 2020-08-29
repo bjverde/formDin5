@@ -95,7 +95,7 @@ class TFormDinSelectField  extends TFormDinGenericField
      * @param integer $intSize             - 9: NOT_IMPLEMENTED Default 1. Num itens que irão aparecer. 
      * @param integer $intWidth           - 10: NOT_IMPLEMENTED Largura em Pixels
      * @param string  $strFirstOptionText - 11: NOT_IMPLEMENTED First Key in Display
-     * @param string  $strFirstOptionValue- 12: NOT_IMPLEMENTED Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
+     * @param string  $strFirstOptionValue- 12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
      * @param string  $strKeyColumn       - 13: NOT_IMPLEMENTED
      * @param string  $strDisplayColumn   - 14: NOT_IMPLEMENTED
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
@@ -122,10 +122,13 @@ class TFormDinSelectField  extends TFormDinGenericField
     {
         if($boolMultiSelect){
             $adiantiObj = new TSelect($id);
+            //$adiantiObj->tag->{'size'} = $intSize;
+            //$adiantiObj->setProperty('size', $intSize);
         }else{
-            $adiantiObj = new TCombo($id);
-        }        
-        parent::__construct($adiantiObj,$id,$label,$boolRequired,$mixValue,null);
+            $adiantiObj = new TCombo($id);            
+        }
+        $value = is_null($strFirstOptionValue)?$strKeyColumn:$strFirstOptionValue;
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
         $this->addItems($mixOptions);
         return $this->getAdiantiObj();
     }
