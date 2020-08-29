@@ -116,6 +116,29 @@ class exe_SelectField_01 extends TPage
             */
         $frm->closeGroup();
 
+
+        $frm->addGroupField('fd5', 'FormDin 5');
+        
+        $listFormas[5]='PayPal';
+        $listFormas[6]='Pag Seguro';
+        $listFormas[7]='Moderninha';
+        $fg2 = $frm->addSelectField('forma_pagamento1_fd5'  // 1: ID do campo
+                                    , 'Select com busca:'
+                                    , false                  // 3: Obrigatorio
+                                    , $listFormas           // 4: array dos valores
+                                    , true                  // 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+                                    , false                  // 6: Default FALSE = Label mesma linha, TRUE = Label acima
+                                    , null                  // 7: Valor DEFAULT, informe o ID do array
+                                    , null
+                                    , null                  //  9: Num itens que irão aparecer
+                                    , 150   // 10: Largura em Pixels
+                                    , null  // 11 First Key in Display
+                                    , null  // 12 Frist Valeu in Display, use value NULL for required
+                                    ,2
+                                    );
+        $fg2->enableSearch();
+
+
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
