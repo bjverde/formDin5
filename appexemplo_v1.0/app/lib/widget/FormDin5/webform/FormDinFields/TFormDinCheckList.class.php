@@ -57,9 +57,10 @@
  */ 
 class TFormDinCheckList {
 
-    protected $objCheck;
-    protected $objSearch;
-    protected $label;
+    private $objCheck;
+    private $label;
+    private $objLabel;
+    private $objSearch;
 
     /**
     * Adicionar botão no layout
@@ -77,24 +78,26 @@ class TFormDinCheckList {
     * @param string  $label             - 2 : Label do Botão
     * @param boolean $boolRequired      - 3 : DEFAULT = false não obrigatório
     * @param boolean $boolEnableSearch  - 4 : DEFAULT = false não faz busca
-    * @param int     $intHeight         - 5 : Altura 
-    * @param boolean $makeScrollable    - 6 : DEFAULT = false lista todos, sem scroll
-    * @return TButton|string|array
+    * @param boolean $boolEnableSearch  - 5 : DEFAULT = false não faz busca
+    * @param int     $intHeight         - 6 : Altura 
+    * @param boolean $makeScrollable    - 7 : DEFAULT = false lista todos, sem scroll
+    * @return TFormDinCheckList
     */
     public function __construct($id
                               , $label
                               , $boolRequired=false
+                              , $listItems
                               , $boolEnableSearch=false
                               , $intHeight=null
                               , $makeScrollable=null
                               )
     {
         $this->setObjCheck($id);
-        $this->setAdiantiObj($adiantiObj);
         $this->setLabel($label);
-        $this->setAction($strName);
-        $this->setImage($strImage);
-        return $this->getAdiantiObj();
+        $this->setRequired($boolRequired);
+        $this->addItems( $listItems );
+        $this->setHeight( $intHeight );
+        $this->makeScrollable( $makeScrollable );
     }
 
     public function setObjCheck($id)
@@ -105,74 +108,46 @@ class TFormDinCheckList {
     public function getObjCheck(){
         return $this->objCheck;
     }
-
+    //--------------------------------------------------------------------
     public function setRequired($boolRequired)
     {
-        if($boolRequired==true){            
-            $this->getObjCheck()->addValidation('Order list', new TRequiredValidator);
+        if($boolRequired==true){
+            $label = $this->getLabel();
+            $this->getObjCheck()->addValidation($label, new TRequiredValidator);
         }
     }
     public function getRequired(){
         return $this->objCheck;
     }
-
+    //--------------------------------------------------------------------
     public function setLabel($label)
     {
-        if( is_array($label) ){
-            $msg = 'O parametro $mixValue não recebe mais um array! Faça uma chamada por Action';
-            ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::ERROR
-                                         ,ValidateHelper::MSG_CHANGE
-                                         ,__CLASS__,__METHOD__,__LINE__);
-        }else{
-            $this->label=$label;
-            $this->getAdiantiObj()->setLabel($label);
-        }
+        $this->label = $label;
+        $this->objLabel =  new TLabel($label);
     }
     public function getLabel(){
         return $this->label;
     }
-
-    public function setAdiantiObj($adiantiObj)
+    public function getObjLabel(){
+        return $this->objLabel;
+    }
+    //--------------------------------------------------------------------
+    public function addItems( $listItems )
     {
-        if( empty($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }
-        if( !is_object($adiantiObj) ){
-            $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restando está igual ;-)';
-            ValidateHelper::migrarMensage($msg
-                                         ,ValidateHelper::ERROR
-                                         ,ValidateHelper::MSG_CHANGE
-                                         ,__CLASS__,__METHOD__,__LINE__);
-        }
-        return $this->adiantiObj=$adiantiObj;
+    $this->getObjCheck()->addItems( $listItems );
     }
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
-    }
-
-    public function setAction($strName)
+    //--------------------------------------------------------------------
+    public function setHeight( $intHeight )
     {
-        if( empty($strName) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT.': strName');
-        }
-        $action = null;
-        if( is_array($strName) ){
-            $action = new TAction(array($strName[0], $strName[1]));
-        }else{
-            $objForm = $this->getObjForm();
-            $action = new TAction(array($objForm, $strName));
-        }        
-        $label = $this->getLabel();
-        $this->getAdiantiObj()->setAction($action,$label);
+        $this->getObjCheck()->setHeight( $intHeight );
     }
-
-    public function setImage($strImage)
+    //--------------------------------------------------------------------
+    public function makeScrollable( $makeScrollable )
     {
-        if( !empty($strImage) ){
-            $this->getAdiantiObj()->setImage($strImage);
+        if( $makeScrollable == true ){
+            $this->getObjCheck()->makeScrollable();
         }
-    }
+    }    
 
 }
 ?>
