@@ -75,6 +75,12 @@ class TFormDinCheckListTest extends TestCase
         parent::tearDown();
     }
 
+    public function testAddItems_failArrayNullException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,null);
+    }    
+
     public function testInstanceOff_TCheckList()
     {
         $adiantiObj = $this->classTest->getObjCheck();
@@ -86,15 +92,17 @@ class TFormDinCheckListTest extends TestCase
         $adiantiObj = $this->classTest->getObjCheck();
         $this->assertEquals(false, $adiantiObj->isScrollable());
         $this->assertEquals('checkPessoa', $this->classTest->getId());
+        $this->assertEquals('Selecione a Pessoa', $this->classTest->getLabel());
+        $this->assertInstanceOf(TLabel::class, $this->classTest-> getObjLabel());
     }
 
-    /*
-    public function testInstanceOff_THBox_showTitle()
+    public function testGetStringSearch()
     {
-        $adiantiObj = $this->classTest->showTitle();
-        $this->assertInstanceOf(THBox::class, $adiantiObj);
+        $this->classTest->addColumn('TPPESSOA','Tipo pessoa','center','5%');
+        $stringResult = $this->classTest->getStringSearch();
+        $expected = 'IDPESSOA,NMPESSOA,TPPESSOA';
+        $this->assertEquals($expected , $stringResult);
     }
-    */
 
     public function testGetInputSearch()
     {
@@ -103,9 +111,12 @@ class TFormDinCheckListTest extends TestCase
         $this->assertInstanceOf(TEntry::class, $adiantiObj);
     }
 
-    public function testAddItems_failArrayNullException()
+        /*
+    public function testInstanceOff_THBox_showTitle()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,null);
+        $adiantiObj = $this->classTest->showTitle();
+        $this->assertInstanceOf(THBox::class, $adiantiObj);
     }
+    */
+
 }
