@@ -110,13 +110,12 @@ class TFormDinCheckListTest extends TestCase
         $this->assertEquals('x', $adiantiObj->getName());
         $this->assertInstanceOf(TEntry::class, $adiantiObj);
     }
-
-        /*
+    
+    /*
     public function testInstanceOff_THBox_showTitle()
     {
         $adiantiObj = $this->classTest->showTitle();
         $this->assertInstanceOf(THBox::class, $adiantiObj);
     }
     */
-
 }
