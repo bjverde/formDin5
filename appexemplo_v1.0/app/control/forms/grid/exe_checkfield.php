@@ -21,6 +21,11 @@ class exe_checkfield extends TPage
 
         $listItems = $this->getListItems();
         $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,$listItems);
+        $checkList->addColumn('code','Id Pessoa','center','10%');
+        $checkList->addColumn('name','Nome','left','70%');
+        $checkList->addColumn('address','Endereço','center','20%');
+
+        $frm->addCheckList($checkList,false);
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
