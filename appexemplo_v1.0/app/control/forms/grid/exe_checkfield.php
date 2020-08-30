@@ -1,0 +1,109 @@
+<?php
+
+use Adianti\Registry\TSession;
+
+class exe_checkfield extends TPage
+{
+    protected $form; // registration form
+    protected $datagrid; // listing
+    protected $pageNavigation;
+    
+    // trait com onSave, onClear, onEdit...
+    use Adianti\Base\AdiantiStandardFormTrait;
+    // trait com onReload, onSearch, onDelete...
+    use Adianti\Base\AdiantiStandardListTrait;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $frm = new TFormDin($this,'Exemplo do Campo Check Field');
+
+        $listItems = $this->getListItems();
+        $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,$listItems);
+
+        // O Adianti permite a Internacionalização - A função _t('string') serve
+        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
+        //primeiro em ingles e depois traduzindo
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
+
+        $this->form = $frm->show();
+
+        // creates the page structure using a table
+        $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
+        $vbox = $formDinBreadCrumb->getAdiantiObj();
+        $vbox->add($this->form);
+        
+        // add the table inside the page
+        parent::add($vbox);
+    }
+
+
+    function getListItems()
+    {
+        $listItems = array();
+
+        $item = new StdClass;
+        $item->code     = '1';
+        $item->name     = 'Aretha Franklin';
+        $item->address  = 'Memphis, Tennessee';
+        $item->phone    = '1111-1111';        
+        $listItems[] = $item;
+        
+        $item = new StdClass;
+        $item->code     = '2';
+        $item->name     = 'Eric Clapton';
+        $item->address  = 'Ripley, Surrey';
+        $item->phone    = '2222-2222';
+        $listItems[] = $item;
+        
+        $item = new StdClass;
+        $item->code     = '3';
+        $item->name     = 'B.B. King';
+        $item->address  = 'Itta Bena, Mississippi';
+        $item->phone    = '3333-3333';
+        $listItems[] = $item;
+        
+        $item = new StdClass;
+        $item->code     = '4';
+        $item->name     = 'Janis Joplin';
+        $item->address  = 'Port Arthur, Texas';
+        $item->phone    = '4444-4444';
+        $listItems[] = $item;
+        
+        return $listItems;
+    }
+
+    /**
+     * Clear filters
+     */
+    public function onClear()
+    {
+        $this->clearFilters();
+        $this->onReload();
+    }
+
+    public function onSave($param)
+    {
+        try
+        {
+            $data = $this->form->getData();
+            $this->form->setData($data);
+            $this->form->validate();
+            
+    
+            //Função do FormDin para Debug
+            FormDinHelper::d($param,'$param');
+            FormDinHelper::debug($data,'$data');
+            FormDinHelper::debug($_REQUEST,'$_REQUEST');
+
+            new TMessage('info', 'Tudo OK!');
+        }
+        catch (Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+        }
+    }
+
+}
