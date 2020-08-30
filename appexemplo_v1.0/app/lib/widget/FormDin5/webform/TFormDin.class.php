@@ -308,6 +308,11 @@ class TFormDin
                 $key = $fieldsRowResult['key'];
             }elseif ($element['type']==self::TYPE_HIDDEN){
                 $adiantiObj->addFields( [$element['obj']] );
+            }elseif ($element['type']==self::TYPE_CHECKLIST){
+                $title = $adiantiObj->showTitle();
+                $boby  = $adiantiObj->showBody();
+                $adiantiObj->addContent( [$title] );
+                //$adiantiObj->addFields( [$boby] );
             }elseif ($element['type']==self::TYPE_ADIANTI_FIELD_NATIVE){
                 //$adiantiObj->addFields( $element['obj'] );
                 call_user_func_array(array($adiantiObj, "addFields"), $element['obj']);
@@ -1275,16 +1280,16 @@ class TFormDin
     /*****
      * 
      */
-    public function addCheckList( $objCheckList,$boolNewLine,$boolLabelAbove )
+    public function addCheckList( $objCheckList,$boolNewLine = true)
     {
         if( empty($objCheckList) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
         }
-        if ($objCheckList instanceof TFormDinCheckList) {
+        if ( !($objCheckList instanceof TFormDinCheckList) ) {
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_CHECKLIST);
         }
         $label = $objCheckList->getLabel();
-        $this->addElementFormList($objCheckList,self::TYPE_CHECKLIST,$label,$boolNewLine,$boolLabelAbove);
+        $this->addElementFormList($objCheckList,self::TYPE_CHECKLIST,$label,$boolNewLine,false);
     }
 
     /**
