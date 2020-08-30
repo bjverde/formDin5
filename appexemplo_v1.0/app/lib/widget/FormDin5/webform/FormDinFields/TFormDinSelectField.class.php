@@ -139,7 +139,6 @@ class TFormDinSelectField  extends TFormDinGenericField
     }
 
     public function addItems($arrayItens){
-        $arrayItens = ArrayHelper::convertString2Array($arrayItens);
         $this->getAdiantiObj()->addItems($arrayItens);
     }    
 
@@ -152,7 +151,7 @@ class TFormDinSelectField  extends TFormDinGenericField
     {
         return $this->multiSelect;
     }
-    public function setMultiSelect($boolMultiSelect)
+    private function setMultiSelect($boolMultiSelect)
     {
         $this->multiSelect = $boolMultiSelect;
     }
