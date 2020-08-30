@@ -63,6 +63,7 @@ class TFormDinCheckList {
     private $objLabel;
     private $objTitle;
     private $listColumn;
+    private $listItems;
 
     /**
     * Adicionar botão no layout
@@ -144,7 +145,8 @@ class TFormDinCheckList {
     //--------------------------------------------------------------------
     public function addItems( $listItems )
     {
-        $this->getObjCheck()->addItems( $listItems );
+        ValidateHelper::isArray($listItems,__METHOD__,__LINE__);
+        $this->listItems = $listItems;
     }
     //--------------------------------------------------------------------
     public function setHeight( $intHeight )
@@ -220,6 +222,7 @@ class TFormDinCheckList {
         foreach( $this->listColumn as $column) {
             $this->getObjCheck()->addColumn($column->name, $column->label,$column->align,$column->width);
         }
+        $this->getObjCheck()->addItems( $this->listItems );
     }
 }
 ?>
