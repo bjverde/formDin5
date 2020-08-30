@@ -57,10 +57,12 @@
  */ 
 class TFormDinCheckList {
 
+    private $id;
     private $objCheck;
     private $label;
     private $objLabel;
-    private $objSearch;
+    private $objTitle;
+    private $listColumn;
 
     /**
     * Adicionar botão no layout
@@ -74,32 +76,40 @@ class TFormDinCheckList {
     * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
     * definir o parametro boolLabelAbove do botão para true tambem.
     *
-    * @param object  $id                - 1 : FORMDIN5 Objeto do Form, é só informar $this
+    * @param object  $id                - 1 : id do campo
     * @param string  $label             - 2 : Label do Botão
     * @param boolean $boolRequired      - 3 : DEFAULT = false não obrigatório
-    * @param boolean $boolEnableSearch  - 4 : DEFAULT = false não faz busca
-    * @param boolean $boolEnableSearch  - 5 : DEFAULT = false não faz busca
+    * @param boolean $listItems         - 4 : List Itens
     * @param int     $intHeight         - 6 : Altura 
-    * @param boolean $makeScrollable    - 7 : DEFAULT = false lista todos, sem scroll
+    * @param boolean $makeScrollable    - 7 : DEFAULT = false
     * @return TFormDinCheckList
     */
     public function __construct($id
                               , $label
                               , $boolRequired=false
                               , $listItems
-                              , $boolEnableSearch=false
                               , $intHeight=null
                               , $makeScrollable=null
                               )
     {
+
+        $this->setId($id);
         $this->setObjCheck($id);
         $this->setLabel($label);
         $this->setRequired($boolRequired);
         $this->addItems( $listItems );
         $this->setHeight( $intHeight );
         $this->makeScrollable( $makeScrollable );
+        $this->listColumn = array();
     }
 
+    public function setId($id){
+        $this->id = $id;
+    }
+    public function getId(){
+        return $this->id;
+    }
+    //--------------------------------------------------------------------
     public function setObjCheck($id)
     {
         $orderlist = new TCheckList($id);
@@ -147,7 +157,53 @@ class TFormDinCheckList {
         if( $makeScrollable == true ){
             $this->getObjCheck()->makeScrollable();
         }
-    }    
+    }
+    public function geTitle(){
 
+        $stringSearch = null;
+        foreach( $this->listColumn as $column) {
+            if( $column->enableSearch == true ){
+                $stringSearch = $stringSearch.','.$column->name;
+            }
+        }
+        $stringSearch = substr($stringSearch, 1); 
+
+
+        $objLabel = $this->getObjLabel();
+        $hbox = new THBox;
+        $hbox->style = 'border-bottom: 1px solid gray;padding-bottom:10px';
+        $hbox->add( $objLabel );
+        if( !empty($stringSearch) ){
+            $id = $this->getId();
+            $id = $id.'Search';
+            $input_search = new TEntry($id);
+            $input_search->placeholder = _t('Search');
+            $input_search->setSize('100%');
+            $this->getObjCheck()->enableSearch($input_search, $stringSearch);
+            $hbox->add( $input_search )->style = 'float:right;width:30%;';
+        }
+        $this->objTitle = $hbox;
+
+        return $this->objTitle;
+    }
+
+    /**
+     * Add list column
+     * @param  $name  = Name of the column in the database
+     * @param  $label = Text label that will be shown in the header
+     * @param  $align = Column align (left, center, right)
+     * @param  $width = Column Width (pixels)
+     * @param  $enableSearch = include field on search
+     */
+    public function addColumn($name, $label, $align, $width, $enableSearch)
+    {
+        $colum = new \stdClass;
+        $colum->name = $name;
+        $colum->label = $label;
+        $colum->align = $align;
+        $colum->width = $width;
+        $colum->enableSearch = $enableSearch;
+        $this->listColumn[] = $colum;
+    }
 }
 ?>
