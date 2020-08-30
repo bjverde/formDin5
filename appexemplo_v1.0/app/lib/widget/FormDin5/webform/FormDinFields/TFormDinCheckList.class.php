@@ -144,7 +144,7 @@ class TFormDinCheckList {
     //--------------------------------------------------------------------
     public function addItems( $listItems )
     {
-    $this->getObjCheck()->addItems( $listItems );
+        $this->getObjCheck()->addItems( $listItems );
     }
     //--------------------------------------------------------------------
     public function setHeight( $intHeight )
@@ -158,35 +158,7 @@ class TFormDinCheckList {
             $this->getObjCheck()->makeScrollable();
         }
     }
-    public function geTitle(){
-
-        $stringSearch = null;
-        foreach( $this->listColumn as $column) {
-            if( $column->enableSearch == true ){
-                $stringSearch = $stringSearch.','.$column->name;
-            }
-        }
-        $stringSearch = substr($stringSearch, 1); 
-
-
-        $objLabel = $this->getObjLabel();
-        $hbox = new THBox;
-        $hbox->style = 'border-bottom: 1px solid gray;padding-bottom:10px';
-        $hbox->add( $objLabel );
-        if( !empty($stringSearch) ){
-            $id = $this->getId();
-            $id = $id.'Search';
-            $input_search = new TEntry($id);
-            $input_search->placeholder = _t('Search');
-            $input_search->setSize('100%');
-            $this->getObjCheck()->enableSearch($input_search, $stringSearch);
-            $hbox->add( $input_search )->style = 'float:right;width:30%;';
-        }
-        $this->objTitle = $hbox;
-
-        return $this->objTitle;
-    }
-
+    //--------------------------------------------------------------------
     /**
      * Add list column
      * @param  $name  = Name of the column in the database
@@ -195,15 +167,59 @@ class TFormDinCheckList {
      * @param  $width = Column Width (pixels)
      * @param  $enableSearch = include field on search
      */
-    public function addColumn($name, $label, $align, $width, $enableSearch)
+    public function addColumn($name, $label, $align, $width, $enableSearch=true)
     {
-        $colum = new \stdClass;
-        $colum->name = $name;
-        $colum->label = $label;
-        $colum->align = $align;
-        $colum->width = $width;
-        $colum->enableSearch = $enableSearch;
-        $this->listColumn[] = $colum;
+        $column = new \stdClass;
+        $column->name = $name;
+        $column->label = $label;
+        $column->align = $align;
+        $column->width = $width;
+        $column->enableSearch = $enableSearch;
+        $this->listColumn[] = $column;
+    }
+    //--------------------------------------------------------------------
+    public function getStringSearch()
+    {
+        $stringSearch = null;
+        foreach( $this->listColumn as $column) {
+            if( $column->enableSearch == true ){
+                $stringSearch = $stringSearch.','.$column->name;
+            }
+        }
+        $stringSearch = substr($stringSearch, 1); 
+        return $stringSearch;
+    }
+    public function getInputSearch($id)
+    {
+        $input_search = new TEntry($id);
+        $input_search->placeholder = _t('Search');
+        $input_search->setSize('100%');
+        return $input_search;
+    }
+    public function showTitle()
+    {
+        $stringSearch = $this->getStringSearch();
+        $objLabel = $this->getObjLabel();
+        $hbox = new THBox;
+        $hbox->style = 'border-bottom: 1px solid gray;padding-bottom:10px';
+        $hbox->add( $objLabel );
+        if( !empty($stringSearch) ){
+            $id = $this->getId();
+            $id = $id.'Search';
+            $input_search = $this->getInputSearch($id);
+            $this->getObjCheck()->enableSearch($input_search, $stringSearch);
+            $hbox->add( $input_search )->style = 'float:right;width:30%;';
+        }
+        $this->objTitle = $hbox;
+
+        return $this->objTitle;
+    }
+    //--------------------------------------------------------------------
+    public function showBody()
+    {
+        foreach( $this->listColumn as $column) {
+            $this->getObjCheck()->addColumn($column->name, $column->label,$column->align,$column->width);
+        }
     }
 }
 ?>
