@@ -59,7 +59,16 @@
             </menuitem>
             <menuitem label='Check'>
                 <icon>fa:check-square fa-fw</icon>
-                <action>comingSoonView</action>
+                <menu>            
+                    <menuitem label='Check Field'>
+                        <icon>fa:check-square fa-fw</icon>
+                        <action>exe_HtmlField</action>
+                    </menuitem>
+                    <menuitem label='Check List'>
+                        <icon>fa:check-square fa-fw</icon>
+                        <action>exe_checkfield</action>
+                    </menuitem>          
+                </menu>
             </menuitem>
             <menuitem label='Switch'>
                 <icon>fa:check-square fa-fw</icon>
@@ -98,10 +107,6 @@
                     </menuitem>                    
                 </menu>
             </menuitem>
-            <menuitem label='Check Field'>
-                <icon>fa:flag fa-fw</icon>
-                <action>exe_checkfield</action>
-            </menuitem>             
             <menuitem label='Select Diretorio/Pasta'>
                 <icon>fa:flag fa-fw</icon>
                 <action>comingSoonView</action>
