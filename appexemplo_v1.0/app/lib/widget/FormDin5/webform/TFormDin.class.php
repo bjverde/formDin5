@@ -309,10 +309,11 @@ class TFormDin
             }elseif ($element['type']==self::TYPE_HIDDEN){
                 $adiantiObj->addFields( [$element['obj']] );
             }elseif ($element['type']==self::TYPE_CHECKLIST){
-                $title = $adiantiObj->showTitle();
-                $boby  = $adiantiObj->showBody();
+                $objCheckList = $element['obj'];
+                $title = $objCheckList->showTitle();
+                $boby  = $objCheckList->showBody();
                 $adiantiObj->addContent( [$title] );
-                //$adiantiObj->addFields( [$boby] );
+                $adiantiObj->addFields( [$boby] );
             }elseif ($element['type']==self::TYPE_ADIANTI_FIELD_NATIVE){
                 //$adiantiObj->addFields( $element['obj'] );
                 call_user_func_array(array($adiantiObj, "addFields"), $element['obj']);
