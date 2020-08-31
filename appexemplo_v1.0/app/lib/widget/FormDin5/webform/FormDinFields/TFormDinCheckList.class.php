@@ -223,6 +223,7 @@ class TFormDinCheckList {
             $this->getObjCheck()->addColumn($column->name, $column->label,$column->align,$column->width);
         }
         $this->getObjCheck()->addItems( $this->listItems );
+        return $this->getObjCheck();
     }
 }
 ?>
