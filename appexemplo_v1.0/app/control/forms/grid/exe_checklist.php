@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_checkfield extends TPage
+class exe_checklist extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing
@@ -23,7 +23,7 @@ class exe_checkfield extends TPage
         $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,$listItems);
         $checkList->addColumn('code','Id Pessoa','center','10%');
         $checkList->addColumn('name','Nome','left','70%');
-        $checkList->addColumn('address','Endereço','center','20%');
+        $checkList->addColumn('address','Endereço','left','20%');
 
         $frm->addCheckList($checkList,false);
 
