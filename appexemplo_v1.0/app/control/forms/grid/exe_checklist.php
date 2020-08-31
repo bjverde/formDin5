@@ -76,7 +76,44 @@ class exe_checklist extends TPage
         $item->address  = 'Port Arthur, Texas';
         $item->phone    = '4444-4444';
         $listItems[] = $item;
+
+        $item = new StdClass;
+        $item->code     = '5';
+        $item->name     = 'Janis Martin';
+        $item->address  = 'Port Arthur, Bahia';
+        $item->phone    = '4444-55555';
+        $listItems[] = $item;
         
+
+        $item = new StdClass;
+        $item->code     = '6';
+        $item->name     = 'Maria Martin';
+        $item->address  = 'Caldas, Amazonas';
+        $item->phone    = '6666-55555';
+        $listItems[] = $item;
+
+
+        $item = new StdClass;
+        $item->code     = '7';
+        $item->name     = 'Maria Martin';
+        $item->address  = 'Caldas, Amazonas';
+        $item->phone    = '6666-55555';
+        $listItems[] = $item;
+
+        $item = new StdClass;
+        $item->code     = '8';
+        $item->name     = 'Aretha Franklin';
+        $item->address  = 'Memphis, Tennessee';
+        $item->phone    = '1111-1111';        
+        $listItems[] = $item;        
+
+        $item = new StdClass;
+        $item->code     = '9';
+        $item->name     = 'Aretha Franklin';
+        $item->address  = 'Memphis, Tennessee';
+        $item->phone    = '1111-1111';        
+        $listItems[] = $item
+
         return $listItems;
     }
 
