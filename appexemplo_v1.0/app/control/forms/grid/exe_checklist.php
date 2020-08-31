@@ -112,7 +112,7 @@ class exe_checklist extends TPage
         $item->name     = 'Aretha Franklin';
         $item->address  = 'Memphis, Tennessee';
         $item->phone    = '1111-1111';        
-        $listItems[] = $item
+        $listItems[] = $item;
 
         return $listItems;
     }
