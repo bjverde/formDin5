@@ -73,11 +73,15 @@ class TFormDinGridColumnFormatDateTest extends TestCase
         $this->assertInstanceOf(TDataGridColumn::class, $result);
     }
 
-    public function testAlignCenter()
+    public function testTransformer()
     {
-        $adiantiObj =  $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridColumn::class, $adiantiObj);
-        $arrayTransformer = $adiantiObj->getTransformer();
+        $arrayTransformer = $this->classTest->getAdiantiObj()->getTransformer();
         $this->assertInstanceOf(TFormDinGridColumnFormatDate::class, $arrayTransformer[0]);
+    }
+
+    public function testFormatDateBrasil()
+    {
+        $result = $this->classTest->formatDate('2020-05-07');
+        $this->assertEquals('07/05/2020', $result);
     }
 }
