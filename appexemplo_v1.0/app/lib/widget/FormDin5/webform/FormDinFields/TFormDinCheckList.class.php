@@ -90,7 +90,6 @@ class TFormDinCheckList {
                               , $boolRequired=false
                               , $listItems
                               , $intHeight=null
-                              , $makeScrollable=null
                               )
     {
 
@@ -100,7 +99,6 @@ class TFormDinCheckList {
         $this->setRequired($boolRequired);
         $this->addItems( $listItems );
         $this->setHeight( $intHeight );
-        $this->makeScrollable( $makeScrollable );
         $this->listColumn = array();
     }
 
@@ -151,12 +149,9 @@ class TFormDinCheckList {
     //--------------------------------------------------------------------
     public function setHeight( $intHeight )
     {
-        $this->getObjCheck()->setHeight( $intHeight );
-    }
-    //--------------------------------------------------------------------
-    public function makeScrollable( $makeScrollable )
-    {
-        if( $makeScrollable == true ){
+        if( !(empty($intHeight)) ){
+            ValidateHelper::isNumeric($intHeight,__METHOD__,__LINE__);
+            $this->getObjCheck()->setHeight( $intHeight );
             $this->getObjCheck()->makeScrollable();
         }
     }
