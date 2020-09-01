@@ -48,18 +48,18 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
      * Coluna do Grid Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7.1
      *
-     * @param  string $name      - 1: Name of the column in the database
-     * @param  string $label     - 2: Text label that will be shown in the header
-     * @param  string $width     - 3: Column Width (pixels)
-     * @param  string $align     - 4: Column align (left|right|center|justify)
-     * @param  string $format     - 5: Column align (left|right|center|justify)
+     * @param  string $name   - 1: Name of the column in the database
+     * @param  string $label  - 2: Text label that will be shown in the header
+     * @param  string $width  - 3: Column Width (pixels)
+     * @param  string $align  - 4: Column align (left|right|center|justify)
+     * @param  string $format - 5: Date Format. DEFAULT = d/m/Y (Brazil) , United States = m/d/Y
      * @return BootstrapFormBuilder
      */
     public function __construct(string $name
                               , string $label
                               , string $width = NULL
-                              , string $align = 'left'
-                              , string $format = 'd/m/Y' 
+                              , string $align ='left'
+                              , string $format='d/m/Y'
                               )
     {
         $column = new TDataGridColumn($name, $label,$align,$width);

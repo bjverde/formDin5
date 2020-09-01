@@ -457,6 +457,29 @@ class TFormDinGrid
         //$this->getAdiantiObj()->addColumn($column);
         //return $column;
     }
+    //---------------------------------------------------------------
+    /**
+     * Coluna do Grid Padronizado em BoorStrap
+     * Reconstruido FormDin 4 Sobre o Adianti 7.1
+     *
+     * @param  string $name   - 1: Name of the column in the database
+     * @param  string $label  - 2: Text label that will be shown in the header
+     * @param  string $width  - 3: Column Width (pixels)
+     * @param  string $align  - 4: Column align (left|right|center|justify)
+     * @param  string $format - 5: Date Format. DEFAULT = d/m/Y (Brazil) , United States = m/d/Y
+     * @return TDataGridColumn
+     */
+    public function addColumnFormatDate(string $name
+                                      , string $label
+                                      , string $width = NULL
+                                      , string $align ='left'
+                                      , string $format='d/m/Y'
+                                      )
+    {
+        $formDinGridColumn = new TFormDinGridColumnFormatDate( $name,$label,$width,$align,$format);
+        $this->addListColumn($formDinGridColumn);
+        return $formDinGridColumn;
+    }    
 
     //---------------------------------------------------------------------------------------
     /**
