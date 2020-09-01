@@ -62,6 +62,8 @@ class exe_grid17 extends TPage
         $grid->addColumn('name',  'Name', null, 'left');
         $grid->addColumn('city',  'City', null, 'left');
         $grid->addColumn('state','State', null, 'left');
+        $grid->addColumnFormatDate('date' ,'Data Brasil' , null, 'left');
+        //$grid->addColumnFormatDate('date' ,'Data' , null, 'left','Y');
         //$grid->enableDefaultButtons(false);
         $this->datagrid = $grid->show();
         $panel = $grid->getPanelGroupGrid();
@@ -91,6 +93,7 @@ class exe_grid17 extends TPage
         $item->name   = 'Aretha Franklin';
         $item->city   = 'Memphis';
         $item->state  = 'Tennessee (US)';
+        $item->date   = '2010-10-01';
         $this->datagrid->addItem($item);
         
         // add an regular object to the datagrid
@@ -99,6 +102,7 @@ class exe_grid17 extends TPage
         $item->name   = 'Eric Clapton';
         $item->city   = 'Ripley';
         $item->state  = 'Surrey (UK)';
+        $item->date   = '2010-10-10';
         $this->datagrid->addItem($item);
         
         // add an regular object to the datagrid
@@ -107,6 +111,7 @@ class exe_grid17 extends TPage
         $item->name   = 'B.B. King';
         $item->city   = 'Itta Bena';
         $item->state  = 'Mississippi (US)';
+        $item->date   = '2010-05-31';
         $this->datagrid->addItem($item);
         
         // add an regular object to the datagrid
@@ -115,6 +120,7 @@ class exe_grid17 extends TPage
         $item->name   = 'Janis Joplin';
         $item->city   = 'Port Arthur';
         $item->state  = 'Texas (US)';
+        $item->date   = '2020-05-31';
         $this->datagrid->addItem($item);
     }
 
