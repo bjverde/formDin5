@@ -83,4 +83,7 @@ class TFormDinGridColumn
     public function getName(){
         return $this->name;
     }
+    public function setTransformer($array){
+        return $this->getAdiantiObj()->setTransformer($array);
+    }
 }

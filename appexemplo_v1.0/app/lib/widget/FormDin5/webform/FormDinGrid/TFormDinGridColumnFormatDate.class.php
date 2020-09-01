@@ -66,7 +66,7 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
         $this->setAdiantiObj($column);
         $this->setName($name);
         $this->setFormat($format);
-        $column->setTransformer(array($this, 'formatDate'));
+        $this->setTransformer(array($this, 'formatDate'));
     }
 
     public function setFormat($format){       
@@ -79,10 +79,11 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
     /**
      * Format the date according to the country
      */
-    public function formatDate($transf_date, $object)
+    public function formatDate($fieldValue)
     {
-        $name = $this->getName();
-        $date = new DateTime($object->$name);
+        //$name = $this->getName();
+        //$date = new DateTime($object->$name);
+        $date = new DateTime($fieldValue);
         $format = $this->getFormat();
         $dateFormat = $date->format($format);
         return $dateFormat;
