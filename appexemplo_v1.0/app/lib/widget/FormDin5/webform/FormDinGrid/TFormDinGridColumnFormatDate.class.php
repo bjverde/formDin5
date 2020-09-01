@@ -81,7 +81,8 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
      */
     public function formatDate($transf_date, $object)
     {
-        $date = new DateTime($object->origin_date);
+        $name = $this->getName();
+        $date = new DateTime($object->$name);
         $format = $this->getFormat();
         $dateFormat = $date->format($format);
         return $dateFormat;
