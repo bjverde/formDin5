@@ -40,13 +40,16 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-require_once  __DIR__.'/../../mockFormAdianti.php';
+$path =   __DIR__.'/../../../';
+require_once $path.'mockFormDinArray.php';
 
-use PHPUnit\Framework\TestCase;
+
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
+use PHPUnit\Framework\TestCase;
 
-class TFormDinGridColumnTest extends TestCase
+class TFormDinCheckListTest extends TestCase
 {
 
     private $classTest;
@@ -56,7 +59,12 @@ class TFormDinGridColumnTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinGridColumn('TEST', 'TEST');
+        $mock = new mockFormDinArray ();
+        $listItems = $mock->generateTablePessoaAdianti();
+        $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,$listItems);
+        $checkList->addColumn('IDPESSOA','Id Pessoa','center','10%');
+        $checkList->addColumn('NMPESSOA','Nome','center','90%');
+        $this->classTest = $checkList;
     }
     
     /**
@@ -67,25 +75,47 @@ class TFormDinGridColumnTest extends TestCase
         parent::tearDown();
     }
 
-    public function testTypeObje()
+    public function testAddItems_failArrayNullException()
     {
-        $result = $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridColumn::class, $result);
+        $this->expectException(InvalidArgumentException::class);
+        $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,null);
+    }    
+
+    public function testInstanceOff_TCheckList()
+    {
+        $adiantiObj = $this->classTest->getObjCheck();
+        $this->assertInstanceOf(TCheckList::class, $adiantiObj);
+    }
+    
+    public function testConstruct()
+    {
+        $adiantiObj = $this->classTest->getObjCheck();
+        $this->assertEquals(false, $adiantiObj->isScrollable());
+        $this->assertEquals('checkPessoa', $this->classTest->getId());
+        $this->assertEquals('Selecione a Pessoa', $this->classTest->getLabel());
+        $this->assertInstanceOf(TLabel::class, $this->classTest-> getObjLabel());
     }
 
-    public function testAlignCenter()
+    public function testGetStringSearch()
     {
-        $column = new TFormDinGridColumn('TEST', 'TEST',null,'center');
-        $result =  $column->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridColumn::class, $result);
-        $this->assertEquals('center', $result->getAlign());
+        $this->classTest->addColumn('TPPESSOA','Tipo pessoa','center','5%');
+        $stringResult = $this->classTest->getStringSearch();
+        $expected = 'IDPESSOA,NMPESSOA,TPPESSOA';
+        $this->assertEquals($expected , $stringResult);
     }
 
-    public function testAlignRight()
+    public function testGetInputSearch()
     {
-        $column = new TFormDinGridColumn('TEST', 'TEST',null,'right');
-        $result =  $column->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridColumn::class, $result);
-        $this->assertEquals('right', $result->getAlign());
+        $adiantiObj = $this->classTest->getInputSearch('x');
+        $this->assertEquals('x', $adiantiObj->getName());
+        $this->assertInstanceOf(TEntry::class, $adiantiObj);
     }
+    
+    /*
+    public function testInstanceOff_THBox_showTitle()
+    {
+        $adiantiObj = $this->classTest->showTitle();
+        $this->assertInstanceOf(THBox::class, $adiantiObj);
+    }
+    */
 }

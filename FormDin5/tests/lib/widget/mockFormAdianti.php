@@ -5,6 +5,11 @@
  */
 class mockFormDinComAdianti extends TPage
 {
+
+    // trait com onSave, onClear, onEdit...
+    use Adianti\Base\AdiantiStandardFormTrait;
+    // trait com onReload, onSearch, onDelete...
+    use Adianti\Base\AdiantiStandardListTrait;
     
     public function onSave()
     {
