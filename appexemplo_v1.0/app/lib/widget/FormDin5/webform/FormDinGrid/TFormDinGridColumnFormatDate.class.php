@@ -85,6 +85,7 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
         //$date = new DateTime($object->$name);
         $date = new DateTime($fieldValue);
         $format = $this->getFormat();
+        $format = str_replace( ['dd','mm', 'yyyy', 'hh', 'ii', 'ss'], ['d','m','Y', 'H', 'i', 's'], $format);
         $dateFormat = $date->format($format);
         return $dateFormat;
     }

@@ -79,9 +79,58 @@ class TFormDinGridColumnFormatDateTest extends TestCase
         $this->assertInstanceOf(TFormDinGridColumnFormatDate::class, $arrayTransformer[0]);
     }
 
-    public function testFormatDateBrasil()
+    public function testFormatDateBrasilPHP()
     {
         $result = $this->classTest->formatDate('2020-05-07');
         $this->assertEquals('07/05/2020', $result);
+    }
+
+    public function testFormatDateBrasilAdianti()
+    {
+        $this->classTest->setFormat('dd/mm/yyyy');
+        $result = $this->classTest->formatDate('2020-05-07');
+        $this->assertEquals('07/05/2020', $result);
+    }
+
+    public function testFormatDateEuaPHP()
+    {
+        $this->classTest->setFormat('m/d/Y');
+        $result = $this->classTest->formatDate('2020-05-07');
+        $this->assertEquals('05/07/2020', $result);
+    }
+
+    public function testFormatDateEuaAdianti()
+    {
+        $this->classTest->setFormat('mm/dd/yyyy');
+        $result = $this->classTest->formatDate('2020-05-07');
+        $this->assertEquals('05/07/2020', $result);
+    }
+
+    public function testFormatDateTimeEuaPHP()
+    {
+        $this->classTest->setFormat('m/d/Y hh:ii');
+        $result = $this->classTest->formatDate('2020-05-07 23:43');
+        $this->assertEquals('05/07/2020 23:43', $result);
+    }
+
+    public function testFormatDateTimeEuaAdianti()
+    {
+        $this->classTest->setFormat('mm/dd/yyyy hh:ii');
+        $result = $this->classTest->formatDate('2020-05-07 23:43');
+        $this->assertEquals('05/07/2020 23:43', $result);
+    }
+
+    public function testFormatDateFinlandPHP()
+    {
+        $this->classTest->setFormat('d-m-Y');
+        $result = $this->classTest->formatDate('2020-05-07');
+        $this->assertEquals('07-05-2020', $result);
+    }
+
+    public function testFormatDateFinlandAdianti()
+    {
+        $this->classTest->setFormat('dd-mm-yyyy');
+        $result = $this->classTest->formatDate('2020-05-07');
+        $this->assertEquals('07-05-2020', $result);
     }
 }
