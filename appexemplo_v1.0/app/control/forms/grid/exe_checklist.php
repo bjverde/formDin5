@@ -1,151 +1,87 @@
 <?php
-
-use Adianti\Registry\TSession;
-
-class exe_checklist extends TPage
-{
-    protected $form; // registration form
-    protected $datagrid; // listing
-    protected $pageNavigation;
-    
-    // trait com onSave, onClear, onEdit...
-    use Adianti\Base\AdiantiStandardFormTrait;
-    // trait com onReload, onSearch, onDelete...
-    use Adianti\Base\AdiantiStandardListTrait;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $frm = new TFormDin($this,'Exemplo do Campo Check Field');
-
-        $listItems = $this->getListItems();
-        $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,$listItems,null);
-        $checkList->addColumn('code','Id Pessoa','center','10%');
-        $checkList->addColumn('name','Nome','left','70%');
-        $checkList->addColumn('address','Endereço','left','20%');
-
-        $frm->addCheckList($checkList,false);
-
-        // O Adianti permite a Internacionalização - A função _t('string') serve
-        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
-        //primeiro em ingles e depois traduzindo
-        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
-        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
-
-        $this->form = $frm->show();
-
-        // creates the page structure using a table
-        $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
-        $vbox = $formDinBreadCrumb->getAdiantiObj();
-        $vbox->add($this->form);
-        
-        // add the table inside the page
-        parent::add($vbox);
-    }
-
-
-    function getListItems()
-    {
-        $listItems = array();
-
-        $item = new StdClass;
-        $item->code     = '1';
-        $item->name     = 'Aretha Franklin';
-        $item->address  = 'Memphis, Tennessee';
-        $item->phone    = '1111-1111';        
-        $listItems[] = $item;
-        
-        $item = new StdClass;
-        $item->code     = '2';
-        $item->name     = 'Eric Clapton';
-        $item->address  = 'Ripley, Surrey';
-        $item->phone    = '2222-2222';
-        $listItems[] = $item;
-        
-        $item = new StdClass;
-        $item->code     = '3';
-        $item->name     = 'B.B. King';
-        $item->address  = 'Itta Bena, Mississippi';
-        $item->phone    = '3333-3333';
-        $listItems[] = $item;
-        
-        $item = new StdClass;
-        $item->code     = '4';
-        $item->name     = 'Janis Joplin';
-        $item->address  = 'Port Arthur, Texas';
-        $item->phone    = '4444-4444';
-        $listItems[] = $item;
-
-        $item = new StdClass;
-        $item->code     = '5';
-        $item->name     = 'Janis Martin';
-        $item->address  = 'Port Arthur, Bahia';
-        $item->phone    = '4444-55555';
-        $listItems[] = $item;
-        
-
-        $item = new StdClass;
-        $item->code     = '6';
-        $item->name     = 'Maria Martin';
-        $item->address  = 'Caldas, Amazonas';
-        $item->phone    = '6666-55555';
-        $listItems[] = $item;
-
-
-        $item = new StdClass;
-        $item->code     = '7';
-        $item->name     = 'Maria Martin';
-        $item->address  = 'Caldas, Amazonas';
-        $item->phone    = '6666-55555';
-        $listItems[] = $item;
-
-        $item = new StdClass;
-        $item->code     = '8';
-        $item->name     = 'Aretha Franklin';
-        $item->address  = 'Memphis, Tennessee';
-        $item->phone    = '1111-1111';        
-        $listItems[] = $item;        
-
-        $item = new StdClass;
-        $item->code     = '9';
-        $item->name     = 'Aretha Franklin';
-        $item->address  = 'Memphis, Tennessee';
-        $item->phone    = '1111-1111';        
-        $listItems[] = $item;
-
-        return $listItems;
-    }
-
     /**
-     * Clear filters
+     * FormCheckListView
+     *
+     * @version    1.0
+     * @package    samples
+     * @subpackage tutor
+     * @author     Pablo Dall'Oglio
+     * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
+     * @license    http://www.adianti.com.br/framework-license
      */
-    public function onClear()
+    class exe_checklist extends TPage
     {
-        $this->clearFilters();
-        $this->onReload();
-    }
-
-    public function onSave($param)
-    {
-        try
+        private $form;
+        
+        public function __construct()
         {
-            $data = $this->form->getData();
-            $this->form->setData($data);
-            $this->form->validate();
+            parent::__construct();
             
-    
-            //Função do FormDin para Debug
-            FormDinHelper::d($param,'$param');
-            FormDinHelper::debug($data,'$data');
-            FormDinHelper::debug($_REQUEST,'$_REQUEST');
-
-            new TMessage('info', 'Tudo OK!');
+            $this->form = new BootstrapFormBuilder;
+            $this->form->setFormTitle('Checklist');
+            
+            $orderlist = new TCheckList('order_list');
+            $orderlist->addValidation('Order list', new TRequiredValidator); // cannot be less the 3 characters
+            
+            //$orderlist->addColumn('id',          'Id',          'center',  '10%');
+            $orderlist->addColumn('description', 'Description', 'left',    '50%');
+            $orderlist->addColumn('sale_price',  'Price',       'left',    '40%');
+            $orderlist->setHeight(250);
+            $orderlist->makeScrollable();
+            
+            
+            $input_search = new TEntry('search');
+            $input_search->placeholder = _t('Search');
+            $input_search->setSize('100%');
+            $orderlist->enableSearch($input_search, 'id, description');
+            
+            $hbox = new THBox;
+            $hbox->style = 'border-bottom: 1px solid gray;padding-bottom:10px';
+            $hbox->add( new TLabel('Order list') );
+            $hbox->add( $input_search )->style = 'float:right;width:30%;';
+            
+            // load order items
+            $orderlist->addItems( Product::allInTransaction('samples') );
+            $this->form->addContent( [$hbox] );
+            $this->form->addFields( [$orderlist] );
+            
+            $this->form->addAction( 'Save', new TAction([$this, 'onSave']), 'fa:save green');
+            
+            // wrap the page content using vertical box
+            $vbox = new TVBox;
+            $vbox->style = 'width: 100%';
+            $vbox->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
+            $vbox->add($this->form);
+            parent::add($vbox);
         }
-        catch (Exception $e)
+        
+        /**
+         * Simulates an save button
+         * Show the form content
+         */
+        public function onSave($param)
         {
-            new TMessage('error', $e->getMessage());
+            try
+            {
+                $data = $this->form->getData(); // optional parameter: active record class
+                
+                $this->form->validate();
+                echo '<pre>';
+                echo '$this->form->getData()';
+                var_dump($data);
+                echo '</pre>';
+                echo 'onSave($param)';
+                echo '<pre>';
+                var_dump($param);
+                echo '</pre>';
+                
+                // put the data back to the form
+                $this->form->setData($data);
+            }
+            catch (Exception $e)
+            {
+                new TMessage('error', $e->getMessage());
+            }
         }
     }
 
-}
