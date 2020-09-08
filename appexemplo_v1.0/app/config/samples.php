@@ -2,7 +2,7 @@
 return [
     'host'  =>  "",
     'port'  =>  "",
-    'name'  =>  "",
+    'name'  =>  "app/database/samples.db",
     'user'  =>  "",
     'pass'  =>  "",
     'type'  =>  "sqlite",
