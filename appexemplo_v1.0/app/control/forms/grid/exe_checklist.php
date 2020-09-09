@@ -21,7 +21,7 @@ class exe_checklist extends TPage
 
         $listItems = $this->getListItems();
         $checkList = new TFormDinCheckList('checkPessoa','Selecione a Pessoa',false,$listItems,null);
-        $checkList->addColumn('code','Id Pessoa','center','10%');
+        $checkList->addColumnHidden('code','Id Pessoa','center','10%');
         $checkList->addColumn('name','Nome','left','70%');
         $checkList->addColumn('address','Endereço','left','20%');
 
