@@ -165,7 +165,7 @@ class TFormDinCheckList {
      * @param  $enableSearch = include field on search
      * @return TDataGridColumn
      */
-    public function addColumnHidden($name, $label, $align, $width, $enableSearch=true)
+    public function addColumnHidden($name, $label, $align, $width, $enableSearch=false)
     {
         $objColumn = $this->addColumn($name, $label, $align, $width, $enableSearch);
         $objColumn->setVisibility(false);
