@@ -104,6 +104,23 @@ class TFormDinCheckListTest extends TestCase
         $this->assertEquals($expected , $stringResult);
     }
 
+    public function testAddColumn_InstanceOff_TDataGridColumn()
+    {
+        $obj = $this->classTest->addColumn('TPPESSOA','Tipo pessoa','center','5%');
+        $this->assertInstanceOf(TDataGridColumn::class, $obj);
+    }
+
+    public function testaddColumnHidden_InstanceOff_TDataGridColumn()
+    {
+        $obj = $this->classTest->addColumnHidden('TPPESSOA','Tipo pessoa','center','5%');
+        $resultProperty = $obj->getProperty('style');
+        $resultDataProperty = $obj->getDataProperty('style');
+        $expected = 'display:none';
+        $this->assertInstanceOf(TDataGridColumn::class, $obj);
+        $this->assertEquals($expected , $resultProperty);
+        $this->assertEquals($expected , $resultDataProperty);
+    }
+
     public function testGetInputSearch()
     {
         $adiantiObj = $this->classTest->getInputSearch('x');
