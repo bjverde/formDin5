@@ -91,7 +91,7 @@ class TFormDinSelectField  extends TFormDinGenericField
      * @param mixed   $mixOptions     - 4: array dos valores. no formato "key=>value". No FormDin 5 só permite array PHP
      * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param mixed   $mixValue       - 7: NOT_IMPLEMENTED Valor DEFAULT, informe o ID do array
+     * @param mixed   $mixValue       - 7: Valor DEFAULT, informe o ID do array
      * @param boolean $boolMultiSelect- 8: Default FALSE = SingleSelect, TRUE = MultiSelect
      * @param integer $intSize             - 9: NOT_IMPLEMENTED Default 1. Num itens que irão aparecer. 
      * @param integer $intWidth           - 10: NOT_IMPLEMENTED Largura em Pixels
@@ -132,7 +132,7 @@ class TFormDinSelectField  extends TFormDinGenericField
         }else{
             $adiantiObj = new TCombo($id);            
         }
-        $value = is_null($strFirstOptionValue)?$strKeyColumn:$strFirstOptionValue;
+        $value = is_null($mixValue)?$strFirstOptionValue:$mixValue;
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
         $this->addItems($mixOptions);
         return $this->getAdiantiObj();
