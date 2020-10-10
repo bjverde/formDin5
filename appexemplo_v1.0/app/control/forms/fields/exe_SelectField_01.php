@@ -134,7 +134,7 @@ class exe_SelectField_01 extends TPage
                                     , 150   // 10: Largura em Pixels
                                     , null  // 11 First Key in Display
                                     , null  // 12 Frist Valeu in Display, use value NULL for required
-                                    ,2
+                                    , 2
                                     );
         $fg2->enableSearch();
 
