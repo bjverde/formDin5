@@ -44,6 +44,7 @@ class ArrayHelper
 {
     const TYPE_FORMDIN = 'ARRAY_TYPE_FORMDIN';
     const TYPE_FORMDIN_STRING = 'STRING_TYPE_FORMDIN';
+    const TYPE_FORMDIN_STRING_GRID = 'STRING_TYPE_FORMDIN_GRID';
     const TYPE_PDO     = 'ARRAY_TYPE_PDO';
     const TYPE_ADIANTI = 'ARRAY_TYPE_ADIANTI';
 
@@ -145,6 +146,73 @@ class ArrayHelper
     public static function getArrayFormKey($array,$atributeName,$key)
     {
         return self::formDinGetValue($array, $atributeName, $key);
+    }
+    //--------------------------------------------------------------------------------
+    /**
+     * Mostra um exemplo do tipo de array ou string conforme a constente informada
+     *  - TYPE_FORMDIN = array no formato FormDin
+     *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE' ou 'KEY=>VALUE,KEY=>VALUE'
+     *  - TYPE_FORMDIN_STRING_GRID = string no formato '<campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>'
+     *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
+     *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
+     *
+     * @param string
+     * @return array
+     */
+    public static function showExempleByType($type)
+    {
+        $arrayResult = array();
+        switch ($type) {
+            case self::TYPE_FORMDIN:
+                $arrayFormDin  = array();
+                $arrayFormDin['ID'][] = 1010;
+                $arrayFormDin['NAME'][] = 'aaaa aaa';
+                $arrayFormDin['SIGLA'][] = 'a';
+
+                $arrayFormDin['ID'][] = 2020;
+                $arrayFormDin['NAME'][] = 'bbb bbb';
+                $arrayFormDin['SIGLA'][] = 'b';
+
+                $arrayFormDin['ID'][] = 3030;
+                $arrayFormDin['NAME'][] = 'ccc ccc';
+                $arrayFormDin['SIGLA'][] = 'c';
+
+                $arrayResult['type']='array';
+                $arrayResult['mensagem']='array no formato FormDin';
+                $arrayResult['exemple']='array';
+            break;
+            case self::TYPE_FORMDIN_STRING:
+                $arrayResult['type']='string';
+                $arrayResult['mensagem']="string no formato 'KEY=VALUE,KEY=VALUE' ou 'KEY=>VALUE,KEY=>VALUE'";
+                $arrayResult['exemple']='1=A,2=B,3=C';
+            break;
+            case self::TYPE_FORMDIN_STRING_GRID:
+                $arrayResult['type']='string';
+                $arrayResult['mensagem']="string no formato '<campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>'";
+                $arrayResult['exemple']='1=A,2=B,3=C';
+            break;
+            case self::TYPE_PDO:
+                $arrayFormDin  = array();
+                $arrayFormDin[0]['ID'] = 1010;
+                $arrayFormDin[0]['NAME'] = 'aaaa aaa';
+                $arrayFormDin[0]['SIGLA'] = 'a';
+
+                $arrayFormDin[1]['ID'] = 2020;
+                $arrayFormDin[1]['NAME'] = 'bbb bbb';
+                $arrayFormDin[1]['SIGLA'] = 'b';
+
+                $arrayFormDin[2]['ID'] = 3030;
+                $arrayFormDin[2]['NAME'] = 'ccc ccc';
+                $arrayFormDin[2]['SIGLA'] = 'c';
+
+                $arrayResult['type']='array';
+                $arrayResult['mensagem']='array no formato FormDin';
+                $arrayResult['exemple']='array';
+            break;            
+            default:
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+          }
+        return $arrayResult;
     }
     //--------------------------------------------------------------------------------
     /**
