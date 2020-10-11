@@ -44,9 +44,13 @@ class ArrayHelper
 {
     const TYPE_FORMDIN = 'ARRAY_TYPE_FORMDIN';
     const TYPE_FORMDIN_STRING = 'STRING_TYPE_FORMDIN';
-    const TYPE_FORMDIN_STRING_GRID = 'STRING_TYPE_FORMDIN_GRID';
+    const TYPE_FORMDIN_STRING_GRID = 'STRING_TYPE_FORMDIN_GRID_ACTION_PARAMETERS';
+    
     const TYPE_PDO     = 'ARRAY_TYPE_PDO';
+    const TYPE_PHP     = 'ARRAY_PHP';
+    
     const TYPE_ADIANTI = 'ARRAY_TYPE_ADIANTI';
+    const TYPE_ADIANTI_GRID = 'ARRAY_TYPE_ADIANTI_GRID_ACTION_PARAMETERS';
 
     public static function validateUndefined($array,$atributeName) 
     {
@@ -216,6 +220,55 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
+     * Determina o tipo do input conforme as constantes declarada
+     *  - TYPE_FORMDIN = string no formato 'KEY|VALUE,KEY|VALUE'
+     *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE'
+     *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
+     *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
+     *
+     * @param string|array $array
+     * @return const
+     */    
+    public static function getType($input)
+    {
+        $type = null;
+        if( ArrayHelper::isArrayNotEmpty($input) ){
+            $type = self::getArrayType($input);
+        }elseif( is_string($input) ){
+            $type = self::getStringType($input);
+        }else{
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+        }
+        return $type;
+    }
+    //--------------------------------------------------------------------------------
+    /**
+     * Determina o tipo  de entrada que pode ser um dos 4 tipos
+     *  - TYPE_FORMDIN = string no formato 'KEY|VALUE,KEY|VALUE'
+     *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE'
+     *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
+     *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
+     *
+     * @param string
+     * @return void
+     */
+    public static function getStringType($input)
+    {
+        $type = null;
+        if( is_string($input) ){
+            if( preg_match('/\|/i',$input) == true ){
+                $type = self::TYPE_FORMDIN_STRING_GRID;
+            }else if( preg_match('/=/i',$input) == true ){
+                $type = self::TYPE_FORMDIN_STRING;
+            }else{
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+            }
+        }else{
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+        }
+        return $type;
+    }
+    /**
      * Determina o tipo  de entrada que pode ser um dos 4 tipos
      *  - TYPE_FORMDIN = string no formato 'KEY|VALUE,KEY|VALUE'
      *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE'
@@ -266,7 +319,7 @@ class ArrayHelper
             $dataArray = self::convertArrayPDO2Adianti($dataArray);
         }
         return $dataArray;
-    }    
+    }
     //--------------------------------------------------------------------------------
     /**
      * Convert Array PDO Format to FormDin format

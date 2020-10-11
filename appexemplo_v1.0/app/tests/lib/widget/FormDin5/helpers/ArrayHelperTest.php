@@ -214,6 +214,39 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals($esperado, $retorno);
     }
     //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testGetStringType_FailWrongTypeNull(){
+        $this->expectException(InvalidArgumentException::class);
+        $array = null;
+        ArrayHelper::getStringType($array);
+    }
+    public function testGetStringType_FailAnyString(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 'any string';
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetStringType_FailInt(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 10;
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetStringType_FailArray(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = array(1=>'vai');
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetStringType_STRING_GRID(){
+        $input = 'KEY|VALUE,KEY|VALUE';
+        $retorno = ArrayHelper::getStringType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID, $retorno);
+    }
+    public function testGetStringType_STRING(){
+        $input = 'KEY=VALUE,KEY=VALUE';
+        $retorno = ArrayHelper::getStringType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING, $retorno);
+    }    
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
     public function testGetArrayType_FailWrongTypeNull(){
         $this->expectException(InvalidArgumentException::class);
         $array = null;
