@@ -154,7 +154,7 @@ class ArrayHelper
      *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
      *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
      *
-     * @param mix $array
+     * @param mix|array $array
      * @return void
      */
     public static function getArrayType($array)
