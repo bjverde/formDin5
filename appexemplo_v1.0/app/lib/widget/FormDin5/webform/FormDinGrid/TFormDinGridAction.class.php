@@ -124,9 +124,9 @@ class TFormDinGridAction
     }    
 
     /**
-     * Converte uma string no formato FormDin
+     * Converte uma string no formato FormDin Grid
      * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
-     * para um array Adianti ['key0'=>'{value0}','key1' => '{value1}']
+     * para um array Adianti Grid Action ['key0'=>'{value0}','key1' => '{value1}']
      *
      * @param array $arrayData
      * @return array 
@@ -142,7 +142,7 @@ class TFormDinGridAction
     }
 
     /**
-     * Converte uma string no formato FormDin
+     * Converte uma string no formato FormDin Grid
      * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
      * para um array PHP (key0=>value0,key1=>value1)
      *
@@ -161,7 +161,7 @@ class TFormDinGridAction
 
     /**
      * Converte um array comum PHP (key0=>value0,key1=>value1) para um
-     * string no formato FormDin Grid Actiion Parameters 
+     * string no formato FormDin Grid Action Parameters 
      * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
      *
      * @param array $arrayData
@@ -178,7 +178,7 @@ class TFormDinGridAction
 
     /**
      * Converte um array comum PHP (key0=>value0,key1=>value1) para um
-     * array no formato Adianti Grid Actiion Parameters 
+     * array no formato Adianti Grid Action Parameters 
      * ['key0'=>'{value0}','key1' => '{value1}']
      *
      * @param array $arrayData
