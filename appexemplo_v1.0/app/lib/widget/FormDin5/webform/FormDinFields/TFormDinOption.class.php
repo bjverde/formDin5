@@ -91,10 +91,10 @@ class TFormDinOption  extends TFormDinGenericField
 	 * @param integer $intWidth        - 6:
 	 * @param integer $intHeight       - 7:
 	 * @param integer $intPaddingItems - 8: numero inteiro para definir o espaço vertical entre as colunas de opções
-	 * @param boolean $boolMultiSelect - 9:
+	 * @param boolean $boolMultiSelect - 9: Default FALSE = SingleSelect, TRUE = MultiSelect
 	 * @param string $strInputType     -10: define o tipo de input a ser gerado. Ex: select, radio ou check
-	 * @param string $strKeyField      -11: nome da coluna que será utilizada para preencher os valores das opções
-	 * @param string $strDisplayField  -12:
+	 * @param string $strKeyField      -11: Nome da coluna que será utilizada para preencher os valores das opções
+	 * @param string $strDisplayField  -12: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
 	 * @param boolean $boolNowrapText  -13:
 	 * @param string $strDataColumns   -14: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
 	 * @return TOption
