@@ -354,9 +354,17 @@ class ArrayHelperTest extends TestCase
         $esperado['S']='SIM';
         $esperado['N']='Não';
         $esperado['T']='Talvez';
-        $retorno = ArrayHelper::convertString2Array($esperado);
+        $retorno = ArrayHelper::convertString2Array($string);
         $this->assertEquals($esperado, $retorno);
-    }    
+    }
+    public function testConvertString2Array_StringSetaFormDin() {
+        $string = 'S=>SIM,N=>Não,T=>Talvez';
+        $esperado['S']='SIM';
+        $esperado['N']='Não';
+        $esperado['T']='Talvez';
+        $retorno = ArrayHelper::convertString2Array($string);
+        $this->assertEquals($esperado, $retorno);
+    }     
 
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
