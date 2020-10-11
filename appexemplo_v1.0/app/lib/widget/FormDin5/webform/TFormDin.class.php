@@ -1057,7 +1057,7 @@ class TFormDin
      * @param string  $strName        - 1: ID do campo
      * @param string  $strLabel       - 2: Label do campo
      * @param boolean $boolRequired   - 3: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
-     * @param mixed   $mixOptions     - 4: Array dos valores. No formato PHP "id=>value", FormDin ou Adianti
+     * @param mixed   $mixOptions     - 4: String "S=SIM,N=NAO,..." ou Array dos valores. Nos formatos: PHP "id=>value", FormDin ou Adianti
      * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param mixed   $mixValue       - 7: Valor DEFAULT, informe o ID do array
