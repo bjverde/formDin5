@@ -400,7 +400,7 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
-     * Convert Array FormDin,PDO ou Adianti para Adianti Format
+     * Convert Array FormDin,PDO ou Adianti para Adianti Format (TYPE_ADIANTI)
      *
      * @param  array $array        - 1: Array
      * @param  boolean $changeCase - 2: Altera String Case. DEFAULT = FALSE não vai alterar.
@@ -419,9 +419,10 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
-     * Convert Array PDO Format to FormDin format
+     * Convert Array PDO Format (TYPE_PDO) to FormDin format (TYPE_FORMDIN)
      *
-     * @param  array $array
+     * @param  array $array      - 01:
+     * @param  boolean $upperCase- 02: DEFAULT = TRUE = UpperCase. False = LowerCase
      * @return array
      */
     public static function convertArrayPdo2FormDin($dataArray,$upperCase = true) 
@@ -442,7 +443,7 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
-     * Convert Array FormDin Format to PDO format
+     * Convert Array FormDin Format (TYPE_FORMDIN) to PDO format(TYPE_PDO)
      *
      * @param  array $array
      * @return array
@@ -454,7 +455,7 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
-     * Convert Array FormDin Format to PDO format
+     * Convert Array FormDin Format (TYPE_FORMDIN) to PDO format (TYPE_PDO)
      *
      * @param  array $array        - 1: Array FormDin4 
      * @param  boolean $changeCase - 2: Altera String Case. DEFAULT = FALSE não vai alterar.
