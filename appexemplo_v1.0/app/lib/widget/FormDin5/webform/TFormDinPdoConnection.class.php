@@ -296,9 +296,9 @@ class TFormDinPdoConnection
 
     /**
      * @codeCoverageIgnore
-     *
-     * @param TCriteria $criteria
-     * @param string $repositoryName
+     * Faz um Select usando o TCriteria
+     * @param TCriteria $criteria    - 01: Obj TCriteria
+     * @param string $repositoryName - 02: nome de classe
      * @return array Adianti
      */    
     public function selectByTCriteria(TCriteria $criteria, $repositoryName)
@@ -322,9 +322,9 @@ class TFormDinPdoConnection
 
     /**
      * @codeCoverageIgnore
-     *
-     * @param TCriteria $criteria
-     * @param string $repositoryName
+     * Faz um Select Count usando o TCriteria
+     * @param TCriteria $criteria    - 01: Obj TCriteria
+     * @param string $repositoryName - 02: nome de classe
      * @return array Adianti
      */
     public function selectCountByTCriteria(TCriteria $criteria, $repositoryName)
