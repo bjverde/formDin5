@@ -197,7 +197,8 @@ class ArrayHelper
      * @throws InvalidArgumentException
      * @return NULL|array
      */
-    public static function formDinDeleteRowByKeyIndex($array,$keyIndex){
+    public static function formDinDeleteRowByKeyIndex($array,$keyIndex)
+    {
         ValidateHelper::isArray($array, __METHOD__, __LINE__);
         $attributeName = array_key_first($array);
         return self::formDinDeleteRowByColumnNameAndKeyIndex($array, $attributeName, $keyIndex);
@@ -244,13 +245,17 @@ class ArrayHelper
         }
         return $result;
     }
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------    
     /**
      * Mostra um exemplo do tipo de array ou string conforme a constente informada
      *  - TYPE_FORMDIN = array no formato FormDin
      *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE' ou 'KEY=>VALUE,KEY=>VALUE'
      *  - TYPE_FORMDIN_STRING_GRID_ACTION = string no formato '<campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>'
-     *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
+     * 
+     *  - TYPE_FORMDIN = array no formato FormDin [NAME_COLUM][KEY_NUM][VALUE]
+     *  - TYPE_PDO = array no formato '[KEY_NUM]=ARRAY,[KEY_NUM]=ARRAY'
      *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
      *
      * @param string
@@ -314,11 +319,14 @@ class ArrayHelper
     //--------------------------------------------------------------------------------
     /**
      * Determina o tipo do input conforme as constantes declarada
-     *  - TYPE_FORMDIN = string no formato 'KEY|VALUE,KEY|VALUE'
+     *  - TYPE_FORMDIN_STRING_GRID = string no formato 'KEY|VALUE,KEY|VALUE'
      *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE'
-     *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
+     * 
+     *  - TYPE_FORMDIN = array no formato FormDin [NAME_COLUM][KEY_NUM][VALUE]
+     *  - TYPE_PDO = array no formato '[KEY_NUM]=ARRAY,[KEY_NUM]=ARRAY'
      *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
      *
+     * user ArrayHelper::showExempleByType para ver exemplos
      * @param string|array $array
      * @return const
      */    
