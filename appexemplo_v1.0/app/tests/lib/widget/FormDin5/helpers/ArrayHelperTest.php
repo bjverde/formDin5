@@ -338,6 +338,48 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals($esperado, $retorno);
     }
     //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testArrayType_FailString(){
+        $this->expectException(InvalidArgumentException::class);
+        $array = 'any string';
+
+        ArrayHelper::arrayTypIsAdiantiGrid($array);
+    }
+    public function testArrayType_FormDin(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTable();
+
+        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }
+    public function testArrayType_FalsePDO(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaPDO();
+
+        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }    
+    public function testArrayType_FalseAdianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaAdianti();
+
+        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }
+    public function testArrayType_FalseArrayPHP(){
+        $array = ['code'=>'code','nome'=>'nome'];
+
+        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }
+    public function testArrayType_True(){
+        $array = ['code'=>'{code}','nome'=>'{nome}'];
+        
+        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $this->assertEquals(true, $retorno);
+    }    
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
     public function testConvertArray2Adianti_FormDin2Adianti(){
         $mock = new mockFormDinArray();
         $array = $mock->generateTablePessoaAdianti();

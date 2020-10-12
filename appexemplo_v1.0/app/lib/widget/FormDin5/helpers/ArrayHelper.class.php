@@ -300,6 +300,28 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
+     * Recebe um Array e deterimina se ou não um array do tipo
+     * TYPE_ADIANTI_GRID = array no formato Adianti Grid Action Parameters 
+     * ['key0'=>'{value0}','key1' => '{value1}']
+     * @param array $arrayData
+     * @return bolean
+     */
+    public static function arrayTypIsAdiantiGrid($arrayData)
+    {
+        ValidateHelper::isArray($arrayData, __METHOD__, __LINE__,false);
+        $result = false;
+        $lastElement = end($arrayData);
+        if( is_string($lastElement) ){
+            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
+            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
+            if( ($fristChar=='{') && ($lastChar=='}') ){
+                $result = true;
+            }
+        }
+        return $result;
+    }
+    //--------------------------------------------------------------------------------
+    /**
      * Convert Array FormDin,PDO ou Adianti para Adianti Format
      *
      * @param  array $array        - 1: Array
