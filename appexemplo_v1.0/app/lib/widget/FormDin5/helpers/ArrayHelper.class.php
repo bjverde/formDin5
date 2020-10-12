@@ -44,13 +44,13 @@ class ArrayHelper
 {
     const TYPE_FORMDIN = 'ARRAY_TYPE_FORMDIN';
     const TYPE_FORMDIN_STRING = 'STRING_TYPE_FORMDIN';
-    const TYPE_FORMDIN_STRING_GRID = 'STRING_TYPE_FORMDIN_GRID_ACTION_PARAMETERS';
+    const TYPE_FORMDIN_STRING_GRID_ACTION = 'STRING_TYPE_FORMDIN_GRID_ACTION_PARAMETERS';
     
     const TYPE_PDO     = 'ARRAY_TYPE_PDO';
     const TYPE_PHP     = 'ARRAY_PHP';
     
     const TYPE_ADIANTI = 'ARRAY_TYPE_ADIANTI';
-    const TYPE_ADIANTI_GRID = 'ARRAY_TYPE_ADIANTI_GRID_ACTION_PARAMETERS';
+    const TYPE_ADIANTI_GRID_ACTION = 'ARRAY_TYPE_ADIANTI_GRID_ACTION_PARAMETERS';
 
     public static function validateUndefined($array,$atributeName) 
     {
@@ -156,7 +156,7 @@ class ArrayHelper
      * Mostra um exemplo do tipo de array ou string conforme a constente informada
      *  - TYPE_FORMDIN = array no formato FormDin
      *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE' ou 'KEY=>VALUE,KEY=>VALUE'
-     *  - TYPE_FORMDIN_STRING_GRID = string no formato '<campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>'
+     *  - TYPE_FORMDIN_STRING_GRID_ACTION = string no formato '<campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>'
      *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
      *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
      *
@@ -190,7 +190,7 @@ class ArrayHelper
                 $arrayResult['mensagem']="string no formato 'KEY=VALUE,KEY=VALUE' ou 'KEY=>VALUE,KEY=>VALUE'";
                 $arrayResult['exemple']='1=A,2=B,3=C';
             break;
-            case self::TYPE_FORMDIN_STRING_GRID:
+            case self::TYPE_FORMDIN_STRING_GRID_ACTION:
                 $arrayResult['type']='string';
                 $arrayResult['mensagem']="string no formato '<campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>'";
                 $arrayResult['exemple']='1=A,2=B,3=C';
@@ -255,7 +255,7 @@ class ArrayHelper
         $type = null;
         if( is_string($input) ){
             if( preg_match('/\|/i',$input) == true ){
-                $type = self::TYPE_FORMDIN_STRING_GRID;
+                $type = self::TYPE_FORMDIN_STRING_GRID_ACTION;
             }else if( preg_match('/=/i',$input) == true ){
                 $type = self::TYPE_FORMDIN_STRING;
             }else{
@@ -301,7 +301,7 @@ class ArrayHelper
     //--------------------------------------------------------------------------------
     /**
      * Recebe um Array e deterimina se ou não um array do tipo
-     * TYPE_ADIANTI_GRID = array no formato Adianti Grid Action Parameters 
+     * TYPE_ADIANTI_GRID_ACTION = array no formato Adianti Grid Action Parameters 
      * ['key0'=>'{value0}','key1' => '{value1}']
      * @param array $arrayData
      * @return bolean
@@ -320,6 +320,33 @@ class ArrayHelper
         }
         return $result;
     }
+    //--------------------------------------------------------------------------------    
+    /**
+     * Detecta o tipo de array de para o MixUpdateFields e retorna o tipo
+     * conforme as constantes de classe
+     * @param array $arrayData
+     * @return mix
+     */
+    public static function getTypeArrayMixUpdateFields($arrayData){
+        $result = null;
+        if( empty($arrayData) ){
+            $result = null;
+        }elseif( ArrayHelper::isArrayNotEmpty($arrayData) ){
+            $lastElement = end($arrayData);;
+            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
+            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
+            if( ($fristChar=='{') && ($lastChar=='}') ){
+                $result = self::TYPE_ADIANTI_GRID_ACTION;
+            }else{
+                $result = self::TYPE_PHP;
+            }
+        }elseif( is_string($arrayData) && (strpos( $arrayData,'|')!== false) ){
+            $result = self::TYPE_FORMDIN_STRING_GRID_ACTION;
+        }else{
+            $result = false;
+        }
+        return $result;
+    }    
     //--------------------------------------------------------------------------------
     /**
      * Convert Array FormDin,PDO ou Adianti para Adianti Format

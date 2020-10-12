@@ -233,7 +233,7 @@ class ArrayHelperTest extends TestCase
     public function testGetType_STRING_GRID(){
         $input = 'KEY|VALUE,KEY|VALUE';
         $retorno = ArrayHelper::getType($input);
-        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID, $retorno);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION, $retorno);
     }
     public function testGetType_STRING(){
         $input = 'KEY=VALUE,KEY=VALUE';
@@ -283,7 +283,7 @@ class ArrayHelperTest extends TestCase
     public function testGetStringType_STRING_GRID(){
         $input = 'KEY|VALUE,KEY|VALUE';
         $retorno = ArrayHelper::getStringType($input);
-        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID, $retorno);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION, $retorno);
     }
     public function testGetStringType_STRING(){
         $input = 'KEY=VALUE,KEY=VALUE';

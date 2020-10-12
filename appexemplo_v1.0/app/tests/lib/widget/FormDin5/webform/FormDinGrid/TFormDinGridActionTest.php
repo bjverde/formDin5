@@ -132,21 +132,21 @@ class TFormDinGridActionTest extends TestCase
     {
         $expected =  ['code'=>'code','nome'=>'nome'];
         $arrayData = 'code|code,nome|nome';
-        $result = $this->classTest->convertArray2OutputFormat($arrayData,TFormDinGridAction::TYPE_PHP);
+        $result = $this->classTest->convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
         $this->assertEquals($expected, $result);
     }
     public function testConvertArray2OutputFormat_inputPHPOutPutPHP()
     {
         $expected  = ['code'=>'code','nome'=>'nome'];
         $arrayData = ['code'=>'code','nome'=>'nome'];
-        $result = $this->classTest->convertArray2OutputFormat($arrayData,TFormDinGridAction::TYPE_PHP);
+        $result = $this->classTest->convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
         $this->assertEquals($expected, $result);
     }
     public function testConvertArray2OutputFormat_inputAdianitOutPutPHP()
     {
         $expected  = ['code'=>'code','nome'=>'nome'];
         $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
-        $result = $this->classTest->convertArray2OutputFormat($arrayData,TFormDinGridAction::TYPE_PHP);
+        $result = $this->classTest->convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
         $this->assertEquals($expected, $result);
     }
 
@@ -154,21 +154,21 @@ class TFormDinGridActionTest extends TestCase
     {
         $expected =  'code|code,nome|nome';
         $arrayData = 'code|code,nome|nome';
-        $result = $this->classTest->convertArray2OutputFormat($arrayData,TFormDinGridAction::TYPE_FORMDIN);
+        $result = $this->classTest->convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
         $this->assertEquals($expected, $result);
     }
     public function testConvertArray2OutputFormat_inputPHPOutPutFormDin()
     {
         $expected  = 'code|code,nome|nome';
         $arrayData = ['code'=>'code','nome'=>'nome'];
-        $result = $this->classTest->convertArray2OutputFormat($arrayData,TFormDinGridAction::TYPE_FORMDIN);
+        $result = $this->classTest->convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
         $this->assertEquals($expected, $result);
     }
     public function testConvertArray2OutputFormat_inputAdianitOutPutFormDin()
     {
         $expected  = 'code|code,nome|nome';
         $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
-        $result = $this->classTest->convertArray2OutputFormat($arrayData,TFormDinGridAction::TYPE_FORMDIN);
+        $result = $this->classTest->convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
         $this->assertEquals($expected, $result);
     }
 
@@ -190,20 +190,20 @@ class TFormDinGridActionTest extends TestCase
     {
         $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
         $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(TFormDinGridAction::TYPE_ADIANTI, $result);
+        $this->assertEquals(ArrayHelper::TYPE_ADIANTI_GRID_ACTION, $result);
     }
 
     public function testGetTypeArrayMixUpdateFields_PHP()
     {
         $arrayData = ['code'=>'code','nome'=>'nome'];
         $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(TFormDinGridAction::TYPE_PHP, $result);
+        $this->assertEquals(ArrayHelper::TYPE_PHP, $result);
     }
 
     public function testGetTypeArrayMixUpdateFields_FormDin()
     {
         $arrayData = 'code|code,nome|nome';
         $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(TFormDinGridAction::TYPE_FORMDIN, $result);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION, $result);
     }
 }

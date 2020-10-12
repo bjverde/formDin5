@@ -198,29 +198,29 @@ class TFormDinGridAction
      * @param const $outputFormat
      * @return array
      */
-    public static function convertArray2OutputFormat($arrayData,$outputFormat = TFormDinGridAction::TYPE_ADIANTI){
+    public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
         $inputFormt = self::getTypeArrayMixUpdateFields($arrayData);
         if($inputFormt===false){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG);
         }
         $result = $arrayData;
         
-        if($inputFormt == TFormDinGridAction::TYPE_PHP){
-            if($outputFormat == TFormDinGridAction::TYPE_FORMDIN){
+        if($inputFormt == ArrayHelper::TYPE_PHP){
+            if($outputFormat == ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION){
                 $result = self::convertArrayParametersPHP2FormDin($arrayData);
-            }elseif($outputFormat == TFormDinGridAction::TYPE_ADIANTI){
+            }elseif($outputFormat == ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
                 $result = self::convertArrayParametersPHP2Adianit($arrayData);
             }
-        }elseif($inputFormt == TFormDinGridAction::TYPE_FORMDIN){
-            if($outputFormat == TFormDinGridAction::TYPE_PHP){
+        }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION){
+            if($outputFormat == ArrayHelper::TYPE_PHP){
                 $result = self::convertArrayParametersFormDin2PHP($arrayData);
-            }elseif($outputFormat == TFormDinGridAction::TYPE_ADIANTI){
+            }elseif($outputFormat == ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
                 $result = self::convertArrayParametersFormDin2Adianti($arrayData);
             }
         }else{
-            if($outputFormat == TFormDinGridAction::TYPE_PHP){
+            if($outputFormat == ArrayHelper::TYPE_PHP){
                 $result = self::convertArrayParametersAdianti2PHP($arrayData);
-            }elseif($outputFormat == TFormDinGridAction::TYPE_FORMDIN){
+            }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION){
                 $result = self::convertArrayParametersAdianti2FormDin($arrayData);
             }
         }
@@ -233,24 +233,7 @@ class TFormDinGridAction
      * @param array $arrayData
      * @return mix
      */
-    public static function getTypeArrayMixUpdateFields($arrayData){
-        $result = null;
-        if( empty($arrayData) ){
-            $result = null;
-        }elseif( ArrayHelper::isArrayNotEmpty($arrayData) ){
-            $lastElement = end($arrayData);;
-            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
-            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
-            if( ($fristChar=='{') && ($lastChar=='}') ){
-                $result = self::TYPE_ADIANTI;
-            }else{
-                $result = self::TYPE_PHP;
-            }
-        }elseif( is_string($arrayData) && (strpos( $arrayData,'|')!== false) ){
-            $result = self::TYPE_FORMDIN;
-        }else{
-            $result = false;
-        }
-        return $result;
+    public static function getTypeArrayMixUpdateFields($arrayData){        
+        return ArrayHelper::getTypeArrayMixUpdateFields($arrayData);
     }
 }
