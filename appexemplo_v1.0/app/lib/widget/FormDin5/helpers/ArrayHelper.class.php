@@ -401,28 +401,6 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     /**
-     * Recebe um Array e deterimina se ou não um array do tipo
-     * TYPE_ADIANTI_GRID_ACTION = array no formato Adianti Grid Action Parameters 
-     * ['key0'=>'{value0}','key1' => '{value1}']
-     * @param array $arrayData
-     * @return bolean
-     */
-    public static function arrayTypIsAdiantiGrid($arrayData)
-    {
-        ValidateHelper::isArray($arrayData, __METHOD__, __LINE__,false);
-        $result = false;
-        $lastElement = end($arrayData);
-        if( is_string($lastElement) ){
-            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
-            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
-            if( ($fristChar=='{') && ($lastChar=='}') ){
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    //--------------------------------------------------------------------------------
-    /**
      * Convert Array FormDin,PDO ou Adianti para Adianti Format
      *
      * @param  array $array        - 1: Array
@@ -656,6 +634,27 @@ class ArrayHelper
         }
         return $arrayData;
     }
+    //--------------------------------------------------------------------------------
+    /**
+     * Recebe um Array e deterimina se ou não um array do tipo
+     * TYPE_ADIANTI_GRID_ACTION = array no formato Adianti Grid Action Parameters 
+     * ['key0'=>'{value0}','key1' => '{value1}']
+     * @param array $arrayData
+     * @return bolean
+     */
+    public static function arrayTypeIsAdiantiGrid( array $arrayData)
+    {
+        $result = false;
+        $lastElement = end($arrayData);
+        if( is_string($lastElement) ){
+            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
+            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
+            if( ($fristChar=='{') && ($lastChar=='}') ){
+                $result = true;
+            }
+        }
+        return $result;
+    }    
     //--------------------------------------------------------------------------------    
     /**
      * Detecta o tipo de array de para o MixUpdateFields e retorna o tipo
@@ -668,10 +667,7 @@ class ArrayHelper
         if( empty($arrayData) ){
             $result = null;
         }elseif( ArrayHelper::isArrayNotEmpty($arrayData) ){
-            $lastElement = end($arrayData);;
-            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
-            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
-            if( ($fristChar=='{') && ($lastChar=='}') ){
+            if( ArrayHelper::arrayTypeIsAdiantiGrid($arrayData) ){
                 $result = self::TYPE_ADIANTI_GRID_ACTION;
             }else{
                 $result = self::TYPE_PHP;

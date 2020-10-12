@@ -340,42 +340,48 @@ class ArrayHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     public function testArrayType_FailString(){
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $array = 'any string';
 
-        ArrayHelper::arrayTypIsAdiantiGrid($array);
+        ArrayHelper::arrayTypeIsAdiantiGrid($array);
     }
+    public function testArrayType_FailObj(){
+        $this->expectException(TypeError::class);
+        $array = new stdClass();
+
+        ArrayHelper::arrayTypeIsAdiantiGrid($array);
+    }    
     public function testArrayType_FormDin(){
         $mock = new mockFormDinArray();
         $array = $mock->generateTable();
 
-        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
         $this->assertEquals(false, $retorno);
     }
     public function testArrayType_FalsePDO(){
         $mock = new mockFormDinArray();
         $array = $mock->generateTablePessoaPDO();
 
-        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
         $this->assertEquals(false, $retorno);
     }    
     public function testArrayType_FalseAdianti(){
         $mock = new mockFormDinArray();
         $array = $mock->generateTablePessoaAdianti();
 
-        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
         $this->assertEquals(false, $retorno);
     }
     public function testArrayType_FalseArrayPHP(){
         $array = ['code'=>'code','nome'=>'nome'];
 
-        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
         $this->assertEquals(false, $retorno);
     }
     public function testArrayType_True(){
         $array = ['code'=>'{code}','nome'=>'{nome}'];
         
-        $retorno = ArrayHelper::arrayTypIsAdiantiGrid($array);
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
         $this->assertEquals(true, $retorno);
     }    
     //-----------------------------------------------------------------------------------
