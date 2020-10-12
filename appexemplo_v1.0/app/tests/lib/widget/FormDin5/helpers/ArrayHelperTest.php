@@ -215,6 +215,51 @@ class ArrayHelperTest extends TestCase
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
+    public function testGetType_FailWrongTypeNull(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = null;
+        ArrayHelper::getType($input);
+    }
+    public function testGetType_FailAnyString(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 'any string';
+        ArrayHelper::getType($input);
+    }
+    public function testGetType_FailInt(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 10;
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetType_STRING_GRID(){
+        $input = 'KEY|VALUE,KEY|VALUE';
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID, $retorno);
+    }
+    public function testGetType_STRING(){
+        $input = 'KEY=VALUE,KEY=VALUE';
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING, $retorno);
+    }
+    public function testGetType_ADIANTI(){
+        $mock = new mockFormDinArray();
+        $input = $mock->generateTablePessoaAdianti();;
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_ADIANTI, $retorno);
+    }
+    public function testGetType_PDO(){
+        $mock = new mockFormDinArray();
+        $input = $mock->generateTablePessoaPDO();;
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_PDO, $retorno);
+    }
+    public function testGetType_FormDin(){
+        $mock = new mockFormDinArray();
+        $input = $mock->generateTable();
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN, $retorno);
+    }    
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
     public function testGetStringType_FailWrongTypeNull(){
         $this->expectException(InvalidArgumentException::class);
         $array = null;

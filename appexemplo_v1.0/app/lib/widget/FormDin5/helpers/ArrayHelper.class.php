@@ -244,10 +244,8 @@ class ArrayHelper
     //--------------------------------------------------------------------------------
     /**
      * Determina o tipo  de entrada que pode ser um dos 4 tipos
-     *  - TYPE_FORMDIN = string no formato 'KEY|VALUE,KEY|VALUE'
+     *  - TYPE_FORMDIN_STRING_GRID = string no formato 'KEY|VALUE,KEY|VALUE'
      *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE'
-     *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
-     *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
      *
      * @param string
      * @return void
@@ -271,7 +269,6 @@ class ArrayHelper
     /**
      * Determina o tipo  de entrada que pode ser um dos 4 tipos
      *  - TYPE_FORMDIN = string no formato 'KEY|VALUE,KEY|VALUE'
-     *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE'
      *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
      *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
      *
