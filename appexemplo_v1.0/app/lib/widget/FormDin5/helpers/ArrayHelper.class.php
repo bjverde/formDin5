@@ -376,9 +376,8 @@ class ArrayHelper
      * @param mix|array $array
      * @return void
      */
-    public static function getArrayType($array)
+    public static function getArrayType(array $array)
     {
-        ValidateHelper::isArray($array, __METHOD__, __LINE__,false);
         $type = self::TYPE_ADIANTI;
         $qtd = CountHelper::count($array);
         if ( $qtd > 0 ){
@@ -554,7 +553,7 @@ class ArrayHelper
     //-------------------------------------------------------------------------
     private static function convertArrayParametersAdianti2FormDin($arrayData){
         $arrayData = self::convertArrayParametersAdianti2PHP($arrayData);
-        $arrayData = self::convertArrayParametersPHP2FormDin($arrayData);
+        $arrayData = self::convertArrayGridActionParametersPHP2FormDin($arrayData);
         return $arrayData;
     }
 
@@ -593,7 +592,7 @@ class ArrayHelper
      * @param array $arrayData
      * @return array 
      */
-    private static function convertArrayParametersFormDin2PHP($arrayData){
+    private static function convertArrayGridActionParametersFormDin2PHP($arrayData){
         $result = array();
         $listFields = explode( ',', $arrayData );
         foreach( $listFields as $k => $field ) {
@@ -611,7 +610,7 @@ class ArrayHelper
      * @param array $arrayData
      * @return array 
      */
-    private static function convertArrayParametersPHP2FormDin($arrayData){
+    private static function convertArrayGridActionParametersPHP2FormDin($arrayData){
         $result = null;
         foreach( $arrayData as $k => $v ) {
             $result = $result.','.$k.'|'.$v;
@@ -628,7 +627,7 @@ class ArrayHelper
      * @param array $arrayData
      * @return array 
      */
-    private static function convertArrayParametersPHP2Adianit($arrayData){
+    private static function convertArrayGridActionParametersPHP2Adianit($arrayData){
         foreach( $arrayData as $k => $v ) {
             $arrayData[$k] = '{'.$v.'}';
         }
@@ -696,13 +695,13 @@ class ArrayHelper
         
         if($inputFormt == ArrayHelper::TYPE_PHP){
             if($outputFormat == ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION){
-                $result = self::convertArrayParametersPHP2FormDin($arrayData);
+                $result = self::convertArrayGridActionParametersPHP2FormDin($arrayData);
             }elseif($outputFormat == ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
-                $result = self::convertArrayParametersPHP2Adianit($arrayData);
+                $result = self::convertArrayGridActionParametersPHP2Adianit($arrayData);
             }
         }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION){
             if($outputFormat == ArrayHelper::TYPE_PHP){
-                $result = self::convertArrayParametersFormDin2PHP($arrayData);
+                $result = self::convertArrayGridActionParametersFormDin2PHP($arrayData);
             }elseif($outputFormat == ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
                 $result = self::convertArrayParametersFormDin2Adianti($arrayData);
             }

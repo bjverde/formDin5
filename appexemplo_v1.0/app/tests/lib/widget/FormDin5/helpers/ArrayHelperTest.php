@@ -293,17 +293,17 @@ class ArrayHelperTest extends TestCase
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     public function testGetArrayType_FailWrongTypeNull(){
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $array = null;
         ArrayHelper::getArrayType($array);
     }
     public function testGetArrayType_FailWrongTypeString(){
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $array = 'xxx';
         ArrayHelper::getArrayType($array);
     }
     public function testGetArrayType_FailWrongTypeObjetc(){
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $array = new stdClass();
         ArrayHelper::getArrayType($array);
     }
