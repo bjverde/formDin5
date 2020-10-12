@@ -62,7 +62,15 @@ class TFormDinPdoConnection
     private $pass;
     private $type;
 
-    public function __construct($database = null,$fech = null,$case = null)
+    /**
+     * Facilitardor de conexão com o banco de dados
+     *
+     * @param string $database : nome da conexão
+     * @param const $outputMode: PDO, FormDin, Adianti
+     * @param const $fech
+     * @param const $case use PDO case. DEFAULT = CASE_NATURAL.  https://www.php.net/manual/pt_BR/pdo.prepare.php
+     */
+    public function __construct($database = null,$outputMode = null,$fech = null,$case = null)
     {
         if(!empty($database)){
             $this->setDatabase($database);
@@ -98,7 +106,7 @@ class TFormDinPdoConnection
     public function setCase($case)
     {
         if(empty($case)){
-            $case = PDO::CASE_UPPER;
+            $case = PDO::CASE_NATURAL;
         }
         $this->case = $case;
     }
