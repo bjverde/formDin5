@@ -137,7 +137,6 @@ class ArrayHelper
         }
         return is_null($array[$atributeName])?array():$array[$atributeName];
     }
-    
     /***
      * @deprecated chante to formDinGetValue
      * Evita erro de notice. Recebe um array FormDin, um atributo e a chave.
@@ -152,6 +151,100 @@ class ArrayHelper
         return self::formDinGetValue($array, $atributeName, $key);
     }
     //--------------------------------------------------------------------------------
+    /**
+     * @deprecated chante to ValidateHelper::isArray
+     * Validade is array and not empty
+     * @param integer $id
+     * @param string $method
+     * @param string $line
+     * @throws InvalidArgumentException
+     * @return void
+     */
+    public static function validateIsArray($array,$method,$line)
+    {
+        ValidateHelper::isArray($array, $method, $line);
+    }
+    //--------------------------------------------------------------------------------
+    /***
+     * Evita erro de notice. Recebe um array FormDin, um atributo e a chave.
+     * Verifica se o atributo e achave existem e devolve o valor
+     * @param array $array
+     * @param string $atributeName
+     * @param int $key
+     * @return NULL|mixed|array
+     */
+    public static function formDinGetValue($array,$atributeName,$key)
+    {
+        ValidateHelper::isArray($array, __METHOD__, __LINE__);
+        $value = null;
+        if( self::has($atributeName, $array) ) {
+            $arrayResult = self::getArray($array, $atributeName);
+            $value = self::get($arrayResult, $key);
+        }
+        return $value;
+    }    
+    
+    /**
+     * Remove todos os elementos de uma linha de um array FormDin
+     * Recebe um array formDin e o numero da linha que será removida.
+     * Retonar um novo array com:
+     *         $result['result'] = true se deletou ou false se não foi possivel deletar
+     *         $result['formarray'] = array com o resultado
+     *         $result['message'] = motivo da não deleção
+     * @param array $array
+     * @param string $atributeName
+     * @param int $keyIndex
+     * @throws InvalidArgumentException
+     * @return NULL|array
+     */
+    public static function formDinDeleteRowByKeyIndex($array,$keyIndex){
+        ValidateHelper::isArray($array, __METHOD__, __LINE__);
+        $attributeName = array_key_first($array);
+        return self::formDinDeleteRowByColumnNameAndKeyIndex($array, $attributeName, $keyIndex);
+    }    
+    
+    /**
+     * Remove todos os elementos de uma linha de um array FormDin
+     * Recebe um array formDin o nome de uma coluna e o numero da linha que será removida.
+     * Retonar um novo array com:
+     *         $result['result'] = true se deletou ou false se não foi possivel deletar
+     *         $result['formarray'] = array com o resultado
+     *         $result['message'] = motivo da não deleção
+     * @param array $array
+     * @param string $atributeName
+     * @param int $keyIndex
+     * @throws InvalidArgumentException
+     * @return NULL|array
+     */
+    public static function formDinDeleteRowByColumnNameAndKeyIndex($array,$attributeName,$keyIndex)
+    {
+        ValidateHelper::isArray($array, __METHOD__, __LINE__);
+        
+        $result = array();
+        $result['result'] = false;
+        $result['formarray'] = $array;
+        
+        if( !self::has($attributeName, $array) ) {
+            $result['message'] = TFormDinMessage::ARRAY_ATTRIBUTE_NOT_EXIST;
+        }else{
+            if( !self::formDinGetValue($array, $attributeName, $keyIndex) ){
+                $result['message'] = TFormDinMessage::ARRAY_KEY_NOT_EXIST;
+            }else{
+                $arrayResult = array();
+                foreach ($array as $attribute => $arrayAttribute) {
+                    foreach ($arrayAttribute as $key => $value) {
+                        if($keyIndex != $key ){
+                            $arrayResult[$attribute][]=$value;
+                        }
+                    }
+                }
+                $result['result']    = true;
+                $result['formarray'] = $arrayResult;
+            }
+        }
+        return $result;
+    }
+    //--------------------------------------------------------------------------------    
     /**
      * Mostra um exemplo do tipo de array ou string conforme a constente informada
      *  - TYPE_FORMDIN = array no formato FormDin
@@ -498,104 +591,7 @@ class ArrayHelper
             }
         }
         return $result;
-    }    
-    //--------------------------------------------------------------------------------
-    /**
-     * @deprecated chante to ValidateHelper::isArray
-     * Validade is array and not empty
-     * @param integer $id
-     * @param string $method
-     * @param string $line
-     * @throws InvalidArgumentException
-     * @return void
-     */
-    public static function validateIsArray($array,$method,$line)
-    {
-        ValidateHelper::isArray($array, $method, $line);
     }
-    //--------------------------------------------------------------------------------
-    /***
-     * Evita erro de notice. Recebe um array FormDin, um atributo e a chave.
-     * Verifica se o atributo e achave existem e devolve o valor
-     * @param array $array
-     * @param string $atributeName
-     * @param int $key
-     * @return NULL|mixed|array
-     */
-    public static function formDinGetValue($array,$atributeName,$key)
-    {
-        ValidateHelper::isArray($array, __METHOD__, __LINE__);
-        $value = null;
-        if( self::has($atributeName, $array) ) {
-            $arrayResult = self::getArray($array, $atributeName);
-            $value = self::get($arrayResult, $key);
-        }
-        return $value;
-    }
-    
-    
-    /**
-     * Remove todos os elementos de uma linha de um array FormDin
-     * Recebe um array formDin e o numero da linha que será removida.
-     * Retonar um novo array com:
-     *         $result['result'] = true se deletou ou false se não foi possivel deletar
-     *         $result['formarray'] = array com o resultado
-     *         $result['message'] = motivo da não deleção
-     * @param array $array
-     * @param string $atributeName
-     * @param int $keyIndex
-     * @throws InvalidArgumentException
-     * @return NULL|array
-     */
-    public static function formDinDeleteRowByKeyIndex($array,$keyIndex){
-        ValidateHelper::isArray($array, __METHOD__, __LINE__);
-        $attributeName = array_key_first($array);
-        return self::formDinDeleteRowByColumnNameAndKeyIndex($array, $attributeName, $keyIndex);
-    }    
-    
-    /**
-     * Remove todos os elementos de uma linha de um array FormDin
-     * Recebe um array formDin o nome de uma coluna e o numero da linha que será removida.
-     * Retonar um novo array com:
-     *         $result['result'] = true se deletou ou false se não foi possivel deletar
-     *         $result['formarray'] = array com o resultado
-     *         $result['message'] = motivo da não deleção
-     * @param array $array
-     * @param string $atributeName
-     * @param int $keyIndex
-     * @throws InvalidArgumentException
-     * @return NULL|array
-     */
-    public static function formDinDeleteRowByColumnNameAndKeyIndex($array,$attributeName,$keyIndex)
-    {
-        ValidateHelper::isArray($array, __METHOD__, __LINE__);
-        
-        $result = array();
-        $result['result'] = false;
-        $result['formarray'] = $array;
-        
-        if( !self::has($attributeName, $array) ) {
-            $result['message'] = TFormDinMessage::ARRAY_ATTRIBUTE_NOT_EXIST;
-        }else{
-            if( !self::formDinGetValue($array, $attributeName, $keyIndex) ){
-                $result['message'] = TFormDinMessage::ARRAY_KEY_NOT_EXIST;
-            }else{
-                $arrayResult = array();
-                foreach ($array as $attribute => $arrayAttribute) {
-                    foreach ($arrayAttribute as $key => $value) {
-                        if($keyIndex != $key ){
-                            $arrayResult[$attribute][]=$value;
-                        }
-                    }
-                }
-                $result['result']    = true;
-                $result['formarray'] = $arrayResult;
-            }
-        }
-        return $result;
-    }
-
-
     //-------------------------------------------------------------------------
     private static function convertArrayParametersAdianti2FormDin($arrayData){
         $arrayData = self::convertArrayParametersAdianti2PHP($arrayData);
