@@ -413,33 +413,6 @@ class ArrayHelper
         }
         return $result;
     }
-    //--------------------------------------------------------------------------------    
-    /**
-     * Detecta o tipo de array de para o MixUpdateFields e retorna o tipo
-     * conforme as constantes de classe
-     * @param array $arrayData
-     * @return mix
-     */
-    public static function getTypeArrayMixUpdateFields($arrayData){
-        $result = null;
-        if( empty($arrayData) ){
-            $result = null;
-        }elseif( ArrayHelper::isArrayNotEmpty($arrayData) ){
-            $lastElement = end($arrayData);;
-            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
-            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
-            if( ($fristChar=='{') && ($lastChar=='}') ){
-                $result = self::TYPE_ADIANTI_GRID_ACTION;
-            }else{
-                $result = self::TYPE_PHP;
-            }
-        }elseif( is_string($arrayData) && (strpos( $arrayData,'|')!== false) ){
-            $result = self::TYPE_FORMDIN_STRING_GRID_ACTION;
-        }else{
-            $result = false;
-        }
-        return $result;
-    }    
     //--------------------------------------------------------------------------------
     /**
      * Convert Array FormDin,PDO ou Adianti para Adianti Format
@@ -675,7 +648,34 @@ class ArrayHelper
         }
         return $arrayData;
     }
-
+    //--------------------------------------------------------------------------------    
+    /**
+     * Detecta o tipo de array de para o MixUpdateFields e retorna o tipo
+     * conforme as constantes de classe
+     * @param array $arrayData
+     * @return mix
+     */
+    public static function getTypeArrayMixUpdateFields($arrayData){
+        $result = null;
+        if( empty($arrayData) ){
+            $result = null;
+        }elseif( ArrayHelper::isArrayNotEmpty($arrayData) ){
+            $lastElement = end($arrayData);;
+            $fristChar = mb_substr($lastElement, 0, 1, 'utf-8');
+            $lastChar  = mb_substr($lastElement, -1, 1, 'utf-8');
+            if( ($fristChar=='{') && ($lastChar=='}') ){
+                $result = self::TYPE_ADIANTI_GRID_ACTION;
+            }else{
+                $result = self::TYPE_PHP;
+            }
+        }elseif( is_string($arrayData) && (strpos( $arrayData,'|')!== false) ){
+            $result = self::TYPE_FORMDIN_STRING_GRID_ACTION;
+        }else{
+            $result = false;
+        }
+        return $result;
+    }
+    //--------------------------------------------------------------------------------    
     /**
      * Detecta o tipo de array do MixUpdateFields e converte para o formato
      * de saída informado
