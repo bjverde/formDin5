@@ -53,6 +53,7 @@ class TFormDinPdoConnection
     private $database = null;
     private $fech = null;
     private $case = null;
+    private $outputFormat = null;
 
 
     private $host;
@@ -66,17 +67,18 @@ class TFormDinPdoConnection
      * Facilitardor de conexão com o banco de dados
      *
      * @param string $database : nome da conexão
-     * @param const $outputMode: PDO, FormDin, Adianti
+     * @param const $outputMode: Default = ArrayHelper::TYPE_PDO. ArrayHelper::TYPE_FORMDIN, ArrayHelper::TYPE_ADIANTI
      * @param const $fech
      * @param const $case use PDO case. DEFAULT = CASE_NATURAL.  https://www.php.net/manual/pt_BR/pdo.prepare.php
      */
-    public function __construct($database = null,$outputMode = null,$fech = null,$case = null)
+    public function __construct($database = null,$outputFormat = null,$fech = null,$case = null)
     {
         if(!empty($database)){
             $this->setDatabase($database);
         }
         $this->setFech($fech);
         $this->setCase($case);
+        $this->setOutputFormat($outputFormat);
     }
 
     public function setDatabase($database)
@@ -113,6 +115,18 @@ class TFormDinPdoConnection
     public function getCase()
     {
         return $this->case;
+    }
+
+    public function setOutputFormat($outputFormat)
+    {
+        if(empty($outputFormat)){
+            $outputFormat = ArrayHelper::TYPE_PDO;
+        }
+        $this->outputFormat = $outputFormat;
+    }
+    public function getOutputFormat()
+    {
+        return $this->outputFormat;
     }
 
     /**
