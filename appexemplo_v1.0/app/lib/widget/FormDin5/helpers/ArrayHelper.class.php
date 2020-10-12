@@ -551,21 +551,34 @@ class ArrayHelper
         return $result;
     }
     //-------------------------------------------------------------------------
+    /**
+     * Converte array Adianti Grid Action ['key0'=>'{value0}','key1' => '{value1}']
+     * para uma string no formato FormDin Grid
+     * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
+     * 
+     * @param array $arrayData
+     * @return array 
+     */     
     private static function convertArrayParametersAdianti2FormDin($arrayData){
-        $arrayData = self::convertArrayParametersAdianti2PHP($arrayData);
+        $arrayData = self::convertArrayGridActionParametersAdianti2PHP($arrayData);
         $arrayData = self::convertArrayGridActionParametersPHP2FormDin($arrayData);
         return $arrayData;
     }
-
-    private static function convertArrayParametersAdianti2PHP($arrayData){
+    /**
+     * Converte array Adianti Grid Action ['key0'=>'{value0}','key1' => '{value1}']
+     * para um array comum PHP (key0=>value0,key1=>value1)
+     * 
+     * @param array $arrayData
+     * @return array 
+     */    
+    private static function convertArrayGridActionParametersAdianti2PHP($arrayData){
         foreach( $arrayData as $k => $v ) {
             $v = mb_substr($v, 0, mb_strlen($v,'utf-8')-1, 'utf-8');
             $v = mb_substr($v, 1, mb_strlen($v,'utf-8'), 'utf-8');
             $arrayData[$k] = $v;
         }
         return $arrayData;
-    }    
-
+    }
     /**
      * Converte uma string no formato FormDin Grid
      * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
@@ -574,7 +587,7 @@ class ArrayHelper
      * @param array $arrayData
      * @return array 
      */
-    private static function convertArrayParametersFormDin2Adianti($arrayData){
+    private static function convertArrayGridActionParametersFormDin2Adianti($arrayData){
         $result = array();
         $listFields = explode( ',', $arrayData );
         foreach( $listFields as $k => $field ) {
@@ -583,7 +596,6 @@ class ArrayHelper
         }
         return $result;
     }
-
     /**
      * Converte uma string no formato FormDin Grid
      * <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
@@ -601,7 +613,6 @@ class ArrayHelper
         }
         return $result;
     }
-
     /**
      * Converte um array comum PHP (key0=>value0,key1=>value1) para um
      * string no formato FormDin Grid Action Parameters 
@@ -618,7 +629,6 @@ class ArrayHelper
         $result  = mb_substr($result, 1, mb_strlen($result,'utf-8'), 'utf-8');
         return $result;
     }
-
     /**
      * Converte um array comum PHP (key0=>value0,key1=>value1) para um
      * array no formato Adianti Grid Action Parameters 
@@ -703,11 +713,11 @@ class ArrayHelper
             if($outputFormat == ArrayHelper::TYPE_PHP){
                 $result = self::convertArrayGridActionParametersFormDin2PHP($arrayData);
             }elseif($outputFormat == ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
-                $result = self::convertArrayParametersFormDin2Adianti($arrayData);
+                $result = self::convertArrayGridActionParametersFormDin2Adianti($arrayData);
             }
         }else{
             if($outputFormat == ArrayHelper::TYPE_PHP){
-                $result = self::convertArrayParametersAdianti2PHP($arrayData);
+                $result = self::convertArrayGridActionParametersAdianti2PHP($arrayData);
             }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION){
                 $result = self::convertArrayParametersAdianti2FormDin($arrayData);
             }
