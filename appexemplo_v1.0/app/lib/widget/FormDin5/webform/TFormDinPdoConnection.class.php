@@ -315,7 +315,7 @@ class TFormDinPdoConnection
      * @param string $repositoryName - 02: nome de classe
      * @return array Adianti
      */    
-    public function selectByTCriteria(TCriteria $criteria, $repositoryName)
+    public function selectByTCriteria(TCriteria $criteria=null, $repositoryName=null)
     {
         try {
             $configConnect = $this->getConfigConnect();
@@ -341,7 +341,7 @@ class TFormDinPdoConnection
      * @param string $repositoryName - 02: nome de classe
      * @return array Adianti
      */
-    public function selectCountByTCriteria(TCriteria $criteria, $repositoryName)
+    public function selectByTCriteriaCount(TCriteria $criteria=null, $repositoryName=null)
     {
         try {
             $configConnect = $this->getConfigConnect();
