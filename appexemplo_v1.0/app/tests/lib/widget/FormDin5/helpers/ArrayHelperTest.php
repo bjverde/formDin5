@@ -623,12 +623,12 @@ class ArrayHelperTest extends TestCase
         $this->expectNotToPerformAssertions();
         $result = ArrayHelper::convertArrayMixUpdate2OutputFormat(null);
     }
-    public function testConvertArray2OutputFormat_arrayEmpty()
+    public function testConvertArrayMixUpdate2OutputFormat_arrayEmpty()
     {
         $this->expectNotToPerformAssertions();
         ArrayHelper::convertArrayMixUpdate2OutputFormat(array());
     }
-    public function testConvertArray2OutputFormat_string()
+    public function testConvertArrayMixUpdate2OutputFormat_string()
     {
         $this->expectException(InvalidArgumentException::class);
         ArrayHelper::convertArrayMixUpdate2OutputFormat('xxx');
