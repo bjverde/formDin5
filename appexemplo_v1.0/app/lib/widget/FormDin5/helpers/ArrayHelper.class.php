@@ -725,6 +725,27 @@ class ArrayHelper
         }
         return $result;
     }
+    //--------------------------------------------------------------------------------    
+    /**
+     * Detecta o tipo de array e converte para o formato de saída informado
+     * @param array $arrayData
+     * @param const $outputFormat
+     * @return array
+     */
+    public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
+        $inputFormt = self::getType($arrayData);
+
+        if($inputFormt == ArrayHelper::TYPE_ADIANTI){
+            $result = self::convertArray2Adianti($arrayData,$changeCase = false,$upperCase = false);
+        }elseif($inputFormt == ArrayHelper::TYPE_PDO){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+        }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+        }else{
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+        }
+        return $result;
+    }
 
 }
 ?>

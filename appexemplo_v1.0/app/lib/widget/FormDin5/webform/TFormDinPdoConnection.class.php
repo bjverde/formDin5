@@ -267,7 +267,14 @@ class TFormDinPdoConnection
             break;
         }
 		return $result;
-	}
+    }
+    
+    public function convertArrayResult($arrayData)
+    {
+        $outputFormat = $this->getOutputFormat();
+        $result = ArrayHelper::convertArray2OutputFormat($arrayData,$outputFormat);
+        return $result;
+    }
 
     /**
      * @codeCoverageIgnore
@@ -294,6 +301,8 @@ class TFormDinPdoConnection
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
             $stmt = $conn->query($sql);    // realiza a consulta
             $result = $stmt->fetchall();
+
+            //$result = $this->convertArrayResult($result);
             TTransaction::close();         // fecha a transação.
             return $result;
         }
