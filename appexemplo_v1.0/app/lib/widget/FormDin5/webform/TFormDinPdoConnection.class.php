@@ -76,9 +76,9 @@ class TFormDinPdoConnection
         if(!empty($database)){
             $this->setDatabase($database);
         }
+        $this->setOutputFormat($outputFormat);
         $this->setFech($fech);
         $this->setCase($case);
-        $this->setOutputFormat($outputFormat);
     }
 
     public function setDatabase($database)
@@ -105,6 +105,17 @@ class TFormDinPdoConnection
         return $this->fech;
     }
 
+    /**
+     * Defini ao case do array de retorno. Veja 
+     * https://www.php.net/manual/pt_BR/pdo.setattribute.php
+     * 
+     * PDO::CASE_LOWER
+     * PDO::CASE_NATURAL
+     * PDO::CASE_UPPER
+     *
+     * @param @param const $case. DEFAULT = PDO::CASE_NATURAL
+     * @return void
+     */
     public function setCase($case)
     {
         if(empty($case)){
