@@ -618,90 +618,90 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals('123456789', $result['formarray']['NMCPF'][0]);
     }
     //-----------------------------------------------------------------------
-    public function testConvertArray2OutputFormat_null()
+    public function testConvertArrayMixUpdate2OutputFormat_null()
     {
         $this->expectNotToPerformAssertions();
-        $result = ArrayHelper::convertArray2OutputFormat(null);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat(null);
     }
     public function testConvertArray2OutputFormat_arrayEmpty()
     {
         $this->expectNotToPerformAssertions();
-        ArrayHelper::convertArray2OutputFormat(array());
+        ArrayHelper::convertArrayMixUpdate2OutputFormat(array());
     }
     public function testConvertArray2OutputFormat_string()
     {
         $this->expectException(InvalidArgumentException::class);
-        ArrayHelper::convertArray2OutputFormat('xxx');
+        ArrayHelper::convertArrayMixUpdate2OutputFormat('xxx');
     }
-    public function testConvertArray2OutputFormat_obj()
+    public function testConvertArrayMixUpdate2OutputFormat_obj()
     {
         $this->expectException(InvalidArgumentException::class);
         $obj = new stdClass();
-        ArrayHelper::convertArray2OutputFormat($obj);
+        ArrayHelper::convertArrayMixUpdate2OutputFormat($obj);
     }    
-    public function testConvertArray2OutputFormat_inputFormDinOutPutAdianti()
+    public function testConvertArrayMixUpdate2OutputFormat_inputFormDinOutPutAdianti()
     {
         $expected = ['code'=>'{code}','nome'=>'{nome}'];
         $arrayData = 'code|code,nome|nome';
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData);
         $this->assertEquals($expected, $result);
     }
-    public function testConvertArray2OutputFormat_inputPHPOutPutAdianti()
+    public function testConvertArrayMixUpdate2OutputFormat_inputPHPOutPutAdianti()
     {
         $expected  = ['code'=>'{code}','nome'=>'{nome}'];
         $arrayData = ['code'=>'code','nome'=>'nome'];
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData);
         $this->assertEquals($expected, $result);
     }
-    public function testConvertArray2OutputFormat_inputAdianitOutPutAdianti()
+    public function testConvertArrayMixUpdate2OutputFormat_inputAdianitOutPutAdianti()
     {
         $expected  = ['code'=>'{code}','nome'=>'{nome}'];
         $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData);
         $this->assertEquals($expected, $result);
     }
     
-    public function testConvertArray2OutputFormat_inputFormDinOutPutPHP()
+    public function testConvertArrayMixUpdate2OutputFormat_inputFormDinOutPutPHP()
     {
         $expected =  ['code'=>'code','nome'=>'nome'];
         $arrayData = 'code|code,nome|nome';
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
         $this->assertEquals($expected, $result);
     }
-    public function testConvertArray2OutputFormat_inputPHPOutPutPHP()
+    public function testConvertArrayMixUpdate2OutputFormat_inputPHPOutPutPHP()
     {
         $expected  = ['code'=>'code','nome'=>'nome'];
         $arrayData = ['code'=>'code','nome'=>'nome'];
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
         $this->assertEquals($expected, $result);
     }
-    public function testConvertArray2OutputFormat_inputAdianitOutPutPHP()
+    public function testConvertArrayMixUpdate2OutputFormat_inputAdianitOutPutPHP()
     {
         $expected  = ['code'=>'code','nome'=>'nome'];
         $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
         $this->assertEquals($expected, $result);
     }
 
-    public function testConvertArray2OutputFormat_inputFormDinOutPutFormDin()
+    public function testConvertArrayMixUpdate2OutputFormat_inputFormDinOutPutFormDin()
     {
         $expected =  'code|code,nome|nome';
         $arrayData = 'code|code,nome|nome';
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
         $this->assertEquals($expected, $result);
     }
-    public function testConvertArray2OutputFormat_inputPHPOutPutFormDin()
+    public function testConvertArrayMixUpdate2OutputFormat_inputPHPOutPutFormDin()
     {
         $expected  = 'code|code,nome|nome';
         $arrayData = ['code'=>'code','nome'=>'nome'];
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
         $this->assertEquals($expected, $result);
     }
-    public function testConvertArray2OutputFormat_inputAdianitOutPutFormDin()
+    public function testConvertArrayMixUpdate2OutputFormat_inputAdianitOutPutFormDin()
     {
         $expected  = 'code|code,nome|nome';
         $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
         $this->assertEquals($expected, $result);
     }
 

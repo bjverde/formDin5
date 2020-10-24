@@ -522,7 +522,7 @@ class TFormDinGrid
                 foreach(  $listKeyColumnId as $id) {
                     $mixUpdateButton[$id] = $id;
                 }                
-                $mixUpdateButton = ArrayHelper::convertArray2OutputFormat($mixUpdateButton);
+                $mixUpdateButton = ArrayHelper::convertArrayMixUpdate2OutputFormat($mixUpdateButton);
             }            
         }
         return $mixUpdateButton;
@@ -585,7 +585,7 @@ class TFormDinGrid
      */
     public function setUpdateFields( $mixUpdateFields = null )
     {
-        $mixUpdateFields = ArrayHelper::convertArray2OutputFormat($mixUpdateFields);
+        $mixUpdateFields = ArrayHelper::convertArrayMixUpdate2OutputFormat($mixUpdateFields);
         $this->updateFields = $mixUpdateFields;
     }    
     //------------------------------------------------------------------------------------
@@ -597,7 +597,7 @@ class TFormDinGrid
      */
     public function getUpdateFields($outputFormat = TFormDinGridAction::TYPE_ADIANTI)
     {
-        $mixUpdateFields = ArrayHelper::convertArray2OutputFormat($this->updateFields,$outputFormat);
+        $mixUpdateFields = ArrayHelper::convertArrayMixUpdate2OutputFormat($this->updateFields,$outputFormat);
         return $mixUpdateFields;
     }    
     //------------------------------------------------------------------------------------

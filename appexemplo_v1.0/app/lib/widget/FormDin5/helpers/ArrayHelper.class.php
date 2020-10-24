@@ -697,7 +697,7 @@ class ArrayHelper
      * @param const $outputFormat
      * @return array
      */
-    public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
+    public static function convertArrayMixUpdate2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
         $inputFormt = self::getTypeArrayMixUpdateFields($arrayData);
         if($inputFormt===false){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_TYPE_WRONG);
