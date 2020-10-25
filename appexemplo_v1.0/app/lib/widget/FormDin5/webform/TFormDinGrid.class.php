@@ -595,7 +595,7 @@ class TFormDinGrid
      * @param const $outputFormat - Formato de saída conforme TFormDinGridAction
      * @return mix
      */
-    public function getUpdateFields($outputFormat = TFormDinGridAction::TYPE_ADIANTI)
+    public function getUpdateFields($outputFormat = ArrayHelper::TYPE_ADIANTI_GRID_ACTION)
     {
         $mixUpdateFields = ArrayHelper::convertArrayMixUpdate2OutputFormat($this->updateFields,$outputFormat);
         return $mixUpdateFields;
