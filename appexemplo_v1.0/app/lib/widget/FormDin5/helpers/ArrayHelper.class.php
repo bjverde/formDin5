@@ -747,13 +747,14 @@ class ArrayHelper
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
                     $result = self::convertArrayPDO2Adianti($arrayData);
                 }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
-                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                    $result = self::convertArrayPdo2FormDin($arrayData,$upperCase);
                 }
             }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
                     $result = self::convertArrayFormDin2Adianti($arrayData,$changeCase,$upperCase);
                 }elseif($inputFormt == ArrayHelper::TYPE_PDO){
                     throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                    $result = self::convertArrayFormDin2PdoV2($arrayData,$changeCase,$upperCase);
                 }                
             }else{
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
