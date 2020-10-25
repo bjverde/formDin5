@@ -732,17 +732,32 @@ class ArrayHelper
      * @param const $outputFormat
      * @return array
      */
-    public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI_GRID_ACTION){
-        $inputFormt = self::getType($arrayData);
+    public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI,$changeCase = false,$upperCase = false){
+        $result = null;
+        if( !empty($arrayData) ){
+            $inputFormt = self::getType($arrayData);
 
-        if($inputFormt == ArrayHelper::TYPE_ADIANTI){
-            $result = self::convertArray2Adianti($arrayData,$changeCase = false,$upperCase = false);
-        }elseif($inputFormt == ArrayHelper::TYPE_PDO){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
-        }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
-        }else{
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+            if($inputFormt == ArrayHelper::TYPE_ADIANTI){
+                if( $outputFormat == ArrayHelper::TYPE_PDO ){
+                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
+                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                }
+            }elseif($inputFormt == ArrayHelper::TYPE_PDO){
+                if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
+                    $result = self::convertArrayPDO2Adianti($arrayData);
+                }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
+                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                }
+            }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
+                if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
+                    $result = self::convertArrayFormDin2Adianti($arrayData,$changeCase,$upperCase);
+                }elseif($inputFormt == ArrayHelper::TYPE_PDO){
+                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                }                
+            }else{
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+            }
         }
         return $result;
     }

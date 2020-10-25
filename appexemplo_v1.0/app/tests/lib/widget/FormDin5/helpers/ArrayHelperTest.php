@@ -760,5 +760,48 @@ class ArrayHelperTest extends TestCase
         $esperado = null;
         $retorno = ArrayHelper::convertArray2OutputFormat($arrayData);
         $this->assertEquals($esperado, $retorno);
-    }  
+    }
+    public function testConvertArray2OutputFormat_Adianti2PDO(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTablePessoaPDO();
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Adianti2FormDin(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTable();
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Pdo2Adianti(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        $esperado = $mock->generateTablePessoaAdianti();
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_ADIANTI);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Pdo2FormDin(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        $esperado = $mock->generateTable();
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_FormDin2Adianti(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTable();
+        $esperado = $mock->generateTablePessoaAdianti();
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_ADIANTI);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_FormDin2Pdo(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTable();
+        $esperado = $$mock->generateTablePessoaPDO();
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO);
+        $this->assertEquals($esperado, $retorno);
+    }     
+
 }
