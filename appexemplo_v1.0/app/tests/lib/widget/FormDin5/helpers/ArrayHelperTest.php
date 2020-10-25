@@ -740,4 +740,25 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION, $result);
     }
     
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testConvertArray2OutputFormat_null(){
+        $arrayData = null;
+        $esperado = null;
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_ArrayEmpty(){
+        $arrayData = array();
+        $esperado = null;
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_StringEmpty(){
+        $arrayData = '' ;
+        $esperado = null;
+        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }  
 }
