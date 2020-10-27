@@ -725,7 +725,41 @@ class ArrayHelper
         }
         return $result;
     }
-    //--------------------------------------------------------------------------------    
+    //--------------------------------------------------------------------------------
+    public static function convertAdianti2Pdo($arrayData,$changeCase = false,$upperCase = false){
+        $result = array();
+        if( self::isArrayNotEmpty($arrayData) ){
+            $obj = $arrayData[0];
+            if($obj instanceof TRecord){
+                foreach( $arrayData as $key => $obj ) {
+                    $result[$key] = $obj->toArray();
+                }
+            }else{
+                foreach( $arrayData as $key => $obj ) {
+                    $result[$key] = get_object_vars($obj);
+                }
+            }
+            if($changeCase){
+                foreach( $result as $key => $arrayInterno ) {
+                    foreach( $arrayInterno as $atributo => $value ) {
+                        if($upperCase) {
+                            $result[ $key ][ strtoupper($atributo) ] = $value;
+                        }else{
+                            $result[ $key ][ strtolower($atributo) ] = $value;
+                        }                        
+                    }
+                }//Fim foreach externo
+            }
+        }//fim test array
+        return $result;
+    }
+    //--------------------------------------------------------------------------------
+    public static function convertAdianti2FormDin($arrayData,$changeCase = false,$upperCase = false){
+        $arrayData = self::convertAdianti2Pdo($arrayData,$changeCase,$upperCase);
+        $result    = self::convertArrayPdo2FormDin($arrayData,$upperCase);
+        return $result;
+    }    
+    //--------------------------------------------------------------------------------
     /**
      * Detecta o tipo de array e converte para o formato de saída informado
      * @param array $arrayData
@@ -739,9 +773,9 @@ class ArrayHelper
 
             if($inputFormt == ArrayHelper::TYPE_ADIANTI){
                 if( $outputFormat == ArrayHelper::TYPE_PDO ){
-                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                    $result = self::convertAdianti2Pdo($arrayData,$changeCase,$upperCase);
                 }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
-                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+                    $result = self::convertAdianti2FormDin($arrayData,$changeCase,$upperCase);
                 }
             }elseif($inputFormt == ArrayHelper::TYPE_PDO){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
