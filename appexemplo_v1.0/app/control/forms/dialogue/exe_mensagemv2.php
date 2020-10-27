@@ -20,12 +20,12 @@ class exe_mensagemv2 extends TPage
         //$text[] = "linha2 <b>'xxx'</b> linha2";
         //$frm->setMessage($text,TFormDinMessage::TYPE_WARING);
 
-        $frm->addButton($this,'Msg Alert', null, 'msgAlert',  null, null, true, false);
-        $frm->addButton($this,'Msg Info', null, 'msgInfo',  null, null, true, false);
-        $frm->addButton($this,'Msg Error', null, 'msgError',  null, null, true, false);
-        //$frm->addButton($this,'Msg POP Sucesso', null, 'msgpopsu',  null, null, false, false);
-        //$frm->addButton($this,'Msg POP Error', null, 'msgpoperror', null, null, false, false);
-        //$frm->addButton($this,'Msg POP Attention', null, 'msgpopattention', null, null, false, false);
+        $frm->addButton('Msg Alert', null, 'msgAlert',  null, null, true, false);
+        $frm->addButton('Msg Info', null, 'msgInfo',  null, null, true, false);
+        $frm->addButton('Msg Error', null, 'msgError',  null, null, true, false);
+        //$frm->addButton('Msg POP Sucesso', null, 'msgpopsu',  null, null, false, false);
+        //$frm->addButton('Msg POP Error', null, 'msgpoperror', null, null, false, false);
+        //$frm->addButton('Msg POP Attention', null, 'msgpopattention', null, null, false, false);
         
         $this->form = $frm->show();
 
