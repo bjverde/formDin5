@@ -52,6 +52,10 @@ class ArrayHelper
     const TYPE_ADIANTI = 'ARRAY_TYPE_ADIANTI';
     const TYPE_ADIANTI_GRID_ACTION = 'ARRAY_TYPE_ADIANTI_GRID_ACTION_PARAMETERS';
 
+    const TYPE_CASE_UPPER    = 'TYPE_CASE_UPPER';
+    const TYPE_CASE_LOWER    = 'TYPE_CASE_LOWER';
+    const TYPE_CASE_NOCHANGE = 'TYPE_CASE_NOCHANGE';
+
     public static function validateUndefined($array,$atributeName) 
     {
         if(!isset($array[$atributeName])) {
@@ -402,18 +406,17 @@ class ArrayHelper
     /**
      * Convert Array FormDin,PDO ou Adianti para Adianti Format (TYPE_ADIANTI)
      *
-     * @param  array $array        - 1: Array
-     * @param  boolean $changeCase - 2: Altera String Case. DEFAULT = FALSE não vai alterar.
-     * @param  boolean $upperCase  - 3: DEFAULT = TRUE = UpperCase. False = LowerCase
+     * @param  array $array       - 01: Array
+     * @param  boolean $upperCase - 02: DEFAULT = ArrayHelper::TYPE_CASE_NOCHANGE
      * @return array
      */
-    public static function convertArray2Adianti($dataArray,$changeCase = false,$upperCase = false) 
+    public static function convertArray2Adianti($dataArray,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE) 
     {
         $typeArray = self::getArrayType($dataArray);
         if($typeArray == self::TYPE_FORMDIN){
-            $dataArray = self::convertArrayFormDin2Adianti($dataArray,$changeCase,$upperCase);
+            $dataArray = self::convertArrayFormDin2Adianti($dataArray,$typeCase);
         }elseif($typeArray == self::TYPE_PDO){
-            $dataArray = self::convertArrayPDO2Adianti($dataArray);
+            $dataArray = self::convertArrayPDO2Adianti($dataArray,$typeCase);
         }
         return $dataArray;
     }
@@ -422,21 +425,23 @@ class ArrayHelper
      * Convert Array PDO Format (TYPE_PDO) to FormDin format (TYPE_FORMDIN)
      *
      * @param  array $array      - 01:
-     * @param  boolean $upperCase- 02: DEFAULT = TRUE = UpperCase. False = LowerCase
+     * @param  boolean $upperCase- 02: DEFAULT = ArrayHelper::TYPE_CASE_NOCHANGE
      * @return array
      */
-    public static function convertArrayPdo2FormDin($dataArray,$upperCase = true) 
+    public static function convertArrayPdo2FormDin($dataArray,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE) 
     {
         $result = false;
         if(is_array($dataArray) ) {
             foreach( $dataArray as $k => $arr ) {
                 foreach( $arr as $fieldName => $value ) {
-                    if($upperCase) {
+                    if( $typeCase == ArrayHelper::TYPE_CASE_NOCHANGE ){
+                        $result[ $fieldName ][ $k ] = $value;
+                    }elseif($typeCase == ArrayHelper::TYPE_CASE_UPPER){
                         $result[ strtoupper($fieldName) ][ $k ] = $value;
                     }else{
-                        $result[ $fieldName ][ $k ] = $value;
+                        $result[ strtolower($fieldName) ][ $k ] = $value;
                     }
-                }
+                }//Fim ForEach Interno
             }
         }
         return $result;
@@ -445,24 +450,11 @@ class ArrayHelper
     /**
      * Convert Array FormDin Format (TYPE_FORMDIN) to PDO format(TYPE_PDO)
      *
-     * @param  array $array
+     * @param  array $array      - 01: Array FormDin4 
+     * @param  boolean $upperCase- 02: DEFAULT = ArrayHelper::TYPE_CASE_NOCHANGE
      * @return array
      */
-    public static function convertArrayFormDin2Pdo($dataArray,$upperCase = false) 
-    {
-        $result = self::convertArrayFormDin2PdoV2($dataArray,true,$upperCase);
-        return $result;
-    }
-    //--------------------------------------------------------------------------------
-    /**
-     * Convert Array FormDin Format (TYPE_FORMDIN) to PDO format (TYPE_PDO)
-     *
-     * @param  array $array        - 1: Array FormDin4 
-     * @param  boolean $changeCase - 2: Altera String Case. DEFAULT = FALSE não vai alterar.
-     * @param  boolean $upperCase  - 3: DEFAULT = TRUE = UpperCase. False = LowerCase
-     * @return array
-     */
-    public static function convertArrayFormDin2PdoV2($dataArray,$changeCase = false,$upperCase = false) 
+    public static function convertArrayFormDin2Pdo($dataArray,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE) 
     {
         $result = false;
         if(is_array($dataArray) ) {
@@ -470,14 +462,12 @@ class ArrayHelper
             $firstKey = $listKeys[0];
             foreach( $dataArray[$firstKey] as $keyNumber => $value ) {
                 foreach( $listKeys as $keyName ) {
-                    if( $changeCase ){
-                        if($upperCase) {
-                            $result[ $keyNumber ][ strtoupper($keyName) ] = $dataArray[$keyName][$keyNumber];
-                        }else{
-                            $result[ $keyNumber ][ strtolower($keyName) ] = $dataArray[$keyName][$keyNumber];
-                        }
-                    }else{
+                    if( $typeCase == ArrayHelper::TYPE_CASE_NOCHANGE ){
                         $result[ $keyNumber ][ $keyName ] = $dataArray[$keyName][$keyNumber];
+                    }elseif($typeCase == ArrayHelper::TYPE_CASE_UPPER){
+                        $result[ $keyNumber ][ strtoupper($keyName) ] = $dataArray[$keyName][$keyNumber];
+                    }else{
+                        $result[ $keyNumber ][ strtolower($keyName) ] = $dataArray[$keyName][$keyNumber];
                     }
                 }
             }
@@ -488,16 +478,15 @@ class ArrayHelper
     /**
      * Convert Array FormDin Format to Adianti format
      *
-     * @param  array $array        - 1: Array FormDin4 
-     * @param  boolean $changeCase - 2: Altera String Case. DEFAULT = FALSE não vai alterar.
-     * @param  boolean $upperCase  - 3: DEFAULT = TRUE = UpperCase. False = LowerCase
+     * @param  array $array      - 01: Array FormDin4 
+     * @param  boolean $upperCase- 02: DEFAULT = ArrayHelper::TYPE_CASE_NOCHANGE
      * @return array
      */
-    public static function convertArrayFormDin2Adianti($dataArray,$changeCase = false,$upperCase = false) 
+    public static function convertArrayFormDin2Adianti($dataArray,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE) 
     {
         $result = array();
         if(self::isArrayNotEmpty($dataArray)){
-            $result = self::convertArrayFormDin2PdoV2($dataArray,$changeCase,$upperCase);
+            $result = self::convertArrayFormDin2Pdo($dataArray,$typeCase);
             foreach( $result as $keyNumber => $value ) {
                 $result[$keyNumber] = (object)$value;
             }
@@ -509,14 +498,30 @@ class ArrayHelper
      * Convert Array PDO format to Adianti format
      *
      * @param  array $array        - 1: Array FormDin4 
+     * @param  boolean $upperCase- 02: DEFAULT = ArrayHelper::TYPE_CASE_NOCHANGE
      * @return array
      */
-    public static function convertArrayPDO2Adianti($dataArray) 
+    public static function convertArrayPDO2Adianti( $dataArray ,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE ) 
     {
-        foreach( $dataArray as $keyNumber => $value ) {
-            $dataArray[$keyNumber] = (object)$value;
+        $resultPDO = null;
+        if( $typeCase == ArrayHelper::TYPE_CASE_NOCHANGE ){
+            $resultPDO = $dataArray;
+        }else{
+            foreach( $dataArray as $key => $arrayInterno ) {
+                foreach( $arrayInterno as $atributo => $value ) {
+                    if($typeCase == ArrayHelper::TYPE_CASE_UPPER) {
+                        $resultPDO[ $key ][ strtoupper($atributo) ] = $value;
+                    }else{
+                        $resultPDO[ $key ][ strtolower($atributo) ] = $value;
+                    }                        
+                }
+            }//Fim foreach externo
         }
-        return $dataArray;
+        $resultAdianti = null;
+        foreach( $resultPDO as $keyNumber => $value ) {
+            $resultAdianti[$keyNumber] = (object)$value;
+        }
+        return $resultAdianti;
     }
     //--------------------------------------------------------------------------------
     /**
@@ -726,7 +731,13 @@ class ArrayHelper
         return $result;
     }
     //--------------------------------------------------------------------------------
-    public static function convertAdianti2Pdo($arrayData,$changeCase = false,$upperCase = false){
+    /**
+     * Converte um array Adianti para o Padrão FormDin
+     * @param array $arrayData    - 1:
+     * @param const $typeCase     - 2: Type Case. Default = ArrayHelper::TYPE_CASE_NOCHANGE, ArrayHelper::TYPE_CASE_UPPER, ArrayHelper::TYPE_CASE_NOCHANGE
+     * @return array
+     */
+    public static function convertAdianti2Pdo($arrayData,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE){
         $result  = array();
         $resultA = array();
         if( self::isArrayNotEmpty($arrayData) ){
@@ -740,58 +751,65 @@ class ArrayHelper
                     $resultA[$key] = get_object_vars($obj);
                 }
             }
-            if($changeCase){
+            if( $typeCase == ArrayHelper::TYPE_CASE_NOCHANGE ){
+                $result = $resultA;
+            }else{
                 foreach( $resultA as $key => $arrayInterno ) {
                     foreach( $arrayInterno as $atributo => $value ) {
-                        if($upperCase) {
+                        if($typeCase == ArrayHelper::TYPE_CASE_UPPER) {
                             $result[ $key ][ strtoupper($atributo) ] = $value;
                         }else{
                             $result[ $key ][ strtolower($atributo) ] = $value;
                         }                        
                     }
                 }//Fim foreach externo
-            }else{
-                $result = $resultA;
             }
         }//fim test array
         return $result;
     }
     //--------------------------------------------------------------------------------
-    public static function convertAdianti2FormDin($arrayData,$changeCase = false,$upperCase = false){
-        $arrayData = self::convertAdianti2Pdo($arrayData,$changeCase,$upperCase);
-        $result    = self::convertArrayPdo2FormDin($arrayData,$upperCase);
+    /**
+     * Converte um array Adianti para o Padrão FormDin
+     * @param array $arrayData    - 1:
+     * @param const $typeCase     - 2: Type Case. Default = ArrayHelper::TYPE_CASE_NOCHANGE, ArrayHelper::TYPE_CASE_UPPER, ArrayHelper::TYPE_CASE_NOCHANGE
+     * @return array
+     */
+    public static function convertAdianti2FormDin($arrayData,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE){
+        $arrayData = self::convertAdianti2Pdo($arrayData,$typeCase);
+        $result    = self::convertArrayPdo2FormDin($arrayData,$typeCase);
         return $result;
     }    
     //--------------------------------------------------------------------------------
     /**
      * Detecta o tipo de array e converte para o formato de saída informado
-     * @param array $arrayData
-     * @param const $outputFormat
+     * @param array $arrayData    - 1:
+     * @param const $outputFormat - 2: Type OutPut Format. Default = ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN
+     * @param const $typeCase     - 3: Type Case. Default = ArrayHelper::TYPE_CASE_NOCHANGE, ArrayHelper::TYPE_CASE_UPPER, ArrayHelper::TYPE_CASE_NOCHANGE
      * @return array
      */
-    public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI,$changeCase = false,$upperCase = false){
+    public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI,$typeCase = ArrayHelper::TYPE_CASE_NOCHANGE){
         $result = null;
         if( !empty($arrayData) ){
             $inputFormat = self::getType($arrayData);
 
             if($inputFormat == ArrayHelper::TYPE_ADIANTI){
                 if( $outputFormat == ArrayHelper::TYPE_PDO ){
-                    $result = self::convertAdianti2Pdo($arrayData,$changeCase,$upperCase);
+                    $result = self::convertAdianti2Pdo($arrayData,$typeCase);
                 }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN){
-                    $result = self::convertAdianti2FormDin($arrayData,$changeCase,$upperCase);
+                    $result = self::convertAdianti2FormDin($arrayData,$typeCase);
                 }
             }elseif($inputFormat == ArrayHelper::TYPE_PDO){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
-                    $result = self::convertArrayPDO2Adianti($arrayData);
+                    $result = self::convertArrayPDO2Adianti($arrayData,$typeCase);
                 }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN){
-                    $result = self::convertArrayPdo2FormDin($arrayData,$upperCase);
+                    $result = self::convertArrayPdo2FormDin($arrayData,$typeCase);
                 }
             }elseif($inputFormat == ArrayHelper::TYPE_FORMDIN){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
-                    $result = self::convertArrayFormDin2Adianti($arrayData,$changeCase,$upperCase);
+                    $result = self::convertArrayFormDin2Adianti($arrayData,$typeCase);
                 }elseif($outputFormat == ArrayHelper::TYPE_PDO){
-                    $result = self::convertArrayFormDin2PdoV2($arrayData,$changeCase,$upperCase);
-                }                
+                    $result = self::convertArrayFormDin2Pdo($arrayData,$typeCase);
+                }
             }else{
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
             }

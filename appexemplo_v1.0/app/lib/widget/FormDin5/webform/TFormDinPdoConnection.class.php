@@ -128,6 +128,10 @@ class TFormDinPdoConnection
         return $this->case;
     }
 
+    /**
+     * Determina o tipo array das consultas
+     * @param const $outputMode: Default = ArrayHelper::TYPE_PDO. ArrayHelper::TYPE_FORMDIN, ArrayHelper::TYPE_ADIANTI
+     */
     public function setOutputFormat($outputFormat)
     {
         if(empty($outputFormat)){
@@ -301,7 +305,6 @@ class TFormDinPdoConnection
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
             $stmt = $conn->query($sql);    // realiza a consulta
             $result = $stmt->fetchall();
-
             //$result = $this->convertArrayResult($result);
             TTransaction::close();         // fecha a transação.
             return $result;
@@ -345,6 +348,7 @@ class TFormDinPdoConnection
             TTransaction::open($database,$db); // abre uma transação
             $repository = new TRepository($repositoryName);
             $collections = $repository->load($criteria);
+            //$collections = $this->convertArrayResult($collections);
             TTransaction::close();         // fecha a transação.
             return $collections;
         }

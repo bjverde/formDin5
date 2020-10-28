@@ -415,7 +415,7 @@ class ArrayHelperTest extends TestCase
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTable();
         $array = $mock->generateTablePessoaPDO();
-        $retorno = ArrayHelper::convertArrayPdo2FormDin($array,true);
+        $retorno = ArrayHelper::convertArrayPdo2FormDin($array,ArrayHelper::TYPE_CASE_UPPER);
         $this->assertEquals($esperado, $retorno);
     }
         
@@ -423,7 +423,7 @@ class ArrayHelperTest extends TestCase
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTablePessoaPDO();
         $array = $mock->generateTable();
-        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,true);
+        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,ArrayHelper::TYPE_CASE_UPPER);
         $this->assertEquals($esperado, $retorno);
     }
 
@@ -441,6 +441,23 @@ class ArrayHelperTest extends TestCase
         $array = $mock->generateTablePessoaPDO();
         $retorno = ArrayHelper::convertArrayPDO2Adianti($array);
         $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArrayPDOAdianti_lower() {
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaPDO();    
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,ArrayHelper::TYPE_CASE_LOWER);
+        $obj0 = $retorno[0];
+        $this->assertEquals(1,  $obj0->idpessoa);
+        $this->assertEquals('Joao Silva',  $obj0->nmpessoa);
+    }
+    public function testConvertArrayPDOAdianti_upper() {
+        $dadosPessoa['idpessoa']=1;
+        $dadosPessoa['nmpessoa']='Joao Silva';
+        $array[] = $dadosPessoa;    
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,ArrayHelper::TYPE_CASE_UPPER);
+        $obj0 = $retorno[0];
+        $this->assertEquals(1,  $obj0->IDPESSOA);
+        $this->assertEquals('Joao Silva',  $obj0->NMPESSOA);
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
@@ -752,7 +769,7 @@ class ArrayHelperTest extends TestCase
     public function testConvertAdianti2Pdo_lowerCase(){
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTablePessoaAdianti();
-        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,true,false);
+        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,ArrayHelper::TYPE_CASE_LOWER);
         $this->assertEquals(1, $retorno[0]['idpessoa']);
         $this->assertEquals('Joao Silva', $retorno[0]['nmpessoa']);
     }
@@ -761,7 +778,7 @@ class ArrayHelperTest extends TestCase
         $dadosPessoa->idpessoa = 1;
         $dadosPessoa->nmpessoa = 'Joao Silva';
         $arrayData[] = $dadosPessoa;
-        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,true,true);
+        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,ArrayHelper::TYPE_CASE_UPPER);
         $this->assertEquals(1, $retorno[0]['IDPESSOA']);
         $this->assertEquals('Joao Silva', $retorno[0]['NMPESSOA']);
     }
@@ -778,7 +795,7 @@ class ArrayHelperTest extends TestCase
     public function testConvertAdianti2FormDin_lowerCase(){
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTablePessoaAdianti();
-        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,true,false);
+        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,ArrayHelper::TYPE_CASE_LOWER);
         $this->assertEquals(1, $retorno['idpessoa'][0]);
         $this->assertEquals('Joao Silva', $retorno['nmpessoa'][0]);
     }
@@ -787,7 +804,7 @@ class ArrayHelperTest extends TestCase
         $dadosPessoa->idpessoa = 1;
         $dadosPessoa->nmpessoa = 'Joao Silva';
         $arrayData[] = $dadosPessoa;
-        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,true,true);
+        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,ArrayHelper::TYPE_CASE_UPPER);
         $this->assertEquals(1, $retorno['IDPESSOA'][0]);
         $this->assertEquals('Joao Silva', $retorno['NMPESSOA'][0]);
     }
