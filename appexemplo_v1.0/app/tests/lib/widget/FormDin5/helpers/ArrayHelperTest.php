@@ -779,8 +779,8 @@ class ArrayHelperTest extends TestCase
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTablePessoaAdianti();
         $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,true,false);
-        $this->assertEquals(1, $retorno[0]['idpessoa']);
-        $this->assertEquals('Joao Silva', $retorno[0]['nmpessoa']);
+        $this->assertEquals(1, $retorno['idpessoa'][0]);
+        $this->assertEquals('Joao Silva', $retorno['nmpessoa'][0]);
     }
     public function testConvertAdianti2FormDin_UpperCase(){
         $dadosPessoa = new StdClass;
@@ -788,8 +788,8 @@ class ArrayHelperTest extends TestCase
         $dadosPessoa->nmpessoa = 'Joao Silva';
         $arrayData[] = $dadosPessoa;
         $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,true,true);
-        $this->assertEquals(1, $retorno[0]['IDPESSOA']);
-        $this->assertEquals('Joao Silva', $retorno[0]['NMPESSOA']);
+        $this->assertEquals(1, $retorno['IDPESSOA'][0]);
+        $this->assertEquals('Joao Silva', $retorno['NMPESSOA'][0]);
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------

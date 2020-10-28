@@ -727,20 +727,21 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     public static function convertAdianti2Pdo($arrayData,$changeCase = false,$upperCase = false){
-        $result = array();
+        $result  = array();
+        $resultA = array();
         if( self::isArrayNotEmpty($arrayData) ){
             $obj = $arrayData[0];
             if($obj instanceof TRecord){
                 foreach( $arrayData as $key => $obj ) {
-                    $result[$key] = $obj->toArray();
+                    $resultA[$key] = $obj->toArray();
                 }
             }else{
                 foreach( $arrayData as $key => $obj ) {
-                    $result[$key] = get_object_vars($obj);
+                    $resultA[$key] = get_object_vars($obj);
                 }
             }
             if($changeCase){
-                foreach( $result as $key => $arrayInterno ) {
+                foreach( $resultA as $key => $arrayInterno ) {
                     foreach( $arrayInterno as $atributo => $value ) {
                         if($upperCase) {
                             $result[ $key ][ strtoupper($atributo) ] = $value;
@@ -749,6 +750,8 @@ class ArrayHelper
                         }                        
                     }
                 }//Fim foreach externo
+            }else{
+                $result = $resultA;
             }
         }//fim test array
         return $result;
