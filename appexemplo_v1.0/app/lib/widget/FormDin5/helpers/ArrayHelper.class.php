@@ -790,7 +790,6 @@ class ArrayHelper
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
                     $result = self::convertArrayFormDin2Adianti($arrayData,$changeCase,$upperCase);
                 }elseif($outputFormat == ArrayHelper::TYPE_PDO){
-                    throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
                     $result = self::convertArrayFormDin2PdoV2($arrayData,$changeCase,$upperCase);
                 }                
             }else{
