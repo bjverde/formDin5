@@ -415,7 +415,7 @@ class ArrayHelperTest extends TestCase
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTable();
         $array = $mock->generateTablePessoaPDO();
-        $retorno = ArrayHelper::convertArrayPdo2FormDin($array,ArrayHelper::TYPE_CASE_UPPER);
+        $retorno = ArrayHelper::convertArrayPdo2FormDin($array,PDO::CASE_UPPER);
         $this->assertEquals($esperado, $retorno);
     }
         
@@ -423,7 +423,7 @@ class ArrayHelperTest extends TestCase
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTablePessoaPDO();
         $array = $mock->generateTable();
-        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,ArrayHelper::TYPE_CASE_UPPER);
+        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,PDO::CASE_UPPER);
         $this->assertEquals($esperado, $retorno);
     }
 
@@ -461,7 +461,7 @@ class ArrayHelperTest extends TestCase
         $dadosPessoa['idpessoa']=1;
         $dadosPessoa['nmpessoa']='Joao Silva';
         $array[] = $dadosPessoa;    
-        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,ArrayHelper::TYPE_CASE_UPPER);
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,PDO::CASE_UPPER);
         $obj0 = $retorno[0];
         $this->assertEquals(1,  $obj0->IDPESSOA);
         $this->assertEquals('Joao Silva',  $obj0->NMPESSOA);
@@ -785,7 +785,7 @@ class ArrayHelperTest extends TestCase
         $dadosPessoa->idpessoa = 1;
         $dadosPessoa->nmpessoa = 'Joao Silva';
         $arrayData[] = $dadosPessoa;
-        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,ArrayHelper::TYPE_CASE_UPPER);
+        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,PDO::CASE_UPPER);
         $this->assertEquals(1, $retorno[0]['IDPESSOA']);
         $this->assertEquals('Joao Silva', $retorno[0]['NMPESSOA']);
     }
@@ -811,7 +811,7 @@ class ArrayHelperTest extends TestCase
         $dadosPessoa->idpessoa = 1;
         $dadosPessoa->nmpessoa = 'Joao Silva';
         $arrayData[] = $dadosPessoa;
-        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,ArrayHelper::TYPE_CASE_UPPER);
+        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,PDO::CASE_UPPER);
         $this->assertEquals(1, $retorno['IDPESSOA'][0]);
         $this->assertEquals('Joao Silva', $retorno['NMPESSOA'][0]);
     }

@@ -52,8 +52,6 @@ class ArrayHelper
     const TYPE_ADIANTI = 'ARRAY_TYPE_ADIANTI';
     const TYPE_ADIANTI_GRID_ACTION = 'ARRAY_TYPE_ADIANTI_GRID_ACTION_PARAMETERS';
 
-    const TYPE_CASE_UPPER    = 'TYPE_CASE_UPPER';
-
     public static function validateUndefined($array,$atributeName) 
     {
         if(!isset($array[$atributeName])) {
@@ -406,7 +404,7 @@ class ArrayHelper
      * Convert Array FormDin,PDO ou Adianti para Adianti Format (TYPE_ADIANTI)
      *
      * @param  array $array       - 01: Array
-     * @param  boolean $upperCase - 02: DEFAULT = PDO::CASE_NATURAL
+     * @param const $typeCase    - 02: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertArray2Adianti($dataArray,$typeCase = PDO::CASE_NATURAL) 
@@ -424,7 +422,7 @@ class ArrayHelper
      * Convert Array PDO Format (TYPE_PDO) to FormDin format (TYPE_FORMDIN)
      *
      * @param  array $array      - 01:
-     * @param  boolean $upperCase- 02: DEFAULT = PDO::CASE_NATURAL
+     * @param const $typeCase    - 02: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertArrayPdo2FormDin($dataArray,$typeCase = PDO::CASE_NATURAL) 
@@ -435,7 +433,7 @@ class ArrayHelper
                 foreach( $arr as $fieldName => $value ) {
                     if( $typeCase == PDO::CASE_NATURAL ){
                         $result[ $fieldName ][ $k ] = $value;
-                    }elseif($typeCase == ArrayHelper::TYPE_CASE_UPPER){
+                    }elseif($typeCase == PDO::CASE_UPPER){
                         $result[ strtoupper($fieldName) ][ $k ] = $value;
                     }else{
                         $result[ strtolower($fieldName) ][ $k ] = $value;
@@ -450,7 +448,7 @@ class ArrayHelper
      * Convert Array FormDin Format (TYPE_FORMDIN) to PDO format(TYPE_PDO)
      *
      * @param  array $array      - 01: Array FormDin4 
-     * @param  boolean $upperCase- 02: DEFAULT = PDO::CASE_NATURAL
+     * @param const $typeCase    - 02: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertArrayFormDin2Pdo($dataArray,$typeCase = PDO::CASE_NATURAL) 
@@ -463,7 +461,7 @@ class ArrayHelper
                 foreach( $listKeys as $keyName ) {
                     if( $typeCase == PDO::CASE_NATURAL ){
                         $result[ $keyNumber ][ $keyName ] = $dataArray[$keyName][$keyNumber];
-                    }elseif($typeCase == ArrayHelper::TYPE_CASE_UPPER){
+                    }elseif($typeCase == PDO::CASE_UPPER){
                         $result[ $keyNumber ][ strtoupper($keyName) ] = $dataArray[$keyName][$keyNumber];
                     }else{
                         $result[ $keyNumber ][ strtolower($keyName) ] = $dataArray[$keyName][$keyNumber];
@@ -478,7 +476,7 @@ class ArrayHelper
      * Convert Array FormDin Format to Adianti format
      *
      * @param  array $array      - 01: Array FormDin4 
-     * @param  boolean $upperCase- 02: DEFAULT = PDO::CASE_NATURAL
+     * @param const $typeCase    - 02: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertArrayFormDin2Adianti($dataArray,$typeCase = PDO::CASE_NATURAL) 
@@ -497,7 +495,7 @@ class ArrayHelper
      * Convert Array PDO format to Adianti format
      *
      * @param  array $array        - 1: Array FormDin4 
-     * @param  boolean $upperCase- 02: DEFAULT = PDO::CASE_NATURAL
+     * @param const $typeCase      - 2: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertArrayPDO2Adianti( $dataArray ,$typeCase = PDO::CASE_NATURAL ) 
@@ -508,7 +506,7 @@ class ArrayHelper
         }else{
             foreach( $dataArray as $key => $arrayInterno ) {
                 foreach( $arrayInterno as $atributo => $value ) {
-                    if($typeCase == ArrayHelper::TYPE_CASE_UPPER) {
+                    if($typeCase == PDO::CASE_UPPER) {
                         $resultPDO[ $key ][ strtoupper($atributo) ] = $value;
                     }else{
                         $resultPDO[ $key ][ strtolower($atributo) ] = $value;
@@ -733,7 +731,7 @@ class ArrayHelper
     /**
      * Converte um array Adianti para o Padrão FormDin
      * @param array $arrayData    - 1:
-     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, PDO::CASE_LOWER
+     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertAdianti2Pdo($arrayData,$typeCase = PDO::CASE_NATURAL){
@@ -755,7 +753,7 @@ class ArrayHelper
             }else{
                 foreach( $resultA as $key => $arrayInterno ) {
                     foreach( $arrayInterno as $atributo => $value ) {
-                        if($typeCase == ArrayHelper::TYPE_CASE_UPPER) {
+                        if($typeCase == PDO::CASE_UPPER) {
                             $result[ $key ][ strtoupper($atributo) ] = $value;
                         }else{
                             $result[ $key ][ strtolower($atributo) ] = $value;
@@ -770,7 +768,7 @@ class ArrayHelper
     /**
      * Converte um array Adianti para o Padrão FormDin
      * @param array $arrayData    - 1:
-     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, PDO::CASE_LOWER
+     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertAdianti2FormDin($arrayData,$typeCase = PDO::CASE_NATURAL){
@@ -783,7 +781,7 @@ class ArrayHelper
      * Detecta o tipo de array e converte para o formato de saída informado
      * @param array $arrayData    - 1:
      * @param const $outputFormat - 2: Type OutPut Format. Default = ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN
-     * @param const $typeCase     - 3: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, PDO::CASE_LOWER
+     * @param const $typeCase     - 3: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI,$typeCase = PDO::CASE_NATURAL){
