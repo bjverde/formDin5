@@ -850,8 +850,8 @@ class ArrayHelperTest extends TestCase
     public function testConvertArray2OutputFormat_FormDin2Pdo(){
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTable();
-        $esperado = $$mock->generateTablePessoaPDO();
-        $retorno = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO);
+        $esperado  = $mock->generateTablePessoaPDO();
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO);
         $this->assertEquals($esperado, $retorno);
     }     
 

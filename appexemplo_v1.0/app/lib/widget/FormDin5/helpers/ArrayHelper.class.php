@@ -772,24 +772,24 @@ class ArrayHelper
     public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI,$changeCase = false,$upperCase = false){
         $result = null;
         if( !empty($arrayData) ){
-            $inputFormt = self::getType($arrayData);
+            $inputFormat = self::getType($arrayData);
 
-            if($inputFormt == ArrayHelper::TYPE_ADIANTI){
+            if($inputFormat == ArrayHelper::TYPE_ADIANTI){
                 if( $outputFormat == ArrayHelper::TYPE_PDO ){
                     $result = self::convertAdianti2Pdo($arrayData,$changeCase,$upperCase);
-                }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
+                }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN){
                     $result = self::convertAdianti2FormDin($arrayData,$changeCase,$upperCase);
                 }
-            }elseif($inputFormt == ArrayHelper::TYPE_PDO){
+            }elseif($inputFormat == ArrayHelper::TYPE_PDO){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
                     $result = self::convertArrayPDO2Adianti($arrayData);
-                }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
+                }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN){
                     $result = self::convertArrayPdo2FormDin($arrayData,$upperCase);
                 }
-            }elseif($inputFormt == ArrayHelper::TYPE_FORMDIN){
+            }elseif($inputFormat == ArrayHelper::TYPE_FORMDIN){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
                     $result = self::convertArrayFormDin2Adianti($arrayData,$changeCase,$upperCase);
-                }elseif($inputFormt == ArrayHelper::TYPE_PDO){
+                }elseif($outputFormat == ArrayHelper::TYPE_PDO){
                     throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
                     $result = self::convertArrayFormDin2PdoV2($arrayData,$changeCase,$upperCase);
                 }                
