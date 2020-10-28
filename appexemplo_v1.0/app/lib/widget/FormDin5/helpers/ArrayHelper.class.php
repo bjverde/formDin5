@@ -53,8 +53,6 @@ class ArrayHelper
     const TYPE_ADIANTI_GRID_ACTION = 'ARRAY_TYPE_ADIANTI_GRID_ACTION_PARAMETERS';
 
     const TYPE_CASE_UPPER    = 'TYPE_CASE_UPPER';
-    const TYPE_CASE_LOWER    = PDO::CASE_LOWER;
-    const TYPE_CASE_NOCHANGE = PDO::CASE_NATURAL;
 
     public static function validateUndefined($array,$atributeName) 
     {
@@ -735,7 +733,7 @@ class ArrayHelper
     /**
      * Converte um array Adianti para o Padrão FormDin
      * @param array $arrayData    - 1:
-     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, ArrayHelper::TYPE_CASE_LOWER
+     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertAdianti2Pdo($arrayData,$typeCase = PDO::CASE_NATURAL){
@@ -772,7 +770,7 @@ class ArrayHelper
     /**
      * Converte um array Adianti para o Padrão FormDin
      * @param array $arrayData    - 1:
-     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, ArrayHelper::TYPE_CASE_LOWER
+     * @param const $typeCase     - 2: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertAdianti2FormDin($arrayData,$typeCase = PDO::CASE_NATURAL){
@@ -785,7 +783,7 @@ class ArrayHelper
      * Detecta o tipo de array e converte para o formato de saída informado
      * @param array $arrayData    - 1:
      * @param const $outputFormat - 2: Type OutPut Format. Default = ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN
-     * @param const $typeCase     - 3: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, ArrayHelper::TYPE_CASE_LOWER
+     * @param const $typeCase     - 3: Type Case. Default = PDO::CASE_NATURAL, ArrayHelper::TYPE_CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
     public static function convertArray2OutputFormat($arrayData,$outputFormat = ArrayHelper::TYPE_ADIANTI,$typeCase = PDO::CASE_NATURAL){

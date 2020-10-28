@@ -280,13 +280,6 @@ class TFormDinPdoConnection
         $outputFormat = $this->getOutputFormat();
         if( $outputFormat != $this->outputFormatDefault ){
             $case = $this->getCase();
-            if($case == PDO::CASE_NATURAL){
-                $case = ArrayHelper::TYPE_CASE_NOCHANGE;
-            }elseif($case == PDO::CASE_UPPER){
-                $case = ArrayHelper::TYPE_CASE_UPPER;
-            }else{
-                $case = ArrayHelper::TYPE_CASE_LOWER;
-            }
             $result = ArrayHelper::convertArray2OutputFormat($arrayData,$outputFormat,$case);
         }else{
             $result = $arrayData;

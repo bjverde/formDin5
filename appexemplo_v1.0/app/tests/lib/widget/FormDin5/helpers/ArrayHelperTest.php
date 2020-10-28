@@ -430,7 +430,7 @@ class ArrayHelperTest extends TestCase
     public function testConvertArrayFormDin2Pdo_lower() {
         $mock = new mockFormDinArray();
         $array = $mock->generateTable();
-        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,ArrayHelper::TYPE_CASE_LOWER);
+        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,PDO::CASE_LOWER);
         $this->assertEquals('Joao Silva', $retorno[0]['nmpessoa']);
     }
 
@@ -452,7 +452,7 @@ class ArrayHelperTest extends TestCase
     public function testConvertArrayPDOAdianti_lower() {
         $mock = new mockFormDinArray();
         $array = $mock->generateTablePessoaPDO();    
-        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,ArrayHelper::TYPE_CASE_LOWER);
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,PDO::CASE_LOWER);
         $obj0 = $retorno[0];
         $this->assertEquals(1,  $obj0->idpessoa);
         $this->assertEquals('Joao Silva',  $obj0->nmpessoa);
@@ -776,7 +776,7 @@ class ArrayHelperTest extends TestCase
     public function testConvertAdianti2Pdo_lowerCase(){
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTablePessoaAdianti();
-        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,ArrayHelper::TYPE_CASE_LOWER);
+        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,PDO::CASE_LOWER);
         $this->assertEquals(1, $retorno[0]['idpessoa']);
         $this->assertEquals('Joao Silva', $retorno[0]['nmpessoa']);
     }
@@ -802,7 +802,7 @@ class ArrayHelperTest extends TestCase
     public function testConvertAdianti2FormDin_lowerCase(){
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTablePessoaAdianti();
-        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,ArrayHelper::TYPE_CASE_LOWER);
+        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,PDO::CASE_LOWER);
         $this->assertEquals(1, $retorno['idpessoa'][0]);
         $this->assertEquals('Joao Silva', $retorno['nmpessoa'][0]);
     }
