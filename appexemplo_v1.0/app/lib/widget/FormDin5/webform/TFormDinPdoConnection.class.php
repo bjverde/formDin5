@@ -54,6 +54,8 @@ class TFormDinPdoConnection
     private $fech = null;
     private $case = null;
     private $outputFormat = null;
+    private $outputFormatDefault = ArrayHelper::TYPE_ADIANTI;
+    private $caseDefault = PDO::CASE_NATURAL;
 
 
     private $host;
@@ -119,7 +121,7 @@ class TFormDinPdoConnection
     public function setCase($case)
     {
         if(empty($case)){
-            $case = PDO::CASE_NATURAL;
+            $case = $this->caseDefault;
         }
         $this->case = $case;
     }
@@ -130,12 +132,12 @@ class TFormDinPdoConnection
 
     /**
      * Determina o tipo array das consultas
-     * @param const $outputMode: Default = ArrayHelper::TYPE_PDO. ArrayHelper::TYPE_FORMDIN, ArrayHelper::TYPE_ADIANTI
+     * @param const $outputMode: Default = ArrayHelper::TYPE_ADIANTI. ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN
      */
     public function setOutputFormat($outputFormat)
     {
         if(empty($outputFormat)){
-            $outputFormat = ArrayHelper::TYPE_PDO;
+            $outputFormat = $this->outputFormatDefault;
         }
         $this->outputFormat = $outputFormat;
     }
@@ -276,7 +278,7 @@ class TFormDinPdoConnection
     public function convertArrayResult($arrayData)
     {
         $outputFormat = $this->getOutputFormat();
-        if( $outputFormat != ArrayHelper::TYPE_PDO ){
+        if( $outputFormat != $this->outputFormatDefault ){
             $case = $this->getCase();
             if($case == PDO::CASE_NATURAL){
                 $case = ArrayHelper::TYPE_CASE_NOCHANGE;
@@ -346,7 +348,7 @@ class TFormDinPdoConnection
      * @codeCoverageIgnore
      * Faz um Select usando o TCriteria
      * @param TCriteria $criteria    - 01: Obj TCriteria
-     * @param string $repositoryName - 02: nome de classe
+     * @param string $repositoryName - 02: nome de classe em app/model
      * @return array Adianti
      */    
     public function selectByTCriteria(TCriteria $criteria=null, $repositoryName=null)
@@ -359,7 +361,7 @@ class TFormDinPdoConnection
             TTransaction::open($database,$db); // abre uma transação
             $repository = new TRepository($repositoryName);
             $collections = $repository->load($criteria);
-            //$collections = $this->convertArrayResult($collections);
+            $collections = $this->convertArrayResult($collections);
             TTransaction::close();         // fecha a transação.
             return $collections;
         }
