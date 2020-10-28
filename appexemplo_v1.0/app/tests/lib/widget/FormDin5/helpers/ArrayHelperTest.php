@@ -812,6 +812,11 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::convertArray2OutputFormat($arrayData);
         $this->assertEquals($esperado, $retorno);
     }
+    public function testConvertArray2OutputFormat_String(){
+        $this->expectException(InvalidArgumentException::class);
+        $arrayData = 'texto blabl' ;
+        ArrayHelper::convertArray2OutputFormat($arrayData);
+    }
     public function testConvertArray2OutputFormat_Adianti2PDO(){
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTablePessoaAdianti();
