@@ -251,8 +251,9 @@ class ArrayHelper
     }
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------    
+    //--------------------------------------------------------------------------------
     /**
+     * @codeCoverageIgnore
      * Mostra um exemplo do tipo de array ou string conforme a constente informada
      *  - TYPE_FORMDIN = array no formato FormDin
      *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE' ou 'KEY=>VALUE,KEY=>VALUE'

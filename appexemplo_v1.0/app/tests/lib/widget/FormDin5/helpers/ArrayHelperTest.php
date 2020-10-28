@@ -427,6 +427,13 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals($esperado, $retorno);
     }
 
+    public function testConvertArrayFormDin2Pdo_lower() {
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTable();
+        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,ArrayHelper::TYPE_CASE_LOWER);
+        $this->assertEquals('Joao Silva', $retorno[0]['nmpessoa']);
+    }
+
     public function testConvertArrayFormDin2Adianti_NoChangeCase() {
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTablePessoaAdianti();
