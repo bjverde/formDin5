@@ -264,7 +264,7 @@ class TFormDinPdoConnection
                 $result = '3306';
             break;
             case self::DBMS_SQLSERVER:
-                $$result = '1433';
+                $result = '1433';
             break;
             case self::DBMS_ORACLE:
                 $result = '1521';
@@ -276,12 +276,23 @@ class TFormDinPdoConnection
     public function convertArrayResult($arrayData)
     {
         $outputFormat = $this->getOutputFormat();
-        $result = ArrayHelper::convertArray2OutputFormat($arrayData,$outputFormat);
+        if( $outputFormat != ArrayHelper::TYPE_PDO ){
+            $case = $this->getCase();
+            if($case == PDO::CASE_NATURAL){
+                $case = ArrayHelper::TYPE_CASE_NOCHANGE;
+            }elseif($case == PDO::CASE_UPPER){
+                $case = ArrayHelper::TYPE_CASE_UPPER;
+            }else{
+                $case = ArrayHelper::TYPE_CASE_LOWER;
+            }
+            $result = ArrayHelper::convertArray2OutputFormat($arrayData,$outputFormat,$case);
+        }else{
+            $result = $arrayData;
+        }        
         return $result;
     }
 
     /**
-     * @codeCoverageIgnore
      * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
      * se a operação foi bem sucedida.
      *
@@ -305,7 +316,7 @@ class TFormDinPdoConnection
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
             $stmt = $conn->query($sql);    // realiza a consulta
             $result = $stmt->fetchall();
-            //$result = $this->convertArrayResult($result);
+            $result = $this->convertArrayResult($result);
             TTransaction::close();         // fecha a transação.
             return $result;
         }
