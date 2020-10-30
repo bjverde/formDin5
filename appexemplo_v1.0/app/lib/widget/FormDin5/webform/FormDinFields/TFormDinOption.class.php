@@ -82,24 +82,27 @@ class TFormDinOption  extends TFormDinGenericField
 	 *
 	 * $strDisplayColumn = nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
 	 *
-	 * @abstract
-	 * @param string $strName          - 1:
-	 * @param array $mixOptions        - 2: array no formato "key=>value" ou nome do pacote oracle e da função a ser executada
-	 * @param array $arrValues         - 3: array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
-	 * @param boolean $boolRequired    - 4:
-	 * @param integer $intQtdColumns   - 5:
-	 * @param integer $intWidth        - 6:
-	 * @param integer $intHeight       - 7:
-	 * @param integer $intPaddingItems - 8: numero inteiro para definir o espaço vertical entre as colunas de opções
-	 * @param boolean $boolMultiSelect - 9: Default FALSE = SingleSelect, TRUE = MultiSelect
-	 * @param string $strInputType     -10: define o tipo de input a ser gerado. Ex: select, radio ou check
-	 * @param string $strKeyField      -11: Nome da coluna que será utilizada para preencher os valores das opções
-	 * @param string $strDisplayField  -12: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-	 * @param boolean $boolNowrapText  -13:
-	 * @param string $strDataColumns   -14: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+	 * @param object $objAdiantiField  -01: Objeto de campo do Adianti
+	 * @param string $id               -02: ID do campo
+	 * @param string  $strLabel        -03: Label do campo
+	 * @param boolean $boolRequired    -04: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
+	 * @param array $mixOptions        -05: array no formato "key=>value" ou nome do pacote oracle e da função a ser executada
+	 * @param array $arrValues         -06: array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
+	 * @param boolean $boolRequired    -07:
+	 * @param integer $intQtdColumns   -09:
+	 * @param integer $intWidth        -10:
+	 * @param integer $intHeight       -09:
+	 * @param integer $intPaddingItems -10: numero inteiro para definir o espaço vertical entre as colunas de opções
+	 * @param boolean $boolMultiSelect -10: Default FALSE = SingleSelect, TRUE = MultiSelect
+	 * @param string $strInputType     -11: define o tipo de input a ser gerado. Ex: select, radio ou check
+	 * @param string $strKeyField      -12: Nome da coluna que será utilizada para preencher os valores das opções
+	 * @param string $strDisplayField  -13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+	 * @param boolean $boolNowrapText  -14:
+	 * @param string $strDataColumns   -15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
 	 * @return TOption
 	 */
-	public function __construct( $strName
+	public function __construct( $adiantiObj
+							   , $strName
 	                           , $mixOptions
 	                           , $arrValues=null
 	                           , $boolRequired=null
@@ -115,6 +118,7 @@ class TFormDinOption  extends TFormDinGenericField
                         	   , $strDataColumns=null 
                         	   )
 	{
+		parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
 		parent::__construct( 'div', $strName );
 		$this->setValue( $arrValues );
 		$this->setRequired( $boolRequired );
