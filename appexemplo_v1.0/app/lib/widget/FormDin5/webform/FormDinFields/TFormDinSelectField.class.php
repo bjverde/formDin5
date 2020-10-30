@@ -85,7 +85,7 @@ class TFormDinSelectField  extends TFormDinGenericField
      *  $frm->addSelectField('tipo','Tipo',true,$tiposDocumentos,null,null,null,null,null,null,' ','');
      * </code>
      *
-     * @param string  $strName        - 1: ID do campo
+     * @param string  $id             - 1: ID do campo
      * @param string  $strLabel       - 2: Label do campo
      * @param boolean $boolRequired   - 3: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
      * @param mixed   $mixOptions     - 4: String "S=SIM,N=NAO,..." ou Array dos valores. Nos formatos: PHP "id=>value", FormDin ou Adianti
@@ -105,22 +105,22 @@ class TFormDinSelectField  extends TFormDinGenericField
      * @return TCombo
      */
     public function __construct(string $id
-                                ,string $label
-                                ,$boolRequired = false
-                                ,array $mixOptions
-                                ,$boolNewLine = true
-                                ,$boolLabelAbove = false
-                                ,$mixValue = null
-                                ,$boolMultiSelect = false
-                                ,$intSize = null
-                                ,$intWidth = null
-                                ,$strFirstOptionText = null
-                                ,$strFirstOptionValue = null
-                                ,$strKeyColumn = null
-                                ,$strDisplayColumn = null
-                                ,$boolNoWrapLabel = null
-                                ,$strDataColumns = null
-                                )
+                               ,string $label
+                               ,$boolRequired = false
+                               ,array $mixOptions
+                               ,$boolNewLine = true
+                               ,$boolLabelAbove = false
+                               ,$mixValue = null
+                               ,$boolMultiSelect = false
+                               ,$intSize = null
+                               ,$intWidth = null
+                               ,$strFirstOptionText = null
+                               ,$strFirstOptionValue = null
+                               ,$strKeyColumn = null
+                               ,$strDisplayColumn = null
+                               ,$boolNoWrapLabel = null
+                               ,$strDataColumns = null
+                               )
     {
         $boolMultiSelect = is_null($boolMultiSelect)?false:$boolMultiSelect;
         $this->setMultiSelect($boolMultiSelect);
