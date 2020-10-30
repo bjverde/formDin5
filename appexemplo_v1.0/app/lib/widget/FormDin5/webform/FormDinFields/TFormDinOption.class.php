@@ -79,40 +79,41 @@ class TFormDinOption  extends TFormDinGenericField
     
 	/**
 	 * Método construtor
-	 *
 	 * $strDisplayColumn = nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-	 *
+	 * 
 	 * @param object  $objAdiantiField -01: Objeto de campo do Adianti
 	 * @param string  $id              -02: ID do campo
 	 * @param string  $label           -03: Label do campo
 	 * @param boolean $boolRequired    -04: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
 	 * @param mixed   $mixOptions      -05: String "S=SIM,N=NAO,..." ou Array dos valores. Nos formatos: PHP "id=>value", FormDin ou Adianti
-	 * @param boolean $boolLabelAbove  -06: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-	 * @param array   $arrValues       -07: Informe o ID do array. Array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
-	 * @param integer $intQtdColumns   -08:
-	 * @param integer $intWidth        -09:
-	 * @param integer $intHeight       -10:
-	 * @param integer $intPaddingItems -11: numero inteiro para definir o espaço vertical entre as colunas de opções
-	 * @param boolean $boolMultiSelect -12: Default FALSE = SingleSelect, TRUE = MultiSelect
-	 * @param string $strInputType     -13: define o tipo de input a ser gerado. Ex: select, radio ou check
-	 * @param string $strKeyField      -14: Nome da coluna que será utilizada para preencher os valores das opções
-	 * @param string $strDisplayField  -15: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-	 * @param boolean $boolNowrapText  -16:
-	 * @param string $strDataColumns   -17: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
-	 * @return TOption
+	 * @param boolean $boolNewLine     -06: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+	 * @param boolean $boolLabelAbove  -07: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+	 * @param array   $arrValues       -08: Informe o ID do array. Array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
+	 * @param boolean $boolMultiSelect -09: Default FALSE = SingleSelect, TRUE = MultiSelect
+	 * @param integer $intQtdColumns   -10: Default 1. Num itens que irão aparecer no MultiSelect
+	 * @param integer $intWidth        -11:
+	 * @param integer $intHeight       -12: Largura em Pixels
+	 * @param integer $intPaddingItems -13: Numero inteiro para definir o espaço vertical entre as colunas de opções
+	 * @param string  $strInputType    -14: Define o tipo de input a ser gerado. Ex: select, radio ou check
+	 * @param string  $strKeyField     -15: Nome da coluna que será utilizada para preencher os valores das opções
+	 * @param string  $strDisplayField -16: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+	 * @param boolean $boolNowrapText  -17:
+	 * @param string  $strDataColumns  -18: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+	 * @return TFormDinOption
 	 */
 	public function __construct( $adiantiObj
 							   , string $id
 							   , string $label
 	                           , $boolRequired=null
 							   , $mixOptions
-							   , $boolLabelAbove
+							   , $boolNewLine=null
+							   , $boolLabelAbove=null
 	                           , $arrValues=null
+                        	   , $boolMultiSelect=null
                         	   , $intQtdColumns=null
                         	   , $intWidth=null
                         	   , $intHeight=null
                         	   , $intPaddingItems=null
-                        	   , $boolMultiSelect=null
                         	   , $strInputType=null
                         	   , $strKeyField=null
                         	   , $strDisplayField=null
@@ -120,23 +121,21 @@ class TFormDinOption  extends TFormDinGenericField
                         	   , $strDataColumns=null 
                         	   )
 	{
+		$value = is_null($mixValue)?$strFirstOptionValue:$mixValue;
 		parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
-		parent::__construct( 'div', $strName );
 		$this->setValue( $arrValues );
 		$this->setRequired( $boolRequired );
 		$this->setQtdColumns( $intQtdColumns );
 		$this->setPaddingItems( $intPaddingItems );
 		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );
-		$this->setMultiSelect( $boolMultiSelect );
-		$this->setCss( 'border',  '1px solid #c0c0c0' ); //#176 relacionado com FormDin4.js
-		//$this->setClass('fwFieldBoarder');
-		$this->setCss( 'display', 'inline' );
+
 		$this->setWidth( $intWidth );
 		$this->setHeight( $intHeight );
 		$this->setKeyField( $strKeyField );
 		$this->setDisplayField( $strDisplayField );
 		$this->setOptions( $mixOptions, $strDisplayField, $strKeyField, null, $strDataColumns );
 		$this->setNowrapText($boolNowrapText);
+
 		// tratamento para campos selects postados das colunas tipo do TGrid onde os nomes são arrays
 		if( $this->getFieldType() == self::SELECT && strpos( $this->getName(), '[' ) !== false ) {
 	   	   $name = $this->getName();
@@ -157,7 +156,36 @@ class TFormDinOption  extends TFormDinGenericField
 			$this->setValue( $_POST[ $this->getId() ] );
 		}
 	}
-
+	//-------------------------------------------------
+	public function setKeyField( $strNewValue=null )
+	{
+		$this->keyField = $strNewValue;
+		return $this;
+	}	
+	public function getKeyField()
+	{
+		return $this->keyField;
+	}
+	//-----------------------------------------------------------------------
+	public function setDisplayField( $strNewValue=null )
+	{
+		$this->displayField = $strNewValue;
+		return $this;
+	}
+	public function getDisplayField()
+	{
+		return $this->displayField;
+	}
+	//-------------------------------------------------------------------------
+	public function setFieldType( $newFieldType )
+	{
+		$this->fldType=$newFieldType;
+		return $this;
+	}
+	public function getFieldType(){ 
+		return $this->fldType; 
+	}
+	//-----------------------------------------------------------------------
 	/**
 	 * Define um array no formato "key=>value" ou string no formato "S=SIM,N=NAO,..." ou
 	 * o nome de um pacoteFunção para recuperar do banco de dados, neste
@@ -193,25 +221,18 @@ class TFormDinOption  extends TFormDinGenericField
 				if( key( $mixOptions ) && is_array( $mixOptions[ key( $mixOptions ) ] ) )
 				{
 					// assumir a primeira e segunda coluna para popular as opções caso não tenha sido informadas
-					if( !isset( $strKeyField ) )
-					{
-						if( !$this->getKeyField() )
-						{
+					if( !isset( $strKeyField ) ){
+						if( !$this->getKeyField() ){
 							list($strKeyField) = array_keys( $mixOptions );
-						}
-						else
-						{
+						}else{
 							$strKeyField = $this->getKeyField();
 						}
 					}
 					if( !isset( $strDisplayField ) )
 					{
-						if( !$this->getDisplayField() )
-						{
+						if( !$this->getDisplayField() ){
 							list(, $strDisplayField) = array_keys( $mixOptions );
-						}
-						else
-						{
+						} else {
 							$strDisplayField = $this->getDisplayField();
 						}
 						if( !isset( $strDisplayField ) )
@@ -242,16 +263,11 @@ class TFormDinOption  extends TFormDinGenericField
 									foreach($arrDataColumns as $colName )
 									{
 										$value='';
-										if( isset( $mixOptions[$colName][$k] ) )
-										{
+										if( isset( $mixOptions[$colName][$k] ) ){
 											$value = $mixOptions[$colName][$k];
-										}
-										elseif( isset( $mixOptions[strtoupper($colName) ][$k] ) )
-										{
+										} elseif( isset( $mixOptions[strtoupper($colName) ][$k] ) ){
 											$value = $mixOptions[strtoupper($colName) ][$k];
-										}
-										elseif( isset( $mixOptions[strtolower($colName) ][$k] ) )
-										{
+										} elseif( isset( $mixOptions[strtolower($colName) ][$k] ) ){
 											$value = $mixOptions[strtolower($colName)][$k];
 										}
 										$value = $this->specialChars2htmlEntities( $value );
@@ -259,12 +275,10 @@ class TFormDinOption  extends TFormDinGenericField
 										$this->arrOptionsData[$v]['data-'.strtolower($colName)] = $value;
 									}
 								}
-							}
+							}//Fim ForEach
 						}
 					}
-				}
-				else
-				{
+				} else {
 					$this->arrOptions = $mixOptions;
 				}
 			}
