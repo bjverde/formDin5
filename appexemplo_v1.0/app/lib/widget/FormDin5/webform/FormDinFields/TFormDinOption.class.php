@@ -82,30 +82,32 @@ class TFormDinOption  extends TFormDinGenericField
 	 *
 	 * $strDisplayColumn = nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
 	 *
-	 * @param object $objAdiantiField  -01: Objeto de campo do Adianti
-	 * @param string $id               -02: ID do campo
-	 * @param string  $strLabel        -03: Label do campo
+	 * @param object  $objAdiantiField -01: Objeto de campo do Adianti
+	 * @param string  $id              -02: ID do campo
+	 * @param string  $label           -03: Label do campo
 	 * @param boolean $boolRequired    -04: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
-	 * @param array $mixOptions        -05: array no formato "key=>value" ou nome do pacote oracle e da função a ser executada
-	 * @param array $arrValues         -06: array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
-	 * @param boolean $boolRequired    -07:
-	 * @param integer $intQtdColumns   -09:
-	 * @param integer $intWidth        -10:
-	 * @param integer $intHeight       -09:
-	 * @param integer $intPaddingItems -10: numero inteiro para definir o espaço vertical entre as colunas de opções
-	 * @param boolean $boolMultiSelect -10: Default FALSE = SingleSelect, TRUE = MultiSelect
-	 * @param string $strInputType     -11: define o tipo de input a ser gerado. Ex: select, radio ou check
-	 * @param string $strKeyField      -12: Nome da coluna que será utilizada para preencher os valores das opções
-	 * @param string $strDisplayField  -13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-	 * @param boolean $boolNowrapText  -14:
-	 * @param string $strDataColumns   -15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+	 * @param mixed   $mixOptions      -05: String "S=SIM,N=NAO,..." ou Array dos valores. Nos formatos: PHP "id=>value", FormDin ou Adianti
+	 * @param boolean $boolLabelAbove  -06: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+	 * @param array   $arrValues       -07: Informe o ID do array. Array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
+	 * @param integer $intQtdColumns   -08:
+	 * @param integer $intWidth        -09:
+	 * @param integer $intHeight       -10:
+	 * @param integer $intPaddingItems -11: numero inteiro para definir o espaço vertical entre as colunas de opções
+	 * @param boolean $boolMultiSelect -12: Default FALSE = SingleSelect, TRUE = MultiSelect
+	 * @param string $strInputType     -13: define o tipo de input a ser gerado. Ex: select, radio ou check
+	 * @param string $strKeyField      -14: Nome da coluna que será utilizada para preencher os valores das opções
+	 * @param string $strDisplayField  -15: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+	 * @param boolean $boolNowrapText  -16:
+	 * @param string $strDataColumns   -17: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
 	 * @return TOption
 	 */
 	public function __construct( $adiantiObj
-							   , $strName
-	                           , $mixOptions
-	                           , $arrValues=null
+							   , string $id
+							   , string $label
 	                           , $boolRequired=null
+							   , $mixOptions
+							   , $boolLabelAbove
+	                           , $arrValues=null
                         	   , $intQtdColumns=null
                         	   , $intWidth=null
                         	   , $intHeight=null
