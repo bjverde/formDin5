@@ -249,8 +249,9 @@ class TFormDinOption  extends TFormDinGenericField
 			}
 
 			$this->arrOptions = null;
-			if( is_array( $mixOptions ) )
-			{
+			if( is_array( $mixOptions ) ) {
+
+				//$mixOptions      = ArrayHelper::convertArray2OutputFormat($mixOptions,ArrayHelper::TYPE_FORMDIN);
 				// verificar se o array está no formato oracle
 				if( key( $mixOptions ) && is_array( $mixOptions[ key( $mixOptions ) ] ) )
 				{
@@ -262,20 +263,21 @@ class TFormDinOption  extends TFormDinGenericField
 							$strKeyField = $this->getKeyField();
 						}
 					}
-					if( !isset( $strDisplayField ) )
-					{
+
+					if( !isset( $strDisplayField ) ) {
+
 						if( !$this->getDisplayField() ){
 							list(, $strDisplayField) = array_keys( $mixOptions );
 						} else {
 							$strDisplayField = $this->getDisplayField();
 						}
-						if( !isset( $strDisplayField ) )
-						{
+
+						if( !isset( $strDisplayField ) ) {
 							$strDisplayField = $strKeyField;
 						}
 					}
-					if( $strKeyField && $strDisplayField )
-					{
+
+					if( $strKeyField && $strDisplayField ) {
 						// reconhecer nome da columa em caixa baixa ou alta
 						if( !array_key_exists( $strKeyField, $mixOptions ) )
 						{
