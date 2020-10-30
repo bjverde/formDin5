@@ -73,12 +73,15 @@ class TFormDinHiddenFieldTest extends TestCase
         $this->assertInstanceOf(THidden::class, $adiantiObj);
     }
 
-    public function test_SetValeu()
+    public function test_GeValeuNull()
     {
-        $expect = 'lalala';
-        $this->classTest->setValue($expect);
         $result = $this->classTest->getValue();
-        $this->assertEquals($expect, $result);
+        $this->assertEquals(null, $result);
     }
 
+    public function test_Required()
+    {
+        $result = $this->classTest->isRequired();
+        $this->assertEquals(false, $result);
+    }
 }

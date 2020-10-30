@@ -103,4 +103,16 @@ class TFormDinOptionTest extends TestCase
         $result = $this->classTest->getQtdColumns();
         $this->assertEquals(3, $result);
     }
+
+    public function testFieldType_null()
+    {
+        $result = $this->classTest->getFieldType();
+        $this->assertEquals(TFormDinOption::SELECT, $result);
+    }
+    public function testFieldType_Radio()
+    {
+        $this->classTest->setFieldType(TFormDinOption::RADIO);
+        $result = $this->classTest->getFieldType();
+        $this->assertEquals(TFormDinOption::RADIO, $result);
+    }
 }
