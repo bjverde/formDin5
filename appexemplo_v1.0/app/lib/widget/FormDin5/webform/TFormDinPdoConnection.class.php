@@ -95,10 +95,20 @@ class TFormDinPdoConnection
         return $this->database;
     }
 
+    /**
+     * Defini ao case do array de retorno. Veja 
+     * https://www.php.net/manual/pt_BR/pdostatement.fetch.php
+     * 
+     * PDO::FETCH_ASSOC - array simples
+     * PDO::FETCH_OBJ   - array de Objeto
+     *
+     * @param @param const $case. DEFAULT = PDO::FETCH_OBJ
+     * @return void
+     */    
     public function setFech($fech)
     {
         if(empty($fech)){
-            $fech = PDO::FETCH_ASSOC;
+            $fech = PDO::FETCH_OBJ;
         }
         $this->fech = $fech;
     }

@@ -148,6 +148,7 @@ class TFormDinPdoConnectionTest extends TestCase
         $name = $path.'database/bdApoio.s3db';
         $this->classTest->setName($name);
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setFech(PDO::FETCH_ASSOC);
         $this->classTest->setCase(PDO::CASE_UPPER);
         $sql = 'select * from dado_apoio order by seq_dado_apoio';
         $result = $this->classTest->executeSql($sql);
@@ -164,6 +165,7 @@ class TFormDinPdoConnectionTest extends TestCase
         $name = $path.'database/bdApoio.s3db';
         $this->classTest->setName($name);
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setFech(PDO::FETCH_ASSOC);
         $this->classTest->setCase(PDO::CASE_LOWER);
         $sql = 'select * from dado_apoio order by seq_dado_apoio';
         $result = $this->classTest->executeSql($sql);
