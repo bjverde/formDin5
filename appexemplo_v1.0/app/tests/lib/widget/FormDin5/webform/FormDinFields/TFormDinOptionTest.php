@@ -115,4 +115,29 @@ class TFormDinOptionTest extends TestCase
         $result = $this->classTest->getFieldType();
         $this->assertEquals(TFormDinOption::RADIO, $result);
     }
+
+    public function testGetOptions_formDin()
+    {
+        $esperado = array();
+        $esperado[1]='Joao Silva';
+        $esperado[2]='Maria Laranja';
+        $esperado[3]='Dell';
+        $esperado[4]='Microsoft';
+        $result = $this->classTest->getOptions();
+        $this->assertEquals($esperado, $result);
+    }
+
+    public function testGetOptions_PDO()
+    {
+        $esperado = array();
+        $esperado[1]='Joao Silva';
+        $esperado[2]='Maria Laranja';
+        $esperado[3]='Dell';
+        $esperado[4]='Microsoft';
+        $mock = new mockFormDinArray ();
+        $mixOptions = $mock->generateTablePessoaPDO();
+
+        $result = $this->classTest->getOptions();
+        $this->assertEquals($esperado, $result);
+    }
 }

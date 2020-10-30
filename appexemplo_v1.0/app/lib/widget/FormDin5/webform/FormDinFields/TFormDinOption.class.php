@@ -76,6 +76,10 @@ class TFormDinOption  extends TFormDinGenericField
 	private $showMinimal;
 	private $nowWrapText;
 	private $arrOptionsData;
+
+	private $mixOptions;
+	private $mixSearchFields;
+	private $dataColumns;
     
 	/**
 	 * Método construtor
@@ -118,10 +122,14 @@ class TFormDinOption  extends TFormDinGenericField
 		parent::__construct($adiantiObj,$id,$label,$boolRequired,null,null);
 
 		$this->setQtdColumns( $intQtdColumns );
-		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );
-		$this->setKeyField( $strKeyField );
+		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );		
+
+		$this->setMixOptions( $mixOptions );
 		$this->setDisplayField( $strDisplayField );
-		$this->setOptions( $mixOptions, $strDisplayField, $strKeyField, null, $strDataColumns );
+		$this->setKeyField( $strKeyField );
+		$this->setSearchFields( null );
+		$this->setDataColumns( $strDataColumns );
+		$this->transformOptions();
 		$this->setNowrapText($boolNowrapText);
 
 	}
@@ -182,6 +190,33 @@ class TFormDinOption  extends TFormDinGenericField
 	public function getNowrapText()
 	{
 		return $this->nowWrapText === true? true: false;
+	}
+	//-------------------------------------------------------------------------	
+	public function setMixOptions($mixOptions = null )
+	{
+		$this->mixOptions = $mixOptions;
+	}
+	public function getMixOptions()
+	{
+		return $this->mixOptions;
+	}
+	//-------------------------------------------------------------------------	
+	public function setSearchFields($mixSearchFields = null )
+	{
+		$this->mixSearchFields = $mixSearchFields;
+	}
+	public function getSearchFields()
+	{
+		return $this->mixSearchFields;
+	}
+	//-------------------------------------------------------------------------	
+	public function setDataColumns($strDataColumns = null )
+	{
+		$this->dataColumns = $strDataColumns;
+	}
+	public function getDataColumns()
+	{
+		return $this->dataColumns;
 	}	
 	//-----------------------------------------------------------------------
 	/**
@@ -193,14 +228,15 @@ class TFormDinOption  extends TFormDinGenericField
 	 * Ex: $mixSearchFields="cod_uf=53,num_pessoa=20" ou array('COD_UF'=53,'NUM_PESSOA'=>20)
 	 * Ex: $strDataColumns = "cod_uf,sig_uf,cod_regiao"
 	 *
-	 * @param mixed $mixOptions
-	 * @param string $strDisplayField
-	 * @param string $strKeyField
-	 * @param mixed $mixSearchFields
-	 * @param string $strDataColumns
 	 */
-	public function setOptions( $mixOptions=null, $strDisplayField=null, $strKeyField=null, $mixSearchFields=null, $strDataColumns=null )
+	public function transformOptions()
 	{
+		$mixOptions      = $this->getMixOptions();
+		$strDisplayField = $this->getDisplayField();
+		$strKeyField     = $this->getKeyField();
+		$mixSearchFields = $this->getSearchFields();
+		$strDataColumns  = $this->getDataColumns();
+
 		if( isset( $mixOptions ) ) {
 
 			if( !is_null($strDataColumns) && trim( $strDataColumns) != '' ) {
