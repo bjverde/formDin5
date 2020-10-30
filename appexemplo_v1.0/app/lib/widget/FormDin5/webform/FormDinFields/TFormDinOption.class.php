@@ -50,7 +50,7 @@
  * NOT_IMPLEMENTED = Parâmetro não implementados, talvez funcione em 
  *                   verões futuras do FormDin. Não vai fazer nada
  * DEPRECATED = Parâmetro que não vai funcionar no Adianti e foi mantido
- *              para o impacto sobre as migrações. Vai gerar um Warning
+ *              para diminuir o impacto sobre as migrações. Vai gerar um Warning
  * FORMDIN5 = Parâmetro novo disponivel apenas na nova versão
  * ------------------------------------------------------------------------
  * 
@@ -64,7 +64,7 @@ class TFormDinOption  extends TFormDinGenericField
 	const SELECT = 'select';
 	
 	private $arrOptions;
-	private $arrValues;
+	private $mixValue;
 	//private $required;
 	private $qtdColunms;
 	private $columns;
@@ -85,20 +85,17 @@ class TFormDinOption  extends TFormDinGenericField
 	 * @param string  $id              -02: ID do campo
 	 * @param string  $label           -03: Label do campo
 	 * @param boolean $boolRequired    -04: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
-	 * @param mixed   $mixOptions      -05: String "S=SIM,N=NAO,..." ou Array dos valores. Nos formatos: PHP "id=>value", FormDin ou Adianti
+	 * @param mixed   $mixOptions      -05: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: PHP "id=>value", FormDin, PDO ou Adianti
 	 * @param boolean $boolNewLine     -06: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
 	 * @param boolean $boolLabelAbove  -07: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-	 * @param array   $arrValues       -08: Informe o ID do array. Array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
+	 * @param array   $mixValue        -08: Informe o ID do array ou array com a lista de ID's no formato "key=>id" para identificar a(s) opção(ões) selecionada(s)
 	 * @param boolean $boolMultiSelect -09: Default FALSE = SingleSelect, TRUE = MultiSelect
 	 * @param integer $intQtdColumns   -10: Default 1. Num itens que irão aparecer no MultiSelect
-	 * @param integer $intWidth        -11:
-	 * @param integer $intHeight       -12: Largura em Pixels
-	 * @param integer $intPaddingItems -13: Numero inteiro para definir o espaço vertical entre as colunas de opções
-	 * @param string  $strInputType    -14: Define o tipo de input a ser gerado. Ex: select, radio ou check
-	 * @param string  $strKeyField     -15: Nome da coluna que será utilizada para preencher os valores das opções
-	 * @param string  $strDisplayField -16: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-	 * @param boolean $boolNowrapText  -17:
-	 * @param string  $strDataColumns  -18: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+	 * @param string  $strInputType    -11: Define o tipo de input a ser gerado. Ex: select, radio ou check
+	 * @param string  $strKeyField     -13: Nome da coluna que será utilizada para preencher os valores das opções
+	 * @param string  $strDisplayField -13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+	 * @param boolean $boolNowrapText  -14:
+	 * @param string  $strDataColumns  -15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
 	 * @return TFormDinOption
 	 */
 	public function __construct( $adiantiObj
@@ -108,12 +105,9 @@ class TFormDinOption  extends TFormDinGenericField
 							   , $mixOptions
 							   , $boolNewLine=null
 							   , $boolLabelAbove=null
-	                           , $arrValues=null
+	                           , $mixValue=null
                         	   , $boolMultiSelect=null
                         	   , $intQtdColumns=null
-                        	   , $intWidth=null
-                        	   , $intHeight=null
-                        	   , $intPaddingItems=null
                         	   , $strInputType=null
                         	   , $strKeyField=null
                         	   , $strDisplayField=null
@@ -121,39 +115,17 @@ class TFormDinOption  extends TFormDinGenericField
                         	   , $strDataColumns=null 
                         	   )
 	{
-		$value = is_null($mixValue)?$strFirstOptionValue:$mixValue;
-		parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
-		$this->setValue( $arrValues );
-		$this->setRequired( $boolRequired );
+		parent::__construct($adiantiObj,$id,$label,$boolRequired,null,null);
+
 		$this->setQtdColumns( $intQtdColumns );
-
 		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );
-
 		$this->setKeyField( $strKeyField );
 		$this->setDisplayField( $strDisplayField );
 		$this->setOptions( $mixOptions, $strDisplayField, $strKeyField, null, $strDataColumns );
 		$this->setNowrapText($boolNowrapText);
 
-		// tratamento para campos selects postados das colunas tipo do TGrid onde os nomes são arrays
-		if( $this->getFieldType() == self::SELECT && strpos( $this->getName(), '[' ) !== false ) {
-	   	   $name = $this->getName();
-		   $arrTemp = explode('[',$name);
-		   if( isset($_POST[$arrTemp[0] ] ) )
-		   {
-		      $expr = '$v=$_POST["'.str_replace( '[', '"][', $name ).';';
-		      if( ! preg_match('/\[\]/',$expr ))
-		      {
-		   		@eval( $expr );
-		   		$this->setValue( $v );
-		      }
-		   }
-		}
-		//if(isset($_POST[$this->getId()]) && $_POST[$this->getId()] )
-		if( isset( $_POST[ $this->getId() ] ) )
-		{
-			$this->setValue( $_POST[ $this->getId() ] );
-		}
 	}
+
 	/**
 	 * Define a quantidade de colunas para distribuição dos checkbox ou radios na tela
 	 *
