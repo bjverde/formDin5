@@ -142,7 +142,39 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertEquals($name, $result['db']['name']);
     }
 
-    public function testExecuteSql_sqllite_upperCase()
+    public function testExecuteSql_sqllite_upperCase_Adianti()
+    {   
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setCase(PDO::CASE_UPPER);
+        $sql = 'select * from dado_apoio order by seq_dado_apoio';
+        $result = $this->classTest->executeSql($sql);
+
+        $this->assertCount(3, $result);
+        $this->assertEquals(1, $result[0]->SEQ_DADO_APOIO);
+        $this->assertEquals('Metro', $result[1]->TIP_DADO_APOIO);
+        $this->assertEquals('KM', $result[2]->SIG_DADO_APOIO);
+    }
+
+    public function testExecuteSql_sqllite_lowerCase_Adianti()
+    {   
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setCase(PDO::CASE_LOWER);
+        $sql = 'select * from dado_apoio order by seq_dado_apoio';
+        $result = $this->classTest->executeSql($sql);
+
+        $this->assertCount(3, $result);
+        $this->assertequals(1, $result[0]->seq_dado_apoio);
+        $this->assertequals('Metro', $result[1]->tip_dado_apoio);
+        $this->assertequals('KM', $result[2]->sig_dado_apoio);
+    }    
+
+    public function testExecuteSql_sqllite_upperCase_pdo()
     {   
         $path =  __DIR__.'/../../../../../';
         $name = $path.'database/bdApoio.s3db';
@@ -159,7 +191,7 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertEquals('KM', $result[2]['SIG_DADO_APOIO']);
     }
 
-    public function testExecuteSql_sqllite_lowerCase()
+    public function testExecuteSql_sqllite_lowerCase_pdo()
     {   
         $path =  __DIR__.'/../../../../../';
         $name = $path.'database/bdApoio.s3db';
