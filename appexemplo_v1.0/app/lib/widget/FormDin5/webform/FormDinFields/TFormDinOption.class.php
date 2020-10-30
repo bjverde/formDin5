@@ -126,11 +126,9 @@ class TFormDinOption  extends TFormDinGenericField
 		$this->setValue( $arrValues );
 		$this->setRequired( $boolRequired );
 		$this->setQtdColumns( $intQtdColumns );
-		$this->setPaddingItems( $intPaddingItems );
+
 		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );
 
-		$this->setWidth( $intWidth );
-		$this->setHeight( $intHeight );
 		$this->setKeyField( $strKeyField );
 		$this->setDisplayField( $strDisplayField );
 		$this->setOptions( $mixOptions, $strDisplayField, $strKeyField, null, $strDataColumns );
@@ -155,6 +153,24 @@ class TFormDinOption  extends TFormDinGenericField
 		{
 			$this->setValue( $_POST[ $this->getId() ] );
 		}
+	}
+	/**
+	 * Define a quantidade de colunas para distribuição dos checkbox ou radios na tela
+	 *
+	 * @param integer $intNewValue
+	 */
+	public function setQtdColumns( $intNewValue=null )
+	{
+		$this->qtdColunms = (( int ) $intNewValue == 0) ? 1 : ( int ) $intNewValue;
+		return $this;
+	}
+	/**
+	 * Recupera a quantidade de colunas para distribuição dos checkbox ou radios na tela
+	 *
+	 */
+	public function getQtdColumns()
+	{
+		return ( int ) $this->qtdColunms;
 	}
 	//-------------------------------------------------
 	public function setKeyField( $strNewValue=null )
@@ -185,6 +201,16 @@ class TFormDinOption  extends TFormDinGenericField
 	public function getFieldType(){ 
 		return $this->fldType; 
 	}
+	//-------------------------------------------------------------------------	
+	public function setNowrapText($boolNewValue = null )
+	{
+		$this->nowWrapText = $boolNewValue;
+		return $this;
+	}
+	public function getNowrapText()
+	{
+		return $this->nowWrapText === true? true: false;
+	}	
 	//-----------------------------------------------------------------------
 	/**
 	 * Define um array no formato "key=>value" ou string no formato "S=SIM,N=NAO,..." ou
@@ -270,7 +296,7 @@ class TFormDinOption  extends TFormDinGenericField
 										} elseif( isset( $mixOptions[strtolower($colName) ][$k] ) ){
 											$value = $mixOptions[strtolower($colName)][$k];
 										}
-										$value = $this->specialChars2htmlEntities( $value );
+										//$value = $this->specialChars2htmlEntities( $value );
 										$value = preg_replace("/\n/",' ',$value);
 										$this->arrOptionsData[$v]['data-'.strtolower($colName)] = $value;
 									}
