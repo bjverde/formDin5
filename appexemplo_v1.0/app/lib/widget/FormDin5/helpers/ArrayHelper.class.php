@@ -321,11 +321,12 @@ class ArrayHelper
     /**
      * Determina o tipo do input conforme as constantes declarada
      *  - TYPE_FORMDIN_STRING_GRID = string no formato 'KEY|VALUE,KEY|VALUE'
-     *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE'
+     *  - TYPE_FORMDIN_STRING = string no formato 'KEY=VALUE,KEY=VALUE' ou 'KEY=>VALUE,KEY=>VALUE'
      * 
      *  - TYPE_FORMDIN = array no formato FormDin [NAME_COLUM][KEY_NUM][VALUE]
-     *  - TYPE_PDO = array no formato '[KEY_NUM]=ARRAY,[KEY_NUM]=ARRAY'
+     *  - TYPE_PDO     = array no formato '[KEY_NUM]=ARRAY,[KEY_NUM]=ARRAY'
      *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
+     *  - TYPE_PHP     = array no formato 'KEY=STRING,KEY=STRING'
      *
      * user ArrayHelper::showExempleByType para ver exemplos
      * @param string|array $array
@@ -370,9 +371,10 @@ class ArrayHelper
     }
     /**
      * Determina o tipo  de entrada que pode ser um dos 4 tipos
-     *  - TYPE_FORMDIN = string no formato 'KEY|VALUE,KEY|VALUE'
-     *  - TYPE_PDO = array no formato 'KEY=ARRAY,KEY=ARRAY'
+     *  - TYPE_FORMDIN = array no formato FormDin [NAME_COLUM][KEY_NUM][VALUE]
+     *  - TYPE_PDO     = array no formato 'KEY=ARRAY,KEY=ARRAY'
      *  - TYPE_ADIANTI = array no formato 'KEY=OBJ,KEY=OBJ'
+     *  - TYPE_PHP     = array no formato 'KEY=STRING,KEY=STRING'
      *
      * @param mix|array $array
      * @return void
