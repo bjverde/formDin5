@@ -71,4 +71,26 @@ class mockFormDinArray
         
         return $dadosPessoa;
     }
+
+
+    public function incluirPessoaAdianti_MixCase($id, $nome, $tipo, $cpf, $cnpj, $dtnascimento){
+        $dadosPessoa = new StdClass;
+        $dadosPessoa->IDPESSOA = $id;
+        $dadosPessoa->nmpessoa = $nome;
+        $dadosPessoa->TPPESSOA = $tipo;
+        $dadosPessoa->nmcpf    = $cpf;
+        $dadosPessoa->NMCNPJ   = $cnpj;
+        $dadosPessoa->dtnascimento = $dtnascimento;
+        return $dadosPessoa;
+    }
+
+    public function generateTablePessoaAdianti_MixCase(){
+        $dadosPessoa = array();
+        $dadosPessoa[] = $this->incluirPessoaAdianti_MixCase(1, 'Joao Silva'   , 'F', '12345678909', null            ,'1990-05-01');
+        $dadosPessoa[] = $this->incluirPessoaAdianti_MixCase(2, 'Maria Laranja', 'F', '52798074002', null            ,'1980-12-10');
+        $dadosPessoa[] = $this->incluirPessoaAdianti_MixCase(3, 'Dell'         , 'J', null         , '72381189000110','1984-04-01');
+        $dadosPessoa[] = $this->incluirPessoaAdianti_MixCase(4, 'Microsoft'    , 'J', null         , '72381189000110','1975-05-01');
+        
+        return $dadosPessoa;
+    }
 }

@@ -130,11 +130,12 @@ class TFormDinOptionTest extends TestCase
     public function testGetOptions_formDin_coluna_tppessoa()
     {
         $esperado = array();
-        $esperado[1]='F';
-        $esperado[2]='F';
-        $esperado[3]='J';
-        $esperado[4]='J';
+        $esperado['1990-05-01']='F';
+        $esperado['1980-12-10']='F';
+        $esperado['1984-04-01']='J';
+        $esperado['1975-05-01']='J';
 
+        $this->classTest->setKeyField( 'DTNASCIMENTO' );
         $this->classTest->setDisplayField('TPPESSOA');
         $this->classTest->transformOptions();
         $result = $this->classTest->getOptions();
@@ -179,7 +180,7 @@ class TFormDinOptionTest extends TestCase
         $esperado[2]='Maria Laranja';
         $esperado[3]='Dell';
         $esperado[4]='Microsoft';
-        $mock = new mockFormDinArray ();
+        $mock = new mockFormDinArray();
         $mixOptions = $mock->generateTablePessoaPDO();
 
         $this->classTest->setMixOptions($mixOptions);
@@ -191,14 +192,15 @@ class TFormDinOptionTest extends TestCase
     public function testGetOptions_PDO_coluna_tppessoa()
     {
         $esperado = array();
-        $esperado[1]='F';
-        $esperado[2]='F';
-        $esperado[3]='J';
-        $esperado[4]='J';
+        $esperado['1990-05-01']='F';
+        $esperado['1980-12-10']='F';
+        $esperado['1984-04-01']='J';
+        $esperado['1975-05-01']='J';
 
         $mock = new mockFormDinArray ();
         $mixOptions = $mock->generateTablePessoaPDO();
 
+        $this->classTest->setKeyField( 'DTNASCIMENTO' );
         $this->classTest->setDisplayField('TPPESSOA');
         $this->classTest->setMixOptions($mixOptions);
         $this->classTest->transformOptions();
@@ -216,6 +218,26 @@ class TFormDinOptionTest extends TestCase
         $mock = new mockFormDinArray();
         $mixOptions = $mock->generateTablePessoaAdianti();
         
+        $this->classTest->setMixOptions($mixOptions);
+        $this->classTest->transformOptions();
+        $result = $this->classTest->getOptions();
+        
+        $this->assertEquals($esperado, $result);
+    }
+
+    public function testGetOptions_Adianti_coluna_tppessoa_mixcase()
+    {
+        $esperado = array();
+        $esperado['1990-05-01']='F';
+        $esperado['1980-12-10']='F';
+        $esperado['1984-04-01']='J';
+        $esperado['1975-05-01']='J';
+
+        $mock = new mockFormDinArray();
+        $mixOptions = $mock->generateTablePessoaAdianti();
+        
+        $this->classTest->setKeyField( 'dtnascimento' );
+        $this->classTest->setDisplayField('TPPESSOA');
         $this->classTest->setMixOptions($mixOptions);
         $this->classTest->transformOptions();
         $result = $this->classTest->getOptions();
