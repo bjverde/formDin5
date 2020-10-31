@@ -27,9 +27,9 @@ class exe_SelectField_01 extends TPage
                            , $listFormas           // 4: array dos valores
                            , null
                            , null
-                           , null
-                           , null
-                           , null  //  9: Num itens que irão aparecer
+                           , null  // 07: Informe o ID do array ou array com a lista de ID's no formato "key=>id" para identificar a(s) opção(ões) selecionada(s)
+                           , null  // 08: Default FALSE = SingleSelect, TRUE = MultiSelect
+                           , null  // 09: Num itens que irão aparecer
                            , null  // 10: Largura em Pixels
                            , ' '   // 11: First Key in Display
                            , null  // 12: Frist Valeu in Display, use value NULL for required
@@ -41,8 +41,8 @@ class exe_SelectField_01 extends TPage
                                    , $listFormas           // 04: array dos valores
                                    , true                  // 05: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
                                    , true                  // 06: Default FALSE = Label mesma linha, TRUE = Label acima
-                                   , null                  // 07: Valor DEFAULT, informe o ID do array
-                                   , null
+                                   , 2                     // 07: Informe o ID do array ou array com a lista de ID's no formato "key=>id" para identificar a(s) opção(ões) selecionada(s)
+                                   , null  // 08: Default FALSE = SingleSelect, TRUE = MultiSelect
                                    , null  // 09: Num itens que irão aparecer
                                    , null  // 10: Largura em Pixels
                                    , null  // 11: First Key in Display
