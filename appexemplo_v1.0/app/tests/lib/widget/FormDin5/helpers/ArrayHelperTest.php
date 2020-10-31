@@ -658,7 +658,7 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals(1, $result['formarray']['IDPESSOA'][0]);
         $this->assertEquals('Joao Silva', $result['formarray']['NMPESSOA'][0]);
         $this->assertEquals('F', $result['formarray']['TPPESSOA'][0]);
-        $this->assertEquals('123456789', $result['formarray']['NMCPF'][0]);
+        $this->assertEquals('12345678909', $result['formarray']['NMCPF'][0]);
     }
     //-----------------------------------------------------------------------
     public function testConvertArrayMixUpdate2OutputFormat_null()
