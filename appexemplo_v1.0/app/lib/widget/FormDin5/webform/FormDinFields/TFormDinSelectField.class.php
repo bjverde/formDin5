@@ -150,20 +150,11 @@ class TFormDinSelectField  extends TFormDinOption
                            ,$strDisplayColumn      //13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
                            ,null
                            ,$strDataColumns        //15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
-                        );
-
-        $this->addItems($mixOptions);
+                        );        
         return $this->getAdiantiObj();
     }
 
-    public function addItems($arrayItens){
-        $this->getAdiantiObj()->addItems($arrayItens);
-    }    
 
-    public function getItems()
-    {
-        return $this->getAdiantiObj()->getItems();
-    }
     //-----------------------------------------------------------
     public function getMultiSelect()
     {

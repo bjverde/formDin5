@@ -132,8 +132,18 @@ class TFormDinOption  extends TFormDinGenericField
 		$this->transformOptions();
 		$this->setNowrapText($boolNowrapText);
 
+		$this->addItems( $this->getOptions() );
 	}
 
+	public function addItems($arrayItens){
+		$arrayItens = ArrayHelper::convertArray2OutputFormat($arrayItens,ArrayHelper::TYPE_FORMDIN);
+        $this->getAdiantiObj()->addItems($arrayItens);
+    }
+    public function getItems()
+    {
+        return $this->getAdiantiObj()->getItems();
+    }
+	//-----------------------------------------------------------------------
 	/**
 	 * Define a quantidade de colunas para distribuição dos checkbox ou radios na tela
 	 *
@@ -152,7 +162,7 @@ class TFormDinOption  extends TFormDinGenericField
 	{
 		return ( int ) $this->qtdColunms;
 	}
-	//-------------------------------------------------
+	//-----------------------------------------------------------------------
 	public function setKeyField( $strNewValue=null )
 	{
 		$this->keyField = $strNewValue;
