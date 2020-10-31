@@ -35,18 +35,18 @@ class exe_SelectField_01 extends TPage
                            , null  // 12: Frist Valeu in Display, use value NULL for required
                            );
         
-        $fg2 = $frm->addSelectField('forma_pagamento2'     // 1: ID do campo
+        $fg2 = $frm->addSelectField('forma_pagamento2'     // 01: ID do campo
                                    , 'Forma Pagamento (DEFAULT):'
-                                   , TRUE                  // 3: Obrigatorio
-                                   , $listFormas           // 4: array dos valores
-                                   , true                  // 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
-                                   , true                  // 6: Default FALSE = Label mesma linha, TRUE = Label acima
-                                   , null                  // 7: Valor DEFAULT, informe o ID do array
+                                   , TRUE                  // 03: Obrigatorio
+                                   , $listFormas           // 04: array dos valores
+                                   , true                  // 05: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+                                   , true                  // 06: Default FALSE = Label mesma linha, TRUE = Label acima
+                                   , null                  // 07: Valor DEFAULT, informe o ID do array
                                    , null
-                                   , null  //  9: Num itens que irão aparecer
-                                   , 150   // 10: Largura em Pixels
-                                   , null   // 11 First Key in Display
-                                   , null     // 12 Frist Valeu in Display, use value NULL for required
+                                   , null  // 09: Num itens que irão aparecer
+                                   , null  // 10: Largura em Pixels
+                                   , null  // 11: First Key in Display
+                                   , null  // 12: Frist Valeu in Display, use value NULL for required
                                    ,2
                                    );
         $fg2->setToolTip('Campo com valor DEFAULT pré-selecionado');
@@ -59,10 +59,10 @@ class exe_SelectField_01 extends TPage
                                 , true                  // 6: Default FALSE = Label mesma linha, TRUE = Label acima
                                 , null                  // 7: Valor DEFAULT, informe o ID do array
                                 , null
-                                , null  //  9: Num itens que irão aparecer
-                                , 150   // 10: Largura em Pixels
-                                , ' '   // 11 First Key in Display
-                                , 4     // 12 Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' não pode ser null
+                                , null  // 09: Num itens que irão aparecer
+                                , null  // 10: Largura em Pixels
+                                , ' '   // 11: First Key in Display
+                                , 4     // 12: Frist Valeu in Display, use value NULL for required
                                 );
         $fg2->setToolTip('Campo com valor DEFAULT pré-selecionado, ATRIBUTO 12');
         
@@ -131,7 +131,7 @@ class exe_SelectField_01 extends TPage
                                     , null                  // 7: Valor DEFAULT, informe o ID do array
                                     , null
                                     , null                  //  9: Num itens que irão aparecer
-                                    , 150   // 10: Largura em Pixels
+                                    , null   // 10: Largura em Pixels
                                     , null  // 11 First Key in Display
                                     , null  // 12 Frist Valeu in Display, use value NULL for required
                                     , 2
