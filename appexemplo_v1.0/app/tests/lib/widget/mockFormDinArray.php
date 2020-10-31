@@ -21,10 +21,10 @@ class mockFormDinArray
     
     public function generateTable(){
         $dadosPessoa = array();
-        $dadosPessoa = $this->incluirPessoa($dadosPessoa, 1, 'Joao Silva', 'F', '123456789', null);
+        $dadosPessoa = $this->incluirPessoa($dadosPessoa, 1, 'Joao Silva'   , 'F', '12345678909', null);
         $dadosPessoa = $this->incluirPessoa($dadosPessoa, 2, 'Maria Laranja', 'F', '52798074002', null);
-        $dadosPessoa = $this->incluirPessoa($dadosPessoa, 3, 'Dell', 'J', null, '72381189000110');
-        $dadosPessoa = $this->incluirPessoa($dadosPessoa, 4, 'Microsoft', 'J', null, '72381189000110');
+        $dadosPessoa = $this->incluirPessoa($dadosPessoa, 3, 'Dell'         , 'J', null         , '72381189000110');
+        $dadosPessoa = $this->incluirPessoa($dadosPessoa, 4, 'Microsoft'    , 'J', null         , '72381189000110');
         
         return $dadosPessoa;
     }
@@ -41,10 +41,10 @@ class mockFormDinArray
     
     public function generateTablePessoaPDO(){
         $dadosPessoa = array();
-        $dadosPessoa[] = $this->incluirPessoaPDO(1, 'Joao Silva', 'F', '123456789', null);
+        $dadosPessoa[] = $this->incluirPessoaPDO(1, 'Joao Silva'   , 'F', '12345678909', null);
         $dadosPessoa[] = $this->incluirPessoaPDO(2, 'Maria Laranja', 'F', '52798074002', null);
-        $dadosPessoa[] = $this->incluirPessoaPDO(3, 'Dell', 'J', null, '72381189000110');
-        $dadosPessoa[] = $this->incluirPessoaPDO(4, 'Microsoft', 'J', null, '72381189000110');
+        $dadosPessoa[] = $this->incluirPessoaPDO(3, 'Dell'         , 'J', null         , '72381189000110');
+        $dadosPessoa[] = $this->incluirPessoaPDO(4, 'Microsoft'    , 'J', null         , '72381189000110');
         
         return $dadosPessoa;
     }
@@ -61,10 +61,10 @@ class mockFormDinArray
 
     public function generateTablePessoaAdianti(){
         $dadosPessoa = array();
-        $dadosPessoa[] = $this->incluirPessoaAdianti(1, 'Joao Silva', 'F', '123456789', null);
+        $dadosPessoa[] = $this->incluirPessoaAdianti(1, 'Joao Silva'   , 'F', '12345678909', null);
         $dadosPessoa[] = $this->incluirPessoaAdianti(2, 'Maria Laranja', 'F', '52798074002', null);
-        $dadosPessoa[] = $this->incluirPessoaAdianti(3, 'Dell', 'J', null, '72381189000110');
-        $dadosPessoa[] = $this->incluirPessoaAdianti(4, 'Microsoft', 'J', null, '72381189000110');
+        $dadosPessoa[] = $this->incluirPessoaAdianti(3, 'Dell'         , 'J', null         , '72381189000110');
+        $dadosPessoa[] = $this->incluirPessoaAdianti(4, 'Microsoft'    , 'J', null         , '72381189000110');
         
         return $dadosPessoa;
     }
