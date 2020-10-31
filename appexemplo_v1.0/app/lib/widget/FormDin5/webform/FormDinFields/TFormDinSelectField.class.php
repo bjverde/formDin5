@@ -134,11 +134,6 @@ class TFormDinSelectField  extends TFormDinOption
         }else{
             $adiantiObj = new TCombo($id);            
         }
-        /*
-        $value = is_null($mixValue)?$strFirstOptionValue:$mixValue;
-        $this->setValue( $value );
-        parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
-        */
 
         parent::__construct($adiantiObj            //01: Objeto de campo do Adianti
                            ,$id                    //02: ID do campo
