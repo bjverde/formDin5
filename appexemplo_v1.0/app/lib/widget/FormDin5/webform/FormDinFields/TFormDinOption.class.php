@@ -96,10 +96,11 @@ class TFormDinOption  extends TFormDinGenericField
 	 * @param boolean $boolMultiSelect -09: Default FALSE = SingleSelect, TRUE = MultiSelect
 	 * @param integer $intQtdColumns   -10: Default 1. Num itens que irão aparecer no MultiSelect
 	 * @param string  $strInputType    -11: Define o tipo de input a ser gerado. Ex: select, radio ou check
-	 * @param string  $strKeyField     -12: Nome da coluna que será utilizada para preencher os valores das opções
-	 * @param string  $strDisplayField -13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-	 * @param boolean $boolNowrapText  -14:
-	 * @param string  $strDataColumns  -15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+	 * @param string  $strFirstOptionValue- 12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
+	 * @param string  $strKeyField     -13: Nome da coluna que será utilizada para preencher os valores das opções
+	 * @param string  $strDisplayField -14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+	 * @param boolean $boolNowrapText  -15:
+	 * @param string  $strDataColumns  -16: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
 	 * @return TFormDinOption
 	 */
 	public function __construct( $adiantiObj
@@ -112,14 +113,17 @@ class TFormDinOption  extends TFormDinGenericField
 	                           , $mixValue=null
                         	   , $boolMultiSelect=null
                         	   , $intQtdColumns=null
-                        	   , $strInputType=null
+							   , $strInputType=null
+							   , $strFirstOptionValue=null
                         	   , $strKeyField=null
                         	   , $strDisplayField=null
                         	   , $boolNowrapText=null
                         	   , $strDataColumns=null 
                         	   )
 	{
-		parent::__construct($adiantiObj,$id,$label,$boolRequired,null,null);
+		$value = is_null($mixValue)?$strFirstOptionValue:$mixValue;        
+		parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
+		//parent::setValue( $value );
 
 		$this->setQtdColumns( $intQtdColumns );
 		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );		

@@ -89,9 +89,9 @@ class TFormDinSelectField  extends TFormDinOption
      * @param string  $strLabel       - 2: Label do campo
      * @param boolean $boolRequired   - 3: Campo obrigatório. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param mixed   $mixOptions     - 4: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: PHP "id=>value", FormDin, PDO ou Adianti
-     * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
-     * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param mixed   $mixValue       - 7: Informe o ID do array ou array com a lista de ID's no formato "key=>id" para identificar a(s) opção(ões) selecionada(s)
+     * @param boolean $boolNewLine        - 05: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+     * @param boolean $boolLabelAbove     - 06: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param mixed   $mixValue           - 07: Informe o ID do array ou array com a lista de ID's no formato "key=>id" para identificar a(s) opção(ões) selecionada(s)
      * @param boolean $boolMultiSelect    - 08: Default FALSE = SingleSelect, TRUE = MultiSelect
      * @param integer $intQtdColumns      - 09: NOT_IMPLEMENTED Default 1. Num itens que irão aparecer no MultiSelect
      * @param integer $intWidth           - 10: DEPRECATED Largura em Pixels
@@ -146,10 +146,11 @@ class TFormDinSelectField  extends TFormDinOption
                            ,$boolMultiSelect       //09: Default FALSE = SingleSelect, TRUE = MultiSelect
                            ,$intQtdColumns         //10: Default 1. Num itens que irão aparecer no MultiSelect
                            ,TFormDinOption::SELECT //11: Define o tipo de input a ser gerado. Ex: select, radio ou check
-                           ,$strKeyColumn          //12: Nome da coluna que será utilizada para preencher os valores das opções
-                           ,$strDisplayColumn      //13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+                           ,$strFirstOptionValue   //12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
+                           ,$strKeyColumn          //13: Nome da coluna que será utilizada para preencher os valores das opções
+                           ,$strDisplayColumn      //14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
                            ,null
-                           ,$strDataColumns        //15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+                           ,$strDataColumns        //16: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
                         );        
         return $this->getAdiantiObj();
     }
