@@ -127,6 +127,21 @@ class TFormDinOptionTest extends TestCase
         $this->assertEquals($esperado, $result);
     }
 
+    public function testGetOptions_formDin_coluna_tppessoa()
+    {
+        $esperado = array();
+        $esperado[1]='F';
+        $esperado[2]='F';
+        $esperado[3]='J';
+        $esperado[4]='J';
+
+        $this->classTest->setDisplayField('TPPESSOA');
+        $this->classTest->transformOptions();
+        $result = $this->classTest->getOptions();
+
+        $this->assertEquals($esperado, $result);
+    }    
+
     public function testGetOptions_StringSeta()
     {
         $esperado = array();
@@ -154,9 +169,9 @@ class TFormDinOptionTest extends TestCase
         $this->classTest->setMixOptions($mixOptions);
         $this->classTest->transformOptions();
         $result = $this->classTest->getOptions();
+
         $this->assertEquals($esperado, $result);
     }
-
     public function testGetOptions_PDO()
     {
         $esperado = array();
@@ -166,17 +181,44 @@ class TFormDinOptionTest extends TestCase
         $esperado[4]='Microsoft';
         $mock = new mockFormDinArray ();
         $mixOptions = $mock->generateTablePessoaPDO();
-        
-        $typoEntrada = ArrayHelper::getType($mixOptions);
 
         $this->classTest->setMixOptions($mixOptions);
         $this->classTest->transformOptions();
-
         $result = $this->classTest->getOptions();
-        $this->assertEquals(ArrayHelper::TYPE_PDO, $typoEntrada);
         
-        $typeSaida = ArrayHelper::getType($result);
-        $this->assertEquals(ArrayHelper::TYPE_PHP, $typeSaida);
+        $this->assertEquals($esperado, $result);
+    }
+    public function testGetOptions_PDO_coluna_tppessoa()
+    {
+        $esperado = array();
+        $esperado[1]='F';
+        $esperado[2]='F';
+        $esperado[3]='J';
+        $esperado[4]='J';
+
+        $mock = new mockFormDinArray ();
+        $mixOptions = $mock->generateTablePessoaPDO();
+
+        $this->classTest->setDisplayField('TPPESSOA');
+        $this->classTest->setMixOptions($mixOptions);
+        $this->classTest->transformOptions();
+        $result = $this->classTest->getOptions();
+        
+        $this->assertEquals($esperado, $result);
+    }    
+    public function testGetOptions_Adianti()
+    {
+        $esperado = array();
+        $esperado[1]='Joao Silva';
+        $esperado[2]='Maria Laranja';
+        $esperado[3]='Dell';
+        $esperado[4]='Microsoft';
+        $mock = new mockFormDinArray();
+        $mixOptions = $mock->generateTablePessoaAdianti();
+        
+        $this->classTest->setMixOptions($mixOptions);
+        $this->classTest->transformOptions();
+        $result = $this->classTest->getOptions();
         
         $this->assertEquals($esperado, $result);
     }
