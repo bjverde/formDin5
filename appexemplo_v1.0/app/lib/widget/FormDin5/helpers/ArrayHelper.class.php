@@ -822,6 +822,8 @@ class ArrayHelper
                 }elseif( $outputFormat == ArrayHelper::TYPE_FORMDIN ){
                     $result = $arrayData;
                 }
+            }elseif( $inputFormat == ArrayHelper::TYPE_PHP ){
+                $result = $arrayData;
             }else{
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
             }

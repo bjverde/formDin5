@@ -250,8 +250,7 @@ class TFormDinOption  extends TFormDinGenericField
 
 			$this->arrOptions = null;
 			if( is_array( $mixOptions ) ) {
-
-				//$mixOptions      = ArrayHelper::convertArray2OutputFormat($mixOptions,ArrayHelper::TYPE_FORMDIN);
+				$mixOptions = ArrayHelper::convertArray2OutputFormat($mixOptions,ArrayHelper::TYPE_FORMDIN);
 				// verificar se o array está no formato oracle
 				if( key( $mixOptions ) && is_array( $mixOptions[ key( $mixOptions ) ] ) )
 				{

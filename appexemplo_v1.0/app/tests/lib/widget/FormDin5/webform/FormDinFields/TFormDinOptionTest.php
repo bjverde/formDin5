@@ -137,7 +137,7 @@ class TFormDinOptionTest extends TestCase
 
         $mixOptions = '1=>Joao Silva,2=>Maria Laranja,3=>Dell,4=>Microsoft';
         $this->classTest->setMixOptions($mixOptions);
-        $this->classTest->transformOptions();        
+        $this->classTest->transformOptions();
         $result = $this->classTest->getOptions();
         $this->assertEquals($esperado, $result);
     }
@@ -152,7 +152,7 @@ class TFormDinOptionTest extends TestCase
         
         $mixOptions = '1=Joao Silva,2=Maria Laranja,3=Dell,4=>Microsoft';
         $this->classTest->setMixOptions($mixOptions);
-        $this->classTest->transformOptions();        
+        $this->classTest->transformOptions();
         $result = $this->classTest->getOptions();
         $this->assertEquals($esperado, $result);
     }
@@ -167,10 +167,17 @@ class TFormDinOptionTest extends TestCase
         $mock = new mockFormDinArray ();
         $mixOptions = $mock->generateTablePessoaPDO();
         
+        $typoEntrada = ArrayHelper::getType($mixOptions);
+
         $this->classTest->setMixOptions($mixOptions);
         $this->classTest->transformOptions();
 
         $result = $this->classTest->getOptions();
+        $this->assertEquals(ArrayHelper::TYPE_PDO, $typoEntrada);
+        
+        $typeSaida = ArrayHelper::getType($result);
+        $this->assertEquals(ArrayHelper::TYPE_PHP, $typeSaida);
+        
         $this->assertEquals($esperado, $result);
     }
 }
