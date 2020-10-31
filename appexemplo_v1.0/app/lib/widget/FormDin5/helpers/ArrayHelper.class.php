@@ -391,7 +391,13 @@ class ArrayHelper
                 if( $firstType &&  $lastType ){
                     $type = self::TYPE_ADIANTI;
                 }else{
-                    $type = self::TYPE_PDO;
+                    $firstType = is_array($array[$keyFirst]);
+                    $lastType  = is_array($array[$KeyLast]);
+                    if( $firstType &&  $lastType ){
+                        $type = self::TYPE_PDO;
+                    }else{
+                        $type = self::TYPE_PHP;
+                    }
                 }
             }else{
                 $type = self::TYPE_FORMDIN;
@@ -795,18 +801,24 @@ class ArrayHelper
                     $result = self::convertAdianti2Pdo($arrayData,$typeCase);
                 }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN){
                     $result = self::convertAdianti2FormDin($arrayData,$typeCase);
+                }elseif( $outputFormat == ArrayHelper::TYPE_ADIANTI){
+                    $result = $arrayData;
                 }
-            }elseif($inputFormat == ArrayHelper::TYPE_PDO){
+            }elseif($inputFormat == ArrayHelper::TYPE_PDO ){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
                     $result = self::convertArrayPDO2Adianti($arrayData,$typeCase);
-                }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN){
+                }elseif($outputFormat == ArrayHelper::TYPE_FORMDIN ){
                     $result = self::convertArrayPdo2FormDin($arrayData,$typeCase);
+                }elseif( $outputFormat == ArrayHelper::TYPE_PDO ){
+                    $result = $arrayData;
                 }
-            }elseif($inputFormat == ArrayHelper::TYPE_FORMDIN){
+            }elseif($inputFormat == ArrayHelper::TYPE_FORMDIN ){
                 if( $outputFormat == ArrayHelper::TYPE_ADIANTI ){
                     $result = self::convertArrayFormDin2Adianti($arrayData,$typeCase);
-                }elseif($outputFormat == ArrayHelper::TYPE_PDO){
+                }elseif($outputFormat == ArrayHelper::TYPE_PDO ){
                     $result = self::convertArrayFormDin2Pdo($arrayData,$typeCase);
+                }elseif( $outputFormat == ArrayHelper::TYPE_FORMDIN ){
+                    $result = $arrayData;
                 }
             }else{
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
