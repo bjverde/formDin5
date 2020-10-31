@@ -56,8 +56,7 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinSelectField  extends TFormDinGenericField
-//class TFormDinSelectField  extends TFormDinOption
+class TFormDinSelectField  extends TFormDinOption
 {
     protected $adiantiObj;
     private $multiSelect;
@@ -88,7 +87,7 @@ class TFormDinSelectField  extends TFormDinGenericField
      *
      * @param string  $id             - 1: ID do campo
      * @param string  $strLabel       - 2: Label do campo
-     * @param boolean $boolRequired   - 3: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
+     * @param boolean $boolRequired   - 3: Campo obrigatório. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param mixed   $mixOptions     - 4: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: PHP "id=>value", FormDin, PDO ou Adianti
      * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
@@ -98,8 +97,8 @@ class TFormDinSelectField  extends TFormDinGenericField
      * @param integer $intWidth           - 10: DEPRECATED Largura em Pixels
      * @param string  $strFirstOptionText - 11: NOT_IMPLEMENTED First Key in Display. Informe um valor diferente de '' ou null para mostrar um Label.
      * @param string  $strFirstOptionValue- 12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
-     * @param string  $strKeyColumn       - 13: NOT_IMPLEMENTED Nome da coluna que será utilizada para preencher os valores das opções
-     * @param string  $strDisplayColumn   - 14: NOT_IMPLEMENTED Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+     * @param string  $strKeyColumn       - 13: Nome da coluna que será utilizada para preencher os valores das opções
+     * @param string  $strDisplayColumn   - 14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED Informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
      * @param string  $boolNoWrapLabel    - 17: FORMDIN5 - enableSearch  Default FALSE = SingleSelect, TRUE = MultiSelect
@@ -135,27 +134,29 @@ class TFormDinSelectField  extends TFormDinGenericField
         }else{
             $adiantiObj = new TCombo($id);            
         }
+        /*
         $value = is_null($mixValue)?$strFirstOptionValue:$mixValue;
         $this->setValue( $value );
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
-        /*
-        parent::__construct($adiantiObj     // 01: Objeto de campo do Adianti
-                           ,$id             // 02: ID do campo
-                           ,$label          // 03: Label do campo
-                           ,$boolRequired   // 04: Default FALSE = não obrigatori, TRUE = obrigatorio
-                           ,$mixOptions     // 05: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: PHP "id=>value", FormDin, PDO ou Adianti
-                           ,$boolNewLine
-                           ,$boolLabelAbove
+        */
+
+        parent::__construct($adiantiObj            //01: Objeto de campo do Adianti
+                           ,$id                    //02: ID do campo
+                           ,$label                 //03: Label do campo
+                           ,$boolRequired          //04: Campo obrigatório. Default FALSE = não obrigatório, TRUE = obrigatório
+                           ,$mixOptions            //05: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: PHP "id=>value", FormDin, PDO ou Adianti
+                           ,$boolNewLine           //06: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+                           ,$boolLabelAbove        //07: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
                            ,$mixValue              //08: Informe o ID do array. Array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
                            ,$boolMultiSelect       //09: Default FALSE = SingleSelect, TRUE = MultiSelect
                            ,$intQtdColumns         //10: Default 1. Num itens que irão aparecer no MultiSelect
-                           ,TFormDinOption::SELECT //11: define o tipo de input a ser gerado. Ex: select, radio ou check
+                           ,TFormDinOption::SELECT //11: Define o tipo de input a ser gerado. Ex: select, radio ou check
                            ,$strKeyColumn          //12: Nome da coluna que será utilizada para preencher os valores das opções
                            ,$strDisplayColumn      //13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
                            ,null
                            ,$strDataColumns        //15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
                         );
-        */
+
         $this->addItems($mixOptions);
         return $this->getAdiantiObj();
     }

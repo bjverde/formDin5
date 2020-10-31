@@ -88,7 +88,7 @@ class TFormDinOption  extends TFormDinGenericField
 	 * @param object  $objAdiantiField -01: Objeto de campo do Adianti
 	 * @param string  $id              -02: ID do campo
 	 * @param string  $label           -03: Label do campo
-	 * @param boolean $boolRequired    -04: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
+	 * @param boolean $boolRequired    -04: Campo obrigatório. Default FALSE = não obrigatório, TRUE = obrigatório
 	 * @param mixed   $mixOptions      -05: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: PHP "id=>value", FormDin, PDO ou Adianti
 	 * @param boolean $boolNewLine     -06: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
 	 * @param boolean $boolLabelAbove  -07: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
@@ -96,7 +96,7 @@ class TFormDinOption  extends TFormDinGenericField
 	 * @param boolean $boolMultiSelect -09: Default FALSE = SingleSelect, TRUE = MultiSelect
 	 * @param integer $intQtdColumns   -10: Default 1. Num itens que irão aparecer no MultiSelect
 	 * @param string  $strInputType    -11: Define o tipo de input a ser gerado. Ex: select, radio ou check
-	 * @param string  $strKeyField     -13: Nome da coluna que será utilizada para preencher os valores das opções
+	 * @param string  $strKeyField     -12: Nome da coluna que será utilizada para preencher os valores das opções
 	 * @param string  $strDisplayField -13: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
 	 * @param boolean $boolNowrapText  -14:
 	 * @param string  $strDataColumns  -15: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
