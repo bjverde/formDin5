@@ -83,38 +83,5 @@ class TFormDinGridActionTest extends TestCase
         $this->assertInstanceOf(TDataGridColumn::class, $result);
         $this->assertEquals('center', $result->getAlign());
     }
-    //-----------------------------------------------------------------------
-    public function testGetTypeArrayMixUpdateFields_null()
-    {
-        $result = $this->classTest->getTypeArrayMixUpdateFields(null);
-        $this->assertEquals(null,$result);
-    }
 
-    public function testGetTypeArrayMixUpdateFields_ArrayNull()
-    {
-        $arrayData = array();
-        $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(null,$result);
-    }
-
-    public function testGetTypeArrayMixUpdateFields_Adianti()
-    {
-        $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
-        $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(TFormDinGridAction::TYPE_ADIANTI, $result);
-    }
-
-    public function testGetTypeArrayMixUpdateFields_PHP()
-    {
-        $arrayData = ['code'=>'code','nome'=>'nome'];
-        $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(TFormDinGridAction::TYPE_PHP, $result);
-    }
-
-    public function testGetTypeArrayMixUpdateFields_FormDin()
-    {
-        $arrayData = 'code|code,nome|nome';
-        $result = $this->classTest->getTypeArrayMixUpdateFields($arrayData);
-        $this->assertEquals(TFormDinGridAction::TYPE_FORMDIN, $result);
-    }
 }

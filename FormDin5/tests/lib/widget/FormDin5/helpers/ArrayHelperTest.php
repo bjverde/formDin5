@@ -214,18 +214,96 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals($esperado, $retorno);
     }
     //-----------------------------------------------------------------------------------
-    public function testGetArrayType_FailWrongTypeNull(){
+    //-----------------------------------------------------------------------------------
+    public function testGetType_FailWrongTypeNull(){
         $this->expectException(InvalidArgumentException::class);
+        $input = null;
+        ArrayHelper::getType($input);
+    }
+    public function testGetType_FailAnyString(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 'any string';
+        ArrayHelper::getType($input);
+    }
+    public function testGetType_FailInt(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 10;
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetType_STRING_GRID(){
+        $input = 'KEY|VALUE,KEY|VALUE';
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION, $retorno);
+    }
+    public function testGetType_STRING(){
+        $input = 'KEY=VALUE,KEY=VALUE';
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING, $retorno);
+    }
+    public function testGetType_ADIANTI(){
+        $mock = new mockFormDinArray();
+        $input = $mock->generateTablePessoaAdianti();;
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_ADIANTI, $retorno);
+    }
+    public function testGetType_PDO(){
+        $mock = new mockFormDinArray();
+        $input = $mock->generateTablePessoaPDO();;
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_PDO, $retorno);
+    }
+    public function testGetType_FormDin(){
+        $mock = new mockFormDinArray();
+        $input = $mock->generateTable();
+        $retorno = ArrayHelper::getType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN, $retorno);
+    }    
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testGetStringType_FailWrongTypeNull(){
+        $this->expectException(InvalidArgumentException::class);
+        $array = null;
+        ArrayHelper::getStringType($array);
+    }
+    public function testGetStringType_FailAnyString(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 'any string';
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetStringType_FailInt(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = 10;
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetStringType_FailArray(){
+        $this->expectException(InvalidArgumentException::class);
+        $input = array(1=>'vai');
+        ArrayHelper::getStringType($input);
+    }
+    public function testGetStringType_STRING_GRID(){
+        $input = 'KEY|VALUE,KEY|VALUE';
+        $retorno = ArrayHelper::getStringType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION, $retorno);
+    }
+    public function testGetStringType_STRING(){
+        $input = 'KEY=VALUE,KEY=VALUE';
+        $retorno = ArrayHelper::getStringType($input);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING, $retorno);
+    }    
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testGetArrayType_FailWrongTypeNull(){
+        $this->expectException(TypeError::class);
         $array = null;
         ArrayHelper::getArrayType($array);
     }
     public function testGetArrayType_FailWrongTypeString(){
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $array = 'xxx';
         ArrayHelper::getArrayType($array);
     }
     public function testGetArrayType_FailWrongTypeObjetc(){
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $array = new stdClass();
         ArrayHelper::getArrayType($array);
     }
@@ -251,6 +329,17 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::getArrayType($array);
         $this->assertEquals($esperado, $retorno);
     }
+    public function testGetArrayType_PHP(){
+        $array = array();
+        $array[0]='Maria';
+        $array[1]='Caio';
+        $array[2]='Ana';
+        $array[3]='Ruy';
+        $esperado = ArrayHelper::TYPE_PHP;
+
+        $retorno = ArrayHelper::getArrayType($array);
+        $this->assertEquals($esperado, $retorno);
+    }    
     public function testGetArrayType_Adianti(){
         $mock = new mockFormDinArray();
         $array = $mock->generateTablePessoaAdianti();
@@ -259,6 +348,54 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::getArrayType($array);
         $this->assertEquals($esperado, $retorno);
     }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testArrayType_FailString(){
+        $this->expectException(TypeError::class);
+        $array = 'any string';
+
+        ArrayHelper::arrayTypeIsAdiantiGrid($array);
+    }
+    public function testArrayType_FailObj(){
+        $this->expectException(TypeError::class);
+        $array = new stdClass();
+
+        ArrayHelper::arrayTypeIsAdiantiGrid($array);
+    }    
+    public function testArrayType_FormDin(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTable();
+
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }
+    public function testArrayType_FalsePDO(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaPDO();
+
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }    
+    public function testArrayType_FalseAdianti(){
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaAdianti();
+
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }
+    public function testArrayType_FalseArrayPHP(){
+        $array = ['code'=>'code','nome'=>'nome'];
+
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
+        $this->assertEquals(false, $retorno);
+    }
+    public function testArrayType_True(){
+        $array = ['code'=>'{code}','nome'=>'{nome}'];
+        
+        $retorno = ArrayHelper::arrayTypeIsAdiantiGrid($array);
+        $this->assertEquals(true, $retorno);
+    }    
+    //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     public function testConvertArray2Adianti_FormDin2Adianti(){
         $mock = new mockFormDinArray();
@@ -289,7 +426,7 @@ class ArrayHelperTest extends TestCase
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTable();
         $array = $mock->generateTablePessoaPDO();
-        $retorno = ArrayHelper::convertArrayPdo2FormDin($array,true);
+        $retorno = ArrayHelper::convertArrayPdo2FormDin($array,PDO::CASE_UPPER);
         $this->assertEquals($esperado, $retorno);
     }
         
@@ -297,8 +434,15 @@ class ArrayHelperTest extends TestCase
         $mock = new mockFormDinArray();
         $esperado  = $mock->generateTablePessoaPDO();
         $array = $mock->generateTable();
-        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,true);
+        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,PDO::CASE_UPPER);
         $this->assertEquals($esperado, $retorno);
+    }
+
+    public function testConvertArrayFormDin2Pdo_lower() {
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTable();
+        $retorno = ArrayHelper::convertArrayFormDin2Pdo($array,PDO::CASE_LOWER);
+        $this->assertEquals('Joao Silva', $retorno[0]['nmpessoa']);
     }
 
     public function testConvertArrayFormDin2Adianti_NoChangeCase() {
@@ -315,6 +459,23 @@ class ArrayHelperTest extends TestCase
         $array = $mock->generateTablePessoaPDO();
         $retorno = ArrayHelper::convertArrayPDO2Adianti($array);
         $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArrayPDOAdianti_lower() {
+        $mock = new mockFormDinArray();
+        $array = $mock->generateTablePessoaPDO();    
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,PDO::CASE_LOWER);
+        $obj0 = $retorno[0];
+        $this->assertEquals(1,  $obj0->idpessoa);
+        $this->assertEquals('Joao Silva',  $obj0->nmpessoa);
+    }
+    public function testConvertArrayPDOAdianti_upper() {
+        $dadosPessoa['idpessoa']=1;
+        $dadosPessoa['nmpessoa']='Joao Silva';
+        $array[] = $dadosPessoa;    
+        $retorno = ArrayHelper::convertArrayPDO2Adianti($array,PDO::CASE_UPPER);
+        $obj0 = $retorno[0];
+        $this->assertEquals(1,  $obj0->IDPESSOA);
+        $this->assertEquals('Joao Silva',  $obj0->NMPESSOA);
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
@@ -349,14 +510,42 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::convertString2Array($esperado);
         $this->assertEquals($esperado, $retorno);
     }
-    public function testConvertString2Array_StringFormDin() {
+    public function testConvertString2Array_3StringFormDin() {
         $string = 'S=SIM,N=Não,T=Talvez';
         $esperado['S']='SIM';
         $esperado['N']='Não';
         $esperado['T']='Talvez';
-        $retorno = ArrayHelper::convertString2Array($esperado);
+        $retorno = ArrayHelper::convertString2Array($string);
         $this->assertEquals($esperado, $retorno);
-    }    
+    }
+    public function testConvertString2Array_3StringFormDin_espaço() {
+        $string = '   S=SIM,N=Não,T=Talvez  ';
+        $esperado['S']='SIM';
+        $esperado['N']='Não';
+        $esperado['T']='Talvez';
+        $retorno = ArrayHelper::convertString2Array($string);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertString2Array_1StringFormDin() {
+        $string = 'S=SIM';
+        $esperado['S']='SIM';
+        $retorno = ArrayHelper::convertString2Array($string);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertString2Array_StringSetaFormDin() {
+        $string = 'S=>SIM,N=>Não,T=>Talvez';
+        $esperado['S']='SIM';
+        $esperado['N']='Não';
+        $esperado['T']='Talvez';
+        $retorno = ArrayHelper::convertString2Array($string);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertString2Array_1StringSetaFormDin() {
+        $string = 'S=>SIM';
+        $esperado['S']='SIM';
+        $retorno = ArrayHelper::convertString2Array($string);
+        $this->assertEquals($esperado, $retorno);
+    }         
 
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
@@ -469,7 +658,270 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals(1, $result['formarray']['IDPESSOA'][0]);
         $this->assertEquals('Joao Silva', $result['formarray']['NMPESSOA'][0]);
         $this->assertEquals('F', $result['formarray']['TPPESSOA'][0]);
-        $this->assertEquals('123456789', $result['formarray']['NMCPF'][0]);
+        $this->assertEquals('12345678909', $result['formarray']['NMCPF'][0]);
+    }
+    //-----------------------------------------------------------------------
+    public function testConvertArrayMixUpdate2OutputFormat_null()
+    {
+        $this->expectNotToPerformAssertions();
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat(null);
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_arrayEmpty()
+    {
+        $this->expectNotToPerformAssertions();
+        ArrayHelper::convertArrayMixUpdate2OutputFormat(array());
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_string()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        ArrayHelper::convertArrayMixUpdate2OutputFormat('xxx');
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_obj()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $obj = new stdClass();
+        ArrayHelper::convertArrayMixUpdate2OutputFormat($obj);
+    }    
+    public function testConvertArrayMixUpdate2OutputFormat_inputFormDinOutPutAdianti()
+    {
+        $expected = ['code'=>'{code}','nome'=>'{nome}'];
+        $arrayData = 'code|code,nome|nome';
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData);
+        $this->assertEquals($expected, $result);
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_inputPHPOutPutAdianti()
+    {
+        $expected  = ['code'=>'{code}','nome'=>'{nome}'];
+        $arrayData = ['code'=>'code','nome'=>'nome'];
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData);
+        $this->assertEquals($expected, $result);
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_inputAdianitOutPutAdianti()
+    {
+        $expected  = ['code'=>'{code}','nome'=>'{nome}'];
+        $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData);
+        $this->assertEquals($expected, $result);
     }
     
+    public function testConvertArrayMixUpdate2OutputFormat_inputFormDinOutPutPHP()
+    {
+        $expected =  ['code'=>'code','nome'=>'nome'];
+        $arrayData = 'code|code,nome|nome';
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
+        $this->assertEquals($expected, $result);
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_inputPHPOutPutPHP()
+    {
+        $expected  = ['code'=>'code','nome'=>'nome'];
+        $arrayData = ['code'=>'code','nome'=>'nome'];
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
+        $this->assertEquals($expected, $result);
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_inputAdianitOutPutPHP()
+    {
+        $expected  = ['code'=>'code','nome'=>'nome'];
+        $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_PHP);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testConvertArrayMixUpdate2OutputFormat_inputFormDinOutPutFormDin()
+    {
+        $expected =  'code|code,nome|nome';
+        $arrayData = 'code|code,nome|nome';
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
+        $this->assertEquals($expected, $result);
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_inputPHPOutPutFormDin()
+    {
+        $expected  = 'code|code,nome|nome';
+        $arrayData = ['code'=>'code','nome'=>'nome'];
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
+        $this->assertEquals($expected, $result);
+    }
+    public function testConvertArrayMixUpdate2OutputFormat_inputAdianitOutPutFormDin()
+    {
+        $expected  = 'code|code,nome|nome';
+        $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
+        $result = ArrayHelper::convertArrayMixUpdate2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION);
+        $this->assertEquals($expected, $result);
+    }
+
+    //-----------------------------------------------------------------------
+    public function testGetTypeArrayMixUpdateFields_null()
+    {
+        $result = ArrayHelper::getTypeArrayMixUpdateFields(null);
+        $this->assertEquals(null,$result);
+    }
+
+    public function testGetTypeArrayMixUpdateFields_ArrayNull()
+    {
+        $arrayData = array();
+        $result = ArrayHelper::getTypeArrayMixUpdateFields($arrayData);
+        $this->assertEquals(null,$result);
+    }
+
+    public function testGetTypeArrayMixUpdateFields_Adianti()
+    {
+        $arrayData = ['code'=>'{code}','nome'=>'{nome}'];
+        $result = ArrayHelper::getTypeArrayMixUpdateFields($arrayData);
+        $this->assertEquals(ArrayHelper::TYPE_ADIANTI_GRID_ACTION, $result);
+    }
+
+    public function testGetTypeArrayMixUpdateFields_PHP()
+    {
+        $arrayData = ['code'=>'code','nome'=>'nome'];
+        $result = ArrayHelper::getTypeArrayMixUpdateFields($arrayData);
+        $this->assertEquals(ArrayHelper::TYPE_PHP, $result);
+    }
+
+    public function testGetTypeArrayMixUpdateFields_FormDin()
+    {
+        $arrayData = 'code|code,nome|nome';
+        $result = ArrayHelper::getTypeArrayMixUpdateFields($arrayData);
+        $this->assertEquals(ArrayHelper::TYPE_FORMDIN_STRING_GRID_ACTION, $result);
+    }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------        
+    public function testConvertAdianti2Pdo_noChangeCase(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTablePessoaPDO();
+        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertAdianti2Pdo_lowerCase(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,PDO::CASE_LOWER);
+        $this->assertEquals(1, $retorno[0]['idpessoa']);
+        $this->assertEquals('Joao Silva', $retorno[0]['nmpessoa']);
+    }
+    public function testConvertAdianti2Pdo_UpperCase(){
+        $dadosPessoa = new StdClass;
+        $dadosPessoa->idpessoa = 1;
+        $dadosPessoa->nmpessoa = 'Joao Silva';
+        $arrayData[] = $dadosPessoa;
+        $retorno = ArrayHelper::convertAdianti2Pdo($arrayData,PDO::CASE_UPPER);
+        $this->assertEquals(1, $retorno[0]['IDPESSOA']);
+        $this->assertEquals('Joao Silva', $retorno[0]['NMPESSOA']);
+    }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------     
+    public function testConvertAdianti2FormDin_noChangeCase(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $esperado = $mock->generateTable();
+        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertAdianti2FormDin_lowerCase(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,PDO::CASE_LOWER);
+        $this->assertEquals(1, $retorno['idpessoa'][0]);
+        $this->assertEquals('Joao Silva', $retorno['nmpessoa'][0]);
+    }
+    public function testConvertAdianti2FormDin_UpperCase(){
+        $dadosPessoa = new StdClass;
+        $dadosPessoa->idpessoa = 1;
+        $dadosPessoa->nmpessoa = 'Joao Silva';
+        $arrayData[] = $dadosPessoa;
+        $retorno = ArrayHelper::convertAdianti2FormDin($arrayData,PDO::CASE_UPPER);
+        $this->assertEquals(1, $retorno['IDPESSOA'][0]);
+        $this->assertEquals('Joao Silva', $retorno['NMPESSOA'][0]);
+    }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testConvertArray2OutputFormat_null(){
+        $arrayData = null;
+        $esperado  = null;
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_ArrayEmpty(){
+        $arrayData = array();
+        $esperado  = null;
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_StringEmpty(){
+        $arrayData = '' ;
+        $esperado  = null;
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_String(){
+        $this->expectException(InvalidArgumentException::class);
+        $arrayData = 'texto blabl' ;
+        ArrayHelper::convertArray2OutputFormat($arrayData);
+    }
+    public function testConvertArray2OutputFormat_Adianti2PDO(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $esperado  = $mock->generateTablePessoaPDO();
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Adianti2FormDin(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $esperado  = $mock->generateTable();
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Adianti2Adianti(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $esperado  = $arrayData;
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_ADIANTI);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Pdo2Adianti(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        $esperado  = $mock->generateTablePessoaAdianti();
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_ADIANTI);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Pdo2FormDin(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        $esperado  = $mock->generateTable();
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_Pdo2Pdo(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        $esperado  = $arrayData;
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO);
+        $this->assertEquals($esperado, $retorno);
+    }    
+    public function testConvertArray2OutputFormat_FormDin2Adianti(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTable();
+        $esperado  = $mock->generateTablePessoaAdianti();
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_ADIANTI);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_FormDin2Pdo(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTable();
+        $esperado  = $mock->generateTablePessoaPDO();
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2OutputFormat_FormDin2FormDin(){
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTable();
+        $esperado  = $arrayData;
+        $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN);
+        $this->assertEquals($esperado, $retorno);
+    }    
+
 }
