@@ -278,25 +278,19 @@ class TFormDinOption  extends TFormDinGenericField
 
 					if( $strKeyField && $strDisplayField ) {
 						// reconhecer nome da columa em caixa baixa ou alta
-						if( !array_key_exists( $strKeyField, $mixOptions ) )
-						{
+						if( !array_key_exists( $strKeyField, $mixOptions ) ){
 							$strKeyField = strtoupper( $strKeyField );
 							$strDisplayField = strtoupper( $strDisplayField );
 						}
-						if( !array_key_exists( $strKeyField, $mixOptions ) )
-						{
+						if( !array_key_exists( $strKeyField, $mixOptions ) ){
 							$strKeyField = strtolower( $strKeyField );
 							$strDisplayField = strtolower( $strDisplayField );
 						}
-						if( is_array( $mixOptions[ $strKeyField ] ) )
-						{
-							foreach( $mixOptions[ $strKeyField ] as $k=>$v )
-							{
+						if( is_array( $mixOptions[ $strKeyField ] ) ){
+							foreach( $mixOptions[ $strKeyField ] as $k=>$v ) {
 								$this->arrOptions[ $v ] = $mixOptions[ $strDisplayField ][ $k ];
-								if( isset( $arrDataColumns ) && is_array( $arrDataColumns ) )
-								{
-									foreach($arrDataColumns as $colName )
-									{
+								if( isset( $arrDataColumns ) && is_array( $arrDataColumns ) ){
+									foreach($arrDataColumns as $colName ){
 										$value='';
 										if( isset( $mixOptions[$colName][$k] ) ){
 											$value = $mixOptions[$colName][$k];
