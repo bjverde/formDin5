@@ -87,8 +87,8 @@ class TFormDin
      * @param bool $strFormName - 05: ID nome do formulario para criação da tag form. Padrão=formdin
      * @param string $strMethod - 06: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
      * @param string $strAction - 07: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
-     * @param boolean $boolPublicMode - 08: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
-     * @param boolean $boolRequired   - 09: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
+     * @param boolean $boolPublicMode      - 08: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
+     * @param boolean $boolClientValidation- 09: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
      *
      * @return BootstrapFormBuilder
      */    
@@ -1056,14 +1056,14 @@ class TFormDin
      *
      * @param string  $strName        - 1: ID do campo
      * @param string  $strLabel       - 2: Label do campo
-     * @param boolean $boolRequired   - 3: Obrigatorio. Default FALSE = não obrigatori, TRUE = obrigatorio
-     * @param mixed   $mixOptions     - 4: String "S=SIM,N=NAO,..." ou Array dos valores. Nos formatos: PHP "id=>value", FormDin ou Adianti
-     * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+     * @param boolean $boolRequired   - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param mixed   $mixOptions     - 4: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN e ArrayHelper::TYPE_PHP
+     * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param mixed   $mixValue       - 7: Valor DEFAULT, informe o ID do array
      * @param boolean $boolMultiSelect- 8: Default FALSE = SingleSelect, TRUE = MultiSelect
      * @param integer $intSize            - 09: NOT_IMPLEMENTED Default 1. Num itens que irão aparecer. 
-     * @param integer $intWidth           - 10: NOT_IMPLEMENTED Largura em Pixels
+     * @param integer $intWidth           - 10: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
      * @param string  $strFirstOptionText - 11: NOT_IMPLEMENTED First Key in Display
      * @param string  $strFirstOptionValue- 12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
      * @param string  $strKeyColumn       - 13: NOT_IMPLEMENTED Nome da coluna que será utilizada para preencher os valores das opções
@@ -1124,9 +1124,9 @@ class TFormDin
      * 
      * @param string $strName         - 1: field ID
      * @param string $strLabel        - 2: Label field
-     * @param boolean $boolRequired   - 3: TRUE = Required, FALSE = not Required
+     * @param boolean $boolRequired   - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param array $arrOptions       - 4: Array Options
-     * @param boolean $boolNewLine    - 5: TRUE = new line, FALSE = no, DEFAULT ou NULL = FALSE
+     * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove - 6: TRUE = Titulo em cima das opções, FALSE = titulo lateral
      * @param string  $strValue       - 7: Valor DEFUALT, informe do id do array
      * @param integer $intQtdColumns  - 8: Quantidade de colunas, valor DEFAULT = 1;
@@ -1173,7 +1173,68 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
-
+    //-----------------------------------------------------------------------------
+    /***
+    * Adicicionar campo tipo checkbox
+    * ------------------------------------------------------------------------
+    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+    * os parâmetros do metodos foram marcados veja documentação da classe para
+    * saber o que cada marca singinifica.
+    * ------------------------------------------------------------------------
+    *
+    * @param string  $strName        -01: ID do campo
+    * @param string  $strLabel       -02: Label do campo
+    * @param boolean $boolRequired   -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatórioObrigatorio.
+    * @param mixed   $mixOptions     -04: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN e ArrayHelper::TYPE_PHP
+    * @param boolean $boolNewLine    -05: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
+    * @param boolean $boolLabelAbove -06: TRUE = Titulo em cima das opções, FALSE = titulo lateral
+    * @param mixed   $mixValue       -07: Valor DEFAULT, informe do ID do arrOptions ou UM array no forma "key=>id" para maracar mais de um valor ao mesmo tempo
+    * @param integer $intQtdColumns  -08: Quantidade de colunas
+    * @param integer $intWidth       -09: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
+    * @param integer $intHeight      -10: DEPRECATED. Informe NULL para evitar o warning. Altura em Pixels
+    * @param integer $intPaddingItems-11: DEPRECATED.
+    * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED 
+    * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED 
+    * @return TCheck
+    */
+    public function addCheckField(string $id
+                                , string $strLabel=null
+                                , $boolRequired=null
+                                , $mixOptions=null
+                                , $boolNewLine=null
+                                , $boolLabelAbove=null
+                                , $mixValue=null
+                                , $intQtdColumns=null
+                                , $intWidth=null
+                                , $intHeight=null
+                                , $intPaddingItems=null
+                                , $boolNoWrapLabel=null 
+                                , $boolNowrapText=null
+                                )
+    {
+       //$field = new TCheck( $strName, $arrOptions, $arrValues, $boolRequired, $intQtdColumns, $intWidth, $intHeight, $intPaddingItems );
+       //$field->setNoWrapText($boolNowrapText);
+       //$this->addDisplayControl( new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel ) );
+       $formField = new TFormDinCheckField($id
+                                           ,$strLabel
+                                           ,$boolRequired
+                                           ,$mixOptions
+                                           ,$boolNewLine
+                                           ,$boolLabelAbove
+                                           ,$mixValue
+                                           ,$intQtdColumns
+                                           ,$intWidth
+                                           ,$intHeight
+                                           ,$intPaddingItems
+                                           ,$boolNoWrapLabel
+                                           ,$boolNowrapText
+                                          );
+        $objField = $formField->getAdiantiObj();
+        $label = $this->getLabelField($strLabel,$boolRequired);
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+    }
     /**
      * Adiciona campo tipo grupo com legenda na parte superior
      * ------------------------------------------------------------------------
