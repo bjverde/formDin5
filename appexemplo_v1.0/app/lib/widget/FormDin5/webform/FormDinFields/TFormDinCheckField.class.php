@@ -97,8 +97,9 @@ class TFormDinCheckField  extends TFormDinOption
      * @param integer $intPaddingItems-11: DEPRECATED.
      * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED 
      * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED
-     * @param mixed   $strKeyColumn   -14: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
-     * @param mixed   $strDisplayColumn-15: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário 
+     * @param boolean $useButton      -14: FORMDIN5 Default FALSE = estilo radio comum, TRUE = estilo tipo botões
+     * @param mixed   $strKeyColumn   -15: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
+     * @param mixed   $strDisplayColumn-16: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário 
      * @return TCheckGroup
      */
     public function __construct(string $id
@@ -114,6 +115,7 @@ class TFormDinCheckField  extends TFormDinOption
                                ,$intPaddingItems=null
                                ,$boolNoWrapLabel=null 
                                ,$boolNowrapText=null
+                               ,$useButton = false
                                ,$strKeyColumn=null
                                ,$strDisplayColumn=null
                                )
@@ -139,7 +141,10 @@ class TFormDinCheckField  extends TFormDinOption
                            ,$strDisplayColumn      //14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
                            ,null
                            ,null                   //16: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
-                        );        
+                        );
+        $this->setBreakItems($intQtdColumns);
+        $this->setUseButton($useButton);
+        $this->setLayout('horizontal');
         return $this->getAdiantiObj();
     }
 

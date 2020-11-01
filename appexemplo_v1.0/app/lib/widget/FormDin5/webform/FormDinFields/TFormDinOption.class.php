@@ -121,13 +121,14 @@ class TFormDinOption  extends TFormDinGenericField
                         	   , $strDataColumns=null 
                         	   )
 	{
-		$value = is_null($mixValue)?$strFirstOptionValue:$mixValue;        
+		$value = is_null($mixValue)?$strFirstOptionValue:$mixValue;
+		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );
+
 		parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
 		//parent::setValue( $value );
 
 		$this->setQtdColumns( $intQtdColumns );
-		$this->setFieldType( ($strInputType == null) ? self::SELECT : $strInputType );		
-
+	
 		$this->setMixOptions( $mixOptions );
 		$this->setDisplayField( $strDisplayField );
 		$this->setKeyField( $strKeyField );
@@ -146,7 +147,44 @@ class TFormDinOption  extends TFormDinGenericField
     public function getItems()
     {
         return $this->getAdiantiObj()->getItems();
+	}
+	
+    public function setUseButton($useButton){
+		if($this->getFieldType() == self::SELECT){
+			throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_OPTION);
+		}
+        if( !empty($useButton) ){
+            $this->getAdiantiObj()->setUseButton();
+        }
+	}
+    public function getButtons()
+    {
+        return $this->getAdiantiObj()->getButtons();
+    }	
+
+    public function setLayout($dir)
+    {
+		if($this->getFieldType() == self::SELECT){
+			throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_OPTION);
+		}
+        $this->getAdiantiObj()->setLayout($dir);
     }
+    public function getLayout()
+    {
+        return $this->getAdiantiObj()->getLayout();
+    }
+    public function setBreakItems($breakItems)
+    {
+		if($this->getFieldType() == self::SELECT){
+			throw new InvalidArgumentException(TFormDinMessage::ERROR_OBJ_OPTION);
+		}
+        $this->getAdiantiObj()->setBreakItems($breakItems);
+    }
+    public function getLabels()
+    {
+        return $this->getAdiantiObj()->getLabels();
+    }
+
 	//-----------------------------------------------------------------------
 	/**
 	 * Define a quantidade de colunas para distribuição dos checkbox ou radios na tela
