@@ -59,7 +59,6 @@
 class TFormDinCheckField  extends TFormDinOption
 {
     protected $adiantiObj;
-    private $multiSelect;
     
     /**
      * Adicionar campo tipo combobox ou menu select
@@ -97,7 +96,9 @@ class TFormDinCheckField  extends TFormDinOption
      * @param integer $intHeight      -10: DEPRECATED. Informe NULL para evitar o warning. Altura em Pixels
      * @param integer $intPaddingItems-11: DEPRECATED.
      * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED 
-     * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED 
+     * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED
+     * @param mixed   $strKeyColumn   -14: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
+     * @param mixed   $strDisplayColumn-15: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário 
      * @return TCheckGroup
      */
     public function __construct(string $id
@@ -113,11 +114,13 @@ class TFormDinCheckField  extends TFormDinOption
                                ,$intPaddingItems=null
                                ,$boolNoWrapLabel=null 
                                ,$boolNowrapText=null
+                               ,$strKeyColumn=null
+                               ,$strDisplayColumn=null
                                )
     {
         $this->setWidth( $intWidth );
         $this->setHeight( $intHeight );
-        $this->sePaddingItems( $intPaddingItems );
+        $this->setPaddingItems( $intPaddingItems );
         $adiantiObj = new TCheckGroup($id);
 
         parent::__construct($adiantiObj            //01: Objeto de campo do Adianti
@@ -138,25 +141,6 @@ class TFormDinCheckField  extends TFormDinOption
                            ,null                   //16: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
                         );        
         return $this->getAdiantiObj();
-    }
-
-
-    //-----------------------------------------------------------
-    public function getMultiSelect()
-    {
-        return $this->multiSelect;
-    }
-    private function setMultiSelect($boolMultiSelect)
-    {
-        $this->multiSelect = $boolMultiSelect;
-    }
-
-    public function enableSearch()
-    {
-        if($this->getMultiSelect() == false)
-        {
-            $this->getAdiantiObj()->enableSearch();
-        }
     }
 
     public function setWidth($intWidth)
