@@ -62,7 +62,7 @@
                 <menu>            
                     <menuitem label='Check Field'>
                         <icon>fa:check-square fa-fw</icon>
-                        <action>exe_HtmlField</action>
+                        <action>exe_CheckField</action>
                     </menuitem>
                     <menuitem label='Check List'>
                         <icon>fa:check-square fa-fw</icon>
