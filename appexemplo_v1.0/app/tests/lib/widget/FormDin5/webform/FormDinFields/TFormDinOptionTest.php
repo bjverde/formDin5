@@ -115,7 +115,6 @@ class TFormDinOptionTest extends TestCase
         $result = $this->classTest->getFieldType();
         $this->assertEquals(TFormDinOption::RADIO, $result);
     }
-
     public function testGetOptions_formDin()
     {
         $esperado = array();

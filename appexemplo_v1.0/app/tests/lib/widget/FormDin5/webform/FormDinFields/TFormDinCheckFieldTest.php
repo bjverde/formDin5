@@ -59,9 +59,7 @@ class TFormDinCheckFieldTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $mock = new mockFormDinArray ();
-        $listItems = $mock->generateTablePessoaAdianti();
-        $select = new TFormDinCheckField('select01','Selecione a Pessoa',false,$listItems);
+        $select = new TFormDinCheckField('check1','Selecione a Pessoa',false,'S=SIM,N=Não');
         $this->classTest = $select;
     }
     
@@ -72,13 +70,41 @@ class TFormDinCheckFieldTest extends TestCase
         $this->classTest = null;
         parent::tearDown();
     }
-
-    public function testInstanceOff_MultiSelectFalse()
+    public function testGetItems()
+    {
+        $items = ['S'=>'SIM', 'N'=>'Não'];
+        $result = $this->classTest->getItems();
+        $this->assertEquals( $items,$result );
+    }
+    public function testLayout()
+    {
+        $this->classTest->setLayout('vertical');
+        $result = $this->classTest->getLayout();
+        $this->assertEquals( 'vertical',$result );
+    }
+    public function testLayout_inSelect()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setFieldType(TFormDinOption::SELECT);
+        $this->classTest->setLayout('vertical');
+    }
+    public function testButton()
+    {
+        $this->classTest->setUseButton(true);
+        $result = $this->classTest->getButtons();
+        $this->assertEquals( true,$result );
+    }
+    public function testButton_inSelect()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setFieldType(TFormDinOption::SELECT);
+        $this->classTest->setUseButton(true);
+    }    
+    public function testInstanceOff()
     {
         $adiantiObj = $this->classTest->getAdiantiObj();
         $this->assertInstanceOf(TCheckGroup::class, $adiantiObj);
-    }
-
+    }    
     public function testWidth()
     {
         $this->expectWarning();

@@ -32,8 +32,39 @@ class exe_CheckField extends TPage
             $frm->addCheckField('campo_3', 'Bioma Não Obrigatório:', false, '1=Cerrado,2=Mata Atlântica,3=Caatinga');
             $frm->addCheckField('campo_4', 'Exemplo 4:', false, 'N', null, null);
         
+            $frm->addCheckField('cd_especie', 'Espécies:', false, '1=Amarela,2=Branca,3=Vermelha');
             //$frm->addCheckField('cd_especie', 'Espécies:', false, '1=Amarela,2=Branca,3=Vermelha')->addEvent('onChange', 'cd_especieChange()');
         $frm->closeGroup();
+
+        /*
+        $frm->addGroupField('gp2', 'Grupo 2');
+            $leg = '<div style=\'border:1px solid green;float:left;background-color:#cfffcf;width:10px;height:10px;\'></div>&nbsp;';
+            //$frm->addCheckField('st_abertas',$leg.'Abertas',null,null,false,null,'N')->addEvent('onChange','formDinFazer()');
+            $frm->addCheckField('st_abertas', $leg.'Abertas', null, null, false, null, 'N')->addEvent('onChange', 'filtrar(this)');
+            $frm->getLabel('st_abertas')->setCss('color', 'green');
+        
+            $leg = '<div style=\'border:1px solid red;float:left;background-color:#FFC1C1;width:10px;height:10px;\'></div>&nbsp;';
+            $frm->addCheckField('st_pendente', $leg.'Pendentes', null, null, false, null, 'N')->addEvent('onChange', 'formDinFazer()');
+        
+            $leg = '<div style=\'border:1px solid blue;float:left;background-color:#C6E2FF;width:10px;height:10px;\'></div>&nbsp;';
+            $frm->addCheckField('st_andamento', $leg.'Andamento', null, null, false, null, 'N')->addEvent('onChange', 'formDinFazer()');
+        
+        $frm->closeGroup();
+        
+        
+        $listLingProg = array('Cobol','PHP','HTML','CSS','JavaScript','Ruby','Python','Java','Delphi');
+        $listLingProgSel = array(0=>1,1=>4,2=>3);
+        $frm->addGroupField('gp3', 'Grupo 3 - Check com valor pre-marcados');
+            $frm->addCheckField('lingProg1', 'Linguagens de Programção:', false, $listLingProg,true,true,$listLingProgSel,3,250);
+        $frm->closeGroup();
+        
+        $frm->addGroupField('gp4', 'Grupo 4 - Check com tamnha definido');
+            $lingProg2 = $frm->addCheckField('lingProg2', 'Linguagens de Programção:', false, $listLingProg,true,true,null,3,100,200);
+            $lingProg2->setCss('background-color', '#ff6347');
+        $frm->closeGroup();
+        */
+
+
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
