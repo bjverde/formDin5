@@ -105,7 +105,7 @@ class TFormDinCheckField  extends TFormDinOption
     public function __construct(string $id
                                ,string $label
                                ,$boolRequired = false
-                               ,$mixOptions
+                               ,$mixOptions=null
                                ,$boolNewLine = true
                                ,$boolLabelAbove = false
                                ,$mixValue=null

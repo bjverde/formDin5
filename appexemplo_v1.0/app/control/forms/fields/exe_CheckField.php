@@ -30,7 +30,7 @@ class exe_CheckField extends TPage
             $frm->addCheckField('campo_1', 'Confirma ?', true);
             $frm->addCheckField('campo_2', 'Bioma Obrigatório para o cadastramentodas espécies:', true, '1=Cerrado,2=Mata Atlântica,3=Caatinga', null, null, null, null, null, null, null, true);
             $frm->addCheckField('campo_3', 'Bioma Não Obrigatório:', false, '1=Cerrado,2=Mata Atlântica,3=Caatinga');
-            //$frm->addCheckField('campo_4', 'Exemplo 4:', false, 'N', null, null);
+            $frm->addCheckField('campo_4', 'Exemplo 4:', false, 'N', null, null);
         
             //$frm->addCheckField('cd_especie', 'Espécies:', false, '1=Amarela,2=Branca,3=Vermelha')->addEvent('onChange', 'cd_especieChange()');
         $frm->closeGroup();
