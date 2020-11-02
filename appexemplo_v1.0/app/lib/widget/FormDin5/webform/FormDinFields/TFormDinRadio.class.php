@@ -55,7 +55,7 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinRadio extends TFormDinGenericField
+class TFormDinRadio extends TFormDinOption
 {
     protected $adiantiObj;
     
@@ -66,26 +66,28 @@ class TFormDinRadio extends TFormDinGenericField
      * @param string $strName         - 1: field ID
      * @param string $strLabel        - 2: Label field
      * @param boolean $boolRequired   - 3: TRUE = Required, FALSE = not Required
-     * @param array $arrOptions       - 4: Array Options ou String FormDin 'S=SIM,N=Não'
+     * @param array   $mixOptions     - 4: Array Options ou String FormDin 'S=SIM,N=Não'
      * @param boolean $boolNewLine    - 5: TRUE = new line, FALSE = no, DEFAULT ou NULL = FALSE
      * @param boolean $boolLabelAbove - 6: TRUE = Titulo em cima das opções, FALSE = titulo lateral
-     * @param string  $strValue       - 7: Valor DEFUALT, informe do id do array
+     * @param string  $mixValue       - 7: Informe o ID do array. Array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
      * @param integer $intQtdColumns  - 8: Quantidade de colunas, valor DEFAULT = 1;
-     * @param integer $intWidth       - 9: DEPRECATED
-     * @param integer $intHeight      -10: DEPRECATED
-     * @param integer $intPaddingItems-11: NOT_IMPLEMENTED
+     * @param integer $intWidth       - 9: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
+     * @param integer $intHeight      -10: DEPRECATED. Informe NULL para evitar o warning. Altura em Pixels
+     * @param integer $intPaddingItems-11: EPRECATED. Informe NULL para evitar o warning. 
      * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED
      * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED
      * @param boolean $useButton      -14: FORMDIN5 Default FALSE = estilo radio comum, TRUE = estilo tipo botões
+     * @param mixed   $strKeyColumn   -15: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
+     * @param mixed   $strDisplayColumn-16: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário 
      * @return mixed TRadioGroup
      */
     public function __construct($id
                                ,$label=null
                                ,$boolRequired=null
-                               ,$arrOptions=null
+                               ,$mixOptions=null
                                ,$boolNewLine=null
                                ,$boolLabelAbove=null
-                               ,$strValue=null
+                               ,$mixValue=null
                                ,$intQtdColumns=null
                                ,$intWidth=null
                                ,$intHeight=null
@@ -93,54 +95,59 @@ class TFormDinRadio extends TFormDinGenericField
                                ,$boolNoWrapLabel=null
                                ,$boolNowrapText=null
                                ,$useButton = null
+                               ,$strKeyColumn = null
+                               ,$strDisplayColumn = null
                                )
     {
+        $this->setWidth( $intWidth );
+        $this->setHeight( $intHeight );
+        $this->setPaddingItems( $intPaddingItems );
+
         $adiantiObj = new TRadioGroup($id);
-        parent::__construct($adiantiObj,$id,$label,$boolRequired,$strValue,null);
-        $this->setUseButton($useButton);
-        $this->addItems($arrOptions);
+        parent::__construct($adiantiObj            //01: Objeto de campo do Adianti
+                           ,$id                    //02: ID do campo
+                           ,$label                 //03: Label do campo
+                           ,$boolRequired          //04: Campo obrigatório. Default FALSE = não obrigatório, TRUE = obrigatório
+                           ,$mixOptions            //05: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: PHP "id=>value", FormDin, PDO ou Adianti
+                           ,$boolNewLine           //06: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+                           ,$boolLabelAbove        //07: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+                           ,$mixValue              //08: Informe o ID do array. Array no formato "key=>key" para identificar a(s) opção(ões) selecionada(s)
+                           ,null                   //09: Default FALSE = SingleSelect, TRUE = MultiSelect
+                           ,$intQtdColumns         //10: Default 1. Num itens que irão aparecer no MultiSelect
+                           ,TFormDinOption::CHECK  //11: Define o tipo de input a ser gerado. Ex: select, radio ou check
+                           ,null                   //12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
+                           ,$strKeyColumn          //13: Nome da coluna que será utilizada para preencher os valores das opções
+                           ,$strDisplayColumn      //14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+                           ,null
+                           ,null                   //16: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+                        );
         $this->setBreakItems($intQtdColumns);
         $this->setUseButton($useButton);
         $this->setLayout('horizontal');
-        return $this->getAdiantiObj();
     }
 
-    public function addItems($arrayItens){
-        $arrayItens = ArrayHelper::convertString2Array($arrayItens);
-        $this->getAdiantiObj()->addItems($arrayItens);
-    }    
+    public function setWidth($intWidth)
+    {
+        ValidateHelper::validadeParam('intWidth',$intWidth
+                                     ,ValidateHelper::WARNING
+                                     ,ValidateHelper::MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
+    }
+    
+    public function setHeight($intHeight)
+    {
+        ValidateHelper::validadeParam('intHeight',$intHeight
+                                     ,ValidateHelper::WARNING
+                                     ,ValidateHelper::MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
+    }
+    
+    public function setPaddingItems($intPaddingItems)
+    {
+        ValidateHelper::validadeParam('intPaddingItems',$intPaddingItems
+                                     ,ValidateHelper::WARNING
+                                     ,ValidateHelper::MSG_DECREP
+                                     ,__CLASS__,__METHOD__,__LINE__);
+	}
 
-    public function setUseButton($useButton){
-        if( !empty($useButton) ){
-            $this->getAdiantiObj()->setUseButton();
-        }
-    }
-
-    public function setLayout($dir)
-    {
-        $this->getAdiantiObj()->setLayout($dir);
-    }
-    public function getLayout()
-    {
-        return $this->getAdiantiObj()->getLayout();
-    }
-
-    public function setBreakItems($breakItems)
-    {
-        $this->getAdiantiObj()->setBreakItems($breakItems);
-    }
-    public function getItems()
-    {
-        return $this->getAdiantiObj()->getItems();
-    }
-
-    public function getButtons()
-    {
-        return $this->getAdiantiObj()->getButtons();
-    }
-
-    public function getLabels()
-    {
-        return $this->getAdiantiObj()->getLabels();
-    }
 }
