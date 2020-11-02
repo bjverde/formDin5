@@ -92,14 +92,25 @@ class TFormDinCheckFieldTest extends TestCase
     {
         $this->classTest->setUseButton(true);
         $result = $this->classTest->getButtons();
-        $this->assertEquals( true,$result );
+        $this->assertInstanceOf(TCheckButton::class, $result['S']);
+    }
+    public function testBreakItems_inSelect()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setFieldType(TFormDinOption::SELECT);
+        $this->classTest->setBreakItems(1);
+    }
+    public function testGetLabels()
+    {
+        $result = $this->classTest->getLabels();
+        $this->assertInstanceOf(TLabel::class, $result['S']);
     }
     public function testButton_inSelect()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->classTest->setFieldType(TFormDinOption::SELECT);
         $this->classTest->setUseButton(true);
-    }    
+    }
     public function testInstanceOff()
     {
         $adiantiObj = $this->classTest->getAdiantiObj();
