@@ -932,6 +932,7 @@ class TFormDin
 
         return $formField;
     }
+
     /**
      * Adicionar campo entrada de dados texto com mascara
      * ------------------------------------------------------------------------
@@ -1173,32 +1174,32 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
-    //-----------------------------------------------------------------------------
-    /***
-    * Adicicionar campo tipo checkbox
-    * ------------------------------------------------------------------------
-    * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
-    * os parâmetros do metodos foram marcados veja documentação da classe para
-    * saber o que cada marca singinifica.
-    * ------------------------------------------------------------------------
-    *
-    * @param string  $strName        -01: ID do campo
-    * @param string  $strLabel       -02: Label do campo
-    * @param boolean $boolRequired   -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatórioObrigatorio.
-    * @param mixed   $mixOptions     -04: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN e ArrayHelper::TYPE_PHP
-    * @param boolean $boolNewLine    -05: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
-    * @param boolean $boolLabelAbove -06: TRUE = Titulo em cima das opções, FALSE = titulo lateral
-    * @param mixed   $mixValue       -07: Valor DEFAULT, informe do ID do arrOptions ou UM array no forma "key=>id" para maracar mais de um valor ao mesmo tempo
-    * @param integer $intQtdColumns  -08: Quantidade de colunas
-    * @param integer $intWidth       -09: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
-    * @param integer $intHeight      -10: DEPRECATED. Informe NULL para evitar o warning. Altura em Pixels
-    * @param integer $intPaddingItems-11: DEPRECATED.
-    * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED 
-    * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED 
-    * @param mixed   $strKeyColumn     - 14: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
-    * @param mixed   $strDisplayColumn - 15: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-    * @return TCheck
-    */
+
+    /**
+     * Adicicionar campo tipo checkbox
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     *
+     * @param string  $id              - 01: ID do campo
+     * @param string  $strLabel        - 02: Label do campo
+     * @param boolean $boolRequired    - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatórioObrigatorio.
+     * @param mixed   $mixOptions      - 04: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN e ArrayHelper::TYPE_PHP
+     * @param boolean $boolNewLine     - 05: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
+     * @param boolean $boolLabelAbove  - 06: TRUE = Titulo em cima das opções, FALSE = titulo lateral
+     * @param mixed   $mixValue        - 07: Valor DEFAULT, informe do ID do arrOptions ou UM array no forma "key=>id" para maracar mais de um valor ao mesmo tempo
+     * @param integer $intQtdColumns   - 08: Quantidade de colunas
+     * @param integer $intWidth        - 09: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
+     * @param integer $intHeight       - 10: DEPRECATED. Informe NULL para evitar o warning. Altura em Pixels
+     * @param integer $intPaddingItems - 11: DEPRECATED.
+     * @param boolean $boolNoWrapLabel - 12: NOT_IMPLEMENTED 
+     * @param boolean $boolNowrapText  - 13: NOT_IMPLEMENTED 
+     * @param mixed   $strKeyColumn    - 14: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
+     * @param mixed   $strDisplayColumn- 15: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+     * @return TFormDinCheckField
+     */
     public function addCheckField(string $id
                                 , string $strLabel=null
                                 , $boolRequired=null
@@ -1241,6 +1242,7 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
+
     /**
      * Adiciona campo tipo grupo com legenda na parte superior
      * ------------------------------------------------------------------------
@@ -1294,7 +1296,7 @@ class TFormDin
 		return $objField;
     }
     
-    /**
+    /*****
      * Este método fecha um campo grupo ou um campo aba para que os campos
      * seguintes fique abaixo dos mesmos e não dentro deles.
      * ------------------------------------------------------------------------
@@ -1308,7 +1310,7 @@ class TFormDin
         $this->addGroupField();
     }
 
-    /**
+    /****
      * Campo de uso geral para insersão manual de códigos html na página
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
@@ -1442,8 +1444,6 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
 	}
-
-
 
     //----------------------------------------------------------------
     //----------------------------------------------------------------
