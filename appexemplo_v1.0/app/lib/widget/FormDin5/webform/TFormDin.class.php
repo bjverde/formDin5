@@ -664,8 +664,81 @@ class TFormDin
         return $this->setAction($actionsLabel, $actionsName, $header, $iconImagem, $color,false);
     }
 
-
     /**
+     * Recebe um objeto do tipo VO e seta os valores automaticamente
+     *
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     *    
+     * @param object $vo
+     */
+    public function setVO( $vo )
+    {
+        foreach( $this->displayControls as $name=>$dc ) {
+            if( $dc->getField()->getFieldType() == 'pagecontrol' )
+            {
+                $dc->getField()->setVo( $vo );
+            }
+            else if( $dc->getField()->getFieldType() == 'group' )
+            {
+                $dc->getField()->setVo( $vo );
+            } else {
+                $dc = new TDAOCreate();
+                if( method_exists( $vo, $method = 'set' . ucfirst( $name ) )
+                    || method_exists($vo, $method = 'set' . ucfirst( $dc->removeUnderline($name) )) )
+                {
+                    $field = $this->getField( $name );
+                    if( $field ) {
+                        if( ! is_array($field->getValue() ) ) {
+                            if( $field->getFieldType()=='fileasync') {
+                                $value = $field->getContent();
+                            } else {
+                                $value = $field->getValue();
+                            }
+                        } else {
+                            $value = $field->getValue();
+                            //print $name.' = '.print_r($field->getValue(),true).'<br>';
+                            if( $field->getFieldType()=='check') {
+                                if(!isset($value[0])) {
+                                    $value=null;
+                                }elseif ( CountHelper::count($value)==1 ){
+                                    $value = $value[0];
+                                }
+                            }else{
+                                if(isset($value[0])) {
+                                    $value = $value[0];
+                                } else {
+                                    $value=null;
+                                } 
+                            }                               
+                        }
+                        if( !is_array($value) ){
+                            $method = '$vo->' . $method . '(\'' . addslashes($value) . '\');';
+                        }else{
+                            $method = '$vo->' . $method . '( array(';
+                            $stringArray = null;
+                            foreach( $value as $key=>$valeuItem ) {
+                                $stringItem = '\''.addslashes($key).'\'=>\''.addslashes($valeuItem).'\'';
+                                if($key > 0){
+                                    $stringArray = $stringArray.','.$stringItem;
+                                }else{
+                                    $stringArray = $stringItem;
+                                }                                   
+                            }
+                            $method = $method.$stringArray.') );';
+                        }
+                        eval( $method );
+                    }
+                }
+            }
+        }
+    }
+
+
+   /**
     * Adiciona um campo oculto ao layout
     * ------------------------------------------------------------------------
     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
@@ -793,7 +866,7 @@ class TFormDin
     	return $formField;
     }
 
-    /****
+    /**
      * Adicona um campo data ou mes/ano ou dia/mes de acordo com o parametro strMaxType
      * Tipo de máscara: DMY, DM, MY
      *  
@@ -847,7 +920,7 @@ class TFormDin
     	return $formField;
     }
 
-    /****
+    /**
      * Adicona um campo Data Hora  ou mes/ano ou dia/mes de acordo com o parametro strMaxType
      * Tipo de máscara: DMY, DM, MY
      *  
@@ -1310,7 +1383,7 @@ class TFormDin
         $this->addGroupField();
     }
 
-    /****
+    /**
      * Campo de uso geral para insersão manual de códigos html na página
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
