@@ -75,12 +75,14 @@ class TFormDinMessage {
 
     const ERROR_HTML_COLOR_HEXA = 'Informe uma cor HTML no formato hexadecimal. Exemplo #efefef !';
 
-    const ERROR_EMPTY_INPUT = 'O Parametro não pode ficar em branco';
-    const ERROR_TYPE_NOT_INT = 'Tipo não númerico! ';
+    const ERROR_EMPTY_INPUT    = 'O Parametro não pode ficar em branco';
+    const ERROR_TYPE_NOT_INT   = 'Tipo não númerico! ';
     const ERROR_TYPE_NOT_ARRAY = 'Tipo não é um array! ';
     const ERROR_TYPE_ARRAY_EMP = 'O array está vazio! ';
-    const ERROR_TYPE_NOT_SET = 'A variable has not been defined! ';
-    const ERROR_TYPE_WRONG = 'Tipo de dados errado';
+    const ERROR_TYPE_NOT_SET   = 'A variable has not been defined! ';
+    const ERROR_TYPE_WRONG     = 'Tipo de dados errado';
+    const ERROR_SQL_NULL       = 'O SQL está em branco';
+    const ERROR_SQL_PARAM      = 'Quantidade de parametros diferente da quantidade utilizada na instrução sql!';
 
     const ERROR_FD5  = 'ERRO FormDin5: ';
     const ERROR_FD5_PARAM_MIGRA  = Self::ERROR_FD5.' Falha na migração do FormDin 4 para 5.';

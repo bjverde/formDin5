@@ -141,7 +141,83 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $result['db']['type']);
         $this->assertEquals($name, $result['db']['name']);
     }
+    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
 
+    public function testValidarQtdParametros_SqlNull()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->validarQtdParametros(null, null);
+    }
+    public function testValidarQtdParametros_SqlNotString()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->validarQtdParametros(1, null);
+    }    
+    public function testValidarQtdParametros_ParamNull()
+    {
+        $this->expectNotToPerformAssertions();
+        $sql = 'select * from dado_apoio order by seq_dado_apoio';
+        $this->classTest->validarQtdParametros($sql, null);
+    }
+
+    public function testValidarQtdParametros_Param_NotArray()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $sql = 'insert into form_exemplo.tipo(
+                                            descricao
+                                           ,idmeta_tipo
+                                           ,sit_ativo
+                                        ) values (?,?,?)';
+        $arrParams = new stdClass();
+        $this->classTest->validarQtdParametros($sql, $arrParams);
+    }
+
+    public function testValidarQtdParametros_QtdParam_FailZero()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $sql = 'insert into form_exemplo.tipo(
+                                            descricao
+                                           ,idmeta_tipo
+                                           ,sit_ativo
+                                        ) values (?,?,?)';
+        $arrParams = array();
+        $this->classTest->validarQtdParametros($sql, $arrParams);
+    }
+
+    public function testValidarQtdParametros_QtdParam_FailDois()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $sql = 'insert into form_exemplo.tipo(
+                                            descricao
+                                           ,idmeta_tipo
+                                           ,sit_ativo
+                                        ) values (?,?,?)';
+        $arrParams = array();
+        $arrParams[]='desc';
+        $arrParams[]=10;
+        $this->classTest->validarQtdParametros($sql, $arrParams);
+    }
+
+    public function testValidarQtdParametros_QtdParam_OK()
+    {
+        $this->expectNotToPerformAssertions();
+        $sql = 'insert into form_exemplo.tipo(
+                                            descricao
+                                           ,idmeta_tipo
+                                           ,sit_ativo
+                                        ) values (?,?,?)';
+        $arrParams = array();
+        $arrParams[]='desc';
+        $arrParams[]=10;
+        $arrParams[]='S';
+        $this->classTest->validarQtdParametros($sql, $arrParams);
+    }
+
+    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
     public function testExecuteSql_sqllite_upperCase_Adianti()
     {   
         $path =  __DIR__.'/../../../../../';

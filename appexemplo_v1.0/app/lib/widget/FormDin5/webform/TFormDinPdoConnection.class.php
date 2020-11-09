@@ -298,16 +298,44 @@ class TFormDinPdoConnection
     }
 
     /**
+     * Verifica se quantidade de parametros está correta
+     * @param string $sql
+     * @param array $arrParams
+     * @return void
+     */
+    public function validarQtdParametros($sql,$arrParams)
+    {   
+        if( empty($sql) || !is_string($sql) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_NULL);
+        }
+        if ( strpos( $sql, '?' ) > 0 && !is_array( $arrParams ) ) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_PARAM);
+        }        
+        if ( strpos( $sql, '?' ) > 0 && is_array( $arrParams ) && count( $arrParams ) == 0 ) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_PARAM);
+        }
+        if ( strpos( $sql, '?' ) > 0 && is_array( $arrParams ) && count( $arrParams ) > 0 ) {
+            $qtd1 = substr_count( $sql, '?' );
+            $qtd2 = count( $arrParams );
+            
+            if ( $qtd1 != $qtd2 ) {
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_PARAM);
+            }
+        }
+    }
+
+    /**
      * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
      * se a operação foi bem sucedida.
      *
      * @param string $sql
-     * @param array $values
+     * @param array $arrParams
      * @return mixed
      */
-    public function executeSql($sql, $values = null)
+    public function executeSql($sql, $arrParams = null)
     {
         try {
+            $this->validarQtdParametros($sql, $arrParams);
             $configConnect = $this->getConfigConnect();
             $database = $configConnect['database'];
             $db = $configConnect['db'];
