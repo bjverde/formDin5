@@ -672,15 +672,20 @@ class TFormDin
      * os parâmetros do metodos foram marcados veja documentação da classe para
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
-     *    
+     *
      * @param object $vo    - 1: objecto Vo
      * @param object $data  - 2: FORMDIN5 $data $this->form->getData();
      * @param array  $param - 3: FORMDIN5 $param da entrada de metodo
      */
     public function setVO( object $vo, object $data = null, array $param = null)
     {
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
-        FormDinHelper::setPropertyVo($_REQUEST,$vo);
+        //FormDinHelper::d($param,'$param');
+        //FormDinHelper::debug($data,'$data');
+        //FormDinHelper::debug($_REQUEST,'$_REQUEST');
+        if( empty($param) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_PARAM);
+        }
+        FormDinHelper::setPropertyVo($param,$vo);
     }
 
 

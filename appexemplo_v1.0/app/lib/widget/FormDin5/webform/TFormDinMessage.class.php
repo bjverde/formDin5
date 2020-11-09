@@ -82,11 +82,13 @@ class TFormDinMessage {
     const ERROR_TYPE_NOT_SET = 'A variable has not been defined! ';
     const ERROR_TYPE_WRONG = 'Tipo de dados errado';
 
-    const ERROR_FD5_PARAM_MIGRA  = 'Falha na migração do FormDin 4 para 5.';
-    const ERROR_FD5_OBJ_ADI  = 'Erro objeto Adianti Fieald não pode ficar em branco.';
-    const ERROR_FD5_OBJ_BUILDER  = 'Erro objeto não é um Adianti BootstrapFormBuilder.';
-    const ERROR_FD5_OBJ_BOOTGRID = 'Erro objeto não é um Adianti BootstrapDatagridWrapper.';
-    const ERROR_FD5_OBJ_CHECKLIST= 'Erro objeto não é um FormDin5 TFormDinCheckList.';
+    const ERROR_FD5  = 'ERRO FormDin5: ';
+    const ERROR_FD5_PARAM_MIGRA  = Self::ERROR_FD5.' Falha na migração do FormDin 4 para 5.';
+    const ERROR_FD5_OBJ_ADI      = Self::ERROR_FD5.' objeto Adianti Fieald não pode ficar em branco.';
+    const ERROR_FD5_OBJ_BUILDER  = Self::ERROR_FD5.' objeto não é um Adianti BootstrapFormBuilder.';
+    const ERROR_FD5_OBJ_BOOTGRID = Self::ERROR_FD5.' objeto não é um Adianti BootstrapDatagridWrapper.';
+    const ERROR_FD5_OBJ_CHECKLIST= Self::ERROR_FD5.' objeto não é um FormDin5 TFormDinCheckList.';
+    const ERROR_FD5_PARAM        = Self::ERROR_FD5.' o parametro não pode ficar em branco.';
     const ERROR_FD5_FORM_MIGRAT  = Self::ERROR_FD5_PARAM_MIGRA.' A classe TFORM MUDOU! o primeiro parametro agora recebe $this!.';
     
     const ERROR_OBJ_TYPE_WRONG  = 'type object is wrong';
