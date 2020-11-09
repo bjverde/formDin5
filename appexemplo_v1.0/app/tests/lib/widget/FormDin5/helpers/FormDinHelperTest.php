@@ -103,6 +103,22 @@ class FormDinHelperTest extends TestCase
         $this->assertEquals( $expected , $vo->getCod_uf());
         $this->assertEquals( $expected , $vo->getNom_municipio());
         $this->assertEquals( $expected , $vo->getSit_ativo());
+    }
+
+    public function testSetPropertyVo_MixCase(){
+        $bodyRequest = array();
+        $bodyRequest['COD_MUNICIPIO'] = 10;
+        $bodyRequest['COD_UF'] = 'DF';
+        $bodyRequest['nom_municipio'] = 'Divinopolis';
+        $bodyRequest['sit_ativo'] = 'N';
+        
+        $vo = new mockMunicipioVO();
+        
+        $vo =  FormDinHelper::setPropertyVo($bodyRequest,$vo);
+        $this->assertEquals( 10 , $vo->getCod_municipio());
+        $this->assertEquals( 'DF' , $vo->getCod_uf());
+        $this->assertEquals( 'Divinopolis' , $vo->getNom_municipio());
+        $this->assertEquals( 'N' , $vo->getSit_ativo());
     }    
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
