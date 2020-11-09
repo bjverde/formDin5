@@ -83,7 +83,26 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->expectNotToPerformAssertions();
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
     }
-    //---------------------------------------------
+
+    public function testSetDatabase_fail_null()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setDatabase(null);
+    }
+    public function testSetDatabase_fail_int()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setDatabase(10);
+    }
+    public function testSetDatabase_ok_string()
+    {
+        $this->expectNotToPerformAssertions();
+        $this->classTest->setDatabase('main config');
+    }    
+
+    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
     public function testGetDefaulPort_PostGre()
     {   
         $this->classTest->setType(TFormDinPdoConnection::DBMS_POSTGRES);
@@ -101,7 +120,7 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
         $result = $this->classTest->getDefaulPort();
         $this->assertEquals(1433, $result);
-    }    
+    }
     //---------------------------------------------
     public function testGetConfigConnect_null()
     {
@@ -144,7 +163,6 @@ class TFormDinPdoConnectionTest extends TestCase
     //----------------------------------------------------------------------
     //----------------------------------------------------------------------
     //----------------------------------------------------------------------
-
     public function testValidarQtdParametros_SqlNull()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -218,6 +236,18 @@ class TFormDinPdoConnectionTest extends TestCase
     //----------------------------------------------------------------------
     //----------------------------------------------------------------------
     //----------------------------------------------------------------------
+    public function testExecuteSql_sqllite_FailSql()
+    {   
+        $this->expectException(Exception::class);
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $sql = 'select12 * from dado_apoio order by seq_dado_apoio';
+        
+        $this->classTest->executeSql($sql);
+    }
+
     public function testExecuteSql_sqllite_upperCase_Adianti()
     {   
         $path =  __DIR__.'/../../../../../';
