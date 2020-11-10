@@ -302,8 +302,8 @@ class TFormDinPdoConnection
 
     /**
      * Verifica se quantidade de parametros está correta
-     * @param string $sql
-     * @param array $arrParams
+     * @param string $sql      -1: string sql do comando
+     * @param array $arrParams -2: array com o valores para bind do sql
      * @return void
      */
     public function validarQtdParametros($sql,$arrParams)
@@ -331,8 +331,8 @@ class TFormDinPdoConnection
      * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
      * se a operação foi bem sucedida.
      *
-     * @param string $sql
-     * @param array $arrParams
+     * @param string $sql      -1: string sql do comando
+     * @param array $arrParams -2: array com o valores para bind do sql
      * @return mixed
      */
     public function executeSql($sql, $arrParams = null)
