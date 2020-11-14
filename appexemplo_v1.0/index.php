@@ -7,9 +7,16 @@ FormDinHelper::setFormDinMinimumVersion($ini['system']['formdin_min_version']);
 $theme  = $ini['general']['theme'];
 new TSession;
 
-$content     = file_get_contents("app/templates/{$theme}/layout.html");
+if (!empty($_REQUEST['theme'])) {
+    TSession::setValue('theme', $_REQUEST['theme']);
+}
+if (!empty(TSession::getValue('theme'))) {
+    $theme = TSession::getValue('theme');
+}
+
+
 $menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
-$content     = str_replace('{MENU}', $menu_string, $content);
+$content     = file_get_contents("app/templates/{$theme}/layout.html");
 
 //---FORMDIN 5 -------------------------
 $content     = str_replace('{head_title}', $ini['general']['application'], $content);

@@ -54,6 +54,17 @@
           <li class="header">MENU</li>
           </ul>
           {MENU}
+          <!-- Change Theme -->
+          <div class="legal" style="padding-top:25px;padding-left:1em">
+            <select name="themeChange" id="themeChange" onchange="location = this.value;">
+              <option disabled selected value> -- select an option -- </option>
+              <option value="index.php?class={class}&theme=theme_formdinv">FormDin Vert</option>
+              <option value="index.php?class={class}&theme=theme_formdin">FormDin</option>
+              <option value="index.php?class={class}&theme=theme3">Bootstrap</option>
+              <option value="index.php?class={class}&theme=theme4">Material</option>
+            </select>
+          </div>
+          <!-- #Change Theme -->     
         </section>
         <!-- /.sidebar -->
       </aside>
