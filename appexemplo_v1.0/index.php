@@ -5,8 +5,6 @@ FormDinHelper::setFormDinMinimumVersion($ini['system']['formdin_min_version']);
 
 
 $theme  = $ini['general']['theme'];
-new TSession;
-
 if (!empty($_REQUEST['theme'])) {
     TSession::setValue('theme', $_REQUEST['theme']);
 }

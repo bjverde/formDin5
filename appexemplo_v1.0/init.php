@@ -23,6 +23,13 @@ define('LANG', $ini['general']['language']);
 
 // custom session name
 session_name('PHPSESSID_'.$ini['general']['application']);
+new TSession;
+if (isset($_REQUEST['class'])){
+    if($_REQUEST['class'] != 'DocumentationView'){
+        TSession::setValue('classCode', $_REQUEST['class']);
+    }
+}
+
 
 if (version_compare(PHP_VERSION, '7.0.0') == -1)
 {

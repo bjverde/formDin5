@@ -46,12 +46,14 @@ class DocumentationView extends TWindow
         if (isset($param['classname']) AND $param['classname'])
         {
             $folder    = 'app/control';
-            $classname = $param['classname'];
-            foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($folder),
-                                                   RecursiveIteratorIterator::SELF_FIRST) as $entry)
+            $classname = TSession::getValue('classCode');
+            $list = new RecursiveDirectoryIterator($folder);
+            $it   = new RecursiveIteratorIterator($list,RecursiveIteratorIterator::SELF_FIRST);
+
+            foreach ($it as $entry)
             {
-                if (is_dir($entry))
-                {
+                if ( strpos($entry, $classname) !== false ) {
+                    error_log('XXX: '.$classname.' - '.$entry);
                     if (file_exists("{$entry}/{$classname}.class.php"))
                     {
                         $resource = str_replace('app/control', 'app/resources', "{$entry}/{$classname}.txt");
@@ -59,6 +61,8 @@ class DocumentationView extends TWindow
                         parent::setTitle("{$entry}/{$classname}.class.php");
                         return;
                     }
+                }else{
+                    error_log('NÃO TEM: '.$classname.' - '.$entry);
                 }
             }
         }
