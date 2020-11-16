@@ -9,16 +9,26 @@
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
  * @license    http://www.adianti.com.br/framework-license
  */
-class DocumentationView extends TWindow
+class DocumentationView extends TPage
 {
     private $label;
     private $source;
+    protected $form; // registration form
     
     public function __construct()
     {
         // parent classs constructor
         parent::__construct();
-        parent::setSize(0.95, 0.8);
+
+        $class = empty(TSession::getValue('classCode'))?'':TSession::getValue('classCode');
+        // creates form
+        $this->form = new BootstrapFormBuilder('form');
+        $this->form->setFormTitle('Source Code class: '.$class);
+
+        $objhtml  = new TElement('div');
+        $html = '<a href="index.php?class='.$class.'">Voltar para a Class:'.$class.'</a>';
+        $objhtml->add($html);
+        $this->form->addFields( [$objhtml]);
         
         $config = AdiantiApplicationConfig::get();
         ini_set('highlight.comment', $config['highlight']['comment']);
@@ -34,7 +44,15 @@ class DocumentationView extends TWindow
         $this->source = new TSourceCode;
         $this->source->generateRowNumbers();
         $wrapper->add($this->source);
-        parent::add($wrapper);
+        //parent::add($wrapper);
+        $this->form->addContent([$wrapper]);
+
+        // wrap the page content using vertical box
+        $vbox = new TVBox;
+        $vbox->style = 'width:100%';
+        //$vbox->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
+        $vbox->add($this->form);
+        parent::add($vbox);
     }
     
     /**
@@ -53,13 +71,11 @@ class DocumentationView extends TWindow
             foreach ($it as $entry){
                 if ( strpos($entry, $classname) !== false ) {
                     $this->source->loadFile("$entry");
-                    parent::setTitle("$entry");
                     return;
                 }
             }
         } else {
             $this->source->loadFile('index.php');
-            parent::setTitle('index.php');
         }
     }
 }
