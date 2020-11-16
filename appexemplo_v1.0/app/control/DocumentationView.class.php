@@ -50,24 +50,14 @@ class DocumentationView extends TWindow
             $list = new RecursiveDirectoryIterator($folder);
             $it   = new RecursiveIteratorIterator($list,RecursiveIteratorIterator::SELF_FIRST);
 
-            foreach ($it as $entry)
-            {
+            foreach ($it as $entry){
                 if ( strpos($entry, $classname) !== false ) {
-                    error_log('XXX: '.$classname.' - '.$entry);
-                    if (file_exists("{$entry}/{$classname}.class.php"))
-                    {
-                        $resource = str_replace('app/control', 'app/resources', "{$entry}/{$classname}.txt");
-                        $this->source->loadFile("{$entry}/{$classname}.class.php");
-                        parent::setTitle("{$entry}/{$classname}.class.php");
-                        return;
-                    }
-                }else{
-                    error_log('NÃO TEM: '.$classname.' - '.$entry);
+                    $this->source->loadFile("$entry");
+                    parent::setTitle("$entry");
+                    return;
                 }
             }
-        }
-        else
-        {
+        } else {
             $this->source->loadFile('index.php');
             parent::setTitle('index.php');
         }
