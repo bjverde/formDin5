@@ -55,6 +55,18 @@
           <li class="header">MENU</li>
           </ul>
           {MENU}
+          <!-- Change Theme -->
+          <div class="legal" style="padding-top:25px;padding-left:1em">
+            <select name="themeChange" id="themeChange" onchange="location = this.value;">
+              <option disabled selected value>- select a Theme -</option>
+              <option value="index.php?class={class}&theme=theme_formdinv">FormDin Vert</option>
+              <option value="index.php?class={class}&theme=theme_formdin">FormDin</option>
+              <option value="index.php?class={class}&theme=theme3">Bootstrap</option>
+              <option value="index.php?class={class}&theme=theme3_v5">Bootstrap V5</option>
+              <option value="index.php?class={class}&theme=theme4">Material</option>
+            </select>
+          </div>
+          <!-- #Change Theme -->           
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -71,6 +83,10 @@
         <div id="adianti_online_content2"></div>
         
         <div id="adianti_right_panel" class="right-panel"></div>
+
+        <a id="view-source" class="float-button" title="View source code" generator="adianti-docs" href="index.php?class=DocumentationView&classname={class}&method=onHelp">
+          <i class="fa fa-code internal-float-button"></i>
+        </a>
         
       </div><!-- /.content-wrapper -->
       <footer class="row main-footer">

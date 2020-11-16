@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Adianti Framework</title>
+    <title>{head_title}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="manifest" href="manifest.json?appver=722">
@@ -21,16 +21,16 @@
     <link href="app/templates/{template}/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
-  <body class="hold-transition skin-blue-light sidebar-mini layout-boxed">
+  <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
         <!-- Logo -->
         <a href="index.php?class=WelcomeView" generator="adianti" target="newwindow" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>AF</b>7</span>
+          <span class="logo-mini">{logo-mini}</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Adianti</b>Framework7</span>
+          <span class="logo-lg">{logo-lg}</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -57,10 +57,11 @@
           <!-- Change Theme -->
           <div class="legal" style="padding-top:25px;padding-left:1em">
             <select name="themeChange" id="themeChange" onchange="location = this.value;">
-              <option disabled selected value> -- select an option -- </option>
+              <option disabled selected value>- select a Theme -</option>
               <option value="index.php?class={class}&theme=theme_formdinv">FormDin Vert</option>
               <option value="index.php?class={class}&theme=theme_formdin">FormDin</option>
               <option value="index.php?class={class}&theme=theme3">Bootstrap</option>
+              <option value="index.php?class={class}&theme=theme3_v5">Bootstrap V5</option>
               <option value="index.php?class={class}&theme=theme4">Material</option>
             </select>
           </div>
@@ -81,6 +82,10 @@
         <div id="adianti_online_content2"></div>
         
         <div id="adianti_right_panel" class="right-panel"></div>
+
+        <a id="view-source" class="float-button" title="View source code" generator="adianti-docs" href="index.php?class=DocumentationView&classname={class}&method=onHelp">
+          <i class="fa fa-code internal-float-button"></i>
+        </a>
         
       </div><!-- /.content-wrapper -->
       <footer class="row main-footer">
