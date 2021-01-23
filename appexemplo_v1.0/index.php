@@ -28,11 +28,11 @@ $content     = str_replace('{logo-link-class}', $ini['system']['logo-link-class'
 $content     = str_replace('{login-link}', $ini['system']['login-link'], $content);
 //---FIM FORMDIN 5 -----------------------
 
+$content     = str_replace('{MENU}', $menu_string, $content);
 $content     = ApplicationTranslator::translateTemplate($content);
 $content     = str_replace('{LIBRARIES}', file_get_contents("app/templates/{$theme}/libraries.html"), $content);
 $content     = str_replace('{class}', isset($_REQUEST['class']) ? $_REQUEST['class'] : '', $content);
 $content     = str_replace('{template}', $theme, $content);
-$content     = str_replace('{MENU}', $menu_string, $content);
 $css         = TPage::getLoadedCSS();
 $js          = TPage::getLoadedJS();
 $content     = str_replace('{HEAD}', $css.$js, $content);
