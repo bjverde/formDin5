@@ -69,8 +69,8 @@ class TFormDinPdoConnection
      * Facilitardor de conexão com o banco de dados
      *
      * @param string $database : nome da conexão. É o nome do arquivo INI de configuração do banco
-     * @param const $outputMode: Default = ArrayHelper::TYPE_PDO. ArrayHelper::TYPE_FORMDIN, ArrayHelper::TYPE_ADIANTI
-     * @param const $fech
+     * @param const $outputMode: DEFAULT = ArrayHelper::TYPE_PDO. ArrayHelper::TYPE_FORMDIN, ArrayHelper::TYPE_ADIANTI
+     * @param const $fech: DEFAULT = PDO::FETCH_OBJ  array de Objet, PDO::FETCH_ASSOC - array simples
      * @param const $case use PDO case. DEFAULT = CASE_NATURAL.  https://www.php.net/manual/pt_BR/pdo.prepare.php
      */
     public function __construct($database = null,$outputFormat = null,$fech = null,$case = null)
