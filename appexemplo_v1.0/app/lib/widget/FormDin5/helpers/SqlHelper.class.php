@@ -126,7 +126,7 @@ class SqlHelper
     //----------------------------------------
     public static function transformValidateString( $string )
     {        
-        if ( self::getDbms() == DBMS_MYSQL ) {
+        if ( self::getDbms() == TFormDinPdoConnection::DBMS_MYSQL ) {
             //$string = addslashes($string);
             //$patterns = '/(%)/';
             $doubleQuotes = chr(34);
@@ -151,7 +151,7 @@ class SqlHelper
      */
     public static function explodeTextString( $string )
     {
-        $dataBaseWithLike = (self::getDbms() == DBMS_MYSQL) || (self::getDbms() == DBMS_POSTGRES) || (self::getDbms() == DBMS_SQLITE) || (self::getDbms() == DBMS_SQLSERVER);
+        $dataBaseWithLike = (self::getDbms() == TFormDinPdoConnection::DBMS_MYSQL) || (self::getDbms() == TFormDinPdoConnection::DBMS_POSTGRES) || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLITE) || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLSERVER);
         if ( $dataBaseWithLike ) {
             $string = trim($string);
             $string = preg_replace('/\s/', '%', $string);

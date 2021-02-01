@@ -201,7 +201,7 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_ok_MySQL() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -209,7 +209,7 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_SingleQuotes_MySQL() {
 	    $expected = "blabl\'abla";
 	    $string = "blabl'abla";
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -217,7 +217,7 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_DubleQuotes_MySQL() {
 	    $expected = 'blabl\"abla';
 	    $string = 'blabl"abla';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -225,7 +225,7 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_ok_SqlServer() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -235,7 +235,7 @@ class SqlHelperTest extends TestCase
 	 */
 	public function testTransformValidateString_SingleQuotes_SqlServer() {
 	    $string = "blabl'abla";
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    SqlHelper::transformValidateString( $string );
 	}
 	//--------------------------------------------------------------------------------
@@ -244,7 +244,7 @@ class SqlHelperTest extends TestCase
 	 */
 	public function testTransformValidateString_DubleQuotes_SqlServer() {
 	    $string = 'blabl"abla';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    SqlHelper::transformValidateString( $string );
 	}
 	//--------------------------------------------------------------------------------
@@ -321,7 +321,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_MySQL() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -329,7 +329,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_MySQL() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -337,7 +337,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_MySQL() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -345,7 +345,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_Postgresql() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_POSTGRES);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -353,7 +353,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_Postgresql() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_POSTGRES);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -361,7 +361,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_Postgresql() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_POSTGRES);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -369,7 +369,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_Sqlite() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_SQLITE);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -377,7 +377,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_Sqlite() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_SQLITE);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -385,7 +385,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_Sqlite() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_SQLITE);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -393,7 +393,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_SqlServer() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -401,7 +401,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_SqlServer() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -409,7 +409,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_SqlServer() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}	
