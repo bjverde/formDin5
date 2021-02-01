@@ -526,6 +526,18 @@ class ArrayHelperTest extends TestCase
         $retorno = ArrayHelper::convertString2Array($string);
         $this->assertEquals($esperado, $retorno);
     }
+    public function testConvertString2Array_S_StringFormDin() {
+        $string = 'S';
+        $esperado['S']='';
+        $retorno = ArrayHelper::convertString2Array($string);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertString2Array_N_StringFormDin() {
+        $string = 'N';
+        $esperado['N']='';
+        $retorno = ArrayHelper::convertString2Array($string);
+        $this->assertEquals($esperado, $retorno);
+    }        
     public function testConvertString2Array_1StringFormDin() {
         $string = 'S=SIM';
         $esperado['S']='SIM';

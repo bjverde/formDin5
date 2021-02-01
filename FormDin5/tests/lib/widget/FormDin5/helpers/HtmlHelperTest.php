@@ -39,9 +39,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../classes/';
-require_once $path.'constants.php';
-require_once $path.'helpers/autoload_formdin_helper.php';
+require_once  __DIR__.'/../../mockFormDinArray.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -56,18 +54,14 @@ class HtmlHelperTest extends TestCase
         $result = HtmlHelper::getViewPort();
         $this->assertEquals( $expected , $result);
 	}
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testValidateHtmlColorHexa_FailNumber() {
+		$this->expectException(InvalidArgumentException::class);
 	    $string = 1;
 	    HtmlHelper::validateHtmlColorHexa( $string );
 	}
 	//--------------------------------------------------------------------------------
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testValidateHtmlColorHexa_FailString() {
+		$this->expectException(InvalidArgumentException::class);
 	    $string = 'xxx';
 	    HtmlHelper::validateHtmlColorHexa( $string );
     }
@@ -76,22 +70,19 @@ class HtmlHelperTest extends TestCase
 	 * @expectedException PHPUnit\Framework\Error\Error
 	 */
 	public function testValidateHtmlColorHexa_FailArray() {
+		$this->expectError();
 	    $string = array(1,2);
 	    HtmlHelper::validateHtmlColorHexa( $string );
     }    
 	//--------------------------------------------------------------------------------
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testValidateHtmlColorHexa_FailWrongSizeLess() {
+		$this->expectException(InvalidArgumentException::class);
 	    $string = '#1';
 	    HtmlHelper::validateHtmlColorHexa( $string );
     }
     //--------------------------------------------------------------------------------
-    /**
-     * @expectedException InvalidArgumentException
-     */
 	public function testValidateHtmlColorHexa_FailWrongSizeBig() {
+		$this->expectException(InvalidArgumentException::class);
 	    $string = '#12345678';
 	    HtmlHelper::validateHtmlColorHexa( $string );
     }

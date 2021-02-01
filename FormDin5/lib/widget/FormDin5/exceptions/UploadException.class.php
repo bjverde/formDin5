@@ -10,11 +10,11 @@
  */
 class UploadException extends Exception {
     public function __construct($code) {
-        $message = $this->codeToMessage($code);
+        $message = self::codeToMessage($code);
         parent::__construct($message, $code);
     }
     
-    private function codeToMessage($code) {
+    public static function codeToMessage($code) {
         switch ($code) {
             case UPLOAD_ERR_INI_SIZE:
                 $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";

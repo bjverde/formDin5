@@ -68,9 +68,9 @@ class TFormDinPdoConnection
     /**
      * Facilitardor de conexão com o banco de dados
      *
-     * @param string $database : nome da conexão
-     * @param const $outputMode: Default = ArrayHelper::TYPE_PDO. ArrayHelper::TYPE_FORMDIN, ArrayHelper::TYPE_ADIANTI
-     * @param const $fech
+     * @param string $database : nome da conexão. É o nome do arquivo INI de configuração do banco
+     * @param const $outputMode: DEFAULT = ArrayHelper::TYPE_PDO. ArrayHelper::TYPE_FORMDIN, ArrayHelper::TYPE_ADIANTI
+     * @param const $fech: DEFAULT = PDO::FETCH_OBJ  array de Objet, PDO::FETCH_ASSOC - array simples
      * @param const $case use PDO case. DEFAULT = CASE_NATURAL.  https://www.php.net/manual/pt_BR/pdo.prepare.php
      */
     public function __construct($database = null,$outputFormat = null,$fech = null,$case = null)
@@ -86,7 +86,10 @@ class TFormDinPdoConnection
     public function setDatabase($database)
     {
         if( empty($database) ){
-            throw new InvalidArgumentException('Database Not Object .class:');
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
+        }
+        if( !is_string($database) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG.' o nome data base dever ser uma string');
         }
         $this->database = $database;
     }
@@ -298,16 +301,44 @@ class TFormDinPdoConnection
     }
 
     /**
+     * Verifica se quantidade de parametros está correta
+     * @param string $sql      -1: string sql do comando
+     * @param array $arrParams -2: array com o valores para bind do sql
+     * @return void
+     */
+    public function validarQtdParametros($sql,$arrParams)
+    {   
+        if( empty($sql) || !is_string($sql) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_NULL);
+        }
+        if ( strpos( $sql, '?' ) > 0 && !is_array( $arrParams ) ) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_PARAM);
+        }        
+        if ( strpos( $sql, '?' ) > 0 && is_array( $arrParams ) && count( $arrParams ) == 0 ) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_PARAM);
+        }
+        if ( strpos( $sql, '?' ) > 0 && is_array( $arrParams ) && count( $arrParams ) > 0 ) {
+            $qtd1 = substr_count( $sql, '?' );
+            $qtd2 = count( $arrParams );
+            
+            if ( $qtd1 != $qtd2 ) {
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_PARAM);
+            }
+        }
+    }
+
+    /**
      * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
      * se a operação foi bem sucedida.
      *
-     * @param string $sql
-     * @param array $values
+     * @param string $sql      -1: string sql do comando
+     * @param array $arrParams -2: array com o valores para bind do sql
      * @return mixed
      */
-    public function executeSql($sql, $values = null)
+    public function executeSql($sql, $arrParams = null)
     {
         try {
+            $this->validarQtdParametros($sql, $arrParams);
             $configConnect = $this->getConfigConnect();
             $database = $configConnect['database'];
             $db = $configConnect['db'];
@@ -319,9 +350,32 @@ class TFormDinPdoConnection
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $conn->setAttribute(PDO::ATTR_CASE, $case);
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
-            $stmt = $conn->query($sql);    // realiza a consulta
-            $result = $stmt->fetchall();
-            $result = $this->convertArrayResult($result);
+            
+            //$stmt = $conn->query($sql);    // realiza a consulta
+            $stmt = $conn->prepare( $sql );
+            $result = $stmt->execute( $arrParams );
+
+            if ( $result ) {                
+                if ( preg_match( '/^select/i', $sql ) > 0  ) {
+                    $result = $stmt->fetchall();
+                    $result = $this->convertArrayResult($result);
+                }else if( preg_match( '/^insert/i', $sql ) > 0  ){
+                    $result = $conn->lastInsertId();
+                }else if( preg_match( '/^exec/i', $sql ) > 0  ){ // Para stored procedure do MS SQL Server                                        
+                    $res = array();
+                    //https://github.com/bjverde/formDin/issues/164
+                    while($stmt->columnCount()) {
+                        $result = $stmt->fetchall();
+                        $result = $this->convertArrayResult($result);
+                        $res[] = $result;
+                        $stmt->nextRowset();
+                    }
+                    $result = $res;
+                }else if( preg_match( '/^call/i', $sql ) > 0  ){ // Para stored procedure do MySQL
+                    $result = $stmt->fetchall();
+                    $result = $this->convertArrayResult($result);
+                }
+            }
             TTransaction::close();         // fecha a transação.
             return $result;
         }

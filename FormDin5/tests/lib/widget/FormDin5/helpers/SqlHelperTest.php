@@ -39,9 +39,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../classes/';
-require_once $path.'constants.php';
-require_once $path.'helpers/autoload_formdin_helper.php';
+require_once  __DIR__.'/../../mockFormDinArray.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -203,7 +201,7 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_ok_MySQL() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -211,7 +209,7 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_SingleQuotes_MySQL() {
 	    $expected = "blabl\'abla";
 	    $string = "blabl'abla";
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -219,7 +217,7 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_DubleQuotes_MySQL() {
 	    $expected = 'blabl\"abla';
 	    $string = 'blabl"abla';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -227,26 +225,22 @@ class SqlHelperTest extends TestCase
 	public function testTransformValidateString_ok_SqlServer() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::transformValidateString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
-	/**
-	 * @expectedException DomainException
-	 */
 	public function testTransformValidateString_SingleQuotes_SqlServer() {
+		$this->expectException(DomainException::class);
 	    $string = "blabl'abla";
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    SqlHelper::transformValidateString( $string );
 	}
 	//--------------------------------------------------------------------------------
-	/**
-	 * @expectedException DomainException
-	 */
 	public function testTransformValidateString_DubleQuotes_SqlServer() {
+		$this->expectException(DomainException::class);
 	    $string = 'blabl"abla';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    SqlHelper::transformValidateString( $string );
 	}
 	//--------------------------------------------------------------------------------
@@ -323,7 +317,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_MySQL() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -331,7 +325,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_MySQL() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -339,7 +333,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_MySQL() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_MYSQL);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -347,7 +341,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_Postgresql() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_POSTGRES);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -355,7 +349,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_Postgresql() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_POSTGRES);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -363,7 +357,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_Postgresql() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_POSTGRES);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -371,7 +365,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_Sqlite() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_SQLITE);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -379,7 +373,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_Sqlite() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_SQLITE);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -387,7 +381,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_Sqlite() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_SQLITE);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -395,7 +389,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_SqlServer() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -403,7 +397,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_2Words_SqlServer() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}
@@ -411,7 +405,7 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_5Words_SqlServer() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(DBMS_SQLSERVER);
+	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
 	    $result = SqlHelper::explodeTextString( $string );
 	    $this->assertEquals( $expected , $result);
 	}	
@@ -428,7 +422,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_Numeric_only() {
 	    $expected = EOL.' AND NUM_ORD = 1200  ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, 'NUM_ORD', SqlHelper::SQL_TYPE_NUMERIC);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -436,7 +430,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_Numeric_others() {
 	    $expected = ' AND 1WORD = \'blablabla\'  '.EOL.' AND NUM_ORD = 1200  ';
 	    $where = ' AND 1WORD = \'blablabla\'  ';
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, 'NUM_ORD', SqlHelper::SQL_TYPE_NUMERIC);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -444,7 +438,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextEqual_1word() {
 	    $expected = EOL.' AND 1WORD = \'blablabla\'  ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_EQUAL);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -452,7 +446,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextEqual_5word() {
 	    $expected = EOL.' AND 5WORD = \'aaa bbb ccc ddd eee\'  ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_EQUAL);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -460,7 +454,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextLike_1word() {
 	    $expected = EOL.' AND 1WORD like \'%blablabla%\' ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -468,7 +462,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextLike_5word() {
 	    $expected = EOL.' AND 5WORD like \'%aaa%bbb%ccc%ddd%eee%\' ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
 	    $this->assertEquals( $expected , $result);
 	}
