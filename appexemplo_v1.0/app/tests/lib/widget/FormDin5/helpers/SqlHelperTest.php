@@ -426,7 +426,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_Numeric_only() {
 	    $expected = EOL.' AND NUM_ORD = 1200  ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, 'NUM_ORD', SqlHelper::SQL_TYPE_NUMERIC);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -434,7 +434,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_Numeric_others() {
 	    $expected = ' AND 1WORD = \'blablabla\'  '.EOL.' AND NUM_ORD = 1200  ';
 	    $where = ' AND 1WORD = \'blablabla\'  ';
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, 'NUM_ORD', SqlHelper::SQL_TYPE_NUMERIC);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -442,7 +442,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextEqual_1word() {
 	    $expected = EOL.' AND 1WORD = \'blablabla\'  ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_EQUAL);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -450,7 +450,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextEqual_5word() {
 	    $expected = EOL.' AND 5WORD = \'aaa bbb ccc ddd eee\'  ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_EQUAL);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -458,7 +458,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextLike_1word() {
 	    $expected = EOL.' AND 1WORD like \'%blablabla%\' ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -466,7 +466,7 @@ class SqlHelperTest extends TestCase
 	public function testGetAtributeWhereGridParameters_TextLike_5word() {
 	    $expected = EOL.' AND 5WORD like \'%aaa%bbb%ccc%ddd%eee%\' ';
 	    $where = null;
-	    $whereGrid = self::getWhereGrid();
+	    $whereGrid = $this->getWhereGrid();
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
 	    $this->assertEquals( $expected , $result);
 	}
