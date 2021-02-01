@@ -49,7 +49,7 @@ class HtmlHelper
     public static function validateHtmlColorHexa($color) 
     {
         if ( !empty($color) && (preg_match('/^#[\D0-9]{6}\z/', $color) !== 1) ){
-            throw new InvalidArgumentException(TMessage::ERROR_HTML_COLOR_HEXA);
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_HTML_COLOR_HEXA);
         }
     }
 

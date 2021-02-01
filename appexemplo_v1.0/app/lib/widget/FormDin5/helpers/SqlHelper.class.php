@@ -135,7 +135,7 @@ class SqlHelper
             $string = preg_replace($patterns, $replacements, $string);
         } else {
             if ( preg_match('/(\'|")/', $string ) > 0 ) {
-                throw new DomainException(TMessage::DONOT_QUOTATION);
+                throw new DomainException(TFormDinMessage::DONOT_QUOTATION);
             }
         }
         return $string;
