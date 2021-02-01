@@ -70,7 +70,7 @@ class HtmlHelperTest extends TestCase
 	 * @expectedException PHPUnit\Framework\Error\Error
 	 */
 	public function testValidateHtmlColorHexa_FailArray() {
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectError();
 	    $string = array(1,2);
 	    HtmlHelper::validateHtmlColorHexa( $string );
     }    
