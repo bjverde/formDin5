@@ -39,9 +39,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../classes/';
-require_once $path.'constants.php';
-require_once $path.'helpers/autoload_formdin_helper.php';
+require_once  __DIR__.'/../../mockFormDinArray.php';
 
 use PHPUnit\Framework\TestCase;
 

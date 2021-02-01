@@ -26,6 +26,14 @@ define('OS', strtoupper(substr(PHP_OS, 0, 3)));
 define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
 
+
+//---FORMDIN 5 -------------------------
+define('DS', DIRECTORY_SEPARATOR);
+define('EOL', "\n");
+define('ESP', chr(32).chr(32).chr(32).chr(32) );
+define('TAB', chr(9));
+//---FIM FORMDIN 5 -----------------------
+
 // custom session name
 session_name('PHPSESSID_'.$ini['general']['application']);
 new TSession;
