@@ -158,14 +158,14 @@ class TFormDinMessage {
 
     public static function logRecord(Exception $exception)
     {
-        $app = $_SESSION[APLICATIVO];
+        $app = $_SESSION[APPLICATION_NAME];
         $login = null;
         $grupo = null;
-        if( ArrayHelper::has('USER',$_SESSION[APLICATIVO]) ) {
-            $login = ( ArrayHelper::has('LOGIN', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['LOGIN']:null );
-            $grupo = ( ArrayHelper::has('GRUPO_NOME', $_SESSION[APLICATIVO]['USER']) ? $_SESSION[APLICATIVO]['USER']['GRUPO_NOME']:null );
+        if( ArrayHelper::has('USER',$_SESSION[APPLICATION_NAME]) ) {
+            $login = ( ArrayHelper::has('LOGIN', $_SESSION[APPLICATION_NAME]['USER']) ? $_SESSION[APPLICATION_NAME]['USER']['LOGIN']:null );
+            $grupo = ( ArrayHelper::has('GRUPO_NOME', $_SESSION[APPLICATION_NAME]['USER']) ? $_SESSION[APPLICATION_NAME]['USER']['GRUPO_NOME']:null );
         }
-        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION.' ,usuario: '.$login
+        $log = 'formDin: '.FormDinHelper::version().' ,sistem: '.APPLICATION_NAME.' v:'.SYSTEM_VERSION.' ,usuario: '.$login
         .PHP_EOL.'type: '.get_class($exception).' ,Code: '.$exception->getCode().' ,file: '.$exception->getFile().' ,line: '.$exception->getLine()
         .PHP_EOL.'mensagem: '.$exception->getMessage()
         .PHP_EOL."Stack trace:"
@@ -176,7 +176,7 @@ class TFormDinMessage {
     
     public static function logRecordSimple($message)
     {
-        $log = 'formDin: '.FORMDIN_VERSION.' ,sistem: '.SYSTEM_ACRONYM.' v:'.SYSTEM_VERSION
+        $log = 'formDin: '.FormDinHelper::version().' ,sistem: '.APPLICATION_NAME.' v:'.SYSTEM_VERSION
         .PHP_EOL.TAB.'mensagem: '.$message;
         error_log($log);
     }
