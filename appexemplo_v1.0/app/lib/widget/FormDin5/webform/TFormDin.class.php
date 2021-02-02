@@ -1091,8 +1091,8 @@ class TFormDin
      * @param integer $intWidth           - 10: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
      * @param string  $strFirstOptionText - 11: NOT_IMPLEMENTED First Key in Display
      * @param string  $strFirstOptionValue- 12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
-     * @param string  $strKeyColumn       - 13: NOT_IMPLEMENTED Nome da coluna que será utilizada para preencher os valores das opções
-     * @param string  $strDisplayColumn   - 14: NOT_IMPLEMENTED Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+     * @param string  $strKeyColumn       - 13: Nome da coluna que será utilizada para preencher os valores das opções
+     * @param string  $strDisplayColumn   - 14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED Informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
      * @return TCombo
