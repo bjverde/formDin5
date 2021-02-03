@@ -75,8 +75,30 @@
                 <action>exe_switch</action>
             </menuitem>            
             <menuitem label='Arquivo ou Blob'>
-                <icon>fa:check-square fa-fw</icon>
-                <action>comingSoonView</action>
+                <icon>far:file fa-file</icon>
+                <menu>            
+                    <menuitem label='Campo Blob'>
+                        <icon>fa:flag fa-fw</icon>
+                        <action>comingSoonView</action>
+                    </menuitem>
+                    <menuitem label='Campo Arquivo simples'>
+                        <icon>far:file fa-file</icon>
+                        <menu>            
+                            <menuitem label='Assincrono'>
+                                <icon>fa:flag fa-fw</icon>
+                                <action>comingSoonView</action>
+                            </menuitem>
+                            <menuitem label='Normal'>
+                                <icon>far:file fa-file</icon>
+                                <action>exe_TFile</action>
+                            </menuitem>
+                            <menuitem label='TAssincrono'>
+                                <icon>fa:flag fa-fw</icon>
+                                <action>comingSoonView</action>
+                            </menuitem>
+                        </menu>
+                    </menuitem>
+                </menu>
             </menuitem>
             <menuitem label='Númerico'>
                 <icon>fa:check-square fa-fw</icon>
