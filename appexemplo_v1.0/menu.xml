@@ -238,11 +238,11 @@
                 </menu>
             </menuitem>
             <menuitem label='Ajuda'>
-                <icon>fa:code fa-fw</icon>
+                <icon>fas:question fa-question-circle #2965f1</icon>
                 <menu>
                     <menuitem label='Ajuda com arquivo HTM'>
-                        <icon>fa:life-ring fa-fw</icon>
-                        <action>comingSoonView</action>
+                        <icon>fas:question fa-question-circle #2965f1</icon>
+                        <action>exe_campo_ajuda</action>
                     </menuitem>      
                     <menuitem label='Ajuda On-line (sqlite)'>
                         <icon>fa:cube fa-fw</icon>
