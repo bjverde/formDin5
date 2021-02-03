@@ -2,7 +2,7 @@
 
 use Adianti\Widget\Form\TLabel;
 
-class exe_campo_ajuda extends TPage
+class exe_TFile extends TPage
 {
     private $html;
     
@@ -23,11 +23,15 @@ class exe_campo_ajuda extends TPage
         //$frm->setColumns(array(100,100));
         $frm->addFileField('anexo', 'Anexo Async:', true, $fileFormat, '100K', 40, false);
         
+        // O Adianti permite a Internacionalização - A função _t('string') serve
+        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
+        //primeiro em ingles e depois traduzindo
+        $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
+        $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
+
         $this->form = $frm->show();
 
-
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
-
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
@@ -37,4 +41,24 @@ class exe_campo_ajuda extends TPage
         // add the table inside the page
         parent::add($vbox);
     }
+
+    /**
+     * Clear filters
+     */
+    public function onClear()
+    {
+        $this->clearFilters();
+        $this->onReload();
+    }
+
+    public function onSave($param)
+    {
+        $data = $this->form->getData();
+        $this->form->setData($data);
+
+        //Função do FormDin para Debug
+        FormDinHelper::d($param,'$param');
+        FormDinHelper::debug($data,'$data');
+        FormDinHelper::debug($_REQUEST,'$_REQUEST');
+    }    
 }

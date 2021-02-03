@@ -36,9 +36,7 @@ class exe_TextField extends TPage
 
         $this->form = $frm->show();
 
-
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
-
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
