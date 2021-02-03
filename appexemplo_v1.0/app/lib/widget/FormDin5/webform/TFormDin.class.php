@@ -957,7 +957,7 @@ class TFormDin
         return $formField;
     }
 
-    /***
+    /**
      * Campos para anexar arquivo. Pode ser um carregamento sincrono ou assincrono via ajax.
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
@@ -1001,7 +1001,7 @@ class TFormDin
                                , $strMessageInvalidFileType=null )
     {
         $formField = new TFormDinFileField($id,$strLabel,$boolRequired,$strAllowedFileTypes,$strMaxFileSize);
-        $objField = $formField->getAdiantiObj();
+        $objField  = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);

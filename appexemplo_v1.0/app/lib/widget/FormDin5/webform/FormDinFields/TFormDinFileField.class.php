@@ -58,6 +58,12 @@
  */
 class TFormDinFileField extends TFormDinGenericField
 {    
+    private $maxSize;
+    private $maxSizeKb;
+    private $allowedFileTypes;
+    private $msgUploadException;
+
+
     /**
      * Campo de uso geral para insersão manual de códigos html na página
      * ------------------------------------------------------------------------
@@ -70,30 +76,44 @@ class TFormDinFileField extends TFormDinGenericField
      * um label invisível defina como "" o seu valor
      *
      * criado o espaço
-     * @param string $strName        - 1: ID do campo
-     * @param string $strValue       - 2: Texto HTML que irá aparece dentro
-     * @param string $strIncludeFile - 3: NOT_IMPLEMENTED Arquivo que será incluido
-     * @param string $strLabel       - 4: Label do campo
-     * @param string $strWidth       - 5: NOT_IMPLEMENTED
-     * @param string $strHeight      - 6: NOT_IMPLEMENTED
+     * @param string $strName        - 01: ID do campo
+     * @param string $strValue       - 02: Texto HTML que irá aparece dentro
+     * @param boolean $boolRequired  - 03: Obrigatorio
+     * @param mixed   $strAllowedFileTypes - 04: Tipos de arquivos. String separado por virgular ou array
+     * @param string $strIncludeFile - 05: NOT_IMPLEMENTED Arquivo que será incluido
+     * @param string $strLabel       - 06: Label do campo
+     * @param string $strWidth       - 07: NOT_IMPLEMENTED
+     * @param string $strHeight      - 09: NOT_IMPLEMENTED
      * @return THtml Field
      */     
     public function __construct( string $id
-                               , string $strLabel
-                               ,$intSize=null
-                               ,$boolRequired=null
-                               ,$strAllowedFileTypes=null
-                               ,$strMaxSize=null
+                               , string $label
+                               , $boolRequired = false
+                               , $strAllowedFileTypes=null
+                               , $intSize=null
+                               , $strMaxSize=null
                                )
     {
-        $adiantiObj = new TElement('div');
+        $this->setAllowedFileTypes( $strAllowedFileTypes );
+        $adiantiObj = new TFile($label);
+        $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
+
         $label = is_null($label)?'':$label;
-        parent::__construct($adiantiObj,$id,$label,null,null,null);
-        $this->add($value);
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,null,null);
+
         return $this->getAdiantiObj();
     }
 
-    public function add($element){
-        $this->getAdiantiObj()->add($element);
+    public function setAllowedFileTypes($strNewFileTypes=null)
+    {
+        if( is_string($strNewFileTypes) ){
+            $strNewFileTypes = strtolower($strNewFileTypes);
+            $strNewFileTypes = explode(',',$strNewFileTypes);
+        }
+        $this->allowedFileTypes = $strNewFileTypes;
+    }
+    public function getAllowedFileTypes()
+    {
+        return $this->allowedFileTypes;
     }
 }
