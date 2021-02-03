@@ -342,10 +342,10 @@ class TFormDin
     }
 
     /**
-     * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
+     * Adciona um Objeto Adianti na lista de objetos que compõem o Formulário.
      * 
      * @param object $obj  -  1: objeto Adianti
-     * @param string $type -  2: Typo confirmo constante
+     * @param string $type -  2: Type conforme constante. TFormDin::TYPE_FIELD, TYPE_LAYOUT, TYPE_ADIANTI_FIELD_NATIVE
      * @param object $label - 3: objeto do tipo Label do $obj
      * @param boolean $boolNewLine    - 4: DEFAULT = True = campo em nova linha. FALSE = mesma linha
      * @param boolean $boolLabelAbove - 5: DEFAULT = FALSE = Label na frente do campo. TRUE = Label sobre o campo
