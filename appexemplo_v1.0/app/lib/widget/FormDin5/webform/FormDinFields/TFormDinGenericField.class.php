@@ -314,5 +314,28 @@ class TFormDinGenericField
 	{
 		return $this->getAdiantiObj()->getProperty('class');
     }
-	//------------------------------------------------------------------------------     
+    //------------------------------------------------------------------------------     
+    /**
+     * DEPRECADED - change to setClass.
+     *
+     * @deprecated
+     * @codeCoverageIgnore
+     *
+     * @param mixed $mixProperty
+     * @param string $newValue
+     */
+    public function setCss( $mixProperty, $newValue = null )
+    {
+        if( !empty($mixProperty) ){
+            $arrBacktrace = debug_backtrace();
+            ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                          ,ValidateHelper::MSG_DECREP
+                                          ,'setCss'
+                                          ,'use o metodo setClass'
+                                          ,$arrBacktrace[0]['file']
+                                          ,$arrBacktrace[0]['line']
+                                        );
+        }
+
+    }
 }

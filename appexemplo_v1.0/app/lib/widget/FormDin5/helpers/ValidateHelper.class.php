@@ -157,6 +157,30 @@ class ValidateHelper
         }
     }
     //--------------------------------------------------------------------------------
+    /**
+     * Undocumented function
+     *
+     * @param [type] $typeErro
+     * @param [type] $typeErroMsg
+     * @param [type] $method
+     * @param [type] $complementoMsg
+     * @param string $file
+     * @param [type] $line
+     */
+    public static function validadeMethod($typeErro,$typeErroMsg,$method,$complementoMsg,$file,$line)
+    {
+        $complemento = self::typeErrorMsg($typeErroMsg);
+        $complemento = !empty($complementoMsg)?$complemento.' '.$complementoMsg:$complementoMsg;
+
+        $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
+            .' O metodo: '.$method
+            .$complemento
+            .', no arquivo: '.$file
+            .', na linha: '.$line
+            ;
+        self::triggerError($msg,$typeErro);
+    }    
+    //--------------------------------------------------------------------------------
     public static function migrarMensage($mensagem,$typeErro,$typeErroMsg,$class,$method,$line,$arquivo=null)
     {
         $test = isset($mensagem) && !empty($mensagem);
