@@ -957,6 +957,58 @@ class TFormDin
         return $formField;
     }
 
+    /***
+     * Campos para anexar arquivo. Pode ser um carregamento sincrono ou assincrono via ajax.
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     *
+     * Será incluido no $_POST 4 elementos com os nomes:
+     * <code>
+     *   $_POST['strName_temp'] - caminho temporario;
+     *   $_POST['strName_type'] - mime type;
+     *   $_POST['strName_size'] - tamanho em kb;
+     *   $_POST['strName_name'] - nome arquivo;
+     * </code>
+     * 
+     * @param string  $id              - 01: id do campo
+     * @param string  $strLabel        - 02: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired    - 03: Obrigatorio
+     * @param mixed   $strAllowedFileTypes - 04: Tipos de arquivos. String separado por virgular ou array
+     * @param string  $strMaxFileSize  - 05: Input the max size file with K, M for Megabit (Mb) or G for Gigabit (Gb). Example 2M = 2 Mb = 2048Kb.
+     * @param integer $intFieldSize    - 06: NOT_IMPLEMENTED
+     * @param boolean $boolAsync       - 07: NOT_IMPLEMENTED
+     * @param boolean $boolNewLine     - 08: NOT_IMPLEMENTED
+     * @param string  $strJsCallBack   - 09: NOT_IMPLEMENTED
+     * @param boolean $boolLabelAbove  - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED
+     * @param string  $strMessageInvalidFileType - 12: NOT_IMPLEMENTED
+     * @return TFile|TFileAsync
+     */
+    public function addFileField(string $id
+                               , string $strLabel
+                               , $boolRequired = false
+                               , $strAllowedFileTypes=null
+                               , $strMaxFileSize=null
+                               , $intFieldSize=null
+                               , $boolAsync=null
+                               , $boolNewLine=null
+                               , $strJsCallBack=null
+                               , $boolLabelAbove=null
+                               , $boolNoWrapLabel=null
+                               , $strMessageInvalidFileType=null )
+    {
+        $formField = new TFormDinFileField($id,$strLabel,$boolRequired,$strAllowedFileTypes,$strMaxFileSize);
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+
+        return $formField;
+    }    
+
     /**
      * Adicionar campo entrada de dados texto com mascara
      * ------------------------------------------------------------------------
