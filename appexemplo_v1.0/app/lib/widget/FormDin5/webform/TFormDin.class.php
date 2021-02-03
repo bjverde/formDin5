@@ -69,7 +69,7 @@ class TFormDin
     private $listFormElements = array();
 
     /**
-     * Método construtor da classe do Formulario Padronizado em BoorStrap
+     * Método construtor da classe do Formulario Padronizado em BootStrap
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
      * os parâmetros do metodos foram marcados veja documentação da classe para
