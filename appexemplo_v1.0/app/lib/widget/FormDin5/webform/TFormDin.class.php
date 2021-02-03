@@ -1490,7 +1490,7 @@ class TFormDin
      * @return void
      */
     public function setFlat($boolNewValue=null){
-        ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
+        ValidateHelper::validadeParam('setFlat',$boolNewValue
                                     ,ValidateHelper::WARNING
                                     ,ValidateHelper::MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
@@ -1501,7 +1501,7 @@ class TFormDin
      * @return void
      */
     public function setMaximize($boolNewValue = null){
-        ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
+        ValidateHelper::validadeParam('setMaximize',$boolNewValue
                                     ,ValidateHelper::WARNING
                                     ,ValidateHelper::MSG_DECREP
                                     ,__CLASS__,__METHOD__,__LINE__); 
