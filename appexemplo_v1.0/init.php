@@ -20,6 +20,12 @@ ApplicationTranslator::setLanguage( $ini['general']['language'] );
 AdiantiApplicationConfig::load($ini);
 AdiantiApplicationConfig::apply();
 
+// define constants
+define('APPLICATION_NAME', $ini['general']['application']);
+define('OS', strtoupper(substr(PHP_OS, 0, 3)));
+define('PATH', dirname(__FILE__));
+define('LANG', $ini['general']['language']);
+
 // ---FORMDIN 5 -------------------------
 define('DS', DIRECTORY_SEPARATOR);
 define('EOL', "\n");
