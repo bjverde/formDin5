@@ -144,7 +144,6 @@ class TFormDinFileField extends TFormDinGenericField
      * Habilita barra de progresso
      *
      * @param boolean $enableFileHandling
-     * @return void
      */
     public function enableFileHandling($enableFileHandling=true)
     {
@@ -158,10 +157,20 @@ class TFormDinFileField extends TFormDinGenericField
      *
      * @param string $title titulo
      * @param string $content
-     * @return void
      */
     public function enablePopover($title = null, $content = '')
     {
         $this->getAdiantiObj()->enablePopover($title,$content);
     }
+
+    /**
+     * Define a classe de serviço que irá processar o upload dos arquivos. O Valor padrão é AdiantiUploaderService
+     *
+     * @param string $service
+     */
+    public function setService($service)
+    {
+        $this->getAdiantiObj()->setService($service);
+    }
+    
 }
