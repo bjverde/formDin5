@@ -17,3 +17,5 @@ appexemplo_v1.0/.phpunit.result.cache
 /sysgenad/
 /phpunit-code-coverage/
 !/phpunit-code-coverage/phpunit-code-coverage.zip
+/appexemplo_v1.0/tmp/
+!/appexemplo_v1.0/tmp/.htaccess
