@@ -834,6 +834,34 @@ class ArrayHelper
         }
         return $result;
     }
+    //--------------------------------------------------------------------------------
+    /**
+     * Recebe um array do tipo ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN
+     * para um array TYPE_PHP no formato 'KEY=VALEU,KEY=VALEU'
+     *
+     * @param array  $arrayData   - 1: Array de entrada
+     * @param string $keyColumn   - 2: String nome da coluna chave
+     * @param string $valeuColumn - 3: String nome da coluna valor
+     * @param const  $typeCase    - 4: Type Case. Default = PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
+     * @return array
+     */
+    public static function convertArray2PhpKeyValue($arrayData,$keyColumn,$valeuColumn,$typeCase = PDO::CASE_NATURAL)
+    {
+        ValidateHelper::isString($keyColumn,__METHOD__,__LINE__);
+        ValidateHelper::isString($valeuColumn,__METHOD__,__LINE__);
+        $arrayData   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_PDO,$typeCase);
+        if( !array_key_exists($keyColumn, $arrayData[0]) ) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+        }
+        if( !array_key_exists($valeuColumn, $arrayData[0]) ) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
+        }
+        $arrayResult = array();
+        foreach( $arrayData as $key => $arrayInterno ) {
+            $arrayResult[ $arrayInterno[$keyColumn] ] = $arrayInterno[$valeuColumn];                       
+        }
+        return $arrayResult;
+    }
 
 }
 ?>

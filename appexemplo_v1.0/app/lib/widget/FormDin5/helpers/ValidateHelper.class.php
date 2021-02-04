@@ -60,6 +60,14 @@ class ValidateHelper
         }
     }
     
+    public static function isString($id,$method,$line)
+    {
+        self::methodLine($method, $line, __METHOD__);
+        if( empty($id) || !is_numeric($id) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_NOT_STRING.'See the method: '.$method.' in the line: '.$line);
+        }
+    }
+
     public static function isNumeric($id,$method,$line)
     {
         self::methodLine($method, $line, __METHOD__);

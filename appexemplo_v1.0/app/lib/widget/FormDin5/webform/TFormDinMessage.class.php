@@ -76,6 +76,7 @@ class TFormDinMessage {
     const ERROR_HTML_COLOR_HEXA = 'Informe uma cor HTML no formato hexadecimal. Exemplo #efefef !';
 
     const ERROR_EMPTY_INPUT    = 'O Parametro não pode ficar em branco';
+    const ERROR_TYPE_NOT_STRING= 'Tipo não é string! ';
     const ERROR_TYPE_NOT_INT   = 'Tipo não númerico! ';
     const ERROR_TYPE_NOT_ARRAY = 'Tipo não é um array! ';
     const ERROR_TYPE_ARRAY_EMP = 'O array está vazio! ';
@@ -121,7 +122,7 @@ class TFormDinMessage {
      * ------------------------------------------------------------------------
      *
      * @param string $message   - 1: Texto da mensagem pode ser HTML
-     * @param string $type      - 2: 2: FORMDIN5 Type mensagem: DEFAULT=info, error, warning. Use TFormDinMessage::TYPE_
+     * @param string $type      - 2: FORMDIN5 Type mensagem: DEFAULT=info, error, warning. Use TFormDinMessage::TYPE_
      * @param TAction $action   - 3: FORMDIN5 Classe TAction do Adianti
      * @param string $title_msg - 4: FORMDIN5 titulo da mensagem
      */
