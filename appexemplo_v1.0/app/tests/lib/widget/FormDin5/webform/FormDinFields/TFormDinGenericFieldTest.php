@@ -110,7 +110,7 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertInstanceOf(TMaxLengthValidator::class, $arrayValidations[0][1]);
     }
 
-    public function test_SetValeuTText()
+    public function test_SetValueTText()
     {
         $id = 'idTest';
         $adiantiObj = new TText($id);
@@ -119,7 +119,7 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertEquals('abc', $result);
     }
 
-    public function test_SetValeuTEntry()
+    public function test_SetValueTEntry()
     {
         $id = 'idTest';
         $adiantiObj = new TEntry($id);
@@ -128,7 +128,7 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertEquals('abc', $result);
     }
 
-    public function test_SetValeuTNumericInt()
+    public function test_SetValueTNumericInt()
     {
         $id = 'idTest';
         $adiantiObj = new TNumeric('numeric', 2, ',', '.', true);
@@ -137,7 +137,7 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertEquals('123,00', $result);
     }
 
-    public function test_SetValeuTNumericString()
+    public function test_SetValueTNumericString()
     {
         $id = 'idTest';
         $adiantiObj = new TNumeric('numeric', 2, ',', '.', true);

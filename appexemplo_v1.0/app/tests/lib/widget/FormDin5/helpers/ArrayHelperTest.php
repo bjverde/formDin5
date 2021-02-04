@@ -147,32 +147,32 @@ class ArrayHelperTest extends TestCase
         $this->assertEquals($esperado, $retorno);
     }
     
-    public function testGetDefaultValeu_NotInArray() {
+    public function testGetDefaultValue_NotInArray() {
     	$esperado  = 'x';
     	$array = array();
     	$array ['y'] = 123;
     	$atributeName = 'k';
     	$DefaultValue = 'x';    	
-    	$retorno = ArrayHelper::getDefaultValeu($array,$atributeName,$DefaultValue);
+    	$retorno = ArrayHelper::getDefaultValue($array,$atributeName,$DefaultValue);
     	$this->assertEquals($esperado, $retorno);
     }
     
-    public function testGetDefaultValeu_NotArray() {
+    public function testGetDefaultVALUE_NotArray() {
     	$esperado  = 'x';
     	$array = 123;
     	$atributeName = 'k';
     	$DefaultValue = 'x';
-    	$retorno = ArrayHelper::getDefaultValeu($array,$atributeName,$DefaultValue);
+    	$retorno = ArrayHelper::getDefaultValue($array,$atributeName,$DefaultValue);
     	$this->assertEquals($esperado, $retorno);
     }
     
-    public function testGetDefaultValeu_InArray() {
+    public function testGetDefaultValue_InArray() {
     	$esperado  = 123;
     	$array = array();
     	$array ['y'] = 123;
     	$atributeName = 'y';
     	$DefaultValue = 'x';
-    	$retorno = ArrayHelper::getDefaultValeu($array,$atributeName,$DefaultValue);
+    	$retorno = ArrayHelper::getDefaultValue($array,$atributeName,$DefaultValue);
     	$this->assertEquals($esperado, $retorno);
     }    
     
@@ -944,7 +944,7 @@ class ArrayHelperTest extends TestCase
         $arrayData = $mock->generateTablePessoaPDO();
         ArrayHelper::convertArray2PhpKeyValue($arrayData,'ID','NOME');
     }
-    public function testConvertArray2PhpKeyValue_FailValeuColumn(){
+    public function testConvertArray2PhpKeyValue_FailValueColumn(){
         $this->expectException(InvalidArgumentException::class);
         $mock = new mockFormDinArray();
         $arrayData = $mock->generateTablePessoaPDO();

@@ -76,31 +76,31 @@ class RequestHelperTest extends TestCase
     	$this->assertEquals($esperado, $retorno);
     }
     
-    public function testGetDefaultValeu_temValor(){
+    public function testGetDefaultValue_temValor(){
         $esperado = 10;
         $_REQUEST['x']= $esperado;
-        $retorno = RequestHelper::getDefaultValeu('x','padrao');        
+        $retorno = RequestHelper::getDefaultValue('x','padrao');        
         $this->assertEquals($esperado, $retorno);
     }
 
-    public function testGetDefaultValeu_NaoValor(){
+    public function testGetDefaultValue_NaoValor(){
         $esperado = 'padrao';
         $_REQUEST['x']= 10;
-        $retorno = RequestHelper::getDefaultValeu('y','padrao');
+        $retorno = RequestHelper::getDefaultValue('y','padrao');
         $this->assertEquals($esperado, $retorno);
     }
     
-    public function testGetDefaultValeu_Branco(){
+    public function testGetDefaultValue_Branco(){
     	$esperado = 'padrao';
     	$_REQUEST['x']= '';
-    	$retorno = RequestHelper::getDefaultValeu('x','padrao');
+    	$retorno = RequestHelper::getDefaultValue('x','padrao');
     	$this->assertEquals($esperado, $retorno);
     }
     
-    public function testGetDefaultValeu_GetNull(){
+    public function testGetDefaultValue_GetNull(){
     	$esperado = 'padrao';
     	$_REQUEST['x']= null;
-    	$retorno = RequestHelper::getDefaultValeu('x','padrao');
+    	$retorno = RequestHelper::getDefaultValue('x','padrao');
     	$this->assertEquals($esperado, $retorno);
     }
 }
