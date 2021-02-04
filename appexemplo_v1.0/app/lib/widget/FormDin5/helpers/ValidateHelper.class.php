@@ -148,6 +148,18 @@ class ValidateHelper
         return $complemento;
     }    
     //--------------------------------------------------------------------------------
+    /**
+     * Usado para fazer a validação de um parametro do metodo da migração do FormDin4 para o FormDin5
+     *
+     * @param string $paramName  nome do parametro
+     * @param [type] $paramValue valor informado
+     * @param const $typeErro ValidateHelper::NOTICIE, ValidateHelper::WARNING e ValidateHelper::ERROR
+     * @param const $typeErroMsg
+     * @param [type] $class
+     * @param [type] $method
+     * @param string $line
+     * @return void
+     */
     public static function validadeParam($paramName,$paramValue,$typeErro,$typeErroMsg,$class,$method,$line)
     {
         $test = isset($paramValue) && !empty($paramValue);
