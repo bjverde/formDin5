@@ -934,6 +934,44 @@ class ArrayHelperTest extends TestCase
         $esperado  = $arrayData;
         $retorno   = ArrayHelper::convertArray2OutputFormat($arrayData,ArrayHelper::TYPE_FORMDIN);
         $this->assertEquals($esperado, $retorno);
-    }    
+    }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    public function testConvertArray2PhpKeyValue_FailKeyColumn(){
+        $this->expectException(InvalidArgumentException::class);
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        ArrayHelper::convertArray2PhpKeyValue($arrayData,'ID','NOME');
+    }
+    public function testConvertArray2PhpKeyValue_FailValeuColumn(){
+        $this->expectException(InvalidArgumentException::class);
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        ArrayHelper::convertArray2PhpKeyValue($arrayData,'IDPESSOA','NOME');
+    }
+    public function testConvertArray2PhpKeyValue_OkPDO(){
+        $esperado[1]='Joao Silva';
+        $esperado[2]='Maria Laranja';
+        $esperado[3]='Dell';
+        $esperado[4]='Microsoft';
 
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaPDO();
+        $retorno   = ArrayHelper::convertArray2PhpKeyValue($arrayData,'IDPESSOA','NMPESSOA');
+        
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testConvertArray2PhpKeyValue_OkAdianti(){
+        $esperado[1]='F';
+        $esperado[2]='F';
+        $esperado[3]='J';
+        $esperado[4]='J';
+
+        $mock = new mockFormDinArray();
+        $arrayData = $mock->generateTablePessoaAdianti();
+        $retorno   = ArrayHelper::convertArray2PhpKeyValue($arrayData,'IDPESSOA','TPPESSOA');
+        
+        $this->assertEquals($esperado, $retorno);
+    }    
 }
