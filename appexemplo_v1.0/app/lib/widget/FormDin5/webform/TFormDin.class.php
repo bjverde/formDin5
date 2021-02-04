@@ -1531,10 +1531,14 @@ class TFormDin
      * @return void
      */
     public function setShowCloseButton( $boolNewValue=null ){
-        ValidateHelper::validadeParam('$boolNewValue',$boolNewValue
-                                    ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_DECREP
-                                    ,__CLASS__,__METHOD__,__LINE__); 
+        $arrBacktrace = debug_backtrace();
+        ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                      ,ValidateHelper::MSG_DECREP
+                                      ,__METHOD__
+                                      ,null
+                                      ,$arrBacktrace[0]['file']
+                                      ,$arrBacktrace[0]['line']
+                                      );
     }
 
     /**
@@ -1542,10 +1546,14 @@ class TFormDin
      * @return void
      */
     public function setFlat($boolNewValue=null){
-        ValidateHelper::validadeParam('setFlat',$boolNewValue
-                                    ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_DECREP
-                                    ,__CLASS__,__METHOD__,__LINE__); 
+        $arrBacktrace = debug_backtrace();
+        ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                      ,ValidateHelper::MSG_DECREP
+                                      ,__METHOD__
+                                      ,null
+                                      ,$arrBacktrace[0]['file']
+                                      ,$arrBacktrace[0]['line']
+                                      );
     }
 
     /**
@@ -1553,10 +1561,14 @@ class TFormDin
      * @return void
      */
     public function setMaximize($boolNewValue = null){
-        ValidateHelper::validadeParam('setMaximize',$boolNewValue
-                                    ,ValidateHelper::WARNING
-                                    ,ValidateHelper::MSG_DECREP
-                                    ,__CLASS__,__METHOD__,__LINE__); 
+        $arrBacktrace = debug_backtrace();
+        ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                      ,ValidateHelper::MSG_DECREP
+                                      ,__METHOD__
+                                      ,null
+                                      ,$arrBacktrace[0]['file']
+                                      ,$arrBacktrace[0]['line']
+                                      );
     }
 
     /**
@@ -1564,9 +1576,12 @@ class TFormDin
      * @return void
      */
     public function setHelpOnLine(){
-        ValidateHelper::validadeParam('$setHelpOnLine',null
-                                ,ValidateHelper::WARNING
-                                ,ValidateHelper::MSG_DECREP
-                                ,__CLASS__,__METHOD__,__LINE__); 
+        ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                      ,ValidateHelper::MSG_DECREP
+                                      ,__METHOD__
+                                      ,null
+                                      ,$arrBacktrace[0]['file']
+                                      ,$arrBacktrace[0]['line']
+                                      );
     }
 }
