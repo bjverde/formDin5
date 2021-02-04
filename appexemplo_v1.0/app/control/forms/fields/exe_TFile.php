@@ -5,6 +5,9 @@ use Adianti\Widget\Form\TLabel;
 class exe_TFile extends TPage
 {
     private $html;
+
+    // importa operações padrão para manipulação de arquivos
+    use Adianti\Base\AdiantiFileSaveTrait;
     
     /**
      * Class constructor
@@ -13,15 +16,24 @@ class exe_TFile extends TPage
     function __construct()
     {
         parent::__construct();
-        
-        $frm = new TFormDin($this,'Exemplo Campo upload arquivo, POST');
+
+        // load the styles
+        TPage::include_css('app/resources/css_form02.css');        
+
+        $frm = new TFormDin($this,'Exemplo campo upload arquivo');
         //$frm->setMaximize(true);
         //$frm->setHelpOnLine('Titulo', $strHeight, $strWidth, 'ajuda', null);
+        
         $fileFormat = 'pdf,gif,txt,jpg,rar,zip,doc';
-        $frm->addHtmlField('html1', 'Arquivo de tamanho maximo de 2MB e no formatos: '.$fileFormat, null, 'Dica:', null, 200)->setCss('border', '1px dashed blue');
+        $strMaxFileSize = '300k';
+        $msg = 'Arquivo de tamanho maximo é '.$strMaxFileSize.' e nos formatos: '.$fileFormat;
+        $msg = $msg.'<br>';
+        $msg = $msg.'<br>PHP está configurado. post_max_size = '.ini_get('post_max_size').' e upload_max_filesize = '.ini_get('upload_max_filesize');
+        
+        $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200)->setClass('notice');
         // define a largura das colunas verticais do formulario para alinhamento dos campos
         //$frm->setColumns(array(100,100));
-        $frm->addFileField('anexo', 'Anexo Async:', true, $fileFormat, '100K', 40, false);
+        $frm->addFileField('anexo', 'Anexo:', true, $fileFormat, '100K', 40, false);
         
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo

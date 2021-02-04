@@ -73,7 +73,6 @@
 }
 
 .notice {
-    width: 200px;
     font-size: 16px;
     border: 1px dashed blue;
     display: inline-block;
