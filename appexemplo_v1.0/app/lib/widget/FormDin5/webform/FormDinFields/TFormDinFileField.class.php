@@ -84,6 +84,8 @@ class TFormDinFileField extends TFormDinGenericField
      * @param string $strLabel       - 06: Label do campo
      * @param string $strWidth       - 07: NOT_IMPLEMENTED
      * @param string $strHeight      - 09: NOT_IMPLEMENTED
+     * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
+     * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
      * @return THtml Field
      */     
     public function __construct( string $id
@@ -92,11 +94,23 @@ class TFormDinFileField extends TFormDinGenericField
                                , $strAllowedFileTypes=null
                                , $intSize=null
                                , $strMaxSize=null
+                               , $enableFileHandling
+                               , $enablePopover
                                )
     {
         $this->setAllowedFileTypes( $strAllowedFileTypes );
+        
         $adiantiObj = new TFile($label);
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
+        //$adiantiObj->enableFileHandling();
+        //$adiantiObj->enablePopover();
+        $this->enableFileHandling($enableFileHandling);
+        if( $enablePopover==true ){
+            $this->enablePopover();
+        }
+
+        $post = $adiantiObj->getPostData();
+        //FormDinHelper::debug($post);
 
         $label = is_null($label)?'':$label;
         parent::__construct($adiantiObj,$id,$label,$boolRequired,null,null);
@@ -115,5 +129,39 @@ class TFormDinFileField extends TFormDinGenericField
     public function getAllowedFileTypes()
     {
         return $this->allowedFileTypes;
+    }
+
+    public function setCompleteAction(TAction $action)
+    {
+        return $this->getAdiantiObj()->setCompleteAction($action);
+    }
+    public function setErrorAction(TAction $action)
+    {
+        return $this->getAdiantiObj()->setErrorAction($action);
+    }
+
+    /**
+     * Habilita barra de progresso
+     *
+     * @param boolean $enableFileHandling
+     * @return void
+     */
+    public function enableFileHandling($enableFileHandling=true)
+    {
+        if( $enableFileHandling==true ){
+            $this->getAdiantiObj()->enableFileHandling();
+        }
+    }
+
+    /**
+     * Habilita o preview
+     *
+     * @param string $title titulo
+     * @param string $content
+     * @return void
+     */
+    public function enablePopover($title = null, $content = '')
+    {
+        $this->getAdiantiObj()->enablePopover($title,$content);
     }
 }

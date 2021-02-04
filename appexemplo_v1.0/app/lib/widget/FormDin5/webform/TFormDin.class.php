@@ -985,6 +985,8 @@ class TFormDin
      * @param boolean $boolLabelAbove  - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED
      * @param string  $strMessageInvalidFileType - 12: NOT_IMPLEMENTED
+     * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
+     * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
      * @return TFile|TFileAsync
      */
     public function addFileField(string $id
@@ -996,11 +998,22 @@ class TFormDin
                                , $boolAsync=null
                                , $boolNewLine=null
                                , $strJsCallBack=null
-                               , $boolLabelAbove=null
+                               , $boolLabelAbove=true
                                , $boolNoWrapLabel=null
-                               , $strMessageInvalidFileType=null )
+                               , $strMessageInvalidFileType=null 
+                               , $enableFileHandling=false
+                               , $enablePopover=false
+                               )
     {
-        $formField = new TFormDinFileField($id,$strLabel,$boolRequired,$strAllowedFileTypes,$strMaxFileSize);
+        $formField = new TFormDinFileField($id
+                                          ,$strLabel
+                                          ,$boolRequired
+                                          ,$strAllowedFileTypes
+                                          ,$intFieldSize
+                                          ,$strMaxFileSize
+                                          ,$enableFileHandling
+                                          ,$enablePopover
+                                        );
         $objField  = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         //$this->addFields($label ,$objField ,$boolLabelAbove);
