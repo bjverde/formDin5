@@ -57,6 +57,41 @@ class ValidateHelperTest extends TestCase
         ValidateHelper::objTypeTFormDinPdoConnection($tpdo,$method,$line);
     }
 
+    public function testisString_FailInputInt() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isString(1,__METHOD__,__LINE__);
+    }
+    public function testisString_FailInputArray() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isString(array(),__METHOD__,__LINE__);
+    }
+    public function testisString_FailInputObj() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isString(new StdClass,__METHOD__,__LINE__);
+    }
+    public function testisString_OK() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::isString('test',__METHOD__,__LINE__);
+    }    
+
+    public function testIsNumeric_FailInputStringText() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isNumeric('1a',__METHOD__,__LINE__);
+    }
+    public function testIsNumeric_OKStringNumber() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::isNumeric('1',__METHOD__,__LINE__);
+    }      
+    public function testIsNumeric_FailInputArray() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isNumeric(array(),__METHOD__,__LINE__);
+    }
+    public function testIsNumeric_FailInputObj() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isNumeric(new StdClass,__METHOD__,__LINE__);
+    }
+  
+
     public function testObjTypeTFormDinPdoConnection_FailLine() {
         $this->expectException(InvalidArgumentException::class);
         $tpdo = null;
