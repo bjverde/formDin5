@@ -784,14 +784,38 @@ class TFormDinTest extends TestCase
         //$this->assertEquals('Limpar', $listAction[0]->Label);
     }
     //-------------------------------------------------------------------------
+    public function testSetColumns()
+    {
+        $this->expectWarning();
+        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $classForm = new stdClass();
+        $formDin = new TFormDin($classForm,'Phpunit');        
+        $formDin->setColumns();
+    }
+    public function testGetColumns()
+    {
+        $this->expectWarning();
+        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $classForm = new stdClass();
+        $formDin = new TFormDin($classForm,'Phpunit');        
+        $formDin->getColumns(true);
+    }
+    public function testGetcolumnWidth()
+    {
+        $this->expectWarning();
+        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $classForm = new stdClass();
+        $formDin = new TFormDin($classForm,'Phpunit');        
+        $formDin->getcolumnWidth(true);
+    }            
     public function testSetShowCloseButton()
     {
         $this->expectWarning();
+        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
         $classForm = new stdClass();
         $formDin = new TFormDin($classForm,'Phpunit');        
         $formDin->setShowCloseButton(true);
     }
-    //-------------------------------------------------------------------------
     public function testSetFlat()
     {
         $this->expectWarning();
@@ -800,7 +824,6 @@ class TFormDinTest extends TestCase
         $formDin = new TFormDin($classForm,'Phpunit');        
         $formDin->setFlat(true);
     }
-    //-------------------------------------------------------------------------
     public function testSetMaximize()
     {
         $this->expectWarning();
@@ -809,7 +832,6 @@ class TFormDinTest extends TestCase
         $formDin = new TFormDin($classForm,'Phpunit');        
         $formDin->setMaximize(true);
     }
-    //-------------------------------------------------------------------------
     public function testSetHelpOnLine()
     {
         $this->expectWarning();

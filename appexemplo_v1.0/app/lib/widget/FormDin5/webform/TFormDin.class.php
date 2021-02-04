@@ -1525,6 +1525,50 @@ class TFormDin
     //----------------------------------------------------------------
     //----------------------------------------------------------------
     //----------------------------------------------------------------
+    /**
+     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
+     * @return void
+     */
+    public function setColumns(){
+        $arrBacktrace = debug_backtrace();
+        ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                      ,ValidateHelper::MSG_DECREP
+                                      ,__METHOD__
+                                      ,null
+                                      ,$arrBacktrace[0]['file']
+                                      ,$arrBacktrace[0]['line']
+                                      );
+    }
+
+    /**
+     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
+     * @return void
+     */
+    public function getColumns(){
+        $arrBacktrace = debug_backtrace();
+        ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                      ,ValidateHelper::MSG_DECREP
+                                      ,__METHOD__
+                                      ,null
+                                      ,$arrBacktrace[0]['file']
+                                      ,$arrBacktrace[0]['line']
+                                      );
+    }
+
+    /**
+     * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
+     * @return void
+     */
+    public function getcolumnWidth(){
+        $arrBacktrace = debug_backtrace();
+        ValidateHelper::validadeMethod(ValidateHelper::WARNING
+                                      ,ValidateHelper::MSG_DECREP
+                                      ,__METHOD__
+                                      ,null
+                                      ,$arrBacktrace[0]['file']
+                                      ,$arrBacktrace[0]['line']
+                                      );
+    }      
 
     /**
      * @deprecated mantido apenas para diminir o impacto na migração do FormDin 4 para FormDin 5 sobre Adianti 7.1
