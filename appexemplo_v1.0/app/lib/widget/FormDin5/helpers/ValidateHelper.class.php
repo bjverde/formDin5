@@ -166,19 +166,19 @@ class ValidateHelper
     }
     //--------------------------------------------------------------------------------
     /**
-     * Undocumented function
+     * Usado para fazer a validação de um metodo da migração do FormDin4 para o FormDin5
      *
-     * @param [type] $typeErro
-     * @param [type] $typeErroMsg
-     * @param [type] $method
-     * @param [type] $complementoMsg
+     * @param const $typeErro ValidateHelper::NOTICIE, ValidateHelper::WARNING e ValidateHelper::ERROR
+     * @param const $typeErroMsg
+     * @param const $method 
+     * @param string $complementoMsg
      * @param string $file
-     * @param [type] $line
+     * @param string $line
      */
     public static function validadeMethod($typeErro,$typeErroMsg,$method,$complementoMsg,$file,$line)
     {
         $complemento = self::typeErrorMsg($typeErroMsg);
-        $complemento = !empty($complementoMsg)?$complemento.' '.$complementoMsg:$complementoMsg;
+        $complemento = !empty($complementoMsg)?$complemento.' '.$complementoMsg:$complemento;
 
         $msg = TFormDinMessage::ERROR_FD5_PARAM_MIGRA
             .' O metodo: '.$method
