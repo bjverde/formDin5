@@ -479,7 +479,7 @@ class TFormDin
     * @param string  $strVerticalAlign  -11 : NOT_IMPLEMENTED
     * @param boolean $boolLabelAbove    -12 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
     * @param string  $strLabel          -13 : NOT_IMPLEMENTED Text label 
-    * @param string  $strHorizontalAlign-14 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Valeus center, left, right
+    * @param string  $strHorizontalAlign-14 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Values center, left, right
     * @return TButton|string|array
     */
     public function addButton( $mixValue
@@ -1090,7 +1090,7 @@ class TFormDin
      * @param integer $intSize            - 09: NOT_IMPLEMENTED Default 1. Num itens que irão aparecer. 
      * @param integer $intWidth           - 10: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
      * @param string  $strFirstOptionText - 11: NOT_IMPLEMENTED First Key in Display
-     * @param string  $strFirstOptionValue- 12: Frist Valeu in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
+     * @param string  $strFirstOptionValue- 12: Frist VALUE in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
      * @param string  $strKeyColumn       - 13: NOT_IMPLEMENTED Nome da coluna que será utilizada para preencher os valores das opções
      * @param string  $strDisplayColumn   - 14: NOT_IMPLEMENTED Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED

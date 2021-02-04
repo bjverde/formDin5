@@ -113,7 +113,7 @@ class ArrayHelper
      * @param mixed  $DefaultValue
      * @return mixed
      */
-    public static function getDefaultValeu($array,$atributeName,$DefaultValue) 
+    public static function getDefaultValue($array,$atributeName,$DefaultValue) 
     {
         $value = $DefaultValue;
         if(self::has($atributeName, $array) ) {
@@ -126,7 +126,7 @@ class ArrayHelper
     
     public static function get($array,$atributeName) 
     {
-        $result = self::getDefaultValeu($array, $atributeName, null);
+        $result = self::getDefaultValue($array, $atributeName, null);
         return $result;
     }
     

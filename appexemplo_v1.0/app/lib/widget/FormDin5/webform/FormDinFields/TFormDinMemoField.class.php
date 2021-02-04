@@ -147,17 +147,17 @@ class TFormDinMemoField extends TFormDinGenericField
         return $this->intMaxLength;
     }
 
-    protected function testSize($valeu)
+    protected function testSize($value)
     {
-        if(preg_match(self::REGEX, $valeu,$output)){
+        if(preg_match(self::REGEX, $value,$output)){
             //FormDinHelper::debug($output);
             if($output[2]=='px'){
-                $valeu = $output[1];
+                $value = $output[1];
             }
         }else{
             throw new InvalidArgumentException('use % ou px');
         }
-        return $valeu;
+        return $value;
     }
 
     public function setSize($intColumns, $intRows)
