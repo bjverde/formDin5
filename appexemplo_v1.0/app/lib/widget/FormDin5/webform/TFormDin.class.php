@@ -1576,6 +1576,7 @@ class TFormDin
      * @return void
      */
     public function setHelpOnLine(){
+        $arrBacktrace = debug_backtrace();
         ValidateHelper::validadeMethod(ValidateHelper::WARNING
                                       ,ValidateHelper::MSG_DECREP
                                       ,__METHOD__
