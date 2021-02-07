@@ -94,8 +94,8 @@ class TFormDinFileField extends TFormDinGenericField
                                , $strAllowedFileTypes=null
                                , $intSize=null
                                , $strMaxSize=null
-                               , $enableFileHandling
-                               , $enablePopover
+                               , $enableFileHandling = false
+                               , $enablePopover = false
                                )
     {
         $this->setAllowedFileTypes( $strAllowedFileTypes );
