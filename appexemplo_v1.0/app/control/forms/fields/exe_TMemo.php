@@ -17,11 +17,15 @@ class exe_TMemo extends TPage
 
         $frm = new TFormDin($this,'Exemplo Campo Memo');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
-        $frm->addMemoField('campo_memo_simples', 'Descrição:', 365, true,'100%');
-        $frm->addMemoField('memo2', 'Descrição:', 400, false, 120, 30,true);
-        $frm->addMemoField('memo3', 'Memo3:', 400, false,'100%', '10%')->setPlaceHolder('Texto de exemplo 30% largura com 10% de altura');
-        $frm->addMemoField('memo4', 'Memo4:', 400, false,'100%', '10%',false)->setReadOnly(true);
-        $frm->addMemoField('memo5', 'Memo5:', 400, false,'30%', '10%',null,true,null,'Texto já preenchido');
+        $frm->addMemoField('memo1NaoObri', 'Não Obrigatório:', 365, false,'100%');
+        $frm->addMemoField('memo1Obri', 'Obrigatório:', 365, true,'100%');
+        $frm->addMemoField('memo2', 'Memo2:', 50, false,'100%', '10%')->setPlaceHolder('Texto de exemplo 100% largura com 10% de altura');
+        $memo3 = $frm->addMemoField('memo3', 'Memo3:', 50, false,'100%', '10%',false);
+        $memo3->setReadOnly(true);
+        $memo3->setPlaceHolder('Campo somente leitura com Place Holder. Texto de exemplo 100% largura com 10% de altura');
+        $frm->addMemoField('memo4', 'Memo4:', 400, false, 120, 30,true);
+        $frm->addMemoField('memo5', 'Memo5:', 400, false,'80%', '15%',false,null,null,'Texto já preenchido');
+        //$frm->addMemoField('memo5', 'Memo5:', 400, false,'30%', '10%',null,true,null,'Texto já preenchido');
         
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
