@@ -17,10 +17,10 @@ class exe_TMemo extends TPage
 
         $frm = new TFormDin($this,'Exemplo Campo Memo');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
-        $frm->addMemoField('campo_memo_simples', 'Descrição:', 1000, true, 80, 5);
+        $frm->addMemoField('campo_memo_simples', 'Descrição:', 365, true,'100%');
         $frm->addMemoField('memo2', 'Descrição:', 400, false, 120, 30,true);
-        $frm->addMemoField('memo3', 'Memo3:', 400, false,'30%', '10%')->setPlaceHolder('Texto de exemplo 30% largura com 10% de altura');
-        $frm->addMemoField('memo4', 'Memo4:', 400, false,'30%', '10%')->setReadOnly(true);
+        $frm->addMemoField('memo3', 'Memo3:', 400, false,'100%', '10%')->setPlaceHolder('Texto de exemplo 30% largura com 10% de altura');
+        $frm->addMemoField('memo4', 'Memo4:', 400, false,'100%', '10%',false)->setReadOnly(true);
         $frm->addMemoField('memo5', 'Memo5:', 400, false,'30%', '10%',null,true,null,'Texto já preenchido');
         
         // O Adianti permite a Internacionalização - A função _t('string') serve
@@ -35,23 +35,8 @@ class exe_TMemo extends TPage
         $maxlength = 10;
         $detalhesolicitacao = new TText($idField);
         $detalhesolicitacao->setId($idField);
-        $detalhesolicitacao->maxlength = $maxlength;
-        $chars              = new TElement('span');
-        $chars->id          = $idField.'_counter';
-        $script             = new TElement('script');
-        $script->type = 'text/javascript';
-        $script->add("var maxLength = ".$maxlength.";
-                        $('#".$idField."').keyup(function() {
-                          var length = $(this).val().length;
-                          var length = maxLength-length;
-                          $('#".$idField."_counter').text(length+' Caracteres Restantes');
-                        });");
-        $container = new TVBox;
-        $container->add($detalhesolicitacao);
-        $container->add($chars);
-        $container->add($script);
 
-        $this->form->addFields([new TLabel('Texto 01')], [$container]);
+        $this->form->addFields([new TLabel('Texto 01')], [$detalhesolicitacao]);
 
         //-------------------------------
         $idField = 'text02';
