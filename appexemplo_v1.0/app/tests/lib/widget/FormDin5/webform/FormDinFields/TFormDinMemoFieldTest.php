@@ -73,19 +73,35 @@ class TFormDinMemoFieldTest extends TestCase
         $this->assertInstanceOf(TText::class, $adiantiObj);
     }
 
-    /*
     public function testTestSize_fail()
     {
-        $this->expectException(InvalidArgumentException::class);
-        
-        $reflectionMethod = new \ReflectionMethod(TFormDinMemoField::class, 'testSize');
-        $reflectionMethod->setAccessible(true);
-        
-        $formDinObj  = new TFormDinMemoField('p1','html simples',300);
-
-        $reflectionMethod->invoke( $formDinObj->testSize(10) );
+        $this->expectNotToPerformAssertions();
+        $this->classTest->testSize(null);
     }
-    */
+
+    public function testTestSize_ok_String100Perent()
+    {
+        $result = $this->classTest->testSize('100%');
+        $this->assertEquals($result,'100%');
+    }
+
+    public function testTestSize_ok_String100()
+    {
+        $result = $this->classTest->testSize('100');
+        $this->assertEquals($result,'100');
+    }    
+
+    public function testTestSize_ok_int100()
+    {
+        $result = $this->classTest->testSize(100);
+        $this->assertEquals($result,100);
+    }    
+
+    public function testTestSize_ok_null()
+    {
+        $result = $this->classTest->testSize(null);
+        $this->assertEquals($result,null);
+    }
 
     public function test_readOnly()
     {
