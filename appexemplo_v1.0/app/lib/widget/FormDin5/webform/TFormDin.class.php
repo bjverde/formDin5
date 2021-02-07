@@ -771,7 +771,7 @@ class TFormDin
      * @param string  $strName         - 1: ID do campo
      * @param string  $strLabel        - 2: Label
      * @param integer $intMaxLength    - 3: Tamanho maximos
-     * @param boolean $boolRequired    - 4: Obrigatorio
+     * @param boolean $boolRequired    - 4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param integer $intColumns      - 5: Largura use px ou %, valores inteiros serão multiplicados 1.5 e apresentado em px
      * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
      * @param boolean $boolNewLine     - 7: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
@@ -779,7 +779,7 @@ class TFormDin
      * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
      * @param string  $strValue       - 10: texto preenchido
      * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
-     * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo
+     * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo`. DEFAULT = true
      * @param string $boolShowCountChar 13: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinMemoField
      */
@@ -821,7 +821,7 @@ class TFormDin
      *  
      * @param string  $strName         - 1: Id do Campo
      * @param string  $strLabel        - 2: Label do Campo
-     * @param boolean $boolRequired    - 3: DEFAULT = false não obrigatório
+     * @param boolean $boolRequired    - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param boolean $boolNewLine     - 4: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param string  $strValue        - 5: Valor inicial
      * @param string  $strMinValue     - 6: Menor data que o campo aceita
@@ -875,7 +875,7 @@ class TFormDin
      *  
      * @param string  $strName         - 1: Id do Campo
      * @param string  $strLabel        - 2: Label do Campo
-     * @param boolean $boolRequired    - 3: DEFAULT = false não obrigatório
+     * @param boolean $boolRequired    - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param boolean $boolNewLine     - 4: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param string  $strValue        - 5: Valor inicial
      * @param string  $strMinValue     - 6: Menor data que o campo aceita
@@ -933,7 +933,7 @@ class TFormDin
      * 
      * @param string $id             - 1: ID do campo
      * @param string $strLabel       - 2: Label do campo
-     * @param boolean $boolRequired  - 3: Obrigatorio
+     * @param boolean $boolRequired  - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param array $itens           - 4: Informe um array do tipo "chave=>valor", com maximo de 2 elementos
      * @param boolean $boolNewLine   - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove- 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
@@ -973,7 +973,7 @@ class TFormDin
      * 
      * @param string  $id              - 01: id do campo
      * @param string  $strLabel        - 02: Rotulo do campo que irá aparece na tela
-     * @param boolean $boolRequired    - 03: Obrigatorio
+     * @param boolean $boolRequired    - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param mixed   $strAllowedFileTypes - 04: Tipos de arquivos. String separado por virgular ou array
      * @param string  $strMaxFileSize  - 05: Input the max size file with K, M for Megabit (Mb) or G for Gigabit (Gb). Example 2M = 2 Mb = 2048Kb.
      * @param integer $intFieldSize    - 06: NOT_IMPLEMENTED
@@ -1034,7 +1034,7 @@ class TFormDin
      *
      * @param string $id              - 1: id do campo
      * @param string $strLabel        - 2: Rotulo do campo que irá aparece na tela
-     * @param boolean $boolRequired   - 3: Obrigatorio
+     * @param boolean $boolRequired   - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param string $strMask         - 4: A mascara
      * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param string $strValue        - 6: texto preenchido
@@ -1076,7 +1076,7 @@ class TFormDin
      *
      * @param string  $strName        -  1: id do campo
      * @param string  $strLabel       -  2: Rotulo do campo que irá aparece na tela
-     * @param boolean $boolRequired   -  3: True = Obrigatorio; False (Defalt) = Não Obrigatorio
+     * @param boolean $boolRequired   -  3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param string  $strMinValue    -  4: Menor Valor
      * @param string  $strMaxValue    -  5: Maior valor
      * @param string  $strMaskType    -  6: HM, HMS
