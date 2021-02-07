@@ -91,8 +91,8 @@ class TFormDinMemoField extends TFormDinGenericField
                               , $label=null
                               , $intMaxLength
                               , $boolRequired=null
-                              , $intColumns='20px'
-                              , $intRows='5px'
+                              , $intColumns='100%'
+                              , $intRows='100%'
                               , $boolNewLine=null
                               , $boolLabelAbove=null
                               , $boolShowCounter=null
@@ -103,10 +103,10 @@ class TFormDinMemoField extends TFormDinGenericField
     {
         $this->setAdiantiObjTText($id);
         parent::__construct($this->getAdiantiObjTText(),$id,$label,$boolRequired,$value,$placeholder);
-        $this->setAdiantiObjTFull($id,$boolShowCountChar,$intMaxLength);
-        $this->setMaxLength($label,$intMaxLength);
         $this->setSize($intColumns, $intRows);
+        $this->setMaxLength($label,$intMaxLength);
         $this->setShowCountChar($boolShowCountChar);
+        $this->setAdiantiObjTFull($id,$boolShowCountChar,$intMaxLength);
         return $this->getAdiantiObj();
     }
 
@@ -162,15 +162,17 @@ class TFormDinMemoField extends TFormDinGenericField
         return $this->intMaxLength;
     }
 
-    protected function testSize($value)
+    public function testSize($value)
     {
-        if(preg_match(self::REGEX, $value,$output)){
-            //FormDinHelper::debug($output);
-            if($output[2]=='px'){
-                $value = $output[1];
+        if( !empty($value) ){
+            if(  preg_match(self::REGEX, $value,$output) ){
+                //FormDinHelper::debug($output);
+                if($output[2]=='px'){
+                    $value = $output[1];
+                }
+            }else{
+                throw new InvalidArgumentException('use % ou px');
             }
-        }else{
-            throw new InvalidArgumentException('use % ou px');
         }
         return $value;
     }
