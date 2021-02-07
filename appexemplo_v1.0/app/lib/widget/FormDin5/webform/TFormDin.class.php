@@ -809,10 +809,8 @@ class TFormDin
                                       , $placeholder 
                                       , $boolShowCountChar
                                     );
-        $objField = $formField->getFullComponent();
-        //$objField = $formField->getAdiantiObj();
+        $objField = $formField->getAdiantiObjFull();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
     	return $formField;
     }
