@@ -46,7 +46,7 @@ $path =  __DIR__.'/../../../../../';
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
 
-class TFormDinMemoFieldTest extends TestCase
+class TFormDinFileFieldTest extends TestCase
 {
 
     private $classTest;
@@ -56,7 +56,10 @@ class TFormDinMemoFieldTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinMemoField('p1','html simples',300);
+        if(!defined('APPLICATION_NAME') ) { 
+            define('APPLICATION_NAME', 'phpunit');
+        }
+        $this->classTest = new TFormDinFileField('testFile1','Test Upload Arquivo',true,'GIF,png,XLS,csv');
     }
     
     /**
@@ -67,54 +70,14 @@ class TFormDinMemoFieldTest extends TestCase
         parent::tearDown();
     }     
     
-    public function test_instanceOff()
+    public function testGetAllowedFileTypes()
     {
-        $adiantiObj = $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TText::class, $adiantiObj);
-    }
-
-    public function testTestSize_fail()
-    {
-        $this->expectNotToPerformAssertions();
-        $this->classTest->testSize(null);
-    }
-
-    public function testTestSize_ok_String100Perent()
-    {
-        $result = $this->classTest->testSize('100%');
-        $this->assertEquals($result,'100%');
-    }
-
-    public function testTestSize_ok_String100()
-    {
-        $result = $this->classTest->testSize('100');
-        $this->assertEquals($result,'100');
-    }    
-
-    public function testTestSize_ok_int100()
-    {
-        $result = $this->classTest->testSize(100);
-        $this->assertEquals($result,100);
-    }    
-
-    public function testTestSize_ok_null()
-    {
-        $result = $this->classTest->testSize(null);
-        $this->assertEquals($result,null);
-    }
-
-    public function test_readOnly()
-    {
-        $reflectionProperty = new \ReflectionProperty(TText::class, 'editable');
-        $reflectionProperty->setAccessible(true);
-
-        $this->classTest->setReadOnly(true);
-        $readOnly = $this->classTest->getReadOnly();
-        $adiantiObj = $this->classTest->getAdiantiObj();
-        $editable = $reflectionProperty->getValue($adiantiObj);
-        
-        $this->assertEquals(false,$editable);
-        $this->assertEquals(true,$readOnly);
+        $expect[] = 'gif';
+        $expect[] = 'png';
+        $expect[] = 'xls';
+        $expect[] = 'csv';
+        $result = $this->classTest->getAllowedFileTypes();
+        $this->assertEquals($expect, $result);
     }
 
 }
