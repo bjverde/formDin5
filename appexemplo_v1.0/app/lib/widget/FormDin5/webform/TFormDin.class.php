@@ -466,14 +466,14 @@ class TFormDin
     * Para que o botão fique alinhado na frente de um campo com labelAbove=true, basta
     * definir o parametro boolLabelAbove do botão para true tambem.
     *
-    * @param string   $mixValue         - 1 : Label do Botão ou array('Gravar', 'Limpar') com nomes
+    * @param string  $mixValue          - 1 : Label do Botão ou array('Gravar', 'Limpar') com nomes
     * @param string  $strAction         - 2 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
-    * @param mixed  $strName            - 3 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
+    * @param mixed   $strName           - 3 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
     * @param string  $strOnClick        - 4 : NOT_IMPLEMENTED Nome da função javascript
     * @param string  $strConfirmMessage - 5 : NOT_IMPLEMENTED Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
     * @param boolean $boolNewLine       - 6 : Em nova linha. DEFAULT = true
     * @param boolean $boolFooter        - 7 : Mostrar o botão no rodapé do form. DEFAULT = true
-    * @param string  $strImage          - 8 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
+    * @param string  $strImage          - 8 : Imagem no botão. Pode ser o caminho completo para uma imagem app/images/icon-key-yellow.png ou fontawesome exemplo: "fas:question fa-question-circle #40a2dd" ou pode setar uma classe css com setClass.
     * @param string  $strImageDisabled  - 9 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
     * @param string  $strHint           -10 : NOT_IMPLEMENTED Texto hint para explicar
     * @param string  $strVerticalAlign  -11 : NOT_IMPLEMENTED
