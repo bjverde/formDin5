@@ -81,7 +81,7 @@ class ServerHelper
         return $url[0];
     }
 
-    public static function homeUrl() 
+    public static function getHomeUrl() 
     {
         $pageURL = self::getCurrentUrl();
         $url = explode('engine.php', $pageURL);
