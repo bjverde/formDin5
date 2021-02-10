@@ -43,32 +43,17 @@ class GetHelper
 {
     public static function get($atributeName) 
     {
-        if(!isset($_GET[$atributeName])) {
-            $_GET[$atributeName]="";
-        }
-        return is_null($_GET[$atributeName])?"":trim($_GET[$atributeName]);
+        return ArrayHelper::get($_GET,$atributeName);
     }
     
     public static function getDefaultValue($atributeName,$DefaultValue) 
     {
-        $value = null;
-        if(isset($_GET[$atributeName]) && ($_GET[$atributeName]<>'') ) {
-            $value = $_GET[$atributeName];
-        }else{
-            $value = $DefaultValue;
-        }
-        return $value;
+        return ArrayHelper::getDefaultValue($_GET,$atributeName,$DefaultValue);
     }
     
     public static function has($atributeName) 
     {
-        $value = null;
-        if(isset($_GET[$atributeName])) {
-            $value = true;
-        }else{
-            $value = false;
-        }
-        return $value;
+        return ArrayHelper::has($atributeName,$_GET);
     }
 }
 ?>
