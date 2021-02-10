@@ -71,26 +71,44 @@ class TFormDinHtmlField extends TFormDinGenericField
      *
      * criado o espaço
      * @param string $strName        - 1: ID do campo
-     * @param string $strValue       - 2: Texto HTML que irá aparece dentro
+     * @param string $strValue       - 2: Texto que irá aparece dentro. Pode ser HTML, HTM, PHP, TXT.
      * @param string $strIncludeFile - 3: NOT_IMPLEMENTED Arquivo que será incluido
      * @param string $strLabel       - 4: Label do campo
-     * @param string $strWidth       - 5: NOT_IMPLEMENTED
-     * @param string $strHeight      - 6: NOT_IMPLEMENTED
+     * @param string $strWidth       - 5: largura em %
+     * @param string $strHeight      - 6: altura em % ou px
      * @return THtml Field
      */     
     public function __construct( string $id
                                , $value=null
                                , $strIncludeFile=null
                                , $label=null
-                               , $strHeight=null
                                , $strWidth=null
+                               , $strHeight=null                               
                                , $boolNewLine=null
                                )
     {
-        $adiantiObj = new TElement('div');
         $label = is_null($label)?'':$label;
+
+        if( empty($strIncludeFile) ){
+            $adiantiObj = new TElement('div');
+            $adiantiObj->add($value);
+        } else {
+            if( !file_exists($strIncludeFile) ) {
+                $adiantiObj = new TElement('div');
+                $adiantiObj->add('Arquivo '.$strIncludeFile.' não encontrado');
+            } else {
+                $url = ServerHelper::getHomeUrl();
+                $url = $url . $strIncludeFile;
+                $adiantiObj = new TElement('iframe');
+                $adiantiObj->id = $id;
+                $adiantiObj->src = $url;
+                $adiantiObj->frameborder = "0";
+                $adiantiObj->scrolling = "yes";
+                $adiantiObj->width = "100%";
+                $adiantiObj->height = "700px";
+            }
+        }
         parent::__construct($adiantiObj,$id,$label,null,null,null);
-        $this->add($value);
         return $this->getAdiantiObj();
     }
 
