@@ -71,9 +71,9 @@ class TFormDinHtmlField extends TFormDinGenericField
      *
      * criado o espaço
      * @param string $strName        - 1: ID do campo
-     * @param string $strValue       - 2: Texto que irá aparece dentro. Pode ser HTML, HTM, PHP, TXT.
-     * @param string $strIncludeFile - 3: NOT_IMPLEMENTED Arquivo que será incluido
-     * @param string $strLabel       - 4: Label do campo
+     * @param string $strValue       - 2: Texto puro ou HTML que irá aparece dentro
+     * @param string $strIncludeFile - 3: Arquivo que será incluido, o arquivo prevalece sobre o valor. Pode ser HTML, HTM, PHP, TXT.
+     * @param string $strLabel       - 4: label do campo
      * @param string $strWidth       - 5: largura em %
      * @param string $strHeight      - 6: altura em % ou px
      * @return THtml Field
