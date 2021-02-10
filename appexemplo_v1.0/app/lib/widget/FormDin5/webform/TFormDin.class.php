@@ -373,6 +373,7 @@ class TFormDin
 
     /**
      * Inclusão de campos no Form, usando elementos nativos do Adianti
+     * recebe um ou vários arrays
      */
     public function addFields()
     {
@@ -382,6 +383,7 @@ class TFormDin
 
     /**
      * Inclusão de um conteudo no Form, usando um elementos nativos do Adianti
+     * recebe um ou vários arrays
      */
     public function addContent()
     {
