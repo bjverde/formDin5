@@ -73,6 +73,23 @@ class ServerHelper
             return $url[0];
         }
     }
+
+    public static function getQueryString() 
+    {
+        $pageURL = self::getCurrentUrl(true);
+        $url = explode('?', $pageURL);
+        return $url[0];
+    }
+
+    public static function homeUrl() 
+    {
+        $pageURL = self::getCurrentUrl();
+        $url = explode('engine.php', $pageURL);
+        $url =  $url[0];
+        $url = explode('index.php', $url);
+        return $url[0];
+    }
+
     /**
      * Return string with IP client
      * https://pt.stackoverflow.com/questions/179389/como-pegar-ip-de-um-usuario-usando-php/179455
