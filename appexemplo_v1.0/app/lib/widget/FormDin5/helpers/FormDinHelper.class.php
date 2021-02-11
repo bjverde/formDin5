@@ -62,7 +62,6 @@ class FormDinHelper
     const GRID_SIMPLE = 'GRID_SIMPLE';
     const GRID_SCREEN_PAGINATION = 'GRID_SCREEN_PAGINATION';
     const GRID_SQL_PAGINATION    = 'GRID_SQL_PAGINATION';
-    const REGEX = '/(\d+)((px?)|(\%?))/';
 
     /**
      * Return FormDin version
@@ -309,19 +308,28 @@ class FormDinHelper
         }
     }
 
-    public static function testSizeWidthAndHeight($value)
+    /**
+     * Recebe um valor e testa se pode ser usado como unidades CSS para width ou height
+     * https://desenvolvimentoparaweb.com/css/unidades-css-rem-vh-vw-vmin-vmax-ex-ch/
+     * @param string $value
+     * @return void
+     */
+    public static function validateSizeWidthAndHeight($value,$enablePx=false)
     {
+        $value = trim($value);
         if( !empty($value) ){
-            if(  preg_match(self::REGEX, $value,$output) ){
-                //FormDinHelper::debug($output);
-                if($output[2]=='px'){
-                    $value = $output[1];
+            if( $enablePx==true ){
+                $regexWithPx = '/\d+(px|\%|em|rem|vh|vw)/';
+                if(  !preg_match($regexWithPx, $value,$output) ){
+                    throw new InvalidArgumentException('use px ou % ou em ou rem ou vh ou vw');
                 }
             }else{
-                throw new InvalidArgumentException('use % ou px');
+                $regex = '/\d+(\%|em|rem|vh|vw)/';
+                if(  !preg_match($regex, $value,$output) ){
+                    throw new InvalidArgumentException('use % ou em ou rem ou vh ou vw');
+                }
             }
         }
-        return $value;
     }
 
 }
