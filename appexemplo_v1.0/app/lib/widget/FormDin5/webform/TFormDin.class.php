@@ -1415,8 +1415,8 @@ class TFormDin
      * @param string $strValue       - 2: Texto puro ou HTML que irá aparece dentro
      * @param string $strIncludeFile - 3: Arquivo que será incluido, o arquivo prevalece sobre o valor. Pode ser HTML, HTM, PHP, TXT.
      * @param string $strLabel       - 4: Label do campo
-     * @param string $strWidth       - 5: largura em %
-     * @param string $strHeight      - 6: altura em % ou px
+     * @param string $strWidth       - 5: Largura em %
+     * @param string $strHeight      - 6: Altura  em % ou px
      * @param boolean $boolNewLine   - 7: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param boolean $boolLabelAbove  8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @return THtml Field
