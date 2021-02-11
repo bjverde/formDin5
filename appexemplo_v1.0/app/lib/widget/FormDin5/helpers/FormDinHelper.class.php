@@ -62,6 +62,7 @@ class FormDinHelper
     const GRID_SIMPLE = 'GRID_SIMPLE';
     const GRID_SCREEN_PAGINATION = 'GRID_SCREEN_PAGINATION';
     const GRID_SQL_PAGINATION    = 'GRID_SQL_PAGINATION';
+    const REGEX = '/(\d+)((px?)|(\%?))/';
 
     /**
      * Return FormDin version
@@ -306,6 +307,21 @@ class FormDinHelper
                 exit();
             }
         }
+    }
+
+    public static function testSizeWidthAndHeight($value)
+    {
+        if( !empty($value) ){
+            if(  preg_match(self::REGEX, $value,$output) ){
+                //FormDinHelper::debug($output);
+                if($output[2]=='px'){
+                    $value = $output[1];
+                }
+            }else{
+                throw new InvalidArgumentException('use % ou px');
+            }
+        }
+        return $value;
     }
 
 }

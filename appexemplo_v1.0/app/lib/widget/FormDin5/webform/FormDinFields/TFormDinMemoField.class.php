@@ -57,7 +57,6 @@
  */
 class TFormDinMemoField extends TFormDinGenericField
 {
-    const REGEX = '/(\d+)((px?)|(\%?))/';
     private $showCountChar;
     private $intMaxLength;
 
@@ -162,32 +161,17 @@ class TFormDinMemoField extends TFormDinGenericField
         return $this->intMaxLength;
     }
 
-    public function testSize($value)
-    {
-        if( !empty($value) ){
-            if(  preg_match(self::REGEX, $value,$output) ){
-                //FormDinHelper::debug($output);
-                if($output[2]=='px'){
-                    $value = $output[1];
-                }
-            }else{
-                throw new InvalidArgumentException('use % ou px');
-            }
-        }
-        return $value;
-    }
-
     public function setSize($intColumns, $intRows)
     {
         if(is_numeric($intRows)){
             $intRows = $intRows * 4;
         }else{
-            $intRows = $this->testSize($intRows);
+            $intRows = FormDinHelper::testSizeWidthAndHeight($intRows);
         }
         if(is_numeric($intColumns)){
             $intColumns = $intColumns * 1.5;
         }else{
-            $intColumns = $this->testSize($intColumns);
+            $intColumns = FormDinHelper::testSizeWidthAndHeight($intColumns);
         }
         $this->getAdiantiObj()->setSize($intColumns, $intRows);
     }

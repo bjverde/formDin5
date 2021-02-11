@@ -211,5 +211,38 @@ class FormDinHelperTest extends TestCase
         $result = FormDinHelper::issetOrNotZero($variable,false);
         $this->assertEquals( $expected , $result);
     }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+
+    public function testTestSize_fail()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::testSizeWidthAndHeight(null);
+    }
+
+    public function testTestSize_ok_String100Perent()
+    {
+        $result = FormDinHelper::testSizeWidthAndHeight('100%');
+        $this->assertEquals($result,'100%');
+    }
+
+    public function testTestSize_ok_String100()
+    {
+        $result = FormDinHelper::testSizeWidthAndHeight('100');
+        $this->assertEquals($result,'100');
+    }    
+
+    public function testTestSize_ok_int100()
+    {
+        $result = FormDinHelper::testSizeWidthAndHeight(100);
+        $this->assertEquals($result,100);
+    }    
+
+    public function testTestSize_ok_null()
+    {
+        $result = FormDinHelper::testSizeWidthAndHeight(null);
+        $this->assertEquals($result,null);
+    }
     
 }
