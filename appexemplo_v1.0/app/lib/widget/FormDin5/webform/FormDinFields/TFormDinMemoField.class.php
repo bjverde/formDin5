@@ -74,8 +74,8 @@ class TFormDinMemoField extends TFormDinGenericField
      * @param string  $strName         - 1: ID do campo
      * @param string  $strLabel        - 2: Label
      * @param integer $intMaxLength    - 3: Tamanho maximos
-     * @param boolean $boolRequired    - 4: Obrigatorio
-     * @param integer $intColumns      - 5: Largura use px ou %, valores inteiros serão multiplicados 1.5 e apresentado em px
+     * @param boolean $boolRequired    - 4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param integer $intColumns      - 5: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
      * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
      * @param boolean $boolNewLine     - 7: NOT_IMPLEMENTED nova linha
      * @param boolean $boolLabelAbove  - 8: NOT_IMPLEMENTED Label sobre o campo
@@ -166,13 +166,16 @@ class TFormDinMemoField extends TFormDinGenericField
         if(is_numeric($intRows)){
             $intRows = $intRows * 4;
         }else{
-            $intRows = FormDinHelper::testSizeWidthAndHeight($intRows);
+            FormDinHelper::validateSizeWidthAndHeight($intRows,true);
         }
         if(is_numeric($intColumns)){
-            $intColumns = $intColumns * 1.5;
-        }else{
-            $intColumns = FormDinHelper::testSizeWidthAndHeight($intColumns);
+            if( $intColumns>=100 ){
+                $intColumns = '100%';
+            }else{
+                $intColumns = $intColumns.'%';
+            }
         }
+        FormDinHelper::validateSizeWidthAndHeight($intColumns);
         $this->getAdiantiObj()->setSize($intColumns, $intRows);
     }
 
