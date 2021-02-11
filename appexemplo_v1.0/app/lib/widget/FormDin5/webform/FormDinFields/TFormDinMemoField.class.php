@@ -168,14 +168,7 @@ class TFormDinMemoField extends TFormDinGenericField
         }else{
             FormDinHelper::validateSizeWidthAndHeight($intRows,true);
         }
-        if(is_numeric($intColumns)){
-            if( $intColumns>=100 ){
-                $intColumns = '100%';
-            }else{
-                $intColumns = $intColumns.'%';
-            }
-        }
-        FormDinHelper::validateSizeWidthAndHeight($intColumns);
+        $intColumns = FormDinHelper::sizeWidthInPercent($intColumns);
         $this->getAdiantiObj()->setSize($intColumns, $intRows);
     }
 

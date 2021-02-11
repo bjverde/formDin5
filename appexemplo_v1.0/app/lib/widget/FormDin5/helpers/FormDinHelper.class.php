@@ -332,4 +332,18 @@ class FormDinHelper
         }
     }
 
+    public static function sizeWidthInPercent($value)
+    {
+        $value = trim($value);
+        if( is_numeric($value) ){
+            if( $value>=100 ){
+                $value = '100%';
+            }else{
+                $value = $value.'%';
+            }
+        }
+        FormDinHelper::validateSizeWidthAndHeight($value);
+        return $value;
+    }
+
 }

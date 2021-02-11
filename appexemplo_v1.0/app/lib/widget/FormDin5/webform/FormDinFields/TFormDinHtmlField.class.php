@@ -82,7 +82,7 @@ class TFormDinHtmlField extends TFormDinGenericField
                                , $value=null
                                , $strIncludeFile=null
                                , $label=null
-                               , $strWidth=null
+                               , $strWidth='100%'
                                , $strHeight=null                               
                                , $boolNewLine=null
                                )
@@ -104,7 +104,7 @@ class TFormDinHtmlField extends TFormDinGenericField
                 $adiantiObj->src = $url;
                 $adiantiObj->frameborder = "0";
                 $adiantiObj->scrolling = "yes";
-                $adiantiObj->width = "100%";
+                $adiantiObj->width  = FormDinHelper::sizeWidthInPercent($strWidth);
                 $adiantiObj->height = "700px";
             }
         }
