@@ -61,6 +61,7 @@ class TFormDinButton {
     protected $objForm;
     protected $objAction;
     protected $label;
+    protected $confirmMessage;
 
     /**
     * Adicionar botão no layout
@@ -79,7 +80,7 @@ class TFormDinButton {
     * @param string  $strNameId         - 3 : Id do Botão. Se ficar null será utilizado o $strAction
     * @param mixed   $strAction         - 4 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
     * @param string  $strOnClick        - 5 : NOT_IMPLEMENTED Nome da função javascript
-    * @param string  $strConfirmMessage - 6 : NOT_IMPLEMENTED Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
+    * @param string  $strConfirmMessage - 6 : Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
     * @param boolean $boolNewLine       - 7 : Em nova linha. DEFAULT = true
     * @param boolean $boolFooter        - 8 : Mostrar o botão no rodapé do form. DEFAULT = true
     * @param string  $strImage          - 9 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
@@ -119,6 +120,7 @@ class TFormDinButton {
         $this->setLabel($label);
         $this->setAction($strAction);
         $this->setImage($strImage);
+        $this->setConfirmMessage($strConfirmMessage);
         return $this->getAdiantiObj();
     }
 
@@ -245,6 +247,21 @@ class TFormDinButton {
         $action = $this->getAdiantiObj()->getAction();
         return $action->getParameters();
     }
+
+    public function setConfirmMessage($confirmMessage)
+    {
+        if( !empty($confirmMessage) ){
+            $this->confirmMessage=$confirmMessage;
+            $class = get_class ( $this->getObjForm() );
+            $stringJs = 'if (confirm(\''.$confirmMessage.'\') == true) { __adianti_load_page(\'index.php?class='.$class.'\'); }';
+            $this->getAdiantiObj()->addFunction($stringJs);
+        }
+    }
+    public function getConfirmMessage()
+    {
+        return $this->confirmMessage;
+    }
+
 
 }
 ?>
