@@ -173,17 +173,17 @@ class TFormDinButton {
         return $this->adiantiObj;
     }
 
-    public function setAction($strName)
+    public function setAction($strAction)
     {
-        if( empty($strName) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT.': strName');
+        if( empty($strAction) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT.': strAction');
         }
         $action = null;
-        if( is_array($strName) ){
-            $action = new TAction(array($strName[0], $strName[1]));
+        if( is_array($strAction) ){
+            $action = new TAction(array($strAction[0],$strAction[1]));
         }else{
             $objForm = $this->getObjForm();
-            $action = new TAction(array($objForm, $strName));
+            $action = new TAction(array($objForm, $strAction));
         }        
         $label = $this->getLabel();
         $this->getAdiantiObj()->setAction($action,$label);
