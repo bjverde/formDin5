@@ -38,6 +38,9 @@ class exe_TButton extends TPage
         $buttonLateral->setParameter('conteudo','2222');
         $buttonLateral->setPopover('Cortina Lateral','right',$msg.'2222');
 
+        $msg = $frm->addButton('Msg JS','msgjs','onSave1',null,'Devo executar?',true,false,'far:check-circle green');
+        $msg->setPopover('Mensagem JS','bottom','Botão com Confirmação em JS incluida');
+
         //$frm->addButton($this,'Limpar', null, 'Limpar', null, null, false, false);
         //$frm->addButton($this,'Exemplo 09 - img', null, 'act09', null, null, true, false,'joia.gif');
         //$frm->addButton($this,'Exemplo 09 - img desabilitado', null, 'act09d', null, null, true, false,'joia.gif','joia_desabilitado.gif');
