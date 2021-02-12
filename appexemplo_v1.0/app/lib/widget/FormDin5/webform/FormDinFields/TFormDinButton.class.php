@@ -185,6 +185,10 @@ class TFormDinButton {
         $label = $this->getLabel();
         $this->getAdiantiObj()->setAction($action,$label);
     }
+    public function getAction()
+    {
+        $this->getAdiantiObj()->getAction();
+    }
 
     public function setImage($strImage)
     {
@@ -192,6 +196,36 @@ class TFormDinButton {
             $this->getAdiantiObj()->setImage($strImage);
         }
     }
+
+    /**
+     * Adds a parameter to the action
+     * @param  $param = parameter name
+     * @param  $value = parameter value
+     */    
+    public function setParameter($param,$value)
+    {
+        $action = $this->getAdiantiObj()->getAction();
+        $action->setParameter($param,$value);
+    }
+
+    /**
+     * Returns a parameter
+     * @param  $param = parameter name
+     */
+    public function getParameter($param)
+    {
+        $action = $this->getAdiantiObj()->getAction();
+        return $action->getParameter($param);
+    }
+
+    /**
+     * Return the Action Parameters
+     */
+    public function getParameters()
+    {
+        $action = $this->getAdiantiObj()->getAction();
+        return $action->getParameters();
+    }    
 
 }
 ?>
