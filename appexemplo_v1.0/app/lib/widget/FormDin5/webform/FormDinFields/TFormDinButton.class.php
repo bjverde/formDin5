@@ -75,9 +75,9 @@ class TFormDinButton {
     * definir o parametro boolLabelAbove do botão para true tambem.
     *
     * @param object  $objForm           - 1 : FORMDIN5 Objeto do Form, é só informar $this
-    * @param string  $mixValue          - 2 : Label do Botão
-    * @param string  $strAction         - 3 : NOT_IMPLEMENTED Nome da ação, ignorando $strName $strOnClick. Se ficar null será utilizado o valor de mixValue
-    * @param mixed   $strName           - 4 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
+    * @param string  $mixValue          - 2 : Label do Botão. No FormDin5 não aceita array('Gravar', 'Limpar')
+    * @param string  $strNameId         - 3 : Id do Botão. Se ficar null será utilizado o $strAction
+    * @param mixed   $strAction         - 4 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
     * @param string  $strOnClick        - 5 : NOT_IMPLEMENTED Nome da função javascript
     * @param string  $strConfirmMessage - 6 : NOT_IMPLEMENTED Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
     * @param boolean $boolNewLine       - 7 : Em nova linha. DEFAULT = true
@@ -93,8 +93,8 @@ class TFormDinButton {
     */
     public function __construct($objForm
                                 , $label
-                                , $strAction=null
-                                , $strName=null
+                                , $strNameId=null
+                                , $strAction
                                 , $strOnClick=null
                                 , $strConfirmMessage=null
                                 , $boolNewLine=null
@@ -108,15 +108,16 @@ class TFormDinButton {
                                 , $strHorizontalAlign=null)
     {
         $adiantiObj = null;
-        if( is_array($strName) ){
-            $adiantiObj = new TButton('btn'.$strName[0].$strName[1]);
+        if( is_array($strAction) ){
+            $strNameId = empty($strNameId)?$strAction[0].$strAction[1]:$strNameId;
         }else{
-            $adiantiObj = new TButton('btn'.$strName);
+            $strNameId = empty($strNameId)?$strAction:$strNameId;
         }
+        $adiantiObj = new TButton('btn'.$strNameId);
         $this->setObjForm($objForm);
         $this->setAdiantiObj($adiantiObj);
         $this->setLabel($label);
-        $this->setAction($strName);
+        $this->setAction($strAction);
         $this->setImage($strImage);
         return $this->getAdiantiObj();
     }
@@ -194,6 +195,24 @@ class TFormDinButton {
     {
         if( !empty($strImage) ){
             $this->getAdiantiObj()->setImage($strImage);
+        }
+    }
+
+    /**
+     * Define um PopOver
+     *
+     * @param string $title = título que irá aparecer
+     * @param string $side  = top, bottom, left, right
+     * @param string $content = conteudo em HTML
+     * @return void
+     */
+    public function setPopover($title,$side='top',$content=null)
+    {
+        $this->getAdiantiObj()->popover  = 'true';
+        $this->getAdiantiObj()->popside  = $side;
+        $this->getAdiantiObj()->poptitle = $title;
+        if( !empty($content) ){
+            $this->getAdiantiObj()->popcontent = $content;
         }
     }
 
