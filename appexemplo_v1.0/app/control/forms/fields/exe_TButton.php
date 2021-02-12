@@ -29,7 +29,8 @@ class exe_TButton extends TPage
         $frm->addButton('Nova linha',null,'onSave1',null,null,true,false,'far:check-circle green');
         $frm->addButton('mesma linha -> vai para Number',null,['exe_NumberField','onReload'],null,null,false,false);
 
-        $frm->addButton('Ajuada Painel Lateral',null,['exe_right_panel','onReload'],null,null,true,false,'fa:life-ring fa-fw #f0db4f');
+        $buttonLateral = $frm->addButton('Ajuada Painel Lateral, enviado parametro',null,['exe_right_panel','onSave'],null,null,true,false,'fa:life-ring fa-fw #f0db4f');
+        $buttonLateral->setParameter('vai','enviado');
 
 
         //$frm->addButton($this,'Limpar', null, 'Limpar', null, null, false, false);

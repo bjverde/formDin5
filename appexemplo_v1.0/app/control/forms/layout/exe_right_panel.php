@@ -10,7 +10,7 @@ class exe_right_panel extends TPage
     
     // trait com onReload, onSearch, onDelete...
     use Adianti\Base\AdiantiStandardListTrait;
-
+    
     public function __construct()
     {
         parent::__construct();

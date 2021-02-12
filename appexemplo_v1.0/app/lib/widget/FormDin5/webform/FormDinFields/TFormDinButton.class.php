@@ -225,7 +225,7 @@ class TFormDinButton {
     {
         $action = $this->getAdiantiObj()->getAction();
         return $action->getParameters();
-    }    
+    }
 
 }
 ?>
