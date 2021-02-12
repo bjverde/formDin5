@@ -29,9 +29,14 @@ class exe_TButton extends TPage
         $frm->addButton('Nova linha',null,'onSave1',null,null,true,false,'far:check-circle green');
         $frm->addButton('mesma linha -> vai para Number',null,['exe_NumberField','onReload'],null,null,false,false);
 
-        $buttonLateral = $frm->addButton('Ajuada Painel Lateral, enviado parametro',null,['exe_right_panel','onSave'],null,null,true,false,'fa:life-ring fa-fw #f0db4f');
-        $buttonLateral->setParameter('vai','enviado');
+        $msg = 'Abre a cortina lateral enviado o parametro "Conteudo" com o valor: ';
+        $buttonLateral = $frm->addButton('Ajuada 1','ajuda1',['exe_right_panel','onSave'],null,null,true,false,'fa:life-ring fa-fw #f0db4f');
+        $buttonLateral->setParameter('conteudo','11111');
+        $buttonLateral->setPopover('Cortina Lateral','right',$msg.'11111');
 
+        $buttonLateral = $frm->addButton('Ajuada 2','ajuda2',['exe_right_panel','onSave'],null,null,true,false,'fa:life-ring fa-fw #f0db4f');
+        $buttonLateral->setParameter('conteudo','2222');
+        $buttonLateral->setPopover('Cortina Lateral','right',$msg.'2222');
 
         //$frm->addButton($this,'Limpar', null, 'Limpar', null, null, false, false);
         //$frm->addButton($this,'Exemplo 09 - img', null, 'act09', null, null, true, false,'joia.gif');
