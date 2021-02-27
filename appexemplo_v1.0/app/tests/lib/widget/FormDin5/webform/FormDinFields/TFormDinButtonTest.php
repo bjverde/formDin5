@@ -76,7 +76,7 @@ class TFormDinButtonTest extends TestCase
     public function testSetAdiantiObj_failNullObjForm()
     {
         $this->expectException(InvalidArgumentException::class);
-        $classTest = new TFormDinButton(null,null,null,nulls);
+        $classTest = new TFormDinButton(null,null,null,null);
     }
 
     public function testSetAdiantiObj_failNullNameButton()
