@@ -253,4 +253,50 @@ class DateTimeHelperTest extends TestCase
         $retorno = DateTimeHelper::isWorkingDay($entrada);
         $this->assertEquals($esperado, $retorno);
     }
+
+    //------------------------------------------------------------
+    //------------------------------------------------------------
+    //------------------------------------------------------------
+    public function testMaskDateFormDin4ToAdianit_DMY() {
+        $esperado = 'dd-mm-yyyy';
+        $entrada = 'DMY';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testMaskDateFormDin4ToAdianit_YMD() {
+        $esperado = 'yyyy-mm-dd';
+        $entrada = 'YMD';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testMaskDateFormDin4ToAdianit_MDY() {
+        $esperado = 'mm-dd-yyyy';
+        $entrada = 'MDY';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testMaskDateFormDin4ToAdianit_MD() {
+        $esperado = 'mm-dd';
+        $entrada = 'MD';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testMaskDateFormDin4ToAdianit_DM() {
+        $esperado = 'dd-mm';
+        $entrada = 'DM';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testMaskDateFormDin4ToAdianit_MY() {
+        $esperado = 'mm-yyyy';
+        $entrada = 'MY';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }
+    public function testMaskDateFormDin4ToAdianit_YM() {
+        $esperado = 'yyyy-mm';
+        $entrada = 'YM';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }    
 }

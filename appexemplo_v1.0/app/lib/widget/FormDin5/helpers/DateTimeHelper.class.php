@@ -287,5 +287,48 @@ class DateTimeHelper
             $startDate->add(new DateInterval('P1D'));
         }
         return $count;
-    }  
+    }
+
+    /**
+     * Convert MaskDate FormDin 4 para Adianti
+     * @param string $strMaskDate
+     * @return string
+    */
+    public static function maskDateFormDin4ToAdianit($strMaskDate)
+    {
+        $strMaskDate = StringHelper::strtolower_utf8($strMaskDate);
+        switch ($strMaskDate) {
+            case 'dmy':
+                $strMaskDate = 'dd-mm-yyyy';
+            break;
+            case 'ymd':
+                $strMaskDate = 'yyyy-mm-dd';
+            break;
+            case 'mdy':
+                $strMaskDate = 'mm-dd-yyyy';
+            break;
+            case 'dm':
+                $strMaskDate = 'dd-mm';
+            break;
+            case 'md':
+                $strMaskDate = 'mm-dd';
+            break;
+            case 'my':
+                $strMaskDate = 'mm-yyyy';
+            break;
+            case 'ym':
+                $strMaskDate = 'yyyy-mm';
+            break;
+            case 'd':
+                $strMaskDate = 'dd';
+            break;
+            case 'm':
+                $strMaskDate = 'mm';
+            break;
+            case 'y':
+                $strMaskDate = 'yyyy';
+            break;
+          }
+        return $strMaskDate;
+    }
 }
