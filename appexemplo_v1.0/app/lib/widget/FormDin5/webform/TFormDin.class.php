@@ -887,15 +887,15 @@ class TFormDin
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      * 
-     * @param string  $strName         - 1: Id do Campo
-     * @param string  $strLabel        - 2: Label do Campo
-     * @param boolean $boolRequired    - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param boolean $boolNewLine     - 4: Default TRUE = campo em nova linha, FALSE continua na linha anterior
-     * @param string  $strValue        - 5: Valor inicial
-     * @param string  $strMinValue     - 6: Menor data que o campo aceita
-     * @param string  $strMaxValue     - 7: Maior data que o campo aceita
-     * @param string  $strMaskType     - 8: DEFAULT = dd-mm-yyyy. Tipo de Mascara dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano) 
-     * @param boolean $boolButtonVisible - 9: Exibe ou não o botão do calendario.
+     * @param string  $strName         - 01: Id do Campo
+     * @param string  $strLabel        - 02: Label do Campo
+     * @param boolean $boolRequired    - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $boolNewLine     - 04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param string  $strValue        - 05: Valor inicial
+     * @param string  $strMinValue     - 06: Menor data que o campo aceita
+     * @param string  $strMaxValue     - 07: Maior data que o campo aceita
+     * @param string  $strMaskType     - 08: Aceita máscara formatao Adianti e FormDin4. DEFAULT = dd-mm-yyyy. Adianti: dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano). FormDin4:  DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
+     * @param boolean $boolButtonVisible-09: Exibe ou não o botão do calendario.
      * @param string  $strExampleText  - 10: Texto de exemplo
      * @param boolean $boolLabelAbove  - 11: DEFAULT = false. Label acima do campo = true
      * @param string  $boolNoWrapLabel - 12: NOT_IMPLEMENTED
