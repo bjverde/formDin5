@@ -879,7 +879,6 @@ class TFormDin
 
     /**
      * Adicona um campo Data e Hora, comm limite minimo e maximo da intervalo da data e de acordo com o parametro strMaskType
-     * Aceita máscara FormDin4 : DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
      * Aceita máscara Adianit  : dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano) 
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
@@ -894,7 +893,7 @@ class TFormDin
      * @param string  $strValue        - 05: Valor inicial
      * @param string  $strMinValue     - 06: Menor data que o campo aceita
      * @param string  $strMaxValue     - 07: Maior data que o campo aceita
-     * @param string  $strMaskType     - 08: Aceita máscara formatao Adianti e FormDin4. DEFAULT = dd-mm-yyyy. Adianti: dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano). FormDin4:  DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
+     * @param string  $strMaskType     - 08: Aceita máscara no formatao Adianti. DEFAULT = dd-mm-yyyy. Adianti: dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano). FormDin4:  DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
      * @param boolean $boolButtonVisible-09: Exibe ou não o botão do calendario.
      * @param string  $strExampleText  - 10: Texto de exemplo
      * @param boolean $boolLabelAbove  - 11: DEFAULT = false. Label acima do campo = true
