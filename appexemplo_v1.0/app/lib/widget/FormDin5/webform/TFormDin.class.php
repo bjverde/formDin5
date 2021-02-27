@@ -818,9 +818,15 @@ class TFormDin
     }
 
     /**
-     * Adicona um campo data ou mes/ano ou dia/mes de acordo com o parametro strMaxType
-     * Tipo de máscara: DMY, DM, MY
-     *  
+     * Adicona um campo Data, comm limite minimo e maximo da intervalo da data e de acordo com o parametro strMaskType
+     * Aceita máscara FormDin4 : DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
+     * Aceita máscara Adianit  : dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano) 
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     *   
      * @param string  $strName         - 1: Id do Campo
      * @param string  $strLabel        - 2: Label do Campo
      * @param boolean $boolRequired    - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
@@ -872,9 +878,15 @@ class TFormDin
     }
 
     /**
-     * Adicona um campo Data Hora  ou mes/ano ou dia/mes de acordo com o parametro strMaxType
-     * Tipo de máscara: DMY, DM, MY
-     *  
+     * Adicona um campo Data e Hora, comm limite minimo e maximo da intervalo da data e de acordo com o parametro strMaskType
+     * Aceita máscara FormDin4 : DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
+     * Aceita máscara Adianit  : dd-mm-yyyy (dia/mês/ano), dd-mm (dia/mês), mm-yyyy (mês/ano) 
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------
+     * 
      * @param string  $strName         - 1: Id do Campo
      * @param string  $strLabel        - 2: Label do Campo
      * @param boolean $boolRequired    - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
@@ -1039,7 +1051,7 @@ class TFormDin
      * @param boolean $boolRequired   - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param string $strMask         - 4: A mascara
      * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
-     * @param string $strValue        - 6: texto preenchido
+     * @param string $strValue        - 6: Valor inicial
      * @param boolean $boolLabelAbove - 7: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED
      * @param string $strExampleText  - 9: PlaceHolder é um Texto de exemplo
@@ -1076,15 +1088,15 @@ class TFormDin
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * @param string  $strName        -  1: id do campo
-     * @param string  $strLabel       -  2: Rotulo do campo que irá aparece na tela
-     * @param boolean $boolRequired   -  3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param string  $strMinValue    -  4: Menor Valor
-     * @param string  $strMaxValue    -  5: Maior valor
-     * @param string  $strMaskType    -  6: HM, HMS
-     * @param boolean $boolNewLine    -  7: Em nova linha. DEFAULT = true
-     * @param string  $strValue       -  8:
-     * @param boolean $boolLabelAbove -  9:
+     * @param string  $strName        - 01: id do campo
+     * @param string  $strLabel       - 02: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired   - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param string  $strMinValue    - 04: Menor Valor
+     * @param string  $strMaxValue    - 05: Maior valor
+     * @param string  $strMaskType    - 06: HM, HMS
+     * @param boolean $boolNewLine    - 07: Em nova linha. DEFAULT = true
+     * @param string  $strValue       - 08: Valor inicial 
+     * @param boolean $boolLabelAbove - 09: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel- 10:
      * @param string $strExampleText  - 11: FORMDIN5: PlaceHolder é um Texto de exemplo
      * @return TTime
