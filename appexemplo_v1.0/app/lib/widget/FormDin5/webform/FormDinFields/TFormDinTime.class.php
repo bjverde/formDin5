@@ -110,6 +110,7 @@ class TFormDinTime extends TFormDinGenericField
         if( is_null($strMaskType) ){
             $strMaskType = 'hh:ii';
         }
+        $strMaskType = DateTimeHelper::maskDateFormDin4ToAdianit($strMaskType);
         $this->maskType = $strMaskType;
         $this->getAdiantiObj()->setMask($strMaskType);
     }

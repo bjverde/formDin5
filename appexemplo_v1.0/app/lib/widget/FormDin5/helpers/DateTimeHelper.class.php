@@ -328,6 +328,12 @@ class DateTimeHelper
             case 'y':
                 $strMaskDate = 'yyyy';
             break;
+            case 'hm':
+                $strMaskDate = 'hh:ii';
+            break;
+            case 'HMS':
+                $strMaskDate = 'hh:ii:ss';
+            break;            
           }
         return $strMaskDate;
     }
