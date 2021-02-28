@@ -26,6 +26,10 @@ class exe_campo_hora extends TPage
         $fld->setToolTip('Hora no formato HH:MM entre 05:00 e 23:00');
         $frm->addTimeField('hor_inicio2', 'Hora:', false, '12:00:00', '15:00:00', 'HMS')->setToolTip('Hora no formato HH:MM:SS entre 12:00 e 15:00');
 
+        $frm->addGroupField('gpx4', 'Mascara FormDin4');
+        $frm->addTimeField('h3', 'horas3:',false,false,false,'HM')->setToolTip(null, 'Mascara HM');
+        $frm->addTimeField('h4', 'horas4:',false,false,false,'HMS')->setToolTip(null, 'Mascara HMS');
+
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
