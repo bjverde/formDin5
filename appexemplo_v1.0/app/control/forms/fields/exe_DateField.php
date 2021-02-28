@@ -26,12 +26,15 @@ class exe_DateField extends TPage
             $dt04->setValue('01/08/2020');
             $frm->addDateField('dat04', 'Data ISO:', false,false,'2020/08/01',null,null,'yyyy-mm-dd')->setToolTip(null, 'Mascara yyyy-mm-dd');
         
-        $frm->addGroupField('gpx3', 'Texto Exemplo');
-            $dt05 = $frm->addDateField('dat05', 'Data Br:');
-            $dt05->setPlaceHolder('01/08/2020');
-            $frm->addDateField('dat06', 'Data ISO:', false,false,null,null,null,'yyyy-mm-dd',null,'2020/08/01')->setToolTip(null, 'Mascara yyyy-mm-dd');
+        $frm->addGroupField('gpx3', 'Mascara');
+            $frm->addDateField('dat05', 'Data Br:' , false,false,null,null,null,'dd/mm/yyyy')->setPlaceHolder('01/08/2020');
+            $frm->addDateField('dat06', 'Data ISO:', false,false,null,null,null,'yyyy/mm/dd')->setToolTip(null, 'Mascara yyyy/mm/dd');
+        
+        $frm->addGroupField('gpx4', 'Mascara FormDin4');
+            $frm->addDateField('dat07', 'Data Br:' ,false,null ,null,null,null,'DMY')->setToolTip(null, 'Mascara DMY');
+            $frm->addDateField('dat08', 'Data ISO:',false,false,null,null,null,'YMD')->setToolTip(null, 'Mascara YMD');
 
-        $frm->addGroupField('gpx4', 'Outros Exemplos');
+        $frm->addGroupField('gpx0', 'Outros Exemplos');
         $dt2 = $frm->addDateField('dat_nascimento2', 'Data no ano 1990:', null,null,null,'01/01/1990','31/12/1990');
         $dt2->setToolTip(null, 'Aceita somente Datas entre 01/01/1990 e 31/12/1990');
         
