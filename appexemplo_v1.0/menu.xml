@@ -310,10 +310,6 @@
             <menuitem label='Grides simples'>
                 <icon>fas:th fa-fw #2965f1</icon>
                 <menu>
-                    <menuitem label='Grides simples - Bootstrap'>
-                        <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_grid17</action>
-                    </menuitem>
                     <menuitem label='Gride 05 - Paginação'>
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_gride05_paginacao</action>
@@ -325,6 +321,14 @@
                     <menuitem label='Gride 05 - Paginação Scroll Vertical'>
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_gride05_paginacao_scrollvertical</action>
+                    </menuitem>
+                    <menuitem label='Grides 17 simples - Bootstrap'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_grid17</action>
+                    </menuitem>
+                    <menuitem label='Grides 18 simples - Setando dados'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_grid18</action>
                     </menuitem>                    
                 </menu> 
             </menuitem>      
