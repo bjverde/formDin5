@@ -298,5 +298,11 @@ class DateTimeHelperTest extends TestCase
         $entrada = 'YM';
         $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
         $this->assertEquals($esperado, $retorno);
-    }    
+    }
+    public function testMaskDateFormDin4ToAdianit_HM() {
+        $esperado = 'hh:ii';
+        $entrada = 'HM';
+        $retorno = DateTimeHelper::maskDateFormDin4ToAdianit($entrada);
+        $this->assertEquals($esperado, $retorno);
+    }     
 }
