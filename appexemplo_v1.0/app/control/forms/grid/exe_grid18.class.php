@@ -16,44 +16,6 @@ class exe_grid18 extends TPage
     public function __construct()
     {
         parent::__construct();
-
-        /*
-        // creates one datagrid
-        $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
-        
-        // create the datagrid columns
-        $code       = new TDataGridColumn('code',    'Code',    'center', '10%');
-        $name       = new TDataGridColumn('name',    'Name',    'left',   '30%');
-        $city       = new TDataGridColumn('city',    'City',    'left',   '30%');
-        $state      = new TDataGridColumn('state',   'State',   'left',   '30%');
-        
-        // add the columns to the datagrid, with actions on column titles, passing parameters
-        $this->datagrid->addColumn($code);
-        $this->datagrid->addColumn($name);
-        $this->datagrid->addColumn($city);
-        $this->datagrid->addColumn($state);
-
-        
-        // creates two datagrid actions
-        $action1 = new TDataGridAction([$this, 'onView'],   ['code'=>'{code}',  'name' => '{name}'] );
-        $action2 = new TDataGridAction([$this, 'onDelete'], ['code'=>'{code}'] );
-        
-        // custom button presentation
-        $action1->setUseButton(TRUE);
-        $action2->setUseButton(TRUE);
-        
-        // add the actions to the datagrid
-        $this->datagrid->addAction($action1, 'View', 'fa:search blue');
-        $this->datagrid->addAction($action2, 'Delete', 'far:trash-alt red');
-        
-        // creates the datagrid model
-        $this->datagrid->createModel();
-        
-        $panel = new TPanelGroup(_t('Bootstrap Datagrid'));
-        $panel->add($this->datagrid)->style = 'overflow-x:auto';
-        $panel->addFooter('footer');
-        */
-        
         
         $mixData = mockBanco::getExemploAdianti();
         $grid = new TFormDinGrid($this,'grid','Exemplo Grid Simples 18 - setando os dados');
@@ -80,51 +42,6 @@ class exe_grid18 extends TPage
         // add the table inside the page
         parent::add($vbox);
     }
-
-    /**
-     * Load the data into the datagrid
-     */
-    function onReload()
-    {
-        $this->datagrid->clear();
-        
-        // add an regular object to the datagrid
-        $item = new StdClass;
-        $item->code   = '1';
-        $item->name   = 'Aretha Franklin';
-        $item->city   = 'Memphis';
-        $item->state  = 'Tennessee (US)';
-        $item->date   = '2010-10-01';
-        $this->datagrid->addItem($item);
-        
-        // add an regular object to the datagrid
-        $item = new StdClass;
-        $item->code   = '2';
-        $item->name   = 'Eric Clapton';
-        $item->city   = 'Ripley';
-        $item->state  = 'Surrey (UK)';
-        $item->date   = '2010-10-10';
-        $this->datagrid->addItem($item);
-        
-        // add an regular object to the datagrid
-        $item = new StdClass;
-        $item->code   = '3';
-        $item->name   = 'B.B. King';
-        $item->city   = 'Itta Bena';
-        $item->state  = 'Mississippi (US)';
-        $item->date   = '2010-05-31';
-        $this->datagrid->addItem($item);
-        
-        // add an regular object to the datagrid
-        $item = new StdClass;
-        $item->code   = '4';
-        $item->name   = 'Janis Joplin';
-        $item->city   = 'Port Arthur';
-        $item->state  = 'Texas (US)';
-        $item->date   = '2020-05-31';
-        $this->datagrid->addItem($item);
-    }
-
 
     /**
      * Executed when the user clicks at the column title
