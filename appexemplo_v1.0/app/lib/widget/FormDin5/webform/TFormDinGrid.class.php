@@ -60,6 +60,7 @@ class TFormDinGrid
 
     const TYPE_SIMPLE   = 'simple';
     const TYPE_CHECKOUT = 'checkout';
+    const ROWS_PER_PAGE = 20;
 
     private $adiantiObj;
     private $panelGroupGrid;
@@ -389,6 +390,7 @@ class TFormDinGrid
         $pageNavigation = new TPageNavigation;
         $pageNavigation->setAction(new TAction(array($this->getObjForm(), 'onReload')));
         $pageNavigation->enableCounters();
+        $pageNavigation->setLimit($this->getMaxRows()); // número máximo de itens por página
         $this->setPageNavigation($pageNavigation);
         $this->getPanelGroupGrid()->addFooter($pageNavigation);
 
@@ -659,6 +661,29 @@ class TFormDinGrid
     {
         $this->updateFields = null;
     }
+    //---------------------------------------------------------------------------------------
+    /**
+     * Qtd Max de linhas
+     *
+     * @param int $intNewValue
+     * @return void
+     */
+    public function setMaxRows( $intNewValue = null ) {
+        $this->maxRows = $intNewValue;
+    }
+    /**
+     * Qtd Max de linhas, nome no padrão Adianti
+     *
+     * @param int $intNewValue
+     * @return void
+     */
+    public function setLimit( $intNewValue = null ) {
+        $this->setMaxRows($intNewValue);
+    }
+    public function getMaxRows() {
+        $maxRows =  empty($this->maxRows)?self::ROWS_PER_PAGE:$this->maxRows;
+        return ( int ) $maxRows;
+    }    
     //---------------------------------------------------------------------------------------
     public function getCreateDefaultButtons()
     {
