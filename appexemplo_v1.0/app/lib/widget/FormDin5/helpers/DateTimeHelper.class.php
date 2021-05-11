@@ -232,12 +232,12 @@ class DateTimeHelper
         }elseif( preg_match('/\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}/', $dateSql) ){
             $dateTime = new DateTime($dateSql);
             if($showSeconds == true){
-                $retorno = $dateTime->format('d/m/Y hh:mm');
+                $retorno = $dateTime->format('d/m/Y H:i:s');
             }elseif($showTheTime == true){
-                $retorno = $dateTime->format('d/m/Y  hh:mm:ss');
+                $retorno = $dateTime->format('d/m/Y H:i');
             }else{
                 $retorno = $dateTime->format('d/m/Y');
-            }            
+            }             
         }elseif( preg_match('/\d{2}\/\d{2}\/\d{4}/', $dateSql) ){
             $retorno = $dateSql;
         }
