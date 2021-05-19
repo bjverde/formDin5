@@ -40,7 +40,9 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TFormDinCnpjField
+use Adianti\Validator\TCNPJValidator;
+
+class TFormDinCnpjField  extends TFormDinMaskField
 {
     protected $adiantiObj;
     
@@ -48,36 +50,60 @@ class TFormDinCnpjField
      * Campo de entrada de dados do tipo CNPJ
      * Reconstruido FormDin 4 Sobre o Adianti 7
      *
-     * @param string $id            - 1: ID do campo
-     * @param string $strLabel      - 2: Label do campo, usado para validações
-     * @param boolean $boolRequired - 3: Obrigatorio. DEFAULT = False.
-     * @param boolean $boolSendMask - 4: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.
-     * @param string $strValue      - 5: Texto preenchido ou valor default
-     * @param string $strExampleText- 6: Texto de exemplo ou placeholder 
-     * @return TEntry
-     */
-    public function __construct(string $id
-                               ,string $strLabel
-                               ,$boolRequired = false
-                               ,$boolSendMask = true
-                               ,string $strValue=null
-                               ,string $strExampleText =null)
+     * @param string  $strName           - 1: ID do campo
+     * @param string  $strLabel          - 2: Label do campo, que irá aparecer na tela do usuario
+     * @param boolean $boolRequired      - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param string  $strValue          - 4: Valor inicial do campo
+     * @param boolean $boolNewLine       - 5: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove    - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolNoWrapLabel   - 7: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+     * @param string  $strInvalidMessage - 8: Mensagem que vai aparece em caso de CPF inválido
+     * @param boolean $boolAlwaysValidate- 9: NOT_IMPLEMENTED
+     * @param string  $strJsCallback     -10: NOT_IMPLEMENTED Js Callback
+     * @param string  $strExampleText    -11: FORMDIN5: PlaceHolder é um Texto de exemplo
+     * @param boolean $boolSendMask      -12: FORMDIN5: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.    
+     *
+     * @return TFormDinCnpjField Field
+     */   
+    public function __construct( $id
+                            , $strLabel=null
+                            , $boolRequired=false
+                            , $strValue=null
+                            , $boolNewLine=null
+                            , $boolLabelAbove=null
+                            , $boolNoWrapLabel=null
+                            , $strInvalidMessage=null
+                            , $boolAlwaysValidate=true
+                            , $strJsCallback=null
+                            , $strExampleText=null
+                            , $boolSendMask=false )
     {
-        $this->adiantiObj = new TEntry($id);
-        $this->adiantiObj->setId($id);
-        $this->adiantiObj->addValidation($strLabel, new TCNPJValidator);
-        $this->adiantiObj->setMask('99.999.999/9999-99', $boolSendMask);
-        if($boolRequired){
-            $strLabel = empty($strLabel)?$id:$strLabel;
-            $this->adiantiObj->addValidation($strLabel, new TRequiredValidator);
-        }
-        if(!empty($strExampleText)){
-            $this->adiantiObj->placeholder = $strExampleText;
-        } 
+        parent::__construct($id
+                           ,$strLabel
+                           ,$boolRequired
+                           ,'99.999.999/9999-99'
+                           ,$boolNewLine
+                           ,$strValue
+                           ,$boolLabelAbove
+                           ,$boolNoWrapLabel
+                           ,$strExampleText
+                           ,$boolSendMask
+                        );
+        $this->setAlwaysValidate($boolAlwaysValidate); 
         return $this->getAdiantiObj();
     }
 
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
-    }
+    public function setAlwaysValidate($boolAlwaysValidate=true)
+	{
+		$this->alwaysValidate = $boolAlwaysValidate;
+        if($boolAlwaysValidate == true){
+            $strLabel = $this->getLabelTxt();
+            $this->getAdiantiObj()->addValidation($strLabel, new TCNPJValidator); 
+        }
+	}
+
+	public function getAlwaysValidate()
+	{
+		return $this->alwaysValidate;
+	}
 }
