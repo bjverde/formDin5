@@ -1045,15 +1045,15 @@ class TFormDin
      * 9 - Represents a numeric character (0-9)
      * A - Represents an alphanumeric character (A-Z,a-z,0-9)
      *
-     * @param string $id              - 1: id do campo
-     * @param string $strLabel        - 2: Rotulo do campo que irá aparece na tela
+     * @param string  $id             - 1: id do campo
+     * @param string  $strLabel       - 2: Rotulo do campo que irá aparece na tela
      * @param boolean $boolRequired   - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param string $strMask         - 4: A mascara
+     * @param string  $strMask        - 4: A mascara
      * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
-     * @param string $strValue        - 6: Valor inicial
+     * @param string  $strValue       - 6: Valor inicial
      * @param boolean $boolLabelAbove - 7: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED
-     * @param string $strExampleText  - 9: PlaceHolder é um Texto de exemplo
+     * @param string  $strExampleText - 9: PlaceHolder é um Texto de exemplo
      * @param boolean $boolSendMask   -10: FORMDIN5: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.
      * @return void
      */
@@ -1458,8 +1458,8 @@ class TFormDin
    /**
     * Adicionar campo CPF
     *
-    * @param string $strName            - 1: ID do campo
-    * @param string $strLabel           - 2: Label do campo, que irá aparecer na tela do usuario
+    * @param string  $strName           - 1: ID do campo
+    * @param string  $strLabel          - 2: Label do campo, que irá aparecer na tela do usuario
     * @param boolean $boolRequired      - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
     * @param string  $strValue          - 4: Valor inicial do campo
     * @param boolean $boolNewLine       - 5: Default TRUE = campo em nova linha, FALSE continua na linha anterior
@@ -1467,8 +1467,8 @@ class TFormDin
     * @param boolean $boolNoWrapLabel   - 7:
     * @param string  $strInvalidMessage - 8:
     * @param boolean $boolAlwaysValidate- 9:
-    * @param string $strJsCallback      -10:
-    * @param string $strExampleText     -11: FORMDIN5: PlaceHolder é um Texto de exemplo
+    * @param string  $strJsCallback     -10:
+    * @param string  $strExampleText    -11: FORMDIN5: PlaceHolder é um Texto de exemplo
     * @param boolean $boolSendMask      -12: FORMDIN5: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.    
     *
     * @return TFormDinCpfField Field
