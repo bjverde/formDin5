@@ -1487,12 +1487,23 @@ class TFormDin
                                 , $boolSendMask=false
                                 )
     {
-        $field = new TFormDinCpfField( $strName, $strValue, $boolRequired );
-        $this->addDisplayControl( new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel ) );
-        $field->setInvalidMessage( $strInvalidMessage );
-        $field->setAlwaysValidate( $boolAlwaysValidate );
-        $field->setCallback( $strJsCallback );
-        return $field;
+		$formField = new TFormDinCpfField( $strName
+                                            , $strLabel
+                                            , $boolRequired
+                                            , $strValue
+                                            , $boolNewLine
+                                            , $boolLabelAbove
+                                            , $boolNoWrapLabel
+                                            , $strInvalidMessage
+                                            , $boolAlwaysValidate
+                                            , $strJsCallback
+                                            , $strExampleText
+                                            , $boolSendMask
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
     }
 
     /*****
