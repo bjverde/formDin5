@@ -40,52 +40,71 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+use Adianti\Validator\TCPFValidator;
+
 class TFormDinCpfField extends TFormDinMaskField
 {
-    protected $adiantiObj;
-    
-    /**
-     * Campo de entrada de dados do tipo CPF
-     * Reconstruido FormDin 4 Sobre o Adianti 7
-     *
-     * @param string  $id             - 1: id do campo
-     * @param string  $strLabel       - 2: Rotulo do campo que irá aparece na tela
-     * @param boolean $boolRequired   - 3: Obrigatorio
-     * @param string  $strMask        - 4: A mascara
-     * @param boolean $boolNewLine    - 5: NOT_IMPLEMENTED Nova linha
-     * @param string  $strValue       - 6: Valor inicial do campo
-     * @param boolean $boolLabelAbove - 7: NOT_IMPLEMENTED Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
-     * @param string  $strExampleText - 9: PlaceHolder é um Texto de exemplo
-     * @param boolean $boolSendMask  - 10: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.
-     * @return void
-     */
+
+    private $alwaysValidate =  true;
+
+   /**
+    * Campo de entrada de dados do tipo CPF
+    * Reconstruido FormDin 4 Sobre o Adianti 7
+    *
+    * @param string  $strName           - 1: ID do campo
+    * @param string  $strLabel          - 2: Label do campo, que irá aparecer na tela do usuario
+    * @param boolean $boolRequired      - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+    * @param string  $strValue          - 4: Valor inicial do campo
+    * @param boolean $boolNewLine       - 5: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+    * @param boolean $boolLabelAbove    - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+    * @param boolean $boolNoWrapLabel   - 7: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+    * @param string  $strInvalidMessage - 8: Mensagem que vai aparece em caso de CPF inválido
+    * @param boolean $boolAlwaysValidate- 9: NOT_IMPLEMENTED
+    * @param string  $strJsCallback     -10: NOT_IMPLEMENTED Js Callback
+    * @param string  $strExampleText    -11: FORMDIN5: PlaceHolder é um Texto de exemplo
+    * @param boolean $boolSendMask      -12: FORMDIN5: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.    
+    *
+    * @return TFormDinCpfField Field
+    */    
     public function __construct( $id
-                               , $label=null
+                               , $strLabel=null
                                , $boolRequired=false
-                               , $strMask=null
+                               , $strValue=null
                                , $boolNewLine=null
-                               , $value=null
                                , $boolLabelAbove=null
                                , $boolNoWrapLabel=null
-                               , $placeholder=null
+                               , $strInvalidMessage=null
+                               , $boolAlwaysValidate=true
+                               , $strJsCallback=null
+                               , $strExampleText=null
                                , $boolSendMask=false )
     {
-        $this->adiantiObj = new TEntry($id);
-        $this->adiantiObj->setId($id);
-        $this->adiantiObj->addValidation($strLabel, new TCNPJValidator);
-        $this->adiantiObj->setMask('99.999.999/9999-99', $boolSendMask);
-        if($boolRequired){
-            $strLabel = empty($strLabel)?$id:$strLabel;
-            $this->adiantiObj->addValidation($strLabel, new TRequiredValidator);
-        }
-        if(!empty($strExampleText)){
-            $this->adiantiObj->placeholder = $strExampleText;
-        } 
+        parent::__construct($id
+                           ,$strLabel
+                           ,$boolRequired
+                           ,'999.999.999-99'
+                           ,$boolNewLine
+                           ,$strValue
+                           ,$boolLabelAbove
+                           ,$boolNoWrapLabel
+                           ,$strExampleText
+                           ,$boolSendMask
+                        );
+        $this->setAlwaysValidate($boolAlwaysValidate); 
         return $this->getAdiantiObj();
     }
 
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
-    }
+    public function setAlwaysValidate($boolAlwaysValidate=true)
+	{
+		$this->alwaysValidate = $boolAlwaysValidate;
+        if($boolAlwaysValidate == true){
+            $strLabel = $this->getLabelTxt();
+            $this->getAdiantiObj()->addValidation($strLabel, new TCPFValidator); 
+        }
+	}
+
+	public function getAlwaysValidate()
+	{
+		return $this->alwaysValidate;
+	}
 }
