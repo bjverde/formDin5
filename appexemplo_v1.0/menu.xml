@@ -106,7 +106,20 @@
             </menuitem>
             <menuitem label='Brasil'>
                 <icon>fa:flag fa-fw green</icon>
-                <action>comingSoonView</action>
+                <menu>
+                    <menuitem label='Campo CEP'>
+                        <icon>fa:flag fa-fw green</icon>
+                        <action>comingSoonView</action>
+                    </menuitem>                
+                    <menuitem label='Campo Telefone'>
+                        <icon>fa:code fa-fw</icon>
+                        <action>comingSoonView</action>
+                    </menuitem>
+                    <menuitem label='Campo Cpf/Cnpj'>
+                        <icon>fa:code fa-fw</icon>
+                        <action>exe_campo_cpf_cnpj</action>
+                    </menuitem>            
+                </menu>
             </menuitem>
             <menuitem label='Data e hora'>
                 <icon>fas:calendar-alt fa-fw</icon>
