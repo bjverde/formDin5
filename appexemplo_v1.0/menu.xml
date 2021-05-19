@@ -108,7 +108,7 @@
                 <icon>fa:flag fa-fw green</icon>
                 <menu>
                     <menuitem label='Campo CEP'>
-                        <icon>fa:flag fa-fw green</icon>
+                        <icon>fa:code fa-fw</icon>
                         <action>comingSoonView</action>
                     </menuitem>                
                     <menuitem label='Campo Telefone'>
@@ -116,7 +116,7 @@
                         <action>comingSoonView</action>
                     </menuitem>
                     <menuitem label='Campo Cpf/Cnpj'>
-                        <icon>fa:code fa-fw</icon>
+                        <icon>fa:flag fa-fw green</icon>
                         <action>exe_campo_cpf_cnpj</action>
                     </menuitem>            
                 </menu>
