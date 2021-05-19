@@ -48,16 +48,16 @@ class TFormDinCpfField extends TFormDinMaskField
      * Campo de entrada de dados do tipo CPF
      * Reconstruido FormDin 4 Sobre o Adianti 7
      *
-     * @param string $id              - 1: id do campo
-     * @param string $strLabel        - 2: Rotulo do campo que irá aparece na tela
+     * @param string  $id             - 1: id do campo
+     * @param string  $strLabel       - 2: Rotulo do campo que irá aparece na tela
      * @param boolean $boolRequired   - 3: Obrigatorio
-     * @param string $strMask         - 4: A mascara
+     * @param string  $strMask        - 4: A mascara
      * @param boolean $boolNewLine    - 5: NOT_IMPLEMENTED Nova linha
-     * @param string $strValue        - 6: texto preenchido
-     * @param boolean $boolLabelAbove - 7: NOT_IMPLEMENTED - Label sobre
-     * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED
-     * @param string $strExampleText  - 9: PlaceHolder é um Texto de exemplo
-     * @param boolean $boolSendMask   - 10: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.
+     * @param string  $strValue       - 6: Valor inicial do campo
+     * @param boolean $boolLabelAbove - 7: NOT_IMPLEMENTED Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolNoWrapLabel- 8: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+     * @param string  $strExampleText - 9: PlaceHolder é um Texto de exemplo
+     * @param boolean $boolSendMask  - 10: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.
      * @return void
      */
     public function __construct( $id
