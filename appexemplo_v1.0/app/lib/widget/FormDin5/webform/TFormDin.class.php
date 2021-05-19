@@ -733,7 +733,7 @@ class TFormDin
      * @param string $strHint         -  8: NOT_IMPLEMENTED
      * @param string $strExampleText  -  9: PlaceHolder é um Texto de exemplo
      * @param boolean $boolLabelAbove - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param boolean $boolNoWrapLabel- 11: NOT_IMPLEMENTED
+     * @param boolean $boolNoWrapLabel- 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @return TFormDinTextField
      */
     public function addTextField(string $id
@@ -780,7 +780,7 @@ class TFormDin
      * @param boolean $boolLabelAbove  - 8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
      * @param string  $strValue       - 10: texto preenchido
-     * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
+     * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo`. DEFAULT = true
      * @param string $boolShowCountChar 13: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinMemoField
@@ -838,7 +838,7 @@ class TFormDin
      * @param boolean $boolButtonVisible - 9: Exibe ou não o botão do calendario.
      * @param string  $strExampleText  - 10: Texto de exemplo
      * @param boolean $boolLabelAbove  - 11: DEFAULT = false. Label acima do campo = true
-     * @param string  $boolNoWrapLabel - 12: NOT_IMPLEMENTED
+     * @param string  $boolNoWrapLabel - 12: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string  $databaseMask    - 13: FORMDIN5 Mascará usada no banco de dados
      * @return TDate
      */
@@ -897,7 +897,7 @@ class TFormDin
      * @param boolean $boolButtonVisible-09: Exibe ou não o botão do calendario.
      * @param string  $strExampleText  - 10: Texto de exemplo
      * @param boolean $boolLabelAbove  - 11: DEFAULT = false. Label acima do campo = true
-     * @param string  $boolNoWrapLabel - 12: NOT_IMPLEMENTED
+     * @param string  $boolNoWrapLabel - 12: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string  $databaseMask    - 13: FORMDIN5 Mascará usada no banco de dados
      * @return TDate
      */
@@ -994,7 +994,7 @@ class TFormDin
      * @param boolean $boolNewLine     - 08: NOT_IMPLEMENTED
      * @param string  $strJsCallBack   - 09: NOT_IMPLEMENTED
      * @param boolean $boolLabelAbove  - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED
+     * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string  $strMessageInvalidFileType - 12: NOT_IMPLEMENTED
      * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
@@ -1096,7 +1096,7 @@ class TFormDin
      * @param boolean $boolNewLine    - 07: Em nova linha. DEFAULT = true
      * @param string  $strValue       - 08: Valor inicial 
      * @param boolean $boolLabelAbove - 09: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param boolean $boolNoWrapLabel- 10:
+     * @param boolean $boolNoWrapLabel- 10: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string $strExampleText  - 11: FORMDIN5: PlaceHolder é um Texto de exemplo
      * @return TTime
      */
@@ -1169,7 +1169,7 @@ class TFormDin
      * @param string  $strFirstOptionValue- 12: Frist Value in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
      * @param string  $strKeyColumn       - 13: Nome da coluna que será utilizada para preencher os valores das opções
      * @param string  $strDisplayColumn   - 14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-     * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
+     * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED Informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
      * @return TCombo
      */
@@ -1234,7 +1234,7 @@ class TFormDin
      * @param integer $intWidth       - 9: DEPRECATED
      * @param integer $intHeight      -10: DEPRECATED
      * @param integer $intPaddingItems-11: NOT_IMPLEMENTED
-     * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED
+     * @param boolean $boolNoWrapLabel-12: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param boolean $boolNowrapText -13: NOT_IMPLEMENTED
      * @param boolean $useButton      -14: FORMDIN5 Default FALSE = estilo radio comum, TRUE = estilo tipo botões
      * @return TRadio
@@ -1294,7 +1294,7 @@ class TFormDin
      * @param integer $intWidth        - 09: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
      * @param integer $intHeight       - 10: DEPRECATED. Informe NULL para evitar o warning. Altura em Pixels
      * @param integer $intPaddingItems - 11: DEPRECATED.
-     * @param boolean $boolNoWrapLabel - 12: NOT_IMPLEMENTED 
+     * @param boolean $boolNoWrapLabel - 12: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param boolean $boolNowrapText  - 13: NOT_IMPLEMENTED 
      * @param mixed   $strKeyColumn    - 14: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
      * @param mixed   $strDisplayColumn- 15: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
@@ -1365,7 +1365,7 @@ class TFormDin
      * @param integer $intHeight       - 03: NOT_IMPLEMENTED altura do grupo. NULL = auto height
      * @param integer $intWidth        - 04: NOT_IMPLEMENTED largura do grupo. NULL = largura do form
      * @param boolean $boolNewLine     - 05: NOT_IMPLEMENTED Default TRUE = campo em nova linha, FALSE continua na linha anterior
-     * @param boolean $boolNoWrapLabel - 06: NOT_IMPLEMENTED
+     * @param boolean $boolNoWrapLabel - 06: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param boolean $boolCloseble    - 07: NOT_IMPLEMENTED pode fechar ou não
      * @param string  $strAccordionId  - 08: NOT_IMPLEMENTED
      * @param boolean $boolOpened      - 09: NOT_IMPLEMENTED inicia aberto
@@ -1463,11 +1463,11 @@ class TFormDin
     * @param boolean $boolRequired      - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
     * @param string  $strValue          - 4: Valor inicial do campo
     * @param boolean $boolNewLine       - 5: Default TRUE = campo em nova linha, FALSE continua na linha anterior
-    * @param boolean $boolLabelAbove    - 6:
-    * @param boolean $boolNoWrapLabel   - 7:
-    * @param string  $strInvalidMessage - 8:
+    * @param boolean $boolLabelAbove    - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+    * @param boolean $boolNoWrapLabel   - 7: true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+    * @param string  $strInvalidMessage - 8: 
     * @param boolean $boolAlwaysValidate- 9:
-    * @param string  $strJsCallback     -10:
+    * @param string  $strJsCallback     -10: Js Callback
     * @param string  $strExampleText    -11: FORMDIN5: PlaceHolder é um Texto de exemplo
     * @param boolean $boolSendMask      -12: FORMDIN5: Se as mascara deve ser enviada ou não para o post. DEFAULT = False.    
     *
@@ -1532,7 +1532,7 @@ class TFormDin
      * @param boolean $boolAllowZero     -12: NOT_IMPLEMENTED
      * @param boolean $boolAllowNull     -13: NOT_IMPLEMENTED
      * @param boolean $boolLabelAbove    -14: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param boolean $boolNoWrapLabel   -15: NOT_IMPLEMENTED
+     * @param boolean $boolNoWrapLabel   -15: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string $tooltip            -16: Texto Tooltip
      * @param boolean $replaceOnPost     -17: FORMDIN5: TRUE: process mask when editing and saving
      * @param string $placeholder        -18: FORMDIN5: Texto do Place Holder
