@@ -265,7 +265,10 @@ class FormDinHelper
      * @return void
      */
     public static function debug( $mixExpression,$strComentario='Debug', $boolExit=FALSE ) {
-        ini_set ( 'xdebug.max_nesting_level', 150 );
+        ini_set("xdebug.var_display_max_children", -1);
+        ini_set("xdebug.var_display_max_data", -1);
+        ini_set("xdebug.var_display_max_depth", -1);
+        //ini_set ( 'xdebug.max_nesting_level', 150 );
         if (defined('DEBUGAR') && !DEBUGAR){
             return;
         }
