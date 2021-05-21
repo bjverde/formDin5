@@ -91,7 +91,7 @@ class StringHelper
      */
     public static function formatCnpjCpf($value) 
     {
-        $cnpj_cpf = preg_replace("/\D/", '', $value);
+        $cnpj_cpf = self::limpaCnpjCpf($value);
         if (strlen($cnpj_cpf) === 11) {
             $value = preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cnpj_cpf);
         } else if(strlen($cnpj_cpf) === 14){
@@ -104,6 +104,26 @@ class StringHelper
     {
         $limpo = preg_replace("/\D/", '', $value);
         return $limpo;
+    }
+
+    /**
+     * Recebe uma string e formata o numero telefone
+     * @param string $value
+     * @return string
+     */
+    public static function formatPhoneNumber($value) 
+    {
+        $cnpj_cpf = self::limpaCnpjCpf($value);
+        if (strlen($cnpj_cpf) === 11) {
+            $value = preg_replace("/(\d{2})(\d{5})(\d{4})/", "(\$1) \$2-\$3", $cnpj_cpf);
+        } else if(strlen($cnpj_cpf) === 10){
+            $value = preg_replace("/(\d{2})(\d{4})(\d{4})/", "(\$1) \$2-\$3", $cnpj_cpf);
+        } else if(strlen($cnpj_cpf) === 9){
+            $value = preg_replace("/(\d{5})(\d{4})/", "\$1-\$2", $cnpj_cpf);
+        } else if(strlen($cnpj_cpf) === 8){
+            $value = preg_replace("/(\d{4})(\d{4})/", "\$1-\$2", $cnpj_cpf);
+        }
+        return $value;
     }
     
     /**
