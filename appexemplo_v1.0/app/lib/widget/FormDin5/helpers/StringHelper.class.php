@@ -107,7 +107,11 @@ class StringHelper
     }
 
     /**
-     * Recebe uma string e formata o numero telefone
+     * Recebe uma string e formata o numero telefone em dos 4 formatos
+     * (61) 91234-5678
+     * (61) 1234-5678
+     * 91234-5678
+     * 1234-5678
      * @param string $value
      * @return string
      */
