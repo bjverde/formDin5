@@ -973,6 +973,41 @@ class TFormDin
     }
 
     /**
+    * Campo para entrada de senhas
+    *
+    * @param string $strName              -1: id do campo
+    * @param string $strLabel             -2: Rotulo do campo que irá aparece na tela
+    * @param boolean $boolRequired        -3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+    * @param boolean $boolNewLine         -4: Em nova linha, DEFALUT is TRUE não obrigatorio.
+    * @param integer $intmaxLength        -5: Tamanho maximo
+    * @param string $strValue            - 6: Valor inicial
+    * @param boolean $boolLabelAbove      -7: Label acima, DEFAULT is FALSE na mesma linha
+    * @param boolean $boolNoWrapLabel
+    * @param integer $intSize
+    * @param boolean $boolUseVirtualKeyboard
+    * @param boolean $boolShowVirtualKeyboardImage
+    * @param boolean $boolReadOnly
+    * @return TPassword
+    */
+    public function addPasswordField( $strName
+                                    , $strLabel=null
+                                    , $boolRequired=null
+                                    , $boolNewLine=null
+                                    , $intmaxLength=null
+                                    , $strValue=null
+                                    , $boolLabelAbove=null
+                                    , $boolNoWrapLabel=null
+                                    , $intSize=null
+                                    , $boolUseVirtualKeyboard=null
+                                    , $boolShowVirtualKeyboardImage=null
+                                    , $boolReadOnly=null )
+    {
+        $field = new TPassword( $strName, $strValue, $intmaxLength, $boolRequired, $intSize, $boolUseVirtualKeyboard, $boolShowVirtualKeyboardImage, $boolReadOnly);
+        $this->addDisplayControl( new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel ) );
+        return $field;
+    }    
+
+    /**
      * Campos para anexar arquivo. Pode ser um carregamento sincrono ou assincrono via ajax.
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X

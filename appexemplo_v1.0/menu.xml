@@ -147,7 +147,7 @@
                 <action>comingSoonView</action>
             </menuitem>            
             <menuitem label='Campo Senha'>
-                <icon>fa:flag fa-fw</icon>
+                <icon>fas:key fa-key #FFD700</icon>
                 <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Campo Captcha'>
