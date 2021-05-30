@@ -148,7 +148,7 @@
             </menuitem>            
             <menuitem label='Campo Senha'>
                 <icon>fas:key fa-key #FFD700</icon>
-                <action>comingSoonView</action>
+                <action>exe_TPasswordField</action>
             </menuitem>
             <menuitem label='Campo Captcha'>
                 <icon>fa:flag fa-fw</icon>
