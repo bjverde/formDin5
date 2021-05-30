@@ -973,22 +973,27 @@ class TFormDin
     }
 
     /**
-    * Campo para entrada de senhas
-    *
-    * @param string $strName              -1: id do campo
-    * @param string $strLabel             -2: Rotulo do campo que irá aparece na tela
-    * @param boolean $boolRequired        -3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-    * @param boolean $boolNewLine         -4: Em nova linha, DEFALUT is TRUE não obrigatorio.
-    * @param integer $intmaxLength        -5: Tamanho maximo
-    * @param string $strValue            - 6: Valor inicial
-    * @param boolean $boolLabelAbove      -7: Label acima, DEFAULT is FALSE na mesma linha
-    * @param boolean $boolNoWrapLabel
-    * @param integer $intSize
-    * @param boolean $boolUseVirtualKeyboard
-    * @param boolean $boolShowVirtualKeyboardImage
-    * @param boolean $boolReadOnly
-    * @return TPassword
-    */
+     * Campo para entrada de senhas
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------    
+     *
+     * @param string $strName             - 1: id do campo
+     * @param string $strLabel            - 2: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired       - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $boolNewLine        - 4: Em nova linha, DEFALUT is TRUE não obrigatorio.
+     * @param integer $intmaxLength       - 5: Tamanho maximo
+     * @param string $strValue            - 6: Valor inicial
+     * @param boolean $boolLabelAbove     - 7: Label acima, DEFAULT is FALSE na mesma linha
+     * @param boolean $boolNoWrapLabel    - 8: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+     * @param integer $intSize            - 9: NOT_IMPLEMENTED quantidade de caracteres visíveis
+     * @param boolean $boolUseVirtualKeyboard
+     * @param boolean $boolShowVirtualKeyboardImage
+     * @param boolean $boolReadOnly
+     * @return TFormDinPassword
+     */
     public function addPasswordField( $strName
                                     , $strLabel=null
                                     , $boolRequired=null
