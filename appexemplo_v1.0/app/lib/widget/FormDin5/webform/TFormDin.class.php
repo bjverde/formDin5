@@ -994,8 +994,8 @@ class TFormDin
      * @param boolean $boolReadOnly
      * @return TFormDinPassword
      */
-    public function addPasswordField( $strName
-                                    , $strLabel=null
+    public function addPasswordField( string $strName
+                                    , string $strLabel=null
                                     , $boolRequired=null
                                     , $boolNewLine=null
                                     , $intmaxLength=null
@@ -1007,9 +1007,13 @@ class TFormDin
                                     , $boolShowVirtualKeyboardImage=null
                                     , $boolReadOnly=null )
     {
-        $field = new TPassword( $strName, $strValue, $intmaxLength, $boolRequired, $intSize, $boolUseVirtualKeyboard, $boolShowVirtualKeyboardImage, $boolReadOnly);
-        $this->addDisplayControl( new TDisplayControl( $strLabel, $field, $boolLabelAbove, $boolNewLine, $boolNoWrapLabel ) );
-        return $field;
+        $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+
+        return $formField;
     }    
 
     /**
@@ -1474,6 +1478,7 @@ class TFormDin
      * @param string $strHeight      - 6: Altura  em % ou px
      * @param boolean $boolNewLine   - 7: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param boolean $boolLabelAbove  8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolNoWrapLabel   - 7: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @return THtml Field
      */
     public function addHtmlField( string $id
