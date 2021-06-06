@@ -789,9 +789,9 @@ class TFormDin
      * @param string $boolShowCountChar 13: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinMemoField
      */
-    public function addMemoField( $strName
-   		                       , $strLabel=null
-   		                       , $intMaxLength
+    public function addMemoField(string $strName
+   		                       , string $strLabel=null
+   		                       , string $intMaxLength
    		                       , $boolRequired=null
    		                       , $intColumns=null
    		                       , $intRows=null
