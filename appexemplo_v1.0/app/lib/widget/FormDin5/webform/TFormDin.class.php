@@ -790,8 +790,8 @@ class TFormDin
      * @return TFormDinMemoField
      */
     public function addMemoField(string $strName
-   		                       , string $strLabel=null
-   		                       , string $intMaxLength
+   		                       , string $strLabel
+   		                       , int $intMaxLength
    		                       , $boolRequired=null
    		                       , $intColumns=null
    		                       , $intRows=null
