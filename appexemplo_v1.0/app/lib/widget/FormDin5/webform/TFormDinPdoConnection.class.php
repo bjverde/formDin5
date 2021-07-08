@@ -359,8 +359,9 @@ class TFormDinPdoConnection
             $stmt = $conn->prepare( $sql );
             $result = $stmt->execute( $arrParams );
 
-            if ( $result ) {                
-                if ( preg_match( '/^select/i', $sql ) > 0  ) {
+            if ( $result ) {
+                
+                if ( preg_match( '/^select/i', $sql ) > 0 || preg_match( '/returning/i', $sql ) > 0 || preg_match( '/^with/i', $sql ) > 0  ) {
                     $result = $stmt->fetchall();
                     $result = $this->convertArrayResult($result);
                 }else if( preg_match( '/^insert/i', $sql ) > 0  ){
