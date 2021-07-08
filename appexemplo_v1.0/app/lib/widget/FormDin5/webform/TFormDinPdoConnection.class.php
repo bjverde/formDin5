@@ -59,7 +59,7 @@ class TFormDinPdoConnection
     private $case = null;
     private $outputFormat = null;
     private $outputFormatDefault = ArrayHelper::TYPE_ADIANTI;
-    private $caseDefault = PDO::CASE_NATURAL;
+    private $caseDefault = PDO::CASE_UPPER;
 
 
     private $host;
