@@ -54,42 +54,39 @@ class TFormDinEmailField  extends TFormDinTextField
      * Adiciona campo para entrada de endereço eletrônico - e-mail
      * Reconstruido FormDin 4 Sobre o Adianti 7
      *
-	 * @param string  $strName      - 1: ID do campo
-	 * @param string  $strLabel     - 2: Label do campo, que irá aparecer na tela do usuario
-	 * @param integer $intMaxLength - 3: Tamanho maximo de caracteres
-	 * @param boolean $boolRequired - 4: Obrigatorio
-	 * @param integer $intSize      - 5: Tamanho do campo na tela
-	 * @param boolean $boolNewLine  - 6: Campo em nova linha
-	 * @param string  $strValue     - 7: valor inicial do campo
-	 * @param boolean $boolLabelAbove-8: Label acima, DEFAULT is FALSE na mesma linha
+	 * @param string  $id            -01: ID do campo
+	 * @param string  $label         -02: Label do campo, que irá aparecer na tela do usuario
+	 * @param integer $intMaxLength  -03: Tamanho maximo de caracteres
+	 * @param boolean $boolRequired  -04: Obrigatorio
+	 * @param integer $intSize       -05: Tamanho do campo na tela
+	 * @param boolean $boolNewLine   -06: Campo em nova linha
+	 * @param string  $strValue      -07: valor inicial do campo
+	 * @param boolean $boolLabelAbove-08: Label acima, DEFAULT is FALSE na mesma linha
+     * @param string $placeholder    -09: FORMDIN5: Texto do Place Holder
      *
      * @return TFormDinEmailField Field
      */   
-    public function __construct( $id
-                            , $strLabel=null
-                            , $boolRequired=false
-                            , $strValue=null
-                            , $boolNewLine=null
-                            , $boolLabelAbove=null
-                            , $boolNoWrapLabel=null
-                            , $strInvalidMessage=null
-                            , $boolAlwaysValidate=true
-                            , $strJsCallback=null
-                            , $strExampleText=null
-                            , $boolSendMask=false )
+    public function __construct(  $id
+                                , $label=null
+                                , $intMaxLength
+                                , $boolRequired=null
+                                , $intSize=null
+                                , $boolNewLine=null
+                                , $strValue=null
+                                , $boolLabelAbove=null
+                                , $boolNoWrapLabel=null 
+                                , $placeholder=null
+                                )
     {
         parent::__construct($id
-                           ,$strLabel
+                           ,$label
+                           ,$intMaxLength
                            ,$boolRequired
-                           ,'99.999.999/9999-99'
-                           ,$boolNewLine
+                           ,$intSize
                            ,$strValue
-                           ,$boolLabelAbove
-                           ,$boolNoWrapLabel
-                           ,$strExampleText
-                           ,$boolSendMask
+                           ,$placeholder
                         );
-        $this->setAlwaysValidate($boolAlwaysValidate); 
+        $this->setAlwaysValidate(TRUE); 
         return $this->getAdiantiObj();
     }
 
