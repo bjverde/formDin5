@@ -175,11 +175,11 @@
                 <action>comingSoonView</action>
             </menuitem>
             <menuitem label='E-mail'>
-                <icon>fa:flag fa-fw</icon>
+                <icon>fas:fas fa-at</icon>
                 <action>exe_TEmail</action>
             </menuitem>
             <menuitem label='Button'>
-                <icon>fa:flag fa-fw</icon>
+                <icon>fab:fab fa-buysellads</icon>
                 <action>exe_TButton</action>
             </menuitem>             
         </menu>
