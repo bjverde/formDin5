@@ -176,7 +176,7 @@
             </menuitem>
             <menuitem label='E-mail'>
                 <icon>fa:flag fa-fw</icon>
-                <action>comingSoonView</action>
+                <action>exe_TEmail</action>
             </menuitem>
             <menuitem label='Button'>
                 <icon>fa:flag fa-fw</icon>
