@@ -225,7 +225,15 @@ class TFormDinPdoConnection
     {
         $this->pass = $pass;
     }
-    
+
+    public function getDbms()
+    {
+        return $this->getType();
+    }
+    public function setDdms($dbms)
+    {
+        return $this->setType($dbms);
+    }
     public function getType()
     {
         return $this->type;
