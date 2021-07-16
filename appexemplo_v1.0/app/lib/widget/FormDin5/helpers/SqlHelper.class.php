@@ -156,7 +156,10 @@ class SqlHelper
      */
     public static function explodeTextString( $string )
     {
-        $dataBaseWithLike = (self::getDbms() == TFormDinPdoConnection::DBMS_MYSQL) || (self::getDbms() == TFormDinPdoConnection::DBMS_POSTGRES) || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLITE) || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLSERVER);
+        $dataBaseWithLike = (self::getDbms() == TFormDinPdoConnection::DBMS_MYSQL) 
+                         || (self::getDbms() == TFormDinPdoConnection::DBMS_POSTGRES)
+                         || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLITE)
+                         || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLSERVER);
         if ( $dataBaseWithLike ) {
             $string = trim($string);
             $string = preg_replace('/\s/', '%', $string);
