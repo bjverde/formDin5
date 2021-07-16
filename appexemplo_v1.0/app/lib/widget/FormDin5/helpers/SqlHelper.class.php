@@ -154,12 +154,12 @@ class SqlHelper
      * @param string $string
      * @return string`
      */
-    public static function explodeTextString( $string )
+    public static function explodeTextString( $string, $dbms )
     {
-        $dataBaseWithLike = (self::getDbms() == TFormDinPdoConnection::DBMS_MYSQL) 
-                         || (self::getDbms() == TFormDinPdoConnection::DBMS_POSTGRES)
-                         || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLITE)
-                         || (self::getDbms() == TFormDinPdoConnection::DBMS_SQLSERVER);
+        $dataBaseWithLike = ($dbms == TFormDinPdoConnection::DBMS_MYSQL) 
+                         || ($dbms == TFormDinPdoConnection::DBMS_POSTGRES)
+                         || ($dbms == TFormDinPdoConnection::DBMS_SQLITE)
+                         || ($dbms == TFormDinPdoConnection::DBMS_SQLSERVER);
         if ( $dataBaseWithLike ) {
             $string = trim($string);
             $string = preg_replace('/\s/', '%', $string);
@@ -197,8 +197,9 @@ class SqlHelper
                                              , $testZero=true
                                              , $value
                                              , $connector=self::SQL_CONNECTOR_AND
+                                             , $dbms
                                              ) {
-        $value = self::explodeTextString($value);
+        $value = self::explodeTextString($value, $dbms);
         $isTrue = EOL.' AND '.$attribute.' like \'%'.$value.'%\' ';
         $attribute = self::attributeIssetOrNotZero($arrayWhereGrid,$attribute,$isTrue,null,$testZero);
         $stringWhere = $stringWhere.$attribute;
@@ -304,7 +305,7 @@ class SqlHelper
     		        $stringWhere = self::getSqlTypeNumeric($stringWhere, $arrayWhereGrid, $attribute, $testZero ,$value, $connector);
     		    break;
     		    case self::SQL_TYPE_TEXT_LIKE:
-    		        $stringWhere = self::getSqlTypeTextLike($stringWhere, $arrayWhereGrid, $attribute, $testZero ,$value, $connector);
+    		        $stringWhere = self::getSqlTypeTextLike($stringWhere ,$arrayWhereGrid ,$attribute ,$testZero ,$value ,$connector ,$dbms);
     		    break;
     		    case self::SQL_TYPE_TEXT_EQUAL:
     		        $stringWhere = self::getSqlTypeText($stringWhere, $arrayWhereGrid, $attribute, $testZero ,$value, $connector);
