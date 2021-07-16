@@ -129,9 +129,9 @@ class SqlHelper
         return $retorno;
     }
     //----------------------------------------
-    public static function transformValidateString( $string )
+    public static function transformValidateString( $string , $dbms)
     {        
-        if ( self::getDbms() == TFormDinPdoConnection::DBMS_MYSQL ) {
+        if ( $dbms == TFormDinPdoConnection::DBMS_MYSQL ) {
             //$string = addslashes($string);
             //$patterns = '/(%)/';
             $doubleQuotes = chr(34);
@@ -276,9 +276,10 @@ class SqlHelper
      * @param string  $stringWhere     1: Existing SQL String that will be concatenated
      * @param array   $arrayWhereGrid  2: array with all attributes and values
      * @param string  $attribute       3: name of the attribute to be verified
-     * @param string  $type            4:
+     * @param string  $type            4: Type of clauses
      * @param boolean $testZero        5: 
-     * @param string  $connector       6:
+     * @param string  $connector       6: Connector self::SQL_CONNECTOR_AND or self::SQL_CONNECTOR_OR
+     * @param string  $dbms            7: Type of Database management system, see const of TFormDinPdoConnection
      * @return string
      */
     public static function getAtributeWhereGridParameters( $stringWhere
@@ -287,11 +288,15 @@ class SqlHelper
                                                          , $type 
                                                          , $testZero=true
                                                          , $connector=self::SQL_CONNECTOR_AND 
+                                                         , $dbms
                                                          ) {
         if( ArrayHelper::has($attribute, $arrayWhereGrid) ){
+            if( empty($dbms) ){
+                throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_NULL_DBMA);
+            }
     	    $value = $arrayWhereGrid[$attribute];
     	    if ( !empty($value) && !is_array($value)){
-    		    $value = self::transformValidateString($value);
+    		    $value = self::transformValidateString($value,$dbms);
     		}
     		
     		switch ($type) {
