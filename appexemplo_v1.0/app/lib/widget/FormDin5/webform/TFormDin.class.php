@@ -492,16 +492,17 @@ class TFormDin
 				       		 , string $strNameId=null
 				       		 , string $strAction
 				       		 , string $strOnClick=null
-				       		, $strConfirmMessage=null
-				       		, $boolNewLine=null
-				       		, $boolFooter=true
-				       		, $strImage=null
-				       		, $strImageDisabled=null
-				       		, $strHint=null
-				       		, $strVerticalAlign=null
-				       		, $boolLabelAbove=null
-				       		, $strLabel=null
-                            , $strHorizontalAlign=null)
+				       		 , string $strConfirmMessage=null
+				       		 , mixed $boolNewLine=null
+				       		 , mixed $boolFooter=true
+				       		 , string $strImage=null
+				       		 , string $strImageDisabled=null
+				       		 , string $strHint=null
+				       		 , string $strVerticalAlign=null
+				       		 , mixed $boolLabelAbove=null
+				       		 , string $strLabel=null
+                             , string $strHorizontalAlign=null
+                             )
     {
         $objForm =  $this->getObjForm();
         if($boolFooter){
