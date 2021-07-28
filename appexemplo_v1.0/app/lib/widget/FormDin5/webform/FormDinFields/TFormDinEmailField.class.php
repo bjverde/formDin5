@@ -66,16 +66,16 @@ class TFormDinEmailField  extends TFormDinTextField
      *
      * @return TFormDinEmailField Field
      */   
-    public function __construct(  $id
-                                , $label=null
-                                , $intMaxLength
-                                , $boolRequired=null
-                                , $intSize=null
+    public function __construct(  string $id
+                                , string $label=null
+                                , int $intMaxLength
+                                , mixed $boolRequired=null
+                                , int $intSize=null
                                 , $boolNewLine=null
-                                , $strValue=null
+                                , string $strValue=null
                                 , $boolLabelAbove=null
                                 , $boolNoWrapLabel=null 
-                                , $placeholder=null
+                                , string $placeholder=null
                                 )
     {
         parent::__construct($id
