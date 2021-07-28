@@ -1223,9 +1223,9 @@ class TFormDin
      */
     public function addSelectField(string $id
                                   ,string $strLabel
-                                  ,$boolRequired = false
-                                  ,array $mixOptions
-                                  ,$boolNewLine = true
+                                  ,bool  $boolRequired = false
+                                  ,mixed $mixOptions
+                                  ,bool  $boolNewLine = true
                                   ,$boolLabelAbove = false
                                   ,$mixValue = null
                                   ,$boolMultiSelect = false
@@ -1658,9 +1658,9 @@ class TFormDin
      * @param string $decimalsSeparator  -19: FORMDIN5: separador decimal. Não pode ser chamado por metodo
      * @return TNumber
      */       
-	public function addNumberField( $strName
-				           		, $strLabel=null
-				           		, $intMaxLength
+	public function addNumberField( string $strName
+				           		  , string $strLabel=null
+				           		  , int $intMaxLength
 				           		, $boolRequired=null
 				           		, $intDecimalPlaces=null
 				           		, $boolNewLine=null
