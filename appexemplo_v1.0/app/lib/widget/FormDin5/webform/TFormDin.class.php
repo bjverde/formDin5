@@ -1223,20 +1223,20 @@ class TFormDin
      */
     public function addSelectField(string $id
                                   ,string $strLabel
-                                  ,bool  $boolRequired = false
+                                  ,mixed $boolRequired = false
                                   ,mixed $mixOptions
-                                  ,bool  $boolNewLine = true
-                                  ,$boolLabelAbove = false
-                                  ,$mixValue = null
-                                  ,$boolMultiSelect = false
-                                  ,$intSize = null
-                                  ,$intWidth = null
-                                  ,$strFirstOptionText = null
-                                  ,$strFirstOptionValue = null
-                                  ,$strKeyColumn = null
-                                  ,$strDisplayColumn = null
-                                  ,$boolNoWrapLabel = null
-                                  ,$strDataColumns = null
+                                  ,mixed $boolNewLine = true
+                                  ,mixed $boolLabelAbove = false
+                                  ,mixed $mixValue = null
+                                  ,mixed $boolMultiSelect = false
+                                  ,int $intSize = null
+                                  ,int $intWidth = null
+                                  ,string $strFirstOptionText = null
+                                  ,string $strFirstOptionValue = null
+                                  ,string $strKeyColumn = null
+                                  ,string $strDisplayColumn = null
+                                  ,string $boolNoWrapLabel = null
+                                  ,string $strDataColumns = null
                                   )
     {
         $formField = new TFormDinSelectField($id
