@@ -1723,9 +1723,9 @@ class TFormDin
      * @param string $placeholder    -09: FORMDIN5: Texto do Place Holder
 	 * @return TFormDinEmailField
 	 */
-	public function addEmailField( $strName
-                                 , $strLabel=null
-                                 , $intMaxLength
+	public function addEmailField( string $strName
+                                 , string $strLabel=null
+                                 , int $intMaxLength
                                  , $boolRequired=null
                                  , $intSize=null
                                  , $boolNewLine=null
