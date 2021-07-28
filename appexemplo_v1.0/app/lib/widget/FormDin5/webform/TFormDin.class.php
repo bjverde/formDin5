@@ -488,10 +488,10 @@ class TFormDin
     * @param string  $strHorizontalAlign-14 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Values center, left, right
     * @return TButton|string|array
     */
-    public function addButton( $mixValue
-				       		, $strNameId=null
-				       		, $strAction
-				       		, $strOnClick=null
+    public function addButton( string $mixValue
+				       		 , string $strNameId=null
+				       		 , string $strAction
+				       		 , string $strOnClick=null
 				       		, $strConfirmMessage=null
 				       		, $boolNewLine=null
 				       		, $boolFooter=true
