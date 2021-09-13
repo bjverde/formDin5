@@ -110,20 +110,20 @@ class TFormDinSelectField  extends TFormDinOption
      */
     public function __construct(string $id
                                ,string $label
-                               ,$boolRequired = false
-                               ,$mixOptions
-                               ,$boolNewLine = true
-                               ,$boolLabelAbove = false
-                               ,$mixValue = null
-                               ,$boolMultiSelect = false
-                               ,$intQtdColumns = null
-                               ,$intWidth = null
-                               ,$strFirstOptionText = null
-                               ,$strFirstOptionValue = null
-                               ,$strKeyColumn = null
-                               ,$strDisplayColumn = null
-                               ,$boolNoWrapLabel = null
-                               ,$strDataColumns = null
+                               ,mixed $boolRequired = false
+                               ,mixed $mixOptions
+                               ,mixed $boolNewLine = true
+                               ,mixed $boolLabelAbove = false
+                               ,mixed $mixValue = null
+                               ,mixed $boolMultiSelect = false
+                               ,int $intQtdColumns = null
+                               ,int $intWidth = null
+                               ,string $strFirstOptionText = null
+                               ,string $strFirstOptionValue = null
+                               ,string $strKeyColumn = null
+                               ,string $strDisplayColumn = null
+                               ,mixed $boolNoWrapLabel = null
+                               ,string $strDataColumns = null
                                )
     {
         $this->setWidth( $intWidth );

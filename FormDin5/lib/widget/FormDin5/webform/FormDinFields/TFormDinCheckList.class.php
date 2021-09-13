@@ -89,11 +89,11 @@ class TFormDinCheckList {
     * @param boolean $makeScrollable    - 7 : DEFAULT = false
     * @return TFormDinCheckList
     */
-    public function __construct($id
-                              , $label
-                              , $boolRequired=false
-                              , $listItems
-                              , $intHeight=null
+    public function __construct(string $id
+                               ,string $label
+                               ,mixed $boolRequired=false
+                               ,mixed $listItems
+                               ,int $intHeight=null
                               )
     {
 

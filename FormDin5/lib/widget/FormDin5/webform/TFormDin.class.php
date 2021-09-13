@@ -488,20 +488,21 @@ class TFormDin
     * @param string  $strHorizontalAlign-14 : NOT_IMPLEMENTED Text Horizontal align. DEFAULT = center. Values center, left, right
     * @return TButton|string|array
     */
-    public function addButton( $mixValue
-				       		, $strNameId=null
-				       		, $strAction
-				       		, $strOnClick=null
-				       		, $strConfirmMessage=null
-				       		, $boolNewLine=null
-				       		, $boolFooter=true
-				       		, $strImage=null
-				       		, $strImageDisabled=null
-				       		, $strHint=null
-				       		, $strVerticalAlign=null
-				       		, $boolLabelAbove=null
-				       		, $strLabel=null
-                            , $strHorizontalAlign=null)
+    public function addButton( string $mixValue
+				       		 , string $strNameId=null
+				       		 , string $strAction
+				       		 , string $strOnClick=null
+				       		 , string $strConfirmMessage=null
+				       		 , mixed $boolNewLine=null
+				       		 , mixed $boolFooter=true
+				       		 , string $strImage=null
+				       		 , string $strImageDisabled=null
+				       		 , string $strHint=null
+				       		 , string $strVerticalAlign=null
+				       		 , mixed $boolLabelAbove=null
+				       		 , string $strLabel=null
+                             , string $strHorizontalAlign=null
+                             )
     {
         $objForm =  $this->getObjForm();
         if($boolFooter){
@@ -1223,20 +1224,20 @@ class TFormDin
      */
     public function addSelectField(string $id
                                   ,string $strLabel
-                                  ,$boolRequired = false
-                                  ,array $mixOptions
-                                  ,$boolNewLine = true
-                                  ,$boolLabelAbove = false
-                                  ,$mixValue = null
-                                  ,$boolMultiSelect = false
-                                  ,$intSize = null
-                                  ,$intWidth = null
-                                  ,$strFirstOptionText = null
-                                  ,$strFirstOptionValue = null
-                                  ,$strKeyColumn = null
-                                  ,$strDisplayColumn = null
-                                  ,$boolNoWrapLabel = null
-                                  ,$strDataColumns = null
+                                  ,mixed $boolRequired = false
+                                  ,mixed $mixOptions
+                                  ,mixed $boolNewLine = true
+                                  ,mixed $boolLabelAbove = false
+                                  ,mixed $mixValue = null
+                                  ,mixed $boolMultiSelect = false
+                                  ,int $intSize = null
+                                  ,int $intWidth = null
+                                  ,string $strFirstOptionText = null
+                                  ,string $strFirstOptionValue = null
+                                  ,string $strKeyColumn = null
+                                  ,string $strDisplayColumn = null
+                                  ,string $boolNoWrapLabel = null
+                                  ,string $strDataColumns = null
                                   )
     {
         $formField = new TFormDinSelectField($id
@@ -1658,9 +1659,9 @@ class TFormDin
      * @param string $decimalsSeparator  -19: FORMDIN5: separador decimal. Não pode ser chamado por metodo
      * @return TNumber
      */       
-	public function addNumberField( $strName
-				           		, $strLabel=null
-				           		, $intMaxLength
+	public function addNumberField( string $strName
+				           		  , string $strLabel=null
+				           		  , int $intMaxLength
 				           		, $boolRequired=null
 				           		, $intDecimalPlaces=null
 				           		, $boolNewLine=null
@@ -1723,9 +1724,9 @@ class TFormDin
      * @param string $placeholder    -09: FORMDIN5: Texto do Place Holder
 	 * @return TFormDinEmailField
 	 */
-	public function addEmailField( $strName
-                                 , $strLabel=null
-                                 , $intMaxLength
+	public function addEmailField( string $strName
+                                 , string $strLabel=null
+                                 , int $intMaxLength
                                  , $boolRequired=null
                                  , $intSize=null
                                  , $boolNewLine=null
