@@ -52,7 +52,7 @@ class FormDinHelperTest extends TestCase
 {
     
     public function testVersion() {
-        $expected = '5.0.0-alpha22';
+        $expected = '5.0.0-alpha26';
         $result =  FormDinHelper::version();
         $this->assertEquals( $expected , $result);
     }
@@ -211,5 +211,67 @@ class FormDinHelperTest extends TestCase
         $result = FormDinHelper::issetOrNotZero($variable,false);
         $this->assertEquals( $expected , $result);
     }
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
+
+    public function testValidateSizeWidthAndHeight_okNull()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateSizeWidthAndHeight(null);
+    }
+
+    public function testValidateSizeWidthAndHeight_okPercent()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateSizeWidthAndHeight('100%');
+    }
+
+    public function testValidateSizeWidthAndHeight_okEm()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateSizeWidthAndHeight('100em');
+    }    
+
+    public function testValidateSizeWidthAndHeight_okRem()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateSizeWidthAndHeight('100rem');
+    }
+
+    public function testValidateSizeWidthAndHeight_okVh()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateSizeWidthAndHeight('100vh');
+    }
+
+    public function testValidateSizeWidthAndHeight_okVw()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateSizeWidthAndHeight('100vw');
+    }
+
+    public function testValidateSizeWidthAndHeight_failInt()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        FormDinHelper::validateSizeWidthAndHeight(100);
+    }
+
+    public function testValidateSizeWidthAndHeight_failString()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        FormDinHelper::validateSizeWidthAndHeight('100');
+    }
+
+    public function testValidateSizeWidthAndHeight_failPx()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        FormDinHelper::validateSizeWidthAndHeight('100px');
+    }
+    public function testValidateSizeWidthAndHeight_okPx()
+    {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateSizeWidthAndHeight('100px',true);
+    }    
     
 }

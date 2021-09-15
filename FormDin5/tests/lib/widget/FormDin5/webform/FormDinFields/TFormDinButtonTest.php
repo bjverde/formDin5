@@ -76,7 +76,7 @@ class TFormDinButtonTest extends TestCase
     public function testSetAdiantiObj_failNullObjForm()
     {
         $this->expectException(InvalidArgumentException::class);
-        $classTest = new TFormDinButton(null,null);
+        $classTest = new TFormDinButton(null,null,null,null);
     }
 
     public function testSetAdiantiObj_failNullNameButton()
@@ -84,7 +84,7 @@ class TFormDinButtonTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         
         $classForm = new mockFormDinComAdianti();
-        $classTest = new TFormDinButton($classForm,null);
+        $classTest = new TFormDinButton($classForm,null,null,null);
     }
 
     public function testSetAdiantiObj_failNullStringName()
@@ -92,7 +92,7 @@ class TFormDinButtonTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         
         $classForm = new mockFormDinComAdianti();
-        $classTest = new TFormDinButton($classForm,'Salvar');
+        $classTest = new TFormDinButton($classForm,'Salvar',null,null);
     }
 
     public function testSetAdiantiObj_failArrayName()
