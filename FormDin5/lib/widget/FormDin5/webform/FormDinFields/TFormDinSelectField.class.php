@@ -105,32 +105,32 @@ class TFormDinSelectField  extends TFormDinOption
      * @param string  $strDisplayColumn   - 14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED Informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
-     * @param string  $boolNoWrapLabel    - 17: FORMDIN5 - enableSearch  Default FALSE = SingleSelect, TRUE = MultiSelect
      * @return TCombo
      */
     public function __construct(string $id
                                ,string $label
-                               ,mixed $boolRequired
-                               ,mixed $mixOptions
-                               ,mixed $boolNewLine = true
-                               ,mixed $boolLabelAbove = false
-                               ,mixed $mixValue = null
-                               ,mixed $boolMultiSelect = false
+                               ,$boolRequired
+                               ,$mixOptions
+                               ,$boolNewLine = true
+                               ,$boolLabelAbove = false
+                               ,$mixValue = null
+                               ,$boolMultiSelect = false
                                ,int $intQtdColumns = null
                                ,int $intWidth = null
                                ,string $strFirstOptionText = null
                                ,string $strFirstOptionValue = null
                                ,string $strKeyColumn = null
                                ,string $strDisplayColumn = null
-                               ,mixed $boolNoWrapLabel = null
+                               ,$boolNoWrapLabel = null
                                ,string $strDataColumns = null
                                )
     {
         $this->setWidth( $intWidth );
 
-        $boolRequired = empty($boolRequired)?false:$boolRequired;
-
+        $boolRequired   = empty($boolRequired)?false:$boolRequired;
+        $boolNewLine    = empty($boolNewLine)?true:$boolNewLine;
         $boolMultiSelect = is_null($boolMultiSelect)?false:$boolMultiSelect;
+        
         $this->setMultiSelect($boolMultiSelect);
 
         if($this->getMultiSelect()){
@@ -155,7 +155,7 @@ class TFormDinSelectField  extends TFormDinOption
                            ,$strFirstOptionValue   //12: Frist Value in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
                            ,$strKeyColumn          //13: Nome da coluna que será utilizada para preencher os valores das opções
                            ,$strDisplayColumn      //14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-                           ,null
+                           ,null                   //15: 
                            ,$strDataColumns        //16: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
                         );        
         return $this->getAdiantiObj();

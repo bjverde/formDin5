@@ -1225,10 +1225,10 @@ class TFormDin
     public function addSelectField(string $id
                                   ,string $strLabel
                                   ,$boolRequired
-                                  ,mixed $mixOptions
+                                  ,$mixOptions
                                   ,$boolNewLine = true
                                   ,$boolLabelAbove = false
-                                  ,mixed $mixValue = null
+                                  ,$mixValue = null
                                   ,$boolMultiSelect = false
                                   ,int $intSize = null
                                   ,int $intWidth = null
