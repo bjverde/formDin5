@@ -490,7 +490,7 @@ class TFormDin
     */
     public function addButton( string $mixValue
 				       		 , string $strNameId=null
-				       		 , string $strAction
+				       		 , $strAction
 				       		 , string $strOnClick=null
 				       		 , string $strConfirmMessage=null
 				       		 , $boolNewLine=null

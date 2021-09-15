@@ -91,12 +91,13 @@ class TFormDinCheckList {
     */
     public function __construct(string $id
                                ,string $label
-                               ,mixed $boolRequired=false
-                               ,mixed $listItems
+                               ,$boolRequired
+                               ,$listItems
                                ,int $intHeight=null
                               )
     {
 
+        $boolRequired = empty($boolRequired)?false:$boolRequired;
         $this->setId($id);
         $this->setObjCheck($id);
         $this->setLabel($label);

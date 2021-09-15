@@ -69,7 +69,7 @@ class TFormDinEmailField  extends TFormDinTextField
     public function __construct(  string $id
                                 , string $label=null
                                 , int $intMaxLength
-                                , mixed $boolRequired=null
+                                , $boolRequired=null
                                 , int $intSize=null
                                 , $boolNewLine=null
                                 , string $strValue=null
