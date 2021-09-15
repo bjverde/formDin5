@@ -493,13 +493,13 @@ class TFormDin
 				       		 , string $strAction
 				       		 , string $strOnClick=null
 				       		 , string $strConfirmMessage=null
-				       		 , mixed $boolNewLine=null
-				       		 , mixed $boolFooter=true
+				       		 , $boolNewLine=null
+				       		 , $boolFooter=true
 				       		 , string $strImage=null
 				       		 , string $strImageDisabled=null
 				       		 , string $strHint=null
 				       		 , string $strVerticalAlign=null
-				       		 , mixed $boolLabelAbove=null
+				       		 , $boolLabelAbove=null
 				       		 , string $strLabel=null
                              , string $strHorizontalAlign=null
                              )
@@ -1224,12 +1224,12 @@ class TFormDin
      */
     public function addSelectField(string $id
                                   ,string $strLabel
-                                  ,mixed $boolRequired = false
+                                  ,$boolRequired
                                   ,mixed $mixOptions
-                                  ,mixed $boolNewLine = true
-                                  ,mixed $boolLabelAbove = false
+                                  ,$boolNewLine = true
+                                  ,$boolLabelAbove = false
                                   ,mixed $mixValue = null
-                                  ,mixed $boolMultiSelect = false
+                                  ,$boolMultiSelect = false
                                   ,int $intSize = null
                                   ,int $intWidth = null
                                   ,string $strFirstOptionText = null
@@ -1240,6 +1240,7 @@ class TFormDin
                                   ,string $strDataColumns = null
                                   )
     {
+        $boolRequired = empty($boolRequired)?false:$boolRequired;
         $formField = new TFormDinSelectField($id
                                             ,$strLabel
                                             ,$boolRequired
