@@ -110,7 +110,7 @@ class TFormDinSelectField  extends TFormDinOption
      */
     public function __construct(string $id
                                ,string $label
-                               ,mixed $boolRequired = false
+                               ,mixed $boolRequired
                                ,mixed $mixOptions
                                ,mixed $boolNewLine = true
                                ,mixed $boolLabelAbove = false
@@ -127,6 +127,8 @@ class TFormDinSelectField  extends TFormDinOption
                                )
     {
         $this->setWidth( $intWidth );
+
+        $boolRequired = empty($boolRequired)?false:$boolRequired;
 
         $boolMultiSelect = is_null($boolMultiSelect)?false:$boolMultiSelect;
         $this->setMultiSelect($boolMultiSelect);
