@@ -91,8 +91,8 @@ class TFormDinCheckList {
     */
     public function __construct(string $id
                                ,string $label
-                               ,mixed $boolRequired=false
-                               ,mixed $listItems
+                               ,$boolRequired=false
+                               ,$listItems
                                ,int $intHeight=null
                               )
     {
