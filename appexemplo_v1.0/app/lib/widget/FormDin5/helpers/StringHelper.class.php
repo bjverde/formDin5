@@ -52,19 +52,21 @@
 class StringHelper
 {
     
-    public static function strtolower_utf8($inputString) 
+    public static function strtolower_utf8($string) 
     {
-        $outputString    = utf8_decode($inputString);
-        $outputString    = strtolower($outputString);
-        $outputString    = utf8_encode($outputString);
-        return $outputString;
+        //$string = utf8_decode($string);
+        //$string = strtolower($string);
+        //$string = utf8_encode($string);
+        $string = mb_strtolower($string, 'UTF-8');
+        return $string;
     }
     
     public static function strtoupper_utf8($string)
     {
-        $string = utf8_decode($string);
-        $string = strtoupper($string);
-        $string = utf8_encode($string);
+        //$string = utf8_decode($string);
+        //$string = strtoupper($string);
+        //$string = utf8_encode($string);
+        $string = mb_strtoupper($string, 'UTF-8');
         return $string;
     }
     
