@@ -129,8 +129,9 @@ class SqlHelper
         return $retorno;
     }
     //----------------------------------------
-    public static function transformValidateString( $string , $dbms)
-    {        
+    public static function transformValidateString( $string , $dbms=null)
+    {   
+        $dbms = empty($dbms)?SqlHelper::getDbms():$dbms;
         if ( $dbms == TFormDinPdoConnection::DBMS_MYSQL ) {
             //$string = addslashes($string);
             //$patterns = '/(%)/';

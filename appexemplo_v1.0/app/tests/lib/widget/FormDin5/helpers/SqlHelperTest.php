@@ -317,96 +317,108 @@ class SqlHelperTest extends TestCase
 	public function testExplodeTextString_1Word_MySQL() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_MYSQL;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_2Words_MySQL() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_MYSQL;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_5Words_MySQL() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_MYSQL);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_MYSQL;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_1Word_Postgresql() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_POSTGRES;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_2Words_Postgresql() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_POSTGRES;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_5Words_Postgresql() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_POSTGRES);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_POSTGRES;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_1Word_Sqlite() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_SQLITE;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_2Words_Sqlite() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_SQLITE;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_5Words_Sqlite() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLITE);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_SQLITE;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_1Word_SqlServer() {
 	    $expected = 'blablabla';
 	    $string = 'blablabla';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_SQLSERVER;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_2Words_SqlServer() {
 	    $expected = 'blablabla%etcetc';
 	    $string = 'blablabla etcetc';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_SQLSERVER;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);
 	    $this->assertEquals( $expected , $result);
 	}
 	//--------------------------------------------------------------------------------
 	public function testExplodeTextString_5Words_SqlServer() {
 	    $expected = 'aaa%bbb%ccc%ddd%eee';
 	    $string = 'aaa bbb ccc ddd eee';
-	    SqlHelper::setDbms(TFormDinPdoConnection::DBMS_SQLSERVER);
-	    $result = SqlHelper::explodeTextString( $string );
+		$dbms  = TFormDinPdoConnection::DBMS_SQLSERVER;
+	    SqlHelper::setDbms($dbms);
+	    $result = SqlHelper::explodeTextString( $string , $dbms);		
 	    $this->assertEquals( $expected , $result);
 	}	
 	//--------------------------------------------------------------------------------
