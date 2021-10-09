@@ -93,18 +93,6 @@ class StringHelperTest extends TestCase
 	    $this->assertEquals( 'UTF-8' , $result);
 	}
 	
-	/*
-	public function testStr2utf8_notUtf8CP850() {
-	    $str = self::STRING_ORIGIN;
-	    $str = mb_convert_encoding($str, "CP850");
-	    $str = StringHelper::str2utf8($str);
-	    $result = mb_detect_encoding($str, 'UTF-8', true);
-	    
-	    $this->assertEquals( self::STRING_ORIGIN ,$str);
-	    $this->assertEquals( 'UTF-8' , $result);
-	}
-	*/
-	
 	public function testStr2utf8_Decode() {
 	    $str = self::STRING_ORIGIN;
 	    $str = utf8_decode($str);
