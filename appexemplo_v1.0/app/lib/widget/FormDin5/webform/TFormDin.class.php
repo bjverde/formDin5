@@ -1519,7 +1519,7 @@ class TFormDin
      * @param boolean $boolNewLine       - 5: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param boolean $boolLabelAbove    - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel   - 7: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
-     * @param string  $strInvalidMessage - 8: Mensagem que vai aparece em caso de CPF inválido
+     * @param string  $strInvalidMessage - 8: NOT_IMPLEMENTED Mensagem que vai aparece em caso de CPF inválido
      * @param boolean $boolAlwaysValidate- 9: Default TRUE = faz validação do campo, FALSE = não valida o campo
      * @param string  $strJsCallback     -10: NOT_IMPLEMENTED Js Callback
      * @param string  $strExampleText    -11: FORMDIN5: PlaceHolder é um Texto de exemplo
@@ -1574,7 +1574,7 @@ class TFormDin
      * @param boolean $boolNewLine       - 5: Default TRUE = campo em nova linha, FALSE continua na linha anterior
      * @param boolean $boolLabelAbove    - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel   - 7: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
-     * @param string  $strInvalidMessage - 8: Mensagem que vai aparece em caso de CPF inválido
+     * @param string  $strInvalidMessage - 8: NOT_IMPLEMENTED Mensagem que vai aparece em caso de CPF inválido
      * @param boolean $boolAlwaysValidate- 9: Default TRUE = faz validação do campo, FALSE = não valida o campo
      * @param string  $strJsCallback     -10: NOT_IMPLEMENTED Js Callback
      * @param string  $strExampleText    -11: FORMDIN5: PlaceHolder é um Texto de exemplo
