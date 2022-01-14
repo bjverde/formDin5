@@ -78,7 +78,7 @@ class TFormDinCpfField extends TFormDinMaskField
                                , $boolLabelAbove=null
                                , $boolNoWrapLabel=null
                                , $strInvalidMessage=null
-                               , $boolAlwaysValidate=true
+                               , $boolAlwaysValidate=null
                                , $strJsCallback=null
                                , $strExampleText=null
                                , $boolSendMask=false )
@@ -98,9 +98,12 @@ class TFormDinCpfField extends TFormDinMaskField
         return $this->getAdiantiObj();
     }
 
-    public function setAlwaysValidate($boolAlwaysValidate=true)
+    public function setAlwaysValidate($boolAlwaysValidate)
 	{
-        $boolAlwaysValidate = empty($boolAlwaysValidate)?true:$boolAlwaysValidate;
+        $boolAlwaysValidate = is_null($boolAlwaysValidate)?true:$boolAlwaysValidate;
+        if( !is_bool($boolAlwaysValidate) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG.': $boolAlwaysValidate boolean');
+        }
 		$this->alwaysValidate = $boolAlwaysValidate;
         if($boolAlwaysValidate == true){
             $strLabel = $this->getLabelTxt();

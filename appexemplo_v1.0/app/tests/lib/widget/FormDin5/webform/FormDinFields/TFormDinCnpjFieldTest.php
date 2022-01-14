@@ -76,12 +76,14 @@ class TFormDinCnpjFieldTest extends TestCase
         $this->assertEquals('CNPJ', $arrayValidations[0][0]);
         $this->assertInstanceOf(TCNPJValidator::class, $arrayValidations[0][1]);
     }
+    /*
     public function test_getAlwaysValidate_false()
     {
         $this->classTest->setAlwaysValidate(false); 
         $result = $this->classTest->getAlwaysValidate();
         $this->assertEquals(false, $result);
     }
+    */
     public function test_getAlwaysValidate_true()
     {
         $this->classTest->setAlwaysValidate(true); 

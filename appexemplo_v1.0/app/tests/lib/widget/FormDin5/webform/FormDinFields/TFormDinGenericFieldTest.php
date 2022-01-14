@@ -109,7 +109,26 @@ class TFormDinGenericFieldTest extends TestCase
         $this->assertEquals('xx', $arrayValidations[0][0]);
         $this->assertInstanceOf(TMaxLengthValidator::class, $arrayValidations[0][1]);
     }
+    //-----------------------------------------------------
+    /*
+    public function testRemoveValidation()
+    {
+        
 
+        $this->classTest->addValidation('xx', new TMaxLengthValidator, array(5));
+        $this->classTest->setRequired(true);
+        //var_dump($this->classTest);
+        $arrayValidations = $this->classTest->getValidations();
+        $qtdValidations   = CountHelper::count($arrayValidations);
+        $this->assertEquals(2, $qtdValidations);
+        
+        $this->classTest->removeValidation(null);
+        $arrayValidations = $this->classTest->getValidations();
+        $qtdValidations   = CountHelper::count($arrayValidations);
+        $this->assertEquals(0, $qtdValidations);        
+    }
+    */
+    //-----------------------------------------------------
     public function test_SetValueTText()
     {
         $id = 'idTest';
