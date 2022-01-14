@@ -150,7 +150,79 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::formatPhoneNumber('12345678') ;		
 		$this->assertEquals( $expected , $result );
 	}
+	//-------------------------------------------------------------
+	public function testNumeroBrasil_stringSimples() {
+        $expected = '12.345.678,00';
+		$result = StringHelper::numeroBrasil('12345678');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroBrasil_stringBrasil() {
+        $expected = '12.345.678,00';
+		$result = StringHelper::numeroBrasil('12345678,00');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroBrasil_stringEua() {
+        $expected = '12.345.678,00';
+		$result = StringHelper::numeroBrasil('12345678.00');
+		$this->assertEquals( $expected , $result );
+	}		
+	public function testNumeroBrasil_number() {
+        $expected = '12.345.678,00';
+		$result = StringHelper::numeroBrasil(12345678);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroBrasil_text() {
+        $expected = null;
+		$result = StringHelper::numeroBrasil('maria');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroBrasil_ZeroInt() {
+        $expected = '0,00';
+		$result = StringHelper::numeroBrasil(0);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroBrasil_ZeroString() {
+        $expected = '0,00';
+		$result = StringHelper::numeroBrasil('0');
+		$this->assertEquals( $expected , $result );
+	}
 
+	public function testNumeroEua_stringSimples() {
+        $expected = '12,345,678.00';
+		$result = StringHelper::numeroEua('12345678');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroEua_stringBrasil() {
+        $expected = '12,345,678.00';
+		$result = StringHelper::numeroEua('12345678,00');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroEua_stringEua() {
+        $expected = '12,345,678.00';
+		$result = StringHelper::numeroEua('12345678.00');
+		$this->assertEquals( $expected , $result );
+	}		
+	public function testNumeroEua_number() {
+        $expected = '12,345,678.00';
+		$result = StringHelper::numeroEua(12345678);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroEua_text() {
+        $expected = null;
+		$result = StringHelper::numeroEua('maria');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroEua_ZeroInt() {
+        $expected = '0.00';
+		$result = StringHelper::numeroEua(0);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroEua_ZeroString() {
+        $expected = '0.00';
+		$result = StringHelper::numeroEua('0');
+		$this->assertEquals( $expected , $result );
+	}	
+	//-------------------------------------------------------------
     public function testTirarAcentos() {
         $expected = 'Voce deve ter recebido uma copia da GNU LGPL versao 3';
 		$result = StringHelper::tirarAcentos(self::STRING_ORIGIN) ;		

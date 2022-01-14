@@ -139,6 +139,36 @@ class StringHelper
         }
         return $value;
     }
+
+    public static function numeroBrasil($value,$decimals=2)
+    {
+        if(is_numeric($value)){
+            $value=number_format($value, $decimals,',','.');
+        }else{
+            if (is_string($value) && str_contains($value,',')) {
+                $value=str_replace(',','.', $value);
+                $value=number_format($value, $decimals,',','.');
+            }else{
+                $value = null;
+            }
+        }
+        return $value;
+    }
+
+    public static function numeroEua($value,$decimals=2)
+    {
+        if(is_numeric($value)){
+            $value=number_format($value, $decimals,'.',',');
+        }else{
+            if (is_string($value) && str_contains($value,',')) {
+                $value=str_replace(',','.', $value);
+                $value=number_format($value, $decimals,'.',',');
+            }else{
+                $value = null;
+            }
+        }
+        return $value;
+    }     
     
     /**
      * Recebe uma string do tipo "olá à mim! ñ" e retona "ola a mim! n"
