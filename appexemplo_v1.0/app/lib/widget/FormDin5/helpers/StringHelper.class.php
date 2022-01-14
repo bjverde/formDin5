@@ -271,4 +271,23 @@ class StringHelper
         return $string;
     }
 
+    /**
+     * Gera um link para API do WhatsApp
+     *
+     * @param string $numeroTelefone - formatado ou não
+     * @param string $msg - mensagem que vai aparecer
+     * @param boolean $iconeVerde - default é o icone verde
+     * @return void
+     */
+    public static function linkApiWhatsApp($numeroTelefone,$msg,$iconeVerde=true) 
+    {
+        $numeroLimpo = str_replace([' ','-','(',')'],['','','',''], $numeroTelefone);
+        $icon = "<i class='fab fa-whatsapp green' aria-hidden='true'></i>";
+        if($iconeVerde==false){
+            $icon = "<i class='fab fa-whatsapp' aria-hidden='true'></i>";
+        }
+        $link =  "{$icon} <a target='newwindow' href='https://api.whatsapp.com/send?phone=55{$numeroLimpo}&text={$msg}'> {$numeroTelefone} </a>";
+        return $link;
+    }
+
 }
