@@ -50,13 +50,15 @@ class TFormDinGridColumnTest extends TestCase
 {
 
     private $classTest;
+    private $objForm;
     
     /**
      * Prepares the environment before running a test.
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinGridColumn('TEST', 'TEST');
+        $this->objForm = new mockFormDinComAdianti();
+        $this->classTest = new TFormDinGridColumn($this->objForm,'TEST', 'TEST');
     }
     
     /**
@@ -75,7 +77,7 @@ class TFormDinGridColumnTest extends TestCase
 
     public function testAlignCenter()
     {
-        $column = new TFormDinGridColumn('TEST', 'TEST',null,'center');
+        $column = new TFormDinGridColumn($this->objForm,'TEST', 'TEST',null,'center');
         $result =  $column->getAdiantiObj();
         $this->assertInstanceOf(TDataGridColumn::class, $result);
         $this->assertEquals('center', $result->getAlign());
@@ -83,7 +85,7 @@ class TFormDinGridColumnTest extends TestCase
 
     public function testAlignRight()
     {
-        $column = new TFormDinGridColumn('TEST', 'TEST',null,'right');
+        $column = new TFormDinGridColumn($this->objForm,'TEST', 'TEST',null,'right');
         $result =  $column->getAdiantiObj();
         $this->assertInstanceOf(TDataGridColumn::class, $result);
         $this->assertEquals('right', $result->getAlign());

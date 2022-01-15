@@ -490,7 +490,7 @@ class TFormDinGrid
                             , string $width = NULL
                             , string $align='left' )
     {
-        $formDinGridColumn = new TFormDinGridColumn( $name,$label,$width,$align);
+        $formDinGridColumn = new TFormDinGridColumn( $this->getObjForm(), $name,$label,$width,$align);
         $this->addListColumn($formDinGridColumn);
         return $formDinGridColumn;
         //$column = $formDinGridColumn->getAdiantiObj();
