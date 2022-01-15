@@ -163,9 +163,13 @@
                 <action>comingSoonView</action>
             </menuitem>
             <menuitem label='Campo Link'>
-                <icon>fa:flag fa-fw</icon>
+                <icon>fas:link fa-link</icon>
                 <action>exe_bar_code</action>
             </menuitem>
+            <menuitem label='Campo Link WhatsApp'>
+                <icon>fab:fa-whatsapp fa-whatsapp green</icon>
+                <action>exe_link_whatsapp_api</action>
+            </menuitem>            
             <menuitem label='Redirect'>
                 <icon>fa:flag fa-fw</icon>
                 <action>comingSoonView</action>
