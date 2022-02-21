@@ -441,6 +441,7 @@ class ArrayHelper
     {
         $result = false;
         if(is_array($dataArray) ) {
+            $result = array(); //Evitando problema com PHP 8.1
             foreach( $dataArray as $k => $arr ) {
                 foreach( $arr as $fieldName => $value ) {
                     if( $typeCase == PDO::CASE_NATURAL ){
