@@ -169,7 +169,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testAttributeIssetOrNotZero_AttributeZero_FALSE_testZeroFALSE() {
-	    $expected = 'ISTRUE';
+	    $expected = 'ISFALSE';
 	    $whereGrid = array();
 	    $whereGrid['NUMERO']=0;
 	    $isTrue = 'ISTRUE';
