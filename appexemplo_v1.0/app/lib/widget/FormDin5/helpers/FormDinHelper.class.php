@@ -323,7 +323,7 @@ class FormDinHelper
      */
     public static function validateSizeWidthAndHeight($value,$enablePx=false)
     {
-        $value = trim($value);
+        $value = is_null($value)?$value:trim($value);
         if( !empty($value) ){
             if( $enablePx==true ){
                 $regexWithPx = '/\d+(px|\%|em|rem|vh|vw)/';
@@ -341,7 +341,7 @@ class FormDinHelper
 
     public static function sizeWidthInPercent($value)
     {
-        $value = trim($value);
+        $value = is_null($value)?$value:trim($value);
         if( is_numeric($value) ){
             if( $value>=100 ){
                 $value = '100%';
