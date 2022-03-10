@@ -48,6 +48,9 @@ if(!defined('ENCODINGS') ) {
 
 // custom session name
 session_name('PHPSESSID_'.$ini['general']['application']);
+
+setlocale(LC_ALL, 'C');
+
 new TSession;
 
 //--- FormDin 5, mostrar Documentos
