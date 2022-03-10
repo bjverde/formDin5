@@ -202,7 +202,7 @@ class DateTimeHelper
     public static function date2Mysql($dateSql,$showTime=false)
     {
         $retorno = null;
-        $dateSql = trim($dateSql);
+        $dateSql = is_null($dateSql)?$dateSql:trim($dateSql);
         if($showTime){
             
             if( preg_match('/\d{4}-\d{2}-\d{2}/', $dateSql) ){
