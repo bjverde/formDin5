@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{head_title}</title>
+    <title>Adianti Framework</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="manifest" href="manifest.json?appver=730">
+    <link rel="manifest" href="manifest.json?appver=740">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="apple-touch-icon" sizes="180x180" href="app/images/icon.png">
@@ -14,23 +14,27 @@
     {LIBRARIES}
     {HEAD}
     
-    <script src="app/lib/include/admin-all.min.js?appver=730" type="text/javascript"></script>
-    <link href="app/lib/include/admin.min.css?appver=730" rel="stylesheet" type="text/css" media="screen">
+    <script src="app/lib/include/admin-all.min.js?appver=740" type="text/javascript"></script>
+    <link href="app/lib/include/admin.min.css?appver=740" rel="stylesheet" type="text/css" media="screen">
 
     <link href="app/templates/{template}/css/AdminLTE.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="app/templates/{template}/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <script>
+    __adianti_set_language('{lang}');
+    </script>
   </head>
-  <body class="hold-transition skin-blue-light sidebar-mini layout-boxed">
+  <body class="hold-transition skin-green-light sidebar-mini layout-boxed">
     <div class="wrapper">
 
       <header class="main-header">
         <!-- Logo -->
         <a href="index.php?class=WelcomeView" generator="adianti" target="newwindow" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini">{logo-mini}</span>
+          <span class="logo-mini"><b>AF</b>7</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">{logo-lg}</span>
+          <span class="logo-lg"><b>Adianti</b>Framework 7.4</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -54,18 +58,6 @@
           <li class="header">MENU</li>
           </ul>
           {MENU}
-          <!-- Change Theme -->
-          <div class="legal" style="padding-top:25px;padding-left:1em">
-            <select name="themeChange" id="themeChange" onchange="location = this.value;">
-              <option disabled selected value>- select a Theme -</option>
-              <option value="index.php?class={class}&theme=theme_formdinv">FormDin Vert</option>
-              <option value="index.php?class={class}&theme=theme_formdin">FormDin</option>
-              <option value="index.php?class={class}&theme=theme3">Bootstrap</option>
-              <option value="index.php?class={class}&theme=theme3_v5">Bootstrap V5</option>
-              <option value="index.php?class={class}&theme=theme4">Material</option>
-            </select>
-          </div>
-          <!-- #Change Theme -->     
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -82,10 +74,6 @@
         <div id="adianti_online_content2"></div>
         
         <div id="adianti_right_panel" class="right-panel"></div>
-
-        <a id="view-source" class="float-button" title="View source code" generator="adianti-docs" href="index.php?class=DocumentationView&classname={class}&method=onHelp">
-          <i class="fa fa-code internal-float-button"></i>
-        </a>
         
       </div><!-- /.content-wrapper -->
       <footer class="row main-footer">
