@@ -45,10 +45,6 @@
                     </menuitem>          
                 </menu>
             </menuitem>
-            <menuitem label='Coord GMS'>
-                <icon>fa:map-marker fa-fw</icon>
-                <action>comingSoonView</action>
-            </menuitem>
             <menuitem label='Select'>
                 <icon>fa:sort-down fa-fw</icon>
                 <action>exe_SelectField_01</action>
@@ -76,11 +72,7 @@
             </menuitem>            
             <menuitem label='Arquivo ou Blob'>
                 <icon>far:file fa-file</icon>
-                <menu>            
-                    <menuitem label='Campo Blob'>
-                        <icon>fa:flag fa-fw</icon>
-                        <action>comingSoonView</action>
-                    </menuitem>
+                <menu>
                     <menuitem label='Campo Arquivo simples'>
                         <icon>far:file fa-file</icon>
                         <menu>            
@@ -91,10 +83,6 @@
                             <menuitem label='Normal'>
                                 <icon>far:file fa-file</icon>
                                 <action>exe_TFile</action>
-                            </menuitem>
-                            <menuitem label='TAssincrono'>
-                                <icon>fa:flag fa-fw</icon>
-                                <action>comingSoonView</action>
                             </menuitem>
                         </menu>
                     </menuitem>
@@ -132,10 +120,6 @@
                         <icon>fas:calendar-alt fa-fw</icon>
                         <action>exe_campo_hora</action>
                     </menuitem>
-                    <menuitem label='Agenda'>
-                        <icon>fas:calendar-alt fa-fw</icon>
-                        <action>comingSoonView</action>
-                    </menuitem>
                     <menuitem label='Data hora'>
                         <icon>fas:calendar-alt fa-fw</icon>
                         <action>exe_DateTimeField</action>
@@ -150,18 +134,6 @@
                 <icon>fas:key fa-key #FFD700</icon>
                 <action>exe_TPasswordField</action>
             </menuitem>
-            <menuitem label='Campo Captcha'>
-                <icon>fa:flag fa-fw</icon>
-                <action>comingSoonView</action>
-            </menuitem>
-            <menuitem label='Campo Cor'>
-                <icon>fa:flag fa-fw</icon>
-                <action>comingSoonView</action>
-            </menuitem>
-            <menuitem label='Tecla de Atalho'>
-                <icon>fa:flag fa-fw</icon>
-                <action>comingSoonView</action>
-            </menuitem>
             <menuitem label='Campo Link'>
                 <icon>fas:link fa-link</icon>
                 <action>exe_bar_code</action>
@@ -169,14 +141,6 @@
             <menuitem label='Campo Link WhatsApp'>
                 <icon>fab:fa-whatsapp fa-whatsapp green</icon>
                 <action>exe_link_whatsapp_api</action>
-            </menuitem>            
-            <menuitem label='Redirect'>
-                <icon>fa:flag fa-fw</icon>
-                <action>comingSoonView</action>
-            </menuitem>
-            <menuitem label='TZip'>
-                <icon>fa:flag fa-fw</icon>
-                <action>comingSoonView</action>
             </menuitem>
             <menuitem label='E-mail'>
                 <icon>fas:fas fa-at</icon>
