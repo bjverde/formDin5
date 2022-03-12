@@ -518,6 +518,7 @@ class ArrayHelper
         if( $typeCase == PDO::CASE_NATURAL ){
             $resultPDO = $dataArray;
         }else{
+            $result = array();  //Evitando problema com PHP 8.1
             foreach( $dataArray as $key => $arrayInterno ) {
                 foreach( $arrayInterno as $atributo => $value ) {
                     if($typeCase == PDO::CASE_UPPER) {
@@ -546,6 +547,7 @@ class ArrayHelper
         if( self::isArrayNotEmpty($string) ) {
             $result = $string;
         }else{
+            $result = array();  //Evitando problema com PHP 8.1
             if( !is_string($string) ){
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG);
             }else{
@@ -868,6 +870,5 @@ class ArrayHelper
         }
         return $arrayResult;
     }
-
 }
 ?>
