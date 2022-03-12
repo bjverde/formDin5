@@ -239,13 +239,14 @@ class TFormDinGrid
      * @param string $align   - 5: 
      * @return void
      */
-    public function addElementColumnList(string $type = self::TYPE_SIMPLE
+    public function addElementColumnList(string $type
                                         ,string $idcolumn
                                         ,string $label
                                         ,string $width = NULL
                                         ,string $align = 'left'
                                         )
     {
+        $type = empty($type)?self::TYPE_SIMPLE:$type;
         $element = array();
         $element['type']=$type;
         $element['idcolumn']=$idcolumn;
