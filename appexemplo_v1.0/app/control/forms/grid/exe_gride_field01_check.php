@@ -66,7 +66,7 @@ class exe_gride_field01_check extends TPage
         // add an regular object to the datagrid
         $item = new StdClass;
         $item->check    = new TCheckButton('check1');
-        $item->check->setIndexValue('on');
+        $item->check->setIndexValue('10');
         $item->code     = '1';
         $item->name     = 'Aretha Franklin';
         $item->address  = 'Memphis, Tennessee';
@@ -77,7 +77,7 @@ class exe_gride_field01_check extends TPage
         // add an regular object to the datagrid
         $item = new StdClass;
         $item->check  = new TCheckButton('check2');
-        $item->check->setIndexValue('on');
+        $item->check->setIndexValue('20');
         $item->code     = '2';
         $item->name     = 'Eric Clapton';
         $item->address  = 'Ripley, Surrey';
@@ -88,7 +88,7 @@ class exe_gride_field01_check extends TPage
         // add an regular object to the datagrid
         $item = new StdClass;
         $item->check  = new TCheckButton('check3');
-        $item->check->setIndexValue('on');
+        $item->check->setIndexValue('30');
         $item->code     = '3';
         $item->name     = 'B.B. King';
         $item->address  = 'Itta Bena, Mississippi';
@@ -99,7 +99,7 @@ class exe_gride_field01_check extends TPage
         // add an regular object to the datagrid
         $item = new StdClass;
         $item->check  = new TCheckButton('check4');
-        $item->check->setIndexValue('on');
+        $item->check->setIndexValue('40');
         $item->code     = '4';
         $item->name     = 'Janis Joplin';
         $item->address  = 'Port Arthur, Texas';
