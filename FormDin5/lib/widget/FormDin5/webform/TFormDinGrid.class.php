@@ -239,13 +239,14 @@ class TFormDinGrid
      * @param string $align   - 5: 
      * @return void
      */
-    public function addElementColumnList(string $type = self::TYPE_SIMPLE
+    public function addElementColumnList(string $type
                                         ,string $idcolumn
                                         ,string $label
                                         ,string $width = NULL
                                         ,string $align = 'left'
                                         )
     {
+        $type = empty($type)?self::TYPE_SIMPLE:$type;
         $element = array();
         $element['type']=$type;
         $element['idcolumn']=$idcolumn;
@@ -362,7 +363,7 @@ class TFormDinGrid
             }
             if( $this->getExportPdf() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
-                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'far:file-pdf fa-fw red' );
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as PDF', $taction, 'far:file-pdf fa-fw red' );
             }
             if( $this->getExportXml() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
@@ -490,7 +491,7 @@ class TFormDinGrid
                             , string $width = NULL
                             , string $align='left' )
     {
-        $formDinGridColumn = new TFormDinGridColumn( $name,$label,$width,$align);
+        $formDinGridColumn = new TFormDinGridColumn( $this->getObjForm(), $name,$label,$width,$align);
         $this->addListColumn($formDinGridColumn);
         return $formDinGridColumn;
         //$column = $formDinGridColumn->getAdiantiObj();

@@ -50,16 +50,17 @@ class TFormDinGridActionTest extends TestCase
 {
 
     private $classTest;
+    private $objForm;
     
     /**
      * Prepares the environment before running a test.
      */
     protected function setUp(): void {
         parent::setUp();
-        $objForm = new mockFormDinComAdianti();
+        $this->objForm = new mockFormDinComAdianti();
         $actionName = 'onSave';
         $arrayMixUpdateFields = ['code'=>'{code}'];
-        $this->classTest = new TFormDinGridAction($objForm,'Salvar',$actionName, $arrayMixUpdateFields);
+        $this->classTest = new TFormDinGridAction($this->objForm,'Salvar',$actionName, $arrayMixUpdateFields);
     }
     
     /**
@@ -78,7 +79,7 @@ class TFormDinGridActionTest extends TestCase
 
     public function testAlignCenter()
     {
-        $column = new TFormDinGridColumn('TEST', 'TEST',null,'center');
+        $column = new TFormDinGridColumn($this->objForm,'TEST', 'TEST',null,'center');
         $result =  $column->getAdiantiObj();
         $this->assertInstanceOf(TDataGridColumn::class, $result);
         $this->assertEquals('center', $result->getAlign());

@@ -40,25 +40,25 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-require_once  __DIR__.'/../../../mockFormAdianti.php';
+$path =  __DIR__.'/../../../../../';
+//require_once $path.'tests/initTest.php';
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
+use PHPUnit\Framework\TestCase;
 
-class TFormDinGridColumnTest extends TestCase
+class TFormDinCnpjFieldTest extends TestCase
 {
 
     private $classTest;
-    private $objForm;
     
     /**
      * Prepares the environment before running a test.
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->objForm = new mockFormDinComAdianti();
-        $this->classTest = new TFormDinGridColumn($this->objForm,'TEST', 'TEST');
+        $this->classTest = new TFormDinCnpjField('cnpj','CNPJ');
     }
     
     /**
@@ -67,27 +67,32 @@ class TFormDinGridColumnTest extends TestCase
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
-    }
-
-    public function testTypeObje()
+    }    
+    //-----------------------------------------------------    
+    public function test_ValidationArray_true()
     {
-        $result = $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridColumn::class, $result);
+        $this->classTest->setAlwaysValidate(true); 
+        $arrayValidations = $this->classTest->getValidations();
+        $this->assertEquals('CNPJ', $arrayValidations[0][0]);
+        $this->assertInstanceOf(TCNPJValidator::class, $arrayValidations[0][1]);
     }
-
-    public function testAlignCenter()
+    /*
+    public function test_getAlwaysValidate_false()
     {
-        $column = new TFormDinGridColumn($this->objForm,'TEST', 'TEST',null,'center');
-        $result =  $column->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridColumn::class, $result);
-        $this->assertEquals('center', $result->getAlign());
+        $this->classTest->setAlwaysValidate(false); 
+        $result = $this->classTest->getAlwaysValidate();
+        $this->assertEquals(false, $result);
     }
-
-    public function testAlignRight()
+    */
+    public function test_getAlwaysValidate_true()
     {
-        $column = new TFormDinGridColumn($this->objForm,'TEST', 'TEST',null,'right');
-        $result =  $column->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridColumn::class, $result);
-        $this->assertEquals('right', $result->getAlign());
+        $this->classTest->setAlwaysValidate(true); 
+        $result = $this->classTest->getAlwaysValidate();
+        $this->assertEquals(true, $result);
     }
+    public function test_getAlwaysValidate_DefaultIstrue()
+    {
+        $result = $this->classTest->getAlwaysValidate();
+        $this->assertEquals(true, $result);
+    }    
 }
