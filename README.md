@@ -56,14 +56,30 @@ O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
         ```
 3. No arquivo index.php da raiz do projeto incluir as linhas abaixo
     ## Arquivo index.php
+    Editar o arquivo inde.php, abaixo das linhas
     ```php
     $menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
     $content     = file_get_contents("app/templates/{$theme}/layout.html");
     ```
+    Incluir as linhas
+
+    ```php
+    //---FORMDIN 5 -------------------------
+    $content     = str_replace('{head_title}', $ini['general']['application'], $content);
+    $content     = str_replace('{formdin_version}', FormDinHelper::version(), $content);
+    $content     = str_replace('{system_version}', $ini['system']['version'], $content);
+    $content     = str_replace('{system_name}', $ini['system']['system_name'], $content);
+    $content     = str_replace('{system_name_sub}', $ini['system']['system_name_sub'], $content);
+    $content     = str_replace('{logo-mini}', $ini['system']['logo-mini'], $content);
+    $content     = str_replace('{logo-lg}', $ini['system']['logo-lg'], $content);
+    $content     = str_replace('{logo-link-class}', $ini['system']['logo-link-class'], $content);
+    $content     = str_replace('{login-link}', $ini['system']['login-link'], $content);
+    //---FIM FORMDIN 5 -----------------------
+    ```
+5. No arquivo init.php da raiz do projeto incluir as linhas abaixo
 
 
 
-    5. No arquivo init.php da raiz do projeto incluir as linhas abaixo
     6. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`    
     7. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
     8. Copiar o arquivo `lib/lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
