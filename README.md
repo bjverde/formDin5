@@ -39,35 +39,37 @@ O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
 
 # Instalação
 1. Baixar o [Adinati FrameWork 7.2.2](https://www.adianti.com.br/) funciona com o template ou FrameWork Puro. Pode ser que funcione com o Adianti 7.0 ou 7.1, porém não é garantido.
-1. Copiar o conteudo pasta FormDin5 conforme orientação abaixo e [Extensibilidade do Adianti](https://www.adianti.com.br/framework-extensibility)
-    1. No arquivo `app/config/application.ini` incluir as linhas abaixo
-    1. No arquivo index.php da raiz do projeto incluir as linhas abaixo
-    1. No arquivo init.php da raiz do projeto incluir as linhas abaixo
-    1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`    
-    1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
-    1. Copiar o arquivo `lib/lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
+2. Copiar o conteudo pasta FormDin5 conforme orientação abaixo e [Extensibilidade do Adianti](https://www.adianti.com.br/framework-extensibility)
+    2.1. No arquivo `app/config/application.ini` incluir as linhas abaixo e alterar conforme a necessidade
+        ## Arquivo application.ini
+        ```ini
+        [system]
+        formdin_min_version=5.0.0-alpha19
+        version = 1.0.0
+        system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
+        system_name_sub = 'APPEV1'
+        logo-lg = APPEV1
+        ;logo-mini = /images/favicon-96x96.png
+        logo-mini = E1
+        logo-link-class = 'index.php?class=AjudaView'
+        login-link = https://github.com/bjverde/FormDin5
+        ```
+3. No arquivo index.php da raiz do projeto incluir as linhas abaixo
+    ## Arquivo index.php
+    ```php
+    $menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
+    $content     = file_get_contents("app/templates/{$theme}/layout.html");
+    ```
 
-## Arquivo application.ini
-Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar conforme a necessidade
-```ini
-[system]
-formdin_min_version=5.0.0-alpha19
-version = 1.0.0
-system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
-system_name_sub = 'APPEV1'
-logo-lg = APPEV1
-;logo-mini = /images/favicon-96x96.png
-logo-mini = E1
-logo-link-class = 'index.php?class=AjudaView'
-login-link = https://github.com/bjverde/FormDin5
-```
 
-## Arquivo index.php
-Editar o arquivo inde.php, abaixo das linhas
-```php
-$menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
-$content     = file_get_contents("app/templates/{$theme}/layout.html");
-```
+
+    5. No arquivo init.php da raiz do projeto incluir as linhas abaixo
+    6. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`    
+    7. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
+    8. Copiar o arquivo `lib/lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
+
+
+
 Incluir as linhas
 
 ```php
