@@ -40,12 +40,12 @@ O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
 # Instalação
 1. Baixar o [Adinati FrameWork 7.2.2](https://www.adianti.com.br/) ou superior. Pode ser que funcione com o Adianti 7.0 ou 7.1, porém não é garantido.
 1. Copiar o conteudo pasta FormDin5 conforme orientação abaixo
-    1. No arquivo `app/config/application.ini` incluir as linhas abaixo
-    1. No arquivo index.php da raiz do projeto incluir as linhas abaixo
-    1. No arquivo init.php da raiz do projeto incluir as linhas abaixo
-    1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`    
-    1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
-    1. Copiar o arquivo `lib/lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
+1. No arquivo `app/config/application.ini` incluir as linhas abaixo
+1. No arquivo index.php da raiz do projeto incluir as linhas abaixo
+1. No arquivo init.php da raiz do projeto incluir as linhas abaixo
+1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`    
+1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
+1. Copiar o arquivo `lib/lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
 
 ## Arquivo application.ini
 Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar conforme a necessidade
