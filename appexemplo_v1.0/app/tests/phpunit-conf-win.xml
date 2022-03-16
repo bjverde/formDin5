@@ -1,23 +1,29 @@
 <phpunit 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.2/phpunit.xsd"
-    bootstrap="D:\wamp64\www\formDin5\appexemplo_v1.0\init.php"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+    bootstrap="../../init.php"
     colors="true"
     verbose="true"
-    >
-    <testsuites>
-        <testsuite name="FormDin 5">
-            <directory>D:\wamp64\www\formDin5\appexemplo_v1.0\app\tests</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">D:\wamp64\www\formDin5\appexemplo_v1.0\app\lib\widget</directory>
-        </whitelist>
-    </filter>
-    <logging>
-        <log type="coverage-html" target="D:\wamp64\www\formDin5\phpunit-code-coverage\" lowUpperBound="35" highLowerBound="70"/>        
-        <log type="testdox-text" target="D:\wamp64\www\formDin5\phpunit-code-coverage\testResult.txt"/>
-        <log type="testdox-html" target="D:\wamp64\www\formDin5\phpunit-code-coverage\testResult.html"/>
-    </logging>     
+    >  
+  <coverage cacheDirectory="../../../phpunit-code-coverage/cache"
+            processUncoveredFiles="true"
+            >
+    <include>
+      <directory suffix=".php">../app/lib/widget</directory>
+    </include>
+    <report>
+      <text outputFile="../../../phpunit-code-coverage/coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+      <php outputFile="../../../phpunit-code-coverage/coverage.php"/>
+      <html outputDirectory="../../../phpunit-code-coverage/html" lowUpperBound="35" highLowerBound="70"/>
+    </report>
+  </coverage>  
+  <testsuites>
+    <testsuite name="FormDin 5">
+      <directory>../tests</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <testdoxText outputFile="../../../phpunit-code-coverage/testResult.txt"/>
+    <testdoxHtml outputFile="../../../phpunit-code-coverage/testResult.html"/>
+  </logging>         
 </phpunit>
