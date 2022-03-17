@@ -39,54 +39,43 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class PostHelper
-{
-    /**
-     * @codeCoverageIgnore
-     */ 
-    public static function getArray($atributeName) 
-    {
-        $result = ArrayHelper::getArray($_POST, $atributeName);
-        return $result;
-    }
+require_once  __DIR__.'/../../mockFormDinArray.php';
 
-    /**
-     * @codeCoverageIgnore
-     */     
-    public static function get($atributeName) 
-    {        
-        $result = ArrayHelper::get($_POST, $atributeName);
-        return $result;
-    }
-    
-    /**
-     * @codeCoverageIgnore
-     */     
-    public static function getDefaultValue($atributeName,$DefaultValue) 
-    {        
-        $result = ArrayHelper::getDefaultValue($_POST, $atributeName, $DefaultValue);
-        return $result;
-    }
+use PHPUnit\Framework\TestCase;
 
-    public static function getInt($atributeName) 
-    {
-        if(!isset($_POST[$atributeName])) {
-            $_POST[$atributeName]="";
-        }
-        $valor = $_POST[$atributeName];
-        $resul = null;
-        if( !empty($valor) && is_numeric($valor) ){
-            $resul = (int)$valor;
-        }
-        return $resul;
-    }
-    
-    public static function getBool($atributeName) 
-    {
-        if(!isset($_POST[$atributeName]) || is_null($_POST[$atributeName])) {
-            $_POST[$atributeName] = false;
-        }
-        return strtoupper($_POST[$atributeName]) == "S" ? true : false;
-    }
+/**
+ * paginationSQLHelper test case.
+ */
+class PostHelperTest extends TestCase
+{	
+
+	public function testGetInt_OkInputInt() {
+	    $atributeName = 'test';
+        $_POST[$atributeName] = 1;
+        $expected = 1;
+	    $result = PostHelper::getInt( $atributeName );
+        $this->assertSame( $expected , $result);
+	}
+
+	public function testGetInt_OkInputString() {
+	    $atributeName = 'test';
+        $_POST[$atributeName] = '10';
+        $expected = 10;
+	    $result = PostHelper::getInt( $atributeName );
+        $this->assertSame( $expected , $result);
+	}
+
+	public function testGetInt_OkPostNull() {
+        $expected = null;
+	    $result = PostHelper::getInt( 'novo' );
+        $this->assertSame( $expected , $result);
+	}
+
+    public function testGetInt_FailInputString() {
+	    $atributeName = 'test';
+        $_POST[$atributeName] = 'casa';
+        $expected = null;
+	    $result = PostHelper::getInt( $atributeName );
+        $this->assertSame( $expected , $result);
+	}
 }
-?>
