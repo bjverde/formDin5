@@ -46,16 +46,25 @@
 
 class GetHelper
 {
+    /**
+     * @codeCoverageIgnore
+     */    
     public static function get($atributeName) 
     {
         return ArrayHelper::get($_GET,$atributeName);
     }
     
+    /**
+     * @codeCoverageIgnore
+     */    
     public static function getDefaultValue($atributeName,$DefaultValue) 
     {
         return ArrayHelper::getDefaultValue($_GET,$atributeName,$DefaultValue);
     }
-    
+
+    /**
+     * @codeCoverageIgnore
+     */
     public static function has($atributeName) 
     {
         return ArrayHelper::has($atributeName,$_GET);
