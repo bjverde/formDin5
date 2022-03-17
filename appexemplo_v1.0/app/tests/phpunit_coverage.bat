@@ -45,6 +45,7 @@ REM ECHO PHP 8.1.0 and PHPUnit 9.5.9 Simples with Coverage
 REM D:\wamp64\bin\php\php8.1.0\php.exe D:\wamp64\bin\phpunit\phpunit-9.5.9.phar --colors=auto --bootstrap D:\wamp64\www\adianti\formDin5\appexemplo_v1.0\init.php --whitelist D:\wamp64\www\adianti\formDin5\appexemplo_v1.0\app\lib\widget\FormDin5 --coverage-html D:\wamp64\www\adianti\formDin5\phpunit-code-coverage D:\wamp64\www\adianti\formDin5\appexemplo_v1.0\app\tests\
 
 ECHO php 8.1.0 and PHPUnit 9.5.9 with Config XML file
-d:\wamp64\bin\php\php8.1.0\php.exe  d:\wamp64\bin\phpunit\phpunit-9.5.9.phar --configuration D:\wamp64\www\adianti\formDin5\appexemplo_v1.0\app\tests\phpunit-conf-win.xml D:\wamp64\www\adianti\formDin5\appexemplo_v1.0\app\tests\
+d:\wamp64\bin\php\php8.1.0\php.exe  d:\wamp64\bin\phpunit\phpunit-9.5.9.phar --configuration D:\wamp64\www\adianti\formDin5\appexemplo_v1.0\app\tests\phpunit-conf-win.xml
+
 
 cd app\tests\

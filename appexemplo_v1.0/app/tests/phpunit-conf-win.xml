@@ -9,11 +9,10 @@
             processUncoveredFiles="true"
             >
     <include>
-      <directory suffix=".php">../app/lib/widget</directory>
+      <directory suffix=".php">../../app/lib/widget</directory>
     </include>
     <report>
       <text outputFile="../../../phpunit-code-coverage/coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
-      <php outputFile="../../../phpunit-code-coverage/coverage.php"/>
       <html outputDirectory="../../../phpunit-code-coverage/html" lowUpperBound="35" highLowerBound="70"/>
     </report>
   </coverage>  
