@@ -12,10 +12,13 @@
 /.buildpath
 
 #FormDin5 Project
-appexemplo_v1.0/.phpunit.result.cache
 /sysgen/
 /sysgenad/
-/phpunit-code-coverage/
-!/phpunit-code-coverage/phpunit-code-coverage.zip
+!phpunit-code-coverage/cache/index.php
+!phpunit-code-coverage/html/index.php
+!phpunit-code-coverage/phpunit-code-coverage.zip
+phpunit-code-coverage/**
+
 /appexemplo_v1.0/tmp/
 !/appexemplo_v1.0/tmp/.htaccess
+appexemplo_v1.0/app/tests/.phpunit.result.cache
