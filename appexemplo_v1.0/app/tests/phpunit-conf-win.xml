@@ -15,7 +15,7 @@
       <text outputFile="../../../phpunit-code-coverage/coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
       <html outputDirectory="../../../phpunit-code-coverage/html" lowUpperBound="35" highLowerBound="70"/>
     </report>
-  </coverage>  
+  </coverage>
   <testsuites>
     <testsuite name="FormDin 5">
       <directory>../tests</directory>
