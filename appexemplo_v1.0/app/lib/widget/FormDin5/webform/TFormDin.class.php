@@ -1346,8 +1346,9 @@ class TFormDin
      * @param integer $intPaddingItems - 11: DEPRECATED.
      * @param boolean $boolNoWrapLabel - 12: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param boolean $boolNowrapText  - 13: NOT_IMPLEMENTED 
-     * @param mixed   $strKeyColumn    - 14: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
-     * @param mixed   $strDisplayColumn- 15: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
+     * @param boolean $setUseButton    - 14: FORMDIN5 Default FALSE = mostra com check normal, TRUE = mostra como um botão
+     * @param mixed   $strKeyColumn    - 15: FORMDIN5 Nome da coluna que será utilizada para preencher os valores das opções
+     * @param mixed   $strDisplayColumn- 16: FORMDIN5 Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário     
      * @return TFormDinCheckField
      */
     public function addCheckField(string $id
@@ -1365,6 +1366,7 @@ class TFormDin
                                 , $boolNowrapText=null
                                 , $strKeyColumn=null
                                 , $strDisplayColumn=null
+                                , $setUseButton=null
                                 )
     {
        //$field = new TCheck( $strName, $arrOptions, $arrValues, $boolRequired, $intQtdColumns, $intWidth, $intHeight, $intPaddingItems );
@@ -1385,6 +1387,7 @@ class TFormDin
                                            ,$boolNowrapText
                                            ,$strKeyColumn
                                            ,$strDisplayColumn
+                                           ,$setUseButton
                                           );
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
