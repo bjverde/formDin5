@@ -50,20 +50,24 @@ class exe_CheckField extends TPage
             $frm->addCheckField('st_andamento', $leg.'Andamento', null, null, false, null, 'N')->addEvent('onChange', 'formDinFazer()');
         
         $frm->closeGroup();
-        
+        */
         
         $listLingProg = array('Cobol','PHP','HTML','CSS','JavaScript','Ruby','Python','Java','Delphi');
         $listLingProgSel = array(0=>1,1=>4,2=>3);
-        $frm->addGroupField('gp3', 'Grupo 3 - Check com valor pre-marcados');
-            $frm->addCheckField('lingProg1', 'Linguagens de Programção:', false, $listLingProg,true,true,$listLingProgSel,3,250);
+        $frm->addGroupField('gp3', 'Grupo 3 - Check como botões');
+            //$frm->addCheckField('lingProg1', 'Linguagens de Programção:', false, $listLingProg,true,true,$listLingProgSel,3,250);
+            $lingProg1 = $frm->addCheckField('lingProg1', 'Linguagens de Programção (função):', false, $listLingProg,true,false);
+            $lingProg1->setUseButton(true);
+
+            $frm->addCheckField('lingProg2', 'Linguagens de Programção (parametro 14):', false, $listLingProg,true,false,null,null,null,null,null,null,null,true);
         $frm->closeGroup();
         
+        /*
         $frm->addGroupField('gp4', 'Grupo 4 - Check com tamnha definido');
             $lingProg2 = $frm->addCheckField('lingProg2', 'Linguagens de Programção:', false, $listLingProg,true,true,null,3,100,200);
             $lingProg2->setCss('background-color', '#ff6347');
         $frm->closeGroup();
         */
-
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
