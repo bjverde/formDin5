@@ -58,6 +58,7 @@ class exe_CheckField extends TPage
             //$frm->addCheckField('lingProg1', 'Linguagens de Programção:', false, $listLingProg,true,true,$listLingProgSel,3,250);
             $lingProg1 = $frm->addCheckField('lingProg1', 'Linguagens de Programção (função):', false, $listLingProg,true,false);
             $lingProg1->setUseButton(true);
+            $lingProg1->setWidth(300);
 
             $frm->addCheckField('lingProg2', 'Linguagens de Programção (parametro 14):', false, $listLingProg,true,false,null,null,null,null,null,null,null,true);
         $frm->closeGroup();
