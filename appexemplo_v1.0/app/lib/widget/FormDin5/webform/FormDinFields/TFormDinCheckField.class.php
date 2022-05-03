@@ -151,7 +151,6 @@ class TFormDinCheckField  extends TFormDinOption
         $this->setBreakItems($intQtdColumns);
         $this->setUseButton($useButton);
         $this->setLayout('horizontal');
-        $this->setUseButton(true);
     }
 
     public function setWidth($intWidth)
