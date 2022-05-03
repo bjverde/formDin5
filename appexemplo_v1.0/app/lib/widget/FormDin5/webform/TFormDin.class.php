@@ -1364,9 +1364,9 @@ class TFormDin
                                 , $intPaddingItems=null
                                 , $boolNoWrapLabel=null 
                                 , $boolNowrapText=null
-                                , $strKeyColumn=null
-                                , $strDisplayColumn=null
                                 , $setUseButton=null
+                                , $strKeyColumn=null
+                                , $strDisplayColumn=null                                
                                 )
     {
        //$field = new TCheck( $strName, $arrOptions, $arrValues, $boolRequired, $intQtdColumns, $intWidth, $intHeight, $intPaddingItems );
@@ -1385,9 +1385,9 @@ class TFormDin
                                            ,$intPaddingItems
                                            ,$boolNoWrapLabel
                                            ,$boolNowrapText
-                                           ,$strKeyColumn
-                                           ,$strDisplayColumn
                                            ,$setUseButton
+                                           ,$strKeyColumn
+                                           ,$strDisplayColumn                                           
                                           );
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
