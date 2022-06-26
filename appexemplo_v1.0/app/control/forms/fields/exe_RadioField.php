@@ -26,7 +26,10 @@ class exe_RadioField extends TPage
             $frm->addRadioField('sit_genero2', 'Genero 2 s/quebra:', true, 'M=Masculino,F=Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino ', null, false, null, null, null, null, null, false, true);
             $frm->addRadioField('sit_genero3', 'Genero 3 c/quebra:', true, 'M=Masculino,F=Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino Feminino ', null, false, null, null, null, null, null, false, false);            
             $frm->addRadioField('sit_genero4', 'Em 5 Colunas:', false, $listTipo, null, true, null, 5, null, null, null, false, false);        
-            $frm->addRadioField('sit_genero5', 'Em 3 Colunas, com valor setado:', false, $listTipo, null, true, 7, 3, null, null, null, false, false);
+            $sit_genero3 = $frm->addRadioField('sit_genero5', 'Em 3 Colunas, com valor setado:', false, $listTipo, null, true, 7, 3, null, null, null, false, false);
+            $listaLabel_genero5 = $sit_genero3->getLabels();
+            $labelItem7 = $listaLabel_genero5[8];
+            $labelItem7->setFontColor('#dd5a43');
         $frm->closeGroup();
 
         $frm->addGroupField('gp2', 'Novidades do FormDin5 devido o Adianti');
@@ -37,6 +40,10 @@ class exe_RadioField extends TPage
         $labelItem7 = $listaLabel[7];
         $labelItem7->setTip("Item mais escolhido");
         $labelItem7->setSize(100);
+        $labelItem7 = $listaLabel[9];
+        $labelItem7->setTip("Item especial");
+        $labelItem7->setSize(50);        
+        $labelItem7->setFontColor('#dd5a43');
 
 
         $sit_cancelado2 = $frm->addRadioField('sit_cancelado2', 'Ativo (vertical):', false, 'S=SIM,N=Não', null, false, null, 2, null, null, null, false);
