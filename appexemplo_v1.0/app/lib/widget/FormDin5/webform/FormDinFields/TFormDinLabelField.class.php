@@ -69,10 +69,11 @@ class TFormDinLabelField
                                ,$decoration = null
                                ,$size = null                               
                                )
-    {  
+    {
         if( empty($color) && ($boolRequired==true) ){
             $color = 'red';
         }
+        $fontsize = empty($fontsize)?'14px':$fontsize;
         $this->adiantiObj = new TLabel($strLabel,$color,$fontsize,$decoration,$size);
     }
 
