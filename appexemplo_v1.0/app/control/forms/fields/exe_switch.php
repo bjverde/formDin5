@@ -24,6 +24,7 @@ class exe_switch extends TPage
         $frm->addSwitchField('id2','Label Switch 2 ReadOnly')->setReadOnly(true);
         $x = $frm->addSwitchField('id3','Label Switch 3 ReadOnly');
         $x->setReadOnly(true);
+        $frm->addSwitchField('id4','Label Switch 4',true,array('A'=>'A','B'=>'B'),false,true);
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
