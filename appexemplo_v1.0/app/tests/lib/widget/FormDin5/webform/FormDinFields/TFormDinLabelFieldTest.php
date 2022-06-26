@@ -87,4 +87,11 @@ class TFormDinLabelFieldTest extends TestCase
         $result =  $this->classTest->getClass();
         $this->assertEquals('aaa bbb', $result);
     }
+
+    public function test_GetToottip()
+    {
+        $this->classTest->setTooltip('vaii');
+        $result =  $this->classTest->getTooltip();
+        $this->assertEquals('vaii', $result);
+    }
 }
