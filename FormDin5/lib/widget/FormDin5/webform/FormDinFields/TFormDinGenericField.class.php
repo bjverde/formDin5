@@ -100,6 +100,9 @@ class TFormDinGenericField
     public function setAdiantiObj($adiantiObj){
         if( empty($adiantiObj) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }
+        if( !is_object($adiantiObj) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
         }        
         return $this->adiantiObj=$adiantiObj;
     }

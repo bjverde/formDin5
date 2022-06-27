@@ -955,6 +955,7 @@ class TFormDin
      * @param array $itens           - 4: Informe um array do tipo "chave=>valor", com maximo de 2 elementos
      * @param boolean $boolNewLine   - 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove- 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param string  $mixValue      - 7: Valor DEFAULT, informe o ID do array
      * @return TRadioGroup
      */
     public function addSwitchField(string $id
@@ -962,9 +963,10 @@ class TFormDin
                                   ,$boolRequired = false
                                   ,array $itens=null
                                   ,$boolNewLine=null
-                                  ,$boolLabelAbove=null)
+                                  ,$boolLabelAbove=null
+                                  ,$mixValue=null)
     {
-        $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
+        $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens,$mixValue);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         //$this->addFields($label ,$objField ,$boolLabelAbove);
