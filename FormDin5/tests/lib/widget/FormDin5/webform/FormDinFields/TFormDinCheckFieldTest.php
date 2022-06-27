@@ -118,8 +118,9 @@ class TFormDinCheckFieldTest extends TestCase
     }    
     public function testWidth()
     {
-        $this->expectWarning();
         $this->classTest->setWidth(10);
+        $result = $this->classTest->getWidth();
+        $this->assertEquals(10,$result );
     }
     public function testHeight()
     {
