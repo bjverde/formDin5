@@ -59,45 +59,48 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinSwitch extends TFormDinGenericField
+class TFormDinSwitch extends TFormDinRadio
 {
     protected $adiantiObj;
+    protected $items = ['S'=>'Sim', 'N'=>'Não'];
     
     /**
      * Cria um RadioGroup com efeito visual de Switch
      * Reconstruido FormDin 4 Sobre o Adianti 7
      * 
-     * @param string $id            - 1: ID do campo
-     * @param string $strLabel      - 2: Label do campo
-     * @param boolean $boolRequired - 3: Obrigatorio
-     * @param array $itens
+     * @param string  $id            - 1: ID do campo
+     * @param string  $strLabel      - 2: Label do campo
+     * @param boolean $boolRequired  - 3: TRUE = Required, FALSE = not Required
+     * @param array   $mixOptions    - 4: Array Options ou String FormDin 'S=SIM,N=Não'
+     * @param boolean $boolNewLine   - 5: TRUE = new line, FALSE = no, DEFAULT ou NULL = FALSE
+     * @param boolean $boolLabelAbove- 6: TRUE = Titulo em cima das opções, FALSE = titulo lateral
+     * @param string  $mixValue      - 7: Valor DEFAULT, informe o ID do array
      * @return mixed TRadioGroup
      */
-    public function __construct(string $id,string $label,$boolRequired = false,array $itens= null)
-    {
-        $adiantiObj = new TRadioGroup($id);
-        $adiantiObj->setLayout('horizontal');
-        $adiantiObj->setUseButton();
-        $items = ['S'=>'Sim', 'N'=>'Não'];
-        $adiantiObj->addItems($items);
-        $this->setAdiantiObj($adiantiObj);
-
-        parent::__construct($this->getAdiantiObj(),$id,$label,$boolRequired,null,null);
-       
-        return $this->getAdiantiObj();
-    }
-    
-    public function setAdiantiObj($adiantiObj)
-    {
-        if( empty($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+    public function __construct(string $id,string $label,$boolRequired = false,array $mixOptions= null, $boolNewLine=true,$boolLabelAbove=false,$mixValue=null)
+    {        
+        if( !empty($mixOptions) ){
+            $this->items = $mixOptions;
+        }else{
+            $mixOptions = $this->items;
         }
-        if( !is_object($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        } 
-        return $this->adiantiObj=$adiantiObj;
-    }
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
+        parent::__construct($id
+                            ,$label
+                            ,$boolRequired
+                            ,$mixOptions
+                            ,$boolNewLine
+                            ,$boolLabelAbove
+                            ,$mixValue
+                            ,2
+                            ,null
+                            ,null
+                            ,null
+                            ,null
+                            ,null
+                            ,true
+                            ,null
+                            ,null
+                            );    
+        return $this->getAdiantiObj();
     }
 }
