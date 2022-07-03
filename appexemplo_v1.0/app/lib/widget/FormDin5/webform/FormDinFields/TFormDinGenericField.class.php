@@ -96,7 +96,11 @@ class TFormDinGenericField
         $this->setPlaceHolder($placeholder);
         return $this->getAdiantiObj();
     }
-
+    //------------------------------------------------------------------------------    
+    /**
+     * Seta um objeto Adianti
+     * @return object 
+     */  
     public function setAdiantiObj($adiantiObj){
         if( empty($adiantiObj) ){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
@@ -120,7 +124,7 @@ class TFormDinGenericField
     public function getAdiantiField(){
         return $this->getAdiantiObj();
     }
-
+    //------------------------------------------------------------------------------    
     /**
      * Seta o texto do Label do campo
      * @param string $label
@@ -128,7 +132,6 @@ class TFormDinGenericField
     protected function setLabelTxt($label){
         $this->labelTxt = $label;
     }
-
     /**
      * Retorna o texto do Label do campo
      * @return string
@@ -136,7 +139,12 @@ class TFormDinGenericField
     public function getLabelTxt(){
         return $this->labelTxt;
     }
-
+    /**
+     * Seta o Label Adianti, criando um objeto Label
+     *
+     * @param string $label         -1: Texto do Label
+     * @param boolean $boolRequired -2: Obrigatorio ou não. DEFAULT = False.
+     */
     public function setLabel($label,$boolRequired){
         if(!empty($label)){
             $this->setLabelTxt($label);
@@ -145,7 +153,6 @@ class TFormDinGenericField
         }
         $this->labelObj = $label;
     }
-    
     /**
      * Retorna objeto do tipo campo do Adianti
      * @return object
@@ -153,7 +160,7 @@ class TFormDinGenericField
     public function getLabel(){
         return $this->labelObj;
     }
-
+    //---------------------------------------------------------------
     public function setId($id){
         $adiantiObj = $this->getAdiantiObj();
         if($adiantiObj instanceof TElement){
