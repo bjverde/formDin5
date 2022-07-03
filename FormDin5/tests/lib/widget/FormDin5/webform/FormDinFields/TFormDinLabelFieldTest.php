@@ -40,16 +40,13 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =   __DIR__.'/../../../';
-require_once $path.'mockFormDinArray.php';
+$path =  __DIR__.'/../../../../../';
+//require_once $path.'tests/initTest.php';
 
-
-use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Error\Notice;
-use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Warning;
 
-class TFormDinCheckFieldTest extends TestCase
+class TFormDinLabelFieldTest extends TestCase
 {
 
     private $classTest;
@@ -59,8 +56,7 @@ class TFormDinCheckFieldTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $select = new TFormDinCheckField('check1','Selecione a Pessoa',false,'S=SIM,N=Não');
-        $this->classTest = $select;
+        $this->classTest = new TFormDinLabelField('Label Text',false,'green','20px','b','200');
     }
     
     /**
@@ -69,67 +65,33 @@ class TFormDinCheckFieldTest extends TestCase
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
-    }
-    public function testGetItems()
-    {
-        $items = ['S'=>'SIM', 'N'=>'Não'];
-        $result = $this->classTest->getItems();
-        $this->assertEquals( $items,$result );
-    }
-    public function testLayout()
-    {
-        $this->classTest->setLayout('vertical');
-        $result = $this->classTest->getLayout();
-        $this->assertEquals( 'vertical',$result );
-    }
-    public function testLayout_inSelect()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->classTest->setFieldType(TFormDinOption::SELECT);
-        $this->classTest->setLayout('vertical');
-    }
-    public function testButton()
-    {
-        $this->classTest->setUseButton(true);
-        $result = $this->classTest->getButtons();
-        $this->assertInstanceOf(TCheckButton::class, $result['S']);
-    }
-    public function testBreakItems_inSelect()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->classTest->setFieldType(TFormDinOption::SELECT);
-        $this->classTest->setBreakItems(1);
-    }
-    public function testGetLabels()
-    {
-        $result = $this->classTest->getLabels();
-        $this->assertInstanceOf(TLabel::class, $result['S']);
-    }
-    public function testButton_inSelect()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->classTest->setFieldType(TFormDinOption::SELECT);
-        $this->classTest->setUseButton(true);
-    }
-    public function testInstanceOff()
+    }     
+    
+    public function test_instanceOff()
     {
         $adiantiObj = $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TCheckGroup::class, $adiantiObj);
-    }    
-    public function testWidth()
-    {
-        $this->classTest->setWidth(10);
-        $result = $this->classTest->getWidth();
-        $this->assertEquals(10,$result );
+        $this->assertInstanceOf(TLabel::class, $adiantiObj);
     }
-    public function testHeight()
+
+    public function test_GetClass()
     {
-        $this->expectWarning();
-        $this->classTest->setHeight(10);
+        $this->classTest->setClass('aaa');
+        $result =  $this->classTest->getClass();
+        $this->assertEquals('aaa', $result);
     }
-    public function testPaddingItems()
+
+    public function test_GetClass2()
     {
-        $this->expectWarning();
-        $this->classTest->setPaddingItems(10);
-    }    
+        $this->classTest->setClass('aaa');
+        $this->classTest->setClass('bbb');
+        $result =  $this->classTest->getClass();
+        $this->assertEquals('aaa bbb', $result);
+    }
+
+    public function test_GetToottip()
+    {
+        $this->classTest->setTooltip('vaii');
+        $result =  $this->classTest->getTooltip();
+        $this->assertEquals('vaii', $result);
+    }
 }
