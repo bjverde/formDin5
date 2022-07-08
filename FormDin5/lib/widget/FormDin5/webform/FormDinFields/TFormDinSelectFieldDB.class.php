@@ -68,29 +68,36 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
      * o que cada marca significa.
      * ------------------------------------------------------------------------
      *
-     * @param string $id          - 1: ID do campo
-     * @param string $strLabel    - 2: Label do campo
-     * @param string $database    - 3: Nome da conexão
-     * @param string $model       - 4: Nome arquivo model, precisa ser do tipo TRecord
-     * @param string $key         - 5: Nome da chave, será o valor enviado para o banco
-     * @param string $value       - 6: Nome do balor que vai aparecer para o usuário
-     * @param string $ordercolumn - 7: Nome da colune de ordenação
-     * @param TCriteria $criteria - 8: Objeto do tipo TCriteria para fazer filtros 
-     * @param string $enableSearch- 9: Define se o campo será tipo autocomplete
+     * @param string $id           - 01: ID do campo
+     * @param string $label        - 02: Label do campo
+     * @param boolean $boolRequired- 03: Campo obrigatório. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param string $value        - 04: Valor inicial 
+     * @param string $database     - 05: Nome da conexão
+     * @param string $model        - 06: Nome arquivo model, precisa ser do tipo TRecord
+     * @param string $key          - 07: Nome da chave, será o valor enviado para o banco
+     * @param string $name         - 08: Nome do balor que vai aparecer para o usuário
+     * @param string $ordercolumn  - 09: Nome da colune de ordenação
+     * @param TCriteria $criteria  - 10: Objeto do tipo TCriteria para fazer filtros 
+     * @param string $enableSearch - 11: Define se o campo será tipo autocomplete
+     * @param string $placeholder   -12: PlaceHolder é um Texto de exemplo
      * @return TEntry
      */
     public function __construct(string $id
                                ,string $label
+                               ,bool   $boolRequired
+                               ,string $value
                                ,string $database
                                ,string $model
                                ,string $key
-                               ,string $value
+                               ,string $name
                                ,string $ordercolumn = null
                                ,TCriteria $criteria = null
                                ,bool $enableSearch = true
                                )
     {
-        $adiantiObj = new TDBCombo($id, $database, $model, $key, $value, $ordercolumn, $criteria)
+        $boolRequired   = empty($boolRequired)?false:$boolRequired;
+
+        $adiantiObj = new TDBCombo($id, $database, $model, $key, $name, $ordercolumn, $criteria)
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
         $this->enableSearch($enableSearch);
         return $this->getAdiantiObj();
