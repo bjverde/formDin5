@@ -98,7 +98,7 @@ class TFormDinFileField extends TFormDinGenericField
                                , $strAllowedFileTypes=null
                                , $intSize=null
                                , $strMaxSize=null
-                               , $value
+                               , $value=null
                                , $enableFileHandling = false
                                , $enablePopover = false
                                , $enableImageGallery = null
