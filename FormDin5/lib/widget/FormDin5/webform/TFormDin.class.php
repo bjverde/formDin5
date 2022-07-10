@@ -1042,7 +1042,7 @@ class TFormDin
      * @param string  $strMaxFileSize  - 05: Input the max size file with K, M for Megabit (Mb) or G for Gigabit (Gb). Example 2M = 2 Mb = 2048Kb.
      * @param integer $intFieldSize    - 06: NOT_IMPLEMENTED
      * @param boolean $boolAsync       - 07: NOT_IMPLEMENTED
-     * @param boolean $boolNewLine     - 08: NOT_IMPLEMENTED
+     * @param boolean $boolNewLine     - 08: Em nova linha, DEFALUT is TRUE não obrigatorio.
      * @param string  $strJsCallBack   - 09: NOT_IMPLEMENTED
      * @param boolean $boolLabelAbove  - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
