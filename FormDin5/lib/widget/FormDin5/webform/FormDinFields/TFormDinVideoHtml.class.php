@@ -85,13 +85,32 @@ class TFormDinVideoHtml extends TFormDinGenericField
 
         parent::__construct($adiantiObj,$id,$label,null,null,null);
         $this->autoplay($autoplay);
+        $this->controls($controls);
+        $this->loop($loop);
     }
 
-    public function autoplay($autoplay)
+    private function setProperty($property, $valeu)
     {
-        $autoplay = empty($autoplay)?true:$autoplay;
-        if($autoplay){
-            $this->getAdiantiObj()->setProperty('autoplay', $autoplay);
+        $valeu = empty($valeu)?true:$valeu;
+        if($valeu){
+            $this->getAdiantiObj()->setProperty($property, $valeu);
         }
+    }
+    public function loop($valeu)
+    {
+        $this->setProperty('loop', $valeu);
+    }    
+    public function controls($valeu)
+    {
+        $this->setProperty('controls', $valeu);
+    }
+    public function muted($valeu)
+    {
+        $this->setProperty('muted', $valeu);
+    }
+    public function autoplay($valeu)
+    {
+        $this->setProperty('autoplay', $valeu);
+        $this->setProperty('muted', $valeu);
     }
 }
