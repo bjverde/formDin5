@@ -1227,45 +1227,29 @@ class TFormDin
     }    
 
     /**
-     * Adicionar campo tipo combobox ou menu select
+     * Adicionar campo tipo combobox ou menu select que faz uma busca no banco
+     * usando TRecord
+     * 
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
      * os parâmetros do metodos foram marcados veja documentação da classe para
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * $mixOptions = array no formato "key=>value". No FormDin 5 só permite array PHP
-     * $strKeyColumn = nome da coluna que será utilizada para preencher os valores das opções
-     * $strDisplayColumn = nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-     * $strDataColumns = informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
-     *
-     * <code>
-     * 	// exemplos
-     * 	$frm->addSelectField('tipo','Tipo:',false,'1=Tipo 1,2=Tipo 2');
-     * 	$frm->addSelectField('tipo','Tipo:',false,'tipo');
-     * 	$frm->addSelectField('tipo','Tipo:',false,'select * from tipo order by descricao');
-     * 	$frm->addSelectField('tipo','Tipo:',false,'tipo|descricao like "F%"');
-     *
-     *  //Exemplo espcial - Campo obrigatorio e sem senhum elemento pre selecionado.
-     *  $frm->addSelectField('tipo','Tipo',true,$tiposDocumentos,null,null,null,null,null,null,' ','');
-     * </code>
-     *
-     * @param string  $strName        - 1: ID do campo
-     * @param string  $strLabel       - 2: Label do campo
-     * @param boolean $boolRequired   - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param mixed   $mixOptions     - 4: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN e ArrayHelper::TYPE_PHP
-     * @param boolean $boolNewLine    - 5: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
-     * @param boolean $boolLabelAbove - 6: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param mixed   $mixValue       - 7: Valor DEFAULT, informe o ID do array
-     * @param boolean $boolMultiSelect- 8: Default FALSE = SingleSelect, TRUE = MultiSelect
-     * @param integer $intSize            - 09: NOT_IMPLEMENTED Default 1. Num itens que irão aparecer. 
-     * @param integer $intWidth           - 10: DEPRECATED. Informe NULL para evitar o warning. Largura em Pixels
-     * @param string  $strFirstOptionText - 11: NOT_IMPLEMENTED First Key in Display
-     * @param string  $strFirstOptionValue- 12: Frist Value in Display, use value NULL for required. Para o valor DEFAULT informe o ID do $mixOptions e $strFirstOptionText = '' e não pode ser null
-     * @param string  $strKeyColumn       - 13: Nome da coluna que será utilizada para preencher os valores das opções
-     * @param string  $strDisplayColumn   - 14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
-     * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
-     * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED Informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+     * @param string  $strName       - 01: ID do campo
+     * @param string  $strLabel      - 02: Label do campo
+     * @param boolean $boolRequired  - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $boolNewLine   - 04: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
+     * @param boolean $boolLabelAbove- 05: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param string $value          - 04: Valor inicial 
+     * @param string $database       - 05: Nome da conexão
+     * @param string $model          - 06: Nome arquivo model, precisa ser do tipo TRecord
+     * @param string $key            - 07: Nome da chave, será o valor enviado para o banco
+     * @param string $name           - 08: Nome do balor que vai aparecer para o usuário
+     * @param string $ordercolumn  - 09: Nome da colune de ordenação
+     * @param TCriteria $criteria  - 10: Objeto do tipo TCriteria para fazer filtros 
+     * @param string $enableSearch - 11: Define se o campo será tipo autocomplete
+     * @param string $placeholder   -12: PlaceHolder é um Texto de exemplo
      * @return TCombo
      */
     public function addSelectField(string $id
@@ -1310,6 +1294,8 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
+
+
     //-----------------------------------------------------------------------------
     /**
      * Adicicionar campo tipo radiobutton
