@@ -1236,8 +1236,8 @@ class TFormDin
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * @param string  $strName       - 01: ID do campo
-     * @param string  $strLabel      - 02: Label do campo
+     * @param string  $id            - 01: ID do campo
+     * @param string  $label         - 02: Label do campo
      * @param boolean $boolRequired  - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param boolean $boolNewLine   - 04: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove- 05: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
@@ -1246,47 +1246,44 @@ class TFormDin
      * @param string $model          - 06: Nome arquivo model, precisa ser do tipo TRecord
      * @param string $key            - 07: Nome da chave, será o valor enviado para o banco
      * @param string $name           - 08: Nome do balor que vai aparecer para o usuário
-     * @param string $ordercolumn  - 09: Nome da colune de ordenação
-     * @param TCriteria $criteria  - 10: Objeto do tipo TCriteria para fazer filtros 
-     * @param string $enableSearch - 11: Define se o campo será tipo autocomplete
-     * @param string $placeholder   -12: PlaceHolder é um Texto de exemplo
-     * @return TCombo
+     * @param string $ordercolumn    - 09: Nome da colune de ordenação
+     * @param TCriteria $criteria    - 10: Objeto do tipo TCriteria para fazer filtros 
+     * @param string $enableSearch   - 11: Define se o campo será tipo autocomplete
+     * @param string $placeholder    - 12: PlaceHolder é um Texto de exemplo
+     * @return TDBCombo
      */
     public function addSelectField(string $id
                                   ,string $strLabel
-                                  ,$boolRequired
-                                  ,$mixOptions
-                                  ,$boolNewLine = true
-                                  ,$boolLabelAbove = false
-                                  ,$mixValue = null
-                                  ,$boolMultiSelect = false
-                                  ,int $intSize = null
-                                  ,int $intWidth = null
-                                  ,string $strFirstOptionText = null
-                                  ,string $strFirstOptionValue = null
-                                  ,string $strKeyColumn = null
-                                  ,string $strDisplayColumn = null
-                                  ,string $boolNoWrapLabel = null
-                                  ,string $strDataColumns = null
+                                  ,bool $boolRequired
+                                  ,bool $boolNewLine
+                                  ,bool $boolLabelAbove
+                                  ,string $value
+                                  ,string $database
+                                  ,string $model
+                                  ,string $key
+                                  ,string $name
+                                  ,string $ordercolumn = null
+                                  ,TCriteria $criteria = null
+                                  ,bool $enableSearch = true
+                                  ,bool $placeholder = null
                                   )
     {
-        $boolRequired = empty($boolRequired)?false:$boolRequired;
-        $formField = new TFormDinSelectField($id
-                                            ,$strLabel
+        $boolRequired   = empty($boolRequired)?false:$boolRequired;
+        $boolNewLine    = empty($boolNewLine)?true:$boolNewLine;
+        $boolLabelAbove = empty($boolLabelAbove)?false:$boolLabelAbove;
+
+        $formField = new TFormDinSelectFieldDB($id
+                                            ,$label
                                             ,$boolRequired
-                                            ,$mixOptions
-                                            ,$boolNewLine
-                                            ,$boolLabelAbove
-                                            ,$mixValue
-                                            ,$boolMultiSelect
-                                            ,$intSize
-                                            ,$intWidth
-                                            ,$strFirstOptionText
-                                            ,$strFirstOptionValue
-                                            ,$strKeyColumn
-                                            ,$strDisplayColumn
-                                            ,$boolNoWrapLabel
-                                            ,$strDataColumns
+                                            ,$value
+                                            ,$database
+                                            ,string $model
+                                            ,string $key
+                                            ,string $name
+                                            ,string $ordercolumn = null
+                                            ,TCriteria $criteria = null
+                                            ,bool $enableSearch = true
+                                            ,bool $placeholder = null
                                         );
         $objField = $formField->getAdiantiObj();
         $label = $this->getLabelField($strLabel,$boolRequired);
