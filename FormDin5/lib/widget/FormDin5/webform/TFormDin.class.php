@@ -1047,9 +1047,10 @@ class TFormDin
      * @param boolean $boolLabelAbove  - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string  $strMessageInvalidFileType - 12: NOT_IMPLEMENTED
-     * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
-     * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
-     * @param integer $enableImageGallery -15: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
+     * @param boolean $value              -13: FORMDIN5 Valor padrão do campo
+     * @param boolean $enableFileHandling -14: FORMDIN5 Habilita barra de progresso
+     * @param boolean $enablePopover      -15: FORMDIN5 Habilita o preview
+     * @param integer $enableImageGallery -16: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
      * @return TFile|TFileAsync
      */
     public function addFileField(string $id
@@ -1064,6 +1065,7 @@ class TFormDin
                                , $boolLabelAbove=true
                                , $boolNoWrapLabel=null
                                , $strMessageInvalidFileType=null 
+                               , $value
                                , $enableFileHandling=false
                                , $enablePopover=false
                                , $enableImageGallery=null
@@ -1075,6 +1077,7 @@ class TFormDin
                                           ,$strAllowedFileTypes
                                           ,$intFieldSize
                                           ,$strMaxFileSize
+                                          ,$value
                                           ,$enableFileHandling
                                           ,$enablePopover
                                           ,$enableImageGallery
