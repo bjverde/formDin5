@@ -715,7 +715,6 @@ class TFormDin
     {
         $formField = new TFormDinHiddenField($id,$strValue,$boolRequired);
         $objField = $formField->getAdiantiObj();
-        //$this->adiantiObj->addFields([$objField]);
         $this->addElementFormList($objField,self::TYPE_HIDDEN);
         return $formField;
     }
@@ -762,7 +761,6 @@ class TFormDin
         $formField->setExampleText($strExampleText);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
@@ -969,7 +967,6 @@ class TFormDin
         $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens,$mixValue);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
 
         return $formField;
@@ -1009,9 +1006,7 @@ class TFormDin
         $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
-
         return $formField;
     }
 
@@ -1050,9 +1045,7 @@ class TFormDin
         $formField = new TFormDinVideoHtml($id,$label,$strValue,$controls,$autoplay,$loop);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
-
         return $formField;
     }
 
@@ -1122,9 +1115,7 @@ class TFormDin
                                         );
         $objField  = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
-
         return $formField;
     }    
 
@@ -1169,7 +1160,6 @@ class TFormDin
                                               ,$strExampleText,$boolSendMask);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
@@ -1348,7 +1338,7 @@ class TFormDin
                                      , $useButton
                                      );
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($strLabel,$boolRequired);
+        $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
@@ -1418,8 +1408,7 @@ class TFormDin
                                            ,$strDisplayColumn                                           
                                           );
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($strLabel,$boolRequired);
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
@@ -1531,7 +1520,6 @@ class TFormDin
                                           ,$strWidth,$boolNewLine,$boolNoWrapLabel);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
