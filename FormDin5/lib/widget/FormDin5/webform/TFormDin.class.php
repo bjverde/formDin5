@@ -1253,7 +1253,7 @@ class TFormDin
      * @return TDBCombo
      */
     public function addSelectField(string $id
-                                  ,string $strLabel
+                                  ,string $label
                                   ,bool $boolRequired
                                   ,bool $boolNewLine
                                   ,bool $boolLabelAbove
@@ -1277,19 +1277,18 @@ class TFormDin
                                             ,$boolRequired
                                             ,$value
                                             ,$database
-                                            ,string $model
-                                            ,string $key
-                                            ,string $name
-                                            ,string $ordercolumn = null
-                                            ,TCriteria $criteria = null
-                                            ,bool $enableSearch = true
-                                            ,bool $placeholder = null
+                                            ,$model
+                                            ,$key
+                                            ,$name
+                                            ,$ordercolumn
+                                            ,$criteria
+                                            ,$enableSearch
+                                            ,$placeholder
                                         );
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($strLabel,$boolRequired);
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
-        return $formField;
+        return $formField;        
     }
 
 
