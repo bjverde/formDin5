@@ -51,7 +51,11 @@ class TFormDinVideoHtml extends TFormDinGenericField
     
 
     /**
-     * Video HTML 
+     * Video HTML 5, com a classe CSS fd5Video basta criar um css para
+     * determinar o tamanho do vídeo
+     * 
+     * Vídeos no HTML5 só tem autoplay SE SOMENTE SE o video for mutado
+     * https://developer.chrome.com/blog/autoplay/
      *
      * @param string  $id          - 1: ID do campo
      * @param string  $label       - 2: Label do campo, usado para validações
@@ -80,6 +84,7 @@ class TFormDinVideoHtml extends TFormDinGenericField
         $adiantiObj->add('Your browser does not support HTML video.');
 
         parent::__construct($adiantiObj,$id,$label,null,null,null);
+        $this->setClass('fd5Video');
         $this->autoplay($autoplay);
         $this->controls($controls);
         $this->loop($loop);
