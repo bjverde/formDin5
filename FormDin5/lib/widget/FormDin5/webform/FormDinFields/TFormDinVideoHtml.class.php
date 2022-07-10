@@ -76,10 +76,6 @@ class TFormDinVideoHtml extends TFormDinGenericField
 
         $adiantiObj = new TElement('video');
         $adiantiObj->class = 'videomidiatv';
-        $adiantiObj->setProperty('autoplay', 'true');
-        $adiantiObj->setProperty('loop', 'true');
-        $adiantiObj->setProperty('muted', 'true');
-        $adiantiObj->setProperty('controls', 'true');
         $adiantiObj->add($showMediaSource);
         $adiantiObj->add('Your browser does not support HTML video.');
 
