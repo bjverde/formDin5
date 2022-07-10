@@ -51,11 +51,14 @@ class TFormDinVideoHtml extends TFormDinGenericField
     
 
     /**
-     * Video HTML 
+     * Video HTML 5, com a classe CSS fd5Video basta criar um css para
+     * determinar o tamanho do vídeo
+     * 
+     * Vídeos no HTML5 só tem autoplay SE SOMENTE SE o video for mutado
+     * https://developer.chrome.com/blog/autoplay/
      *
-     * @param string $id           - 1: ID do campo
-     * @param string $strLabel     - 2: Label do campo, usado para validações
-     * @param boolean $boolNewLine - 3: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param string  $id          - 1: ID do campo
+     * @param string  $label       - 2: Label do campo, usado para validações
      * @param string  $strValue    - 4: Valor inicial
      * @param boolean $controls    - 5: Default TRUE  = habilita o controler sobre o vídeo, FALSE desativa o controler
      * @param boolean $autoplay    - 6: Default FALSE = habilita o autoplay, FALSE não iniciar o vídeo automaticamente
@@ -63,8 +66,7 @@ class TFormDinVideoHtml extends TFormDinGenericField
      * @return TLabel
      */
     public function __construct(string $id
-                               ,string $strLabel
-                               ,bool $boolNewLine
+                               ,string $label
                                ,string $strValue
                                ,bool $controls
                                ,bool $autoplay
@@ -73,55 +75,43 @@ class TFormDinVideoHtml extends TFormDinGenericField
     {
 
         $showMediaSource = new TElement('source');
-        $showMediaSource->src = $media->img_caminho;
+        $showMediaSource->src = $strValue;
         $showMediaSource->type = 'video/mp4';
 
-        $showMedia = new TElement('video');
-        $showMedia->class = 'videomidiatv';
-        $showMedia->setProperty('autoplay', 'true');
-        $showMedia->setProperty('loop', 'true');
-        $showMedia->setProperty('muted', 'true');
-        $showMedia->setProperty('controls', 'true');
-        $showMedia->add($showMediaSource);
-        $showMedia->add('Your browser does not support HTML video.');
+        $adiantiObj = new TElement('video');
+        $adiantiObj->class = 'videomidiatv';
+        $adiantiObj->add($showMediaSource);
+        $adiantiObj->add('Your browser does not support HTML video.');
 
+        parent::__construct($adiantiObj,$id,$label,null,null,null);
+        $this->setClass('fd5Video');
+        $this->autoplay($autoplay);
+        $this->controls($controls);
+        $this->loop($loop);
+    }
 
-        if( empty($color) && ($boolRequired==true) ){
-            $color = 'red';
+    private function setProperty($property, $valeu)
+    {
+        $valeu = empty($valeu)?true:$valeu;
+        if($valeu){
+            $this->getAdiantiObj()->setProperty($property, $valeu);
         }
-        $fontsize = empty($fontsize)?'14px':$fontsize;
-        $this->adiantiObj = new TLabel($strLabel,$color,$fontsize,$decoration,$size);
     }
-    //------------------------------------------------------------------------------    
-    /**
-     * Seta um objeto Adianti
-     * @return object 
-     */     
-    public function setAdiantiObj($adiantiObj){
-        if( empty($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }
-        if( !is_object($adiantiObj) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
-        }        
-        return $this->adiantiObj=$adiantiObj;
+    public function loop($valeu)
+    {
+        $this->setProperty('loop', $valeu);
+    }    
+    public function controls($valeu)
+    {
+        $this->setProperty('controls', $valeu);
     }
-    /**
-     * Retorna um campo do Adianti
-     * @return object 
-     */ 
-    public function getAdiantiObj(){
-        return $this->adiantiObj;
+    public function muted($valeu)
+    {
+        $this->setProperty('muted', $valeu);
     }
-	//------------------------------------------------------------------------------    
-	public function setClass($className)
-	{
-        $this->class[]=$className;
-        $className = implode(' ', $this->class);
-        $this->getAdiantiObj()->setProperty('class',$className);
-	}
-	public function getClass()
-	{
-		return $this->getAdiantiObj()->getProperty('class');
+    public function autoplay($valeu)
+    {
+        $this->setProperty('autoplay', $valeu);
+        $this->setProperty('muted', $valeu);
     }
 }
