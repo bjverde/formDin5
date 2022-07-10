@@ -1042,13 +1042,14 @@ class TFormDin
      * @param string  $strMaxFileSize  - 05: Input the max size file with K, M for Megabit (Mb) or G for Gigabit (Gb). Example 2M = 2 Mb = 2048Kb.
      * @param integer $intFieldSize    - 06: NOT_IMPLEMENTED
      * @param boolean $boolAsync       - 07: NOT_IMPLEMENTED
-     * @param boolean $boolNewLine     - 08: NOT_IMPLEMENTED
+     * @param boolean $boolNewLine     - 08: Em nova linha, DEFALUT is TRUE não obrigatorio.
      * @param string  $strJsCallBack   - 09: NOT_IMPLEMENTED
      * @param boolean $boolLabelAbove  - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string  $strMessageInvalidFileType - 12: NOT_IMPLEMENTED
      * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
+     * @param integer $enableImageGallery -15: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
      * @return TFile|TFileAsync
      */
     public function addFileField(string $id
@@ -1065,6 +1066,7 @@ class TFormDin
                                , $strMessageInvalidFileType=null 
                                , $enableFileHandling=false
                                , $enablePopover=false
+                               , $enableImageGallery=null
                                )
     {
         $formField = new TFormDinFileField($id
@@ -1075,6 +1077,7 @@ class TFormDin
                                           ,$strMaxFileSize
                                           ,$enableFileHandling
                                           ,$enablePopover
+                                          ,$enableImageGallery
                                         );
         $objField  = $formField->getAdiantiObj();
         $label = $formField->getLabel();
