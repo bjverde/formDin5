@@ -1049,6 +1049,7 @@ class TFormDin
      * @param string  $strMessageInvalidFileType - 12: NOT_IMPLEMENTED
      * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
+     * @param integer $enableImageGallery -15: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
      * @return TFile|TFileAsync
      */
     public function addFileField(string $id
@@ -1065,6 +1066,7 @@ class TFormDin
                                , $strMessageInvalidFileType=null 
                                , $enableFileHandling=false
                                , $enablePopover=false
+                               , $enableImageGallery=null
                                )
     {
         $formField = new TFormDinFileField($id
@@ -1075,6 +1077,7 @@ class TFormDin
                                           ,$strMaxFileSize
                                           ,$enableFileHandling
                                           ,$enablePopover
+                                          ,$enableImageGallery
                                         );
         $objField  = $formField->getAdiantiObj();
         $label = $formField->getLabel();

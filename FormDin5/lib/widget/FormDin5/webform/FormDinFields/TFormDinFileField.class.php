@@ -100,6 +100,7 @@ class TFormDinFileField extends TFormDinGenericField
                                , $strMaxSize=null
                                , $enableFileHandling = false
                                , $enablePopover = false
+                               , $enableImageGallery = null
                                )
     {
         $this->setAllowedFileTypes( $strAllowedFileTypes );
@@ -108,6 +109,10 @@ class TFormDinFileField extends TFormDinGenericField
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();
         //$adiantiObj->enablePopover();
+        if( !empty($enableImageGallery) ){
+            $this->enableFileHandling();
+            $this->enableImageGallery($enableImageGallery,null);
+        }        
         $this->enableFileHandling($enableFileHandling);
         if( $enablePopover==true ){
             $this->enablePopover();
@@ -175,6 +180,11 @@ class TFormDinFileField extends TFormDinGenericField
     public function setService($service)
     {
         $this->getAdiantiObj()->setService($service);
+    }
+
+    public function enableImageGallery($width = null, $height = 100)
+    {
+        $this->getAdiantiObj()->enableImageGallery($width,$height);
     }
     
 }
