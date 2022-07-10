@@ -990,11 +990,7 @@ class TFormDin
      * @param integer $intmaxLength       - 5: Tamanho maximo
      * @param string $strValue            - 6: Valor inicial
      * @param boolean $boolLabelAbove     - 7: Label acima, DEFAULT is FALSE na mesma linha
-     * @param boolean $boolNoWrapLabel    - 8: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
-     * @param integer $intSize            - 9: NOT_IMPLEMENTED quantidade de caracteres visíveis
-     * @param boolean $boolUseVirtualKeyboard
-     * @param boolean $boolShowVirtualKeyboardImage
-     * @param boolean $boolReadOnly
+     * @param boolean $enableToggleVisibility- 8: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @return TFormDinPassword
      */
     public function addPasswordField( string $strName
