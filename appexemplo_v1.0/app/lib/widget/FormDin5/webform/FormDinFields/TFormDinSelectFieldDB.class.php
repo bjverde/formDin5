@@ -80,7 +80,7 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
      * @param TCriteria $criteria  - 10: Objeto do tipo TCriteria para fazer filtros 
      * @param string $enableSearch - 11: Define se o campo será tipo autocomplete
      * @param string $placeholder   -12: PlaceHolder é um Texto de exemplo
-     * @return TEntry
+     * @return TDBCombo
      */
     public function __construct(string $id
                                ,string $label
@@ -93,6 +93,7 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
                                ,string $ordercolumn = null
                                ,TCriteria $criteria = null
                                ,bool $enableSearch = true
+                               ,bool $placeholder = null
                                )
     {
         $boolRequired   = empty($boolRequired)?false:$boolRequired;
