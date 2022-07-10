@@ -1017,7 +1017,49 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
 
         return $formField;
-    }    
+    }
+
+
+    /**
+     * Campo com vídeo html5
+     * 
+     * Vídeos no HTML5 só tem autoplay SE SOMENTE SE o video for mutado
+     * https://developer.chrome.com/blog/autoplay/
+     * ------------------------------------------------------------------------
+     * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
+     * os parâmetros do metodos foram marcados veja documentação da classe para
+     * saber o que cada marca singinifica.
+     * ------------------------------------------------------------------------    
+     *
+     * @param string $id             - 1: id do campo
+     * @param string $label          - 2: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolNewLine   - 3: Em nova linha, DEFALUT is TRUE não obrigatorio.
+     * @param boolean $boolLabelAbove- 4: Label acima, DEFAULT is FALSE na mesma linha
+     * @param string  $strValue      - 5: Valor inicial
+     * @param boolean $controls      - 6: Default TRUE  = habilita o controler sobre o vídeo, FALSE desativa o controler
+     * @param boolean $autoplay      - 7: Default FALSE = habilita o autoplay, FALSE não iniciar o vídeo automaticamente
+     * @param boolean $loop          - 8: Default FALSE = habilita o video em loop, FALSE não fica em loop
+     * @return TFormDinVideoHtml
+     */
+    public function addVidoHtml5(string $id
+                                ,string $label
+                                ,bool $boolNewLine
+                                ,bool $boolLabelAbove
+                                ,string $strValue
+                                ,bool $controls
+                                ,bool $autoplay
+                                ,bool $loop
+                                )
+    {
+        $formField = new TFormDinVideoHtml($id,$label,$strValue,$controls,$autoplay,$loop);
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+
+        return $formField;
+    }
+
 
     /**
      * Campos para anexar arquivo. Pode ser um carregamento sincrono ou assincrono via ajax.
