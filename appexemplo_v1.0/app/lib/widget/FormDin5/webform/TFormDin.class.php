@@ -1042,9 +1042,9 @@ class TFormDin
                                 ,$boolNewLine
                                 ,$boolLabelAbove
                                 ,string $strValue
-                                ,$controls
-                                ,$autoplay
-                                ,$loop
+                                ,$controls = null
+                                ,$autoplay = null
+                                ,$loop = null
                                 )
     {
         $formField = new TFormDinVideoHtml($id,$label,$strValue,$controls,$autoplay,$loop);

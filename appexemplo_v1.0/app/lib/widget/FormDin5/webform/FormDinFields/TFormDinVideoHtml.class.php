@@ -68,9 +68,9 @@ class TFormDinVideoHtml extends TFormDinGenericField
     public function __construct(string $id
                                ,string $label
                                ,string $strValue
-                               ,$controls
-                               ,$autoplay
-                               ,$loop
+                               ,$controls = null
+                               ,$autoplay = null
+                               ,$loop = null
                                )
     {
         $controls= empty($controls)?true:$controls;
