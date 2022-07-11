@@ -1047,6 +1047,9 @@ class TFormDin
                                 ,$loop = null
                                 )
     {
+        $boolNewLine    = empty($boolNewLine)?true:$boolNewLine;
+        $boolLabelAbove = empty($boolLabelAbove)?false:$boolLabelAbove;
+
         $formField = new TFormDinVideoHtml($id,$label,$strValue,$controls,$autoplay,$loop);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
