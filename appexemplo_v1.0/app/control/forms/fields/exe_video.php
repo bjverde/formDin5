@@ -19,8 +19,15 @@ class exe_video extends TPage
 
         $frm = new TFormDin($this,'Exemplo Video HTML5');
 
-        $frm->addVidoHtml5('video','Vídeo exemplo',false,false,'app/images/mov_bbb.mp4',false,false,false);
+        $frm->addGroupField('g1', 'Video Basico, sempre tem controle');
+        $frm->addVidoHtml5( 'v1','Vídeo exemplo',null,null,'app/images/mov_bbb.mp4');
         
+        $frm->addGroupField('g2', 'Video Basico, SEM controle');
+        $frm->addVidoHtml5( 'v2','Vídeo exemplo',null,null,'app/images/mov_bbb.mp4',false);
+
+        $frm->addGroupField('g3', 'Video Basico, SEM controle');
+        $frm->addVidoHtml5( 'v3','Vídeo exemplo',null,null,'app/images/mov_bbb.mp4',false,false,false);
+
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
