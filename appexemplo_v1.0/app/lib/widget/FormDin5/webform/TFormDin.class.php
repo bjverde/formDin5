@@ -1341,7 +1341,7 @@ class TFormDin
                                     ,$boolRequired
                                     ,$boolNewLine
                                     ,$boolLabelAbove
-                                    ,string $value
+                                    ,string|null $value
                                     ,string $database
                                     ,string $model
                                     ,string $key
