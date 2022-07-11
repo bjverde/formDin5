@@ -68,11 +68,14 @@ class TFormDinVideoHtml extends TFormDinGenericField
     public function __construct(string $id
                                ,string $label
                                ,string $strValue
-                               ,bool $controls
-                               ,bool $autoplay
-                               ,bool $loop
+                               ,$controls
+                               ,$autoplay
+                               ,$loop
                                )
     {
+        $controls= empty($controls)?true:$controls;
+        $autoplay= empty($autoplay)?false:$autoplay;
+        $loop    = empty($loop)?false:$loop;
 
         $showMediaSource = new TElement('source');
         $showMediaSource->src = $strValue;

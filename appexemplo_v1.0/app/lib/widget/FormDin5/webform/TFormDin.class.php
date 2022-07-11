@@ -1039,12 +1039,12 @@ class TFormDin
      */
     public function addVidoHtml5(string $id
                                 ,string $label
-                                ,bool $boolNewLine
-                                ,bool $boolLabelAbove
+                                ,$boolNewLine
+                                ,$boolLabelAbove
                                 ,string $strValue
-                                ,bool $controls
-                                ,bool $autoplay
-                                ,bool $loop
+                                ,$controls
+                                ,$autoplay
+                                ,$loop
                                 )
     {
         $formField = new TFormDinVideoHtml($id,$label,$strValue,$controls,$autoplay,$loop);
@@ -1249,9 +1249,9 @@ class TFormDin
      */
     public function addSelectField(string $id
                                   ,string $label
-                                  ,bool $boolRequired
-                                  ,bool $boolNewLine
-                                  ,bool $boolLabelAbove
+                                  ,$boolRequired
+                                  ,$boolNewLine
+                                  ,$boolLabelAbove
                                   ,string $value
                                   ,string $database
                                   ,string $model
@@ -1259,8 +1259,8 @@ class TFormDin
                                   ,string $name
                                   ,string $ordercolumn = null
                                   ,TCriteria $criteria = null
-                                  ,bool $enableSearch = true
-                                  ,bool $placeholder = null
+                                  ,$enableSearch = true
+                                  ,$placeholder = null
                                   )
     {
         $boolRequired   = empty($boolRequired)?false:$boolRequired;
