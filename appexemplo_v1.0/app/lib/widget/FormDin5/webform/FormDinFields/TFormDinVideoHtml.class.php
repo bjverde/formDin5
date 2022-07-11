@@ -95,7 +95,7 @@ class TFormDinVideoHtml extends TFormDinGenericField
 
     private function setProperty($property, $valeu)
     {
-        $valeu = empty($valeu)?true:$valeu;
+        $valeu = empty($valeu)?'false':'true';
         if($valeu){
             $this->getAdiantiObj()->setProperty($property, $valeu);
         }
