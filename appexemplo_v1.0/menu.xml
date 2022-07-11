@@ -58,7 +58,7 @@
                     </menuitem>
                     <menuitem label='Select via Baco'>
                         <icon>fa:sort-down fa-fw</icon>
-                        <action>exe_SelectField_01</action>
+                        <action>exe_SelectFielddb</action>
                     </menuitem>
                 </menu>
             </menuitem>
