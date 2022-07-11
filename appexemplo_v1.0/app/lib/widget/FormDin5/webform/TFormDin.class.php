@@ -980,8 +980,8 @@ class TFormDin
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------    
      *
-     * @param string $strName             - 1: id do campo
-     * @param string $strLabel            - 2: Rotulo do campo que irá aparece na tela
+     * @param string $id                  - 1: id do campo
+     * @param string $label               - 2: Rotulo do campo que irá aparece na tela
      * @param boolean $boolRequired       - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param boolean $boolNewLine        - 4: Em nova linha, DEFALUT is TRUE não obrigatorio.
      * @param integer $intmaxLength       - 5: Tamanho maximo
@@ -990,8 +990,8 @@ class TFormDin
      * @param boolean $enableToggleVisibility- 8: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @return TFormDinPassword
      */
-    public function addPasswordField( string $strName
-                                    , string $strLabel=null
+    public function addPasswordField( string $id
+                                    , string $label=null
                                     , $boolRequired=null
                                     , $boolNewLine=null
                                     , $intmaxLength=null
@@ -1003,7 +1003,12 @@ class TFormDin
                                     , $boolShowVirtualKeyboardImage=null
                                     , $boolReadOnly=null )
     {
-        $formField = new TFormDinSwitch($id,$strLabel,$boolRequired,$itens);
+        $formField = new TFormDinPassword($id
+                                         ,$label
+                                         ,$strValue
+                                         ,$controls
+                                         ,$autoplay
+                                         ,$loop);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
