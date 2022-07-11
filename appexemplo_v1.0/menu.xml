@@ -34,7 +34,7 @@
             </menuitem>            
             <menuitem label='HTML'>
                 <icon>fab:html5 fa-fw</icon>
-                <menu>            
+                <menu>
                     <menuitem label='HTML'>
                         <icon>fab:html5 fa-fw</icon>
                         <action>exe_HtmlField</action>
@@ -51,7 +51,16 @@
             </menuitem>
             <menuitem label='Select'>
                 <icon>fa:sort-down fa-fw</icon>
-                <action>exe_SelectField_01</action>
+                <menu>
+                    <menuitem label='Select'>
+                        <icon>fa:sort-down fa-fw</icon>
+                        <action>exe_SelectField_01</action>
+                    </menuitem>
+                    <menuitem label='Select via Baco'>
+                        <icon>fa:sort-down fa-fw</icon>
+                        <action>exe_SelectField_01</action>
+                    </menuitem>
+                </menu>
             </menuitem>
             <menuitem label='Radio'>
                 <icon>fa:table fa-fw</icon>
