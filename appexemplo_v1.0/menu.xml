@@ -42,7 +42,11 @@
                     <menuitem label='HTML com iFrame'>
                         <icon>fab:html5 fa-fw</icon>
                         <action>exe_HtmlField_iframe</action>
-                    </menuitem>          
+                    </menuitem>
+                    <menuitem label='Vídeo HTML5'>
+                        <icon>fab:youtube fa-fw</icon>
+                        <action>exe_HtmlField_iframe</action>
+                    </menuitem>
                 </menu>
             </menuitem>
             <menuitem label='Select'>
