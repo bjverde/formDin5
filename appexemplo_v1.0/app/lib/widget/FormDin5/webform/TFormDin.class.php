@@ -1303,8 +1303,7 @@ class TFormDin
                                             ,$strDataColumns
                                         );
         $objField = $formField->getAdiantiObj();
-        $label = $this->getLabelField($strLabel,$boolRequired);
-        //$this->addFields($label ,$objField ,$boolLabelAbove);
+        $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
