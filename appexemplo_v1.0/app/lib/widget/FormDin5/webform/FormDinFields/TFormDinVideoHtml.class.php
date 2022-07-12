@@ -68,15 +68,11 @@ class TFormDinVideoHtml extends TFormDinGenericField
     public function __construct(string $id
                                ,string $label
                                ,string $strValue
-                               ,$controls = null
-                               ,$autoplay = null
-                               ,$loop = null
+                               ,$controls = true
+                               ,$autoplay = false
+                               ,$loop = false
                                )
     {
-        $controls= empty($controls)?true:$controls;
-        $autoplay= empty($autoplay)?false:$autoplay;
-        $loop    = empty($loop)?false:$loop;
-
         $showMediaSource = new TElement('source');
         $showMediaSource->src = $strValue;
         $showMediaSource->type = 'video/mp4';
@@ -86,7 +82,7 @@ class TFormDinVideoHtml extends TFormDinGenericField
         $adiantiObj->add($showMediaSource);
         $adiantiObj->add('Your browser does not support HTML video.');
 
-        parent::__construct($adiantiObj,$id,$label,null,null,null);
+        parent::__construct($adiantiObj,$id,$label,false,null,null);
         $this->setClass('fd5Video');
         $this->autoplay($autoplay);
         $this->controls($controls);
@@ -95,9 +91,8 @@ class TFormDinVideoHtml extends TFormDinGenericField
 
     private function setProperty($property, $valeu)
     {
-        $valeu = empty($valeu)?'false':'true';
-        if($valeu){
-            $this->getAdiantiObj()->setProperty($property, $valeu);
+        if($valeu==true){
+            $this->getAdiantiObj()->setProperty($property, 'true');
         }
     }
     public function loop($valeu)

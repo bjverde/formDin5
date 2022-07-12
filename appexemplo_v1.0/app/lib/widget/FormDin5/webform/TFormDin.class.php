@@ -1037,14 +1037,14 @@ class TFormDin
      * @param boolean $loop          - 8: Default FALSE = habilita o video em loop, FALSE não fica em loop
      * @return TFormDinVideoHtml
      */
-    public function addVidoHtml5(string $id
+    public function addVideoHtml5(string $id
                                 ,string $label
                                 ,$boolNewLine
                                 ,$boolLabelAbove
                                 ,string $strValue
-                                ,$controls = null
-                                ,$autoplay = null
-                                ,$loop = null
+                                ,$controls = true
+                                ,$autoplay = false
+                                ,$loop = false
                                 )
     {
         $boolNewLine    = empty($boolNewLine)?true:$boolNewLine;
