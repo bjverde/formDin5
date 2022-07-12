@@ -115,7 +115,6 @@ class TFormDinFileField extends TFormDinGenericField
         }
         
         if( !empty($enableImageGallery) ){
-            $this->enableFileHandling();
             $this->enableImageGallery($enableImageGallery,null);
         }        
         $this->enableFileHandling($enableFileHandling);
@@ -192,8 +191,9 @@ class TFormDinFileField extends TFormDinGenericField
         $this->getAdiantiObj()->setValue($value);
     }
 
-    public function enableImageGallery($width = null, $height = 100)
+    public function enableImageGallery($width = null, $height = null)
     {
+        $this->enableFileHandling();
         $this->getAdiantiObj()->enableImageGallery($width,$height);
     }
     

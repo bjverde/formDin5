@@ -1104,7 +1104,7 @@ class TFormDin
                                , $boolLabelAbove=true
                                , $boolNoWrapLabel=null
                                , $strMessageInvalidFileType=null 
-                               , $value
+                               , $value=null
                                , $enableFileHandling=false
                                , $enablePopover=false
                                , $enableImageGallery=null
