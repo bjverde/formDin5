@@ -118,10 +118,21 @@ class exe_SelectField_01 extends TPage
 
 
         $frm->addGroupField('fd5', 'FormDin 5');
+        $msg = '<b>Não é um select que busca no banco</b>.'
+              .'<br>O select abaixo com busca, coloca todas as opções no html da tela. Não faz a busca no banco.'
+              .'<br><a href="index.php?class=exe_SelectFielddb">Exemplo com busca no banco</a>';
+        $frm->addHtmlField('html1',$msg, null, 'Dica:', null, 200);
         
         $listFormas[5]='PayPal';
         $listFormas[6]='Pag Seguro';
         $listFormas[7]='Moderninha';
+        $listFormas[8]='Dolar';
+        $listFormas[9]='Euro';
+        $listFormas[10]='Bolivares';
+        $listFormas[11]='Vale transporte';
+        $listFormas[12]='Galinha';
+        $listFormas[13]='Bode';
+        $listFormas[14]='Milho';
         $fg2 = $frm->addSelectField('forma_pagamento1_fd5'  // 1: ID do campo
                                     , 'Select com busca:'
                                     , false                  // 3: Obrigatorio
