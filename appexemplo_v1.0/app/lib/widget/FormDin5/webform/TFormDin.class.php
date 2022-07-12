@@ -1346,8 +1346,8 @@ class TFormDin
                                     ,string $model
                                     ,string $key
                                     ,string $name
-                                    ,string $ordercolumn = null
-                                    ,TCriteria $criteria = null
+                                    ,string|null $ordercolumn = null
+                                    ,TCriteria|null $criteria = null
                                     ,$enableSearch = true
                                     ,$placeholder = null
                                   )

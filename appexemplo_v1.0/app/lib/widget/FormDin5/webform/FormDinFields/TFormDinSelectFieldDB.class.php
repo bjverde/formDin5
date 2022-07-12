@@ -84,7 +84,7 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
      */
     public function __construct(string $id
                                ,string $label
-                               ,bool   $boolRequired
+                               ,bool|null   $boolRequired
                                ,string|null $value
                                ,string $database
                                ,string $model
@@ -106,7 +106,7 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
 
     public function enableSearch($enableSearch)
     {
-        $enableSearch = empty($enableSearch)?true:$enableSearch;
+        $enableSearch = is_null($enableSearch)?true:$enableSearch;
         if($enableSearch){
             $this->getAdiantiObj()->enableSearch();
         }
