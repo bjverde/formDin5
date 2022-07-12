@@ -16,10 +16,17 @@ class exe_video extends TPage
         parent::__construct();
 
         $frm = new TFormDin($this,'Exemplo Video HTML5');
+        $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $frm->addVideoHtml5( 'v1','Vídeo exemplo',null,null,'app/images/mov_bbb.mp4');        
         $frm->addVideoHtml5( 'v2','Vídeo sem controle',null,null,'app/images/mov_bbb.mp4',false);
-        $frm->addVideoHtml5( 'v3','Vídeo com controle, autoplay e loop',null,true,'app/images/mov_bbb.mp4',true,true,true);
 
+        $frm->addGroupField('g3', 'Atenção especial com autoplay');
+        $frm->addVideoHtml5( 'v3','Vídeo com controle, autoplay e loop',null,true,'app/images/mov_bbb.mp4',true,true,true);
+        https://developer.chrome.com/blog/autoplay/
+        $msg = '<b>Teve uma mudança com autoplay do vídeo e audio</b>.'
+              .'<br>Não é possível deixar o autoplay ligado com audio, então só ira funcionar com muted ligado'
+              .'<br><a href="https://developer.chrome.com/blog/autoplay/">Autoplay policy in Chrome</a>';
+        $frm->addHtmlField('html1',$msg, null, 'Dica:', null, 200);
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
