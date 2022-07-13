@@ -980,14 +980,19 @@ class TFormDin
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------    
      *
-     * @param string $id                  - 1: id do campo
-     * @param string $label               - 2: Rotulo do campo que irá aparece na tela
-     * @param boolean $boolRequired       - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param boolean $boolNewLine        - 4: Em nova linha, DEFALUT is TRUE não obrigatorio.
-     * @param integer $intmaxLength       - 5: Tamanho maximo
-     * @param string $strValue            - 6: Valor inicial
-     * @param boolean $boolLabelAbove     - 7: Label acima, DEFAULT is FALSE na mesma linha
-     * @param boolean $enableToggleVisibility- 8: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+     * @param string $id                     -01: id do campo
+     * @param string $label                  -02: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired          -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $boolNewLine           -04: Em nova linha, DEFALUT is TRUE não obrigatorio.
+     * @param integer $intmaxLength          -05: Tamanho maximo
+     * @param string  $value                 -06: Valor inicial
+     * @param boolean $boolLabelAbove        -07: Label acima, DEFAULT is FALSE na mesma linha
+     * @param boolean $boolNoWrapLabel       -08: NOT_IMPLEMENTED
+     * @param integer $intSize               -09: NOT_IMPLEMENTED
+     * @param boolean $boolUseVirtualKeyboard-10: NOT_IMPLEMENTED
+     * @param boolean $boolShowVirtualKeyboardImage -11: NOT_IMPLEMENTED
+     * @param boolean $boolReadOnly          -12: NOT_IMPLEMENTED
+     * @param boolean $enableToggleVisibility-13: FORMDIN5 DEFALUT is TRUE mostra a senha ou não
      * @return TFormDinPassword
      */
     public function addPasswordField( string $id
@@ -995,18 +1000,19 @@ class TFormDin
                                     , $boolRequired=null
                                     , $boolNewLine=null
                                     , $intmaxLength=null
-                                    , $strValue=null
+                                    , $value=null
                                     , $boolLabelAbove=null
                                     , $boolNoWrapLabel=null
                                     , $intSize=null
                                     , $boolUseVirtualKeyboard=null
                                     , $boolShowVirtualKeyboardImage=null
-                                    , $boolReadOnly=null )
+                                    , $boolReadOnly=null 
+                                    , $enableToggleVisibility=true)
     {
         $formField = new TFormDinPassword($id
                                          ,$label
-                                         ,$strValue
-                                         ,$controls
+                                         ,$boolRequired
+                                         ,$value
                                          ,$autoplay
                                          ,$loop);
         $objField = $formField->getAdiantiObj();

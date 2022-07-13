@@ -57,25 +57,25 @@ class TFormDinPassword extends TFormDinGenericField
      * Vídeos no HTML5 só tem autoplay SE SOMENTE SE o video for mutado
      * https://developer.chrome.com/blog/autoplay/
      *
-     * @param string  $id          - 1: ID do campo
-     * @param string  $label       - 2: Label do campo, usado para validações
-     * @param string  $strValue    - 4: Valor inicial
-     * @param boolean $controls    - 5: Default TRUE  = habilita o controler sobre o vídeo, FALSE desativa o controler
-     * @param boolean $autoplay    - 6: Default FALSE = habilita o autoplay, FALSE não iniciar o vídeo automaticamente
-     * @param boolean $loop        - 7: Default FALSE = habilita o video em loop, FALSE não fica em loop
+     * @param string $id                     -01: id do campo
+     * @param string $label                  -02: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired          -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param integer $intmaxLength          -04: Tamanho maximo
+     * @param string  $value                 -05: Valor inicial
+     * @param boolean $enableToggleVisibility-06: FORMDIN5 DEFALUT is TRUE mostra a senha ou não
      * @return TLabel
      */
     public function __construct(string $id
-                               ,string $label
-                               ,string $strValue
-                               ,bool $controls
-                               ,bool $autoplay
-                               ,bool $loop
+                               ,string $label=null
+                               ,$boolRequired=null
+                               ,$intmaxLength=null
+                               ,$value=null
+                               ,$enableToggleVisibility=true
                                )
     {
 
         $adiantiObj = new TPassword($id);
 
-        parent::__construct($adiantiObj,$id,$label,null,null,null);
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
     }
 }
