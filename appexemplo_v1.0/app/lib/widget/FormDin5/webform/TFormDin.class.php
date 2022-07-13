@@ -1012,9 +1012,10 @@ class TFormDin
         $formField = new TFormDinPassword($id
                                          ,$label
                                          ,$boolRequired
+                                         ,$intmaxLength
                                          ,$value
-                                         ,$autoplay
-                                         ,$loop);
+                                         ,$enableToggleVisibility
+                                        );
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);

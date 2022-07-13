@@ -75,10 +75,9 @@ class TFormDinPassword extends TFormDinGenericField
     {
 
         $adiantiObj = new TPassword($id);
-
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,null);
         $this->setMaxLength($intmaxLength);
-        $this->enableToggleVisibility($$intmaxLength);
+        $this->enableToggleVisibility($enableToggleVisibility);
     }
 
     public function setMaxLength($intmaxLength)
