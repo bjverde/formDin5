@@ -17,10 +17,10 @@ class exe_TPasswordField extends TPage
         
         $frm = new TFormDin($this,'Exemplo Campo Senha');
 
-        //$frm->addPasswordField('senha1', 'Senha1:');
-        //$frm->addPasswordField('senha2', 'Senha2:', null, null, null, null, null, null, null, true, true, false);
-        //$frm->addPasswordField('senha3', 'Senha3:', null, null, null, null, null, null, null, true, true, true);
-        //$frm->addPasswordField('senha4', 'Senha4:', null, null, null, null, null, null, null, true, false, true);
+        $frm->addPasswordField('senha1', 'Senha1:');
+        $frm->addPasswordField('senha2', 'Senha2:', null, null, null, null, null, null, null, true, true, false);
+        $frm->addPasswordField('senha3', 'Senha3:', null, null, null, null, null, null, null, true, true, true);
+        $frm->addPasswordField('senha4', 'Senha4:', null, null, null, null, null, null, null, true, false, true);
 
     
         // O Adianti permite a Internacionalização - A função _t('string') serve
