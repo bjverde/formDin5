@@ -84,8 +84,8 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
      */
     public function __construct(string $id
                                ,string $label
-                               ,bool   $boolRequired
-                               ,string $value
+                               ,bool|null   $boolRequired
+                               ,string|null $value
                                ,string $database
                                ,string $model
                                ,string $key
@@ -98,7 +98,7 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
     {
         $boolRequired   = empty($boolRequired)?false:$boolRequired;
 
-        $adiantiObj = new TDBCombo($id, $database, $model, $key, $name, $ordercolumn, $criteria)
+        $adiantiObj = new TDBCombo($id, $database, $model, $key, $name, $ordercolumn, $criteria);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
         $this->enableSearch($enableSearch);
         return $this->getAdiantiObj();
@@ -106,7 +106,7 @@ class TFormDinSelectFieldDB extends TFormDinGenericField
 
     public function enableSearch($enableSearch)
     {
-        $enableSearch = empty($enableSearch)?true:$enableSearch;
+        $enableSearch = is_null($enableSearch)?true:$enableSearch;
         if($enableSearch){
             $this->getAdiantiObj()->enableSearch();
         }
