@@ -25,6 +25,9 @@ class exe_NumberField extends TPage
             $frm->addNumberField('num_peso', 'Peso Unitário:', 5, false, 2, true)->setExampleText('Kg');
             $frm->addNumberField('num_preco', 'Preço Unitário:', 9, false, 2, false)->setExampleText('R$');
 
+            $frm->addNumberField('numfd09', 'inteiros até 10000', 5, false, 0, null,10000,1,10000);
+            $frm->addNumberField('numfd10', 'num real até 10.00,00', 6, false, 2,false,10000,1,10000,true)->setExampleText('Num max caractes conta . e ,');
+
             $frm->addNumberField('numfd01', 'inteiros até 100', 3, false, 0, null,null,3,100);
             $frm->addNumberField('numfd02', 'num real até 100', 6, false, 2,false,null,3,100)->setExampleText('Num max caractes conta . e ,');
 
