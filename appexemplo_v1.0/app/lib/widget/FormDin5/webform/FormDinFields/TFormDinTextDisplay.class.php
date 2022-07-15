@@ -102,4 +102,33 @@ class TFormDinTextDisplay extends TFormDinGenericField
         $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
         return $obj;
     }
+
+    public static function dataTimeBr(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$showTheTime = false
+                                        ,$showSeconds = false
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+    {
+        $value = DateTimeHelper::DateIso2DateBr($value,$showTheTime,$showSeconds);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
+    }
+
+    public static function numeroBrasil(string $id
+                                    ,string $label
+                                    ,string $value
+                                    ,$decimals=2
+                                    ,$color = null
+                                    ,$size = null
+                                    ,$decoration = null
+                                    )
+    {
+        $value = StringHelper::numeroBrasil($value,$decimals);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
+    } 
 }
