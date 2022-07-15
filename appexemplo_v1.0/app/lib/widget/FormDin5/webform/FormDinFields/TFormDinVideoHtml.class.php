@@ -63,7 +63,7 @@ class TFormDinVideoHtml extends TFormDinGenericField
      * @param boolean $controls    - 5: Default TRUE  = habilita o controler sobre o vídeo, FALSE desativa o controler
      * @param boolean $autoplay    - 6: Default FALSE = habilita o autoplay, FALSE não iniciar o vídeo automaticamente
      * @param boolean $loop        - 7: Default FALSE = habilita o video em loop, FALSE não fica em loop
-     * @return TLabel
+     * @return TElement
      */
     public function __construct(string $id
                                ,string $label
