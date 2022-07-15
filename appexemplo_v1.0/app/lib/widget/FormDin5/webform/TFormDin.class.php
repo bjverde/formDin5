@@ -1946,6 +1946,43 @@ class TFormDin
         return $formField;
 	}
 
+    /**
+     * Adiciona uma linha simples de texto formatado numero de telefone
+     *
+     * @param string $strName         -01: ID do campo
+     * @param string $strLabel        -02: Label do campo, que irá aparecer na tela do usuario
+     * @param string $value           -03: Texto que será incluido
+     * @param boolean $boolNewLine    -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param [type] $color
+     * @param [type] $size
+     * @param [type] $decoration
+     * @return void
+     */
+	public function addTextDisplayPhoneNumber(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$boolNewLine=null
+                                        ,$boolLabelAbove=null
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+	{
+        $value = StringHelper::formatPhoneNumber($value);
+        $formField = new TFormDinTextDisplay($id
+                                            ,$label
+                                            ,$value
+                                            ,$color
+                                            ,$size
+                                            ,$decoration
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
+
 
     //----------------------------------------------------------------
     //----------------------------------------------------------------
