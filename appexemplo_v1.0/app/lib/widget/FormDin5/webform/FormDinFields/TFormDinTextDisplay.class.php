@@ -76,4 +76,30 @@ class TFormDinTextDisplay extends TFormDinGenericField
         $adiantiObj = new TTextDisplay($value,$color,$size,$decoration);
         parent::__construct($adiantiObj,$id,$label,false,null,null);
     }
+
+    public static function cnpjCpf(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+    {
+        $value = StringHelper::formatCnpjCpf($value);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
+    }    
+
+    public static function phoneNumber(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+    {
+        $value = StringHelper::formatPhoneNumber($value);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
+    }
 }

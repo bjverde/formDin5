@@ -1932,8 +1932,7 @@ class TFormDin
                                         ,$decoration = null
                                         )
 	{
-        $value = StringHelper::formatCnpjCpf($value);
-        $formField = new TFormDinTextDisplay($id
+        $formField = TFormDinTextDisplay::cnpjCpf($id
                                             ,$label
                                             ,$value
                                             ,$color
@@ -1968,9 +1967,8 @@ class TFormDin
                                         ,$size = null
                                         ,$decoration = null
                                         )
-	{
-        $value = StringHelper::formatPhoneNumber($value);
-        $formField = new TFormDinTextDisplay($id
+	{        
+        $formField = TFormDinTextDisplay::phoneNumber($id
                                             ,$label
                                             ,$value
                                             ,$color
