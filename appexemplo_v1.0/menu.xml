@@ -47,6 +47,10 @@
                         <icon>fab:youtube fa-fw</icon>
                         <action>exe_video</action>
                     </menuitem>
+                    <menuitem label='Text Display'>
+                        <icon>fab:youtube fa-fw</icon>
+                        <action>exe_textdisplay</action>
+                    </menuitem>                    
                 </menu>
             </menuitem>
             <menuitem label='Select'>
