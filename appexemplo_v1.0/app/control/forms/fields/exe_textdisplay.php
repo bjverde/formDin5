@@ -24,7 +24,8 @@ class exe_textdisplay extends TPage
         $frm->addTextDisplay('td1','Geral','Mostra um texto simples');
         $frm->addTextDisplayCpfCpnj('td2','CPF','12345678909');
         $frm->addTextDisplayCpfCpnj('td3','CNPJ','36806647000152');
-        $frm->addTextDisplayDataTimeBr('td3','Data iso para BR','2022-07-18');
+        $frm->addTextDisplayDataTimeBr('td4','Data iso para BR','2022-07-18');
+        $frm->addTextDisplayNumeroBrasil('td5','Número em formato BR','123456,78');
 
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
