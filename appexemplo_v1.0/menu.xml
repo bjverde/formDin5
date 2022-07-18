@@ -48,7 +48,7 @@
                         <action>exe_video</action>
                     </menuitem>
                     <menuitem label='Text Display'>
-                        <icon>fab:youtube fa-fw</icon>
+                        <icon>fab:html5 fa-fw</icon>
                         <action>exe_textdisplay</action>
                     </menuitem>                    
                 </menu>
