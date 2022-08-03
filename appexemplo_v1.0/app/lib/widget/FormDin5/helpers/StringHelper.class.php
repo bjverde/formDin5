@@ -142,7 +142,9 @@ class StringHelper
 
     public static function is_numeroBrasil($value)
     {
-        //$numeroBr = preg_match('/((\d{1,3}+)(.?)+)(,?)(\d*)/', $value, $outputBr);
+        if( empty($value) ){
+            return false;
+        }
         $numero= preg_match('/^([0-9.]*)(,?)(\d*)$/', $value, $output_array);
         $result= ($numero===1)?true:false;
         return $result;
@@ -150,7 +152,9 @@ class StringHelper
 
     public static function is_numeroEua($value)
     {
-        //$numeroBr = preg_match('/((\d{1,3}+)(.?)+)(,?)(\d*)/', $value, $outputBr);
+        if( empty($value) ){
+            return false;
+        }
         $numero = preg_match('/^([0-9,]*)(.?)(\d*)$/', $value, $output_array);
         $result  = ($numero===1)?true:false;
         return $result;
@@ -160,18 +164,22 @@ class StringHelper
     {
         if(is_numeric($value)){
             $value=number_format($value, $decimals,',','.');
-        }else{
-            if (is_string($value) && self::is_numeroBrasil($value)) {
+        }else if( is_string($value) && self::is_numeroBrasil($value) ){
+            if ( (strlen($value)==5) && str_contains($value,',') ) {
+                return $value;
+            }else if( (strlen($value)==5) && str_contains($value,'.') ) {
+                $value=str_replace('.',',', $value);
+                return $value;                
+            }else if (is_string($value) && self::is_numeroEua($value)) {
                 $search =array('.', ',');
                 $replace=array('', '.');
                 $value=str_replace($search, $replace, $value);
                 $value=number_format($value, $decimals,',','.');
-            }else if (is_string($value) && self::is_numeroEua($value)) {
-                $value=str_replace(',','', $value);
-                $value=number_format($value, $decimals,',','.');
             }else{
-                $value = null;
+                return $value;
             }
+        }else{
+            $value = null;
         }
         return $value;
     }
