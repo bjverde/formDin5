@@ -140,13 +140,34 @@ class StringHelper
         return $value;
     }
 
+    public static function is_numeroBrasil($value)
+    {
+        //$numeroBr = preg_match('/((\d{1,3}+)(.?)+)(,?)(\d*)/', $value, $outputBr);
+        $numero= preg_match('/^([0-9.]*)(,?)(\d*)$/', $value, $output_array);
+        $result= ($numero===1)?true:false;
+        return $result;
+    }
+
+    public static function is_numeroEua($value)
+    {
+        //$numeroBr = preg_match('/((\d{1,3}+)(.?)+)(,?)(\d*)/', $value, $outputBr);
+        $numero = preg_match('/^([0-9,]*)(.?)(\d*)$/', $value, $output_array);
+        $result  = ($numero===1)?true:false;
+        return $result;
+    }     
+
     public static function numeroBrasil($value,$decimals=2)
     {
         if(is_numeric($value)){
             $value=number_format($value, $decimals,',','.');
         }else{
-            if (is_string($value) && str_contains($value,',')) {
-                $value=str_replace(',','.', $value);
+            if (is_string($value) && self::is_numeroBrasil($value)) {
+                $search =array('.', ',');
+                $replace=array('', '.');
+                $value=str_replace($search, $replace, $value);
+                $value=number_format($value, $decimals,',','.');
+            }else if (is_string($value) && self::is_numeroEua($value)) {
+                $value=str_replace(',','', $value);
                 $value=number_format($value, $decimals,',','.');
             }else{
                 $value = null;
@@ -161,7 +182,9 @@ class StringHelper
             $value=number_format($value, $decimals,'.',',');
         }else{
             if (is_string($value) && str_contains($value,',')) {
-                $value=str_replace(',','.', $value);
+                $search =array('.', ',');
+                $replace=array('', '.');
+                $value=str_replace($search, $replace, $value);
                 $value=number_format($value, $decimals,'.',',');
             }else{
                 $value = null;

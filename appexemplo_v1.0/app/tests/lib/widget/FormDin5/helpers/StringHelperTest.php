@@ -151,6 +151,52 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 	//-------------------------------------------------------------
+	public function testIsNumeroBrasil_eua12Mil() {
+        $expected = false;
+		$result = StringHelper::is_numeroBrasil('12,000.00');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_eua12() {
+        $expected = false;
+		$result = StringHelper::is_numeroBrasil('12.00');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_euaMilhoes() {
+        $expected = false;
+		$result = StringHelper::is_numeroBrasil('123,456,789.99');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_maria() {
+        $expected = false;
+		$result = StringHelper::is_numeroBrasil('maria');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_null() {
+        $expected = false;
+		$result = StringHelper::is_numeroBrasil(null);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_12() {
+        $expected = true;
+		$result = StringHelper::is_numeroBrasil('12');
+		$this->assertEquals( $expected , $result );
+	}	
+	public function testIsNumeroBrasil_12milSemCentavos() {
+        $expected = true;
+		$result = StringHelper::is_numeroBrasil('12.123');
+		$this->assertEquals( $expected , $result );
+	}			
+	//-------------------------------------------------------------
+	public function testNumeroBrasil_stringEua12Mil() {
+        $expected = '12.000,00';
+		$result = StringHelper::numeroBrasil('12,000.00');
+		$this->assertEquals( $expected , $result );
+	}	
+	public function testNumeroBrasil_stringBr12Mil() {
+        $expected = '12.000,00';
+		$result = StringHelper::numeroBrasil('12.000,00');
+		$this->assertEquals( $expected , $result );
+	}
 	public function testNumeroBrasil_stringSimples() {
         $expected = '12.345.678,00';
 		$result = StringHelper::numeroBrasil('12345678');
