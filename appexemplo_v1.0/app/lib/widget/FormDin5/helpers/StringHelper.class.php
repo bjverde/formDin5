@@ -158,7 +158,7 @@ class StringHelper
         $numero= preg_match('/^([0-9,]*)(\.?)(\d*)$/', $value, $output_array);
         $result= ($numero===1)?true:false;
         return $result;
-    }     
+    }
 
     /**
      * Recebe uma string com numero formato brasil ou eua e devolver no formato Brasil
@@ -204,15 +204,24 @@ class StringHelper
     {
         if(is_numeric($value)){
             $value=number_format($value, $decimals,'.',',');
-        }else{
-            if (is_string($value) && str_contains($value,',')) {
-                $search =array('.', ',');
-                $replace=array('', '.');
-                $value=str_replace($search, $replace, $value);
-                $value=number_format($value, $decimals,'.',',');
+        }else if( is_string($value) && self::is_numeroEua($value) ){
+            if ( (strlen($value)==5) && str_contains($value,'.') ) {
+                return $value;
+            }else if( (strlen($value)==5) && str_contains($value,',') ) {
+                $value=str_replace(',','.', $value);
+                return $value;                
             }else{
-                $value = null;
+                $value=str_replace(',','', $value);
+                $value=number_format($value, $decimals,'.',',');
+                return $value;
             }
+        }else if( is_string($value) && self::is_numeroBrasil($value) ){        
+            $search =array(',','.');
+            $replace=array('', ',');
+            $value=str_replace($search, $replace, $value);
+            $value=number_format($value, $decimals,'.',',');
+        }else{
+            $value = null;
         }
         return $value;
     }     
