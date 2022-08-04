@@ -201,7 +201,59 @@ class StringHelperTest extends TestCase
         $expected = false;
 		$result = StringHelper::is_numeroBrasil('123,456,789.99');
 		$this->assertEquals( $expected , $result );
-	}				
+	}
+	//-------------------------------------------------------------
+	public function testIsNumero_12() {
+        $expected = true;
+		$result = StringHelper::is_numeroEua('12');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_12Centavos() {
+        $expected = true;
+		$result = StringHelper::is_numeroEua('12.34');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_12milSemCentavos() {
+        $expected = true;
+		$result = StringHelper::is_numeroEua('12.123');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_12milCemCentavos() {
+        $expected = true;
+		$result = StringHelper::is_numeroEua('12,123.56');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_BilhõesCemCentavos() {
+        $expected = true;
+		$result = StringHelper::is_numeroEua('20,123,456,789.56');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_null() {
+        $expected = false;
+		$result = StringHelper::is_numeroEua(null);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_maria() {
+        $expected = false;
+		$result = StringHelper::is_numeroEua('maria');
+		$this->assertEquals( $expected , $result );
+	}
+	//Expressão regular não ficou bem feita
+	public function testIsNumeroEua_br12Centavos() {
+        $expected = true;
+		$result = StringHelper::is_numeroEua('12,00');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_br12Mil() {
+        $expected = false;
+		$result = StringHelper::is_numeroEua('12.000,00');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_nrMilhoes() {
+        $expected = false;
+		$result = StringHelper::is_numeroEua('123.456.789,99');
+		$this->assertEquals( $expected , $result );
+	}
 	//-------------------------------------------------------------
 	public function testNumeroBrasil_stringEua12Mil() {
         $expected = '12.000,00';
