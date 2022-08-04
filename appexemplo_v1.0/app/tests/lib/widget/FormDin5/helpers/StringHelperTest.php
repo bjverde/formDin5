@@ -300,7 +300,17 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::numeroBrasil('0');
 		$this->assertEquals( $expected , $result );
 	}
-
+	//-------------------------------------------------------------
+	public function testNumeroEua_stringEua12Mil() {
+        $expected = '12,000.00';
+		$result = StringHelper::numeroEua('12,000.00');
+		$this->assertEquals( $expected , $result );
+	}	
+	public function testNumeroEua_stringBr12Mil() {
+        $expected = '12,000.00';
+		$result = StringHelper::numeroEua('12.000,00');
+		$this->assertEquals( $expected , $result );
+	}	
 	public function testNumeroEua_stringSimples() {
         $expected = '12,345,678.00';
 		$result = StringHelper::numeroEua('12345678');
