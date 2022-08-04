@@ -145,7 +145,7 @@ class StringHelper
         if( empty($value) ){
             return false;
         }
-        $numero= preg_match('/^([0-9.]*)(,?)(\d*)$/', $value, $output_array);
+        $numero= preg_match('/^([0-9\.]*)(,?)(\d*)$/', $value, $output_array);
         $result= ($numero===1)?true:false;
         return $result;
     }
@@ -155,8 +155,8 @@ class StringHelper
         if( empty($value) ){
             return false;
         }
-        $numero = preg_match('/^([0-9,]*)(.?)(\d*)$/', $value, $output_array);
-        $result  = ($numero===1)?true:false;
+        $numero= preg_match('/^([0-9,]*)(\.?)(\d*)$/', $value, $output_array);
+        $result= ($numero===1)?true:false;
         return $result;
     }     
 
@@ -170,14 +170,16 @@ class StringHelper
             }else if( (strlen($value)==5) && str_contains($value,'.') ) {
                 $value=str_replace('.',',', $value);
                 return $value;                
-            }else if (is_string($value) && self::is_numeroEua($value)) {
-                $search =array('.', ',');
+            }else{
+                $search =array('.',',');
                 $replace=array('', '.');
                 $value=str_replace($search, $replace, $value);
                 $value=number_format($value, $decimals,',','.');
-            }else{
                 return $value;
             }
+        }else if( is_string($value) && self::is_numeroEua($value) ){        
+            $value=str_replace(',','', $value);
+            $value=number_format($value, $decimals,',','.');
         }else{
             $value = null;
         }
