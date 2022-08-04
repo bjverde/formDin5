@@ -160,6 +160,13 @@ class StringHelper
         return $result;
     }     
 
+    /**
+     * Recebe uma string com numero formato brasil ou eua e devolver no formato Brasil
+     *
+     * @param numeric|string $value  valor que deve ser convertido
+     * @param integer $decimals numero de casas decimais
+     * @return string|null
+     */
     public static function numeroBrasil($value,$decimals=2)
     {
         if(is_numeric($value)){
@@ -186,6 +193,13 @@ class StringHelper
         return $value;
     }
 
+    /**
+     * Recebe uma string com numero formato EUA ou Brasil e devolver no formato EUA
+     *
+     * @param numeric|string $value  valor que deve ser convertido
+     * @param integer $decimals numero de casas decimais
+     * @return string|null
+     */    
     public static function numeroEua($value,$decimals=2)
     {
         if(is_numeric($value)){
