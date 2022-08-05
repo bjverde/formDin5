@@ -1838,7 +1838,7 @@ class TFormDin
 	 * @param integer $intMaxLength  -03: Tamanho maximo de caracteres
 	 * @param boolean $boolRequired  -04: Obrigatorio
 	 * @param integer $intSize       -05: Tamanho do campo na tela
-	 * @param boolean $boolNewLine   -06: Campo em nova linha
+	 * @param boolean $boolNewLine   -06: Default TRUE = campo em nova linha, FALSE continua na linha anterior
 	 * @param string  $strValue      -07: valor inicial do campo
 	 * @param boolean $boolLabelAbove-08: Label acima, DEFAULT is FALSE na mesma linha
      * @param string $placeholder    -09: FORMDIN5: Texto do Place Holder
@@ -1873,6 +1873,192 @@ class TFormDin
         return $formField;
 	}
 
+    /**
+     * Adiciona uma linha simples de texto com label
+     *
+     * @param string $strName         -01: ID do campo
+     * @param string $strLabel        -02: Label do campo, que irá aparecer na tela do usuario
+     * @param string $value           -03: Texto que será incluido
+     * @param boolean $boolNewLine    -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param [type] $color
+     * @param [type] $size
+     * @param [type] $decoration
+     * @return void
+     */
+	public function addTextDisplay( string $id
+                                   ,string $label
+                                   ,string $value
+                                   ,$boolNewLine=null
+                                   ,$boolLabelAbove=null
+                                   ,$color = null
+                                   ,$size = null
+                                   ,$decoration = null
+                                 )
+	{
+        $formField = new TFormDinTextDisplay($id
+                                            ,$label
+                                            ,$value
+                                            ,$color
+                                            ,$size
+                                            ,$decoration
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
+
+    /**
+     * Adiciona uma linha simples de texto formatado com cnpj com label
+     *
+     * @param string $strName         -01: ID do campo
+     * @param string $strLabel        -02: Label do campo, que irá aparecer na tela do usuario
+     * @param string $value           -03: Texto que será incluido
+     * @param boolean $boolNewLine    -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param [type] $color
+     * @param [type] $size
+     * @param [type] $decoration
+     * @return void
+     */
+	public function addTextDisplayCpfCpnj(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$boolNewLine=null
+                                        ,$boolLabelAbove=null
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+	{
+        $formField = TFormDinTextDisplay::cnpjCpf($id
+                                            ,$label
+                                            ,$value
+                                            ,$color
+                                            ,$size
+                                            ,$decoration
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
+
+    /**
+     * Adiciona uma linha simples de texto formatado numero de telefone
+     *
+     * @param string $strName         -01: ID do campo
+     * @param string $strLabel        -02: Label do campo, que irá aparecer na tela do usuario
+     * @param string $value           -03: Texto que será incluido
+     * @param boolean $boolNewLine    -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param [type] $color
+     * @param [type] $size
+     * @param [type] $decoration
+     * @return void
+     */
+	public function addTextDisplayPhoneNumber(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$boolNewLine=null
+                                        ,$boolLabelAbove=null
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+	{        
+        $formField = TFormDinTextDisplay::phoneNumber($id
+                                            ,$label
+                                            ,$value
+                                            ,$color
+                                            ,$size
+                                            ,$decoration
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
+
+    /**
+     * Adiciona uma linha simples de texto formatado de data
+     *
+     * @param string $strName         -01: ID do campo
+     * @param string $strLabel        -02: Label do campo, que irá aparecer na tela do usuario
+     * @param string $value           -03: Texto que será incluido
+     * @param boolean $boolNewLine    -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param [type] $color
+     * @param [type] $size
+     * @param [type] $decoration
+     * @return void
+     */
+	public function addTextDisplayDataTimeBr(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$showTheTime = false
+                                        ,$showSeconds = false
+                                        ,$boolNewLine=null
+                                        ,$boolLabelAbove=null
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+	{        
+        $formField = TFormDinTextDisplay::dataTimeBr($id
+                                            ,$label
+                                            ,$value
+                                            ,$showTheTime
+                                            ,$showSeconds
+                                            ,$color
+                                            ,$size
+                                            ,$decoration
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
+
+
+    /**
+     * Adiciona uma linha simples de texto formatado de data
+     *
+     * @param string $strName         -01: ID do campo
+     * @param string $strLabel        -02: Label do campo, que irá aparecer na tela do usuario
+     * @param string $value           -03: Texto que será incluido
+     * @param boolean $boolNewLine    -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param [type] $color
+     * @param [type] $size
+     * @param [type] $decoration
+     * @return void
+     */
+	public function addTextDisplayNumeroBrasil(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$decimals=2
+                                        ,$boolNewLine=null
+                                        ,$boolLabelAbove=null
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
+	{        
+        $formField = TFormDinTextDisplay::numeroBrasil($id
+                                            ,$label
+                                            ,$value
+                                            ,$decimals
+                                            ,$color
+                                            ,$size
+                                            ,$decoration
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
 
     //----------------------------------------------------------------
     //----------------------------------------------------------------
