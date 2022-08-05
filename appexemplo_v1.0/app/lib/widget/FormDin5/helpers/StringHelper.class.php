@@ -155,7 +155,7 @@ class StringHelper
         if( empty($value) ){
             return false;
         }
-        $numero= preg_match('/^([0-9,]*)(\.?)(\d*)$/', $value, $output_array);
+        $numero= preg_match('/^([0-9,]*)(\.+)(\d*)$/', $value, $output_array);
         $result= ($numero===1)?true:false;
         return $result;
     }
@@ -216,8 +216,8 @@ class StringHelper
                 return $value;
             }
         }else if( is_string($value) && self::is_numeroBrasil($value) ){        
-            $search =array(',','.');
-            $replace=array('', ',');
+            $search =array('.',',');
+            $replace=array('', '.');
             $value=str_replace($search, $replace, $value);
             $value=number_format($value, $decimals,'.',',');
         }else{
