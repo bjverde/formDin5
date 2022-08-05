@@ -204,7 +204,7 @@ class StringHelperTest extends TestCase
 	}
 	//-------------------------------------------------------------
 	public function testIsNumero_12() {
-        $expected = true;
+        $expected = false;
 		$result = StringHelper::is_numeroEua('12');
 		$this->assertEquals( $expected , $result );
 	}
@@ -238,10 +238,14 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::is_numeroEua('maria');
 		$this->assertEquals( $expected , $result );
 	}
-	//Expressão regular não ficou bem feita
 	public function testIsNumeroEua_br12Centavos() {
-        $expected = true;
+        $expected = false;
 		$result = StringHelper::is_numeroEua('12,00');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroBrasil_brSimples() {
+        $expected = false;
+		$result = StringHelper::is_numeroEua('12345678,00');
 		$this->assertEquals( $expected , $result );
 	}
 	public function testIsNumeroBrasil_br12Mil() {
@@ -290,6 +294,16 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::numeroBrasil('maria');
 		$this->assertEquals( $expected , $result );
 	}
+	public function testNumeroBrasil_12Int() {
+        $expected = '12,00';
+		$result = StringHelper::numeroBrasil(12);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroBrasil_12String() {
+        $expected = '12,00';
+		$result = StringHelper::numeroBrasil('12');
+		$this->assertEquals( $expected , $result );
+	}	
 	public function testNumeroBrasil_ZeroInt() {
         $expected = '0,00';
 		$result = StringHelper::numeroBrasil(0);
@@ -336,6 +350,16 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::numeroEua('maria');
 		$this->assertEquals( $expected , $result );
 	}
+	public function testNumeroEua_12Int() {
+        $expected = '12.00';
+		$result = StringHelper::numeroEua(12);
+		$this->assertEquals( $expected , $result );
+	}
+	public function testNumeroEua_12String() {
+        $expected = '12.00';
+		$result = StringHelper::numeroEua('12');
+		$this->assertEquals( $expected , $result );
+	}		
 	public function testNumeroEua_ZeroInt() {
         $expected = '0.00';
 		$result = StringHelper::numeroEua(0);
