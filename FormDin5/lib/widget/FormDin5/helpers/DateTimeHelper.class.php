@@ -278,6 +278,7 @@ class DateTimeHelper
     public static function DateIso2DateBr($dateSql,$showTheTime=false,$showSeconds=false)
     {
         $retorno = null;
+        $dateSql = is_null($dateSql)?'':trim($dateSql);
         if( preg_match('/\d{4}-\d{2}-\d{2}$/', $dateSql) ){
             $dateTime = new DateTime($dateSql);
             $retorno = $dateTime->format('d/m/Y');
