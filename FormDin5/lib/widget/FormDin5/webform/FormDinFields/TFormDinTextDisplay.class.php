@@ -44,7 +44,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class TFormDinVideoHtml extends TFormDinGenericField
+class TFormDinTextDisplay extends TFormDinGenericField
 {
     protected $adiantiObj;
     private $class = array();
@@ -67,49 +67,68 @@ class TFormDinVideoHtml extends TFormDinGenericField
      */
     public function __construct(string $id
                                ,string $label
-                               ,string $strValue
-                               ,$controls = true
-                               ,$autoplay = false
-                               ,$loop = false
+                               ,string $value
+                               ,$color = null
+                               ,$size = null
+                               ,$decoration = null
                                )
     {
-        $showMediaSource = new TElement('source');
-        $showMediaSource->src = $strValue;
-        $showMediaSource->type = 'video/mp4';
-
-        $adiantiObj = new TElement('video');
-        $adiantiObj->class = 'videomidiatv';
-        $adiantiObj->add($showMediaSource);
-        $adiantiObj->add('Your browser does not support HTML video.');
-
+        $adiantiObj = new TTextDisplay($value,$color,$size,$decoration);
         parent::__construct($adiantiObj,$id,$label,false,null,null);
-        $this->setClass('fd5Video');
-        $this->autoplay($autoplay);
-        $this->controls($controls);
-        $this->loop($loop);
     }
 
-    private function setProperty($property, $valeu)
+    public static function cnpjCpf(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
     {
-        if($valeu==true){
-            $this->getAdiantiObj()->setProperty($property, 'true');
-        }
-    }
-    public function loop($valeu)
-    {
-        $this->setProperty('loop', $valeu);
+        $value = StringHelper::formatCnpjCpf($value);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
     }    
-    public function controls($valeu)
+
+    public static function phoneNumber(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
     {
-        $this->setProperty('controls', $valeu);
+        $value = StringHelper::formatPhoneNumber($value);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
     }
-    public function muted($valeu)
+
+    public static function dataTimeBr(string $id
+                                        ,string $label
+                                        ,string $value
+                                        ,$showTheTime = false
+                                        ,$showSeconds = false
+                                        ,$color = null
+                                        ,$size = null
+                                        ,$decoration = null
+                                        )
     {
-        $this->setProperty('muted', $valeu);
+        $value = DateTimeHelper::DateIso2DateBr($value,$showTheTime,$showSeconds);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
     }
-    public function autoplay($valeu)
+
+    public static function numeroBrasil(string $id
+                                    ,string $label
+                                    ,string $value
+                                    ,$decimals=2
+                                    ,$color = null
+                                    ,$size = null
+                                    ,$decoration = null
+                                    )
     {
-        $this->setProperty('autoplay', $valeu);
-        $this->setProperty('muted', $valeu);
-    }
+        $value = StringHelper::numeroBrasil($value,$decimals);
+        $obj = new TFormDinTextDisplay($id,$label,$value,$color,$size,$decoration);
+        return $obj;
+    } 
 }
