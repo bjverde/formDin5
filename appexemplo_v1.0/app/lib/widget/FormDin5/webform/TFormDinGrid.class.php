@@ -71,6 +71,7 @@ class TFormDinGrid
     private $pageNavigation;
     private $objForm;
     private $listColumn = array();
+    private $dataGrid;
 
     protected $idGrid;
     protected $title;
@@ -174,7 +175,8 @@ class TFormDinGrid
         }else{
             $this->setObjForm($objForm);
 
-            $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
+            $this->dataGrid = new TDataGrid();
+            $bootgrid = new BootstrapDatagridWrapper($this->dataGrid);
             $bootgrid->width = '100%';
             $this->setAdiantiObj($bootgrid);
             $this->setId($strName);
@@ -230,6 +232,22 @@ class TFormDinGrid
         $this->getAdiantiObj()->setId($idGrid);
         $this->idGrid = $idGrid;
     }
+    //---------------------------------------------------------------
+    private function getDataGrid(){
+        return $this->dataGrid;
+    }
+    private function setDataGrid($dataGrid){
+        if( !is_object($dataGrid) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }         
+        $this->dataGrid = $dataGrid;
+    }
+    public function setActionSide(string $side){
+        if( !is_object($dataGrid) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }
+        $this->getDataGrid()->setActionSide($side);
+    }    
     //---------------------------------------------------------------
     /**
      * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
