@@ -183,6 +183,7 @@ class TFormDinGrid
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
             $this->setExportShowGroup(true);
+            $this->setExportCsv(true);
             $this->setExportExcel(true);
             $this->setExportPdf(true);
             $this->setExportXml(true);
@@ -346,7 +347,7 @@ class TFormDinGrid
             $dropdown->setButtonClass('btn btn-default waves-effect dropdown-toggle');
             if( $this->getExportCsv() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
-                $dropdown->addAction( 'CSV', $taction, 'fas:file-csv #00b894' );
+                $dropdown->addAction( 'CSV', $taction, 'fas:file-csv #66ccff' );
             }
             if( $this->getExportPdf() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
@@ -358,13 +359,13 @@ class TFormDinGrid
             }
             if( $this->getExportXml() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
-                $dropdown->addAction( 'XML', $taction, 'fa:code fa-fw green' );
+                $dropdown->addAction( 'XML', $taction, 'far:file-code #95a5a6' );
             }
             $this->getPanelGroupGrid()->addHeaderWidget( $dropdown );
         }elseif( $showExport && !$showExportGroup ){
             if( $this->getExportCsv() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
-                $this->getPanelGroupGrid()->addHeaderActionLink( 'CSV', $taction, 'fas:file-csv #00b894' );
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'CSV', $taction, 'fas:file-csv #66ccff' );
             }
             if( $this->getExportPdf() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
@@ -376,7 +377,7 @@ class TFormDinGrid
             }
             if( $this->getExportXml() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
-                $this->getPanelGroupGrid()->addHeaderActionLink( 'XML', $taction, 'fa:code fa-fw green' );
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'XML', $taction, 'far:file-code #95a5a6' );
             }
         }
     }
