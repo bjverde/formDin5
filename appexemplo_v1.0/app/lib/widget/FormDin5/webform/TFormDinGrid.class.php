@@ -338,7 +338,7 @@ class TFormDinGrid
 
     public function showGridExport()
     {
-        $showExport = $this->getExportExcel() || $this->getExportPdf() || $this->getExportXml();
+        $showExport = $this->getExportCsv() || $this->getExportExcel() || $this->getExportPdf() || $this->getExportXml();
         $showExportGroup = $this->getExportShowGroup();
 
         if( $showExport && $showExportGroup ){
