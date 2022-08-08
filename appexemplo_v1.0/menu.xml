@@ -354,7 +354,12 @@
             </menuitem>
             <menuitem label='Grides Draw - desenhando Dinamicamente'>
                 <icon>fas:th fa-fw #2965f1</icon>
-                <action>comingSoonView</action>
+                <menu>
+                    <menuitem label='Gride Draw 07 - ações a direita'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride_draw_07</action>
+                    </menuitem>
+                </menu>
             </menuitem>
         </menu>        
     </menuitem>
