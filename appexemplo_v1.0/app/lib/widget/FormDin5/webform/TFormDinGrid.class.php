@@ -183,6 +183,7 @@ class TFormDinGrid
             $this->bootstrapGrid = new BootstrapDatagridWrapper($this->dataGrid);
             $this->setAdiantiObj($this->bootstrapGrid);
             $this->setWidth($strWidth);
+            $this->setActionSide('left');
             $this->setId($strName);
             $this->setHeight($strHeight);
             $this->setData($mixData);
@@ -245,9 +246,16 @@ class TFormDinGrid
         }         
         $this->dataGrid = $dataGrid;
     }
-    public function setActionSide(string $side){
-        if( !is_object($dataGrid) ){
-            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+    /**
+     * Define o lado que ação irá aparecer. O Default é 'left'
+     * Os valores possíveis são: left, right, esquerda, direita
+     * @param string $side
+     */
+    public function setActionSide($side){
+        $side = empty($side)?'left':$side;
+        $validando = $side=='left'||$side=='esquerda'||$side=='right'||$side=='direita';
+        if( !$validando ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_VALEU_NOT_VALID);
         }
         $this->getDataGrid()->setActionSide($side);
     }    
