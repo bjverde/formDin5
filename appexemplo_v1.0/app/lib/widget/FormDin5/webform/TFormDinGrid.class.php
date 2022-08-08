@@ -72,12 +72,14 @@ class TFormDinGrid
     private $objForm;
     private $listColumn = array();
     private $dataGrid;
+    private $bootstrapGrid;
 
     protected $idGrid;
     protected $title;
     protected $updateFields;
     protected $key;
     protected $width;
+    protected $minWidth;
     private $maxRows;
     private $realTotalRowsSqlPaginator;    
 
@@ -175,13 +177,14 @@ class TFormDinGrid
         }else{
             $this->setObjForm($objForm);
 
+            $strWidth = empty($strWidth)?'100%':$strWidth;
+
             $this->dataGrid = new TDataGrid();
-            $bootgrid = new BootstrapDatagridWrapper($this->dataGrid);
-            $bootgrid->width = '100%';
-            $this->setAdiantiObj($bootgrid);
+            $this->bootstrapGrid = new BootstrapDatagridWrapper($this->dataGrid);
+            $this->setAdiantiObj($this->bootstrapGrid);
+            $this->setWidth($strWidth);
             $this->setId($strName);
             $this->setHeight($strHeight);
-            $this->setWidth($strWidth);
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
             $this->setExportShowGroup(true);
@@ -731,13 +734,24 @@ class TFormDinGrid
         }
     }
     //---------------------------------------------------------------
-    public function getWidth()
-    {
+    public function getWidth(){
         return $this->width;
     }
-    public function setWidth( $width )
-    {
+    public function setWidth(string $width){
+        if(empty($width)){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
+        }
         $this->width = $width;
+        $this->getAdiantiObj()->width=$width;
+    }
+    //---------------------------------------------------------------
+    public function getMinWidth()
+    {
+        return $this->minWidth;
+    }
+    public function setMinWidth( $width )
+    {
+        $this->minWidth = $width;
         $this->getAdiantiObj()->style = 'min-width: '.$width.'px';
     }
     //---------------------------------------------------------------
