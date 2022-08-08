@@ -327,9 +327,22 @@
                     <menuitem label='Grides 18 simples - Setando dados'>
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_grid18</action>
-                    </menuitem>                    
+                    </menuitem>
                 </menu> 
-            </menuitem>      
+            </menuitem>
+            <menuitem label='Grides Exportar'>
+                <icon>fas:th fa-fw #2965f1</icon>
+                <menu>
+                    <menuitem label='Gride 05 - Exportar somente CSV'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride05_csv</action>
+                    </menuitem>
+                    <menuitem label='Gride 05 - Exportar somente XLS e PDF'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride05_xls_pdf</action>
+                    </menuitem>
+                </menu> 
+            </menuitem>            
             <menuitem label='Grides com campos internos'>
                 <icon>fas:th fa-fw #2965f1</icon>
                 <menu>
