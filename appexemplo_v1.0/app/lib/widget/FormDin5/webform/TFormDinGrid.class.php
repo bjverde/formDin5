@@ -392,8 +392,6 @@ class TFormDinGrid
         $this->showGridAction();
         $this->showGridExport();
 
-        //TDataGrid::setActionSide('right');
-
         $this->getAdiantiObj()->createModel();
         if( !empty($this->getData()) ){
             $this->getAdiantiObj()->addItems( $this->getData() );
