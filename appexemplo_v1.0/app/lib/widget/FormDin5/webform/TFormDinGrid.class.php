@@ -341,33 +341,33 @@ class TFormDinGrid
 
         if( $showExport && $showExportGroup ){
             // header actions
-            $dropdown = new TDropDown('Export', 'fa:list');
+            $dropdown = new TDropDown('Exportar', 'fa:list');
             $dropdown->setButtonClass('btn btn-default waves-effect dropdown-toggle');
             if( $this->getExportExcel() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
-                $dropdown->addAction( 'Save as CSV', $taction, 'fa:table blue' );
+                $dropdown->addAction( 'CSV', $taction, 'fa:table blue' );
             }
             if( $this->getExportPdf() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
-                $dropdown->addAction( 'Save as CSV', $taction, 'far:file-pdf fa-fw red' );
+                $dropdown->addAction( 'PDF', $taction, 'far:file-pdf fa-fw red' );
             }
             if( $this->getExportXml() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
-                $dropdown->addAction( 'Save as XML', $taction, 'fa:code fa-fw green' );
+                $dropdown->addAction( 'XML', $taction, 'fa:code fa-fw green' );
             }
             $this->getPanelGroupGrid()->addHeaderWidget( $dropdown );
         }elseif( $showExport && !$showExportGroup ){
             if( $this->getExportExcel() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']);
-                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as CSV', $taction, 'fa:table blue' );
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'CSV', $taction, 'fa:table blue' );
             }
             if( $this->getExportPdf() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']);
-                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as PDF', $taction, 'far:file-pdf fa-fw red' );
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'PDF', $taction, 'far:file-pdf fa-fw red' );
             }
             if( $this->getExportXml() ){
                 $taction = new TAction([$this->getObjForm(), 'onExportXML'], ['register_state' => 'false', 'static'=>'1']);
-                $this->getPanelGroupGrid()->addHeaderActionLink( 'Save as XML', $taction, 'fa:code fa-fw green' );
+                $this->getPanelGroupGrid()->addHeaderActionLink( 'XML', $taction, 'fa:code fa-fw green' );
             }
         }
     }
@@ -634,7 +634,7 @@ class TFormDinGrid
     public function getOnDrawActionButton()
     {
         return $this->onDrawActionButton;
-    }    
+    }
     //------------------------------------------------------------------------------------
     /**
      * Campos do form origem que serão atualizados ao selecionar o item desejado.
@@ -660,7 +660,7 @@ class TFormDinGrid
     {
         $mixUpdateFields = ArrayHelper::convertArrayMixUpdate2OutputFormat($this->updateFields,$outputFormat);
         return $mixUpdateFields;
-    }    
+    }
     //------------------------------------------------------------------------------------
     public function clearUpdateFields()
     {
@@ -688,7 +688,7 @@ class TFormDinGrid
     public function getMaxRows() {
         $maxRows =  empty($this->maxRows)?self::ROWS_PER_PAGE:$this->maxRows;
         return ( int ) $maxRows;
-    }    
+    }
     //---------------------------------------------------------------------------------------
     public function getCreateDefaultButtons()
     {
@@ -708,7 +708,7 @@ class TFormDinGrid
     public function getWidth()
     {
         return $this->width;
-    }   
+    }
     public function setWidth( $width )
     {
         $this->width = $width;
@@ -730,14 +730,15 @@ class TFormDinGrid
     public function setExportShowGroup( $boolNewValue = null )
     {
         $this->exportShowGroup = is_null( $boolNewValue ) ? true : $boolNewValue;
-    }    
+    }
     public function getExportShowGroup() {
         return $this->exportShowGroup;
-    }    
+    }
+    //---------------------------------------------------------------------------------------
     public function setExportExcel( $boolNewValue = null )
     {
         $this->exportExcel = is_null( $boolNewValue ) ? true : $boolNewValue;
-    }    
+    }
     public function getExportExcel() {
         return $this->exportExcel;
     }
@@ -745,7 +746,7 @@ class TFormDinGrid
     public function setExportPdf( $boolNewValue = null )
     {
         $this->exportPdf = is_null( $boolNewValue ) ? true : $boolNewValue;
-    }    
+    }
     public function getExportPdf() {
         return $this->exportPdf;
     }
@@ -753,11 +754,11 @@ class TFormDinGrid
     public function setExportXml( $boolNewValue = null )
     {
         $this->exportXml = is_null( $boolNewValue ) ? true : $boolNewValue;
-    }    
+    }
     public function getExportXml() {
         return $this->exportXml;
-    }        
-
+    }
+    //------------------------------------------------------------------------------------
     /**
      * Define se os botoes Alterar e Excluir serão exibidos quando não for
      * adicionado nenhum botão
@@ -772,19 +773,18 @@ class TFormDinGrid
     public function setCreateDefaultEditButton( $boolNewValue = null )
     {
         $this->createDefaultEditButton = is_null( $boolNewValue ) ? true : $boolNewValue;
-    }    
+    }
     public function getCreateDefaultEditButton( $boolNewValue = null )
     {
         return is_null( $this->createDefaultEditButton ) ? true : $this->createDefaultEditButton;
-    }    
+    }
     //------------------------------------------------------------------------------------
     public function setCreateDefaultDeleteButton( $boolNewValue = null )
     {
         $this->createDefaultDeleteButton = is_null( $boolNewValue ) ? true : $boolNewValue;
-    }
-    
+    }    
     public function getCreateDefaultDeleteButton( $boolNewValue = null )
     {
         return is_null( $this->createDefaultDeleteButton ) ? true : $this->createDefaultDeleteButton;
-    }    
+    }
 }
