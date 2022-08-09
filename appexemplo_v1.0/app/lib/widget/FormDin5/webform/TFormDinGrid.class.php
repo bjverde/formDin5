@@ -80,6 +80,8 @@ class TFormDinGrid
     protected $key;
     protected $width;
     protected $minWidth;
+    protected $action_group;
+    protected $enableActionGroup;
     private $maxRows;
     private $realTotalRowsSqlPaginator;    
 
@@ -337,13 +339,20 @@ class TFormDinGrid
     public function showGridAction()
     {
         $listGridAction = $this->getListGridAction();
-        if( ArrayHelper::isArrayNotEmpty($listGridAction) ){
+        $listGridActionNotEmpty = ArrayHelper::isArrayNotEmpty($listGridAction);
+        if( $listGridActionNotEmpty && $this->getEnableActionGroup()==false ){
             foreach( $listGridAction as $itemGridAction ) {
                 $this->getAdiantiObj()->addAction($itemGridAction->getAdiantiObj()
                                                  ,$itemGridAction->getActionLabel()
                                                  ,$itemGridAction->getImage()
                                                  );
             }
+        }else if( $listGridActionNotEmpty && $this->getEnableActionGroup()==true ){
+            $action_group = $this->getActionGroup();
+            foreach( $listGridAction as $itemGridAction ) {
+                $action_group->addAction($itemGridAction->getAdiantiObj());
+            }            
+            $this->getAdiantiObj()->addActionGroup( $action_group );
         }else{
             if( $this->getCreateDefaultButtons() ){
                 if( $this->getCreateDefaultEditButton() ){
@@ -843,4 +852,35 @@ class TFormDinGrid
     {
         return is_null( $this->createDefaultDeleteButton ) ? true : $this->createDefaultDeleteButton;
     }
+    //------------------------------------------------------------------------------------
+    /**
+     * Ativa um grupo de ações padrão 
+     *
+     * @param boolean $enable - Default = FALSE, sem grupo de ações. TRUE = Habilita grupo de ações
+     */
+    public function enableActionGroup( $enable )
+    {
+        $enable=empty($enable)?false:$enable;
+        if ($enable==true){
+            $this->setActionGroup( 'Ações', 'fa:th' );
+        }
+        $this->enableActionGroup = $enable;
+    }
+    public function getEnableActionGroup()
+    {
+        return $this->enableActionGroup;
+    }
+    /**
+     * Cria um Action Group
+     * @param $label Action Group label
+     * @param $icon  Action Group icon
+     */
+    public function setActionGroup( $label,$icon )
+    {
+        $this->action_group = new TDataGridActionGroup($label,$icon);
+    }
+    public function getActionGroup()
+    {
+        return $this->action_group;
+    }    
 }
