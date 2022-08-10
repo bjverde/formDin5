@@ -342,6 +342,23 @@
                         <action>exe_gride05_xls_pdf</action>
                     </menuitem>
                 </menu> 
+            </menuitem>
+            <menuitem label='Grides Ações'>
+                <icon>fas:th fa-fw #2965f1</icon>
+                <menu>
+                    <menuitem label='Gride 19 - Desativando Edit'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride19</action>
+                    </menuitem>
+                    <menuitem label='Gride 19 - Incluindo Nova Ação'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride19_nova_acao</action>
+                    </menuitem>
+                    <menuitem label='Gride 19 - Ações em grupo'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_gride19_grupo</action>
+                    </menuitem>                    
+                </menu> 
             </menuitem>            
             <menuitem label='Grides com campos internos'>
                 <icon>fas:th fa-fw #2965f1</icon>
