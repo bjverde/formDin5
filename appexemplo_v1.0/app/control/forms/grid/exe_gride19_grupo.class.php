@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_gride19_nova_acao extends TPage
+class exe_gride19_grupo extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing
@@ -19,7 +19,7 @@ class exe_gride19_nova_acao extends TPage
         $this->setActiveRecord('tb_paginacao');// defines the active record
         $this->setDefaultOrder('id', 'asc');   // define the default order
 
-        $frm = new TFormDin($this,'Grid 19 - Novas ações');
+        $frm = new TFormDin($this,'Grid 19 - Ações em Grupo');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $msg = '<b>Este exemplo utiliza a tabela tb_paginacao do banco de dados app/database/bdApoio.s3db (sqlite).</b>';
         $msg = $msg.'<br>';
@@ -39,7 +39,7 @@ class exe_gride19_nova_acao extends TPage
         $grid->addColumn('id',  'id', null, 'center');
         $grid->addColumn('descricao',  'Descrição', null, 'left');
 
-        //Sempre que incluir uma nova ação as ações defualt Edit e Delete são desativadas
+        $grid->enableActionGroup(true);
         $grid->addButton(_t('Delete'),'onDelete',null,null,null,'far:trash-alt red');
         $grid->addButton('Detalhar','onDetalhar',null,null,null,'fas:th fa-fw #2965f1');
         $grid->addButton('Abrir Painel','onPainelLateral',null,null,null,'fas:link fa-link');

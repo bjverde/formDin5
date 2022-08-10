@@ -19,7 +19,7 @@ class exe_gride19 extends TPage
         $this->setActiveRecord('tb_paginacao');// defines the active record
         $this->setDefaultOrder('id', 'asc');   // define the default order
 
-        $frm = new TFormDin($this,'Exemplo Exportar Grid somente CSV');
+        $frm = new TFormDin($this,'Grid 19 - Desativando Edit');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $msg = '<b>Este exemplo utiliza a tabela tb_paginacao do banco de dados app/database/bdApoio.s3db (sqlite).</b>';
         $msg = $msg.'<br>';
