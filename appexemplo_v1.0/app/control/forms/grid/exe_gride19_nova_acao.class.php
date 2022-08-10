@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_gride19 extends TPage
+class exe_gride19_nova_acao extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing
@@ -40,6 +40,7 @@ class exe_gride19 extends TPage
         $grid->addColumn('descricao',  'Descrição', null, 'left');
 
         $grid->setCreateDefaultEditButton(false);
+        $grid->addButton('Detalhar','onDetalhar',null,null,null,'far:edit blue');
 
         $grid->setExportPdf(false);
         $grid->setExportExcel(false);
@@ -47,7 +48,7 @@ class exe_gride19 extends TPage
 
         $this->datagrid = $grid->show();
         $this->pageNavigation = $grid->getPageNavigation();
-        $panelGroupGrid = $grid->getPanelGroupGrid();
+        $panelGroupGrid = $grid->getPanelGroupGrid();;
 
 
         //$this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
@@ -92,7 +93,7 @@ class exe_gride19 extends TPage
         }
     }
 
-    /**
+     /**
      * Executed when the user clicks at the delete button
      * STATIC Method, does't reload the page when executed
      */
@@ -101,6 +102,17 @@ class exe_gride19 extends TPage
         // get the parameter and shows the message
         $code = $param['id'];
         new TMessage('error', "Você tentou clicou para deletar o registro <b>{$code}</b> e não será deletado");
+    }
+
+         /**
+     * Executed when the user clicks at the delete button
+     * STATIC Method, does't reload the page when executed
+     */
+    public static function onDetalhar($param)
+    {
+        // get the parameter and shows the message
+        $code = $param['id'];
+        new TMessage('info', "Você tentou clicou para DETALHAR o registro <b>{$code}</b>");
     }
 
 }
