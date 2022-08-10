@@ -23,7 +23,7 @@ class exe_gride19_nova_acao extends TPage
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $msg = '<b>Este exemplo utiliza a tabela tb_paginacao do banco de dados app/database/bdApoio.s3db (sqlite).</b>';
         $msg = $msg.'<br>';
-        $msg = $msg.'<br>Desativando ação Edit';
+        $msg = $msg.'<br>Criando novas ações';
         $frm->addHtmlField('mensagem', $msg);
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
@@ -40,7 +40,9 @@ class exe_gride19_nova_acao extends TPage
         $grid->addColumn('descricao',  'Descrição', null, 'left');
 
         $grid->setCreateDefaultEditButton(false);
-        $grid->addButton('Detalhar','onDetalhar',null,null,null,'far:edit blue');
+        $grid->addButton(_t('Delete'),'onDelete',null,null,null,'far:trash-alt red');
+        $grid->addButton('Detalhar','onDetalhar',null,null,null,'fas:th fa-fw #2965f1');
+        $grid->addButton('Abrir Painel','onPainelLateral',null,null,null,'fas:link fa-link');
 
         $grid->setExportPdf(false);
         $grid->setExportExcel(false);
@@ -104,15 +106,18 @@ class exe_gride19_nova_acao extends TPage
         new TMessage('error', "Você tentou clicou para deletar o registro <b>{$code}</b> e não será deletado");
     }
 
-         /**
-     * Executed when the user clicks at the delete button
-     * STATIC Method, does't reload the page when executed
-     */
     public static function onDetalhar($param)
     {
         // get the parameter and shows the message
         $code = $param['id'];
         new TMessage('info', "Você tentou clicou para DETALHAR o registro <b>{$code}</b>");
+    }
+
+    public static function onPainelLateral($param)
+    {
+        // get the parameter and shows the message
+        $code = $param['id'];
+        new TMessage('info', "Você tentou clicou para abrir o registro <b>{$code}</b> em painel lateral");
     }
 
 }
