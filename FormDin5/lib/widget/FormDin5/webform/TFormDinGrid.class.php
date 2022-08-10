@@ -71,12 +71,17 @@ class TFormDinGrid
     private $pageNavigation;
     private $objForm;
     private $listColumn = array();
+    private $dataGrid;
+    private $bootstrapGrid;
 
     protected $idGrid;
     protected $title;
     protected $updateFields;
     protected $key;
     protected $width;
+    protected $minWidth;
+    protected $action_group;
+    protected $enableActionGroup;
     private $maxRows;
     private $realTotalRowsSqlPaginator;    
 
@@ -174,12 +179,15 @@ class TFormDinGrid
         }else{
             $this->setObjForm($objForm);
 
-            $bootgrid = new BootstrapDatagridWrapper(new TDataGrid);
-            $bootgrid->width = '100%';
-            $this->setAdiantiObj($bootgrid);
+            $strWidth = empty($strWidth)?'100%':$strWidth;
+
+            $this->dataGrid = new TDataGrid();
+            $this->bootstrapGrid = new BootstrapDatagridWrapper($this->dataGrid);
+            $this->setAdiantiObj($this->bootstrapGrid);
+            $this->setWidth($strWidth);
+            $this->setActionSide('left');
             $this->setId($strName);
             $this->setHeight($strHeight);
-            $this->setWidth($strWidth);
             $this->setData($mixData);
             $this->setUpdateFields( $mixUpdateFields );
             $this->setExportShowGroup(true);
@@ -230,6 +238,29 @@ class TFormDinGrid
         $this->getAdiantiObj()->setId($idGrid);
         $this->idGrid = $idGrid;
     }
+    //---------------------------------------------------------------
+    private function getDataGrid(){
+        return $this->dataGrid;
+    }
+    private function setDataGrid($dataGrid){
+        if( !is_object($dataGrid) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FD5_OBJ_ADI);
+        }         
+        $this->dataGrid = $dataGrid;
+    }
+    /**
+     * Define o lado que ação irá aparecer. O Default é 'left'
+     * Os valores possíveis são: left, right, esquerda, direita
+     * @param string $side
+     */
+    public function setActionSide($side){
+        $side = empty($side)?'left':$side;
+        $validando = $side=='left'||$side=='esquerda'||$side=='right'||$side=='direita';
+        if( !$validando ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_VALEU_NOT_VALID);
+        }
+        $this->getDataGrid()->setActionSide($side);
+    }    
     //---------------------------------------------------------------
     /**
      * Adciona um Objeto Adianti na lista de objetos que compeen o Formulário.
@@ -308,13 +339,20 @@ class TFormDinGrid
     public function showGridAction()
     {
         $listGridAction = $this->getListGridAction();
-        if( ArrayHelper::isArrayNotEmpty($listGridAction) ){
+        $listGridActionNotEmpty = ArrayHelper::isArrayNotEmpty($listGridAction);
+        if( $listGridActionNotEmpty && $this->getEnableActionGroup()==false ){
             foreach( $listGridAction as $itemGridAction ) {
                 $this->getAdiantiObj()->addAction($itemGridAction->getAdiantiObj()
                                                  ,$itemGridAction->getActionLabel()
                                                  ,$itemGridAction->getImage()
                                                  );
             }
+        }else if( $listGridActionNotEmpty && $this->getEnableActionGroup()==true ){
+            $action_group = $this->getActionGroup();
+            foreach( $listGridAction as $itemGridAction ) {
+                $action_group->addAction($itemGridAction->getAdiantiObj());
+            }            
+            $this->getAdiantiObj()->addActionGroup( $action_group );
         }else{
             if( $this->getCreateDefaultButtons() ){
                 if( $this->getCreateDefaultEditButton() ){
@@ -391,8 +429,6 @@ class TFormDinGrid
         $this->showGridColumn();
         $this->showGridAction();
         $this->showGridExport();
-
-        //TDataGrid::setActionSide('right');
 
         $this->getAdiantiObj()->createModel();
         if( !empty($this->getData()) ){
@@ -715,13 +751,24 @@ class TFormDinGrid
         }
     }
     //---------------------------------------------------------------
-    public function getWidth()
-    {
+    public function getWidth(){
         return $this->width;
     }
-    public function setWidth( $width )
-    {
+    public function setWidth(string $width){
+        if(empty($width)){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_EMPTY_INPUT);
+        }
         $this->width = $width;
+        $this->getAdiantiObj()->width=$width;
+    }
+    //---------------------------------------------------------------
+    public function getMinWidth()
+    {
+        return $this->minWidth;
+    }
+    public function setMinWidth( $width )
+    {
+        $this->minWidth = $width;
         $this->getAdiantiObj()->style = 'min-width: '.$width.'px';
     }
     //---------------------------------------------------------------
@@ -805,4 +852,35 @@ class TFormDinGrid
     {
         return is_null( $this->createDefaultDeleteButton ) ? true : $this->createDefaultDeleteButton;
     }
+    //------------------------------------------------------------------------------------
+    /**
+     * Ativa um grupo de ações padrão 
+     *
+     * @param boolean $enable - Default = FALSE, sem grupo de ações. TRUE = Habilita grupo de ações
+     */
+    public function enableActionGroup( $enable )
+    {
+        $enable=empty($enable)?false:$enable;
+        if ($enable==true){
+            $this->setActionGroup( 'Ações', 'fa:th' );
+        }
+        $this->enableActionGroup = $enable;
+    }
+    public function getEnableActionGroup()
+    {
+        return $this->enableActionGroup;
+    }
+    /**
+     * Cria um Action Group
+     * @param $label Action Group label
+     * @param $icon  Action Group icon
+     */
+    public function setActionGroup( $label,$icon )
+    {
+        $this->action_group = new TDataGridActionGroup($label,$icon);
+    }
+    public function getActionGroup()
+    {
+        return $this->action_group;
+    }    
 }
