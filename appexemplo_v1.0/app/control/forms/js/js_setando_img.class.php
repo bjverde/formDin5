@@ -28,15 +28,23 @@ class js_setando_img extends TPage
 
         $entry     = new TEntry('entry');
 
-        $imagecapture = new TImageCapture('imagecapture');            
-        $imagecapture->setAllowedExtensions( ['gif', 'png', 'jpg', 'jpeg'] );
-        $imagecapture->setSize(300, 200);
-        $imagecapture->setCropSize(300, 200);
-        $imagecapture->setValue('app/images/adianti.png');
+        $image  = new TFile('image');
+        $image->setAllowedExtensions( ['gif', 'png', 'jpg', 'jpeg'] );
+        $image->enableFileHandling();
+        $image->enableImageGallery();
+        //$image->setValue('app/images/adianti.png');
+
+        /*
+        $image = new TImageCapture('image');            
+        $image->setAllowedExtensions( ['gif', 'png', 'jpg', 'jpeg'] );
+        $image->setSize(300, 200);
+        $image->setCropSize(300, 200);
+        $image->setValue('app/images/adianti.png');
+        */
 
         $this->form->addFields( [ new TLabel('Combo') ],   [ $combo ] );
         $this->form->addFields( [ new TLabel('Entry') ],   [ $entry ] );
-        $this->form->addFields( [ new TLabel('Img') ],   [ $imagecapture ] );
+        $this->form->addFields( [ new TLabel('Img') ],   [ $image ] );
 
         // wrap the page content using vertical box
         $vbox = new TVBox;
@@ -85,7 +93,7 @@ class js_setando_img extends TPage
             $caminho = 'app/images/'.$combo;
             $obj = new StdClass;
             $obj->entry = $caminho;
-            $obj->imagecapture = $caminho;
+            $obj->image = $caminho;
             var_dump($obj);
             TForm::sendData(self::$formName, $obj);
         }
