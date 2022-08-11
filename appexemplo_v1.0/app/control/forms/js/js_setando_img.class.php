@@ -18,10 +18,15 @@ class js_setando_img extends TPage
         $this->form = new BootstrapFormBuilder(self::$formName);
         $this->form->setFormTitle( 'JS Exemplo - setando Img' );
         
-        $options = ['adianti.png'=>'Adianti', 'builder.png' => 'Builder', 'template3.png' => 'template3', 'template4.png' => 'template4'];
+        $options = ['adianti.png'=>'Adianti'
+                  , 'builder.png' => 'Builder'
+                  , 'template3.png' => 'template3'
+                  , 'template4.png' => 'template4'];
         $combo     = new TCombo('combo');
         $combo->addItems($options);
         $combo->setChangeAction(new TAction([$this,'setImg']));
+
+        $entry     = new TEntry('entry');
 
         $imagecapture = new TImageCapture('imagecapture');            
         $imagecapture->setAllowedExtensions( ['gif', 'png', 'jpg', 'jpeg'] );
@@ -30,6 +35,7 @@ class js_setando_img extends TPage
         $imagecapture->setValue('app/images/adianti.png');
 
         $this->form->addFields( [ new TLabel('Combo') ],   [ $combo ] );
+        $this->form->addFields( [ new TLabel('Entry') ],   [ $entry ] );
         $this->form->addFields( [ new TLabel('Img') ],   [ $imagecapture ] );
 
         // wrap the page content using vertical box
@@ -76,8 +82,11 @@ class js_setando_img extends TPage
         try {
             //var_dump($param);
             $combo = $param['combo'];
+            $caminho = 'app/images/'.$combo;
             $obj = new StdClass;
-            $obj->imagecapture = 'app/images/'.$combo;
+            $obj->entry = $caminho;
+            $obj->imagecapture = $caminho;
+            var_dump($obj);
             TForm::sendData(self::$formName, $obj);
         }
         catch (Exception $e){
