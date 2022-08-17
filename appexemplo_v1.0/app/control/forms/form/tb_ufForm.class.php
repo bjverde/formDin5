@@ -44,7 +44,7 @@ class tb_ufForm extends TPage
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
-        $frm->setAction( 'Buscar', 'onSearch', null, 'fa:save', 'black' );
+        $frm->setAction( 'Buscar', 'onSearch', null, 'fas:search', 'black' );
         $frm->setAction( _t('Save'), 'onSave', null, 'fa:save', 'green' );
         $frm->setActionLink( _t('Clear'), 'onClear', null, 'fa:eraser', 'red');
 
