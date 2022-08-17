@@ -390,7 +390,12 @@
     </menuitem>
     <menuitem label='Formulário'>
         <icon>far:edit fa-fw green</icon>
-        <action>comingSoonView</action>
+        <menu>
+            <menuitem label='UF'>
+                <icon>far:edit fa-fw green</icon>
+                <action>tb_ufForm</action>
+            </menuitem>
+        </menu>
     </menuitem>
     <menuitem label='Layout e CSS'>
         <icon>fab:css3-alt fa-fw #264de4</icon>
