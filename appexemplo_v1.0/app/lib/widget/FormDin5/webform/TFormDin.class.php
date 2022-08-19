@@ -1358,9 +1358,9 @@ class TFormDin
                                     ,$placeholder = null
                                   )
     {
-        $boolRequired   = empty($boolRequired)?false:$boolRequired;
-        $boolNewLine    = empty($boolNewLine)?true:$boolNewLine;
-        $boolLabelAbove = empty($boolLabelAbove)?false:$boolLabelAbove;
+        $boolRequired   = is_null($boolRequired)?false:$boolRequired;
+        $boolNewLine    = is_null($boolNewLine)?true:$boolNewLine;
+        $boolLabelAbove = is_null($boolLabelAbove)?false:$boolLabelAbove;
 
         $formField = new TFormDinSelectFieldDB($id
                                             ,$label
