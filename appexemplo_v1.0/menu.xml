@@ -391,10 +391,14 @@
     <menuitem label='Formulário'>
         <icon>far:edit fa-fw green</icon>
         <menu>
-            <menuitem label='UF'>
+            <menuitem label='UF FormDin5'>
                 <icon>far:edit fa-fw green</icon>
-                <action>tb_ufForm</action>
+                <action>tb_ufFormDin</action>
             </menuitem>
+            <menuitem label='UF Adianti'>
+                <icon>far:edit fa-fw green</icon>
+                <action>tb_ufFormAdianti</action>
+            </menuitem>            
         </menu>
     </menuitem>
     <menuitem label='Layout e CSS'>
