@@ -24,7 +24,7 @@ class exe_TFile extends TPage
         //$frm->setMaximize(true);
         //$frm->setHelpOnLine('Titulo', $strHeight, $strWidth, 'ajuda', null);
         
-        $fileFormat = 'pdf,gif,txt,jpg,rar,zip,doc';
+        $fileFormat = 'gif,png,jpg,jpeg,pdf,txt,rar,zip,doc';
         $strMaxFileSize = '300k';
         $msg = 'Arquivo de tamanho maximo é '.$strMaxFileSize.' e nos formatos: '.$fileFormat;
         $msg = $msg.'<br>';
@@ -45,10 +45,14 @@ class exe_TFile extends TPage
         $anexofd5_1->enableFileHandling();
 
 
-        $frm->addHtmlField('htmlfd5_2', 'Upload com Barra de progresso e PreView de Imagens', null, 'Dica:', null, 200)->setClass('notice');
+        $frm->addHtmlField('htmlfd5_2', 'Upload com Barra de progresso e PreView de Imagens (passe o mouse sobre o nome do arquivo)', null, 'Dica:', null, 200)->setClass('notice');
         $anexofd5_2 = $frm->addFileField('anexofd5_2', 'Anexo FD5 2:', true, $fileFormat, '100K', 40, false);
         $anexofd5_2->enablePopover();
         $anexofd5_2->enableFileHandling();
+
+        $frm->addHtmlField('htmlfd5_3', 'Upload com Barra de progresso e Galeria da Imagens', null, 'Dica:', null, 200)->setClass('notice');
+        $anexofd5_3 = $frm->addFileField('anexofd5_3', 'Anexo FD5 3:', true, $fileFormat, '100K', 40, false);
+        $anexofd5_3->enableImageGallery();        
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
