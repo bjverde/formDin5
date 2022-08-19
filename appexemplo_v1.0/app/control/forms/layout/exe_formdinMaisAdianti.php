@@ -21,7 +21,7 @@ class exe_formdinMaisAdianti extends TPage
 
 
         $frm->addGroupField('fl8', 'FormDin - 4 campo, label sobre');
-        $frm->addTextField('fl81', 'fl81:', 20, false, 20, 'FormDin',false, null, null, true);
+        $frm->addTextField('fl81', 'fl81:', 20, false, 20, 'FormDin',true, null, null, true);
         $frm->addTextField('fl82', 'fl82:', 20, false, 20, 'FormDin',false, null, null, true);
         $frm->addTextField('fl83', 'fl83:', 20, true, 20, 'Texto inicial',false, null, null, true);
         $frm->addTextField('fl84', 'fl84:', 20, false, 20, 'FormDin',false, null, null, true);
