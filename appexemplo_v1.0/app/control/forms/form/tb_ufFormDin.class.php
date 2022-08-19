@@ -10,7 +10,7 @@
  * System appex created in: 2022-08-17 01:36:21
  */
 
-class tb_ufForm extends TPage
+class tb_ufFormDin extends TPage
 {
 
     protected $form; //Registration form Adianti
