@@ -1054,8 +1054,8 @@ class TFormDin
                                 ,$loop = false
                                 )
     {
-        $boolNewLine    = empty($boolNewLine)?true:$boolNewLine;
-        $boolLabelAbove = empty($boolLabelAbove)?false:$boolLabelAbove;
+        $boolNewLine    = is_null($boolNewLine)?true:$boolNewLine;
+        $boolLabelAbove = is_null($boolLabelAbove)?false:$boolLabelAbove;
 
         $formField = new TFormDinVideoHtml($id,$label,$strValue,$controls,$autoplay,$loop);
         $objField = $formField->getAdiantiObj();
@@ -1291,7 +1291,7 @@ class TFormDin
                                   ,string $strDataColumns = null
                                   )
     {
-        $boolRequired = empty($boolRequired)?false:$boolRequired;
+        $boolRequired = is_null($boolRequired)?false:$boolRequired;
         $formField = new TFormDinSelectField($id
                                             ,$strLabel
                                             ,$boolRequired
