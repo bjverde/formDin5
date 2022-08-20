@@ -38,11 +38,13 @@ class tb_ufFormAdianti extends TPage
         $this->form->setFormTitle("listTipoDocumental");
         $this->limit = 20;
 
-        $id = new TEntry('cod_uf');
+        $id = new THidden('cod_uf');
+        $sig_uf = new TEntry('sig_uf');
         $descricao = new TEntry('nom_uf');
         $estado = new TEntry('cod_regiao');
 
-        $id->addValidation("id", new TRequiredValidator()); 
+
+        $sig_uf->addValidation("sig_uf", new TRequiredValidator()); 
         $descricao->addValidation("Descrição", new TRequiredValidator()); 
         $estado->addValidation("Estado", new TRequiredValidator()); 
 
@@ -51,8 +53,10 @@ class tb_ufFormAdianti extends TPage
         $estado->setSize('100%');
         $descricao->setSize('100%');
 
-        $row1 = $this->form->addFields([new TLabel("Cod Uf:", '#F70000', '14px', null)],[$id],[new TLabel("Descrição:", '#FF0000', '14px', null)],[$descricao]);
-        $row2 = $this->form->addFields([new TLabel("Estado:", '#FF0000', '14px', null)],[$estado],[],[]);
+        $row1 = $this->form->addFields([new TLabel("sig_uf:", '#F70000', '14px', null)],[$sig_uf]
+                                      ,[new TLabel("Nom Uf:", '#FF0000', '14px', null)],[$descricao]);
+        $row2 = $this->form->addFields([new TLabel("Cod Regiao:", '#FF0000', '14px', null)],[$estado]
+                                      ,[$id],[]);
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data') );
@@ -76,15 +80,17 @@ class tb_ufFormAdianti extends TPage
         $this->datagrid->style = 'width: 100%';
         $this->datagrid->setHeight(250);
 
-        $column_id = new TDataGridColumn('cod_uf', "Id", 'center' , '70px');
-        $column_descricao = new TDataGridColumn('nom_uf', "Descricao", 'left');
-        $column_estado = new TDataGridColumn('cod_regiao', "Estado", 'left');
+        $column_id = new TDataGridColumn('cod_uf', "Id", 'center');
+        $column_sig_uf = new TDataGridColumn('sig_uf', "Sig Uf", 'left');
+        $column_descricao = new TDataGridColumn('nom_uf', "Nom Uf", 'left');
+        $column_estado = new TDataGridColumn('cod_regiao', "Cod Região", 'left');
 
         $order_id = new TAction(array($this, 'onReload'));
         $order_id->setParameter('order', 'id');
         $column_id->setAction($order_id);
 
         $this->datagrid->addColumn($column_id);
+        $this->datagrid->addColumn($column_sig_uf);
         $this->datagrid->addColumn($column_descricao);
         $this->datagrid->addColumn($column_estado);
 
