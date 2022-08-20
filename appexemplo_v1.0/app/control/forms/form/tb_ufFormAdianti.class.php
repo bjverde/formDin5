@@ -11,7 +11,9 @@ class tb_ufFormAdianti extends TPage
     //private static $database = 'dbapoio';
     //private static $activeRecord = 'tb_uf';
     private static $primaryKey = 'cod_uf';
-    private static $formName = 'tb_ufFormAdianti';    
+    private static $formName = 'tb_ufFormAdianti';
+    private $showMethods = ['onReload', 'onSearch', 'onRefresh', 'onClearFilters'];
+
 
     // trait com onReload, onSearch, onDelete, onClear, onEdit, show
     use Adianti\Base\AdiantiStandardFormTrait;
@@ -27,7 +29,7 @@ class tb_ufFormAdianti extends TPage
         }
         $this->setDatabase('dbapoio'); // define the database
         $this->setActiveRecord('tb_uf'); // define the Active Record
-        $this->setDefaultOrder('cod_uf', 'asc'); // define the default order
+        $this->setDefaultOrder('nom_uf', 'asc'); // define the default order
 
         // creates the form
         $this->form = new BootstrapFormBuilder(self::$formName);
@@ -49,7 +51,7 @@ class tb_ufFormAdianti extends TPage
         $estado->setSize('100%');
         $descricao->setSize('100%');
 
-        $row1 = $this->form->addFields([new TLabel("Id:", '#F70000', '14px', null)],[$id],[new TLabel("Descrição:", '#FF0000', '14px', null)],[$descricao]);
+        $row1 = $this->form->addFields([new TLabel("Cod Uf:", '#F70000', '14px', null)],[$id],[new TLabel("Descrição:", '#FF0000', '14px', null)],[$descricao]);
         $row2 = $this->form->addFields([new TLabel("Estado:", '#FF0000', '14px', null)],[$estado],[],[]);
 
         // keep the form filled during navigation with session data
@@ -57,7 +59,9 @@ class tb_ufFormAdianti extends TPage
 
         $btn_onsearch = $this->form->addAction("Buscar", new TAction([$this, 'onSearch']), 'fas:search #ffffff');
         $this->btn_onsearch = $btn_onsearch;
-        $btn_onsearch->addStyleClass('btn-primary'); 
+        $btn_onsearch->addStyleClass('btn-primary');
+
+        $btn_onsearch = $this->form->addAction(_t('Clear'), new TAction([$this, 'onClear']), 'fa:eraser red');
 
         // creates a Datagrid
         $this->datagrid = new TDataGrid;
@@ -151,6 +155,50 @@ class tb_ufFormAdianti extends TPage
 
     }
 
+    /**
+     * Register the filter in the session
+     */
+    public function onSearch($param = null)
+    {
+        $data = $this->form->getData();
+        $filters = [];
+
+        //<onBeforeDatagridSearch>
+
+        //</onBeforeDatagridSearch> 
+
+        TSession::setValue(__CLASS__.'_filter_data', NULL);
+        TSession::setValue(__CLASS__.'_filters', NULL);
+
+        if (isset($data->cod_uf) AND ( (is_scalar($data->cod_uf) AND $data->cod_uf !== '') OR (is_array($data->cod_uf) AND (!empty($data->cod_uf)) )) )
+        {
+            $filters[] = new TFilter('cod_uf', '=', $data->cod_uf);// create the filter 
+        }
+
+        if (isset($data->nom_uf) AND ( (is_scalar($data->nom_uf) AND $data->nom_uf !== '') OR (is_array($data->nom_uf) AND (!empty($data->nom_uf)) )) )
+        {
+            $filters[] = new TFilter('nom_uf', 'like', "%{$data->nom_uf}%");// create the filter 
+        }
+
+        if (isset($data->estado) AND ( (is_scalar($data->estado) AND $data->estado !== '') OR (is_array($data->estado) AND (!empty($data->estado)) )) )
+        {
+            $filters[] = new TFilter('estado', 'like', "%{$data->estado}%");// create the filter 
+        }
+
+        //<onDatagridSearch>
+
+        //</onDatagridSearch>
+
+        // fill the form with data again
+        $this->form->setData($data);
+
+        // keep the search data in the session
+        TSession::setValue(__CLASS__.'_filter_data', $data);
+        TSession::setValue(__CLASS__.'_filters', $filters);
+
+        $this->onReload(['offset' => 0, 'first_page' => 1]);
+    }
+
     public function onShow($param = null)
     {
 
@@ -163,14 +211,10 @@ class tb_ufFormAdianti extends TPage
     public function show()
     {
         // check if the datagrid is already loaded
-        if (!$this->loaded AND (!isset($_GET['method']) OR !(in_array($_GET['method'],  $this->showMethods))) )
-        {
-            if (func_num_args() > 0)
-            {
+        if (!$this->loaded AND (!isset($_GET['method']) OR !(in_array($_GET['method'],  $this->showMethods))) ) {
+            if (func_num_args() > 0){
                 $this->onReload( func_get_arg(0) );
-            }
-            else
-            {
+            } else {
                 $this->onReload();
             }
         }
