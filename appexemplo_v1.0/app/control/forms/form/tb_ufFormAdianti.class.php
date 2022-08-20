@@ -161,42 +161,8 @@ class tb_ufFormAdianti extends TPage
     public function onSearch($param = null)
     {
         $data = $this->form->getData();
-        $filters = [];
-
-        //<onBeforeDatagridSearch>
-
-        //</onBeforeDatagridSearch> 
-
-        TSession::setValue(__CLASS__.'_filter_data', NULL);
-        TSession::setValue(__CLASS__.'_filters', NULL);
-
-        if (isset($data->cod_uf) AND ( (is_scalar($data->cod_uf) AND $data->cod_uf !== '') OR (is_array($data->cod_uf) AND (!empty($data->cod_uf)) )) )
-        {
-            $filters[] = new TFilter('cod_uf', '=', $data->cod_uf);// create the filter 
-        }
-
-        if (isset($data->nom_uf) AND ( (is_scalar($data->nom_uf) AND $data->nom_uf !== '') OR (is_array($data->nom_uf) AND (!empty($data->nom_uf)) )) )
-        {
-            $filters[] = new TFilter('nom_uf', 'like', "%{$data->nom_uf}%");// create the filter 
-        }
-
-        if (isset($data->estado) AND ( (is_scalar($data->estado) AND $data->estado !== '') OR (is_array($data->estado) AND (!empty($data->estado)) )) )
-        {
-            $filters[] = new TFilter('estado', 'like', "%{$data->estado}%");// create the filter 
-        }
-
-        //<onDatagridSearch>
-
-        //</onDatagridSearch>
-
-        // fill the form with data again
-        $this->form->setData($data);
-
-        // keep the search data in the session
-        TSession::setValue(__CLASS__.'_filter_data', $data);
-        TSession::setValue(__CLASS__.'_filters', $filters);
-
-        $this->onReload(['offset' => 0, 'first_page' => 1]);
+        var_dump($param);
+        var_dump($data);
     }
 
     public function onShow($param = null)
