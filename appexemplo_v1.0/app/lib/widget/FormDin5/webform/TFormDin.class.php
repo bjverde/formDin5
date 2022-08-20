@@ -92,7 +92,7 @@ class TFormDin
      * @param string $strMethod - 06: NOT_IMPLEMENTED: metodo GET ou POST, utilizado pelo formulario para submeter as informações. padrão=POST
      * @param string $strAction - 07: NOT_IMPLEMENTED: página/url para onde os dados serão enviados. Padrão = propria página
      * @param boolean $boolPublicMode      - 08: NOT_IMPLEMENTED: ignorar mensagem fwSession_exprired da aplicação e não chamar atela de login
-     * @param boolean $boolClientValidation- 09: FORMDIN5: Se vai fazer validação no Cliente (Navegador)
+     * @param boolean $boolClientValidation- 09: FORMDIN5: Se vai fazer validação no Cliente (Navegador), use com cuidado essa opção.
      *
      * @return BootstrapFormBuilder
      */    
@@ -104,7 +104,7 @@ class TFormDin
                                ,$strMethod = null
                                ,$strAction  = null
                                ,$boolPublicMode  = null
-                               ,$boolClientValidation = true)
+                               ,$boolClientValidation = false)
     {
 
         if( !is_object($objForm) ){
@@ -123,6 +123,7 @@ class TFormDin
 
             $this->validateDeprecated($strHeigh,$strWidth);
             $bootForm = new BootstrapFormBuilder($strName);
+            $boolClientValidation = is_null($boolClientValidation)?false:$boolClientValidation;
             $this->setAdiantiObj( $bootForm, $strName,$strTitle, $boolClientValidation);
             return $this->getAdiantiObj();
         }
