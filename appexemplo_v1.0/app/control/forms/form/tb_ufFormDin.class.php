@@ -92,27 +92,25 @@ class tb_ufFormDin extends TPage
     //--------------------------------------------------------------------------------
     public function onSave($param)
     {
+        $this->form->validate();
         $data = $this->form->getData();
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
-
+        
+        //FormDinHelper::d($param,'$param');
+        //FormDinHelper::debug($data,'$data');
+        //FormDinHelper::debug($_REQUEST,'$_REQUEST');
         try{
-            $this->form->validate();
-            $this->form->setData($data);
-            $vo = new Tb_ufVO();
-            $this->frm->setVo( $vo ,$data ,$param );
-            $controller = new Tb_ufController();
-            $resultado = $controller->save( $vo );
-            if( is_int($resultado) && $resultado!=0 ) {
-                //$text = TFormDinMessage::messageTransform($text); //Tranform Array in Msg Adianti
-                $this->onReload();
-                $this->frm->addMessage( _t('Record saved') );
-                //$this->frm->clearFields();
-            }else{
-                $this->frm->addMessage($resultado);
-            }
+            $messageAction = null;
+            TTransaction::open($this->database); // open a transaction
+
+            $object = new tb_uf(); // create an empty object 
+            $object->fromArray( (array) $data); // load the object with data
+            $object->store(); // save the object 
+
+            $this->form->setData($data); // fill form data
+            TTransaction::close(); // close the transaction
+
+            new TMessage('info', "Registro salvo", $messageAction); 
+            $this->onReload();
         }catch (Exception $e){
             new TMessage(TFormDinMessage::TYPE_ERROR, $e->getMessage());
         } //END TryCatch
