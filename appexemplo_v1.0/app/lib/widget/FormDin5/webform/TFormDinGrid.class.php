@@ -526,23 +526,35 @@ class TFormDinGrid
      * Coluna do Grid Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7.1
      *
-     * @param  string $name  - 1: Name of the column in the database
-     * @param  string $label - 2: Text label that will be shown in the header
-     * @param  string $width - 3: Column Width (pixels)
-     * @param  string $align - 4: Column align (left|right|center|justify)
+     * @param string $name  - 1: Name of the column in the database
+     * @param string $label - 2: Text label that will be shown in the header
+     * @param string $width - 3: Column Width (pixels)
+     * @param string $align - 4: Column align (left|right|center|justify)
+     * @param bool $boolReadOnly - 5: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
+	 * @param bool $boolSortable - 6: FORMDIN5: Coluna ordenavel. DEFAULT = true
+	 * @param bool $boolVisivle  - 7: FORMDIN5: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
      * @return TDataGridColumn
      */
     public function addColumn(string $name
                             , string $label
                             , string $width = NULL
-                            , string $align='left' )
+                            , string $align='left'
+                            , bool $boolReadOnly = false
+                            , bool $boolSortable = true
+                            , bool $boolVisivle = true
+                            )
     {
-        $formDinGridColumn = new TFormDinGridColumn( $this->getObjForm(), $name,$label,$width,$align);
+        $formDinGridColumn = new TFormDinGridColumn( $this->getObjForm()
+                                                   , $name
+                                                   , $label
+                                                   , $width
+                                                   , $align
+                                                   , $boolReadOnly
+                                                   , $boolSortable
+                                                   , $boolVisivle
+                                                );
         $this->addListColumn($formDinGridColumn);
         return $formDinGridColumn;
-        //$column = $formDinGridColumn->getAdiantiObj();
-        //$this->getAdiantiObj()->addColumn($column);
-        //return $column;
     }
     //---------------------------------------------------------------
     /**
