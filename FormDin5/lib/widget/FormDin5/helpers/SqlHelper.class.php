@@ -223,7 +223,11 @@ class SqlHelper
         $testZero = empty($testZero)?true:$testZero;
         $connector = empty($connector)?self::SQL_CONNECTOR_AND:$connector;
         $value = self::explodeTextString($value, $dbms);
-        $isTrue = EOL.' AND '.$attribute.' like \'%'.$value.'%\' ';
+        if ( $dbms == TFormDinPdoConnection::DBMS_SQLSERVER ) {
+            $isTrue = EOL.' AND '.$attribute.' like \'%'.$value.'%\' COLLATE Latin1_General_CI_AI';
+        } else {
+            $isTrue = EOL.' AND '.$attribute.' like \'%'.$value.'%\' ';
+        }
         $attribute = self::attributeIssetOrNotZero($arrayWhereGrid,$attribute,$isTrue,null,$testZero);
         $stringWhere = $stringWhere.$attribute;
         return $stringWhere;
