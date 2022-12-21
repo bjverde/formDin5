@@ -9,7 +9,7 @@
 class TFormDinDateValidatorMax extends TFieldValidator
 {
     /**
-     * Apresenta uma mensagem de erro se a data do campo é poster a data Maxima limite
+     * Apresenta uma mensagem de erro se a data do campo é posterior a data Maxima limite
      * Funciona com campo Date ou Datetime independe da máscara
      * @param $label Label do campo
      * @param $value Valor do campo
