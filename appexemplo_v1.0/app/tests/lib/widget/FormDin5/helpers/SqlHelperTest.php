@@ -467,6 +467,18 @@ class SqlHelperTest extends TestCase
 	    $expected = EOL.' AND 1WORD like \'%blablabla%\' ';
 	    $where = null;
 	    $whereGrid = $this->getWhereGrid();
+		$dbms  = TFormDinPdoConnection::DBMS_MYSQL;
+	    SqlHelper::setDbms($dbms);			
+	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
+	    $this->assertEquals( $expected , $result);
+	}
+	//--------------------------------------------------------------------------------
+	public function testGetAtributeWhereGridParameters_TextLike_1word_SqlServer() {
+	    $expected = EOL.' AND 1WORD like \'%blablabla%\' COLLATE Latin1_General_CI_AI';
+	    $where = null;
+	    $whereGrid = $this->getWhereGrid();
+		$dbms  = TFormDinPdoConnection::DBMS_SQLSERVER;
+	    SqlHelper::setDbms($dbms);			
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '1WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
 	    $this->assertEquals( $expected , $result);
 	}
@@ -475,6 +487,18 @@ class SqlHelperTest extends TestCase
 	    $expected = EOL.' AND 5WORD like \'%aaa%bbb%ccc%ddd%eee%\' ';
 	    $where = null;
 	    $whereGrid = $this->getWhereGrid();
+		$dbms  = TFormDinPdoConnection::DBMS_MYSQL;
+	    SqlHelper::setDbms($dbms);			
+	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
+	    $this->assertEquals( $expected , $result);
+	}
+	//--------------------------------------------------------------------------------
+	public function testGetAtributeWhereGridParameters_TextLike_5word_SqlServer() {
+	    $expected = EOL.' AND 5WORD like \'%aaa%bbb%ccc%ddd%eee%\' COLLATE Latin1_General_CI_AI';
+	    $where = null;
+	    $whereGrid = $this->getWhereGrid();
+		$dbms  = TFormDinPdoConnection::DBMS_SQLSERVER;
+	    SqlHelper::setDbms($dbms);		
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
 	    $this->assertEquals( $expected , $result);
 	}
