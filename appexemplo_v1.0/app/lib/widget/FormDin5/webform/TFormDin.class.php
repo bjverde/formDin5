@@ -1847,7 +1847,7 @@ class TFormDin
 	 */
 	public function addEmailField( string $strName
                                  , string $strLabel=null
-                                 , int $intMaxLength
+                                 , int $intMaxLength=null
                                  , $boolRequired=null
                                  , $intSize=null
                                  , $boolNewLine=null
