@@ -95,6 +95,11 @@ class TFormDinDateTest extends TestCase
         $result = $this->classTest->getMask();
         $this->assertEquals('yyyy-mm-dd',$result);
     }
+    public function testDatabaseMaskDefault()
+    {
+        $result = $this->classTest->getDatabaseMask();
+        $this->assertEquals('yyyy-mm-dd',$result);
+    }    
     public function testDatabaseMask()
     {
         $this->classTest->setDatabaseMask('yyyy-mm-dd');
