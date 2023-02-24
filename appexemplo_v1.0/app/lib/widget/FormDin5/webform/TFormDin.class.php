@@ -707,7 +707,7 @@ class TFormDin
     *
     * @param string $strName       - 1: Id do Campo
     * @param string $strValue      - 2: Valor inicial
-    * @param boolean $boolRequired - 3: True = Obrigatorio; False (Defalt) = Não Obrigatorio  
+    * @param boolean $boolRequired - 3: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
     * @return TFormDinHiddenField
     */
     public function addHiddenField(string $id
@@ -731,7 +731,7 @@ class TFormDin
      * @param string $id              -  1: ID do campo
      * @param string $strLabel        -  2: Label do campo
      * @param integer $intMaxLength   -  3: tamanho máximo de caracteres
-     * @param boolean $boolRequired   -  4: Obrigatorio ou não. DEFAULT = False.
+     * @param boolean $boolRequired   -  4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param integer $intSize        -  5: NOT_IMPLEMENTED quantidade de caracteres visíveis
      * @param string $strValue        -  6: texto preenchido
      * @param boolean $boolNewLine    -  7: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
@@ -1454,7 +1454,7 @@ class TFormDin
      *
      * @param string  $id              - 01: ID do campo
      * @param string  $strLabel        - 02: Label do campo
-     * @param boolean $boolRequired    - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatórioObrigatorio.
+     * @param boolean $boolRequired    - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param mixed   $mixOptions      - 04: String "S=SIM,N=NAO,..." ou Array dos valores nos formatos: ArrayHelper::TYPE_ADIANTI, ArrayHelper::TYPE_PDO, ArrayHelper::TYPE_FORMDIN e ArrayHelper::TYPE_PHP
      * @param boolean $boolNewLine     - 05: Default TRUE = cria nova linha, FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove  - 06: TRUE = Titulo em cima das opções, FALSE = titulo lateral
@@ -1762,7 +1762,7 @@ class TFormDin
      * @param string $strName            - 1: ID do campo
      * @param string $strLabel           - 2: Label do campo, que irá aparecer na tela do usuario
      * @param integer $intMaxLength      - 3: Quantidade maxima de digitos, considerando ponto e virgula
-     * @param boolean $boolRequired      - 4: Obrigatorio
+     * @param boolean $boolRequired      - 4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param integer $intDecimalPlaces  - 5: Quantidade de casas decimais.
      * @param boolean $boolNewLine       - 6: Campo em nova linha. Default = true = inicia em nova linha, false = continua na linha anterior 
      * @param string $strValue           - 7: valor inicial do campo
@@ -1837,7 +1837,7 @@ class TFormDin
 	 * @param string  $strName       -01: ID do campo
 	 * @param string  $strLabel      -02: Label do campo, que irá aparecer na tela do usuario
 	 * @param integer $intMaxLength  -03: Tamanho maximo de caracteres
-	 * @param boolean $boolRequired  -04: Obrigatorio
+	 * @param boolean $boolRequired  -04: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
 	 * @param integer $intSize       -05: Tamanho do campo na tela
 	 * @param boolean $boolNewLine   -06: Default TRUE = campo em nova linha, FALSE continua na linha anterior
 	 * @param string  $strValue      -07: valor inicial do campo
