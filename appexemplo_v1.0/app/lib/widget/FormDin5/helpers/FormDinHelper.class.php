@@ -111,8 +111,19 @@ class FormDinHelper
 			}
 		}
 	}
-
-
+    //--------------------------------------------------------------------------------
+    public static function getAdiantiFrameWorkVersion(){
+        if(!defined('DS') ) { 
+            define('DS', DIRECTORY_SEPARATOR); 
+        }
+        $fileVersion = __DIR__.DS.'..'.DS.'..'.DS.'..'.DS.'..'.DS.'..'.DS.'lib'.DS.'VERSION';
+        if ( !file_exists($fileVersion) ) {
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_FILE_NOT_FOUND.' VERSION do Adianti');
+        }
+        $linesVersion = file($fileVersion, FILE_SKIP_EMPTY_LINES);
+        $version = ArrayHelper::get($linesVersion,0);
+        return $version;
+    }
     //--------------------------------------------------------------------------------
     /**
      * Recebe um array PHP que pode ser o corpo de um request e um objeto VO. Quando o id do array bodyRequest for
