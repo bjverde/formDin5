@@ -207,8 +207,9 @@ class SqlHelper
      * @param mixed  $arrayWhereGrid  2: array with all attributes and values
      * @param string $attribute       3: name of the attribute to be verified
      * @param mixed  $testZero        4: test string with ZERO, Default is TRUE
-     * @param string $value
-     * @param string $connector
+     * @param string $value           5:
+     * @param string $connector       6:
+     * @param string $dbms            7:
      * @return string
      */    
     public static function getSqlTypeTextLike( $stringWhere
@@ -216,8 +217,8 @@ class SqlHelper
                                              , $attribute
                                              , $testZero
                                              , $value
-                                             , $connector
-                                             , $dbms
+                                             , $connector=null
+                                             , $dbms=null
                                              )
     {
         $testZero = empty($testZero)?true:$testZero;
