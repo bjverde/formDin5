@@ -68,6 +68,9 @@ class TFormDinMessage {
     const FORM_MIN_VERSION_BLANK = 'Informe a versão minima do formDin';
     const FORM_MIN_VERSION_NOT = ' Para esse sistema funcionar a versão mínima necessária do formDin é: ';
     const FORM_MIN_YOU_VERSION = 'Sua versão do FormDin é : ';
+
+    const ADIANTI_VERSION_BLANK = 'A versão do Adianti está em branco! procure o arquivo sistema/lib/VERSION';
+    const ADIANTI_MIN_VERSION_FORMDIN = ' Para esse sistema funcionar a versão mínima necessária do Adianti é: ';
     
     const ARRAY_EXPECTED = 'O atribruto deveria ser um array';
     const ARRAY_KEY_NOT_EXIST = 'Não existe a chave procurada no array FormDin';
