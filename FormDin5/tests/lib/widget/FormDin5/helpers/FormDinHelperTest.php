@@ -72,6 +72,31 @@ class FormDinHelperTest extends TestCase
         $this->assertEquals( $expected , $result);
     }
     //-----------------------------------------------------------------------------------
+    public function testAdiantiVersion() {
+        $expected = '7.4';
+        $result =  FormDinHelper::getAdiantiFrameWorkVersion();
+        $this->assertEquals( $expected , $result);
+    }
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testAdianti_setAdminMinimumVersionFrameWork_ok() {
+        FormDinHelper::setAdminMinimumVersionFrameWork('7.3.0');
+    }  
+    public function testAdianti_setAdminMinimumVersionFrameWork_Exception() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::setAdminMinimumVersionFrameWork('99.99.99');
+    }
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testAdianti_setAdminSystemMinimumVersion_ok() {
+        FormDinHelper::setAdminSystemMinimumVersion('7.3.0');
+    }  
+    public function testAdianti_setAdminSystemMinimumVersion_Exception() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::setAdminSystemMinimumVersion('99.99.99');
+    }    
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     public function testSetPropertyVo_noSet(){
@@ -88,7 +113,7 @@ class FormDinHelperTest extends TestCase
         $this->assertEquals( $expected , $vo->getNom_municipio());
         $this->assertEquals( $expected , $vo->getSit_ativo());
     }
-    
+    //-----------------------------------------------------------------------------------
     public function testSetPropertyVo_setOnlyCodMunicipio_lowerCase(){
         $bodyRequest = array();
         $bodyRequest['cod_municipio'] = 10;
