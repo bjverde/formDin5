@@ -94,10 +94,13 @@ Incluir as linhas
 
 ```php
 //---FORMDIN 5 -------------------------
-define('DS', DIRECTORY_SEPARATOR);
-define('EOL', "\n");
-define('ESP', chr(32).chr(32).chr(32).chr(32) );
-define('TAB', chr(9));
+FormDinHelper::setAdminSystemMinimumVersion('7.5.1');
+FormDinHelper::setFormDinMinimumVersion('5.0.0');
+
+if(!defined('DS') )  { define('DS', DIRECTORY_SEPARATOR); }
+if(!defined('EOL') ) { define('EOL', "\n"); }
+if(!defined('ESP') ) { define('ESP', chr(32).chr(32).chr(32).chr(32) ); }
+if(!defined('TAB') ) { define('TAB', chr(9)); }
 //---FIM FORMDIN 5 -----------------------
 ```
 
