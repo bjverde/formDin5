@@ -127,7 +127,7 @@ class FormDinHelper
 		    throw new DomainException(TFormDinMessage::ADIANTI_VERSION_BLANK);			
 		} else {
 			if( !FormDinHelper::versionMinimum($minimumVersion,self::ADIANTI_MIN_FORMDIN) ){
-                $msg = TFormDinMessage::FORM_MIN_YOU_VERSION.self::version().TFormDinMessage::FORM_MIN_VERSION_NOT.$minimumVersion;
+                $msg = TFormDinMessage::ADIANTI_MIN_YOU_VERSION.self::ADIANTI_MIN_FORMDIN.'.'.TFormDinMessage::FORM_MIN_VERSION_NOT.$minimumVersion;
 			    throw new DomainException($msg);
 			}
 		}
