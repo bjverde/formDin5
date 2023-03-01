@@ -82,13 +82,21 @@ class FormDinHelperTest extends TestCase
      */
     public function testAdianti_setAdminMinimumVersionFrameWork_ok() {
         FormDinHelper::setAdminMinimumVersionFrameWork('7.3.0');
-    }
-    /**
-     * @expectedException DomainException
-     */    
+    }  
     public function testAdianti_setAdminMinimumVersionFrameWork_Exception() {
+        $this->expectException(DomainException::class);
         FormDinHelper::setAdminMinimumVersionFrameWork('99.99.99');
     }
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testAdianti_setAdminSystemMinimumVersion_ok() {
+        FormDinHelper::setAdminSystemMinimumVersion('7.3.0');
+    }  
+    public function testAdianti_setAdminSystemMinimumVersion_Exception() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::setAdminSystemMinimumVersion('99.99.99');
+    }    
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     public function testSetPropertyVo_noSet(){
