@@ -94,7 +94,6 @@ class FormDinHelper
         }
         return version_compare($formVersion,$version,'>=');
     }
-
 	/***
      * Sets the minimum formDin version for the system to work
 	 * 
@@ -167,7 +166,7 @@ class FormDinHelper
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FILE_NOT_FOUND.' VERSION do Adianti');
         }
         $linesVersion = file($fileVersion, FILE_SKIP_EMPTY_LINES);
-        $version = ArrayHelper::get($linesVersion,0);
+        $version = trim(ArrayHelper::get($linesVersion,0));
         return $version;
     }
     //--------------------------------------------------------------------------------
