@@ -31,7 +31,36 @@ define('OS', strtoupper(substr(PHP_OS, 0, 3)));
 define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
 
+// ---FORMDIN 5 -------------------------
+define('DS', DIRECTORY_SEPARATOR);
+define('EOL', "\n");
+define('ESP', chr(32).chr(32).chr(32).chr(32) );
+define('TAB', chr(9));
+
+define('SYSTEM_VERSION', $ini['system']['version']);
+define('SYSTEM_NAME', $ini['system']['system_name']);
+// ---FIM FORMDIN 5 -----------------------
+
+// ============= SysGen For Adianti  =================//
+define('ROOT_PATH', '../');
+if(!defined('ROWS_PER_PAGE') ) { 
+    define('ROWS_PER_PAGE', 20); 
+}
+if(!defined('ENCODINGS') ) { 
+    define('ENCODINGS', 'UTF-8'); 
+}
+// ============================================//
+
 // custom session name
 session_name('PHPSESSID_'.$ini['general']['application']);
 
 setlocale(LC_ALL, 'C');
+
+new TSession;
+
+//--- FormDin 5, mostrar Documentos
+if (isset($_REQUEST['class'])){
+    if($_REQUEST['class'] != 'DocumentationView'){
+        TSession::setValue('classCode', $_REQUEST['class']);
+    }
+}
