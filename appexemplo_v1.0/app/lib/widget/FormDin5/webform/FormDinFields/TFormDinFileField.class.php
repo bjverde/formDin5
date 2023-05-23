@@ -106,7 +106,7 @@ class TFormDinFileField extends TFormDinGenericField
     {
         $this->setAllowedFileTypes( $strAllowedFileTypes );
         
-        $adiantiObj = new TFile($label);
+        $adiantiObj = new TFile($id);
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();
         //$adiantiObj->enablePopover();

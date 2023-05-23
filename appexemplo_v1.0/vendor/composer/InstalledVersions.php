@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '785e3c83a0aea5e934252886a508d3457e759ff2',
+    'reference' => '360ff7193844400b783a180d70d92cf1ec0449f3',
     'name' => '__root__',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '785e3c83a0aea5e934252886a508d3457e759ff2',
+      'reference' => '360ff7193844400b783a180d70d92cf1ec0449f3',
     ),
     'adianti/pdfdesigner' => 
     array (
@@ -51,7 +51,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '76a371e28bfa05e31aaa9075a21b68a96032c5b0',
+      'reference' => '8cb3ae772a708712150f92b776971d743cbf0fdb',
     ),
     'adianti/plugins' => 
     array (
@@ -65,21 +65,30 @@ private static $installed = array (
     ),
     'bacon/bacon-qr-code' => 
     array (
+      'pretty_version' => '2.0.7',
+      'version' => '2.0.7.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd70c840f68657ce49094b8d91f9ee0cc07fbf66c',
+    ),
+    'dasprid/enum' => 
+    array (
       'pretty_version' => '1.0.3',
       'version' => '1.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '5a91b62b9d37cee635bbf8d553f4546057250bee',
+      'reference' => '5abf82f213618696dda8e3bf6f64dd042d8542b2',
     ),
     'dompdf/dompdf' => 
     array (
-      'pretty_version' => 'v1.1.1',
-      'version' => '1.1.1.0',
+      'pretty_version' => 'v1.2.2',
+      'version' => '1.2.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'de4aad040737a89fae2129cdeb0f79c45513128d',
+      'reference' => '5031045d9640b38cfc14aac9667470df09c9e090',
     ),
     'firebase/php-jwt' => 
     array (
@@ -92,12 +101,12 @@ private static $installed = array (
     ),
     'linfo/linfo' => 
     array (
-      'pretty_version' => 'v4.0.6',
-      'version' => '4.0.6.0',
+      'pretty_version' => 'v4.0.7',
+      'version' => '4.0.7.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'aea87565d4fd1124e637581b66a41c8b86ee22bb',
+      'reference' => 'b2719321a34cbbd3f87407649610d5fff3177d3f',
     ),
     'pablodalloglio/fpdf' => 
     array (
@@ -131,30 +140,30 @@ private static $installed = array (
     ),
     'phenx/php-font-lib' => 
     array (
-      'pretty_version' => '0.5.2',
-      'version' => '0.5.2.0',
+      'pretty_version' => '0.5.4',
+      'version' => '0.5.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ca6ad461f032145fff5971b5985e5af9e7fa88d8',
+      'reference' => 'dd448ad1ce34c63d09baccd05415e361300c35b4',
     ),
     'phenx/php-svg-lib' => 
     array (
-      'pretty_version' => 'v0.3.3',
-      'version' => '0.3.3.0',
+      'pretty_version' => '0.4.1',
+      'version' => '0.4.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '5fa61b65e612ce1ae15f69b3d223cb14ecc60e32',
+      'reference' => '4498b5df7b08e8469f0f8279651ea5de9626ed02',
     ),
     'phpmailer/phpmailer' => 
     array (
-      'pretty_version' => 'v6.5.3',
-      'version' => '6.5.3.0',
+      'pretty_version' => 'v6.7',
+      'version' => '6.7.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'baeb7cde6b60b1286912690ab0693c7789a31e71',
+      'reference' => '80fc8686fcd070267b98dae0ec228d5d67d94310',
     ),
     'phprtflite/phprtflite' => 
     array (
@@ -167,21 +176,21 @@ private static $installed = array (
     ),
     'picqer/php-barcode-generator' => 
     array (
-      'pretty_version' => 'v2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => 'v2.2.4',
+      'version' => '2.2.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '16c51a795454198500cdfb4f82de288945af3960',
+      'reference' => 'b98f110cc5a79f723688fb17fd90b9325300d844',
     ),
     'sabberworm/php-css-parser' => 
     array (
-      'pretty_version' => '8.3.1',
-      'version' => '8.3.1.0',
+      'pretty_version' => '8.4.0',
+      'version' => '8.4.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'd217848e1396ef962fb1997cf3e2421acba7f796',
+      'reference' => 'e41d2140031d533348b2192a83f02d8dd8a71d30',
     ),
     'tburry/pquery' => 
     array (

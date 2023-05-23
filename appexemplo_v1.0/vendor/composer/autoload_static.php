@@ -4,12 +4,13 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
+class ComposerStaticInitc9c4554746f9331a3d1f3f9923e91a0d
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
             'Svg\\' => 4,
+            'Sabberworm\\CSS\\' => 15,
         ),
         'P' => 
         array (
@@ -28,6 +29,11 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         'D' => 
         array (
             'Dompdf\\' => 7,
+            'DASPRiD\\Enum\\' => 13,
+        ),
+        'B' => 
+        array (
+            'BaconQrCode\\' => 12,
         ),
         'A' => 
         array (
@@ -39,6 +45,10 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         'Svg\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg',
+        ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
         'Picqer\\Barcode\\' => 
         array (
@@ -64,6 +74,14 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
+        'DASPRiD\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'BaconQrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
+        ),
         'Adianti\\Plugins\\' => 
         array (
             0 => __DIR__ . '/..' . '/adianti/plugins/src',
@@ -83,10 +101,6 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
             'Spreadsheet' => 
             array (
                 0 => __DIR__ . '/..' . '/pablodalloglio/spreadsheet_excel_writer',
-            ),
-            'Sabberworm\\CSS' => 
-            array (
-                0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
             ),
         ),
         'P' => 
@@ -108,13 +122,6 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
             'FPDF' => 
             array (
                 0 => __DIR__ . '/..' . '/pablodalloglio/fpdf',
-            ),
-        ),
-        'B' => 
-        array (
-            'BaconQrCode' => 
-            array (
-                0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
             ),
         ),
         'A' => 
@@ -158,10 +165,10 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc9c4554746f9331a3d1f3f9923e91a0d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc9c4554746f9331a3d1f3f9923e91a0d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitc9c4554746f9331a3d1f3f9923e91a0d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitc9c4554746f9331a3d1f3f9923e91a0d::$classMap;
 
         }, null, ClassLoader::class);
     }
