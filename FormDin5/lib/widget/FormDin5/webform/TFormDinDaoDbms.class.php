@@ -312,9 +312,8 @@ class TFormDinDaoDbms
 	*/
 	public function serializeFields()
 	{
-		if ( $this->getMetadataDir() && $this->getTableName() )
-		{
-		    $filename = $this->getMetadataDir() . $this->getConnDbType() . '-' . $this->getTableName() . '.ser';
+		if ( $this->getMetadataDir() && $this->getTableName() ) {
+		    $filename = $this->getMetadataDir().$this->getType().'-'.$this->getTableName().'.ser';
 		    $data = serialize( $this->getFields() );
 		    file_put_contents( $filename, $data );
 		}
