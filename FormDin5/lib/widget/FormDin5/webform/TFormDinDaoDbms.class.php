@@ -158,10 +158,6 @@ class TFormDinDaoDbms
 	*/
 	public function getSchema()
 	{
-		if( $this->conn )
-		{
-			return $this->getConnSchema();
-		}
 		return $this->schema;
 	}
 
