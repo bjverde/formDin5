@@ -219,12 +219,9 @@ class TFormDinDaoDbms
 	public function getField( $strFieldName )
 	{
 		$strFieldName=strtoupper( $strFieldName );
-
-		if ( isset( $this->fields[ $strFieldName ] ) )
-		{
+		if ( isset( $this->fields[ $strFieldName ] ) ){
 			return $this->fields[ $strFieldName ];
 		}
-
 		return null;
 	}
 
