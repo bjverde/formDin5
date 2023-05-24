@@ -15,7 +15,7 @@ This version has the proposal to be the next version of **[FormDin 4 in GitHub.]
 
 Used libraries
 
-* [Adinati FrameWork 7.2.1](https://www.adianti.com.br/)
+* [Adinati FrameWork 7.5.1](https://www.adianti.com.br/)
 * BootStrap 4.1.3
 * Jquery 3.3.1
 * FPF 1.8.2
@@ -43,15 +43,14 @@ O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
     1. No arquivo `app/config/application.ini` incluir as linhas abaixo
     1. No arquivo index.php da raiz do projeto incluir as linhas abaixo
     1. No arquivo init.php da raiz do projeto incluir as linhas abaixo
-    1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`    
     1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
-    1. Copiar o arquivo `lib/lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
+    1. Copiar o arquivo `lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
 
 ## Arquivo application.ini
 Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar conforme a necessidade
 ```ini
 [system]
-formdin_min_version=5.0.0-alpha19
+formdin_min_version=5.0.0-alpha33
 version = 1.0.0
 system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
 system_name_sub = 'APPEV1'
