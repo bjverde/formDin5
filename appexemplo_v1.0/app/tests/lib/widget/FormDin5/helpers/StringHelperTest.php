@@ -389,6 +389,25 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 
+	public function testString2PascalCaseWithSeparator_UnderLine() {
+        $expected = 'AcaoDeletarMao';
+		$result = StringHelper::string2PascalCaseWithSeparator('ação_deLEtar_MÃO','_') ;
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testString2PascalCaseWithSeparator_menos() {
+        $expected = 'AcaoDeletarMao';
+		$result = StringHelper::string2PascalCaseWithSeparator('ação-deLEtar-MÃO','-') ;
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testString2PascalCaseWithSeparator_Exception() {
+		$this->expectException(InvalidArgumentException::class);
+        $expected = 'AcaoDeletarMao';
+		$result = StringHelper::string2PascalCaseWithSeparator('ação-deLEtar-MÃO','@') ;
+		$this->assertEquals( $expected , $result );
+	}	
+
 	public function testString2CamelCase() {
         $expected = 'acaoDeletarMao';
 		$result = StringHelper::string2CamelCase('ação deLEtar MÃO') ;		

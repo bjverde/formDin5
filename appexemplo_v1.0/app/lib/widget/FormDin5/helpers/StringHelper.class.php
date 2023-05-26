@@ -281,6 +281,27 @@ class StringHelper
     }
 
     /**
+     * Recebe uma string "minha string"e converte para o formato PascalCase
+     * "MinhaString"
+     * https://medium.com/better-programming/string-case-styles-camel-pascal-snake-and-kebab-case-981407998841
+     *
+     * @param string $string
+     * @param string $separator 
+     * @return string
+     */
+    public static function string2PascalCaseWithSeparator($string,$separator) 
+    {
+        $listSeparator = array('-','_',';',',');
+        if (!in_array($separator, $listSeparator)) {
+            throw new InvalidArgumentException('Use um separador valido: - _ ; ,');
+        }
+        $separator = '/'.$separator.'/';
+        $string = preg_replace($separator, ' ', $string);
+        $string = self::string2PascalCase($string);
+        return $string;
+    }
+
+    /**
      * Recebe uma string "minha string"e converte para o formato CamelCase
      * "minhaString"
      * https://medium.com/better-programming/string-case-styles-camel-pascal-snake-and-kebab-case-981407998841
