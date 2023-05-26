@@ -73,7 +73,7 @@ class FormDinHelperTest extends TestCase
     }
     //-----------------------------------------------------------------------------------
     public function testAdiantiVersion() {
-        $expected = '7.4';
+        $expected = '7.5.1b.2';
         $result =  FormDinHelper::getAdiantiFrameWorkVersion();
         $this->assertEquals( $expected , $result);
     }
