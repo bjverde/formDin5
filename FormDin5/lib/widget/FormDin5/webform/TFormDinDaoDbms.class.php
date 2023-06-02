@@ -65,6 +65,7 @@ class TFormDinDaoDbms
 	private $sqlParams	= null;
 	private $cursor		= null;
 	private $eof		= null;
+	private $type		= null;
 
 	/**
 	* Classe para pegar metadatos sobre diversos banco de dados.
@@ -157,10 +158,6 @@ class TFormDinDaoDbms
 	*/
 	public function getSchema()
 	{
-		if( $this->conn )
-		{
-			return $this->getConnSchema();
-		}
 		return $this->schema;
 	}
 
@@ -222,12 +219,9 @@ class TFormDinDaoDbms
 	public function getField( $strFieldName )
 	{
 		$strFieldName=strtoupper( $strFieldName );
-
-		if ( isset( $this->fields[ $strFieldName ] ) )
-		{
+		if ( isset( $this->fields[ $strFieldName ] ) ){
 			return $this->fields[ $strFieldName ];
 		}
-
 		return null;
 	}
 
@@ -318,9 +312,8 @@ class TFormDinDaoDbms
 	*/
 	public function serializeFields()
 	{
-		if ( $this->getMetadataDir() && $this->getTableName() )
-		{
-		    $filename = $this->getMetadataDir() . $this->getConnDbType() . '-' . $this->getTableName() . '.ser';
+		if ( $this->getMetadataDir() && $this->getTableName() ) {
+		    $filename = $this->getMetadataDir().$this->getType().'-'.$this->getTableName().'.ser';
 		    $data = serialize( $this->getFields() );
 		    file_put_contents( $filename, $data );
 		}
