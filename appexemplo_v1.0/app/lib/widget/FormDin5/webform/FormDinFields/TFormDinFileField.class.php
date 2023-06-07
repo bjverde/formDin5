@@ -80,16 +80,17 @@ class TFormDinFileField extends TFormDinGenericField
      * um label invisível defina como "" o seu valor
      *
      * criado o espaço
-     * @param string $strName        - 01: ID do campo
-     * @param string $strValue       - 02: Texto HTML que irá aparece dentro
-     * @param boolean $boolRequired  - 03: Obrigatorio
+     * @param string  $strName        - 01: ID do campo
+     * @param string  $strValue       - 02: Texto HTML que irá aparece dentro
+     * @param boolean $boolRequired   - 03: Obrigatorio
      * @param mixed   $strAllowedFileTypes - 04: Tipos de arquivos. String separado por virgular ou array
-     * @param string $strIncludeFile - 05: NOT_IMPLEMENTED Arquivo que será incluido
-     * @param string $strLabel       - 06: Label do campo
-     * @param string $strWidth       - 07: NOT_IMPLEMENTED
-     * @param string $strHeight      - 09: NOT_IMPLEMENTED
+     * @param string  $strIncludeFile - 05: NOT_IMPLEMENTED Arquivo que será incluido
+     * @param string  $strLabel       - 06: Label do campo
+     * @param string  $strWidth       - 07: NOT_IMPLEMENTED
+     * @param string  $strHeight      - 09: NOT_IMPLEMENTED
      * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
+     * @param boolean $enableMultiFile    -15: FORMDIN5 MultiFiles
      * @return THtml Field
      */     
     public function __construct( string $id
@@ -102,11 +103,17 @@ class TFormDinFileField extends TFormDinGenericField
                                , $enableFileHandling = false
                                , $enablePopover = false
                                , $enableImageGallery = null
+                               , $enableMultiFile = false
                                )
     {
+        $this->setId($id);
         $this->setAllowedFileTypes( $strAllowedFileTypes );
-        
-        $adiantiObj = new TFile($id);
+        if( !empty($enableMultiFile) ){
+            $this->enableMultiFile($enableMultiFile);
+        }else{
+            $this->enableMultiFile(false);
+        }
+        $adiantiObj = $this->getAdiantiObj();
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();
         //$adiantiObj->enablePopover();
@@ -129,6 +136,23 @@ class TFormDinFileField extends TFormDinGenericField
         parent::__construct($adiantiObj,$id,$label,$boolRequired,null,null);
 
         return $this->getAdiantiObj();
+    }
+
+    /**
+     * Habilita multiplo envio de arquivo
+     *
+     * @param string $title titulo
+     */
+    public function enableMultiFile($enableMultiFile=false)
+    {
+        $adiantiObj = null;
+        $id = $this->getId();
+        if( $enableMultiFile == false){
+            $adiantiObj = new TFile($id);
+        }else{
+            $adiantiObj = new TMultiFile($id);
+        }        
+        $this->setAdiantiObj($adiantiObj);
     }
 
     public function setAllowedFileTypes($strNewFileTypes=null)
