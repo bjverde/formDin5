@@ -1098,7 +1098,7 @@ class TFormDin
      * @param boolean $enableFileHandling -14: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover      -15: FORMDIN5 Habilita o preview
      * @param integer $enableImageGallery -16: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
-     * @param boolean $enableMultiFile    -17: Muda de Upload simples para Upload Multiplos
+     * @param boolean $enableMultiFile    -17: FORMDIN5 Muda de Upload simples para Upload Multiplos
      * @return TFile|TFileAsync
      */
     public function addFileField(string $id
