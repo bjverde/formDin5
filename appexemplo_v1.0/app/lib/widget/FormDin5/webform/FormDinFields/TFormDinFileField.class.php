@@ -66,7 +66,7 @@ class TFormDinFileField extends TFormDinGenericField
     private $maxSizeKb;
     private $allowedFileTypes;
     private $msgUploadException;
-
+    private $id;
 
     /**
      * Campo de uso geral para insersão manual de códigos html na página
@@ -137,7 +137,13 @@ class TFormDinFileField extends TFormDinGenericField
 
         return $this->getAdiantiObj();
     }
-
+    //---------------------------------------------------------------
+    public function setId($id){
+        $this->id = $id;
+    }
+    public function getId(){
+        return $this->id;
+    }
     /**
      * Habilita multiplo envio de arquivo
      *
