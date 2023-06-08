@@ -165,6 +165,9 @@ class TFormDinFileField extends TFormDinGenericField
             $strNewFileTypes = strtolower($strNewFileTypes);
             $strNewFileTypes = explode(',',$strNewFileTypes);
         }
+        if( empty($strNewFileTypes) ){
+            $strNewFileTypes=array();
+        }
         $this->allowedFileTypes = $strNewFileTypes;
     }
     public function getAllowedFileTypes()
