@@ -35,23 +35,23 @@ class exe_TFile extends TPage
         $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200)->setClass('notice');
         //define a largura das colunas verticais do formulario para alinhamento dos campos
         //$frm->setColumns(array(100,100));
-        $frm->addFileField('anexo', 'Anexo:', true, $fileFormat, '100K', 40, false);
+        $frm->addFileField('anexo', 'Anexo:', false, $fileFormat, '100K', 40, false);
         
         $frm->addGroupField('fd5', 'FormDin 5');
 
         $frm->addHtmlField('htmlfd5_1', 'Upload com Barra de progresso', null, 'Dica:', null, 200)->setClass('notice');
-        $anexofd5_1 = $frm->addFileField('anexofd5_1', 'Anexo FD5 1:', true, $fileFormat, '100K', 40, false);
+        $anexofd5_1 = $frm->addFileField('anexofd5_1', 'Anexo FD5 1:', false, $fileFormat, '100K', 40, false);
         //$anexofd5_1->enablePopover();
         $anexofd5_1->enableFileHandling();
 
 
         $frm->addHtmlField('htmlfd5_2', 'Upload com Barra de progresso e PreView de Imagens (passe o mouse sobre o nome do arquivo)', null, 'Dica:', null, 200)->setClass('notice');
-        $anexofd5_2 = $frm->addFileField('anexofd5_2', 'Anexo FD5 2:', true, $fileFormat, '100K', 40, false);
+        $anexofd5_2 = $frm->addFileField('anexofd5_2', 'Anexo FD5 2:', false, $fileFormat, '100K', 40, false);
         $anexofd5_2->enablePopover();
         $anexofd5_2->enableFileHandling();
 
         $frm->addHtmlField('htmlfd5_3', 'Upload com Barra de progresso e Galeria da Imagens', null, 'Dica:', null, 200)->setClass('notice');
-        $anexofd5_3 = $frm->addFileField('anexofd5_3', 'Anexo FD5 3:', true, $fileFormat, '100K', 40, false);
+        $anexofd5_3 = $frm->addFileField('anexofd5_3', 'Anexo FD5 3:', false, $fileFormat, '100K', 40, false);
         $anexofd5_3->enableImageGallery();        
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
@@ -84,12 +84,23 @@ class exe_TFile extends TPage
 
     public function onSave($param)
     {
-        $data = $this->form->getData();
-        $this->form->setData($data);
+        try
+        {
+            $data = $this->form->getData();
+            $this->form->setData($data);
+            $this->form->validate();
+            
+    
+            //Função do FormDin para Debug
+            FormDinHelper::d($param,'$param');
+            FormDinHelper::debug($data,'$data');
+            FormDinHelper::debug($_REQUEST,'$_REQUEST');
 
-        //Função do FormDin para Debug
-        FormDinHelper::d($param,'$param');
-        FormDinHelper::debug($data,'$data');
-        FormDinHelper::debug($_REQUEST,'$_REQUEST');
+            new TMessage('info', 'Tudo OK!');
+        }
+        catch (Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+        }
     }    
 }
