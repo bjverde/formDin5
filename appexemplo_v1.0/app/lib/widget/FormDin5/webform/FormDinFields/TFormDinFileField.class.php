@@ -76,23 +76,21 @@ class TFormDinFileField extends TFormDinGenericField
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-      * Se o label for null, não será criado o espaço referente a ele no formulário, para criar
+     * Se o label for null, não será criado o espaço referente a ele no formulário, para criar
      * um label invisível defina como "" o seu valor
      *
-     * criado o espaço
-     * @param string  $strName        - 01: ID do campo
-     * @param string  $strValue       - 02: Texto HTML que irá aparece dentro
-     * @param boolean $boolRequired   - 03: Obrigatorio
-     * @param mixed   $strAllowedFileTypes - 04: Tipos de arquivos. String separado por virgular ou array
-     * @param string  $strIncludeFile - 05: NOT_IMPLEMENTED Arquivo que será incluido
-     * @param string  $strLabel       - 06: Label do campo
-     * @param string  $strWidth       - 07: NOT_IMPLEMENTED
-     * @param string  $strHeight      - 09: NOT_IMPLEMENTED
-     * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
-     * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
-     * @param boolean $enableMultiFile    -15: FORMDIN5 MultiFiles
-     * @return THtml Field
-     */     
+     * @param string $id            -01: ID do campo
+     * @param string $label         -02: Texto HTML que irá aparece dentro
+     * @param boolean $boolRequired -03: Obrigatorio
+     * @param mixed $strAllowedFileTypes -04: Tipos de arquivos. String separado por virgular ou array
+     * @param [type] $intSize       -05:
+     * @param [type] $strMaxSize    -06: Input the max size file with K, M for Megabit (Mb) or G for Gigabit (Gb). Example 2M = 2 Mb = 2048Kb.
+     * @param [type] $value         -07: FORMDIN5 Valor padrão do campo
+     * @param boolean $enableFileHandling-08: FORMDIN5 Habilita barra de progresso
+     * @param boolean $enablePopover     -09: FORMDIN5 Habilita o preview
+     * @param integer $enableImageGallery-10: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
+     * @param boolean $enableMultiFile   -11: FORMDIN5 MultiFiles
+     */
     public function __construct( string $id
                                , string $label
                                , $boolRequired = false
