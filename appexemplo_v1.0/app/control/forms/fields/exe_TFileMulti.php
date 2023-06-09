@@ -37,10 +37,10 @@ class exe_TFileMulti extends TPage
         $file      = new TFile('file');
         $file->setAllowedExtensions( ['png', 'jpg'] );
 
-        $multifile1 = new TMultiFile('multifile1');
+        $multifile1 = new TMultiFile('multifilead1');
         $multifile1->setAllowedExtensions( ['png', 'jpg'] );
 
-        $multifile2 = new TMultiFile('multifile2');
+        $multifile2 = new TMultiFile('multifilead2');
         $multifile2->setAllowedExtensions( ['png', 'jpg'] );
         $multifile2->enableImageGallery(100);
         //$multifile2->enablePopover(100,50);
@@ -51,11 +51,9 @@ class exe_TFileMulti extends TPage
 
         
         $frm->addGroupField('fd5', 'FormDin 5');
-        $frm->addFileField('anexo', 'Upload simples:', false, $fileFormat, '100K', 40, false);
-        $frm->addHtmlField('htmlfd5_1', 'Upload com Barra de progresso', null, 'Dica:', null, 200)->setClass('notice');
-        $anexofd5_1 = $frm->addFileField('anexofd5_1', 'Anexo FD5 1:', false, $fileFormat, '100K', 40, false);
-        //$anexofd5_1->enablePopover();
-        $anexofd5_1->enableFileHandling();
+        //$multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat,null,null,null,null,null,null,null,null,null,null,null,null,true);        
+        $multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat);
+        $multifilefd1->enableMultiFile(true);
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
