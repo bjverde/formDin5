@@ -33,17 +33,6 @@ class exe_TFileMulti extends TPage
         $msg = $msg.'<br>PHP está configurado. post_max_size = '.ini_get('post_max_size').' e upload_max_filesize = '.ini_get('upload_max_filesize');
         
         $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200)->setClass('notice');
-        //define a largura das colunas verticais do formulario para alinhamento dos campos
-        //$frm->setColumns(array(100,100));
-        $frm->addFileField('anexo', 'Anexo:', false, $fileFormat, '100K', 40, false);
-        
-        $frm->addGroupField('fd5', 'FormDin 5');
-
-        $frm->addHtmlField('htmlfd5_1', 'Upload com Barra de progresso', null, 'Dica:', null, 200)->setClass('notice');
-        $anexofd5_1 = $frm->addFileField('anexofd5_1', 'Anexo FD5 1:', false, $fileFormat, '100K', 40, false);
-        //$anexofd5_1->enablePopover();
-        $anexofd5_1->enableFileHandling();
-
 
         $file      = new TFile('file');
         $file->setAllowedExtensions( ['png', 'jpg'] );
@@ -53,13 +42,21 @@ class exe_TFileMulti extends TPage
 
         $multifile2 = new TMultiFile('multifile2');
         $multifile2->setAllowedExtensions( ['png', 'jpg'] );
-        //$multifile2->enableImageGallery(100,50);
-        $multifile2->enablePopover(100,50);
+        $multifile2->enableImageGallery(100);
+        //$multifile2->enablePopover(100,50);
         
         $frm->addContent([new TLabel('Adianti - Campos puros')] );
-        $frm->addFields( [new TLabel('Upload simples'), $file ] );
         $frm->addFields( [new TLabel('Upload Multiplo - básico'), $multifile1 ] );
-        $frm->addFields( [new TLabel('Upload Multiplo - básico'), $multifile2 ] );
+        $frm->addFields( [new TLabel('Upload Multiplo - galeria'), $multifile2 ] );
+
+        
+        $frm->addGroupField('fd5', 'FormDin 5');
+        $frm->addFileField('anexo', 'Upload simples:', false, $fileFormat, '100K', 40, false);
+        $frm->addHtmlField('htmlfd5_1', 'Upload com Barra de progresso', null, 'Dica:', null, 200)->setClass('notice');
+        $anexofd5_1 = $frm->addFileField('anexofd5_1', 'Anexo FD5 1:', false, $fileFormat, '100K', 40, false);
+        //$anexofd5_1->enablePopover();
+        $anexofd5_1->enableFileHandling();
+
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
