@@ -144,7 +144,7 @@ class TFormDinFileFieldMulti extends TFormDinGenericField
             $strNewFileTypes = explode(',',$strNewFileTypes);
         }
         if( empty($strNewFileTypes) ){
-            $strNewFileTypes=array();
+            $strNewFileTypes='';
         }
         $this->allowedFileTypes = $strNewFileTypes;
     }
