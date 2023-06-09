@@ -60,7 +60,7 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinFileField extends TFormDinGenericField
+class TFormDinFileFieldMulti extends TFormDinGenericField
 {    
     private $maxSize;
     private $maxSizeKb;
@@ -89,7 +89,6 @@ class TFormDinFileField extends TFormDinGenericField
      * @param boolean $enableFileHandling-08: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover     -09: FORMDIN5 Habilita o preview
      * @param integer $enableImageGallery-10: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
-     * @param boolean $enableMultiFile   -11: FORMDIN5 MultiFiles
      */
     public function __construct( string $id
                                , string $label
@@ -101,12 +100,11 @@ class TFormDinFileField extends TFormDinGenericField
                                , $enableFileHandling = false
                                , $enablePopover = false
                                , $enableImageGallery = null
-                               , $enableMultiFile = false
                                )
     {
         $this->setId($id);
         $this->setAllowedFileTypes( $strAllowedFileTypes );
-        $adiantiObj = new TFile($id);
+        $adiantiObj = new TMultiFile($id);
         $adiantiObj = $this->getAdiantiObj();
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();

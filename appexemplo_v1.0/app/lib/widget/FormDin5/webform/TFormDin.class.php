@@ -1098,7 +1098,6 @@ class TFormDin
      * @param boolean $enableFileHandling -14: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover      -15: FORMDIN5 Habilita o preview
      * @param integer $enableImageGallery -16: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
-     * @param boolean $enableMultiFile    -17: FORMDIN5 Muda de Upload simples para Upload Multiplos
      * @return TFile|TFileAsync
      */
     public function addFileField(string $id
@@ -1117,7 +1116,6 @@ class TFormDin
                                , $enableFileHandling=false
                                , $enablePopover=false
                                , $enableImageGallery=null
-                               , $enableMultiFile=false
                                )
     {
         $formField = new TFormDinFileField($id
@@ -1130,13 +1128,12 @@ class TFormDin
                                           ,$enableFileHandling
                                           ,$enablePopover
                                           ,$enableImageGallery
-                                          ,$enableMultiFile
                                         );
         $objField  = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
-    }    
+    }
 
     /**
      * Adicionar campo entrada de dados texto com mascara
