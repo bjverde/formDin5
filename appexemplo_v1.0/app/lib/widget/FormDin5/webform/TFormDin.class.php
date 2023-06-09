@@ -1098,7 +1098,7 @@ class TFormDin
      * @param boolean $enableFileHandling -14: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover      -15: FORMDIN5 Habilita o preview
      * @param integer $enableImageGallery -16: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
-     * @return TFile|TFileAsync
+     * @return TFile
      */
     public function addFileField(string $id
                                , string $strLabel
@@ -1134,6 +1134,63 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
+
+    /**
+     * Campos para anexar multiplos arquivo.
+     * 
+     * @param string  $id              - 01: id do campo
+     * @param string  $strLabel        - 02: Rotulo do campo que irá aparece na tela
+     * @param boolean $boolRequired    - 03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param mixed   $strAllowedFileTypes - 04: Tipos de arquivos. String separado por virgular ou array
+     * @param string  $strMaxFileSize  - 05: Input the max size file with K, M for Megabit (Mb) or G for Gigabit (Gb). Example 2M = 2 Mb = 2048Kb.
+     * @param integer $intFieldSize    - 06: NOT_IMPLEMENTED
+     * @param boolean $boolAsync       - 07: NOT_IMPLEMENTED
+     * @param boolean $boolNewLine     - 08: Em nova linha, DEFALUT is TRUE não obrigatorio.
+     * @param string  $strJsCallBack   - 09: NOT_IMPLEMENTED
+     * @param boolean $boolLabelAbove  - 10: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolNoWrapLabel - 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+     * @param string  $strMessageInvalidFileType - 12: NOT_IMPLEMENTED
+     * @param boolean $value              -13: FORMDIN5 Valor padrão do campo
+     * @param boolean $enableFileHandling -14: FORMDIN5 Habilita barra de progresso
+     * @param boolean $enablePopover      -15: FORMDIN5 Habilita o preview
+     * @param integer $enableImageGallery -16: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
+     * @return TMultiFile
+     */
+    public function addFileFieldMulti(string $id
+                                    , string $strLabel
+                                    , $boolRequired = false
+                                    , $strAllowedFileTypes=null
+                                    , $strMaxFileSize=null
+                                    , $intFieldSize=null
+                                    , $boolAsync=null
+                                    , $boolNewLine=null
+                                    , $strJsCallBack=null
+                                    , $boolLabelAbove=true
+                                    , $boolNoWrapLabel=null
+                                    , $strMessageInvalidFileType=null 
+                                    , $value=null
+                                    , $enableFileHandling=false
+                                    , $enablePopover=false
+                                    , $enableImageGallery=null
+                                    )
+    {
+        $formField = new TFormDinFileFieldMulti($id
+                                                ,$strLabel
+                                                ,$boolRequired
+                                                ,$strAllowedFileTypes
+                                                ,$intFieldSize
+                                                ,$strMaxFileSize
+                                                ,$value
+                                                ,$enableFileHandling
+                                                ,$enablePopover
+                                                ,$enableImageGallery
+                                                );
+        $objField  = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+    }
+
 
     /**
      * Adicionar campo entrada de dados texto com mascara
