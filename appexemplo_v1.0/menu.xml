@@ -101,6 +101,10 @@
                                 <icon>far:file fa-file</icon>
                                 <action>exe_TFile</action>
                             </menuitem>
+                            <menuitem label='Multiplo Upload'>
+                                <icon>far:file fa-file</icon>
+                                <action>exe_TFileMulti</action>
+                            </menuitem>                            
                         </menu>
                     </menuitem>
                 </menu>
