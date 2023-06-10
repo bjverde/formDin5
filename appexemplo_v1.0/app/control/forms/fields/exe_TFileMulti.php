@@ -6,6 +6,9 @@ class exe_TFileMulti extends TPage
 {
     private $html;
 
+    // trait com onReload, onSearch, onDelete...
+    use Adianti\Base\AdiantiStandardListTrait;
+
     // importa operações padrão para manipulação de arquivos
     use Adianti\Base\AdiantiFileSaveTrait;
     
@@ -53,7 +56,6 @@ class exe_TFileMulti extends TPage
         $frm->addGroupField('fd5', 'FormDin 5');
         //$multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat,null,null,null,null,null,null,null,null,null,null,null,null,true);        
         $multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat);
-        $multifilefd1->enableMultiFile(true);
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve

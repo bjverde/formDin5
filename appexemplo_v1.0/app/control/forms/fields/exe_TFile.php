@@ -6,6 +6,9 @@ class exe_TFile extends TPage
 {
     private $html;
 
+    // trait com onReload, onSearch, onDelete...
+    use Adianti\Base\AdiantiStandardListTrait;
+
     // importa operações padrão para manipulação de arquivos
     use Adianti\Base\AdiantiFileSaveTrait;
     
