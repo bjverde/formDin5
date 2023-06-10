@@ -105,7 +105,6 @@ class TFormDinFileFieldMulti extends TFormDinGenericField
         $this->setId($id);
         $this->setAllowedFileTypes( $strAllowedFileTypes );
         $adiantiObj = new TMultiFile($id);
-        $adiantiObj = $this->getAdiantiObj();
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();
         //$adiantiObj->enablePopover();

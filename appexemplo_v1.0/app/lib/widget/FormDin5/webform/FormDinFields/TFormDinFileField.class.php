@@ -107,7 +107,6 @@ class TFormDinFileField extends TFormDinGenericField
         $this->setId($id);
         $this->setAllowedFileTypes( $strAllowedFileTypes );
         $adiantiObj = new TFile($id);
-        $adiantiObj = $this->getAdiantiObj();
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();
         //$adiantiObj->enablePopover();
@@ -144,9 +143,6 @@ class TFormDinFileField extends TFormDinGenericField
         if( is_string($strNewFileTypes) ){
             $strNewFileTypes = strtolower($strNewFileTypes);
             $strNewFileTypes = explode(',',$strNewFileTypes);
-        }
-        if( empty($strNewFileTypes) ){
-            $strNewFileTypes=array();
         }
         $this->allowedFileTypes = $strNewFileTypes;
     }
