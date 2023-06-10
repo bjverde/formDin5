@@ -54,8 +54,7 @@ class exe_TFileMulti extends TPage
 
         
         $frm->addGroupField('fd5', 'FormDin 5');
-        //$multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat,null,null,null,null,null,null,null,null,null,null,null,null,true);        
-        $multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat);
+        $frm->addFileFieldMulti('multifilefd1', 'Upload Multiplo:', false, $fileFormat);
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
