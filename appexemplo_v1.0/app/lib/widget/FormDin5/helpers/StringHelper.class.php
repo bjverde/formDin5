@@ -150,12 +150,29 @@ class StringHelper
         return $result;
     }
 
+    /**
+     * Recebe um string e verfica se está no formato de número americano
+     * 999,999,999.00000 ou 999999999.00000
+     * 
+     * @param string|int|float $value
+     * @return boolean
+     */
     public static function is_numeroEua($value)
     {
         if( empty($value) ){
             return false;
         }
-        $numero= preg_match('/^([0-9,]*)(\.+)(\d*)$/', $value, $output_array);
+        //Retira números no formato 12,00
+        $naoNumero = preg_match('/^([0-9]*)([\,]{1})(\d{1,2})$/', $value, $output_array);
+        if($naoNumero===1){
+            return false;
+        }
+        //Retira números no formato 12,1234
+        $naoNumero = preg_match('/^([0-9]*)(...)([\,]{1})(\d{4,})$/', $value, $output_array);
+        if($naoNumero===1){
+            return false;
+        }
+        $numero= preg_match('/^([0-9,]*)(\.?)(\d*)$/', $value, $output_array);
         $result= ($numero===1)?true:false;
         return $result;
     }
