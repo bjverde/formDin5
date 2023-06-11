@@ -48,7 +48,7 @@ class NumericHelper
 {
     /**
      * Convert uma string númerica no formato Brasil 123.456,78 ou americana 123,456.78
-     * para um float 123456.78
+     * para um float 123456.78 com 2 casas decimais
      *
      * @param string|int|float $number
      * @return float
