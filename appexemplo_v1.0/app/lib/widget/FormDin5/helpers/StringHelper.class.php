@@ -145,6 +145,16 @@ class StringHelper
         if( empty($value) ){
             return false;
         }
+        //Retira números no formato 12.00
+        $naoNumero = preg_match('/^([0-9]*)([\.]{1})(\d{1,2})$/', $value, $output_array);
+        if($naoNumero===1){
+            return false;
+        }
+        //Retira números no formato 12.1234
+        $naoNumero = preg_match('/^([0-9]*)(...)([\.]{1})(\d{4,})$/', $value, $output_array);
+        if($naoNumero===1){
+            return false;
+        }        
         $numero= preg_match('/^([0-9\.]*)(,?)(\d*)$/', $value, $output_array);
         $result= ($numero===1)?true:false;
         return $result;
