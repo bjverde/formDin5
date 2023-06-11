@@ -89,7 +89,6 @@ class TFormDinFileField extends TFormDinGenericField
      * @param boolean $enableFileHandling-08: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover     -09: FORMDIN5 Habilita o preview
      * @param integer $enableImageGallery-10: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
-     * @param boolean $enableMultiFile   -11: FORMDIN5 MultiFiles
      */
     public function __construct( string $id
                                , string $label
@@ -101,7 +100,6 @@ class TFormDinFileField extends TFormDinGenericField
                                , $enableFileHandling = false
                                , $enablePopover = false
                                , $enableImageGallery = null
-                               , $enableMultiFile = false
                                )
     {
         $this->setId($id);
@@ -156,10 +154,18 @@ class TFormDinFileField extends TFormDinGenericField
         return $this->allowedFileTypes;
     }
 
+    /**
+     * Define the TAction (static) to be executed when upload is finished
+     * @param $action TAction object
+     */    
     public function setCompleteAction(TAction $action)
     {
         return $this->getAdiantiObj()->setCompleteAction($action);
-    }
+    }    
+    /**
+     * Define the TAction (static) to be executed when some error occurs
+     * @param $action TAction object
+     */    
     public function setErrorAction(TAction $action)
     {
         return $this->getAdiantiObj()->setErrorAction($action);
@@ -207,23 +213,5 @@ class TFormDinFileField extends TFormDinGenericField
     {
         $this->enableFileHandling();
         $this->getAdiantiObj()->enableImageGallery($width,$height);
-    }
-
-    /**
-     * Define the TAction (static) to be executed when upload is finished
-     * @param $action TAction object
-     */    
-    public function setCompleteAction(TAction $action)
-    {
-        $this->getAdiantiObj()->setCompleteAction($action);
-    }
-
-    /**
-     * Define the TAction (static) to be executed when some error occurs
-     * @param $action TAction object
-     */
-    public function setErrorAction(TAction $action)
-    {
-        $this->getAdiantiObj()->setErrorAction($action);
-    }    
+    }  
 }
