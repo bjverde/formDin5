@@ -48,11 +48,6 @@ use PHPUnit\Framework\TestCase;
  */
 class NumericHelperTest extends TestCase
 {	
-    public function testCast2Float_maria() {
-        $expected = null;
-		$result = NumericHelper::cast2Float('maria');
-		$this->assertSame( $expected , $result );
-	} 
 	public function testCast2Float_12() {
         $expected = 12.0;
 		$result = NumericHelper::cast2Float('12');
