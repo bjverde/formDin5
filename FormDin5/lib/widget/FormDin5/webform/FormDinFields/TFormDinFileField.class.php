@@ -66,7 +66,7 @@ class TFormDinFileField extends TFormDinGenericField
     private $maxSizeKb;
     private $allowedFileTypes;
     private $msgUploadException;
-
+    private $id;
 
     /**
      * Campo de uso geral para insersão manual de códigos html na página
@@ -76,22 +76,20 @@ class TFormDinFileField extends TFormDinGenericField
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-      * Se o label for null, não será criado o espaço referente a ele no formulário, para criar
+     * Se o label for null, não será criado o espaço referente a ele no formulário, para criar
      * um label invisível defina como "" o seu valor
      *
-     * criado o espaço
-     * @param string $strName        - 01: ID do campo
-     * @param string $strValue       - 02: Texto HTML que irá aparece dentro
-     * @param boolean $boolRequired  - 03: Obrigatorio
-     * @param mixed   $strAllowedFileTypes - 04: Tipos de arquivos. String separado por virgular ou array
-     * @param string $strIncludeFile - 05: NOT_IMPLEMENTED Arquivo que será incluido
-     * @param string $strLabel       - 06: Label do campo
-     * @param string $strWidth       - 07: NOT_IMPLEMENTED
-     * @param string $strHeight      - 09: NOT_IMPLEMENTED
-     * @param boolean $enableFileHandling -13: FORMDIN5 Habilita barra de progresso
-     * @param boolean $enablePopover      -14: FORMDIN5 Habilita o preview
-     * @return THtml Field
-     */     
+     * @param string $id            -01: ID do campo
+     * @param string $label         -02: Texto HTML que irá aparece dentro
+     * @param boolean $boolRequired -03: Obrigatorio
+     * @param mixed $strAllowedFileTypes -04: Tipos de arquivos. String separado por virgular ou array
+     * @param [type] $intSize       -05:
+     * @param [type] $strMaxSize    -06: Input the max size file with K, M for Megabit (Mb) or G for Gigabit (Gb). Example 2M = 2 Mb = 2048Kb.
+     * @param [type] $value         -07: FORMDIN5 Valor padrão do campo
+     * @param boolean $enableFileHandling-08: FORMDIN5 Habilita barra de progresso
+     * @param boolean $enablePopover     -09: FORMDIN5 Habilita o preview
+     * @param integer $enableImageGallery-10: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
+     */
     public function __construct( string $id
                                , string $label
                                , $boolRequired = false
@@ -104,8 +102,8 @@ class TFormDinFileField extends TFormDinGenericField
                                , $enableImageGallery = null
                                )
     {
+        $this->setId($id);
         $this->setAllowedFileTypes( $strAllowedFileTypes );
-        
         $adiantiObj = new TFile($id);
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();
@@ -130,7 +128,19 @@ class TFormDinFileField extends TFormDinGenericField
 
         return $this->getAdiantiObj();
     }
+    //---------------------------------------------------------------
+    public function setId($id){
+        $this->id = $id;
+    }
+    public function getId(){
+        return $this->id;
+    }
 
+    /**
+     * Define os tipos de arquivos permitidos. Pode ser um array simples ou uma string com os valores separados por virgula
+     *
+     * @param string|array 
+     */
     public function setAllowedFileTypes($strNewFileTypes=null)
     {
         if( is_string($strNewFileTypes) ){
@@ -144,10 +154,18 @@ class TFormDinFileField extends TFormDinGenericField
         return $this->allowedFileTypes;
     }
 
+    /**
+     * Define the TAction (static) to be executed when upload is finished
+     * @param $action TAction object
+     */    
     public function setCompleteAction(TAction $action)
     {
         return $this->getAdiantiObj()->setCompleteAction($action);
-    }
+    }    
+    /**
+     * Define the TAction (static) to be executed when some error occurs
+     * @param $action TAction object
+     */    
     public function setErrorAction(TAction $action)
     {
         return $this->getAdiantiObj()->setErrorAction($action);
@@ -195,6 +213,5 @@ class TFormDinFileField extends TFormDinGenericField
     {
         $this->enableFileHandling();
         $this->getAdiantiObj()->enableImageGallery($width,$height);
-    }
-    
+    }  
 }
