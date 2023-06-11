@@ -138,6 +138,11 @@ class TFormDinFileField extends TFormDinGenericField
         return $this->id;
     }
 
+    /**
+     * Define os tipos de arquivos permitidos. Pode ser um array simples ou uma string com os valores separados por virgula
+     *
+     * @param string|array 
+     */
     public function setAllowedFileTypes($strNewFileTypes=null)
     {
         if( is_string($strNewFileTypes) ){
@@ -203,5 +208,22 @@ class TFormDinFileField extends TFormDinGenericField
         $this->enableFileHandling();
         $this->getAdiantiObj()->enableImageGallery($width,$height);
     }
-    
+
+    /**
+     * Define the TAction (static) to be executed when upload is finished
+     * @param $action TAction object
+     */    
+    public function setCompleteAction(TAction $action)
+    {
+        $this->getAdiantiObj()->setCompleteAction($action);
+    }
+
+    /**
+     * Define the TAction (static) to be executed when some error occurs
+     * @param $action TAction object
+     */
+    public function setErrorAction(TAction $action)
+    {
+        $this->getAdiantiObj()->setErrorAction($action);
+    }    
 }
