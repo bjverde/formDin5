@@ -215,7 +215,7 @@ class StringHelperTest extends TestCase
 	}
 	public function testIsNumeroEua_12milSemCentavos() {
         $expected = true;
-		$result = StringHelper::is_numeroEua('12.123');
+		$result = StringHelper::is_numeroEua('12,123');
 		$this->assertEquals( $expected , $result );
 	}
 	public function testIsNumeroEua_12milCemCentavos() {
@@ -226,6 +226,11 @@ class StringHelperTest extends TestCase
 	public function testIsNumeroEua_BilhoesCemCentavos() {
         $expected = true;
 		$result = StringHelper::is_numeroEua('20,123,456,789.56');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_BilhoesSemCentavos() {
+        $expected = true;
+		$result = StringHelper::is_numeroEua('20,123,456,789');
 		$this->assertEquals( $expected , $result );
 	}
 	public function testIsNumeroEua_null() {
@@ -253,9 +258,14 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::is_numeroEua('12.000,00');
 		$this->assertEquals( $expected , $result );
 	}
-	public function testIsNumeroEua_brMilhoes() {
+	public function testIsNumeroEua_brMilhoesCemCentavos() {
         $expected = false;
 		$result = StringHelper::is_numeroEua('123.456.789,99');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testIsNumeroEua_brMilhoesSemCentavos() {
+        $expected = false;
+		$result = StringHelper::is_numeroEua('123.456.789');
 		$this->assertEquals( $expected , $result );
 	}
 	//-------------------------------------------------------------
