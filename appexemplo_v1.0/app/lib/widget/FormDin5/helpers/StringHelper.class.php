@@ -177,7 +177,7 @@ class StringHelper
                 return $value;
             }else if( (strlen($value)==5) && str_contains($value,'.') ) {
                 $value=str_replace('.',',', $value);
-                return $value;                
+                return $value;
             }else{
                 $search =array('.',',');
                 $replace=array('', '.');
@@ -185,7 +185,7 @@ class StringHelper
                 $value=number_format($value, $decimals,',','.');
                 return $value;
             }
-        }else if( is_string($value) && self::is_numeroEua($value) ){        
+        }else if( is_string($value) && self::is_numeroEua($value) ){
             $value=str_replace(',','', $value);
             $value=number_format($value, $decimals,',','.');
         }else{
@@ -211,13 +211,13 @@ class StringHelper
                 return $value;
             }else if( (strlen($value)==5) && str_contains($value,',') ) {
                 $value=str_replace(',','.', $value);
-                return $value;                
+                return $value;
             }else{
                 $value=str_replace(',','', $value);
                 $value=number_format($value, $decimals,'.',',');
                 return $value;
             }
-        }else if( is_string($value) && self::is_numeroBrasil($value) ){        
+        }else if( is_string($value) && self::is_numeroBrasil($value) ){
             $search =array('.',',');
             $replace=array('', '.');
             $value=str_replace($search, $replace, $value);
@@ -226,7 +226,7 @@ class StringHelper
             $value = null;
         }
         return $value;
-    }     
+    }
     
     /**
      * Recebe uma string do tipo "olá à mim! ñ" e retona "ola a mim! n"
