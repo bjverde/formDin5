@@ -162,6 +162,7 @@ class StringHelper
 
     /**
      * Recebe uma string com numero formato brasil ou eua e devolver no formato Brasil
+     * Qualquer outro formato vai retorna null
      *
      * @param numeric|string $value  valor que deve ser convertido
      * @param integer $decimals numero de casas decimais
@@ -194,7 +195,8 @@ class StringHelper
     }
 
     /**
-     * Recebe uma string com numero formato EUA ou Brasil e devolver no formato EUA
+     * Recebe uma string com numero formato EUA ou Brasil e devolver no formato EUA.
+     * Qualquer outro formato vai retorna null
      *
      * @param numeric|string $value  valor que deve ser convertido
      * @param integer $decimals numero de casas decimais
