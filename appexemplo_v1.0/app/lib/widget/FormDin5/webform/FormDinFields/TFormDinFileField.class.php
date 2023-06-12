@@ -89,7 +89,6 @@ class TFormDinFileField extends TFormDinGenericField
      * @param boolean $enableFileHandling-08: FORMDIN5 Habilita barra de progresso
      * @param boolean $enablePopover     -09: FORMDIN5 Habilita o preview
      * @param integer $enableImageGallery-10: FORMDIN5 Numero da Largura (width) da imagem da galaria, DEFAULT = 120. Para customizar use o metodo enableImageGallery
-     * @param boolean $enableMultiFile   -11: FORMDIN5 MultiFiles
      */
     public function __construct( string $id
                                , string $label
@@ -101,13 +100,11 @@ class TFormDinFileField extends TFormDinGenericField
                                , $enableFileHandling = false
                                , $enablePopover = false
                                , $enableImageGallery = null
-                               , $enableMultiFile = false
                                )
     {
         $this->setId($id);
         $this->setAllowedFileTypes( $strAllowedFileTypes );
         $adiantiObj = new TFile($id);
-        $adiantiObj = $this->getAdiantiObj();
         $adiantiObj->setAllowedExtensions( $this->getAllowedFileTypes() );
         //$adiantiObj->enableFileHandling();
         //$adiantiObj->enablePopover();
@@ -139,14 +136,16 @@ class TFormDinFileField extends TFormDinGenericField
         return $this->id;
     }
 
+    /**
+     * Define os tipos de arquivos permitidos. Pode ser um array simples ou uma string com os valores separados por virgula
+     *
+     * @param string|array 
+     */
     public function setAllowedFileTypes($strNewFileTypes=null)
     {
         if( is_string($strNewFileTypes) ){
             $strNewFileTypes = strtolower($strNewFileTypes);
             $strNewFileTypes = explode(',',$strNewFileTypes);
-        }
-        if( empty($strNewFileTypes) ){
-            $strNewFileTypes='';
         }
         $this->allowedFileTypes = $strNewFileTypes;
     }
@@ -155,10 +154,18 @@ class TFormDinFileField extends TFormDinGenericField
         return $this->allowedFileTypes;
     }
 
+    /**
+     * Define the TAction (static) to be executed when upload is finished
+     * @param $action TAction object
+     */    
     public function setCompleteAction(TAction $action)
     {
         return $this->getAdiantiObj()->setCompleteAction($action);
-    }
+    }    
+    /**
+     * Define the TAction (static) to be executed when some error occurs
+     * @param $action TAction object
+     */    
     public function setErrorAction(TAction $action)
     {
         return $this->getAdiantiObj()->setErrorAction($action);
@@ -206,6 +213,5 @@ class TFormDinFileField extends TFormDinGenericField
     {
         $this->enableFileHandling();
         $this->getAdiantiObj()->enableImageGallery($width,$height);
-    }
-    
+    }  
 }

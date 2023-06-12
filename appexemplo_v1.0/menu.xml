@@ -90,15 +90,24 @@
             <menuitem label='Arquivo ou Blob'>
                 <icon>far:file fa-file</icon>
                 <menu>
+                    <menuitem label='Salvar no banco'>
+                        <icon>fas:database fa-fw</icon>
+                        <menu>            
+                            <menuitem label='Salvar, meta dados'>
+                                <icon>fa:flag fa-fw</icon>
+                                <action>exe_fwShowBlobDisco</action>
+                            </menuitem>
+                            <menuitem label='Salvar, no banco'>
+                                <icon>fas:database fa-fw</icon>
+                                <action>exe_TFileMulti</action>
+                            </menuitem>                            
+                        </menu>
+                    </menuitem>                
                     <menuitem label='Campo Arquivo simples'>
                         <icon>far:file fa-file</icon>
                         <menu>            
                             <menuitem label='Assincrono'>
                                 <icon>fa:flag fa-fw</icon>
-                                <action>comingSoonView</action>
-                            </menuitem>
-                            <menuitem label='Normal'>
-                                <icon>far:file fa-file</icon>
                                 <action>exe_TFile</action>
                             </menuitem>
                             <menuitem label='Multiplo Upload'>

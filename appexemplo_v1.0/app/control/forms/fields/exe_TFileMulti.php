@@ -6,6 +6,9 @@ class exe_TFileMulti extends TPage
 {
     private $html;
 
+    // trait com onReload, onSearch, onDelete...
+    use Adianti\Base\AdiantiStandardListTrait;
+
     // importa operações padrão para manipulação de arquivos
     use Adianti\Base\AdiantiFileSaveTrait;
     
@@ -25,6 +28,7 @@ class exe_TFileMulti extends TPage
         //$frm->setHelpOnLine('Titulo', $strHeight, $strWidth, 'ajuda', null);
         
         $fileFormat = 'gif,png,jpg,jpeg,pdf,txt,rar,zip,doc';
+        $arrayFileFormat = explode(',',$fileFormat);
         $strMaxFileSize = '300k';
         $msg = 'Arquivo de tamanho maximo é '.$strMaxFileSize.' e nos formatos: '.$fileFormat;
         $msg = $msg.'<br>';
@@ -35,13 +39,13 @@ class exe_TFileMulti extends TPage
         $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200)->setClass('notice');
 
         $file      = new TFile('file');
-        $file->setAllowedExtensions( ['png', 'jpg'] );
+        $file->setAllowedExtensions( $arrayFileFormat );
 
         $multifile1 = new TMultiFile('multifilead1');
-        $multifile1->setAllowedExtensions( ['png', 'jpg'] );
+        $multifile1->setAllowedExtensions( $arrayFileFormat );
 
         $multifile2 = new TMultiFile('multifilead2');
-        $multifile2->setAllowedExtensions( ['png', 'jpg'] );
+        $multifile2->setAllowedExtensions( $arrayFileFormat );
         $multifile2->enableImageGallery(100);
         //$multifile2->enablePopover(100,50);
         
@@ -51,9 +55,7 @@ class exe_TFileMulti extends TPage
 
         
         $frm->addGroupField('fd5', 'FormDin 5');
-        //$multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat,null,null,null,null,null,null,null,null,null,null,null,null,true);        
-        $multifilefd1 = $frm->addFileField('multifilefd1', 'Upload Multiplo:', false, $fileFormat);
-        $multifilefd1->enableMultiFile(true);
+        $frm->addFileFieldMulti('multifilefd1', 'Upload Multiplo:', false, $fileFormat);
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
@@ -98,10 +100,10 @@ class exe_TFileMulti extends TPage
             FormDinHelper::debug($data,'$data');
             FormDinHelper::debug($_REQUEST,'$_REQUEST');
 
+            //AQUI vai processar o array do campo informado
+
             new TMessage('info', 'Tudo OK!');
-        }
-        catch (Exception $e)
-        {
+        }catch (Exception $e){
             new TMessage('error', $e->getMessage());
         }
     }    
