@@ -16,9 +16,12 @@ class exe_fwShowBlobDisco extends TPage
     private static $formName = 'form_blobDisco';
     private $showMethods = ['onReload', 'onSearch', 'onRefresh', 'onClearFilters'];    
 
+    // trait com onSave, onClear, onEdit...
+    use Adianti\Base\AdiantiStandardFormTrait;
     // trait com onReload, onSearch, onDelete...
     use Adianti\Base\AdiantiStandardListTrait;
-
+    // trait List com onExportCSV, onExportXLS, onExportXML, onExportPDF...
+    use Adianti\Base\AdiantiStandardListExportTrait;
     // importa operações padrão para manipulação de arquivos
     use Adianti\Base\AdiantiFileSaveTrait;
     
@@ -124,10 +127,10 @@ class exe_fwShowBlobDisco extends TPage
         $dropdown_button_exportar = new TDropDown("Exportar", 'fas:file-export #2d3436');
         $dropdown_button_exportar->setPullSide('right');
         $dropdown_button_exportar->setButtonClass('btn btn-default waves-effect dropdown-toggle');
-        //$dropdown_button_exportar->addPostAction( "CSV", new TAction(['ArquivosList', 'onExportCsv'],['static' => 1]), 'datagrid_'.self::$formName, 'fas:file-csv #00b894' );
-        //$dropdown_button_exportar->addPostAction( "XLS", new TAction(['ArquivosList', 'onExportXls'],['static' => 1]), 'datagrid_'.self::$formName, 'fas:file-excel #4CAF50' );
-        //$dropdown_button_exportar->addPostAction( "PDF", new TAction(['ArquivosList', 'onExportPdf'],['static' => 1]), 'datagrid_'.self::$formName, 'far:file-pdf #e74c3c' );
-        //$dropdown_button_exportar->addPostAction( "XML", new TAction(['ArquivosList', 'onExportXml'],['static' => 1]), 'datagrid_'.self::$formName, 'far:file-code #95a5a6' );
+        $dropdown_button_exportar->addPostAction( "CSV", new TAction([$this, 'onExportCsv'],['static' => 1]), 'datagrid_'.self::$formName, 'fas:file-csv #00b894' );
+        $dropdown_button_exportar->addPostAction( "XLS", new TAction([$this, 'onExportXls'],['static' => 1]), 'datagrid_'.self::$formName, 'fas:file-excel #4CAF50' );
+        $dropdown_button_exportar->addPostAction( "PDF", new TAction([$this, 'onExportPdf'],['static' => 1]), 'datagrid_'.self::$formName, 'far:file-pdf #e74c3c' );
+        $dropdown_button_exportar->addPostAction( "XML", new TAction([$this, 'onExportXml'],['static' => 1]), 'datagrid_'.self::$formName, 'far:file-code #95a5a6' );
 
         $head_right_actions->add($dropdown_button_exportar);
 
