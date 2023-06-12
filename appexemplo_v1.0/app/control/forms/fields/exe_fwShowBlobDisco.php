@@ -5,8 +5,16 @@ use Adianti\Widget\Form\TLabel;
 class exe_fwShowBlobDisco extends TPage
 {
     private $form; // form
-    private $datagrid; // listing
+
+    private $datagrid;        //DataGrid listing
+    private $filter_criteria; //DataGrid criteria
+    private $datagrid_form;   //DataGrid Form
+    private $datagridPanel;
     private $pageNavigation;
+
+    private static $primaryKey = 'id_arquivo';
+    private static $formName = 'form_blobDisco';
+    private $showMethods = ['onReload', 'onSearch', 'onRefresh', 'onClearFilters'];    
 
     // trait com onReload, onSearch, onDelete...
     use Adianti\Base\AdiantiStandardListTrait;
@@ -21,6 +29,10 @@ class exe_fwShowBlobDisco extends TPage
     function __construct()
     {
         parent::__construct();
+        $this->filter_criteria = new TCriteria;
+        $this->setLimit(20);
+        $this->setDatabase('dbapoio'); // define the database
+        $this->setActiveRecord('tb_arquivo'); // define the Active Record
 
         // load the styles
         TPage::include_css('app/resources/css_form02.css');        
@@ -62,19 +74,71 @@ class exe_fwShowBlobDisco extends TPage
         $this->datagrid = new TDataGrid;
         $this->datagrid->disableHtmlConversion();
 
-        $this->datagrid = new BootstrapDatagridWrapper($this->datagrid);
-        $this->filter_criteria = new TCriteria;
+        $this->datagrid_form = new TForm('datagrid_'.self::$formName);
+        $this->datagrid_form->onsubmit = 'return false';
 
+        $this->datagrid = new BootstrapDatagridWrapper($this->datagrid);
         $this->datagrid->style = 'width: 100%';
-        $this->datagrid->setHeight(320);        
+        $this->datagrid->setHeight(320);
+
+        $column_id_arquivo = new TDataGridColumn('id_arquivo', "id", 'center' , '70px');
+        $column_nome_arquivo = new TDataGridColumn('nome_arquivo', "Nome", 'left');
+
+        $this->datagrid->addColumn($column_id_arquivo);
+        $this->datagrid->addColumn($column_nome_arquivo);
+
+        // create the datagrid model
+        $this->datagrid->createModel();
+
+        // creates the page navigation
+        $this->pageNavigation = new TPageNavigation;
+        $this->pageNavigation->enableCounters();
+        $this->pageNavigation->setAction(new TAction(array($this, 'onReload')));
+        $this->pageNavigation->setWidth($this->datagrid->getWidth());        
+
+        $panel = new TPanelGroup();
+        $panel->datagrid = 'datagrid-container';
+        $this->datagridPanel = $panel;
+        $this->datagrid_form->add($this->datagrid);
+        $panel->add($this->datagrid_form);
+
+        $panel->getBody()->class .= ' table-responsive';
+
+        $panel->addFooter($this->pageNavigation);
+
+        $headerActions = new TElement('div');
+        $headerActions->class = ' datagrid-header-actions ';
+        $headerActions->style = 'background-color:#fff; justify-content: space-between;';
+
+        $head_left_actions = new TElement('div');
+        $head_left_actions->class = ' datagrid-header-actions-left-actions ';
+
+        $head_right_actions = new TElement('div');
+        $head_right_actions->class = ' datagrid-header-actions-left-actions ';
+
+        $headerActions->add($head_left_actions);
+        $headerActions->add($head_right_actions);
+
+        $panel->getBody()->insert(0, $headerActions);
+
+        $dropdown_button_exportar = new TDropDown("Exportar", 'fas:file-export #2d3436');
+        $dropdown_button_exportar->setPullSide('right');
+        $dropdown_button_exportar->setButtonClass('btn btn-default waves-effect dropdown-toggle');
+        //$dropdown_button_exportar->addPostAction( "CSV", new TAction(['ArquivosList', 'onExportCsv'],['static' => 1]), 'datagrid_'.self::$formName, 'fas:file-csv #00b894' );
+        //$dropdown_button_exportar->addPostAction( "XLS", new TAction(['ArquivosList', 'onExportXls'],['static' => 1]), 'datagrid_'.self::$formName, 'fas:file-excel #4CAF50' );
+        //$dropdown_button_exportar->addPostAction( "PDF", new TAction(['ArquivosList', 'onExportPdf'],['static' => 1]), 'datagrid_'.self::$formName, 'far:file-pdf #e74c3c' );
+        //$dropdown_button_exportar->addPostAction( "XML", new TAction(['ArquivosList', 'onExportXml'],['static' => 1]), 'datagrid_'.self::$formName, 'far:file-code #95a5a6' );
+
+        $head_right_actions->add($dropdown_button_exportar);
 
         // creates the page structure using a table
         $formDinBreadCrumb = new TFormDinBreadCrumb(__CLASS__);
-        $vbox = $formDinBreadCrumb->getAdiantiObj();
-        $vbox->add($this->form);
+        $container = $formDinBreadCrumb->getAdiantiObj();
+        $container->add($this->form);
+        $container->add($panel);
         
         // add the table inside the page
-        parent::add($vbox);
+        parent::add($container);
     }
 
     /**
@@ -101,9 +165,7 @@ class exe_fwShowBlobDisco extends TPage
             FormDinHelper::debug($_REQUEST,'$_REQUEST');
 
             new TMessage('info', 'Tudo OK!');
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             new TMessage('error', $e->getMessage());
         }
     }    
