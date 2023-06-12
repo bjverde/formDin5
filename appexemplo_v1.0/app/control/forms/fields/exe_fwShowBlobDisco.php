@@ -36,6 +36,7 @@ class exe_fwShowBlobDisco extends TPage
         $this->setLimit(20);
         $this->setDatabase('dbapoio'); // define the database
         $this->setActiveRecord('tb_arquivo'); // define the Active Record
+        $this->setDefaultOrder(self::$primaryKey, 'asc'); // define the default order
 
         // load the styles
         TPage::include_css('app/resources/css_form02.css');        
@@ -84,11 +85,14 @@ class exe_fwShowBlobDisco extends TPage
         $this->datagrid->style = 'width: 100%';
         $this->datagrid->setHeight(320);
 
-        $column_id_arquivo = new TDataGridColumn('id_arquivo', "id", 'center' , '70px');
+        $column_id_arquivo = new TDataGridColumn(self::$primaryKey, "id", 'center' , '70px');
         $column_nome_arquivo = new TDataGridColumn('nome_arquivo', "Nome", 'left');
 
         $this->datagrid->addColumn($column_id_arquivo);
         $this->datagrid->addColumn($column_nome_arquivo);
+
+        $action_onEdit = TFormDinGridTransformer::getDataGridActionOnEdit($this, self::$primaryKey);
+        $this->datagrid->addAction($action_onEdit);
 
         // create the datagrid model
         $this->datagrid->createModel();
