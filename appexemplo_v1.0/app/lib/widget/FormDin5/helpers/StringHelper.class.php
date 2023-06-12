@@ -110,6 +110,12 @@ class StringHelper
         return $value;
     }
 
+    /**
+     * Recebe uma string e deixar apenas os números sem formatação
+     *
+     * @param string $value
+     * @return string
+     */
     public static function limpaCnpjCpf($value) 
     {
         $limpo = preg_replace("/\D/", '', $value);
@@ -117,13 +123,13 @@ class StringHelper
     }
 
     /**
-     * Recebe uma string e formata o numero telefone em dos 4 formatos
+     * Recebe uma string e formata o numero telefone em dos 4 formatos, conforme o tamanho da string
      * (61) 91234-5678
      * (61) 1234-5678
      * 91234-5678
      * 1234-5678
      * @param string $value
-     * @return string
+     * @return string|int
      */
     public static function formatPhoneNumber($value) 
     {
@@ -140,21 +146,28 @@ class StringHelper
         return $value;
     }
 
+    /**
+     * Recebe um string e verfica se está no formato de número brasileiro
+     * 999.999.999,00000 ou 999999999,00000
+     * 
+     * @param string|int|float|null $value
+     * @return boolean
+     */    
     public static function is_numeroBrasil($value)
     {
         if( empty($value) ){
             return false;
         }
-        //Retira números no formato 12.00
+        //Retira números no formato 12,00
         $naoNumero = preg_match('/^([0-9]*)([\.]{1})(\d{1,2})$/', $value, $output_array);
         if($naoNumero===1){
             return false;
         }
-        //Retira números no formato 12.1234
+        //Retira números no formato 12,1234
         $naoNumero = preg_match('/^([0-9]*)(...)([\.]{1})(\d{4,})$/', $value, $output_array);
         if($naoNumero===1){
             return false;
-        }        
+        }
         $numero= preg_match('/^([0-9\.]*)(,?)(\d*)$/', $value, $output_array);
         $result= ($numero===1)?true:false;
         return $result;
