@@ -94,6 +94,9 @@ class exe_fwShowBlobDisco extends TPage
         $action_onEdit = TFormDinGridTransformer::getDataGridActionOnEdit($this, self::$primaryKey);
         $this->datagrid->addAction($action_onEdit);
 
+        $action_onEdit = TFormDinGridTransformer::getDataGridActionOnDelete($this, self::$primaryKey);
+        $this->datagrid->addAction($action_onEdit);
+
         // create the datagrid model
         $this->datagrid->createModel();
 
