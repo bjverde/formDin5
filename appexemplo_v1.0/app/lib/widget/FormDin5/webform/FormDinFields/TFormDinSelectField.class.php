@@ -106,7 +106,7 @@ class TFormDinSelectField  extends TFormDinOption
      * @param string  $strDisplayColumn   - 14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED Informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
-     * @param string  $enableSearch       - 17: Define se o campo select terá autocomplete
+     * @param string  $enableSearch       - 17: FORMDIN5: Define se o campo select terá autocomplete
      * @return TCombo
      */
     public function __construct(string $id
@@ -165,6 +165,7 @@ class TFormDinSelectField  extends TFormDinOption
                            ,$strDisplayColumn      //14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
                            ,null                   //15: 
                            ,$strDataColumns        //16: informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
+                           ,$enableSearch          //17: FORMDIN5: Define se o campo select terá autocomplete
                         );        
         return $this->getAdiantiObj();
     }
