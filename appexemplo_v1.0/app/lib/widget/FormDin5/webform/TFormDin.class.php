@@ -1348,6 +1348,7 @@ class TFormDin
                                   ,string $strDisplayColumn = null
                                   ,string $boolNoWrapLabel = null
                                   ,string $strDataColumns = null
+                                  ,bool $enableSearch = true
                                   )
     {
         $boolRequired = is_null($boolRequired)?false:$boolRequired;
@@ -1367,6 +1368,7 @@ class TFormDin
                                             ,$strDisplayColumn
                                             ,$boolNoWrapLabel
                                             ,$strDataColumns
+                                            ,$enableSearch
                                         );
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
