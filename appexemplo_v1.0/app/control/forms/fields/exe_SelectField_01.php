@@ -19,6 +19,11 @@ class exe_SelectField_01 extends TPage
 
         $frm = new TFormDin($this,'Exemplo do Campo Select Simples');
 
+        $msg = '<b>O Select no FD5 mudou o comportamento padrão</b>.';
+        $msg = $msg.'<br>No FD4 o padrão é o select sem autocomplete. Para usar esse padrão o atributo 17 desativa o autocomplete';
+        $msg = $msg.'<br>No FD5 o padráo é o select COM autocomplete.';
+        $frm->addHtmlField('fd5_html2',$msg, null, 'Dica:', null, 200);
+
         $frm->addGroupField('gp1', 'Selects Normais');
         $listFormas = array();
         $listFormas[1] ='Dinheiro';
@@ -35,23 +40,23 @@ class exe_SelectField_01 extends TPage
         $listFormas[12]='Galinha';
         $listFormas[13]='Bode';
         $listFormas[14]='Milho';
-        $frm->addSelectField('forma_pagamento'     // 1: ID do campo
+        $frm->addSelectField('forma_pagamento'  // 01: ID do campo
                            , 'Forma Pagamento:'
-                           , TRUE
-                           , $listFormas           // 4: array dos valores
-                           , null
-                           , null
-                           , null  // 07: Informe o ID do array ou array com a lista de ID's no formato "key=>id" para identificar a(s) opção(ões) selecionada(s)
-                           , null  // 08: Default FALSE = SingleSelect, TRUE = MultiSelect
-                           , null  // 09: Num itens que irão aparecer
-                           , null  // 10: Largura em Pixels
-                           , ' '   // 11: First Key in Display
-                           , null  // 12: Frist Value in Display, use value NULL for required
-                           , null  // 13: Nome coluna para preencher os valores
-                           , null  // 14: Nome colune para exiver para usuario
-                           , null  // 15
-                           , null  // 16
-                           , false // 17
+                           , TRUE         // 03: Obrigatorio
+                           , $listFormas  // 04: array dos valores
+                           , null         // 05: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+                           , null         // 06: Default FALSE = Label mesma linha, TRUE = Label acima
+                           , null         // 07: Informe o ID do array ou array com a lista de ID's no formato "key=>id" para identificar a(s) opção(ões) selecionada(s)
+                           , null         // 08: Default FALSE = SingleSelect, TRUE = MultiSelect
+                           , null         // 09: Num itens que irão aparecer
+                           , null         // 10: Largura em Pixels
+                           , ' '          // 11: First Key in Display
+                           , null         // 12: Frist Value in Display, use value NULL for required
+                           , null         // 13: Nome coluna para preencher os valores
+                           , null         // 14: Nome colune para exiver para usuario
+                           , null         // 15:
+                           , null         // 16:
+                           , false        // 17: FORMDIN5: Define o se compote terá autocomplete
                            );
         
         $fg2 = $frm->addSelectField('forma_pagamento2'     // 01: ID do campo
@@ -169,8 +174,9 @@ class exe_SelectField_01 extends TPage
         $fg2->enableSearch(true);
 
 
-        $msg = '<b>Select com ICONE</b>.'
-              .'<br>Busque por nome de paises, EXEMPLO MAR';
+        $msg = '<b>Select com ICONE</b>.';
+        $msg = $msg.'<br>Busque por nome de paises, EXEMPLO MAR';
+        $msg = $msg.'<br>É possível incluir emojis basta copiar de colar do site <a href="https://emojipedia.org/pt">https://emojipedia.org/pt</a>';              
         $frm->addHtmlField('fd5_html2',$msg, null, 'Dica:', null, 200);        
         $listDdi = HtmlHelper::getListDdi();
         $fg3 = $frm->addSelectField('ddi_fd5'  // 1: ID do campo
