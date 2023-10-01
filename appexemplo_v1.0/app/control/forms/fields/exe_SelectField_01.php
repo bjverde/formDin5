@@ -20,7 +20,21 @@ class exe_SelectField_01 extends TPage
         $frm = new TFormDin($this,'Exemplo do Campo Select Simples');
 
         $frm->addGroupField('gp1', 'Selects Normais');
-        $listFormas = array(1=>'Dinheiro',2=>'Cheque',3=>'Cartão',4=>'BitCoin');
+        $listFormas = array();
+        $listFormas[1] ='Dinheiro';
+        $listFormas[2] ='Cheque';
+        $listFormas[3] ='Cartão';
+        $listFormas[4] ='BitCoin';
+        $listFormas[5] ='PayPal';
+        $listFormas[6] ='Pag Seguro';
+        $listFormas[7] ='Moderninha';
+        $listFormas[8] ='Dolar';
+        $listFormas[9] ='Euro';
+        $listFormas[10]='Bolivares';
+        $listFormas[11]='Vale transporte';
+        $listFormas[12]='Galinha';
+        $listFormas[13]='Bode';
+        $listFormas[14]='Milho';
         $frm->addSelectField('forma_pagamento'     // 1: ID do campo
                            , 'Forma Pagamento:'
                            , TRUE
@@ -135,18 +149,9 @@ class exe_SelectField_01 extends TPage
         $msg = '<b>Não é um select que busca no banco</b>.'
               .'<br>O select abaixo com busca, coloca todas as opções no html da tela. Não faz a busca no banco.'
               .'<br><a href="index.php?class=exe_SelectFielddb">Exemplo com busca no banco</a>';
-        $frm->addHtmlField('html1',$msg, null, 'Dica:', null, 200);
+        $frm->addHtmlField('fd5_html1',$msg, null, 'Dica:', null, 200);
         
-        $listFormas[5]='PayPal';
-        $listFormas[6]='Pag Seguro';
-        $listFormas[7]='Moderninha';
-        $listFormas[8]='Dolar';
-        $listFormas[9]='Euro';
-        $listFormas[10]='Bolivares';
-        $listFormas[11]='Vale transporte';
-        $listFormas[12]='Galinha';
-        $listFormas[13]='Bode';
-        $listFormas[14]='Milho';
+
         $fg2 = $frm->addSelectField('forma_pagamento1_fd5'  // 1: ID do campo
                                     , 'Select com busca:'
                                     , false                  // 3: Obrigatorio
@@ -162,6 +167,27 @@ class exe_SelectField_01 extends TPage
                                     , 2
                                     );
         $fg2->enableSearch(true);
+
+
+        $msg = '<b>Select com ICONE</b>.'
+              .'<br>Busque por nome de paises, EXEMPLO MAR';
+        $frm->addHtmlField('fd5_html2',$msg, null, 'Dica:', null, 200);        
+        $listDdi = HtmlHelper::getListDdi();
+        $fg3 = $frm->addSelectField('ddi_fd5'  // 1: ID do campo
+                                    , 'Select com busca:'
+                                    , false                  // 3: Obrigatorio
+                                    , $listDdi           // 4: array dos valores
+                                    , true                  // 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+                                    , false                  // 6: Default FALSE = Label mesma linha, TRUE = Label acima
+                                    , null                  // 7: Valor DEFAULT, informe o ID do array
+                                    , null
+                                    , null                  //  9: Num itens que irão aparecer
+                                    , null   // 10: Largura em Pixels
+                                    , null  // 11 First Key in Display
+                                    , null  // 12 Frist VALUE in Display, use value NULL for required
+                                    , 2
+                                    );
+        $fg3->enableSearch(true);
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
