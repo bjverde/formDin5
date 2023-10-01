@@ -110,7 +110,7 @@ class TFormDinGridTransformer
     public static function linkApiWhatsApp($value, $object, $row, $msg, $iconeVerde)
     {
         if ($value){
-            $string = StringHelper::linkApiWhatsApp($value,$msg,$iconeVerde);
+            $string = HtmlHelper::linkApiWhatsApp($value,$msg,$iconeVerde);
             return $string;
         }
         return $value;
