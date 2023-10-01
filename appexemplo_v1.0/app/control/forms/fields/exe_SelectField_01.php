@@ -33,6 +33,11 @@ class exe_SelectField_01 extends TPage
                            , null  // 10: Largura em Pixels
                            , ' '   // 11: First Key in Display
                            , null  // 12: Frist Value in Display, use value NULL for required
+                           , null  // 13: Nome coluna para preencher os valores
+                           , null  // 14: Nome colune para exiver para usuario
+                           , null  // 15
+                           , null  // 16
+                           , false // 17
                            );
         
         $fg2 = $frm->addSelectField('forma_pagamento2'     // 01: ID do campo
@@ -47,7 +52,11 @@ class exe_SelectField_01 extends TPage
                                    , null  // 10: Largura em Pixels
                                    , null  // 11: First Key in Display
                                    , null  // 12: Frist VALUE in Display, use value NULL for required
-                                   ,2
+                                   , 2     // 13: Nome coluna para preencher os valores
+                                   , null  // 14: Nome colune para exiver para usuario
+                                   , null  // 15
+                                   , null  // 16
+                                   , false // 17
                                    );
         $fg2->setToolTip('Campo com valor DEFAULT pré-selecionado');
         
@@ -63,6 +72,11 @@ class exe_SelectField_01 extends TPage
                                 , null  // 10: Largura em Pixels
                                 , ' '   // 11: First Key in Display
                                 , 4     // 12: Frist VALUE in Display, use value NULL for required
+                                , null  // 13: Nome coluna para preencher os valores
+                                , null  // 14: Nome colune para exiver para usuario
+                                , null  // 15
+                                , null  // 16
+                                , false // 17                                
                                 );
         $fg2->setToolTip('Campo com valor DEFAULT pré-selecionado, ATRIBUTO 12');
         
@@ -147,7 +161,7 @@ class exe_SelectField_01 extends TPage
                                     , null  // 12 Frist VALUE in Display, use value NULL for required
                                     , 2
                                     );
-        $fg2->enableSearch();
+        $fg2->enableSearch(true);
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
