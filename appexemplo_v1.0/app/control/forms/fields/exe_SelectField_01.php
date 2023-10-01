@@ -79,7 +79,7 @@ class exe_SelectField_01 extends TPage
                                    );
         $fg2->setToolTip('Campo com valor DEFAULT pré-selecionado');
         
-        $fg2 = $frm->addSelectField('forma_pagamento3'     // 1: ID do campo
+        $fg3 = $frm->addSelectField('forma_pagamento3'     // 1: ID do campo
                                 , 'Forma Pagamento (DEFAULT):'
                                 , TRUE                  // 3: Obrigatorio
                                 , $listFormas           // 4: array dos valores
@@ -97,7 +97,7 @@ class exe_SelectField_01 extends TPage
                                 , null  // 16
                                 , false // 17                                
                                 );
-        $fg2->setToolTip('Campo com valor DEFAULT pré-selecionado, ATRIBUTO 12');
+        $fg3->setToolTip('Campo com valor DEFAULT pré-selecionado, ATRIBUTO 12');
         
         
         //$frm->addSelectField('estado', 'Estado (todos):', false, 'tb_uf', true, false, null, false, null, null, '-- selecione o Estado --', null, 'COD_UF', 'NOM_UF', null, 'cod_regiao')->addEvent('onChange', 'select_change(this)')->setToolTip('SELECT - esta campo select possui o código da região adicionado em sua tag option. Para adicionar dados extras a um campo select, basta definir as colunas no parâmetro $arrDataColumns.');
@@ -157,7 +157,7 @@ class exe_SelectField_01 extends TPage
         $frm->addHtmlField('fd5_html1',$msg, null, 'Dica:', null, 200);
         
 
-        $fg2 = $frm->addSelectField('forma_pagamento1_fd5'  // 1: ID do campo
+        $fg4 = $frm->addSelectField('forma_pagamento1_fd5'  // 1: ID do campo
                                     , 'Select com busca:'
                                     , false                  // 3: Obrigatorio
                                     , $listFormas           // 4: array dos valores
@@ -171,7 +171,7 @@ class exe_SelectField_01 extends TPage
                                     , null  // 12 Frist VALUE in Display, use value NULL for required
                                     , 2
                                     );
-        $fg2->enableSearch(true);
+        $fg4->enableSearch(true);
 
 
         $msg = '<b>Select com ICONE</b>.';
@@ -179,7 +179,7 @@ class exe_SelectField_01 extends TPage
         $msg = $msg.'<br>É possível incluir emojis basta copiar de colar do site <a href="https://emojipedia.org/pt">https://emojipedia.org/pt</a>';              
         $frm->addHtmlField('fd5_html2',$msg, null, 'Dica:', null, 200);        
         $listDdi = HtmlHelper::getListDdi();
-        $fg3 = $frm->addSelectField('ddi_fd5'  // 1: ID do campo
+        $fg5 = $frm->addSelectField('ddi_fd5'  // 1: ID do campo
                                     , 'Select com busca:'
                                     , false                  // 3: Obrigatorio
                                     , $listDdi           // 4: array dos valores
@@ -193,7 +193,7 @@ class exe_SelectField_01 extends TPage
                                     , null  // 12 Frist VALUE in Display, use value NULL for required
                                     , 2
                                     );
-        $fg3->enableSearch(true);
+        $fg5->enableSearch(true);
 
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
