@@ -38,16 +38,6 @@ class exe_link_whatsapp_api extends TPage
         parent::add($vbox);
     }
 
-    public function getCurrentUrl() 
-    {
-        $pageURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
-        $pageURL = $pageURL.$_SERVER["SERVER_NAME"];
-        $pageURL = $pageURL.( ( $_SERVER["SERVER_PORT"] != 80 ) ? ":".$_SERVER["SERVER_PORT"] : "") ;
-        $pageURL = $pageURL.$_SERVER["REQUEST_URI"];
-        $url = explode('engine.php', $pageURL);
-        return $url[0];
-    }
-
     public function onReload()
     {
        var_dump($_REQUEST);
