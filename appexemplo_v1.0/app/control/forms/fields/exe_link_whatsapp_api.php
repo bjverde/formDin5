@@ -17,8 +17,8 @@ class exe_link_whatsapp_api extends TPage
         $this->form = new BootstrapFormBuilder('form');
         $this->form->setFormTitle('Link API WhatsApp');
 
-        $linkVerde = StringHelper::linkApiWhatsApp('(61) 91234-5678','Olá Vamos conversar');
-        $linkNormal = StringHelper::linkApiWhatsApp('(61) 91234-5678','Olá Vamos conversar',false);
+        $linkVerde = HtmlHelper::linkApiWhatsApp('(61) 91234-5678','Olá Vamos conversar');
+        $linkNormal = HtmlHelper::linkApiWhatsApp('(61) 91234-5678','Olá Vamos conversar',false);
         $objhtml  = new TElement('div');
         $html = 'Link verde '.$linkVerde;
         $html = $html.'<br>Link normal '.$linkNormal;
