@@ -77,6 +77,76 @@ class HtmlHelper
         return $link;
     }
 
+
+    /**
+     * Get List DDD 
+     *
+     * @return array
+     */
+    public static function getListDdd() 
+    {
+        $ddds = [
+            68 => 'Acre - 68',
+            82 => 'Alagoas - 82',
+            96 => 'Amapá - 96',
+            92 => 'Amazonas - 92',
+            77 => 'Bahia - 77',
+            73 => 'Bahia - 73',
+            74 => 'Bahia - 74',
+            75 => 'Bahia - 75',
+            85 => 'Ceará - 85',
+            88 => 'Ceará - 88',
+            61 => 'Distrito Federal - 61',
+            27 => 'Espírito Santo - 27',
+            28 => 'Espírito Santo - 28',
+            62 => 'Goiás - 62',
+            64 => 'Goiás - 64',
+            98 => 'Maranhão - 98',
+            99 => 'Maranhão - 99',
+            65 => 'Mato Grosso - 65',
+            66 => 'Mato Grosso - 66',
+            67 => 'Mato Grosso do Sul - 67',
+            31 => 'Minas Gerais - 31',
+            32 => 'Minas Gerais - 32',
+            33 => 'Minas Gerais - 33',
+            34 => 'Minas Gerais - 34',
+            35 => 'Minas Gerais - 35',
+            37 => 'Minas Gerais - 37',
+            38 => 'Minas Gerais - 38',
+            91 => 'Pará - 91',
+            93 => 'Pará - 93',
+            94 => 'Pará - 94',
+            95 => 'Roraima - 95',
+            41 => 'Paraná - 41',
+            42 => 'Paraná - 42',
+            43 => 'Paraná - 43',
+            44 => 'Paraná - 44',
+            45 => 'Paraná - 45',
+            46 => 'Paraná - 46',
+            79 => 'Sergipe - 79',
+            11 => 'São Paulo - 11',
+            12 => 'São Paulo - 12',
+            13 => 'São Paulo - 13',
+            14 => 'São Paulo - 14',
+            15 => 'São Paulo - 15',
+            16 => 'São Paulo - 16',
+            17 => 'São Paulo - 17',
+            18 => 'São Paulo - 18',
+            19 => 'São Paulo - 19',
+            21 => 'Rio de Janeiro - 21',
+            22 => 'Rio de Janeiro - 22',
+            24 => 'Rio de Janeiro - 24',
+            47 => 'Santa Catarina - 47',
+            48 => 'Santa Catarina - 48',
+            49 => 'Santa Catarina - 49',
+            69 => 'Rondônia - 69',
+            63 => 'Tocantins - 63'
+        ];
+
+        return $ddds;
+    }
+
+
     /**
      * Get List DDI whit emojis
      *
