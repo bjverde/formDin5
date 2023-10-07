@@ -96,5 +96,55 @@ class OrmAdiantiHelperTest extends TestCase
         $param = array(1=>'ana');
         $result = OrmAdiantiHelper::testParam($param);
         $this->assertEquals( $expected , $result);
-	}     
+	}
+
+    //$filters = OrmAdiantiHelper::addFilter($filters,'nome','like',$data->nome,null);
+    //$filters = OrmAdiantiHelper::addFilter($filters,'ddi' ,'='   ,$data->ddi ,null);
+    //$filters = OrmAdiantiHelper::addFilter($filters,'ddd' ,'='   ,$data->ddd ,null);
+    //$filters = OrmAdiantiHelper::addFilter($filters,'celular' ,'like'   ,$data->celular ,null);
+
+    public function testAddFilter_like() {
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = array();
+        $expected[] = new TFilter('nome','like',$data);
+
+        $filters= array();
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','like',$data->nome,null);
+        $this->assertEquals( $expected , $result);
+	}
+    public function testAddFilter_equal() {
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = array();
+        $expected[] = new TFilter('nome','=',$data);
+
+        $filters= array();
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','=',$data->nome,null);
+        $this->assertEquals( $expected , $result);
+	}
+    public function testAddFilter_notEqual() {
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = array();
+        $expected[] = new TFilter('nome','!=',$data);
+
+        $filters= array();
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','!=',$data->nome,null);
+        $this->assertEquals( $expected , $result);
+	}
+    public function testAddFilter_In() {
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = array();
+        $expected[] = new TFilter('nome','in',$data);
+
+        $filters= array();
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','in',$data->nome,null);
+        $this->assertEquals( $expected , $result);
+	}
 }
