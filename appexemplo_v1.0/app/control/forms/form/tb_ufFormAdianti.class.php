@@ -228,4 +228,13 @@ class tb_ufFormAdianti extends TPage
             new TMessage(TFormDinMessage::TYPE_ERROR, $e->getMessage());
         } //END TryCatch
     } //END onSave
+    //--------------------------------------------------------------------------------
+    /**
+     * Clear filters
+     */
+    public function onClear()
+    {
+        $this->clearFilters();
+        $this->onReload();
+    } //END onClear
 }
