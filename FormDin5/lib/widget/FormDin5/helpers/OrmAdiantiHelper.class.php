@@ -56,5 +56,27 @@ class OrmAdiantiHelper
         }
     	return $result;
     }
+
+    /**
+     * Inclui um novo elemento do tipo TFilter no ArrayFilter se $data for tiver valor
+     *
+     * @param array  $arrayFilter 01: array com os filtros já incluiso
+     * @param string $filde       02: campo que será usado
+     * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
+     * @param mixed  $data        04: valor que será testado
+     * @param string $sql         05: String Sql para um sub select. 
+     * @return array
+     */
+    public static function addFilter($arrayFilter,$filde,$conector,$data,$sql) 
+    {
+        if( self::testParam($data) ){
+            if( empty($sql) ){
+                $arrayFilter[] = new TFilter($filde,$conector,$data);// create the filter 
+            }else{
+                $arrayFilter[] = new TFilter($filde,$conector,$sql);// create the filter 
+            }
+        }
+    	return $arrayFilter;
+    }    
 }
 ?>
