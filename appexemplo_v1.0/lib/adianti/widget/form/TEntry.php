@@ -191,8 +191,8 @@ class TEntry extends TField implements AdiantiWidgetInterface
                 
                 if ($this->numericMask)
                 {
-                    $value = isset($value)? str_replace( $this->thousandSeparator, '', $value) : null;
-                    $value = isset($value)? str_replace( $this->decimalsSeparator, '.', $value): null;
+                    $value = isset($value)? (isset($this->thousandSeparator)?str_replace( $this->thousandSeparator,  '', $value):$value): null;
+                    $value = isset($value)? (isset($this->decimalsSeparator)?str_replace( $this->decimalsSeparator, '.', $value):$value): null;
                     return $value;
                 }
                 else if ($this->mask)
