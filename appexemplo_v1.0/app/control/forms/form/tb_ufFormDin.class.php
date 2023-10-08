@@ -17,6 +17,7 @@ class tb_ufFormDin extends TPage
     protected $frm;  //Registration component FormDin 5
     protected $datagrid; //Listing
     protected $pageNavigation;
+    protected $filter_criteria;
 
     // trait com onReload, onSearch, onDelete, onClear, onEdit, show
     use Adianti\Base\AdiantiStandardFormTrait;
@@ -31,6 +32,12 @@ class tb_ufFormDin extends TPage
         $this->setDatabase('dbapoio'); // define the database
         $this->setActiveRecord('tb_uf'); // define the Active Record
         $this->setDefaultOrder('cod_uf', 'asc'); // define the default order
+
+        $this->filter_criteria = new TCriteria;
+        $this->addFilterField('cod_uf', '=', 'cod_uf'); //campo, operador, campo do form
+        $this->addFilterField('sig_uf', '=', 'sig_uf'); //campo, operador, campo do form
+        $this->addFilterField('nom_uf', 'like', 'nom_uf'); //campo, operador, campo do form
+        $this->addFilterField('cod_regiao', '=', 'cod_regiao'); //campo, operador, campo do form        
 
         $primaryKey = 'cod_uf';
         $this->frm = new TFormDin($this,'tb_uf');
