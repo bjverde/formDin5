@@ -106,11 +106,11 @@ class TFormDinGridTransformer
      * @param string $msg     04 - texto da mensagem
      * @param boolean $iconeVerde 05 - Mostra icone verde ou mostra icone na cor da fonte
      * @return void
-     */      
+     */    
     public static function linkApiWhatsApp($value, $object, $row, $msg, $iconeVerde)
     {
         if ($value){
-            $string = StringHelper::linkApiWhatsApp($value,$msg,$iconeVerde);
+            $string = HtmlHelper::linkApiWhatsApp($value,$msg,$iconeVerde);
             return $string;
         }
         return $value;
