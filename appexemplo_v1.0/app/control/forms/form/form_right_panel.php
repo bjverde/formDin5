@@ -16,9 +16,9 @@ class form_right_panel extends TPage
         parent::__construct();
         $this->adianti_target_container = 'adianti_right_panel';
 
-        $frm = new TFormDin($this,'Exemplo do Campo HTML');
+        $frm = new TFormDin($this,'Painel a direita generico');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
-        $frm->addHtmlField('html1', '<b>O campo html é um campo livre</b>. Você poderá adicionar qualquer conteúdo na página.', null, 'Dica:', null, 200);
+        $frm->addHtmlField('html1', '<b>Painel a direita generico.', null, 'Dica:', null, 200);
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
