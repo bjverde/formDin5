@@ -118,6 +118,7 @@ class exe_gride19_nova_acao extends TPage
         // get the parameter and shows the message
         $code = $param['id'];
         new TMessage('info', "Você clicou para abrir o registro <b>{$code}</b> em painel lateral");
+        AdiantiCoreApplication::loadPage('form_right_panel', 'onReload', ['adianti_target_container' => 'adianti_right_panel', 'register_state' => 'false']);
     }
 
 }
