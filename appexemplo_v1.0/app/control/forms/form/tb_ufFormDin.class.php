@@ -34,8 +34,8 @@ class tb_ufFormDin extends TPage
         $this->setDefaultOrder('cod_uf', 'asc'); // define the default order
 
         $this->filter_criteria = new TCriteria;
-        $this->addFilterField('cod_uf', '=', 'cod_uf'); //campo, operador, campo do form
-        $this->addFilterField('sig_uf', '=', 'sig_uf'); //campo, operador, campo do form
+        $this->addFilterField('cod_uf', 'like', 'cod_uf'); //campo, operador, campo do form
+        $this->addFilterField('sig_uf', 'like', 'sig_uf'); //campo, operador, campo do form
         $this->addFilterField('nom_uf', 'like', 'nom_uf'); //campo, operador, campo do form
         $this->addFilterField('cod_regiao', '=', 'cod_regiao'); //campo, operador, campo do form        
 
