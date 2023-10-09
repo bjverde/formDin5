@@ -103,21 +103,21 @@ class exe_gride19_grupo extends TPage
     {
         // get the parameter and shows the message
         $code = $param['id'];
-        new TMessage('error', "Você tentou clicou para deletar o registro <b>{$code}</b> e não será deletado");
+        new TMessage('error', "Você clicou para deletar o registro <b>{$code}</b> e não será deletado");
     }
 
     public static function onDetalhar($param)
     {
         // get the parameter and shows the message
         $code = $param['id'];
-        new TMessage('info', "Você tentou clicou para DETALHAR o registro <b>{$code}</b>");
+        new TMessage('info', "Você clicou para DETALHAR o registro <b>{$code}</b>");
     }
 
     public static function onPainelLateral($param)
     {
         // get the parameter and shows the message
         $code = $param['id'];
-        new TMessage('info', "Você tentou clicou para abrir o registro <b>{$code}</b> em painel lateral");
+        new TMessage('info', "Você clicou para abrir o registro <b>{$code}</b> em painel lateral");
     }
 
 }
