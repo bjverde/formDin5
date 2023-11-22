@@ -16,6 +16,9 @@ class exe_grid18 extends TPage
     public function __construct()
     {
         parent::__construct();
+
+        //$this->setDatabase('dbapoio');         // defines the database
+        //$this->setActiveRecord('tb_paginacao');// defines the active record
         
         $mixData = mockBanco::getExemploAdianti();
         $grid = new TFormDinGrid($this,'grid','Exemplo Grid Simples 18 - setando os dados');
