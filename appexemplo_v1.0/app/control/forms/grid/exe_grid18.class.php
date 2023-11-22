@@ -29,6 +29,8 @@ class exe_grid18 extends TPage
         $grid->addColumn('city',  'City', null, 'left');
         $grid->addColumn('state','State', null, 'left');
         $grid->addColumnFormatDate('date' ,'Data Brasil' , null, 'left');
+        $numero = $grid->addColumn('numero1' ,'Número' , null, 'right');
+        $numero->setTransformer( function($value, $object, $row){TFormDinGridTransformer::gridNumeroBrasil($value, $object, $row);} );
         //$grid->addColumnFormatDate('date' ,'Data' , null, 'left','Y');
         //$grid->enableDefaultButtons(false);
         $this->datagrid = $grid->show();
