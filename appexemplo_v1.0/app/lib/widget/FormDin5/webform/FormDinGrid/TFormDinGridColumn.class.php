@@ -136,6 +136,11 @@ class TFormDinGridColumn
         return $this->getAdiantiObj()->enableAutoHide($width);
     }
 	//-------------------------------------------------------------------------------------------
+    /**
+     * Crie uma função de callback para transformar os dados dever ser feita
+     * nomeFuncao ($value, $object, $row)
+     * @param $callback  A function name of a method of an object
+     */    
     public function setTransformer(Callable $callback){
         return $this->getAdiantiObj()->setTransformer($callback);
     }
