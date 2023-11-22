@@ -7,6 +7,7 @@ class tb_ufFormAdianti extends TPage
     protected $frm;  //Registration component FormDin 5
     protected $datagrid; //Listing
     protected $pageNavigation;
+    protected $filter_criteria;
 
     //private static $database = 'dbapoio';
     //private static $activeRecord = 'tb_uf';
@@ -30,6 +31,12 @@ class tb_ufFormAdianti extends TPage
         $this->setDatabase('dbapoio'); // define the database
         $this->setActiveRecord('tb_uf'); // define the Active Record
         $this->setDefaultOrder('nom_uf', 'asc'); // define the default order
+
+        $this->filter_criteria = new TCriteria;
+        $this->addFilterField('cod_uf', '=', 'cod_uf'); //campo, operador, campo do form
+        $this->addFilterField('sig_uf', '=', 'sig_uf'); //campo, operador, campo do form
+        $this->addFilterField('nom_uf', 'like', 'nom_uf'); //campo, operador, campo do form
+        $this->addFilterField('cod_regiao', '=', 'cod_regiao'); //campo, operador, campo do form
 
         // creates the form
         $this->form = new BootstrapFormBuilder(self::$formName);
@@ -161,16 +168,6 @@ class tb_ufFormAdianti extends TPage
 
     }
 
-    /**
-     * Register the filter in the session
-     */
-    public function onSearch($param = null)
-    {
-        $data = $this->form->getData();
-        var_dump($param);
-        var_dump($data);
-    }
-
     public function onShow($param = null)
     {
 
@@ -231,4 +228,13 @@ class tb_ufFormAdianti extends TPage
             new TMessage(TFormDinMessage::TYPE_ERROR, $e->getMessage());
         } //END TryCatch
     } //END onSave
+    //--------------------------------------------------------------------------------
+    /**
+     * Clear filters
+     */
+    public function onClear()
+    {
+        $this->clearFilters();
+        $this->onReload();
+    } //END onClear
 }
