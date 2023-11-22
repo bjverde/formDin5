@@ -96,6 +96,9 @@ class TFormDinGrid
     protected $exportExcel;
     protected $exportPdf;
     protected $exportXml;
+    protected $columns;
+    protected $qtdColumns;
+    protected $onDrawActionButton;
 
 
     /**
