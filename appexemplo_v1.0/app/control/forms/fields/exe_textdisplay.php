@@ -27,6 +27,11 @@ class exe_textdisplay extends TPage
         $frm->addTextDisplayDataTimeBr('td4','Data iso para BR','2022-07-18');
         $frm->addTextDisplayNumeroBrasil('td5','Número em formato BR','123456,78');
 
+        $frm->addGroupField('gpx1', 'ATENÇÃO');
+            $frm->addButton('Vai para "Exemplo HTML"',null,['exe_HtmlField','onReload'],null,null,true,false);
+            $frm->addHtmlField('html5', 'Existem dois tipos de campos muito pareciddos addHtmlField e addTextDisplay. O Primeiro é livre.', null, null, 100);
+        $frm->closeGroup();        
+
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 

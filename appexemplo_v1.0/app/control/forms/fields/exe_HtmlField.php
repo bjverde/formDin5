@@ -22,6 +22,11 @@ class exe_HtmlField extends TPage
         $frm->addHtmlField('html3', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100);
         $frm->addHtmlField('html4', 'Esta campo html não possui largura definda, portando se ajustará à largura do form.', null, null, 100,null,false);
 
+        $frm->addGroupField('gpx1', 'ATENÇÃO');
+            $frm->addButton('Vai para "Exemplo Text Diplay"',null,['exe_textdisplay','onReload'],null,null,true,false);
+            $frm->addHtmlField('html5', 'Existem dois tipos de campos muito pareciddos addHtmlField e addTextDisplay. O Segundo tem algumas facilidades.', null, null, 100);
+        $frm->closeGroup();
+
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
