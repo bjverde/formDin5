@@ -15,7 +15,10 @@ class mockBanco
         $item->state   = 'Tennessee (US)';
         $item->date    = '2010-10-01';
         $item->dateTime= '2010-10-01 01:01:00';
-        $item->numero1 = '123.456,06';
+        $item->numero1 = '123456,06';
+        $item->numero2 = '123456.06';
+        $item->sim1    = 's';
+        $item->sim2    = 'sim';
         $banco[]=$item;
         
         // add an regular object to the datagrid
@@ -26,7 +29,10 @@ class mockBanco
         $item->state   = 'Surrey (UK)';
         $item->date    = '2010-10-10';
         $item->dateTime= '2010-10-01 15:01:00';
-        $item->numero1 = '123456.06';
+        $item->numero1 = '-123456.06';
+        $item->numero2 = '-123456.06';
+        $item->sim1    = 'n';
+        $item->sim2    = 'não';        
         $banco[]=$item;
         
         // add an regular object to the datagrid
@@ -38,6 +44,7 @@ class mockBanco
         $item->date    = '2010-05-31';
         $item->dateTime= '2010-10-01 18:01:00';
         $item->numero1 = '123456.06';
+        $item->numero2 = '123456.06';
         $banco[]=$item;
         
         // add an regular object to the datagrid
@@ -49,6 +56,7 @@ class mockBanco
         $item->date    = '2020-05-31';
         $item->dateTime= '2010-10-01 18:01:00';
         $item->numero1 = '123456.06';
+        $item->numero2 = '123456.06';
         $banco[]=$item;
 
 
@@ -61,6 +69,7 @@ class mockBanco
         $item->date    = '2020-05-31';
         $item->dateTime= '2010-10-01 18:01:00';
         $item->numero1 = '123456.06';
+        $item->numero2 = '123456.06';
         $banco[]=$item;
 
         // add an regular object to the datagrid
@@ -72,6 +81,7 @@ class mockBanco
         $item->date    = '2020-05-31';
         $item->dateTime= '2010-10-01 18:01:00';
         $item->numero1 = '123456.06';
+        $item->numero2 = '123456.06';
         $banco[]=$item;
 
         // add an regular object to the datagrid
@@ -83,6 +93,7 @@ class mockBanco
         $item->date    = '2020-05-31';
         $item->dateTime= '2010-10-01 18:01:00';
         $item->numero1 = '123456.06';
+        $item->numero2 = '123456.06';
         $banco[]=$item;
 
         // add an regular object to the datagrid
@@ -94,6 +105,7 @@ class mockBanco
         $item->date    = '2020-05-31';
         $item->dateTime= '2010-10-01 18:01:00';
         $item->numero1 = '123456.06';
+        $item->numero2 = '123456.06';
         $banco[]=$item;
 
         // add an regular object to the datagrid
