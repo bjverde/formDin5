@@ -54,5 +54,14 @@ class FileHelper
         }
     	return $result;
     }
+
+    public static function move(string $from, string $to) 
+    {
+        if( !self::exists($from) ){
+            throw new Exception('File not exist: '.$from);
+        }
+    	$result = rename($from,$to);
+    	return $result;
+    }
 }
 ?>
