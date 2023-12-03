@@ -60,7 +60,7 @@
                         <icon>fa:sort-down fa-fw</icon>
                         <action>exe_SelectField_01</action>
                     </menuitem>
-                    <menuitem label='Select via Baco'>
+                    <menuitem label='Select via Banco'>
                         <icon>fa:sort-down fa-fw</icon>
                         <action>exe_SelectFielddb</action>
                     </menuitem>
