@@ -193,6 +193,17 @@ class exe_SelectField_01 extends TPage
                                     , 2
                                     );
 
+        $frm->addGroupField('gpx1', 'Exemplos relacionados');
+
+        $msg = null;
+        $msg = $msg.'<b>Veja outros exemplos</b>.';
+        $msg = $msg.'<ul>';
+        $msg = $msg.'  <li><a href="index.php?class=exe_SelectField_01">Exemplo Campo Select Simples</a></li>';
+        $msg = $msg.'  <li><a href="index.php?class=exe_SelectFielddb">Exemplo Campo Select via banco</a></li>';
+        $msg = $msg.'  <li><a href="index.php?class=exe_SelectFielddb">Exemplo Campo Select setando valores</a></li>';
+        $msg = $msg.'</ul>';
+        $frm->addHtmlField('aviso_relacionado',$msg, null, 'Lista de exemplos', null, 200);            
+
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
         //primeiro em ingles e depois traduzindo
