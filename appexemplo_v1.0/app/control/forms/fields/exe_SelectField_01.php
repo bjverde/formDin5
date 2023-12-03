@@ -17,14 +17,6 @@ class exe_SelectField_01 extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin($this,'Exemplo do Campo Select Simples');
-
-        $msg = '<b>O Select no FD5 mudou o comportamento padrão</b>.';
-        $msg = $msg.'<br>No FD4 o padrão é o select sem autocomplete. Para usar esse padrão o atributo 17 desativa o autocomplete';
-        $msg = $msg.'<br>No FD5 o padráo é o select COM autocomplete.';
-        $frm->addHtmlField('fd5_html2',$msg, null, 'Dica:', null, 200);
-
-        $frm->addGroupField('gp1', 'Selects Normais');
         $listFormas = array();
         $listFormas[1] ='Dinheiro';
         $listFormas[2] ='Cheque';
@@ -40,6 +32,11 @@ class exe_SelectField_01 extends TPage
         $listFormas[12]='Galinha';
         $listFormas[13]='Bode';
         $listFormas[14]='Milho';
+
+
+        $frm = new TFormDin($this,'Exemplo do Campo Select Simples');
+
+        $frm->addGroupField('gp1', 'Selects Normais');
         $frm->addSelectField('forma_pagamento'  // 01: ID do campo
                            , 'Forma Pagamento:'
                            , TRUE         // 03: Obrigatorio
@@ -151,25 +148,32 @@ class exe_SelectField_01 extends TPage
 
 
         $frm->addGroupField('fd5', 'FormDin 5');
-        $msg = '<b>Não é um select que busca no banco</b>.'
-              .'<br>O select abaixo com busca, coloca todas as opções no html da tela. Não faz a busca no banco.'
-              .'<br><a href="index.php?class=exe_SelectFielddb">Exemplo com busca no banco</a>';
-        $frm->addHtmlField('fd5_html1',$msg, null, 'Dica:', null, 200);
+
+        $msg = '<b>O Select no FD5 incluiu a possíbilidade que todo campo select/combo por ter autocomplete</b>.';
+        $msg = $msg.'<br>Para usar o autocomplete é o atributo 17 que ativa / desativa';
+        $msg = $msg.'<br<br>O select abaixo com busca, coloca todas as opções no html da tela. Não faz a busca no banco.';
+        $msg = $msg.'<br>Busque por nome de paises, EXEMPLO MAR';
+        $msg = $msg.'<br><a href="index.php?class=exe_SelectFielddb">Exemplo com busca no banco</a>';
+        $frm->addHtmlField('fd5_html2',$msg, null, 'Dica:', null, 200);
         
 
         $fg4 = $frm->addSelectField('forma_pagamento1_fd5'  // 1: ID do campo
                                     , 'Select com busca:'
-                                    , false                  // 3: Obrigatorio
-                                    , $listFormas           // 4: array dos valores
-                                    , true                  // 5: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
-                                    , false                  // 6: Default FALSE = Label mesma linha, TRUE = Label acima
-                                    , null                  // 7: Valor DEFAULT, informe o ID do array
-                                    , null
-                                    , null                  //  9: Num itens que irão aparecer
-                                    , null   // 10: Largura em Pixels
-                                    , null  // 11 First Key in Display
-                                    , null  // 12 Frist VALUE in Display, use value NULL for required
-                                    , 2
+                                    , false           // 03: Obrigatorio
+                                    , $listFormas     // 04: array dos valores
+                                    , true            // 05: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+                                    , false           // 06: Default FALSE = Label mesma linha, TRUE = Label acima
+                                    , null            // 07: Valor DEFAULT, informe o ID do array
+                                    , null            // 08: Default FALSE = SingleSelect, TRUE = MultiSelect
+                                    , null            // 09: Num itens que irão aparecer
+                                    , null            // 10: Largura em Pixels
+                                    , null            // 11: First Key in Display
+                                    , null            // 12: Frist VALUE in Display, use value NULL for required
+                                    , 2               // 13: Nome coluna para preencher os valores
+                                    , null            // 14: Nome coluna para exibit para usuario
+                                    , null            // 15:
+                                    , null            // 16:
+                                    , true            // 17: FORMDIN5: Define o se compote terá autocomplete
                                     );
 
 
