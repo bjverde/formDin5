@@ -18,11 +18,67 @@ class exe_upload_img extends TPage
         $frm = new TFormDin($this,'Exemplo Upload Imagem');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
         
-        echo getcwd().'<br>';
-        echo dirname(__FILE__).'<br>';
-        echo basename(__DIR__).'<br>';
+        //echo getcwd().'<br>';
+        //echo dirname(__FILE__).'<br>';
+        //echo basename(__DIR__).'<br>';
+        //FileHelper::move(getcwd().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR .'imprensa.png',getcwd().DIRECTORY_SEPARATOR.'app/images/pessoas/imprensa.png');
 
-        FileHelper::move(getcwd().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR .'imprensa.png',getcwd().DIRECTORY_SEPARATOR.'app/images/pessoas/imprensa.png');
+        $imagecapture = new TImageCapture('imagecapture');
+        $imagecapture->setAllowedExtensions( ['gif', 'png', 'jpg', 'jpeg'] );
+        $imagecapture->setSize(300, 200);
+        $imagecapture->setCropSize(300, 200);
+        $imagecapture->enableFileHandling(false);
+
+        $frm->addFields( [new TLabel('Image Capture')], [$imagecapture] );
+
+        $idField = 'selfieponto';
+
+        $adiantiObjWebCam = new TElement('video');
+        $adiantiObjWebCam->class = 'fd5WebCam';
+        $adiantiObjWebCam->setProperty('id',$idField.'_video');
+        $adiantiObjWebCam->setProperty('name',$idField.'_video');        
+        $adiantiObjWebCam->add('autoplay');
+        $adiantiObjWebCam->add('Your browser does not support HTML video.');
+
+        $adiantiObjWebCamCanvas = new TElement('canvas');
+        $adiantiObjWebCamCanvas->class = 'fd5WebCamCanvas';
+        $adiantiObjWebCamCanvas->setProperty('id',$idField.'_videoCanvas');
+        $adiantiObjWebCamCanvas->setProperty('name',$idField.'_videoCanvas');          
+
+        $scriptJswebCam = new TElement('script');
+        $scriptJswebCam->setProperty('src', 'app/lib/include/FormDin5WebCams.js?appver='.FormDinHelper::version());
+
+
+        $btPause = new TButton('btnPause');
+        $btPause->class = 'btn btn-success btn-lg';
+        $btPause->setLabel('S');
+        $btPause->setImage('fas:sign-in-alt');        
+
+        $btnChangeCamera = new TButton('btnChangeCamera');
+        $btnChangeCamera->class = 'btn btn-success btn-lg';
+        $btnChangeCamera->setLabel('S');
+        $btnChangeCamera->setImage('fas:sign-in-alt');
+
+        $btnScreenshot = new TButton('btnScreenshot');
+        $btnScreenshot->class = 'btn btn-warning btn-lg';
+        $btnScreenshot->setLabel('Saída');
+        $btnScreenshot->setImage('fas:sign-out-alt');
+
+        $divButton = new TElement('div');
+        $divButton->class = 'fd5DivWebCamButton';
+        $divButton->add($btPause);
+        $divButton->add($btnChangeCamera);
+        $divButton->add($btnScreenshot);
+
+
+        $divWebCam = new TElement('div');
+        $adiantiObjWebCam->class = 'fd5DivWebCam';
+        $divWebCam->add($adiantiObjWebCam);
+        $divWebCam->add($adiantiObjWebCamCanvas);
+        $divWebCam->add($scriptJswebCam);
+        $divWebCam->add($divButton);
+      
+        $row5 = $frm->addFields([new TLabel("Nova WebCam:", '#ff0000', '14px', null, '100%')],[$divWebCam]);
 
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
