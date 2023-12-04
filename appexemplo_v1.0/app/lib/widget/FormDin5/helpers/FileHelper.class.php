@@ -55,6 +55,13 @@ class FileHelper
     	return $result;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param string $from  caminho da origem. Sugestão getcwd().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR .'imprensa.png';
+     * @param string $to    caminho da destino. Sugestão getcwd().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR .'imprensa.png';
+     * @return void
+     */
     public static function move(string $from, string $to) 
     {
         if( !self::exists($from) ){
