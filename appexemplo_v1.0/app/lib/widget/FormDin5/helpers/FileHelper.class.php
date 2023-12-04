@@ -56,10 +56,12 @@ class FileHelper
     }
 
     /**
-     * Undocumented function
+     * Move um arquivo do ponto A para o ponto B.
+     * Verifica o arquivo de origem existe. Se não existir vai gerar uma Exception 
+     * Verifica se o caminho de destino existe, se não existe vai criar todo o caminho. Depois 
      *
      * @param string $from  caminho da origem. Sugestão getcwd().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR .'imprensa.png';
-     * @param string $to    caminho da destino. Sugestão getcwd().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR .'imprensa.png';
+     * @param string $to    caminho da destino.Sugestão getcwd().DIRECTORY_SEPARATOR.'app/images/pessoas/'.DIRECTORY_SEPARATOR .'imprensa.png';
      * @return void
      */
     public static function move(string $from, string $to) 
@@ -67,7 +69,13 @@ class FileHelper
         if( !self::exists($from) ){
             throw new Exception('File not exist: '.$from);
         }
-    	$result = rename($from,$to);
+        if( !is_dir($to) ){
+            $dirname = dirname($to);
+            if (!mkdir($dirname, 0755, true)) {
+                throw new Exception('Falha ao criar os diretórios: '.$dirname);
+            }
+        }
+        $result = rename($from,$to);	
     	return $result;
     }
 }
