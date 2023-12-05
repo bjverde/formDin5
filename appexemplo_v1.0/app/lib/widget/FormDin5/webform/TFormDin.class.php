@@ -475,7 +475,7 @@ class TFormDin
     *
     * @param string  $mixValue          - 1 : Label do Botão. No FormDin5 não aceita array('Gravar', 'Limpar')
     * @param string  $strNameId         - 2 : Id do Botão. Se ficar null será utilizado o $strName
-    * @param mixed   $strAction         - 2 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
+    * @param mixed   $strAction         - 3 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
     * @param string  $strOnClick        - 4 : Nome da função javascript que será executada no onClick ou script da função. Vai desativar o parametro 5
     * @param string  $strConfirmMessage - 5 : Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito. Se o parametro 4 for informado não vai executar
     * @param boolean $boolNewLine       - 6 : Em nova linha. DEFAULT = true
