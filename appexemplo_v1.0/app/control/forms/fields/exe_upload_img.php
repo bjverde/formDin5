@@ -53,7 +53,7 @@ class exe_upload_img extends TPage
         $btPause->class = 'btn btn-success btn-sm';
         $btPause->setLabel('Ligar');
         $btPause->setImage('fa:power-off');
-        $btPause->addFunction("fd5WebCamLigar()");
+        $btPause->addFunction("fd5VideoStart()");
 
         $btnChangeCamera = new TButton('btnChangeCamera');
         $btnChangeCamera->class = 'btn btn-light btn-sm';

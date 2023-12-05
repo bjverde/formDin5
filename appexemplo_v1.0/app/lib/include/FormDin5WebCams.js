@@ -40,25 +40,45 @@
  */
 
 
-  // stop video stream
-function fd5StopVideoStream() {
-    var videoStream = navigator.mediaDevices.getUserMedia(constraints);
+function fd5VideoSpec() {
+    var video = document.querySelector('video');
+    const constraints = {
+        video: {
+          width: {
+            min: 1280,
+            ideal: 1920,
+            max: 2560,
+          },
+          height: {
+            min: 720,
+            ideal: 1080,
+            max: 1440,
+          },
+        },
+      };
+    return constraints;
+}
+
+
+// stop video stream
+function fd5VideoStop() {
+    specs = fd5VideoSpec();
+    var videoStream = navigator.mediaDevices.getUserMedia(specs);
     if (videoStream) {
-      videoStream.getTracks().forEach((track) => {
+        videoStream.getTracks().forEach((track) => {
         track.stop();
       });
     }
 }
 
-
-function fd5WebCamLigar()
+function fd5VideoStart()
 {
     if ( !"mediaDevices" in navigator ||
          !"getUserMedia" in navigator.mediaDevices ) {
         alert("Camera API is not available in your browser");
         return;
     }
-
+    //fd5VideoStop();
 	var video = document.querySelector('video');
 
 	navigator.mediaDevices.getUserMedia({video:true})
