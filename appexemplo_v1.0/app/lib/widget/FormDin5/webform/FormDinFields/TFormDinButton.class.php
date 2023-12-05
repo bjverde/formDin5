@@ -280,7 +280,10 @@ class TFormDinButton {
 
     public function setConfirmMessage($confirmMessage)
     {
-        if( !empty($confirmMessage) && empty($this->getStrOnClick()) ){
+
+        if( !empty($confirmMessage) && !empty($this->getStrOnClick()) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_INPUT_PARAMETER_CONFLICT.' não informe os paramentros 5 (strOnClick) e 6 (confirmMessage) aos mesmo tempo');
+        }else if( !empty($confirmMessage) && empty($this->getStrOnClick()) ){
             $this->confirmMessage=$confirmMessage;
             $class = get_class ( $this->getObjForm() );
             $stringJs = 'if (confirm(\''.$confirmMessage.'\') == true) { __adianti_load_page(\'index.php?class='.$class.'\'); }';
