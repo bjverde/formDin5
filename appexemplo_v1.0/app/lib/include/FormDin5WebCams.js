@@ -53,3 +53,18 @@ function fd5WebCamLigar()
 		console.log(error);
 	});	
 }
+
+function fd5WebCamCampiturar()
+{
+	var video = document.querySelector('video');
+    var canvas = document.querySelector('canvas');
+    canvas.height = video.videoHeight;
+    canvas.width = video.videoWidth;
+    var context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0);
+    var link = document.createElement('a');
+    link.download = 'foto.png';
+    link.href = canvas.toDataURL();
+    link.textContent = 'Clique para baixar a imagem';
+    document.body.appendChild(link);	
+}
