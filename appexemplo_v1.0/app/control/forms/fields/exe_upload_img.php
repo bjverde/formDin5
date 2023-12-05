@@ -50,19 +50,19 @@ class exe_upload_img extends TPage
 
 
         $btPause = new TButton('btnPause');
-        $btPause->class = 'btn btn-success btn-lg';
-        $btPause->setLabel('S');
-        $btPause->setImage('fas:sign-in-alt');        
+        $btPause->class = 'btn btn-success btn-sm';
+        $btPause->setLabel('Ligar');
+        $btPause->setImage('fa:power-off');
 
         $btnChangeCamera = new TButton('btnChangeCamera');
-        $btnChangeCamera->class = 'btn btn-success btn-lg';
-        $btnChangeCamera->setLabel('S');
-        $btnChangeCamera->setImage('fas:sign-in-alt');
+        $btnChangeCamera->class = 'btn btn-light btn-sm';
+        $btnChangeCamera->setLabel('Alterar Camera');
+        $btnChangeCamera->setImage('fa:sync-alt');
 
         $btnScreenshot = new TButton('btnScreenshot');
-        $btnScreenshot->class = 'btn btn-warning btn-lg';
-        $btnScreenshot->setLabel('Saída');
-        $btnScreenshot->setImage('fas:sign-out-alt');
+        $btnScreenshot->class = 'btn btn-primary btn-sm';
+        $btnScreenshot->setLabel('Salvar');
+        $btnScreenshot->setImage('fa:camera');
 
         $divButton = new TElement('div');
         $divButton->class = 'fd5DivWebCamButton';
