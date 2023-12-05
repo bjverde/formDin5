@@ -119,7 +119,7 @@
                 </menu>
             </menuitem>
             <menuitem label='Upload imagem'>
-                <icon>fa:fa-image fa-fw</icon>
+                <icon>fa:image fa-fw</icon>
                 <action>exe_upload_img</action>
             </menuitem>            
             <menuitem label='Númerico'>
