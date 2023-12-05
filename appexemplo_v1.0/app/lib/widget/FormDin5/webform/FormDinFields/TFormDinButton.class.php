@@ -67,6 +67,7 @@ class TFormDinButton {
     protected $label;
     protected $confirmMessage;
     protected $strOnClick;
+    protected $strHint;
 
     /**
     * Adicionar botão no layout
@@ -127,6 +128,7 @@ class TFormDinButton {
         $this->setAction($strAction);
         $this->setImage($strImage);
         $this->setConfirmMessage($strConfirmMessage);
+        $this->setHint($strHint);
         return $this->getAdiantiObj();
     }
 
@@ -295,6 +297,14 @@ class TFormDinButton {
         return $this->confirmMessage;
     }
 
-
+    public function getHint()
+	{
+		return $this->strHint;
+	}
+	private function setHint($strHint)
+	{
+		$this->strHint = $strHint;
+        $this->setPopover(null,'top',$strHint);
+	}
 }
 ?>

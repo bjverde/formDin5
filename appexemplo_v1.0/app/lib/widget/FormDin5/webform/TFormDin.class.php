@@ -482,7 +482,7 @@ class TFormDin
     * @param boolean $boolFooter        - 7 : Mostrar o botão no rodapé do form. DEFAULT = true
     * @param string  $strImage          - 8 : Imagem no botão. Pode ser o caminho completo para uma imagem app/images/icon-key-yellow.png ou fontawesome exemplo: "fas:question fa-question-circle #40a2dd" ou pode setar uma classe css com setClass.
     * @param string  $strImageDisabled  - 9 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
-    * @param string  $strHint           -10 : NOT_IMPLEMENTED Texto hint para explicar
+    * @param string  $strHint           -10 : Texto hint para explicar
     * @param string  $strVerticalAlign  -11 : NOT_IMPLEMENTED
     * @param boolean $boolLabelAbove    -12 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
     * @param string  $strLabel          -13 : NOT_IMPLEMENTED Text label 
