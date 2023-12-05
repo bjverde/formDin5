@@ -40,8 +40,25 @@
  */
 
 
+  // stop video stream
+function fd5StopVideoStream() {
+    var videoStream = navigator.mediaDevices.getUserMedia(constraints);
+    if (videoStream) {
+      videoStream.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
+}
+
+
 function fd5WebCamLigar()
 {
+    if ( !"mediaDevices" in navigator ||
+         !"getUserMedia" in navigator.mediaDevices ) {
+        alert("Camera API is not available in your browser");
+        return;
+    }
+
 	var video = document.querySelector('video');
 
 	navigator.mediaDevices.getUserMedia({video:true})
@@ -59,9 +76,11 @@ function fd5WebCamCampiturar()
 	var video = document.querySelector('video');
     var canvas = document.querySelector('canvas');
     canvas.height = video.videoHeight;
-    canvas.width = video.videoWidth;
-    var context = canvas.getContext('2d');
+    canvas.width  = video.videoWidth;
+    var context   = canvas.getContext('2d');
     context.drawImage(video, 0, 0);
+
+
     var link = document.createElement('a');
     link.download = 'foto.png';
     link.href = canvas.toDataURL();
