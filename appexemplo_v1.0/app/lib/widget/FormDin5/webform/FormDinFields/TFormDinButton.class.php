@@ -66,6 +66,7 @@ class TFormDinButton {
     protected $objAction;
     protected $label;
     protected $confirmMessage;
+    protected $strOnClick;
 
     /**
     * Adicionar botão no layout
@@ -83,8 +84,8 @@ class TFormDinButton {
     * @param string  $mixValue          - 2 : Label do Botão. No FormDin5 não aceita array('Gravar', 'Limpar')
     * @param string  $strNameId         - 3 : Id do Botão. Se ficar null será utilizado o $strAction
     * @param mixed   $strAction         - 4 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
-    * @param string  $strOnClick        - 5 : NOT_IMPLEMENTED Nome da função javascript
-    * @param string  $strConfirmMessage - 6 : Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
+    * @param string  $strOnClick        - 4 : Nome da função javascript que será executada no onClick ou script da função. Vai desativar o parametro 5
+    * @param string  $strConfirmMessage - 5 : Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito. Se o parametro 4 for informado não vai executar
     * @param boolean $boolNewLine       - 7 : Em nova linha. DEFAULT = true
     * @param boolean $boolFooter        - 8 : Mostrar o botão no rodapé do form. DEFAULT = true
     * @param string  $strImage          - 9 : Imagem no botão. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
@@ -124,6 +125,7 @@ class TFormDinButton {
         $this->setLabel($label);
         $this->setAction($strAction);
         $this->setImage($strImage);
+        $this->addFunction($strOnClick);
         $this->setConfirmMessage($strConfirmMessage);
         return $this->getAdiantiObj();
     }
@@ -252,9 +254,30 @@ class TFormDinButton {
         return $action->getParameters();
     }
 
+	public function getStrOnClick()
+	{
+		return $this->strOnClick;
+	}
+	private function setStrOnClick($strOnClick)
+	{
+		return $this->strOnClick = $strOnClick;
+	}
+
+    /**
+     * Add a JavaScript function to be executed by the button
+     * @param $function A piece of JavaScript code
+     */
+    public function addFunction($strOnClick)
+    {
+        if (!empty($strOnClick)){
+            $this->setStrOnClick($strOnClick);
+            $this->getAdiantiObj()->addFunction($strOnClick);
+        }
+    }
+
     public function setConfirmMessage($confirmMessage)
     {
-        if( !empty($confirmMessage) ){
+        if( !empty($confirmMessage) && empty($this->getStrOnClick()) ){
             $this->confirmMessage=$confirmMessage;
             $class = get_class ( $this->getObjForm() );
             $stringJs = 'if (confirm(\''.$confirmMessage.'\') == true) { __adianti_load_page(\'index.php?class='.$class.'\'); }';
