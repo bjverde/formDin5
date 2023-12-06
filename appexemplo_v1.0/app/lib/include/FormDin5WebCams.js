@@ -97,10 +97,9 @@ function fd5VideoCampiturar(id){
   var context= canvas.getContext('2d');
 
   video.style.display = 'none';
-  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.width  = video.videoWidth;
   context.drawImage(video, 0, 0);
-
-  
 
   var link = document.createElement('a');
   link.download= nameFile;
