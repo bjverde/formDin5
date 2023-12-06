@@ -102,23 +102,24 @@ function fd5VideoCampiturar(id){
   context.drawImage(video, 0, 0);
 
   hiddenField.value = nameFile;
+  fd5VideoSaveTmpAdianti(id,canvas);
 }
 
-function fd5VideoSaveTmpAdianti(){
-    document.getElementById("carregando").innerHTML="Salvando, aguarde...";
-    var file = document.getElementById("base64image").src;
-    
-    var formdata = new FormData();
-    formdata.append("base64image", file);
+function fd5VideoSaveTmpAdianti(id,canvas){
+  let pathSite = fd5VideoCaminhoSite();
+  pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
+  let file = canvas.getContext('2d');  
+  let formdata = new FormData();
+  formdata.append('#'+id+'_base64', file);
 
-    var ajax = new XMLHttpRequest();
-    ajax.open("POST", "upload.php");
-    ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
-    ajax.send(formdata);
+  var ajax = new XMLHttpRequest();
+  ajax.open("POST", pathSite);
+  ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
+  ajax.send(formdata);
 }
 
 function fd5VideoCaminhoSite(){
-    let pathname = window.location.pathname;
-    let partes   = pathname.split('index.php');
-    return partes[0];
+  let pathname = window.location.pathname;
+  let partes   = pathname.split('index.php');
+  return partes[0];
 }
