@@ -89,33 +89,43 @@ function fd5VideoStart(){
 }
 
 function fd5VideoCampiturar(id){
-  let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
-  let hiddenField = document.querySelector('#'+id);
+  try {
+    let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
+    let hiddenField = document.querySelector('#'+id);
 
-  var video  = document.querySelector('#'+id+'_video');
-  var canvas = document.querySelector('#'+id+'_videoCanvas');
-  var context= canvas.getContext('2d');
+    var video  = document.querySelector('#'+id+'_video');
+    var canvas = document.querySelector('#'+id+'_videoCanvas');
+    var context= canvas.getContext('2d');
 
-  video.style.display = 'none';
-  canvas.height = video.videoHeight;
-  canvas.width  = video.videoWidth;
-  context.drawImage(video, 0, 0);
+    video.style.display = 'none';
+    canvas.height = video.videoHeight;
+    canvas.width  = video.videoWidth;
+    context.drawImage(video, 0, 0);
 
-  hiddenField.value = nameFile;
-  fd5VideoSaveTmpAdianti(id,canvas);
+    hiddenField.value = nameFile;
+    fd5VideoSaveTmpAdianti(id,canvas);
+  }
+  catch (e) {
+      __adianti_error('Error', e);
+  }    
 }
 
 function fd5VideoSaveTmpAdianti(id,canvas){
-  let pathSite = fd5VideoCaminhoSite();
-  pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
-  let file = canvas.getContext('2d');  
-  let formdata = new FormData();
-  formdata.append('#'+id+'_base64', file);
+  try {
+    let pathSite = fd5VideoCaminhoSite();
+    pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
+    let file = canvas.getContext('2d');  
+    let formdata = new FormData();
+    formdata.append('#'+id+'_base64', file);
 
-  var ajax = new XMLHttpRequest();
-  ajax.open("POST", pathSite);
-  ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
-  ajax.send(formdata);
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", pathSite,true);
+    ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
+    ajax.send(formdata);
+  }
+  catch (e) {
+      __adianti_error('Error', e);
+  }    
 }
 
 function fd5VideoCaminhoSite(){
