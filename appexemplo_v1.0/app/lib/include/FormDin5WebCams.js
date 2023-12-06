@@ -107,3 +107,14 @@ function fd5WebCamCampiturar()
     link.textContent = 'Clique para baixar a imagem';
     document.body.appendChild(link);	
 }
+
+function fd5VideoSaveTmpAdianti(){
+    document.getElementById("carregando").innerHTML="Salvando, aguarde...";
+    var file = document.getElementById("base64image").src;
+    var formdata = new FormData();
+    formdata.append("base64image", file);
+    var ajax = new XMLHttpRequest();
+    ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
+    ajax.open("POST", "upload.php");
+    ajax.send(formdata);
+}
