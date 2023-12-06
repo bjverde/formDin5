@@ -89,7 +89,7 @@ function fd5VideoStart(){
 }
 
 function fd5VideoCampiturar(id){
-  try {
+  //try {
     let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
     let hiddenField = document.querySelector('#'+id);
 
@@ -103,29 +103,51 @@ function fd5VideoCampiturar(id){
     context.drawImage(video, 0, 0);
 
     hiddenField.value = nameFile;
-    fd5VideoSaveTmpAdianti(id,canvas);
+    fd5VideoSaveTmpAdianti(id,nameFile,canvas);
+    /*
   }
   catch (e) {
       __adianti_error('Error', e);
-  }    
+  }
+  */
 }
 
-function fd5VideoSaveTmpAdianti(id,canvas){
-  try {
+function fd5VideoSaveTmpAdianti(id,nameFile,canvas){
+  //try {
     let pathSite = fd5VideoCaminhoSite();
     pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
-    let file = canvas.getContext('2d');  
-    let formdata = new FormData();
-    formdata.append('#'+id+'_base64', file);
 
-    var ajax = new XMLHttpRequest();
+    let dataURL = canvas.toDataURL();
+    let file = dataUrltoFile(dataURL,nameFile);
+    let formdata = new FormData();
+    formdata.append(id, nameFile);
+    formdata.append('arquivo', file);
+
+    let ajax = new XMLHttpRequest();
     ajax.open("POST", pathSite,true);
-    ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
+    //ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     ajax.send(formdata);
+
+    // Tratando a resposta da requisição (opcional)
+    ajax.onreadystatechange = function() {
+      if (ajax.readyState === XMLHttpRequest.DONE) {
+          if (ajax.status === 200) {
+              // A requisição foi processada com sucesso
+              console.log('Imagem enviada para o PHP com sucesso!');
+          } else {
+              // Ocorreu um erro durante o envio
+              console.error('Erro ao enviar a imagem para o PHP');
+          }
+      }
+    };
+    //ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
+    //ajax.send(formdata);
+    /*
   }
   catch (e) {
       __adianti_error('Error', e);
   }
+  */
 }
 
 function fd5VideoCaminhoSite(){
@@ -136,6 +158,18 @@ function fd5VideoCaminhoSite(){
 
 function upload_completo(event) {
   console.log(event);
+}
+
+function dataUrltoFile(dataURL,nameFile) {
+  let byteString = atob(dataURL.split(',')[1]);
+  let mimeType = dataURL.split(',')[0].split(':')[1].split(';')[0];
+  let n = byteString.length;
+  let u8arr = new Uint8Array(n);
+  while (n--) {
+      u8arr[n] = byteString.charCodeAt(n);
+  }
+  let name = nameFile;
+  return new File([u8arr], name, {type:mimeType});
 }
 
 
