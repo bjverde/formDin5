@@ -89,8 +89,7 @@ function fd5VideoStart(){
 		console.log(error);
 	});	
 }
-
-function fd5WebCamCampiturar(id){
+function fd5VideoCampiturar(id){
   let hiddenField = document.querySelector('#'+id);
   console.log(hiddenField);
 
@@ -100,10 +99,11 @@ function fd5WebCamCampiturar(id){
   var context   = canvas.getContext('2d');
   context.drawImage(video, 0, 0);
 
+  var nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
 
   var link = document.createElement('a');
-  link.download= 'foto.png';
-  hiddenField.value = 'foto.png';
+  link.download= nameFile;
+  hiddenField.value = nameFile;
   link.href = canvas.toDataURL();
   link.textContent = 'Clique para baixar a imagem';
   document.body.appendChild(link);	

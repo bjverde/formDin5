@@ -67,7 +67,7 @@ class exe_upload_img extends TPage
         $btnScreenshot->class = 'btn btn-primary btn-sm';
         $btnScreenshot->setLabel('Salvar');
         $btnScreenshot->setImage('fa:camera');
-        $btnScreenshot->addFunction("fd5WebCamCampiturar('".$idField."')");
+        $btnScreenshot->addFunction("fd5VideoCampiturar('".$idField."')");
 
         $divButton = new TElement('div');
         $divButton->class = 'fd5DivVideoButton';
