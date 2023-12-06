@@ -118,3 +118,9 @@ function fd5VideoSaveTmpAdianti(){
     ajax.open("POST", "upload.php");
     ajax.send(formdata);
 }
+
+function fd5VideoCaminhoSite(){
+    let pathname = window.location.pathname;
+    let partes   = pathname.split('index.php');
+    return partes[0];
+}
