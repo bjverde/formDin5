@@ -34,6 +34,7 @@ class exe_upload_img extends TPage
         $idField = 'selfieponto';
 
         $adiantiObjHiden = new THidden($idField);
+        $adiantiObjHiden->setId($idField);
 
         $adiantiObjWebCam = new TElement('video');
         $adiantiObjWebCam->class = 'fd5Video';

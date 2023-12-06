@@ -91,7 +91,8 @@ function fd5VideoStart(){
 }
 
 function fd5WebCamCampiturar(id){
-  let hidden = document.querySelector('#'+id);
+  let hiddenField = document.querySelector('#'+id);
+  console.log(hiddenField);
 
   var video = document.querySelector('video');
   var canvas = document.querySelector('canvas');
@@ -102,7 +103,7 @@ function fd5WebCamCampiturar(id){
 
   var link = document.createElement('a');
   link.download= 'foto.png';
-  hidden.value = 'foto.png';
+  hiddenField.value = 'foto.png';
   link.href = canvas.toDataURL();
   link.textContent = 'Clique para baixar a imagem';
   document.body.appendChild(link);	
