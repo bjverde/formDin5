@@ -69,7 +69,7 @@ class exe_upload_img extends TPage
         $divButton = new TElement('div');
         $divButton->class = 'fd5DivWebCamButton';
         $divButton->add($btPause);
-        $divButton->add($btnChangeCamera);
+        //$divButton->add($btnChangeCamera);
         $divButton->add($btnScreenshot);
 
 
