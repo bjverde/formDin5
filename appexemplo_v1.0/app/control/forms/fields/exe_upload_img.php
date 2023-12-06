@@ -36,6 +36,9 @@ class exe_upload_img extends TPage
         $adiantiObjHiden = new THidden($idField);
         $adiantiObjHiden->setId($idField);
 
+        $adiantiObjHidenBase64 = new THidden($idField.'_base64');
+        $adiantiObjHidenBase64->setId($idField.'_base64');
+
         $adiantiObjWebCam = new TElement('video');
         $adiantiObjWebCam->class = 'fd5Video';
         $adiantiObjWebCam->setProperty('id',$idField.'_video');
@@ -54,7 +57,7 @@ class exe_upload_img extends TPage
 
         $btPause = new TButton('btnPause');
         $btPause->class = 'btn btn-success btn-sm';
-        $btPause->setLabel('Ligar');
+        $btPause->setLabel('Ligar Câmera');
         $btPause->setImage('fa:power-off');
         $btPause->addFunction("fd5VideoStart()");
 
@@ -65,7 +68,7 @@ class exe_upload_img extends TPage
 
         $btnScreenshot = new TButton('btnScreenshot');
         $btnScreenshot->class = 'btn btn-primary btn-sm';
-        $btnScreenshot->setLabel('Salvar');
+        $btnScreenshot->setLabel('Capiturar Foto');
         $btnScreenshot->setImage('fa:camera');
         $btnScreenshot->addFunction("fd5VideoCampiturar('".$idField."')");
 
@@ -81,6 +84,7 @@ class exe_upload_img extends TPage
         $divWebCam->class = 'fd5DivVideo';
         $divWebCam->setProperty('id',$idField.'_videodiv');
         $divWebCam->add($adiantiObjHiden);
+        $divWebCam->add($adiantiObjHidenBase64);
         $divWebCam->add($adiantiObjWebCam);
         $divWebCam->add($adiantiObjWebCamCanvas);
         $divWebCam->add($scriptJswebCam);
