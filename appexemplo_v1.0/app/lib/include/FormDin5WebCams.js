@@ -59,8 +59,6 @@ function fd5VideoSpec() {
     return constraints;
 }
 
-
-// stop video stream
 function fd5VideoStop() {
     specs = fd5VideoSpec();
     var videoStream = navigator.mediaDevices.getUserMedia(specs);
@@ -89,17 +87,20 @@ function fd5VideoStart(){
 		console.log(error);
 	});	
 }
-function fd5VideoCampiturar(id){
-  let hiddenField = document.querySelector('#'+id);
-  console.log(hiddenField);
 
-  var video = document.querySelector('video');
-  var canvas = document.querySelector('canvas');
-  canvas.width  = video.videoWidth;
-  var context   = canvas.getContext('2d');
+function fd5VideoCampiturar(id){
+  let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
+  let hiddenField = document.querySelector('#'+id);
+
+  var video  = document.querySelector('#'+id+'_video');
+  var canvas = document.querySelector('#'+id+'_videoCanvas');
+  var context= canvas.getContext('2d');
+
+  video.style.display = 'none';
+  canvas.width = video.videoWidth;
   context.drawImage(video, 0, 0);
 
-  var nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
+  
 
   var link = document.createElement('a');
   link.download= nameFile;
