@@ -71,8 +71,7 @@ function fd5VideoStop() {
     }
 }
 
-function fd5VideoStart()
-{
+function fd5VideoStart(){
     if ( !"mediaDevices" in navigator ||
          !"getUserMedia" in navigator.mediaDevices ) {
         alert("Camera API is not available in your browser");
@@ -91,31 +90,34 @@ function fd5VideoStart()
 	});	
 }
 
-function fd5WebCamCampiturar()
-{
-	var video = document.querySelector('video');
-    var canvas = document.querySelector('canvas');
-    canvas.height = video.videoHeight;
-    canvas.width  = video.videoWidth;
-    var context   = canvas.getContext('2d');
-    context.drawImage(video, 0, 0);
+function fd5WebCamCampiturar(id){
+  let hidden = document.querySelector('#'+id);
+
+  var video = document.querySelector('video');
+  var canvas = document.querySelector('canvas');
+  canvas.width  = video.videoWidth;
+  var context   = canvas.getContext('2d');
+  context.drawImage(video, 0, 0);
 
 
-    var link = document.createElement('a');
-    link.download = 'foto.png';
-    link.href = canvas.toDataURL();
-    link.textContent = 'Clique para baixar a imagem';
-    document.body.appendChild(link);	
+  var link = document.createElement('a');
+  link.download= 'foto.png';
+  hidden.value = 'foto.png';
+  link.href = canvas.toDataURL();
+  link.textContent = 'Clique para baixar a imagem';
+  document.body.appendChild(link);	
 }
 
 function fd5VideoSaveTmpAdianti(){
     document.getElementById("carregando").innerHTML="Salvando, aguarde...";
     var file = document.getElementById("base64image").src;
+    
     var formdata = new FormData();
     formdata.append("base64image", file);
+
     var ajax = new XMLHttpRequest();
-    ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
     ajax.open("POST", "upload.php");
+    ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
     ajax.send(formdata);
 }
 

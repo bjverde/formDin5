@@ -33,8 +33,10 @@ class exe_upload_img extends TPage
 
         $idField = 'selfieponto';
 
+        $adiantiObjHiden = new THidden($idField);
+
         $adiantiObjWebCam = new TElement('video');
-        $adiantiObjWebCam->class = 'fd5WebCam';
+        $adiantiObjWebCam->class = 'fd5Video';
         $adiantiObjWebCam->setProperty('id',$idField.'_video');
         $adiantiObjWebCam->setProperty('name',$idField.'_video');        
         $adiantiObjWebCam->add('autoplay');
@@ -64,17 +66,20 @@ class exe_upload_img extends TPage
         $btnScreenshot->class = 'btn btn-primary btn-sm';
         $btnScreenshot->setLabel('Salvar');
         $btnScreenshot->setImage('fa:camera');
-        $btnScreenshot->addFunction("fd5WebCamCampiturar()");
+        $btnScreenshot->addFunction("fd5WebCamCampiturar(".$idField.")");
 
         $divButton = new TElement('div');
-        $divButton->class = 'fd5DivWebCamButton';
+        $divButton->class = 'fd5DivVideoButton';
+        $divButton->setProperty('id',$idField.'_videoDivButton');
         $divButton->add($btPause);
         //$divButton->add($btnChangeCamera);
         $divButton->add($btnScreenshot);
 
 
         $divWebCam = new TElement('div');
-        $adiantiObjWebCam->class = 'fd5DivWebCam';
+        $divWebCam->class = 'fd5DivVideo';
+        $divWebCam->setProperty('id',$idField.'_videodiv');
+        $divWebCam->add($adiantiObjHiden);
         $divWebCam->add($adiantiObjWebCam);
         $divWebCam->add($adiantiObjWebCamCanvas);
         $divWebCam->add($scriptJswebCam);
