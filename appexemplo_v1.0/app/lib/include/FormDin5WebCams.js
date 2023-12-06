@@ -125,7 +125,7 @@ function fd5VideoSaveTmpAdianti(id,canvas){
   }
   catch (e) {
       __adianti_error('Error', e);
-  }    
+  }
 }
 
 function fd5VideoCaminhoSite(){
@@ -133,3 +133,35 @@ function fd5VideoCaminhoSite(){
   let partes   = pathname.split('index.php');
   return partes[0];
 }
+
+function upload_completo(event) {
+  console.log(event);
+}
+
+
+/*
+onReadyStateChange = function(evt)
+    {
+        var status = null;
+        
+        try {
+            status = evt.target.status;
+        }
+        catch(e) {
+            return;
+        }
+        
+        if (status == '200' && evt.target.readyState == '4' && evt.target.responseText) {
+            try {
+                var response = JSON.parse( evt.target.responseText );
+                
+                if ( response.type == 'error' ) {
+                    __adianti_error('Error', response.msg);
+                }
+            }
+            catch (e) {
+                __adianti_error('Error', e);
+            }
+        }
+    };
+*/
