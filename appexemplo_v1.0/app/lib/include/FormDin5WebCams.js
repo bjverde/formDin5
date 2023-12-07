@@ -141,7 +141,7 @@ function fd5VideoSaveTmpAdianti(id,canvas){
     ajax.onreadystatechange = function() {
       if (ajax.readyState === XMLHttpRequest.DONE) {
           if (ajax.status === 200) {
-            desenharCheck(canvas);
+            fd5VideoCampiturarSucesso(canvas);
           } else {
             __adianti_error('Error', 'Error ao gravar a imagem, informe o problema');
           }
@@ -155,10 +155,24 @@ function fd5VideoSaveTmpAdianti(id,canvas){
   }
 }
 
-function desenharCheck(canvas) {
+function fd5VideoCampiturarSucesso(canvas) {
   let context = canvas.getContext('2d');
-  context.fillStyle = 'green';
-  context.fillRect(20, 20, 30, 30);
+  let pathImg = fd5VideoCaminhoSite();
+  pathImg = pathImg+'app/images/mark-cheque-green.png';
+
+  // Carregar a imagem PNG com fundo transparente
+  let imagemPNG = new Image();
+  imagemPNG.onload = function() {
+    let percentualReducao = 0.1;
+    let novaLargura = imagemPNG.width * percentualReducao;
+    let novaAltura = imagemPNG.height * percentualReducao;
+
+    // Desenhar a imagem PNG sobre a imagem do vídeo no canto direito superior
+    let posX = 25; // Posição X (canto direito)
+    let posY = 25; // Posição Y (canto superior)
+    context.drawImage(imagemPNG, posX, posY, novaLargura, novaAltura);
+  };
+  imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
 }
 
 function fd5VideoCaminhoSite(){
