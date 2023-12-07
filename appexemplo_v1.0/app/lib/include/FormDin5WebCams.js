@@ -40,6 +40,8 @@
  */
 
 
+let videoStream; // Variável para armazenar o stream de vídeo
+
 function fd5VideoSpec() {
     var video = document.querySelector('video');
     const constraints = {
@@ -59,29 +61,31 @@ function fd5VideoSpec() {
     return constraints;
 }
 
-function fd5VideoStop() {
-    specs = fd5VideoSpec();
-    var videoStream = navigator.mediaDevices.getUserMedia(specs);
-    if (videoStream) {
-        videoStream.getTracks().forEach((track) => {
-        track.stop();
-      });
-    }
+
+function fd5VideoStop(){
+  if (videoStream) {
+      let tracks = videoStream.getTracks(); // Obtém todas as faixas de mídia do stream
+      tracks.forEach(track => track.stop()); // Para cada faixa, interrompe a captura
+      videoStream = null; // Define a variável do stream como null para indicar que não há stream ativo
+      let video = document.querySelector('video');
+      video.srcObject = null; // Remove o stream do vídeo
+  }
 }
 
 function fd5VideoStart(){
-    if ( !"mediaDevices" in navigator ||
-         !"getUserMedia" in navigator.mediaDevices ) {
-        alert("Camera API is not available in your browser");
-        return;
-    }
-    //fd5VideoStop();
+   if ( !"mediaDevices" in navigator ||
+        !"getUserMedia" in navigator.mediaDevices ) {
+    __adianti_error('Error', 'Camera API is not available in your browser');
+    return;
+  }
+  fd5VideoStop();
 	var video = document.querySelector('video');
 
 	navigator.mediaDevices.getUserMedia({video:true})
 	.then(stream => {
 		video.srcObject = stream;
 		video.play();
+    videoStream = stream; // Armazena o stream de vídeo na variável
 	})
 	.catch(error => {
 		console.log(error);
@@ -99,11 +103,12 @@ function fd5VideoCampiturar(id){
     var canvas = document.querySelector('#'+id+'_videoCanvas');
     var context= canvas.getContext('2d');
 
-    video.style.display = 'none';
+    //video.style.display = 'none';
     canvas.height = video.videoHeight;
     canvas.width  = video.videoWidth;
     context.drawImage(video, 0, 0);
 
+    fd5VideoStop();
     fd5VideoSaveTmpAdianti(id,canvas);
   }
   catch (e) {
