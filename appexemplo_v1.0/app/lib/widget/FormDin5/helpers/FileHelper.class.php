@@ -41,6 +41,33 @@
 class FileHelper
 {
     /**
+     * Retorna o nome da pasta que está o sistema
+     * @return string
+     */
+    public static function getNomePastaSistema() 
+    {
+        $partes = explode(DIRECTORY_SEPARATOR, __DIR__);
+        array_pop($partes);//helpers
+        array_pop($partes);//FormDin5
+        array_pop($partes);//widget
+        array_pop($partes);//lib
+        array_pop($partes);//app
+    	return end($partes);
+    }
+
+    /**
+     * Retorna o caminho completo do sistema no SO
+     * @return string
+     */
+    public static function getCaminhoSistema() 
+    {
+        $nomeSitema   = self::getNomePastaSistema();
+        $partes = explode($nomeSitema, __DIR__);
+        $caminho= $partes[0].$nomeSitema;
+    	return $caminho;
+    }
+
+    /**
      * Avoid the problem Deprecated of PHP 8.1.X
      * @param string $filePath
      * @return void
