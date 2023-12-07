@@ -89,7 +89,7 @@ function fd5VideoStart(){
 }
 
 function fd5VideoCampiturar(id){
-  //try {
+  try {
     let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
     let hiddenField = document.querySelector('#'+id);
 
@@ -104,16 +104,14 @@ function fd5VideoCampiturar(id){
 
     hiddenField.value = nameFile;
     fd5VideoSaveTmpAdianti(id,nameFile,canvas);
-    /*
   }
   catch (e) {
       __adianti_error('Error', e);
   }
-  */
 }
 
 function fd5VideoSaveTmpAdianti(id,nameFile,canvas){
-  //try {
+  try {
     let pathSite = fd5VideoCaminhoSite();
     pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
 
@@ -142,12 +140,10 @@ function fd5VideoSaveTmpAdianti(id,nameFile,canvas){
     };
     //ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
     //ajax.send(formdata);
-    /*
   }
   catch (e) {
       __adianti_error('Error', e);
   }
-  */
 }
 
 function fd5VideoCaminhoSite(){
