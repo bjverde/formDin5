@@ -62,25 +62,25 @@ function fd5VideoSpec() {
 }
 
 
-function fd5VideoStop(){
+function fd5VideoStop(id){
   if (videoStream) {
       let tracks = videoStream.getTracks(); // Obtém todas as faixas de mídia do stream
       tracks.forEach(track => track.stop()); // Para cada faixa, interrompe a captura
       videoStream = null; // Define a variável do stream como null para indicar que não há stream ativo
-      let video = document.querySelector('video');
+      let video = document.querySelector('#'+id+'_video');
       video.srcObject = null; // Remove o stream do vídeo
   }
 }
 
 
-function fd5VideoStart(){
+function fd5VideoStart(id){
    if ( !"mediaDevices" in navigator ||
         !"getUserMedia" in navigator.mediaDevices ) {
     __adianti_error('Error', 'Camera API is not available in your browser');
     return;
   }
-  fd5VideoStop();
-	var video = document.querySelector('video');
+  fd5VideoStop(id);
+  let video = document.querySelector('#'+id+'_video');
 
 	navigator.mediaDevices.getUserMedia({video:true})
 	.then(stream => {
@@ -208,7 +208,7 @@ function fd5VideoCampiturar(id){
     canvas.width  = video.videoWidth;
     context.drawImage(video, 0, 0);
 
-    fd5VideoStop();
+    fd5VideoStop(id);
     fd5VideoSaveTmpAdianti(id,canvas);
   }
   catch (e) {
