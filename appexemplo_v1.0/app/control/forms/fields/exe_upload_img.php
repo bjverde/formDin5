@@ -17,20 +17,9 @@ class exe_upload_img extends TPage
 
         $frm = new TFormDin($this,'Exemplo Upload Imagem');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
-        
-        //echo getcwd().'<br>';
-        //echo dirname(__FILE__).'<br>';
-        //echo basename(__DIR__).'<br>';
-        //FileHelper::move(getcwd().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR .'imprensa.png',getcwd().DIRECTORY_SEPARATOR.'app/images/pessoas/imprensa.png');
+        $frm->addVideoStreamPhoto('selfieponto','Nova WebCam',true);
 
-        $imagecapture = new TImageCapture('imagecapture');
-        $imagecapture->setAllowedExtensions( ['gif', 'png', 'jpg', 'jpeg'] );
-        $imagecapture->setSize(300, 200);
-        $imagecapture->setCropSize(300, 200);
-        $imagecapture->enableFileHandling(false);
-
-        $frm->addFields( [new TLabel('Image Capture')], [$imagecapture] );
-
+        /*
         $idField = 'selfieponto';
 
         $adiantiObjHiden = new THidden($idField);
@@ -86,8 +75,11 @@ class exe_upload_img extends TPage
         $divWebCam->add($adiantiObjWebCamCanvas);
         $divWebCam->add($scriptJswebCam);
         $divWebCam->add($divButton);
-      
-        $row5 = $frm->addFields([new TLabel("Nova WebCam:", '#ff0000', '14px', null, '100%')],[$divWebCam]);
+        */
+
+        //$fd5VideoStream = new TFormDinVideoStreamPhoto('selfieponto','Nova WebCam',true);
+        //$divWebCam = $fd5VideoStream->getAdiantiObj();      
+        //$row5 = $frm->addFields([new TLabel("Nova WebCam:", '#ff0000', '14px', null, '100%')],[$divWebCam]);
 
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
