@@ -1067,6 +1067,49 @@ class TFormDin
 
 
     /**
+     * Video stream em HTML 5 com canvas para capiturar uma foto da Camera
+     * 
+     * Algo semelhante ao exemplo abaixo
+     * https://doug2k1.github.io/javascript-camera/
+     *
+     * @param string  $id              -01: ID do campo
+     * @param string  $label           -02: Label do campo, usado para validações
+     * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $boolNewLine     -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove  -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param string  $enableChangeCam -06: NOT_IMPLEMENTED TRUE (Default) or FALSE, Enable Change Cam
+     * @param boolean $width           -07: NOT_IMPLEMENTED Default Null, largura em % ou px
+     * @param boolean $height          -08: NOT_IMPLEMENTED Default Null, altura  em % ou px
+     * @return TElement
+     */
+    public function addVideoStreamPhoto(string $idField
+                                       ,string $label
+                                       ,$boolRequired= null
+                                       ,$boolNewLine = null
+                                       ,$boolLabelAbove= null
+                                       ,$enableChangeCam= null
+                                       ,$width = null
+                                       ,$height= null
+                                       )
+    {
+        $boolRequired   = is_null($boolRequired)?false:$boolRequired;
+        $enableChangeCam= is_null($enableChangeCam)?true:$enableChangeCam;
+        $boolNewLine    = is_null($boolNewLine)?true:$boolNewLine;
+        $boolLabelAbove = is_null($boolLabelAbove)?false:$boolLabelAbove;        
+
+        $formField = new TFormDinVideoStreamPhoto($idField
+                                                 ,$label
+                                                 ,$boolRequired
+                                                 ,$enableChangeCam
+                                                 ,$width
+                                                 ,$height);
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+    }
+
+    /**
      * Campos para anexar arquivo. Pode ser um carregamento sincrono ou assincrono via ajax.
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
