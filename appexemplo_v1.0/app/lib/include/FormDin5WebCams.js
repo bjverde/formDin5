@@ -147,14 +147,19 @@ function fd5VideoSaveTmpAdianti(id,canvas){
           }
       }
     };
-    //ajax.addEventListener("load", function(event) { upload_completo(event);}, false);
-    //ajax.send(formdata);
   }
   catch (e) {
       __adianti_error('Error', e);
   }
 }
 
+/**
+ * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
+ * Coloca uma imagem sobre a imagem da camera para indicar que está correto
+ * @param {string} id - O ID do elemento de vídeo a ser capturado.
+ * @param {object } canvas - um objeto do tipo HTMLCanvasElement
+ * @returns {void}
+ */
 function fd5VideoCampiturarSucesso(canvas) {
   let context = canvas.getContext('2d');
   let pathImg = fd5VideoCaminhoSite();
