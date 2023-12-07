@@ -79,14 +79,14 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
         $adiantiObjWebCam = new TElement('video');
         $adiantiObjWebCam->class = 'fd5Video';
         $adiantiObjWebCam->setProperty('id',$idField.'_video');
-        $adiantiObjWebCam->setProperty('name',$idField.'_video');        
+        $adiantiObjWebCam->setProperty('name',$idField.'_video');
         $adiantiObjWebCam->add('autoplay');
         $adiantiObjWebCam->add('Your browser does not support HTML video.');
 
         $adiantiObjWebCamCanvas = new TElement('canvas');
         $adiantiObjWebCamCanvas->class = 'fd5WebCamCanvas';
         $adiantiObjWebCamCanvas->setProperty('id',$idField.'_videoCanvas');
-        $adiantiObjWebCamCanvas->setProperty('name',$idField.'_videoCanvas');          
+        $adiantiObjWebCamCanvas->setProperty('name',$idField.'_videoCanvas');
 
         $scriptJswebCam = new TElement('script');
         $scriptJswebCam->setProperty('src', 'app/lib/include/FormDin5WebCams.js?appver='.FormDinHelper::version());
