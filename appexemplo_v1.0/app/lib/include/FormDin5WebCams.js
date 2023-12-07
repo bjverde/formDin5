@@ -141,11 +141,9 @@ function fd5VideoSaveTmpAdianti(id,canvas){
     ajax.onreadystatechange = function() {
       if (ajax.readyState === XMLHttpRequest.DONE) {
           if (ajax.status === 200) {
-              // A requisição foi processada com sucesso
-              console.log('Imagem enviada para o PHP com sucesso!');
+            desenharCheck(canvas);
           } else {
-              // Ocorreu um erro durante o envio
-              console.error('Erro ao enviar a imagem para o PHP');
+            __adianti_error('Error', 'Error ao gravar a imagem, informe o problema');
           }
       }
     };
@@ -155,6 +153,12 @@ function fd5VideoSaveTmpAdianti(id,canvas){
   catch (e) {
       __adianti_error('Error', e);
   }
+}
+
+function desenharCheck(canvas) {
+  let context = canvas.getContext('2d');
+  context.fillStyle = 'green';
+  context.fillRect(20, 20, 30, 30);
 }
 
 function fd5VideoCaminhoSite(){
