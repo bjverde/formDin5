@@ -118,6 +118,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
         $divButton->add($btnScreenshot);
 
 
+        $idDivWebCam = $idField.'_videodiv';
         $divWebCam = new TElement('div');
         $divWebCam->class = 'fd5DivVideo';
         $divWebCam->setProperty('id',$idField.'_videodiv');
@@ -128,7 +129,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
         $divWebCam->add($divButton);
 
         $adiantiObj = $divWebCam;
-        parent::__construct($adiantiObj,$idField,$label,false,null,null);
+        parent::__construct($adiantiObj,$idDivWebCam,$label,false,null,null);
         return $this->getAdiantiObj();
     }
 
