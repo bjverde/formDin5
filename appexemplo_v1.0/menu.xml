@@ -120,7 +120,7 @@
             </menuitem>
             <menuitem label='Upload imagem'>
                 <icon>fa:image fa-fw</icon>
-                <action>exe_upload_img</action>
+                <action>exe_TFormDinVideoStreamPhoto</action>
             </menuitem>            
             <menuitem label='Númerico'>
                 <icon>fa:check-square fa-fw</icon>

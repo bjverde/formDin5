@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_upload_img extends TPage
+class exe_TFormDinVideoStreamPhoto extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing
@@ -15,7 +15,7 @@ class exe_upload_img extends TPage
     {
         parent::__construct();
 
-        $frm = new TFormDin($this,'Exemplo Upload Imagem');
+        $frm = new TFormDin($this,'Exemplo TFormDinVideoStreamPhoto');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $frm->addVideoStreamPhoto('webcam1','Nova WebCam',true);
 
