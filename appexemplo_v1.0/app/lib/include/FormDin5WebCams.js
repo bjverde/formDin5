@@ -92,6 +92,34 @@ function fd5VideoStart(){
 	});	
 }
 
+
+function fd5VideoCaminhoSite(){
+  let pathname = window.location.pathname;
+  let partes   = pathname.split('index.php');
+  return partes[0];
+}
+
+
+/**
+ * Sub função do fd5VideoSaveTmpAdianti só para facilitar leitura e manutenção
+ * Pega um dataURL e converte para um File
+ * @param {object} dataURL  - recebe o resultado do canvas.toDataURL()
+ * @param {string} nameFile - nome do arquivo
+ * @returns {File}
+ */
+function dataUrltoFile(dataURL,nameFile) {
+  let byteString = atob(dataURL.split(',')[1]);
+  let mimeType = dataURL.split(',')[0].split(':')[1].split(';')[0];
+  let n = byteString.length;
+  let u8arr = new Uint8Array(n);
+  while (n--) {
+      u8arr[n] = byteString.charCodeAt(n);
+  }
+  let name = nameFile;
+  return new File([u8arr], name, {type:mimeType});
+}
+
+
 /**
  * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
  * @param {string} id - O ID do elemento de vídeo a ser capturado.
@@ -185,28 +213,3 @@ function fd5VideoCampiturarSucesso(canvas) {
   imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
 }
 
-function fd5VideoCaminhoSite(){
-  let pathname = window.location.pathname;
-  let partes   = pathname.split('index.php');
-  return partes[0];
-}
-
-
-/**
- * Sub função do fd5VideoSaveTmpAdianti só para facilitar leitura e manutenção
- * Pega um dataURL e converte para um File
- * @param {object} dataURL  - recebe o resultado do canvas.toDataURL()
- * @param {string} nameFile - nome do arquivo
- * @returns {File}
- */
-function dataUrltoFile(dataURL,nameFile) {
-  let byteString = atob(dataURL.split(',')[1]);
-  let mimeType = dataURL.split(',')[0].split(':')[1].split(';')[0];
-  let n = byteString.length;
-  let u8arr = new Uint8Array(n);
-  while (n--) {
-      u8arr[n] = byteString.charCodeAt(n);
-  }
-  let name = nameFile;
-  return new File([u8arr], name, {type:mimeType});
-}
