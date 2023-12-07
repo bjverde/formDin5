@@ -52,16 +52,17 @@ class exe_upload_img extends TPage
         $scriptJswebCam->setProperty('src', 'app/lib/include/FormDin5WebCams.js?appver='.FormDinHelper::version());
 
 
-        $btPause = new TButton('btnPause');
-        $btPause->class = 'btn btn-success btn-sm';
-        $btPause->setLabel('Ligar Câmera');
-        $btPause->setImage('fa:power-off');
-        $btPause->addFunction("fd5VideoStart()");
+        $btnStart = new TButton('btnStart');
+        $btnStart->class = 'btn btn-success btn-sm';
+        $btnStart->setLabel('Ligar Câmera');
+        $btnStart->setImage('fa:power-off');
+        $btnStart->addFunction("fd5VideoStart('".$idField."')");
 
         $btnChangeCamera = new TButton('btnChangeCamera');
         $btnChangeCamera->class = 'btn btn-light btn-sm';
         $btnChangeCamera->setLabel('Alterar Camera');
         $btnChangeCamera->setImage('fa:sync-alt');
+        $btnChangeCamera->addFunction("fd5VideoCampiturar('".$idField."')");
 
         $btnScreenshot = new TButton('btnScreenshot');
         $btnScreenshot->class = 'btn btn-primary btn-sm';
@@ -72,8 +73,8 @@ class exe_upload_img extends TPage
         $divButton = new TElement('div');
         $divButton->class = 'fd5DivVideoButton';
         $divButton->setProperty('id',$idField.'_videoDivButton');
-        $divButton->add($btPause);
-        //$divButton->add($btnChangeCamera);
+        $divButton->add($btnStart);
+        $divButton->add($btnChangeCamera);
         $divButton->add($btnScreenshot);
 
 
