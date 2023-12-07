@@ -36,9 +36,6 @@ class exe_upload_img extends TPage
         $adiantiObjHiden = new THidden($idField);
         $adiantiObjHiden->setId($idField);
 
-        $adiantiObjHidenBase64 = new THidden($idField.'_base64');
-        $adiantiObjHidenBase64->setId($idField.'_base64');
-
         $adiantiObjWebCam = new TElement('video');
         $adiantiObjWebCam->class = 'fd5Video';
         $adiantiObjWebCam->setProperty('id',$idField.'_video');
@@ -84,7 +81,6 @@ class exe_upload_img extends TPage
         $divWebCam->class = 'fd5DivVideo';
         $divWebCam->setProperty('id',$idField.'_videodiv');
         $divWebCam->add($adiantiObjHiden);
-        $divWebCam->add($adiantiObjHidenBase64);
         $divWebCam->add($adiantiObjWebCam);
         $divWebCam->add($adiantiObjWebCamCanvas);
         $divWebCam->add($scriptJswebCam);
