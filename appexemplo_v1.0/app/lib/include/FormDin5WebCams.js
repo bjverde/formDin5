@@ -191,10 +191,6 @@ function fd5VideoCaminhoSite(){
   return partes[0];
 }
 
-function upload_completo(event) {
-  console.log(event);
-}
-
 
 /**
  * Sub função do fd5VideoSaveTmpAdianti só para facilitar leitura e manutenção
@@ -214,31 +210,3 @@ function dataUrltoFile(dataURL,nameFile) {
   let name = nameFile;
   return new File([u8arr], name, {type:mimeType});
 }
-
-
-/*
-onReadyStateChange = function(evt)
-    {
-        var status = null;
-        
-        try {
-            status = evt.target.status;
-        }
-        catch(e) {
-            return;
-        }
-        
-        if (status == '200' && evt.target.readyState == '4' && evt.target.responseText) {
-            try {
-                var response = JSON.parse( evt.target.responseText );
-                
-                if ( response.type == 'error' ) {
-                    __adianti_error('Error', response.msg);
-                }
-            }
-            catch (e) {
-                __adianti_error('Error', e);
-            }
-        }
-    };
-*/
