@@ -123,9 +123,37 @@ function dataUrltoFile(dataURL,nameFile) {
 
 /**
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
+ * Coloca uma imagem sobre a imagem da camera para indicar que está correto
+ * @param {string} id     - O ID do elemento de vídeo a ser capturado.
+ * @param {object} canvas - um objeto do tipo HTMLCanvasElement
+ * @returns {void}
+ */
+function fd5VideoCampiturarSucesso(canvas) {
+  let context = canvas.getContext('2d');
+  let pathImg = fd5VideoCaminhoSite();
+  pathImg = pathImg+'app/images/mark-cheque-green.png';
+
+  // Carregar a imagem PNG com fundo transparente
+  let imagemPNG = new Image();
+  imagemPNG.onload = function() {
+    let percentualReducao = 0.1;
+    let novaLargura = imagemPNG.width * percentualReducao;
+    let novaAltura = imagemPNG.height * percentualReducao;
+
+    // Desenhar a imagem PNG sobre a imagem do vídeo no canto direito superior
+    let posX = 25; // Posição X (canto direito)
+    let posY = 25; // Posição Y (canto superior)
+    context.drawImage(imagemPNG, posX, posY, novaLargura, novaAltura);
+  };
+  imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
+}
+
+
+/**
+ * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
  * Pegar o ScreenShot gerado e envia para o servidor 
- * @param {string} id - O ID do elemento de vídeo a ser capturado.
- * @param {object } canvas - um objeto do tipo HTMLCanvasElement
+ * @param {string} id     - O ID do elemento de vídeo a ser capturado.
+ * @param {object} canvas - um objeto do tipo HTMLCanvasElement
  * @returns {void}
  */
 function fd5VideoSaveTmpAdianti(id,canvas){
@@ -163,32 +191,6 @@ function fd5VideoSaveTmpAdianti(id,canvas){
   }
 }
 
-/**
- * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
- * Coloca uma imagem sobre a imagem da camera para indicar que está correto
- * @param {string} id - O ID do elemento de vídeo a ser capturado.
- * @param {object } canvas - um objeto do tipo HTMLCanvasElement
- * @returns {void}
- */
-function fd5VideoCampiturarSucesso(canvas) {
-  let context = canvas.getContext('2d');
-  let pathImg = fd5VideoCaminhoSite();
-  pathImg = pathImg+'app/images/mark-cheque-green.png';
-
-  // Carregar a imagem PNG com fundo transparente
-  let imagemPNG = new Image();
-  imagemPNG.onload = function() {
-    let percentualReducao = 0.1;
-    let novaLargura = imagemPNG.width * percentualReducao;
-    let novaAltura = imagemPNG.height * percentualReducao;
-
-    // Desenhar a imagem PNG sobre a imagem do vídeo no canto direito superior
-    let posX = 25; // Posição X (canto direito)
-    let posY = 25; // Posição Y (canto superior)
-    context.drawImage(imagemPNG, posX, posY, novaLargura, novaAltura);
-  };
-  imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
-}
 
 /**
  * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
