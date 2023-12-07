@@ -111,6 +111,13 @@ function fd5VideoCampiturar(id){
   }
 }
 
+/**
+ * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
+ * Pegar o ScreenShot gerado e envia para o servidor 
+ * @param {string} id - O ID do elemento de vídeo a ser capturado.
+ * @param {object } canvas - um objeto do tipo HTMLCanvasElement
+ * @returns {void}
+ */
 function fd5VideoSaveTmpAdianti(id,canvas){
   try {
     let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
@@ -160,6 +167,14 @@ function upload_completo(event) {
   console.log(event);
 }
 
+
+/**
+ * Sub função do fd5VideoSaveTmpAdianti só para facilitar leitura e manutenção
+ * Pega um dataURL e converte para um File
+ * @param {object} dataURL  - recebe o resultado do canvas.toDataURL()
+ * @param {string} nameFile - nome do arquivo
+ * @returns {File}
+ */
 function dataUrltoFile(dataURL,nameFile) {
   let byteString = atob(dataURL.split(',')[1]);
   let mimeType = dataURL.split(',')[0].split(':')[1].split(';')[0];
