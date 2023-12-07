@@ -96,8 +96,8 @@ class FileHelper
         if( !self::exists($from) ){
             throw new Exception('File not exist: '.$from);
         }
-        if( !is_dir($to) ){
-            $dirname = dirname($to);
+        $dirname = dirname($to);
+        if( !is_dir($dirname) ){
             if (!mkdir($dirname, 0755, true)) {
                 throw new Exception('Falha ao criar os diretórios: '.$dirname);
             }
