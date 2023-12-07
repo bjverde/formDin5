@@ -74,7 +74,7 @@ class exe_upload_img extends TPage
         $divButton->class = 'fd5DivVideoButton';
         $divButton->setProperty('id',$idField.'_videoDivButton');
         $divButton->add($btnStart);
-        $divButton->add($btnChangeCamera);
+        //$divButton->add($btnChangeCamera);
         $divButton->add($btnScreenshot);
 
 
