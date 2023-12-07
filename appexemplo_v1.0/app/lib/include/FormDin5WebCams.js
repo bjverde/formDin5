@@ -88,11 +88,13 @@ function fd5VideoStart(){
 	});	
 }
 
+/**
+ * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
+ * @param {string} id - O ID do elemento de vídeo a ser capturado.
+ * @returns {void}
+ */
 function fd5VideoCampiturar(id){
   try {
-    let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
-    let hiddenField = document.querySelector('#'+id);
-
     var video  = document.querySelector('#'+id+'_video');
     var canvas = document.querySelector('#'+id+'_videoCanvas');
     var context= canvas.getContext('2d');
@@ -102,16 +104,19 @@ function fd5VideoCampiturar(id){
     canvas.width  = video.videoWidth;
     context.drawImage(video, 0, 0);
 
-    hiddenField.value = nameFile;
-    fd5VideoSaveTmpAdianti(id,nameFile,canvas);
+    fd5VideoSaveTmpAdianti(id,canvas);
   }
   catch (e) {
       __adianti_error('Error', e);
   }
 }
 
-function fd5VideoSaveTmpAdianti(id,nameFile,canvas){
+function fd5VideoSaveTmpAdianti(id,canvas){
   try {
+    let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
+    let hiddenField = document.querySelector('#'+id);
+    hiddenField.value = nameFile;
+
     let pathSite = fd5VideoCaminhoSite();
     pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
 
@@ -123,7 +128,6 @@ function fd5VideoSaveTmpAdianti(id,nameFile,canvas){
 
     let ajax = new XMLHttpRequest();
     ajax.open("POST", pathSite,true);
-    //ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     ajax.send(formdata);
 
     // Tratando a resposta da requisição (opcional)
