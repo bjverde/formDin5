@@ -71,8 +71,10 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
                                ,$height= null
                                )
     {
-        $adiantiObjHiden = new THidden($idField);
-        $adiantiObjHiden->setId($idField);
+        //$adiantiObjHiden = new THidden($idField);
+        //$adiantiObjHiden->setId($idField);
+        $fd5Hidden = new TFormDinHiddenField($idField,null,$boolRequired);
+        $adiantiObjHiden = $fd5Hidden->getAdiantiObj();
 
         $adiantiObjWebCam = new TElement('video');
         $adiantiObjWebCam->class = 'fd5Video';
