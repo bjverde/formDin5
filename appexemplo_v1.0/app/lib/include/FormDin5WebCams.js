@@ -72,6 +72,7 @@ function fd5VideoStop(){
   }
 }
 
+
 function fd5VideoStart(){
    if ( !"mediaDevices" in navigator ||
         !"getUserMedia" in navigator.mediaDevices ) {
@@ -119,30 +120,6 @@ function dataUrltoFile(dataURL,nameFile) {
   return new File([u8arr], name, {type:mimeType});
 }
 
-
-/**
- * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
- * @param {string} id - O ID do elemento de vídeo a ser capturado.
- * @returns {void}
- */
-function fd5VideoCampiturar(id){
-  try {
-    var video  = document.querySelector('#'+id+'_video');
-    var canvas = document.querySelector('#'+id+'_videoCanvas');
-    var context= canvas.getContext('2d');
-
-    //video.style.display = 'none';
-    canvas.height = video.videoHeight;
-    canvas.width  = video.videoWidth;
-    context.drawImage(video, 0, 0);
-
-    fd5VideoStop();
-    fd5VideoSaveTmpAdianti(id,canvas);
-  }
-  catch (e) {
-      __adianti_error('Error', e);
-  }
-}
 
 /**
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
@@ -213,3 +190,26 @@ function fd5VideoCampiturarSucesso(canvas) {
   imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
 }
 
+/**
+ * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
+ * @param {string} id - O ID do elemento de vídeo a ser capturado.
+ * @returns {void}
+ */
+function fd5VideoCampiturar(id){
+  try {
+    var video  = document.querySelector('#'+id+'_video');
+    var canvas = document.querySelector('#'+id+'_videoCanvas');
+    var context= canvas.getContext('2d');
+
+    //video.style.display = 'none';
+    canvas.height = video.videoHeight;
+    canvas.width  = video.videoWidth;
+    context.drawImage(video, 0, 0);
+
+    fd5VideoStop();
+    fd5VideoSaveTmpAdianti(id,canvas);
+  }
+  catch (e) {
+      __adianti_error('Error', e);
+  }
+}
