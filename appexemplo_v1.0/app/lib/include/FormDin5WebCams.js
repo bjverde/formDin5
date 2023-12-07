@@ -89,6 +89,7 @@ function fd5VideoStart(id){
     videoStream = stream; // Armazena o stream de vídeo na variável
 	})
 	.catch(error => {
+    __adianti_error('Error', error);
 		console.log(error);
 	});	
 }
