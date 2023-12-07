@@ -59,13 +59,10 @@ class upload {
 if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
     $diretorioDestino = FileHelper::getCaminhoSistema().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR;
 
-    // Move o arquivo enviado para o diretório de destino
     $caminhoArquivo = $diretorioDestino . $_FILES['arquivo']['name'];
     move_uploaded_file($_FILES['arquivo']['tmp_name'], $caminhoArquivo);
 
-    // Exibe uma mensagem indicando que o arquivo foi recebido com sucesso
     echo "Arquivo recebido e salvo com sucesso em: $caminhoArquivo";
 } else {
-    // Caso ocorra algum erro no envio do arquivo
     echo "Erro no envio do arquivo ou nenhum arquivo recebido.";
 }
