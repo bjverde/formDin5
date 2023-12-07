@@ -475,14 +475,14 @@ class TFormDin
     *
     * @param string  $mixValue          - 1 : Label do Botão. No FormDin5 não aceita array('Gravar', 'Limpar')
     * @param string  $strNameId         - 2 : Id do Botão. Se ficar null será utilizado o $strName
-    * @param mixed   $strAction         - 2 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
-    * @param string  $strOnClick        - 4 : NOT_IMPLEMENTED Nome da função javascript
-    * @param string  $strConfirmMessage - 5 : Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito.
+    * @param mixed   $strAction         - 3 : Nome do metodo da ação (string) no mesmo Form ou  Array [FormDestino,actionsName]
+    * @param string  $strOnClick        - 4 : Nome da função javascript que será executada no onClick ou script da função. Vai desativar o parametro 5
+    * @param string  $strConfirmMessage - 5 : Mensagem de confirmação, para utilizar o confirme sem utilizar javaScript explicito. Se o parametro 4 for informado não vai executar
     * @param boolean $boolNewLine       - 6 : Em nova linha. DEFAULT = true
     * @param boolean $boolFooter        - 7 : Mostrar o botão no rodapé do form. DEFAULT = true
     * @param string  $strImage          - 8 : Imagem no botão. Pode ser o caminho completo para uma imagem app/images/icon-key-yellow.png ou fontawesome exemplo: "fas:question fa-question-circle #40a2dd" ou pode setar uma classe css com setClass.
     * @param string  $strImageDisabled  - 9 : NOT_IMPLEMENTED Imagem no desativado. Evite usar no lugar procure usar a propriedade setClass. Busca pasta imagens do base ou no caminho informado
-    * @param string  $strHint           -10 : NOT_IMPLEMENTED Texto hint para explicar
+    * @param string  $strHint           -10 : Texto hint para explicar
     * @param string  $strVerticalAlign  -11 : NOT_IMPLEMENTED
     * @param boolean $boolLabelAbove    -12 : NOT_IMPLEMENTED Position text label. DEFAULT is false. NULL = false. 
     * @param string  $strLabel          -13 : NOT_IMPLEMENTED Text label 
@@ -1067,6 +1067,49 @@ class TFormDin
 
 
     /**
+     * Video stream em HTML 5 com canvas para capiturar uma foto da Camera
+     * 
+     * Algo semelhante ao exemplo abaixo
+     * https://doug2k1.github.io/javascript-camera/
+     *
+     * @param string  $id              -01: ID do campo
+     * @param string  $label           -02: Label do campo, usado para validações
+     * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $boolNewLine     -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove  -05: Label acima, DEFAULT is FALSE na mesma linha
+     * @param string  $enableChangeCam -06: NOT_IMPLEMENTED TRUE (Default) or FALSE, Enable Change Cam
+     * @param boolean $width           -07: NOT_IMPLEMENTED Default Null, largura em % ou px
+     * @param boolean $height          -08: NOT_IMPLEMENTED Default Null, altura  em % ou px
+     * @return TElement
+     */
+    public function addVideoStreamPhoto(string $idField
+                                       ,string $label
+                                       ,$boolRequired= null
+                                       ,$boolNewLine = null
+                                       ,$boolLabelAbove= null
+                                       ,$enableChangeCam= null
+                                       ,$width = null
+                                       ,$height= null
+                                       )
+    {
+        $boolRequired   = is_null($boolRequired)?false:$boolRequired;
+        $enableChangeCam= is_null($enableChangeCam)?true:$enableChangeCam;
+        $boolNewLine    = is_null($boolNewLine)?true:$boolNewLine;
+        $boolLabelAbove = is_null($boolLabelAbove)?false:$boolLabelAbove;        
+
+        $formField = new TFormDinVideoStreamPhoto($idField
+                                                 ,$label
+                                                 ,$boolRequired
+                                                 ,$enableChangeCam
+                                                 ,$width
+                                                 ,$height);
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+    }
+
+    /**
      * Campos para anexar arquivo. Pode ser um carregamento sincrono ou assincrono via ajax.
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
@@ -1329,7 +1372,7 @@ class TFormDin
      * @param string  $strDisplayColumn   - 14: Nome da coluna que será utilizada para preencher as opções que serão exibidas para o usuário
      * @param string  $boolNoWrapLabel    - 15: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @param string  $strDataColumns     - 16: NOT_IMPLEMENTED Informações extras do banco de dados que deverão ser adicionadas na tag option do campo select
-     * @param string  $enableSearch       - 17: FORMDIN5: Define se o campo select terá autocomplete
+     * @param string  $enableSearch       - 17: FORMDIN5: Default FALSE = Campo SEM autocomplete, TRUE = Define se o campo select terá autocomplete
      * @return TCombo
      */
     public function addSelectField(string $id
@@ -1348,7 +1391,7 @@ class TFormDin
                                   ,string $strDisplayColumn = null
                                   ,string $boolNoWrapLabel = null
                                   ,string $strDataColumns = null
-                                  ,bool $enableSearch = true
+                                  ,bool $enableSearch = false
                                   )
     {
         $boolRequired = is_null($boolRequired)?false:$boolRequired;

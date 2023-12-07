@@ -118,6 +118,10 @@
                     </menuitem>
                 </menu>
             </menuitem>
+            <menuitem label='Upload imagem'>
+                <icon>fa:image fa-fw</icon>
+                <action>exe_TFormDinVideoStreamPhoto</action>
+            </menuitem>            
             <menuitem label='Númerico'>
                 <icon>fa:check-square fa-fw</icon>
                 <action>exe_NumberField</action>

@@ -41,6 +41,9 @@ class exe_TButton extends TPage
         $msg = $frm->addButton('Msg JS','msgjs','onSave1',null,'Devo executar?',true,false,'far:check-circle green');
         $msg->setPopover('Mensagem JS','bottom','Botão com Confirmação em JS incluida');
 
+        $alert = $frm->addButton('Alert JS','alertjs',null,'alert("Hello! I am an alert box!!");',null,true,false,'far:check-circle green');
+        $alert->setPopover(null,'top','Informe o nome de uma função JS ou coloque toda função JS que será executada no onClick. ');
+
         //$frm->addButton($this,'Limpar', null, 'Limpar', null, null, false, false);
         //$frm->addButton($this,'Exemplo 09 - img', null, 'act09', null, null, true, false,'joia.gif');
         //$frm->addButton($this,'Exemplo 09 - img desabilitado', null, 'act09d', null, null, true, false,'joia.gif','joia_desabilitado.gif');
