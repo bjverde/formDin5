@@ -51,12 +51,13 @@ Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar con
 ```ini
 [system]
 formdin_min_version=5.0.0-alpha33
-version = 1.0.0
+system_version = 1.0.0
+head_title  = "App Exemplo1"
 system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
 system_name_sub = 'APPEV1'
 logo-lg = APPEV1
-;logo-mini = /images/favicon-96x96.png
-logo-mini = E1
+;logo-mini = /images/favicon-96x96.png ; logo minimo com imagem
+logo-mini = E1 ; logo minimo com texto 
 logo-link-class = 'index.php?class=AjudaView'
 login-link = https://github.com/bjverde/FormDin5
 ```
