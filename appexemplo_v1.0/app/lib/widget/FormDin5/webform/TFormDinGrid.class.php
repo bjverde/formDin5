@@ -581,7 +581,28 @@ class TFormDinGrid
         $formDinGridColumn = new TFormDinGridColumnFormatDate( $name,$label,$width,$align,$format);
         $this->addListColumn($formDinGridColumn);
         return $formDinGridColumn;
-    }    
+    }
+    //---------------------------------------------------------------
+    /**
+     * Coluna com campo CPF ou CNPJ formatado. Se valor informado não for uma
+     * string com tamanho 11 ou 14 vai retorna NULL
+     *
+     * @param  string $name   - 1: Name of the column in the database
+     * @param  string $label  - 2: Text label that will be shown in the header
+     * @param  string $width  - 3: Column Width (pixels)
+     * @param  string $align  - 4: Column align (left|right|center|justify)
+     * @return TDataGridColumn
+     */
+    public function addColumnFormatCpfCnpj(string $name
+                                          , string $label
+                                          , string $width = NULL
+                                          , string $align ='left'
+                                          )
+    {
+        $formDinGridColumn = new TFormDinGridColumnFormatCpfCnpj( $name,$label,$width,$align);
+        $this->addListColumn($formDinGridColumn);
+        return $formDinGridColumn;
+    }     
 
     //---------------------------------------------------------------------------------------
     /**
