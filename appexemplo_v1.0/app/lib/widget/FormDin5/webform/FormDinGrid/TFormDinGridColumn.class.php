@@ -137,8 +137,15 @@ class TFormDinGridColumn
     }
 	//-------------------------------------------------------------------------------------------
     /**
-     * Crie uma função de callback para transformar os dados dever ser feita
-     * nomeFuncao ($value, $object, $row)
+     * Crie uma função de callback para formatar os dados da coluna da grid
+     * 
+     * Poder uma função anonimoa do tipo
+     *    function($value, $object, $row){ //codigo retun $valorAparecerGrid}
+     * 
+     * Pode ser tambem com array array('nomeClasse', 'nomeFuncao') veja o exemplo
+     * TFormDinGridColumnFormatDate nomeClasse pode receber o valor $this
+     * nomeFuncao vai receber apenas um valor como parametro $fieldValue
+     * 
      * @param $callback  A function name of a method of an object
      */    
     public function setTransformer(Callable $callback){
