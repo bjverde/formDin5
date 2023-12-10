@@ -141,6 +141,7 @@ class TFormDinGridColumn
      * 
      * Poder uma função anonimoa do tipo
      *    function($value, $object, $row){ //codigo retun $valorAparecerGrid}
+     *    Existem diversas funções prontas em TFormDinGridTransformer 
      * 
      * Pode ser tambem com array array('nomeClasse', 'nomeFuncao') veja o exemplo
      * TFormDinGridColumnFormatDate nomeClasse pode receber o valor $this
