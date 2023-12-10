@@ -26,6 +26,7 @@ class exe_grid18 extends TPage
         //$grid->setHeight(2500);
         $grid->addColumn('code',  'Code', null, 'center');
         $grid->addColumn('name',  'Name', null, 'left');
+        $grid->addColumnFormatCpfCnpj('cpf',   'CPF');
         //$grid->addColumn('city',  'City', null, 'left');
         //$grid->addColumn('state','State', null, 'left');
         $grid->addColumnFormatDate('date' ,'Data Brasil' , null, 'left');
