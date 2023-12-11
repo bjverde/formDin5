@@ -52,22 +52,37 @@ class TFormDinGridColumnFormatCpfCnpj extends TFormDinGridColumn
      * Coluna do Grid Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7.1
      *
-     * @param  string $name   - 1: Name of the column in the database
-     * @param  string $label  - 2: Text label that will be shown in the header
-     * @param  string $width  - 3: Column Width (pixels)
-     * @param  string $align  - 4: Column align (left|right|center|justify)
-     * @return BootstrapFormBuilder
+     * @param string $name   - 01: Name of the column in the database
+     * @param string $label  - 02: Text label that will be shown in the header
+     * @param string $width  - 03: Column Width (pixels)
+     * @param string $align  - 04: Column align (left|right|center|justify)
+     * @param bool   $boolReadOnly - 06: Somente leitura. DEFAULT = false
+	 * @param bool   $boolSortable - 07: Coluna ordenavel. DEFAULT = true
+	 * @param bool   $boolVisivle  - 08: Coluna visivel. DEFAULT = true
+     * @return TDataGridColumn
      */
-    public function __construct(string $name
+    public function __construct(object $objForm
+                              , string $name
                               , string $label
                               , string $width = NULL
                               , string $align ='left'
+                              , bool $boolReadOnly = false
+                              , bool $boolSortable = true
+                              , bool $boolVisivle = true                              
                               )
     {
-        $column = new TDataGridColumn($name, $label,$align,$width);
-        $this->setAdiantiObj($column);
+        parent::__construct( $objForm
+                            , $name
+                            , $label
+                            , $width
+                            , $align
+                            , $boolReadOnly
+                            , $boolSortable
+                            , $boolVisivle
+                        );
         $this->setName($name);
         $this->setTransformer(array($this, 'format'));
+        return $this->getAdiantiObj();
     }
 
     /**
