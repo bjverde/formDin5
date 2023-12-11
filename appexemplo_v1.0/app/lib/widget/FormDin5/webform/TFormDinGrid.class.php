@@ -608,13 +608,14 @@ class TFormDinGrid
      * Coluna com campo CPF ou CNPJ formatado. Se valor informado não for uma
      * string com tamanho 11 ou 14 vai retorna NULL
      *
-     * @param string $name   - 1: Name of the column in the database
-     * @param string $label  - 2: Text label that will be shown in the header
-     * @param string $width  - 3: Column Width (pixels)
-     * @param string $align  - 4: Column align (left|right|center|justify)
-     * @param bool $boolReadOnly - 5: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
-	 * @param bool $boolSortable - 6: FORMDIN5: Coluna ordenavel. DEFAULT = true
-	 * @param bool $boolVisivle  - 7: FORMDIN5: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
+     * @param string $name   - 01: Name of the column in the database
+     * @param string $label  - 02: Text label that will be shown in the header
+     * @param string $width  - 03: Column Width (pixels)
+     * @param string $align  - 04: Column align (left|right|center|justify)
+     * @param bool $boolReadOnly - 05: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
+	 * @param bool $boolSortable - 06: FORMDIN5: Coluna ordenavel. DEFAULT = true
+	 * @param bool $boolVisivle  - 07: FORMDIN5: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
+     * @param string $autoHide   - 08: FORMDIN5: Largura em pix que a coluna não ficará visivel, se a largura da tela ficar menor que o valor informado a coluna irá desaparer.
      * @return TDataGridColumn
      */
     public function addColumnFormatCpfCnpj( string $name
@@ -624,6 +625,7 @@ class TFormDinGrid
                                           , bool $boolReadOnly = false
                                           , bool $boolSortable = true
                                           , bool $boolVisivle = true
+                                          , string $autoHide = null
                                           )
     {
         $formDinGridColumn = new TFormDinGridColumnFormatCpfCnpj($this->getObjForm()
@@ -634,6 +636,7 @@ class TFormDinGrid
                                                                 ,$boolReadOnly
                                                                 ,$boolSortable
                                                                 ,$boolVisivle
+                                                                ,$autoHide
                                                             );
         $this->addListColumn($formDinGridColumn);
         return $formDinGridColumn;

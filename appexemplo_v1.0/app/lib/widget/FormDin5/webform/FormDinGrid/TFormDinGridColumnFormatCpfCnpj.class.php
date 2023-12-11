@@ -58,8 +58,9 @@ class TFormDinGridColumnFormatCpfCnpj extends TFormDinGridColumn
      * @param string $width  - 04: Column Width (pixels)
      * @param string $align  - 05: Column align (left|right|center|justify)
      * @param bool   $boolReadOnly - 06: Somente leitura. DEFAULT = false
-	 * @param bool   $boolSortable - 07: Coluna ordenavel. DEFAULT = true
-	 * @param bool   $boolVisivle  - 08: Coluna visivel. DEFAULT = true
+	 * @param bool   $boolSortable - 07: FORMDIN5: Coluna ordenavel. DEFAULT = true
+	 * @param bool   $boolVisivle  - 08: FORMDIN5: Coluna visivel. DEFAULT = true
+     * @param bool   $boolVisivle  - 09: FORMDIN5: Coluna visivel. DEFAULT = true
      * @return TDataGridColumn
      */
     public function __construct(object $objForm
@@ -69,7 +70,8 @@ class TFormDinGridColumnFormatCpfCnpj extends TFormDinGridColumn
                               , string $align ='left'
                               , bool $boolReadOnly = false
                               , bool $boolSortable = true
-                              , bool $boolVisivle = true                              
+                              , bool $boolVisivle = true   
+                              , string $autoHide = null                           
                               )
     {
         parent::__construct( $objForm
@@ -80,6 +82,7 @@ class TFormDinGridColumnFormatCpfCnpj extends TFormDinGridColumn
                             , $boolReadOnly
                             , $boolSortable
                             , $boolVisivle
+                            , $autoHide
                         );
         $this->setName($name);
         $this->setTransformer(array($this, 'format'));
