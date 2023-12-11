@@ -60,7 +60,7 @@ class TFormDinGridColumnFormatCpfCnpj extends TFormDinGridColumn
      * @param bool   $boolReadOnly - 06: Somente leitura. DEFAULT = false
 	 * @param bool   $boolSortable - 07: FORMDIN5: Coluna ordenavel. DEFAULT = true
 	 * @param bool   $boolVisivle  - 08: FORMDIN5: Coluna visivel. DEFAULT = true
-     * @param bool   $boolVisivle  - 09: FORMDIN5: Coluna visivel. DEFAULT = true
+     * @param string $autoHide     - 09: FORMDIN5: Largura em pix que a coluna não ficará visivel, se a largura da tela ficar menor que o valor informado a coluna irá desaparer.
      * @return TDataGridColumn
      */
     public function __construct(object $objForm
@@ -70,8 +70,8 @@ class TFormDinGridColumnFormatCpfCnpj extends TFormDinGridColumn
                               , string $align ='left'
                               , bool $boolReadOnly = false
                               , bool $boolSortable = true
-                              , bool $boolVisivle = true   
-                              , string $autoHide = null                           
+                              , bool $boolVisivle = true
+                              , string $autoHide = null
                               )
     {
         parent::__construct( $objForm
