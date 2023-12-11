@@ -148,8 +148,8 @@ class TFormDinGridTransformer
     {
         $imgPath = empty($imgPath)?'app/images/':$imgPath;
         $maxWidth = empty($maxWidth)?'100px':$maxWidth;
+        $value = $imgPath.$value;
         if (is_file($value)==true){
-            $value = $imgPath.$value;
             $image = new TImage($value);
             $image->style = 'max-width: '.$maxWidth;
             return $image;
