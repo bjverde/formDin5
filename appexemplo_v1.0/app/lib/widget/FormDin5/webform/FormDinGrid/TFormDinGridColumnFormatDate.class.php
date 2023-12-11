@@ -72,6 +72,7 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
                               , bool $boolReadOnly = false
                               , bool $boolSortable = true
                               , bool $boolVisivle  = true
+                              , string $autoHide = null
                               )
     {
         parent::__construct(  $objForm
@@ -83,6 +84,7 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
                             , $boolReadOnly
                             , $boolSortable
                             , $boolVisivle
+                            , $autoHide
                         );
         $this->setName($name);
         $this->setFormat($format);
