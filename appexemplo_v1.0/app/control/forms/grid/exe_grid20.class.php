@@ -25,9 +25,9 @@ class exe_grid20 extends TPage
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
 
         $msg = null;
-        $msg = $msg.'<br>No exemplo abaixo mostrar como formatar as colunas de duas formas distintas';
+        $msg = $msg.'<br>Para visualizar esse exemplo redimencione a tela';
         $msg = $msg.'<ul>';
-        $msg = $msg.'  <li>addColumn - coluna normal</li>';
+        $msg = $msg.'  <li>name - coluna name está oculta</li>';
         $msg = $msg.'  <li>addColumnFormatCpfCnpj - coluna formatando CPF ou CNPJ</li>';
         $msg = $msg.'  <li>addColumnFormatDate - coluna formatando data</li>';
         $msg = $msg.'  <li>setTransformer metodo para facilitar a formatação</li>';
@@ -41,9 +41,15 @@ class exe_grid20 extends TPage
         $grid->setData($mixData);
         //$grid->setHeight(2500);
         $grid->addColumn('code',  'Code', null, 'center');
-        $grid->addColumn('name',  'Name', null, 'left');
+        $grid->addColumn('name',  'Name', null, 'left',false,true,false);
         $grid->addColumnFormatCpfCnpj('cpf',   'CPF');
-
+        $grid->addColumn('city',  'City', null, 'left');
+        $grid->addColumn('state','State', null, 'left');
+        $grid->addColumnFormatDate('date' ,'Data Brasil' , null, 'left',false,true,true,400);
+        $grid->addColumn('numero1' ,'Número 1' , null, 'left',false,true,true,600);
+        $grid->addColumn('numero2' ,'Número 2' , null, 'left',false,true,true,800);
+        $grid->addColumn('sim1' ,'Sim 1' , null, 'left',false,true,true,1000);
+        $grid->addColumn('sim2' ,'Sim 2' , null, 'left',false,true,true,1200);
         $grid->enableDefaultButtons(false);
         $this->datagrid = $grid->show();
         $panel = $grid->getPanelGroupGrid();
