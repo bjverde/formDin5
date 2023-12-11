@@ -52,22 +52,38 @@ class TFormDinGridColumnFormatDate extends TFormDinGridColumn
      * Coluna do Grid Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7.1
      *
-     * @param  string $name   - 1: Name of the column in the database
-     * @param  string $label  - 2: Text label that will be shown in the header
-     * @param  string $width  - 3: Column Width (pixels)
-     * @param  string $align  - 4: Column align (left|right|center|justify)
-     * @param  string $format - 5: Date Format. DEFAULT = d/m/Y (Brazil). Exemplo: United States = m/d/Y. Aceita o formato Adianti dd/mm/yyyy ou DateTime do PHP d/m/Y. 
+     * @param object $objForm- 1: FORMDIN5 Objeto do Adianti da classe do Form, é repassado pela classe TFormDinGrid
+     * @param string $name   - 2: Name of the column in the database
+     * @param string $label  - 3: Text label that will be shown in the header
+     * @param string $width  - 4: Column Width (pixels)
+     * @param string $align  - 5: Column align (left|right|center|justify)
+     * @param string $format - 6: Date Format. DEFAULT = d/m/Y (Brazil). Exemplo: United States = m/d/Y. Aceita o formato Adianti dd/mm/yyyy ou DateTime do PHP d/m/Y. 
+     * @param bool $boolReadOnly - 7: FORMDIN5: Somente leitura. DEFAULT = false
+	 * @param bool $boolSortable - 8: FORMDIN5: Coluna ordenavel. DEFAULT = true
+	 * @param bool $boolVisivle  - 9: FORMDIN5: Coluna visivel. DEFAULT = true
      * @return BootstrapFormBuilder
      */
-    public function __construct(string $name
+    public function __construct(object $objForm
+                              , string $name
                               , string $label
                               , string $width = NULL
                               , string $align ='left'
                               , string $format='d/m/Y'
+                              , bool $boolReadOnly = false
+                              , bool $boolSortable = true
+                              , bool $boolVisivle  = true
                               )
     {
-        $column = new TDataGridColumn($name, $label,$align,$width);
-        $this->setAdiantiObj($column);
+        parent::__construct(  $objForm
+                            , $name
+                            , $label
+                            , $width
+                            , $align
+                            , $format
+                            , $boolReadOnly
+                            , $boolSortable
+                            , $boolVisivle
+                        );
         $this->setName($name);
         $this->setFormat($format);
         $this->setTransformer(array($this, 'formatDate'));

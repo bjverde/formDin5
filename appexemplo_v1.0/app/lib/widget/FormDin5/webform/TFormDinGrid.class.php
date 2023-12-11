@@ -569,6 +569,9 @@ class TFormDinGrid
      * @param  string $width  - 3: Column Width (pixels)
      * @param  string $align  - 4: Column align (left|right|center|justify)
      * @param  string $format - 5: Date Format. DEFAULT = d/m/Y (Brazil). Exemplo: United States = m/d/Y. Aceita o formato Adianti dd/mm/yyyy ou DateTime do PHP d/m/Y. 
+     * @param bool $boolReadOnly - 6: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
+	 * @param bool $boolSortable - 7: FORMDIN5: Coluna ordenavel. DEFAULT = true
+	 * @param bool $boolVisivle  - 8: FORMDIN5: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
      * @return TDataGridColumn
      */
     public function addColumnFormatDate(string $name
@@ -576,9 +579,21 @@ class TFormDinGrid
                                       , string $width = NULL
                                       , string $align ='left'
                                       , string $format='d/m/Y'
+                                      , bool $boolReadOnly = false
+                                      , bool $boolSortable = true
+                                      , bool $boolVisivle = true
                                       )
     {
-        $formDinGridColumn = new TFormDinGridColumnFormatDate( $name,$label,$width,$align,$format);
+        $formDinGridColumn = new TFormDinGridColumnFormatDate($this->getObjForm()
+                                                            ,$name
+                                                            ,$label
+                                                            ,$width
+                                                            ,$align
+                                                            ,$format
+                                                            ,$boolReadOnly
+                                                            ,$boolSortable
+                                                            ,$boolVisivle
+                                                        );
         $this->addListColumn($formDinGridColumn);
         return $formDinGridColumn;
     }
