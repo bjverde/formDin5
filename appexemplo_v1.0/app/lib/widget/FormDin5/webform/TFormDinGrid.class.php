@@ -572,9 +572,10 @@ class TFormDinGrid
      * @param  string $width  - 3: Column Width (pixels)
      * @param  string $align  - 4: Column align (left|right|center|justify)
      * @param  string $format - 5: Date Format. DEFAULT = d/m/Y (Brazil). Exemplo: United States = m/d/Y. Aceita o formato Adianti dd/mm/yyyy ou DateTime do PHP d/m/Y. 
-     * @param bool $boolReadOnly - 6: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
-	 * @param bool $boolSortable - 7: FORMDIN5: Coluna ordenavel. DEFAULT = true
-	 * @param bool $boolVisivle  - 8: FORMDIN5: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
+     * @param bool $boolReadOnly - 06: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
+	 * @param bool $boolSortable - 07: FORMDIN5: Coluna ordenavel. DEFAULT = true
+	 * @param bool $boolVisivle  - 08: FORMDIN5: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
+     * @param string $autoHide   - 09: FORMDIN5: Largura em pix que a coluna não ficará visivel, se a largura da tela ficar menor que o valor informado a coluna irá desaparer.
      * @return TDataGridColumn
      */
     public function addColumnFormatDate(string $name
@@ -585,6 +586,7 @@ class TFormDinGrid
                                       , bool $boolReadOnly = false
                                       , bool $boolSortable = true
                                       , bool $boolVisivle = true
+                                      , string $autoHide = null
                                       )
     {
         $formDinGridColumn = new TFormDinGridColumnFormatDate($this->getObjForm()
@@ -596,6 +598,7 @@ class TFormDinGrid
                                                             ,$boolReadOnly
                                                             ,$boolSortable
                                                             ,$boolVisivle
+                                                            ,$autoHide
                                                         );
         $this->addListColumn($formDinGridColumn);
         return $formDinGridColumn;

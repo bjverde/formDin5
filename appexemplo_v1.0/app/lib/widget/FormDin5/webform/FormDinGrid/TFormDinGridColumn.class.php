@@ -61,10 +61,10 @@ class TFormDinGridColumn
      * @param string $label      - 03: Text label that will be shown in the header
      * @param string $width      - 04: Column Width (pixels)
      * @param string $align      - 05: Column align (left|right|center|justify)
-     * @param bool $boolReadOnly - 06: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
-	 * @param bool $boolSortable - 07: Coluna ordenavel. DEFAULT = true
-	 * @param bool $boolVisivle  - 08: Coluna visivel. DEFAULT = true
-     * @param string $autoHide   - 09: Largura em pix que a coluna não ficará visivel, se a largura da tela ficar menor que o valor informado a coluna irá desaparer.
+     * @param bool $boolReadOnly - 06: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
+	 * @param bool $boolSortable - 07: FORMDIN5: Coluna ordenavel. DEFAULT = true
+	 * @param bool $boolVisivle  - 08: FORMDIN5: Coluna visivel ou não. DEFAULT = true
+     * @param string $autoHide   - 09: FORMDIN5: Largura em pix que a coluna não ficará visivel, se a largura da tela ficar menor que o valor informado a coluna irá desaparer.
      * @return TDataGridColumn
      */
     public function __construct(object $objForm
@@ -95,6 +95,7 @@ class TFormDinGridColumn
             $this->setAdiantiObj($column);
             $this->setName($name);
             $this->setSortable($boolSortable);
+            $this->setVisibility($boolVisivle);
             $this->enableAutoHide($autoHide);
             return $this->getAdiantiObj();
         }
