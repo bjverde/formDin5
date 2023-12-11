@@ -64,7 +64,7 @@ class TFormDinGridColumn
      * @param bool $boolReadOnly - 6: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
 	 * @param bool $boolSortable - 7: Coluna ordenavel. DEFAULT = true
 	 * @param bool $boolVisivle  - 8: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
-     * @return BootstrapFormBuilder
+     * @return TDataGridColumn
      */
     public function __construct(object $objForm
                               , string $name
