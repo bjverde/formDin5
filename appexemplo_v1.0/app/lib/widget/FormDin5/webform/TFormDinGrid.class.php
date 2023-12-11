@@ -141,8 +141,8 @@ class TFormDinGrid
      * @param string $strName             - 2: ID da grid
      * @param string $strTitle            - 3: Titulo da grid
      * @param array $mixData              - 4: Array de dados. Pode ser form formato Adianti, FormDin ou PDO
-     * @param mixed $strHeight            - 5: Altura 
-     * @param mixed $strWidth             - 6: NOT_IMPLEMENTED Largura
+     * @param mixed $strHeight            - 5: Altura em pixels isso poder ligar o scroll vertical
+     * @param mixed $strWidth             - 6: Largura do grid em % porcentagem
      * @param mixed $strKeyField          - 7: NOT_IMPLEMENTED Chave primaria
      * @param array $mixUpdateFields      - 8: Campos do form origem que serão atualizados ao selecionar o item desejado. Separados por virgulas seguindo o padrão <campo_tabela> | <campo_formulario> , <campo_tabela> | <campo_formulario>
      * @param mixed $intMaxRows           - 9: NOT_IMPLEMENTED Qtd Max de linhas
