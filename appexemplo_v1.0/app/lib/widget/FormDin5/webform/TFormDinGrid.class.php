@@ -535,7 +535,7 @@ class TFormDinGrid
      * @param string $align - 04: Column align (left|right|center|justify)
      * @param bool $boolReadOnly - 05: FORMDIN5: NOT_IMPLEMENTED Somente leitura. DEFAULT = false
 	 * @param bool $boolSortable - 06: FORMDIN5: Coluna ordenavel. DEFAULT = true
-	 * @param bool $boolVisivle  - 07: FORMDIN5: NOT_IMPLEMENTED Coluna visivel. DEFAULT = true
+	 * @param bool $boolVisivle  - 07: FORMDIN5: Coluna visivel ou não. DEFAULT = true
      * @param string $autoHide   - 08: FORMDIN5: Largura em pix que a coluna não ficará visivel, se a largura da tela ficar menor que o valor informado a coluna irá desaparer.
      * @return TDataGridColumn
      */
