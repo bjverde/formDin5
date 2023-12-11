@@ -52,10 +52,11 @@ class TFormDinGridColumnFormatCpfCnpj extends TFormDinGridColumn
      * Coluna do Grid Padronizado em BoorStrap
      * Reconstruido FormDin 4 Sobre o Adianti 7.1
      *
-     * @param string $name   - 01: Name of the column in the database
-     * @param string $label  - 02: Text label that will be shown in the header
-     * @param string $width  - 03: Column Width (pixels)
-     * @param string $align  - 04: Column align (left|right|center|justify)
+     * @param object $objForm- 01: FORMDIN5 Objeto do Adianti da classe do Form, é repassado pela classe TFormDinGrid
+     * @param string $name   - 02: Name of the column in the database
+     * @param string $label  - 03: Text label that will be shown in the header
+     * @param string $width  - 04: Column Width (pixels)
+     * @param string $align  - 05: Column align (left|right|center|justify)
      * @param bool   $boolReadOnly - 06: Somente leitura. DEFAULT = false
 	 * @param bool   $boolSortable - 07: Coluna ordenavel. DEFAULT = true
 	 * @param bool   $boolVisivle  - 08: Coluna visivel. DEFAULT = true
