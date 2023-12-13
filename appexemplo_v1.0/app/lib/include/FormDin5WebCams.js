@@ -80,7 +80,10 @@ function fd5VideoStart(id){
     return;
   }
   fd5VideoStop(id);
+  let canvas= document.querySelector('#'+id+'_videoCanvas');
+  canvas.style.display = "none";
   let video = document.querySelector('#'+id+'_video');
+  video.style.display = "block";
 
 	navigator.mediaDevices.getUserMedia({video:true})
 	.then(stream => {
@@ -201,7 +204,9 @@ function fd5VideoSaveTmpAdianti(id,canvas){
 function fd5VideoCampiturar(id){
   try {
     var video  = document.querySelector('#'+id+'_video');
+    video.style.display = "nome";
     var canvas = document.querySelector('#'+id+'_videoCanvas');
+    canvas.style.display = "block";
     var context= canvas.getContext('2d');
 
     //video.style.display = 'none';
