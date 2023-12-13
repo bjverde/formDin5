@@ -92,12 +92,16 @@ function fd5VideoStart(id){
   fd5VideoAlternarDisplay('#'+id+'_videoCanvas','none');
   let video = document.querySelector('#'+id+'_video');
   fd5VideoAlternarDisplay('#'+id+'_video','block');
+  let divVideo = document.querySelector('#'+id+'_videodiv');
 
 	navigator.mediaDevices.getUserMedia({video:true})
 	.then(stream => {
 		video.srcObject = stream;
 		video.play();
     videoStream = stream; // Armazena o stream de vídeo na variável
+
+    video.height= divVideo.offsetHeight;
+    video.width = divVideo.offsetWidth;
 	})
 	.catch(error => {
     __adianti_error('Error', error);
