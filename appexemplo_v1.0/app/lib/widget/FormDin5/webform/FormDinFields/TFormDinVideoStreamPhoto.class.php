@@ -121,7 +121,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
         $idDivWebCam = $idField.'_videodiv';
         $divWebCam = new TElement('div');
         $divWebCam->class = 'fd5DivVideo';
-        $divWebCam->setProperty('id',$idField.'_videodiv');
+        $divWebCam->setProperty('id',$idDivWebCam);
         $divWebCam->add($adiantiObjHiden);
         $divWebCam->add($adiantiObjWebCam);
         $divWebCam->add($adiantiObjWebCamCanvas);
