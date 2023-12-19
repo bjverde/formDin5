@@ -349,6 +349,10 @@
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_grid18</action>
                     </menuitem>
+                    <menuitem label='Grides 20 simples - Campo oculto'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_grid20</action>
+                    </menuitem>                    
                 </menu> 
             </menuitem>
             <menuitem label='Grides Exportar'>

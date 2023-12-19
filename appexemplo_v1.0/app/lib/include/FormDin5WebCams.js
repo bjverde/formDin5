@@ -72,6 +72,15 @@ function fd5VideoStop(id){
   }
 }
 
+function fd5VideoAlternarDisplay(idElemento, modoExibicao) {
+  var elemento = document.querySelector(idElemento);
+  // Verifica se o modo de exibição atual é igual ao desejado
+  if (window.getComputedStyle(elemento).display === modoExibicao) {
+      return;
+  }
+  elemento.style.display = modoExibicao; // Alterna para o modo de exibição desejado
+}
+
 
 function fd5VideoStart(id){
    if ( !"mediaDevices" in navigator ||
@@ -80,13 +89,19 @@ function fd5VideoStart(id){
     return;
   }
   fd5VideoStop(id);
+  fd5VideoAlternarDisplay('#'+id+'_videoCanvas','none');
   let video = document.querySelector('#'+id+'_video');
+  fd5VideoAlternarDisplay('#'+id+'_video','block');
+  let divVideo = document.querySelector('#'+id+'_videodiv');
 
 	navigator.mediaDevices.getUserMedia({video:true})
 	.then(stream => {
 		video.srcObject = stream;
 		video.play();
     videoStream = stream; // Armazena o stream de vídeo na variável
+
+    video.height= divVideo.offsetHeight;
+    video.width = divVideo.offsetWidth;
 	})
 	.catch(error => {
     __adianti_error('Error', error);
@@ -200,8 +215,12 @@ function fd5VideoSaveTmpAdianti(id,canvas){
  */
 function fd5VideoCampiturar(id){
   try {
-    var video  = document.querySelector('#'+id+'_video');
-    var canvas = document.querySelector('#'+id+'_videoCanvas');
+    let idVideo= '#'+id+'_video';
+    var video  = document.querySelector(idVideo);
+    fd5VideoAlternarDisplay(idVideo,'none');
+    let idCanvas= '#'+id+'_videoCanvas';
+    var canvas  = document.querySelector(idCanvas);
+    fd5VideoAlternarDisplay(idCanvas,'block');
     var context= canvas.getContext('2d');
 
     //video.style.display = 'none';

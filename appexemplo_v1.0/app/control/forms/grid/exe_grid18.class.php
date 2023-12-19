@@ -4,7 +4,8 @@ use Adianti\Registry\TSession;
 
 class exe_grid18 extends TPage
 {
-    protected $form; // registration form
+    protected $form; //Registration form Adianti
+    protected $frm;  //Registration component FormDin 5
     protected $datagrid; // listing
     protected $pageNavigation;
     
@@ -19,13 +20,29 @@ class exe_grid18 extends TPage
 
         //$this->setDatabase('dbapoio');         // defines the database
         //$this->setActiveRecord('tb_paginacao');// defines the active record
-        
+
+        $frm = new TFormDin($this,'Exemplo Grid Simples 18 - setando os dados e Formatando');
+        $frm->addHiddenField('id'); //POG para evitar problema de noticie
+
+        $msg = null;
+        $msg = $msg.'<br>No exemplo abaixo mostrar como formatar as colunas de duas formas distintas';
+        $msg = $msg.'<ul>';
+        $msg = $msg.'  <li>addColumn - coluna normal</li>';
+        $msg = $msg.'  <li>addColumnFormatCpfCnpj - coluna formatando CPF ou CNPJ</li>';
+        $msg = $msg.'  <li>addColumnFormatDate - coluna formatando data</li>';
+        $msg = $msg.'  <li>setTransformer metodo para facilitar a formatação</li>';
+        $msg = $msg.'</ul>';        
+        $frm->addHtmlField('dica1',$msg, null, 'Dica:', null, 200);
+
+        $this->form = $frm->show();
+
         $mixData = mockBanco::getExemploAdianti();
         $grid = new TFormDinGrid($this,'grid','Exemplo Grid Simples 18 - setando os dados');
         $grid->setData($mixData);
         //$grid->setHeight(2500);
         $grid->addColumn('code',  'Code', null, 'center');
         $grid->addColumn('name',  'Name', null, 'left');
+        $grid->addColumnFormatCpfCnpj('cpf',   'CPF');
         //$grid->addColumn('city',  'City', null, 'left');
         //$grid->addColumn('state','State', null, 'left');
         $grid->addColumnFormatDate('date' ,'Data Brasil' , null, 'left');
