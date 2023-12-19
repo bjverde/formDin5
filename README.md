@@ -45,18 +45,20 @@ O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
     1. No arquivo init.php da raiz do projeto incluir as linhas abaixo
     1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
     1. Copiar o arquivo `lib/include/FormDin5.js` para `/app/lib/include/FormDin5.js`
+    1. Copiar o arquivo `lib/include/FormDin5WebCams.js` para `/app/lib/include/FormDin5WebCams.js`
 
 ## Arquivo application.ini
 Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar conforme a necessidade
 ```ini
 [system]
 formdin_min_version=5.0.0-alpha33
-version = 1.0.0
+system_version = 1.0.0
+head_title  = "App Exemplo1"
 system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
 system_name_sub = 'APPEV1'
 logo-lg = APPEV1
-;logo-mini = /images/favicon-96x96.png
-logo-mini = E1
+;logo-mini = /images/favicon-96x96.png ; logo minimo com imagem
+logo-mini = E1 ; logo minimo com texto 
 logo-link-class = 'index.php?class=AjudaView'
 login-link = https://github.com/bjverde/FormDin5
 ```
