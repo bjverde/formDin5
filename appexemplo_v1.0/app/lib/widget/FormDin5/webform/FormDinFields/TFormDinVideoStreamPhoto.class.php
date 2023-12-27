@@ -61,8 +61,8 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
      * @param string  $enableChangeCam -04: NOT_IMPLEMENTED TRUE (Default) or FALSE, Enable Change Cam
      * @param boolean $width           -05: NOT_IMPLEMENTED Default Null, largura em % ou px
      * @param boolean $height          -06: NOT_IMPLEMENTED Default Null, altura  em % ou px
-     * @param boolean $imgPathFeedBack -07: Caminho da imagem que vai aparece com FeedBack visual. Valor defualt é app/images/mark-cheque-green.png
-     * @param boolean $imgPercent      -08: Percentual do tamanho da imagem
+     * @param string  $imgPathFeedBack -07: Caminho da imagem que vai aparece com FeedBack visual. Valor defualt é app/images/mark-cheque-green.png
+     * @param string  $imgPercent      -08: Percentual do tamanho da imagem
      * @return TElement
      */
     public function __construct(string $idField
