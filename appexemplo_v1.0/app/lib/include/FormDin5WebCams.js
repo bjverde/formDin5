@@ -176,11 +176,12 @@ function fd5VideoCampiturarSucesso(canvas,imgPathFeedBack, imgPercent) {
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
  * Pegar o ScreenShot gerado e envia para o servidor 
  * @param {string} id     - O ID do elemento de vídeo a ser capturado.
+ * @param {object} canvasCapturado- um objeto do tipo HTMLCanvasElement
  * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
  * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
  */
-function fd5VideoSaveTmpAdianti(id,imgPathFeedBack, imgPercent){
+function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent){
   try {
     let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
     let hiddenField = document.querySelector('#'+id);
@@ -190,7 +191,16 @@ function fd5VideoSaveTmpAdianti(id,imgPathFeedBack, imgPercent){
     pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
 
     let idCanvas= '#'+id+'_videoCanvas';
-    let canvasUpload = document.querySelector(idCanvas);    
+    let canvasUpload = document.querySelector(idCanvas);
+    
+    // Define a largura e altura desejadas para o arquivo de upload
+    var larguraParaUpload = 1280;
+    var alturaParaUpload = 720;
+
+    canvasUpload.height = alturaParaUpload;
+    canvasUpload.width  = larguraParaUpload;
+    let context = canvasUpload.getContext('2d');
+    context.drawImage(video, 0, 0, larguraParaUpload, alturaParaUpload);
     
     let dataURL = canvasUpload.toDataURL();
     let file = dataUrltoFile(dataURL,nameFile);
@@ -206,7 +216,7 @@ function fd5VideoSaveTmpAdianti(id,imgPathFeedBack, imgPercent){
     ajax.onreadystatechange = function() {
       if (ajax.readyState === XMLHttpRequest.DONE) {
           if (ajax.status === 200) {
-            fd5VideoCampiturarSucesso(canvasUpload,imgPathFeedBack, imgPercent);
+            fd5VideoCampiturarSucesso(canvasCapturado,imgPathFeedBack, imgPercent);
           } else {
             __adianti_error('Error', 'Error ao gravar a imagem, informe o problema');
           }
@@ -236,14 +246,13 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     var canvasCapturado = document.querySelector(idCanvas);
     fd5VideoAlternarDisplay(idCanvas,'block');
 
-    var context= canvasCapturado.getContext('2d');
-    //video.style.display = 'none';
     canvasCapturado.height = video.videoHeight;
     canvasCapturado.width  = video.videoWidth;
+    var context= canvasCapturado.getContext('2d');
     context.drawImage(video, 0, 0);
 
     fd5VideoStop(id);
-    fd5VideoSaveTmpAdianti(id,imgPathFeedBack, imgPercent);
+    fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent);
   }
   catch (e) {
       __adianti_error('Error', e);
