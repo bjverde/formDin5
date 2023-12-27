@@ -229,11 +229,12 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     let idVideo= '#'+id+'_video';
     var video  = document.querySelector(idVideo);
     fd5VideoAlternarDisplay(idVideo,'none');
+
     let idCanvas= '#'+id+'_videoCanvas';
     var canvas  = document.querySelector(idCanvas);
     fd5VideoAlternarDisplay(idCanvas,'block');
+    
     var context= canvas.getContext('2d');
-
     //video.style.display = 'none';
     canvas.height = video.videoHeight;
     canvas.width  = video.videoWidth;
