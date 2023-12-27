@@ -72,9 +72,14 @@ function fd5VideoStop(id){
   }
 }
 
+/**
+ * Verifica se o modo de exibição atual é igual ao desejado
+ * @param {string} idElemento  - 01: id do elemento html iniciando com # 
+ * @param {string} modoExibicao- 02: block ou none
+ * @returns 
+ */
 function fd5VideoAlternarDisplay(idElemento, modoExibicao) {
   var elemento = document.querySelector(idElemento);
-  // Verifica se o modo de exibição atual é igual ao desejado
   if (window.getComputedStyle(elemento).display === modoExibicao) {
       return;
   }
