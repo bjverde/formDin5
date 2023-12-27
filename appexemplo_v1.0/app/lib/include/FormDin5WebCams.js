@@ -95,8 +95,9 @@ function fd5VideoStart(id){
   }
   fd5VideoStop(id);
   fd5VideoAlternarDisplay('#'+id+'_videoCanvas','none');
-  let video = document.querySelector('#'+id+'_video');
   fd5VideoAlternarDisplay('#'+id+'_video','block');
+  
+  let video = document.querySelector('#'+id+'_video');
   let divVideo = document.querySelector('#'+id+'_videodiv');
 
 	navigator.mediaDevices.getUserMedia({video:true})
