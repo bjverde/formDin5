@@ -142,19 +142,20 @@ function dataUrltoFile(dataURL,nameFile) {
  * Coloca uma imagem sobre a imagem da camera para indicar que está correto
  * @param {string} id     - O ID do elemento de vídeo a ser capturado.
  * @param {object} canvas - um objeto do tipo HTMLCanvasElement
+ * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
+ * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
  */
-function fd5VideoCampiturarSucesso(canvas) {
+function fd5VideoCampiturarSucesso(canvas,imgPathFeedBack, imgPercent) {
   let context = canvas.getContext('2d');
   let pathImg = fd5VideoCaminhoSite();
-  pathImg = pathImg+'app/images/mark-cheque-green.png';
+  pathImg = pathImg+imgPathFeedBack;
 
   // Carregar a imagem PNG com fundo transparente
   let imagemPNG = new Image();
   imagemPNG.onload = function() {
-    let percentualReducao = 0.1;
-    let novaLargura = imagemPNG.width * percentualReducao;
-    let novaAltura = imagemPNG.height * percentualReducao;
+    let novaLargura = imagemPNG.width  * imgPercent;
+    let novaAltura  = imagemPNG.height * imgPercent;
 
     // Desenhar a imagem PNG sobre a imagem do vídeo no canto direito superior
     let posX = 25; // Posição X (canto direito)
@@ -170,9 +171,11 @@ function fd5VideoCampiturarSucesso(canvas) {
  * Pegar o ScreenShot gerado e envia para o servidor 
  * @param {string} id     - O ID do elemento de vídeo a ser capturado.
  * @param {object} canvas - um objeto do tipo HTMLCanvasElement
+ * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
+ * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
  */
-function fd5VideoSaveTmpAdianti(id,canvas){
+function fd5VideoSaveTmpAdianti(id,canvas,imgPathFeedBack, imgPercent){
   try {
     let nameFile = 'image' + Math.floor((Math.random() * 1000000) + 1) + '.png';
     let hiddenField = document.querySelector('#'+id);
@@ -195,7 +198,7 @@ function fd5VideoSaveTmpAdianti(id,canvas){
     ajax.onreadystatechange = function() {
       if (ajax.readyState === XMLHttpRequest.DONE) {
           if (ajax.status === 200) {
-            fd5VideoCampiturarSucesso(canvas);
+            fd5VideoCampiturarSucesso(canvas,imgPathFeedBack, imgPercent);
           } else {
             __adianti_error('Error', 'Error ao gravar a imagem, informe o problema');
           }
@@ -211,9 +214,11 @@ function fd5VideoSaveTmpAdianti(id,canvas){
 /**
  * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
  * @param {string} id - O ID do elemento de vídeo a ser capturado.
+ * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
+ * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
  */
-function fd5VideoCampiturar(id){
+function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
   try {
     let idVideo= '#'+id+'_video';
     var video  = document.querySelector(idVideo);
@@ -229,7 +234,7 @@ function fd5VideoCampiturar(id){
     context.drawImage(video, 0, 0);
 
     fd5VideoStop(id);
-    fd5VideoSaveTmpAdianti(id,canvas);
+    fd5VideoSaveTmpAdianti(id,canvas,imgPathFeedBack, imgPercent);
   }
   catch (e) {
       __adianti_error('Error', e);
