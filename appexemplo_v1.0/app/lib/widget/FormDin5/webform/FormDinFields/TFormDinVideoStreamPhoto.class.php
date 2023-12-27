@@ -76,7 +76,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
                                )
     {
         $imgPathFeedBack = empty($imgPathFeedBack)?'app/images/mark-cheque-green.png':$imgPathFeedBack;
-        $imgPercent = empty($imgPercent)?'0.7':$imgPercent;
+        $imgPercent = empty($imgPercent)?'0.45':$imgPercent;
 
         //$adiantiObjHiden = new THidden($idField);
         //$adiantiObjHiden->setId($idField);
