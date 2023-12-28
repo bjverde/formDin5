@@ -1080,6 +1080,8 @@ class TFormDin
      * @param string  $enableChangeCam -06: NOT_IMPLEMENTED TRUE (Default) or FALSE, Enable Change Cam
      * @param boolean $width           -07: NOT_IMPLEMENTED Default Null, largura em % ou px
      * @param boolean $height          -08: NOT_IMPLEMENTED Default Null, altura  em % ou px
+     * @param string  $imgPathFeedBack -09: Caminho da imagem que vai aparece com FeedBack visual. Valor defualt é app/images/mark-cheque-green.png
+     * @param string  $imgPercent      -10: Percentual do tamanho da imagem
      * @return TElement
      */
     public function addVideoStreamPhoto(string $idField
@@ -1090,6 +1092,8 @@ class TFormDin
                                        ,$enableChangeCam= null
                                        ,$width = null
                                        ,$height= null
+                                       ,$imgPathFeedBack= null
+                                       ,$imgPercent= null
                                        )
     {
         $boolRequired   = is_null($boolRequired)?false:$boolRequired;
@@ -1102,7 +1106,9 @@ class TFormDin
                                                  ,$boolRequired
                                                  ,$enableChangeCam
                                                  ,$width
-                                                 ,$height);
+                                                 ,$height
+                                                 ,$imgPathFeedBack
+                                                 ,$imgPercent);
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
