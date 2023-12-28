@@ -86,6 +86,15 @@ function fd5VideoAlternarDisplay(idElemento, modoExibicao) {
   elemento.style.display = modoExibicao; // Alterna para o modo de exibição desejado
 }
 
+function fd5VideoGetImgDimensoes(id){
+  let divPrincipal  = document.querySelector('#'+id+'_videodiv');
+  let proporcaoAlturaLargura = 9/16;
+  var imgDimensoes = {
+     height: (divPrincipal.offsetWidth * proporcaoAlturaLargura)
+    ,width : divPrincipal.offsetWidth
+  };
+  return imgDimensoes;
+}
 
 function fd5VideoStart(id){
    if ( !"mediaDevices" in navigator ||
@@ -99,7 +108,7 @@ function fd5VideoStart(id){
   fd5VideoAlternarDisplay('#'+id+'_videoCanvasUpload','none');
   
   let video = document.querySelector('#'+id+'_video');
-  let divVideo = document.querySelector('#'+id+'_videodiv');
+  let divPrincipal = fd5VideoGetImgDimensoes(id);
 
 	navigator.mediaDevices.getUserMedia({video:true})
 	.then(stream => {
@@ -107,8 +116,8 @@ function fd5VideoStart(id){
 		video.play();
     videoStream = stream; // Armazena o stream de vídeo na variável
 
-    video.height= divVideo.offsetHeight;
-    video.width = divVideo.offsetWidth;
+    video.height= divPrincipal.height;
+    video.width = divPrincipal.width;
 	})
 	.catch(error => {
     __adianti_error('Error', error);
