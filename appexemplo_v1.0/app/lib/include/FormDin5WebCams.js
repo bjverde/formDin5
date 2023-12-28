@@ -245,12 +245,7 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     let idCanvas= '#'+id+'_videoCanvas';
     var canvasCapturado = document.querySelector(idCanvas);
     fd5VideoAlternarDisplay(idCanvas,'block');
-
-    canvasCapturado.height = video.videoHeight;
-    canvasCapturado.width  = video.videoWidth;
-    var context= canvasCapturado.getContext('2d');
-    context.drawImage(video, 0, 0);
-
+    
     fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent);
     fd5VideoStop(id);
   }
