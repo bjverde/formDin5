@@ -94,8 +94,9 @@ function fd5VideoStart(id){
     return;
   }
   fd5VideoStop(id);
-  fd5VideoAlternarDisplay('#'+id+'_videoCanvas','none');
   fd5VideoAlternarDisplay('#'+id+'_video','block');
+  fd5VideoAlternarDisplay('#'+id+'_videoCanvas','none');
+  fd5VideoAlternarDisplay('#'+id+'_videoCanvasUpload','none');
   
   let video = document.querySelector('#'+id+'_video');
   let divVideo = document.querySelector('#'+id+'_videodiv');
@@ -172,7 +173,7 @@ function fd5VideoCampiturarSucesso(canvas,imgPathFeedBack, imgPercent) {
 }
 
 function fd5VideoGeraImgUpload(id,video){
-  let idCanvas= '#'+id+'_videoCanvas';
+  let idCanvas= '#'+id+'_videoCanvasUpload';
   let canvasUpload = document.querySelector(idCanvas);
   
   // Define a largura e altura desejadas para o arquivo de upload
