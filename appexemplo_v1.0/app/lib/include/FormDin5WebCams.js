@@ -261,12 +261,11 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     var canvasCapturado = document.querySelector(idCanvas);
     fd5VideoAlternarDisplay(idCanvas,'block');
 
-    let divPrincipal  = document.querySelector('#'+id+'_videodiv');
-    let proporcaoLarguraAltura = 9/16;
-    canvasCapturado.height = (divPrincipal.offsetWidth * proporcaoLarguraAltura);
-    canvasCapturado.width  = divPrincipal.offsetWidth;
+    let divPrincipal = fd5VideoGetImgDimensoes(id);
+    canvasCapturado.height = divPrincipal.height;
+    canvasCapturado.width  = divPrincipal.width;
     let context= canvasCapturado.getContext('2d');
-    context.drawImage(video, 0, 0, divPrincipal.offsetWidth, (divPrincipal.offsetWidth * proporcaoLarguraAltura));
+    context.drawImage(video, 0, 0, divPrincipal.width, divPrincipal.height);
 
     fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent);
     fd5VideoStop(id);
