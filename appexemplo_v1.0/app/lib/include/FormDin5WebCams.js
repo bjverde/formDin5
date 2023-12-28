@@ -187,9 +187,6 @@ function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPer
     let hiddenField = document.querySelector('#'+id);
     hiddenField.value = nameFile;
 
-    let pathSite = fd5VideoCaminhoSite();
-    pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
-
     let idCanvas= '#'+id+'_videoCanvas';
     let canvasUpload = document.querySelector(idCanvas);
     
@@ -207,6 +204,9 @@ function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPer
     let formdata = new FormData();
     formdata.append(id, nameFile);
     formdata.append('arquivo', file);
+
+    let pathSite = fd5VideoCaminhoSite();
+    pathSite = pathSite+'app/lib/widget/FormDin5/callback/upload.class.php';
 
     let ajax = new XMLHttpRequest();
     ajax.open("POST", pathSite,true);
