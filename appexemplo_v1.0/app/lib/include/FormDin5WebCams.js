@@ -171,6 +171,21 @@ function fd5VideoCampiturarSucesso(canvas,imgPathFeedBack, imgPercent) {
   imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
 }
 
+function fd5VideoGeraImgUpload(id,video){
+  let idCanvas= '#'+id+'_videoCanvas';
+  let canvasUpload = document.querySelector(idCanvas);
+  
+  // Define a largura e altura desejadas para o arquivo de upload
+  var larguraParaUpload = 1280;
+  var alturaParaUpload = 720;
+
+  canvasUpload.height = alturaParaUpload;
+  canvasUpload.width  = larguraParaUpload;
+  let context = canvasUpload.getContext('2d');
+  context.drawImage(video, 0, 0, larguraParaUpload, alturaParaUpload);  
+
+  return canvasUpload;
+}
 
 /**
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
@@ -187,17 +202,7 @@ function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPer
     let hiddenField = document.querySelector('#'+id);
     hiddenField.value = nameFile;
 
-    let idCanvas= '#'+id+'_videoCanvas';
-    let canvasUpload = document.querySelector(idCanvas);
-    
-    // Define a largura e altura desejadas para o arquivo de upload
-    var larguraParaUpload = 1280;
-    var alturaParaUpload = 720;
-
-    canvasUpload.height = alturaParaUpload;
-    canvasUpload.width  = larguraParaUpload;
-    let context = canvasUpload.getContext('2d');
-    context.drawImage(video, 0, 0, larguraParaUpload, alturaParaUpload);
+    let canvasUpload = fd5VideoGeraImgUpload(id,video);
     
     let dataURL = canvasUpload.toDataURL();
     let file = dataUrltoFile(dataURL,nameFile);
@@ -245,7 +250,7 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     let idCanvas= '#'+id+'_videoCanvas';
     var canvasCapturado = document.querySelector(idCanvas);
     fd5VideoAlternarDisplay(idCanvas,'block');
-    
+
     fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent);
     fd5VideoStop(id);
   }
