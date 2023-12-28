@@ -251,8 +251,8 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     var context= canvasCapturado.getContext('2d');
     context.drawImage(video, 0, 0);
 
-    fd5VideoStop(id);
     fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent);
+    fd5VideoStop(id);
   }
   catch (e) {
       __adianti_error('Error', e);
