@@ -12,13 +12,8 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p id="demo">Clique no botão para obter sua localização:</p>
-    <button onclick="getLocation()">Clique aqui</button>
-    <div id="info"></div>
-    <div id="mapholder"></div>
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <h1>Exemplo de Geolocalização</h1>
 <script>
-var x=document.getElementById("demo");
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -29,14 +24,17 @@ function getLocation() {
 }
 function showPosition(position) {
     console.log(position);
-    let lat=position.coords.latitude;
-    let lon=position.coords.longitude;
-    console.log('lat',lat);
-    console.log('lon',lon);
+    let latitude=position.coords.latitude;
+    let longitude=position.coords.longitude;
+    console.log('Latitude: ',latitude);
+    console.log('Longitude:',longitude);
 }
 function showError(error) {
-    console.log(error);
+    console.log('Erro ao obter localização:', erro);
 }
+
+// Atribuir a função diretamente a window.onload
+window.onload = getLocation;
 </script>
 </body>
 </html>
