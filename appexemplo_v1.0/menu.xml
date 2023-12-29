@@ -53,6 +53,19 @@
                     </menuitem>                    
                 </menu>
             </menuitem>
+            <menuitem label='Coordenadas'>
+                <icon>fas:map-marker #DB4A39</icon>
+                <menu>
+                    <menuitem label='Latitude e Longitude'>
+                        <icon>fas:globe #DB4A39</icon>
+                        <action>exe_TFormDinCordLatLon</action>
+                    </menuitem>
+                    <menuitem label='Grau, Minuto e Segundo'>
+                        <icon>fa:cube fa-fw</icon>
+                        <action>comingSoonView</action>
+                    </menuitem>
+                </menu>
+            </menuitem>            
             <menuitem label='Select'>
                 <icon>fa:sort-down fa-fw</icon>
                 <menu>
