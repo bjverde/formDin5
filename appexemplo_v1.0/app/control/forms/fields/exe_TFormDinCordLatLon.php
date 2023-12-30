@@ -93,17 +93,18 @@ class exe_TFormDinCordLatLon extends TPage
     {
         try
         {
-            $data = $this->form->getData();
-            $this->form->setData($data);
-            $this->form->validate();
-            
-    
+            //$data = $this->form->getData();
+            //$this->form->setData($data);
+            //$this->form->validate();
             //Função do FormDin para Debug
             FormDinHelper::d($param,'$param');
-            FormDinHelper::debug($data,'$data');
-            FormDinHelper::debug($_REQUEST,'$_REQUEST');
+            //FormDinHelper::debug($data,'$data');
+            //FormDinHelper::debug($_REQUEST,'$_REQUEST');
 
-            new TMessage('info', 'Tudo OK!');
+            $text[] = 'Tudo OK!';
+            $text[] = '<a href="https://www.google.com/maps?q='.$param['cood_lat'].','.$param['cood_lon'].'" target="_blank">Abrir no google Maps</a>';
+            $text = TFormDinMessage::messageTransform($text);
+            new TMessage(TFormDinMessage::TYPE_INFO, $text);
         }
         catch (Exception $e)
         {
