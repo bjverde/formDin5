@@ -22,18 +22,19 @@ class exe_TFormDinCordLatLon extends TPage
         //-15.807197901482752
         $idField = 'cood';
         $boolRequired = false;
-        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',$boolRequired,21);
-        $adiantiObjLat = $fd5Lat->getAdiantiObj();
+        //$fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',$boolRequired,21);
+        //$adiantiObjLat = $fd5Lat->getAdiantiObj();
+        $adiantiObjLat = new TEntry($idField);
 
         $scriptJswebCam = new TElement('script');
-        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver=500');
+        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocationLoad.js?appver=500');
 
         $idDivWebCam = $idField.'_videodiv';
         $divWebCam = new TElement('div');
         $divWebCam->class = 'fd5DivVideo';
         $divWebCam->setProperty('id',$idDivWebCam);
         $divWebCam->add($adiantiObjLat);
-        //$divWebCam->add($scriptJswebCam);
+        $divWebCam->add($scriptJswebCam);
 
         $row2 = $frm->addFields([new TLabel("Cod Regiao:", '#FF0000', '14px', null)],[$divWebCam]
                                       ,[],[]);
