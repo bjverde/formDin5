@@ -5,7 +5,9 @@ function fd5GetLocation(idField) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             fd5ShowPosition(position,idField);
-        },fd5ShowPositionError);
+        },function(error) {
+            fd5ShowPositionError(error,idField);
+        });
     } else{
         let dadosLocalizacao = {
             code: 999
@@ -45,7 +47,7 @@ function fd5ShowPosition(position,idField) {
     let fieldAlt = document.querySelector('#'+idField+'_alt');
     fieldAlt.value = altitude;
 }
-function fd5ShowPositionError(error) {
+function fd5ShowPositionError(error,idField) {
     var code= error.code;
     var msg = null;
     switch(error.code) {
