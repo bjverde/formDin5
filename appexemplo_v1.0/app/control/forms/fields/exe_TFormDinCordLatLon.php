@@ -98,11 +98,14 @@ class exe_TFormDinCordLatLon extends TPage
             //$this->form->validate();
             //Função do FormDin para Debug
             FormDinHelper::d($param,'$param');
-            //FormDinHelper::debug($data,'$data');
-            //FormDinHelper::debug($_REQUEST,'$_REQUEST');
+            $latitude  = $param['cood_lat'];
+            $longitude = $param['cood_lon'];
 
             $text[] = 'Tudo OK!';
-            $text[] = '<a href="https://www.google.com/maps?q='.$param['cood_lat'].','.$param['cood_lon'].'" target="_blank">Abrir no google Maps</a>';
+            $text[] = '<a href="https://www.google.com/maps?q='.$latitude.','.$longitude.'" target="_blank">Abrir no google Maps</a>';
+            $text[] = '<a href="https://www.bing.com/maps?cp='.$latitude.'~'.$longitude.'" target="_blank">Bing Maps</a>';
+            $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$latitude.'&mlon='.$longitude.'" target="_blank">OpenStreetMap (OSM)</a>';
+            $text[] = '<a href="https://www.here.com/directions/drive/mylocation='.$latitude.','.$longitude.'" target="_blank">HERE Maps</a>';
             $text = TFormDinMessage::messageTransform($text);
             new TMessage(TFormDinMessage::TYPE_INFO, $text);
         }
