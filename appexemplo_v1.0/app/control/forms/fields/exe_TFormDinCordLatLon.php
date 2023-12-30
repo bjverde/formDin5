@@ -18,28 +18,26 @@ class exe_TFormDinCordLatLon extends TPage
         $frm = new TFormDin($this,'Exemplo TFormDinCordLatLon');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
 
-        $msg = null;
-        $msg = $msg.'<br>No Adianti tem os exemplos FormImageUploader com TImageCapture que pegar da Camera';
-        $msg = $msg.'<br>Porém no celular o TImageCapture permite fazer upload de imagens, porém o TFormDinVideoStreamPhoto só usar Camera';
-        $msg = $msg.'<br><a href="https://framework.adianti.me//tutor/index.php?class=FormImageUploader">Adianti Tutor - FormImageUploader</a>';
-        $frm->addHtmlField('dica1',$msg, null, 'Dica:', null, 200);
 
+        //-15.807197901482752
+        $idField = 'cood';
+        $boolRequired = false;
+        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',$boolRequired,21);
+        $adiantiObjLat = $fd5Lat->getAdiantiObj();
 
-        $frm->addVideoStreamPhoto('webcam1','Nova WebCam',true);
+        $scriptJswebCam = new TElement('script');
+        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver=500');
 
-        //$fd5VideoStream = new TFormDinVideoStreamPhoto('webcam2','WebCam modo Adianti',true);
-        //$divWebCam = $fd5VideoStream->getAdiantiObj();      
-        //$row5 = $frm->addFields([new TLabel("WebCam modo Adianti:", '#ff0000', '14px', null, '100%')],[$divWebCam]);
+        $idDivWebCam = $idField.'_videodiv';
+        $divWebCam = new TElement('div');
+        $divWebCam->class = 'fd5DivVideo';
+        $divWebCam->setProperty('id',$idDivWebCam);
+        $divWebCam->add($adiantiObjLat);
+        //$divWebCam->add($scriptJswebCam);
 
-        $msg = null;
-        $msg = $msg.'<br>Exemplo com upload de imagens';
-        $msg = $msg.'<ul>';
-        $msg = $msg.'  <li><a href="index.php?class=exe_fwShowBlobDisco">Exemplo Campo Select Simples</a></li>';
-        $msg = $msg.'  <li><a href="index.php?class=exe_TFileMulti">Exemplo campo upload arquivo Multiplo</a></li>';
-        $msg = $msg.'  <li><a href="index.php?class=exe_TFile">Exemplo campo upload arquivo</a></li>';
-        $msg = $msg.'</ul>';
-        $frm->addGroupField('gpx1', 'Veja outros exemplos relacionados');
-        $frm->addHtmlField('aviso_relacionado',$msg, null, 'Lista de exemplos', null, 200);        
+        $row2 = $frm->addFields([new TLabel("Cod Regiao:", '#FF0000', '14px', null)],[$divWebCam]
+                                      ,[],[]);
+       
 
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
