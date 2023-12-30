@@ -24,16 +24,32 @@ class exe_TFormDinCordLatLon extends TPage
         $boolRequired = false;
         //$fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',$boolRequired,21);
         //$adiantiObjLat = $fd5Lat->getAdiantiObj();
-        $adiantiObjLat = new TEntry($idField);
+        $adiantiObjLat = new TEntry($idField.'_lat');
+        $adiantiObjLat->id = $idField.'_lat';
+
+        $adiantiObjLon = new TEntry($idField.'_lon');
+        $adiantiObjLon->id = $idField.'_lon';
+
+        $adiantiObjAlt = new TEntry($idField.'_alt');
+        $adiantiObjAlt->id = $idField.'_alt';        
 
         $scriptJswebCam = new TElement('script');
-        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocationLoad.js?appver=500');
+        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
+
+        $btnScreenshot = new TButton('btnScreenshot');
+        $btnScreenshot->class = 'btn btn-primary btn-sm';
+        $btnScreenshot->setLabel('Informar Geolocalização');
+        $btnScreenshot->setImage('fas:map-marker');
+        $btnScreenshot->addFunction("fd5GetLocation('".$idField."')");        
 
         $idDivWebCam = $idField.'_videodiv';
         $divWebCam = new TElement('div');
         $divWebCam->class = 'fd5DivVideo';
         $divWebCam->setProperty('id',$idDivWebCam);
+        $divWebCam->add($btnScreenshot);
         $divWebCam->add($adiantiObjLat);
+        $divWebCam->add($adiantiObjLon);
+        $divWebCam->add($adiantiObjAlt);
         $divWebCam->add($scriptJswebCam);
 
         $row2 = $frm->addFields([new TLabel("Cod Regiao:", '#FF0000', '14px', null)],[$divWebCam]

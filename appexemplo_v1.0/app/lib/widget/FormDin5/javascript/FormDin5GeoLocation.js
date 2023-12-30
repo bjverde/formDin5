@@ -1,29 +1,40 @@
 var eventoCarregamento = new Event('fd5GeolocationLoad');
 document.dispatchEvent(eventoCarregamento);
 
-function fd5GetLocation() {
+function fd5GetLocation(idField) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(fd5ShowPosition,fd5ShowPositionError);
+        navigator.geolocation.getCurrentPosition(function(position) {
+            fd5ShowPosition(position,idField);
+        },fd5ShowPositionError);
     } else{
         console.log('Geolocalização não é suportada nesse browser.');
     }
 }
-function fd5ShowPosition(position) {
-    console.log(position);
-    let latitude=position.coords.latitude;
+function fd5ShowPosition(position,idField) {
+
+    let latitude =position.coords.latitude;
     let longitude=position.coords.longitude;
+    let altitude =position.coords.altitude;
     var dadosLocalizacao = {
-         latitude: position.coords.latitude
-        ,longitude: position.coords.longitude
-        ,altitude: position.coords.altitude
+         latitude: latitude
+        ,longitude:longitude
+        ,altitude: altitude
         ,accuracy: position.coords.accuracy
         ,altitudeAccuracy: position.coords.altitudeAccuracy
-        ,heading: position.coords.heading
-        ,speed: position.coords.speed
+        ,heading:position.coords.heading
+        ,speed:  position.coords.speed
         ,timestamp: position.timestamp
     };
     var jsonLocalizacao = JSON.stringify(dadosLocalizacao);
-    console.log('Localização em formato JSON:', jsonLocalizacao);
+
+    let fieldLat = document.querySelector('#'+idField+'_lat');
+    fieldLat.value = latitude;
+
+    let fieldLon = document.querySelector('#'+idField+'_lon');
+    fieldLon.value = longitude;
+
+    let fieldAlt = document.querySelector('#'+idField+'_alt');
+    fieldAlt.value = altitude;
 }
 function fd5ShowPositionError(error) {
     console.log('Erro ao obter localização:', error);
