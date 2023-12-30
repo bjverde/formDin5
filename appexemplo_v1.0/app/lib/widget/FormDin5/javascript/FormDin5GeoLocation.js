@@ -1,11 +1,14 @@
-function getLocation() {
+var eventoCarregamento = new Event('fd5GeolocationLoad');
+document.dispatchEvent(eventoCarregamento);
+
+function fd5GetLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition,showError);
+        navigator.geolocation.getCurrentPosition(fd5ShowPosition,fd5ShowPositionError);
     } else{
         console.log('Geolocalização não é suportada nesse browser.');
     }
 }
-function showPosition(position) {
+function fd5ShowPosition(position) {
     console.log(position);
     let latitude=position.coords.latitude;
     let longitude=position.coords.longitude;
@@ -22,6 +25,6 @@ function showPosition(position) {
     var jsonLocalizacao = JSON.stringify(dadosLocalizacao);
     console.log('Localização em formato JSON:', jsonLocalizacao);
 }
-function showError(error) {
-    console.log('Erro ao obter localização:', erro);
+function fd5ShowPositionError(error) {
+    console.log('Erro ao obter localização:', error);
 }

@@ -4,5 +4,5 @@ document.body.appendChild(script); // Define o src do script para o seu arquivo 
 
 // Adiciona um ouvinte para o evento personalizado
 document.addEventListener('fd5GeolocationLoad', function() {
-    getLocation();
+    fd5GetLocation();
 });
