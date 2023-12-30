@@ -25,6 +25,3 @@ function showPosition(position) {
 function showError(error) {
     console.log('Erro ao obter localização:', erro);
 }
-
-// Atribuir a função diretamente a window.onload
-window.onload = getLocation;
