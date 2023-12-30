@@ -22,6 +22,10 @@ class exe_TFormDinCordLatLon extends TPage
         //-15.807197901482752
         $idField = 'cood';
         $boolRequired = false;
+
+        $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
+        $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
+
         //$fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',$boolRequired,21);
         //$adiantiObjLat = $fd5Lat->getAdiantiObj();
         $adiantiObjLat = new TEntry($idField.'_lat');
@@ -47,6 +51,7 @@ class exe_TFormDinCordLatLon extends TPage
         $divWebCam->class = 'fd5DivVideo';
         $divWebCam->setProperty('id',$idDivWebCam);
         $divWebCam->add($btnScreenshot);
+        $divWebCam->add($adObjHiddenJson);
         $divWebCam->add($adiantiObjLat);
         $divWebCam->add($adiantiObjLon);
         $divWebCam->add($adiantiObjAlt);

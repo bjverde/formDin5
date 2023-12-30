@@ -25,7 +25,9 @@ function fd5ShowPosition(position,idField) {
         ,speed:  position.coords.speed
         ,timestamp: position.timestamp
     };
-    var jsonLocalizacao = JSON.stringify(dadosLocalizacao);
+    let jsonLocalizacao = JSON.stringify(dadosLocalizacao);
+    let fieldJson = document.querySelector('#'+idField+'_json');
+    fieldJson.value = jsonLocalizacao;    
 
     let fieldLat = document.querySelector('#'+idField+'_lat');
     fieldLat.value = latitude;
