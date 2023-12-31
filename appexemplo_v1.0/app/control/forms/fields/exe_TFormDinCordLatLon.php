@@ -37,27 +37,27 @@ class exe_TFormDinCordLatLon extends TPage
         $adiantiObjAlt = new TEntry($idField.'_alt');
         $adiantiObjAlt->id = $idField.'_alt';        
 
-        $scriptJswebCam = new TElement('script');
-        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
+        $scriptJsGeo = new TElement('script');
+        $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
 
-        $btnScreenshot = new TButton('btnScreenshot');
-        $btnScreenshot->class = 'btn btn-primary btn-sm';
-        $btnScreenshot->setLabel('Informar Geolocalização');
-        $btnScreenshot->setImage('fas:map-marker');
-        $btnScreenshot->addFunction("fd5GetLocation('".$idField."')");        
+        $btnGeo = new TButton('btnScreenshot');
+        $btnGeo->class = 'btn btn-primary btn-sm';
+        $btnGeo->setLabel('Informar Geolocalização');
+        $btnGeo->setImage('fas:map-marker');
+        $btnGeo->addFunction("fd5GetLocation('".$idField."')");        
 
-        $idDivWebCam = $idField.'_videodiv';
-        $divWebCam = new TElement('div');
-        $divWebCam->class = 'fd5DivVideo';
-        $divWebCam->setProperty('id',$idDivWebCam);
-        $divWebCam->add($btnScreenshot);
-        $divWebCam->add($adObjHiddenJson);
-        $divWebCam->add($adiantiObjLat);
-        $divWebCam->add($adiantiObjLon);
-        $divWebCam->add($adiantiObjAlt);
-        $divWebCam->add($scriptJswebCam);
+        $idDivGeo = $idField.'_videodiv';
+        $divGeo = new TElement('div');
+        $divGeo->class = 'fd5DivVideo';
+        $divGeo->setProperty('id',$idDivGeo);
+        $divGeo->add($btnGeo);
+        $divGeo->add($adObjHiddenJson);
+        $divGeo->add($adiantiObjLat);
+        $divGeo->add($adiantiObjLon);
+        $divGeo->add($adiantiObjAlt);
+        $divGeo->add($scriptJsGeo);
 
-        $row2 = $frm->addFields([new TLabel("Cod Regiao:", '#FF0000', '14px', null)],[$divWebCam]
+        $row2 = $frm->addFields([new TLabel("Coordenadas:", '#FF0000', '14px', null)],[$divGeo]
                                       ,[],[]);
        
 
