@@ -1984,6 +1984,45 @@ class TFormDin
 	}
 
     /**
+     * Pegar informações geolocalização do navegador
+     *
+     * @param string  $idField         -01: ID do campo
+     * @param string  $label           -02: Label do campo, usado para validações
+     * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $boolNewLine     -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove  -05: Label na mesma linha DEFAULT is FALSE, para label acima = TRUE
+     * @param boolean $showFields      -06: TRUE (Default) or FALSE, Show fields latitude and longitude
+     * @param boolean $showAltitude    -07: TRUE (Default) or FALSE, Show field  altitude
+     * @param boolean $fieldsReadOnly  -08: TRUE (Default) or FALSE, Field read only
+     * @param boolean $fielAllJson     -09: TRUE (Default) or FALSE, Cria um campo oculta que vai receber um JSON com todos os atributos
+     * @return TElement
+     */
+	public function addCordLatLon(string $idField
+                                 ,string $label
+                                 ,$boolRequired  =null
+                                 ,$boolNewLine   =null
+                                 ,$boolLabelAbove=null
+                                 ,$showFields    =null
+                                 ,$showAltitude  =null
+                                 ,$fieldsReadOnly=null
+                                 ,$fielAllJson   =null
+                                )
+	{        
+        $formField = new TFormDinCordLatLon( $idField
+                                            ,$label
+                                            ,$boolRequired
+                                            ,$showFields
+                                            ,$showAltitude
+                                            ,$fieldsReadOnly
+                                            ,$fielAllJson
+                                            );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
+
+    /**
      * Adiciona uma linha simples de texto com label
      *
      * @param string $strName         -01: ID do campo
