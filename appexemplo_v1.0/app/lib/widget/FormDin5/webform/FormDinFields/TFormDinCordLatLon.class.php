@@ -48,7 +48,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
 {
     protected $adiantiObj;
     private $class = array();
-    private $idField = null;
+    private $idDivGeo = null;
     private $showFields = null;
     private $showAltitude = null;
     private $fieldsReadOnly = null;
@@ -80,18 +80,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $this->setFieldsReadOnly($fieldsReadOnly);
         $this->setFieldAllJson($fieldAllJson);
         $adiantiObj = $this->getDivGeo($idField,$boolRequired);
-        parent::__construct($adiantiObj,$idDivGeo,$label,false,null,null);
+        parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
         return $this->getAdiantiObj();
-    }
-    //--------------------------------------------------------------------
-    public function setIdField($idField)
-    {
-        $idField = empty($idField)?true:$idField;
-        $this->idField = $idField;
-    }
-    public function getIdField(){
-        return $this->idField;
-    }    
+    }   
     //--------------------------------------------------------------------
     public function setShowFields($showFields)
     {
@@ -129,10 +120,15 @@ class TFormDinCordLatLon extends TFormDinGenericField
         return $this->fieldsReadOnly;
     }
     //--------------------------------------------------------------------
+    public function setIdDivGeo($idDivGeo)
+    {
+        $this->idDivGeo = $idDivGeo;
+    }
+    public function getIdDivGeo(){
+        return $this->idDivGeo;
+    }    
+    //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
-        $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
-        $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
-
         $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
         $adiantiObjLat = $fd5Lat->getAdiantiObj();
 
@@ -151,12 +147,16 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $btnGeo->setImage('fas:map-marker');
         $btnGeo->addFunction("fd5GetLocation('".$idField."')");        
 
-        $idDivGeo = $idField.'_videodiv';
+        $this->setIdDivGeo($idField.'_videodiv');
         $divGeo = new TElement('div');
         $divGeo->class = 'fd5DivVideo';
-        $divGeo->setProperty('id',$idDivGeo);
+        $divGeo->setProperty('id',$this->getIdDivGeo());
         $divGeo->add($btnGeo);
-        $divGeo->add($adObjHiddenJson);
+        if($this->getFieldAllJson()){
+            $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
+            $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();               
+            $divGeo->add($adObjHiddenJson);
+        }
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
         $divGeo->add($adiantiObjAlt);
