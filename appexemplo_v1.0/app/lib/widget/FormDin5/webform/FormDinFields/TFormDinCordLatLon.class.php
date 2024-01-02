@@ -129,15 +129,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     }    
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
-        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-        $adiantiObjLat = $fd5Lat->getAdiantiObj();
-
-        $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-        $adiantiObjLon = $fd5Lon->getAdiantiObj();
-
-        $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-        $adiantiObjAlt = $fd5Alt->getAdiantiObj();
-
+        
         $scriptJsGeo = new TElement('script');
         $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
 
@@ -157,10 +149,33 @@ class TFormDinCordLatLon extends TFormDinGenericField
             $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();               
             $divGeo->add($adObjHiddenJson);
         }
+
+        $adiantiObjLat = null;
+        $adiantiObjLon = null;
+        $adiantiObjAlt = null;
+        if( $this->getShowFields() == true){
+            $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+            $adiantiObjLat = $fd5Lat->getAdiantiObj();
+    
+            $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+            $adiantiObjLon = $fd5Lon->getAdiantiObj();
+    
+            $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+            $adiantiObjAlt = $fd5Alt->getAdiantiObj();
+        }else{
+            $fd5Lat  = new TFormDinHiddenField($idField.'_lat',null,$boolRequired);
+            $adiantiObjLat = $fd5Lat->getAdiantiObj();
+
+            $fd5Lon = new TFormDinHiddenField($idField.'_lon',null,$boolRequired);
+            $adiantiObjLon = $fd5Lon->getAdiantiObj();
+    
+            $fd5Alt = new TFormDinHiddenField($idField.'_alt',null,$boolRequired);
+            $adiantiObjAlt = $fd5Alt->getAdiantiObj();            
+        }
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
         $divGeo->add($adiantiObjAlt);
-        $divGeo->add($scriptJsGeo);        
+        $divGeo->add($scriptJsGeo);
         return $divGeo;
     }    
 }
