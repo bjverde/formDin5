@@ -26,16 +26,14 @@ class exe_TFormDinCordLatLon extends TPage
         $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
         $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
 
-        //$fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',$boolRequired,21);
-        //$adiantiObjLat = $fd5Lat->getAdiantiObj();
-        $adiantiObjLat = new TEntry($idField.'_lat');
-        $adiantiObjLat->id = $idField.'_lat';
+        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $adiantiObjLat = $fd5Lat->getAdiantiObj();
 
-        $adiantiObjLon = new TEntry($idField.'_lon');
-        $adiantiObjLon->id = $idField.'_lon';
+        $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $adiantiObjLon = $fd5Lon->getAdiantiObj();
 
-        $adiantiObjAlt = new TEntry($idField.'_alt');
-        $adiantiObjAlt->id = $idField.'_alt';        
+        $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $adiantiObjAlt = $fd5Alt->getAdiantiObj();
 
         $scriptJsGeo = new TElement('script');
         $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
