@@ -68,11 +68,11 @@ class TFormDinCordLatLon extends TFormDinGenericField
      */
     public function __construct(string $idField
                                ,string $label
-                               ,$boolRequired = false
-                               ,$showFields = true
-                               ,$showAltitude = true
-                               ,$fieldsReadOnly= true
-                               ,$fieldAllJson = true
+                               ,$boolRequired  =null
+                               ,$showFields    =null
+                               ,$showAltitude  =null
+                               ,$fieldsReadOnly=null
+                               ,$fieldAllJson  =null
                                )
     {
         $this->setShowFields($showFields);

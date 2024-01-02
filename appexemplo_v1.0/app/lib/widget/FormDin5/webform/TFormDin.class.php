@@ -1994,7 +1994,7 @@ class TFormDin
      * @param boolean $showFields      -06: TRUE (Default) or FALSE, Show fields latitude and longitude
      * @param boolean $showAltitude    -07: TRUE (Default) or FALSE, Show field  altitude
      * @param boolean $fieldsReadOnly  -08: TRUE (Default) or FALSE, Field read only
-     * @param boolean $fielAllJson     -09: TRUE (Default) or FALSE, Cria um campo oculta que vai receber um JSON com todos os atributos
+     * @param boolean $fieldAllJson    -09: TRUE (Default) or FALSE, Cria um campo oculta que vai receber um JSON com todos os atributos
      * @return TElement
      */
 	public function addCordLatLon(string $idField
@@ -2005,7 +2005,7 @@ class TFormDin
                                  ,$showFields    =null
                                  ,$showAltitude  =null
                                  ,$fieldsReadOnly=null
-                                 ,$fielAllJson   =null
+                                 ,$fieldAllJson   =null
                                 )
 	{        
         $formField = new TFormDinCordLatLon( $idField
@@ -2014,7 +2014,7 @@ class TFormDin
                                             ,$showFields
                                             ,$showAltitude
                                             ,$fieldsReadOnly
-                                            ,$fielAllJson
+                                            ,$fieldAllJson
                                             );
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
