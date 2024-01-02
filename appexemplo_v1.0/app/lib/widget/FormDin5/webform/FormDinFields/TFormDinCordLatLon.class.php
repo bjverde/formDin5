@@ -70,77 +70,43 @@ class TFormDinCordLatLon extends TFormDinGenericField
                                ,$fielAllJson = true
                                )
     {
-        $imgPathFeedBack = empty($imgPathFeedBack)?'app/images/mark-cheque-green.png':$imgPathFeedBack;
-        $imgPercent = empty($imgPercent)?'0.45':$imgPercent;
+        $idField = 'cood';
+        $boolRequired = false;
 
-        //$adiantiObjHiden = new THidden($idField);
-        //$adiantiObjHiden->setId($idField);
-        $fd5Hidden = new TFormDinHiddenField($idField,null,$boolRequired);
-        $adiantiObjHiden = $fd5Hidden->getAdiantiObj();
+        $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
+        $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
 
-        $adiantiObjWebCam = new TElement('video');
-        $adiantiObjWebCam->class = 'fd5Video';
-        $adiantiObjWebCam->setProperty('id',$idField.'_video');
-        $adiantiObjWebCam->setProperty('name',$idField.'_video');
-        $adiantiObjWebCam->setProperty('style','display: none;');
-        $adiantiObjWebCam->add('autoplay');
-        $adiantiObjWebCam->add('Your browser does not support HTML video.');
+        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $adiantiObjLat = $fd5Lat->getAdiantiObj();
 
-        $adiantiObjVideoCanvas = new TElement('canvas');
-        $adiantiObjVideoCanvas->class = 'fd5VideoCanvas';
-        $adiantiObjVideoCanvas->setProperty('id',$idField.'_videoCanvas');
-        $adiantiObjVideoCanvas->setProperty('name',$idField.'_videoCanvas');
-        $adiantiObjVideoCanvas->setProperty('style','display: none;');
+        $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $adiantiObjLon = $fd5Lon->getAdiantiObj();
 
-        $adiantiObjVideoCanvasUpload = new TElement('canvas');
-        $adiantiObjVideoCanvasUpload->class = 'fd5VideoCanvasUpload';
-        $adiantiObjVideoCanvasUpload->setProperty('id',$idField.'_videoCanvasUpload');
-        $adiantiObjVideoCanvasUpload->setProperty('name',$idField.'_videoCanvasUpload');
-        $adiantiObjVideoCanvasUpload->setProperty('style','display: none;');
+        $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $adiantiObjAlt = $fd5Alt->getAdiantiObj();
 
-        $scriptJswebCam = new TElement('script');
-        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5WebCams.js?appver='.FormDinHelper::version());
+        $scriptJsGeo = new TElement('script');
+        $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
 
+        $btnGeo = new TButton('btnScreenshot');
+        $btnGeo->class = 'btn btn-primary btn-sm';
+        $btnGeo->setLabel('Informar Geolocalização');
+        $btnGeo->setImage('fas:map-marker');
+        $btnGeo->addFunction("fd5GetLocation('".$idField."')");        
 
-        $btnStart = new TButton('btnStart');
-        $btnStart->class = 'btn btn-success btn-sm';
-        $btnStart->setLabel('Ligar Câmera');
-        $btnStart->setImage('fa:power-off');
-        $btnStart->addFunction("fd5VideoStart('".$idField."')");
+        $idDivGeo = $idField.'_videodiv';
+        $divGeo = new TElement('div');
+        $divGeo->class = 'fd5DivVideo';
+        $divGeo->setProperty('id',$idDivGeo);
+        $divGeo->add($btnGeo);
+        $divGeo->add($adObjHiddenJson);
+        $divGeo->add($adiantiObjLat);
+        $divGeo->add($adiantiObjLon);
+        $divGeo->add($adiantiObjAlt);
+        $divGeo->add($scriptJsGeo);
 
-        $btnChangeCamera = new TButton('btnChangeCamera');
-        $btnChangeCamera->class = 'btn btn-light btn-sm';
-        $btnChangeCamera->setLabel('Alterar Camera');
-        $btnChangeCamera->setImage('fa:sync-alt');
-        $btnChangeCamera->addFunction("fd5VideoCampiturar('".$idField."')");
-
-        $btnScreenshot = new TButton('btnScreenshot');
-        $btnScreenshot->class = 'btn btn-primary btn-sm';
-        $btnScreenshot->setLabel('Capiturar Foto');
-        $btnScreenshot->setImage('fa:camera');
-        $btnScreenshot->addFunction("fd5VideoCampiturar('".$idField."','".$imgPathFeedBack."',".$imgPercent.")");
-
-        $divButton = new TElement('div');
-        $divButton->class = 'fd5DivVideoButton';
-        $divButton->setProperty('id',$idField.'_videoDivButton');
-        $divButton->add($btnStart);
-        //$divButton->add($btnChangeCamera);
-        $divButton->add($btnScreenshot);
-
-
-        $idDivWebCam = $idField.'_videodiv';
-        $divWebCam = new TElement('div');
-        $divWebCam->class = 'fd5DivVideo';
-        $divWebCam->setProperty('id',$idDivWebCam);
-        $divWebCam->add($adiantiObjHiden);
-        $divWebCam->add($adiantiObjWebCam);
-        $divWebCam->add($adiantiObjVideoCanvas);
-        $divWebCam->add($adiantiObjVideoCanvasUpload);
-        $divWebCam->add($scriptJswebCam);
-        $divWebCam->add($divButton);
-
-        $adiantiObj = $divWebCam;
-        parent::__construct($adiantiObj,$idDivWebCam,$label,false,null,null);
+        $adiantiObj = $divGeo;
+        parent::__construct($adiantiObj,$idDivGeo,$label,false,null,null);
         return $this->getAdiantiObj();
     }
 
