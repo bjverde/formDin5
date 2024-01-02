@@ -2005,9 +2005,9 @@ class TFormDin
                                  ,$showFields    =null
                                  ,$showAltitude  =null
                                  ,$fieldsReadOnly=null
-                                 ,$fieldAllJson   =null
+                                 ,$fieldAllJson  =null
                                 )
-	{        
+	{
         $formField = new TFormDinCordLatLon( $idField
                                             ,$label
                                             ,$boolRequired

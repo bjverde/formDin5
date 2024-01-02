@@ -86,7 +86,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     //--------------------------------------------------------------------
     public function setShowFields($showFields)
     {
-        $showFields = empty($showFields)?true:$showFields;
+        $showFields = is_null($showFields)?true:$showFields;
         $this->showFields = $showFields;
     }
     public function getShowFields(){
@@ -95,7 +95,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     //--------------------------------------------------------------------
     public function setShowAltitude($showAltitude)
     {
-        $showAltitude = empty($showAltitude)?true:$showAltitude;
+        $showAltitude = is_null($showAltitude)?true:$showAltitude;
         $this->showAltitude = $showAltitude;
     }
     public function getShowAltitude(){
@@ -104,7 +104,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     //--------------------------------------------------------------------
     public function setFieldsReadOnly($fieldsReadOnly)
     {
-        $fieldsReadOnly = empty($fieldsReadOnly)?true:$fieldsReadOnly;
+        $fieldsReadOnly = is_null($fieldsReadOnly)?true:$fieldsReadOnly;
         $this->fieldsReadOnly = $fieldsReadOnly;
     }
     public function getFieldsReadOnly(){
@@ -113,7 +113,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     //--------------------------------------------------------------------
     public function setFieldAllJson($fieldAllJson)
     {
-        $fieldAllJson = empty($fieldAllJson)?true:$fieldAllJson;
+        $fieldAllJson = is_null($fieldAllJson)?true:$fieldAllJson;
         $this->fieldAllJson = $fieldAllJson;
     }
     public function getFieldAllJson(){
