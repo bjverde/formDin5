@@ -48,6 +48,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
 {
     protected $adiantiObj;
     private $class = array();
+    private $showFields = null;
 
     /**
      * Pegar informações geolocalização do navegador
@@ -70,19 +71,16 @@ class TFormDinCordLatLon extends TFormDinGenericField
                                ,$fielAllJson = true
                                )
     {
-        $idField = 'cood';
-        $boolRequired = false;
-
         $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
         $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
 
-        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
         $adiantiObjLat = $fd5Lat->getAdiantiObj();
 
-        $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
         $adiantiObjLon = $fd5Lon->getAdiantiObj();
 
-        $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
         $adiantiObjAlt = $fd5Alt->getAdiantiObj();
 
         $scriptJsGeo = new TElement('script');
