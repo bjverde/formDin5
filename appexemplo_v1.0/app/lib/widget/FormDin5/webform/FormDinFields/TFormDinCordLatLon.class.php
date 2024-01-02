@@ -49,6 +49,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     protected $adiantiObj;
     private $class = array();
     private $showFields = null;
+    private $showAltitude = null;
 
     /**
      * Pegar informações geolocalização do navegador
@@ -71,6 +72,8 @@ class TFormDinCordLatLon extends TFormDinGenericField
                                ,$fielAllJson = true
                                )
     {
+        $this->setShowFields($showFields);
+        $this->setShowAltitude($showFields);
         $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
         $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
 
@@ -107,28 +110,22 @@ class TFormDinCordLatLon extends TFormDinGenericField
         parent::__construct($adiantiObj,$idDivGeo,$label,false,null,null);
         return $this->getAdiantiObj();
     }
-
-    private function setProperty($property, $valeu)
+    //--------------------------------------------------------------------
+    public function setShowFields($showFields)
     {
-        if($valeu==true){
-            $this->getAdiantiObj()->setProperty($property, 'true');
-        }
+        $showFields = empty($showFields)?true:$showFields;
+        $this->showFields = $showFields;
     }
-    public function loop($valeu)
-    {
-        $this->setProperty('loop', $valeu);
-    }    
-    public function controls($valeu)
-    {
-        $this->setProperty('controls', $valeu);
+    public function getShowFields(){
+        return $this->showFields;
     }
-    public function muted($valeu)
+    //--------------------------------------------------------------------
+    public function setShowAltitude($showAltitude)
     {
-        $this->setProperty('muted', $valeu);
+        $showAltitude = empty($showAltitude)?true:$showAltitude;
+        $this->showAltitude = $showAltitude;
     }
-    public function autoplay($valeu)
-    {
-        $this->setProperty('autoplay', $valeu);
-        $this->setProperty('muted', $valeu);
+    public function getShowAltitude(){
+        return $this->showAltitude;
     }
 }
