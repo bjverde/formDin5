@@ -160,8 +160,10 @@ class TFormDinCordLatLon extends TFormDinGenericField
             $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
             $adiantiObjLon = $fd5Lon->getAdiantiObj();
     
-            $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-            $adiantiObjAlt = $fd5Alt->getAdiantiObj();
+            if( $this->getShowAltitude() == true){
+                $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+                $adiantiObjAlt = $fd5Alt->getAdiantiObj();
+            }
         }else{
             $fd5Lat  = new TFormDinHiddenField($idField.'_lat',null,$boolRequired);
             $adiantiObjLat = $fd5Lat->getAdiantiObj();
@@ -169,8 +171,10 @@ class TFormDinCordLatLon extends TFormDinGenericField
             $fd5Lon = new TFormDinHiddenField($idField.'_lon',null,$boolRequired);
             $adiantiObjLon = $fd5Lon->getAdiantiObj();
     
-            $fd5Alt = new TFormDinHiddenField($idField.'_alt',null,$boolRequired);
-            $adiantiObjAlt = $fd5Alt->getAdiantiObj();            
+            if( $this->getShowAltitude() == true){
+                $fd5Alt = new TFormDinHiddenField($idField.'_alt',null,$boolRequired);
+                $adiantiObjAlt = $fd5Alt->getAdiantiObj();
+            }
         }
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
