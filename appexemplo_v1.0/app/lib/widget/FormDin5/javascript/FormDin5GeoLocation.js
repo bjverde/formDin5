@@ -1,25 +1,27 @@
 var eventoCarregamento = new Event('fd5GeolocationLoad');
 document.dispatchEvent(eventoCarregamento);
 
-function fd5GetLocation(idField) {
+function fd5GetLocation(idField,showAltitude,fieldAllJson) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            fd5ShowPosition(position,idField);
+            fd5ShowPosition(position,idField,showAltitude,fieldAllJson);
         },function(error) {
-            fd5ShowPositionError(error,idField);
+            fd5ShowPositionError(error,idField,fieldAllJson);
         });
     } else{
         let dadosLocalizacao = {
             code: 999
            ,msg :'Geolocalização não é suportada nesse browser.'
         };
-       let jsonLocalizacao = JSON.stringify(dadosLocalizacao);
-       let fieldJson = document.querySelector('#'+idField+'_json');
-       fieldJson.value = jsonLocalizacao;
+        if(fieldAllJson==true){
+            let jsonLocalizacao = JSON.stringify(dadosLocalizacao);
+            let fieldJson = document.querySelector('#'+idField+'_json');
+            fieldJson.value = jsonLocalizacao;
+        }
        console.log(code,msg);
     }
 }
-function fd5ShowPosition(position,idField) {
+function fd5ShowPosition(position,idField,showAltitude,fieldAllJson) {
 
     let latitude =position.coords.latitude;
     let longitude=position.coords.longitude;
@@ -34,9 +36,11 @@ function fd5ShowPosition(position,idField) {
         ,speed:  position.coords.speed
         ,timestamp: position.timestamp
     };
-    let jsonLocalizacao = JSON.stringify(dadosLocalizacao);
-    let fieldJson = document.querySelector('#'+idField+'_json');
-    fieldJson.value = jsonLocalizacao;    
+    if(fieldAllJson==true){
+        let jsonLocalizacao = JSON.stringify(dadosLocalizacao);
+        let fieldJson = document.querySelector('#'+idField+'_json');
+        fieldJson.value = jsonLocalizacao;
+    }
 
     let fieldLat = document.querySelector('#'+idField+'_lat');
     fieldLat.value = latitude;
@@ -44,10 +48,12 @@ function fd5ShowPosition(position,idField) {
     let fieldLon = document.querySelector('#'+idField+'_lon');
     fieldLon.value = longitude;
 
-    let fieldAlt = document.querySelector('#'+idField+'_alt');
-    fieldAlt.value = altitude;
+    if(showAltitude==true){
+        let fieldAlt = document.querySelector('#'+idField+'_alt');
+        fieldAlt.value = altitude;
+    }
 }
-function fd5ShowPositionError(error,idField) {
+function fd5ShowPositionError(error,idField,fieldAllJson) {
     var code= error.code;
     var msg = null;
     switch(error.code) {
@@ -68,8 +74,10 @@ function fd5ShowPositionError(error,idField) {
         code:code
        ,msg:msg
     };
-   let jsonLocalizacao = JSON.stringify(dadosLocalizacao);
-   let fieldJson = document.querySelector('#'+idField+'_json');
-   fieldJson.value = jsonLocalizacao;
+    if(fieldAllJson==true){
+        let jsonLocalizacao = JSON.stringify(dadosLocalizacao);
+        let fieldJson = document.querySelector('#'+idField+'_json');
+        fieldJson.value = jsonLocalizacao;
+    }
    console.log(code,msg);
 }
