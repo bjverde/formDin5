@@ -18,45 +18,7 @@ class exe_TFormDinCordLatLon extends TPage
         $frm = new TFormDin($this,'Exemplo TFormDinCordLatLon');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
 
-
-        //-15.807197901482752
-        $idField = 'cood';
-        $boolRequired = false;
-
-        $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
-        $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
-
-        $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-        $adiantiObjLat = $fd5Lat->getAdiantiObj();
-
-        $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-        $adiantiObjLon = $fd5Lon->getAdiantiObj();
-
-        $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,false,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-        $adiantiObjAlt = $fd5Alt->getAdiantiObj();
-
-        $scriptJsGeo = new TElement('script');
-        $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
-
-        $btnGeo = new TButton('btnScreenshot');
-        $btnGeo->class = 'btn btn-primary btn-sm';
-        $btnGeo->setLabel('Informar Geolocalização');
-        $btnGeo->setImage('fas:map-marker');
-        $btnGeo->addFunction("fd5GetLocation('".$idField."')");        
-
-        $idDivGeo = $idField.'_videodiv';
-        $divGeo = new TElement('div');
-        $divGeo->class = 'fd5DivVideo';
-        $divGeo->setProperty('id',$idDivGeo);
-        $divGeo->add($btnGeo);
-        $divGeo->add($adObjHiddenJson);
-        $divGeo->add($adiantiObjLat);
-        $divGeo->add($adiantiObjLon);
-        $divGeo->add($adiantiObjAlt);
-        $divGeo->add($scriptJsGeo);
-
-        $row2 = $frm->addFields([new TLabel("Coordenadas:", '#FF0000', '14px', null)],[$divGeo]
-                                      ,[],[]);
+        $frm->addCordLatLon('cood','Coordenadas',false,false,false);
        
 
         $this->form = $frm->show();
