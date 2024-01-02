@@ -155,9 +155,15 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $adiantiObjAlt = null;
         if( $this->getShowFields() == true){
             $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+            if( $this->getFieldsReadOnly() ){
+                $fd5Lat->setReadOnly(true);
+            }
             $adiantiObjLat = $fd5Lat->getAdiantiObj();
     
             $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+            if( $this->getFieldsReadOnly() ){
+                $fd5Lon->setReadOnly(true);
+            }
             $adiantiObjLon = $fd5Lon->getAdiantiObj();
     
             if( $this->getShowAltitude() == true){
@@ -166,9 +172,15 @@ class TFormDinCordLatLon extends TFormDinGenericField
             }
         }else{
             $fd5Lat  = new TFormDinHiddenField($idField.'_lat',null,$boolRequired);
+            if( $this->getFieldsReadOnly() ){
+                $fd5Lat->setReadOnly(true);
+            }
             $adiantiObjLat = $fd5Lat->getAdiantiObj();
 
             $fd5Lon = new TFormDinHiddenField($idField.'_lon',null,$boolRequired);
+            if( $this->getFieldsReadOnly() ){
+                $fd5Lon->setReadOnly(true);
+            }
             $adiantiObjLon = $fd5Lon->getAdiantiObj();
     
             if( $this->getShowAltitude() == true){
