@@ -137,7 +137,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $btnGeo->class = 'btn btn-primary btn-sm';
         $btnGeo->setLabel('Informar Geolocalização');
         $btnGeo->setImage('fas:map-marker');
-        $btnGeo->addFunction("fd5GetLocation('".$idField.",".$this->getShowAltitude().",".$this->getFieldAllJson()."')");        
+        $btnGeo->addFunction("fd5GetLocation('".$idField."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
 
         $this->setIdDivGeo($idField.'_videodiv');
         $divGeo = new TElement('div');
@@ -168,6 +168,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
     
             if( $this->getShowAltitude() == true){
                 $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+                if( $this->getFieldsReadOnly() ){
+                    $fd5Alt->setReadOnly(true);
+                }                
                 $adiantiObjAlt = $fd5Alt->getAdiantiObj();
             }
         }else{
