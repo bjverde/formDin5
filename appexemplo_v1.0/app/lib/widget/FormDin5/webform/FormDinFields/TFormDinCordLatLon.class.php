@@ -48,8 +48,11 @@ class TFormDinCordLatLon extends TFormDinGenericField
 {
     protected $adiantiObj;
     private $class = array();
+    private $idField = null;
     private $showFields = null;
     private $showAltitude = null;
+    private $fieldsReadOnly = null;
+    private $fieldAllJson = null;
 
     /**
      * Pegar informações geolocalização do navegador
@@ -60,7 +63,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
      * @param boolean $showFields      -04: TRUE (Default) or FALSE, Show fields latitude and longitude
      * @param boolean $showAltitude    -05: TRUE (Default) or FALSE, Show field  altitude
      * @param boolean $fieldsReadOnly  -06: TRUE (Default) or FALSE, Field read only
-     * @param boolean $fielAllJson     -07: TRUE (Default) or FALSE, Cria um campo oculta que vai receber um JSON com todos os atributos
+     * @param boolean $fieldAllJson    -07: TRUE (Default) or FALSE, Cria um campo oculta que vai receber um JSON com todos os atributos
      * @return TElement
      */
     public function __construct(string $idField
@@ -69,11 +72,64 @@ class TFormDinCordLatLon extends TFormDinGenericField
                                ,$showFields = true
                                ,$showAltitude = true
                                ,$fieldsReadOnly= true
-                               ,$fielAllJson = true
+                               ,$fieldAllJson = true
                                )
     {
         $this->setShowFields($showFields);
-        $this->setShowAltitude($showFields);
+        $this->setShowAltitude($showAltitude);
+        $this->setFieldsReadOnly($fieldsReadOnly);
+        $this->setFieldAllJson($fieldAllJson);
+        $adiantiObj = $this->getDivGeo($idField,$boolRequired);
+        parent::__construct($adiantiObj,$idDivGeo,$label,false,null,null);
+        return $this->getAdiantiObj();
+    }
+    //--------------------------------------------------------------------
+    public function setIdField($idField)
+    {
+        $idField = empty($idField)?true:$idField;
+        $this->idField = $idField;
+    }
+    public function getIdField(){
+        return $this->idField;
+    }    
+    //--------------------------------------------------------------------
+    public function setShowFields($showFields)
+    {
+        $showFields = empty($showFields)?true:$showFields;
+        $this->showFields = $showFields;
+    }
+    public function getShowFields(){
+        return $this->showFields;
+    }
+    //--------------------------------------------------------------------
+    public function setShowAltitude($showAltitude)
+    {
+        $showAltitude = empty($showAltitude)?true:$showAltitude;
+        $this->showAltitude = $showAltitude;
+    }
+    public function getShowAltitude(){
+        return $this->showAltitude;
+    }
+    //--------------------------------------------------------------------
+    public function setFieldsReadOnly($fieldsReadOnly)
+    {
+        $fieldsReadOnly = empty($fieldsReadOnly)?true:$fieldsReadOnly;
+        $this->fieldsReadOnly = $fieldsReadOnly;
+    }
+    public function getFieldsReadOnly(){
+        return $this->fieldsReadOnly;
+    }
+    //--------------------------------------------------------------------
+    public function setFieldAllJson($fieldAllJson)
+    {
+        $fieldAllJson = empty($fieldAllJson)?true:$fieldAllJson;
+        $this->fieldAllJson = $fieldAllJson;
+    }
+    public function getFieldAllJson(){
+        return $this->fieldsReadOnly;
+    }
+    //--------------------------------------------------------------------
+    private function getDivGeo($idField,$boolRequired){
         $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
         $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();        
 
@@ -104,28 +160,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
         $divGeo->add($adiantiObjAlt);
-        $divGeo->add($scriptJsGeo);
-
-        $adiantiObj = $divGeo;
-        parent::__construct($adiantiObj,$idDivGeo,$label,false,null,null);
-        return $this->getAdiantiObj();
-    }
-    //--------------------------------------------------------------------
-    public function setShowFields($showFields)
-    {
-        $showFields = empty($showFields)?true:$showFields;
-        $this->showFields = $showFields;
-    }
-    public function getShowFields(){
-        return $this->showFields;
-    }
-    //--------------------------------------------------------------------
-    public function setShowAltitude($showAltitude)
-    {
-        $showAltitude = empty($showAltitude)?true:$showAltitude;
-        $this->showAltitude = $showAltitude;
-    }
-    public function getShowAltitude(){
-        return $this->showAltitude;
-    }
+        $divGeo->add($scriptJsGeo);        
+        return $divGeo;
+    }    
 }
