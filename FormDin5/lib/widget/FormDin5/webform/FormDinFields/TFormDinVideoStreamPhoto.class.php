@@ -104,7 +104,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
         $adiantiObjVideoCanvasUpload->setProperty('style','display: none;');
 
         $scriptJswebCam = new TElement('script');
-        $scriptJswebCam->setProperty('src', 'app/lib/include/FormDin5WebCams.js?appver='.FormDinHelper::version());
+        $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5WebCams.js?appver='.FormDinHelper::version());
 
 
         $btnStart = new TButton('btnStart');
