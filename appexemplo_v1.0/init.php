@@ -32,8 +32,8 @@ define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
 
 //--- FORMDIN 5 START ---------------------------------------------------------
-FormDinHelper::setAdminSystemMinimumVersion('7.5.1');
-FormDinHelper::setFormDinMinimumVersion('5.1.0');
+FormDinHelper::verifyFormDinMinimumVersion('5.1.0');
+FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.5.1b2');
 
 if(!defined('DS')  ) { define('DS', DIRECTORY_SEPARATOR); }
 if(!defined('EOL') ) { define('EOL', "\n"); }
