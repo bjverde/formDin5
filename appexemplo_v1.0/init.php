@@ -31,11 +31,14 @@ define('OS', strtoupper(substr(PHP_OS, 0, 3)));
 define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
 
-// ---FORMDIN 5 -------------------------
-define('DS', DIRECTORY_SEPARATOR);
-define('EOL', "\n");
-define('ESP', chr(32).chr(32).chr(32).chr(32) );
-define('TAB', chr(9));
+//--- FORMDIN 5 START ---------------------------------------------------------
+FormDinHelper::verifyFormDinMinimumVersion('5.1.0');
+FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.5.1b2');
+
+if(!defined('DS')  ) { define('DS', DIRECTORY_SEPARATOR); }
+if(!defined('EOL') ) { define('EOL', "\n"); }
+if(!defined('ESP') ) { define('ESP', chr(32).chr(32).chr(32).chr(32) ); }
+if(!defined('TAB') ) { define('TAB', chr(9)); }
 
 define('SYSTEM_VERSION', $ini['system']['version']);
 define('SYSTEM_NAME', $ini['system']['system_name']);
