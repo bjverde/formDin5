@@ -50,13 +50,15 @@ class TFormDinGridColumnFormatDateTest extends TestCase
 {
 
     private $classTest;
+    private $objForm;
     
     /**
      * Prepares the environment before running a test.
      */
     protected function setUp(): void {
         parent::setUp();
-        $this->classTest = new TFormDinGridColumnFormatDate('TEST', 'TEST');
+        $this->objForm = new mockFormDinComAdianti();
+        $this->classTest = new TFormDinGridColumnFormatDate($this->objForm,'TEST', 'TEST');
     }
     
     /**
