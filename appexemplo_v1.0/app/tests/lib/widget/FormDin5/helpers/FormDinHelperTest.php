@@ -94,12 +94,12 @@ class FormDinHelperTest extends TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testAdianti_verifyAdminSystemMinimumVersion_ok() {
-        FormDinHelper::verifyAdminSystemMinimumVersion('7.3.0');
+    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_ok() {
+        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.3.0');
     }  
-    public function testAdianti_verifyAdminSystemMinimumVersion_Exception() {
+    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_Exception() {
         $this->expectException(DomainException::class);
-        FormDinHelper::verifyAdminSystemMinimumVersion('99.99.99');
+        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('99.99.99');
     }
     //-----------------------------------------------------------------------------------
     public function testAdiantiVersion() {
