@@ -90,13 +90,13 @@ class FormDinHelperTest extends TestCase
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_Exception() {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin('99.99.99');
-    }    
+    }
     /**
      * @doesNotPerformAssertions
      */
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_ok() {
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.3.0');
-    }  
+    }
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_Exception() {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('99.99.99');
@@ -106,7 +106,7 @@ class FormDinHelperTest extends TestCase
         $expected = '7.5.1b.2';
         $result =  FormDinHelper::getAdiantiFrameWorkVersion();
         $this->assertEquals( $expected , $result);
-    }        
+    }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     public function testSetPropertyVo_noSet(){
