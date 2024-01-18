@@ -71,32 +71,42 @@ class FormDinHelperTest extends TestCase
         $result = FormDinHelper::versionMinimum('5.0.0');
         $this->assertEquals( $expected , $result);
     }
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testAdianti_verifyFormDinMinimumVersion_ok() {
+        FormDinHelper::verifyFormDinMinimumVersion('5.1.0');
+    }
+    public function testAdianti_verifyFormDinMinimumVersion_Exception() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyFormDinMinimumVersion('99.99.99');
+    }
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_ok() {
+        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin('5.1.0');
+    }
+    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_Exception() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin('99.99.99');
+    }    
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testAdianti_verifyAdminSystemMinimumVersion_ok() {
+        FormDinHelper::verifyAdminSystemMinimumVersion('7.3.0');
+    }  
+    public function testAdianti_verifyAdminSystemMinimumVersion_Exception() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyAdminSystemMinimumVersion('99.99.99');
+    }
     //-----------------------------------------------------------------------------------
     public function testAdiantiVersion() {
         $expected = '7.5.1b.2';
         $result =  FormDinHelper::getAdiantiFrameWorkVersion();
         $this->assertEquals( $expected , $result);
-    }
-    /**
-     * @doesNotPerformAssertions
-     */
-    public function testAdianti_setAdminMinimumVersionFrameWork_ok() {
-        FormDinHelper::setAdminMinimumVersionFrameWork('7.3.0');
-    }  
-    public function testAdianti_setAdminMinimumVersionFrameWork_Exception() {
-        $this->expectException(DomainException::class);
-        FormDinHelper::setAdminMinimumVersionFrameWork('99.99.99');
-    }
-    /**
-     * @doesNotPerformAssertions
-     */
-    public function testAdianti_setAdminSystemMinimumVersion_ok() {
-        FormDinHelper::setAdminSystemMinimumVersion('7.3.0');
-    }  
-    public function testAdianti_setAdminSystemMinimumVersion_Exception() {
-        $this->expectException(DomainException::class);
-        FormDinHelper::setAdminSystemMinimumVersion('99.99.99');
-    }    
+    }        
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     public function testSetPropertyVo_noSet(){

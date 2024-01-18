@@ -133,12 +133,12 @@ class FormDinHelper
 		}
 	}
 	/***
-     * Sets the minimum AdiantiFrameWork version for the system to work
+     *  Checks if the version of Adianti FrameWork meets the minimum requirement for System to work
 	 * 
-	 * Define a versão minima do AdiantiFrameWork para o sistema funcionar
+	 * Verifica se a versão do AdiantiFrameWork atendene o requisito minimo para o Sistema funcionar
      * @param string $minimumVersion
      */
-	public static function verifyAdminSystemMinimumVersion($minimumVersion) {		
+	public static function verifyMinimumVersionAdiantiFrameWorkToSystem($minimumVersion) {		
 		if ( empty($minimumVersion) ) {
 		    throw new DomainException(TFormDinMessage::ADIANTI_MIN_VERSION_BLANK);			
 		} else {
