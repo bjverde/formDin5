@@ -65,7 +65,7 @@ login-link = https://github.com/bjverde/FormDin5
 ```
 
 ## Arquivo index.php
-Editar o arquivo inde.php, abaixo das linhas
+Editar o arquivo index.php, abaixo das linhas
 ```php
 $menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
 $content     = file_get_contents("app/templates/{$theme}/layout.html");
@@ -87,7 +87,7 @@ $content     = str_replace('{login-link}', $ini['system']['login-link'], $conten
 ```
 
 ## Arquivo init.php
-Editar o arquivo inde.php, abaixo das linhas
+Editar o arquivo init.php, abaixo das linhas
 ```php
 define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
