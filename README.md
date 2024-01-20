@@ -6,7 +6,7 @@ FormDin or Dynamic Form is a simple php Framework for creating web system quickl
 
 FormDin created in 2004 by Luís Eugênio Barbosa to increase the speed of development in IBAMA. Version 4 is based on the ideas in the Books [Pablo Dall'Oglio](http://www.dalloglio.net/c5?livros).
 
-This version has the proposal to be the next version of **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. FormDin 5 is a FrameWork meta, as it is built on the [Adinati FrameWork 7.X](https://www.adianti.com.br/) of [Pablo Dall'Oglio](http://www.dalloglio.net/ ). Therefore, it is not a complete FrameWork, it has total dependence on [Adinati FrameWork 7.1](https://www.adianti.com.br/).
+This version has the proposal to be the next version of **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. FormDin 5 is a FrameWork meta, as it is built on the [Adinati FrameWork 7.X](https://adiantiframework.com.br) of [Pablo Dall'Oglio](http://www.dalloglio.net/). Therefore, it is not a complete FrameWork, it has total dependence on [Adinati FrameWork 7.1](https://adiantiframework.com.br).
 
 *unfortunately the documentation in English is not complete. The first language is Brazilian Portuguese. Translations are made as soon as possible.*
 
@@ -15,7 +15,7 @@ This version has the proposal to be the next version of **[FormDin 4 in GitHub.]
 
 Used libraries
 
-* [Adinati FrameWork 7.5.1](https://www.adianti.com.br/)
+* [Adinati FrameWork 7.6.0](https://adiantiframework.com.br)
 * BootStrap 4.1.3
 * Jquery 3.3.1
 * FPF 1.8.2
@@ -25,7 +25,7 @@ Used libraries
 
 FormDin ou Formulário Dinâmico é um Framework php simples para criar sistema web de forma rápida e fácil.
 
-O FormDin 5 é um meta FrameWork ou um adaptador ou uma extensão, por ser construído sobre o [Adinati FrameWork 7.X](https://www.adianti.com.br/) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total dependência do [Adinati](https://www.adianti.com.br/). É um Framework de transição do [FormDin 4](https://github.com/bjverde/formDin) para o Adianti FrameWork, facilitando a migração. É uma abstração das chamadas do FormDin 4 no Adianti. 
+O FormDin 5 é um meta FrameWork ou um adaptador ou uma extensão, por ser construído sobre o [Adinati FrameWork 7.X](https://adiantiframework.com.br) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total dependência do [Adinati](https://www.adianti.com.br/). É um Framework de transição do [FormDin 4](https://github.com/bjverde/formDin) para o Adianti FrameWork, facilitando a migração. É uma abstração das chamadas do FormDin 4 no Adianti. 
 
 O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais recursos e uma comunidade muito maior. Logo o ideal é juntar forçar pegando o que tem de melhor dos dois.
 
@@ -38,8 +38,8 @@ O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
 * phpunit-code-coverage - resultado da cobertura dos testes do PHPUnit
 
 # Instalação
-1. Baixar o [Adinati FrameWork 7.2.2](https://www.adianti.com.br/) funciona com o template ou FrameWork Puro. Pode ser que funcione com o Adianti 7.0 ou 7.1, porém não é garantido.
-1. Copiar o conteudo pasta FormDin5 conforme orientação abaixo e [Estensibilidade do Adianti](https://www.adianti.com.br/framework-extensibility)
+1. Baixar o [Adinati FrameWork 7.2.2](https://adiantiframework.com.br) funciona com o template ou FrameWork Puro. Pode ser que funcione com o Adianti 7.0 ou 7.1, porém não é garantido.
+1. Copiar o conteudo pasta FormDin5 conforme orientação abaixo
     1. No arquivo `app/config/application.ini` incluir as linhas abaixo
     1. No arquivo index.php da raiz do projeto incluir as linhas abaixo
     1. No arquivo init.php da raiz do projeto incluir as linhas abaixo
@@ -52,7 +52,7 @@ Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar con
 ```ini
 [system]
 formdin_min_version=5.1.1
-adianti_min_version=7.5.1b2
+adianti_min_version=7.6.0
 system_version = 1.0.0
 head_title  = "App Exemplo1"
 system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
