@@ -51,7 +51,8 @@ O [Adinati](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
 Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar conforme a necessidade
 ```ini
 [system]
-formdin_min_version=5.0.0-alpha33
+formdin_min_version=5.1.1
+adianti_min_version=7.5.1b2
 system_version = 1.0.0
 head_title  = "App Exemplo1"
 system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
@@ -64,7 +65,7 @@ login-link = https://github.com/bjverde/FormDin5
 ```
 
 ## Arquivo index.php
-Editar o arquivo inde.php, abaixo das linhas
+Editar o arquivo index.php, abaixo das linhas
 ```php
 $menu_string = AdiantiMenuBuilder::parse('menu.xml', $theme);
 $content     = file_get_contents("app/templates/{$theme}/layout.html");
@@ -86,7 +87,7 @@ $content     = str_replace('{login-link}', $ini['system']['login-link'], $conten
 ```
 
 ## Arquivo init.php
-Editar o arquivo inde.php, abaixo das linhas
+Editar o arquivo init.php, abaixo das linhas
 ```php
 define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
@@ -94,15 +95,16 @@ define('LANG', $ini['general']['language']);
 Incluir as linhas
 
 ```php
-//---FORMDIN 5 -------------------------
-FormDinHelper::setAdminSystemMinimumVersion('7.5.1');
-FormDinHelper::setFormDinMinimumVersion('5.0.0');
+//--- FORMDIN 5 START ---------------------------------------------------------
+FormDinHelper::verifyFormDinMinimumVersion($ini['system']['formdin_min_version']);
+FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem($ini['system']['adianti_min_version']);
 
+if(!defined('SYSTEM_VERSION') )  { define('SYSTEM_VERSION', $ini['system']['version']); }
 if(!defined('DS') )  { define('DS', DIRECTORY_SEPARATOR); }
 if(!defined('EOL') ) { define('EOL', "\n"); }
 if(!defined('ESP') ) { define('ESP', chr(32).chr(32).chr(32).chr(32) ); }
 if(!defined('TAB') ) { define('TAB', chr(9)); }
-//---FIM FORMDIN 5 -----------------------
+//--- FORMDIN 5 END -----------------------------------------------------------
 ```
 
 

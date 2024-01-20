@@ -35,6 +35,7 @@ define('LANG', $ini['general']['language']);
 FormDinHelper::verifyFormDinMinimumVersion('5.1.0');
 FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.5.1b2');
 
+if(!defined('SYSTEM_VERSION') )  { define('SYSTEM_VERSION', $ini['system']['version']); }
 if(!defined('DS')  ) { define('DS', DIRECTORY_SEPARATOR); }
 if(!defined('EOL') ) { define('EOL', "\n"); }
 if(!defined('ESP') ) { define('ESP', chr(32).chr(32).chr(32).chr(32) ); }
