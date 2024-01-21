@@ -51,7 +51,7 @@ use PHPUnit\Framework\TestCase;
 class FormDinHelperTest extends TestCase
 {
     public $formDinVersion = '5.1.1';
-    public $adiantiVersion = '7.5.1b2';
+    public $adiantiVersion = '7.5.1b.2';
 
     public function testVersion() {
         $expected = $this->formDinVersion;
@@ -79,9 +79,27 @@ class FormDinHelperTest extends TestCase
     public function testAdianti_verifyFormDinMinimumVersion_ok() {
         FormDinHelper::verifyFormDinMinimumVersion($this->formDinVersion);
     }
+    /**
+     * @doesNotPerformAssertions
+     */    
+    public function testAdianti_verifyFormDinMinimumVersion_okFormat4() {
+        FormDinHelper::verifyFormDinMinimumVersion($this->formDinVersion);
+    }    
     public function testAdianti_verifyFormDinMinimumVersion_Exception() {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99.99.99');
+    }
+    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat1() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyFormDinMinimumVersion('99');
+    }
+    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat2() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyFormDinMinimumVersion('99.99');
+    }
+    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat5() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyFormDinMinimumVersion('99.99.99.99.99');
     }
     /**
      * @doesNotPerformAssertions
