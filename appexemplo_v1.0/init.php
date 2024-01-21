@@ -36,7 +36,7 @@ FormDinHelper::verifyFormDinMinimumVersion($ini['system']['formdin_min_version']
 FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem($ini['system']['adianti_min_version']);
 
 if(!defined('SYSTEM_VERSION') )  { define('SYSTEM_VERSION', $ini['system']['version']); }
-if(!defined('SYSTEM_NAME') )     { define('SYSTEM_NAME', $ini['system']['version']); }
+if(!defined('SYSTEM_NAME') )     { define('SYSTEM_NAME', $ini['system']['system_name']); }
 if(!defined('DS')  ) { define('DS', DIRECTORY_SEPARATOR); }
 if(!defined('EOL') ) { define('EOL', "\n"); }
 if(!defined('ESP') ) { define('ESP', chr(32).chr(32).chr(32).chr(32) ); }
