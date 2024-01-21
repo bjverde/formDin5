@@ -94,6 +94,14 @@ class FormDinHelper
         }
         return version_compare($formVersion,$version,'>=');
     }
+    public static function validateFormat($version)
+    {
+        $t = explode(".", $version);
+        $qtd = CountHelper::count($t);
+        if( ($qtd<3)&&($qtd>4) ){
+            throw new DomainException(TFormDinMessage::FORM_MIN_VERSION_INVALID_FORMAT);
+        }
+    }    
 	/***
      * Sets the minimum formDin version for the system to work
 	 * 
@@ -104,10 +112,7 @@ class FormDinHelper
 		if ( empty($minimumVersion) ) {
 		    throw new DomainException(TFormDinMessage::FORM_MIN_VERSION_BLANK);			
 		} else {
-		    $t = explode(".", $minimumVersion);
-		    if( CountHelper::count($t) != 3 ){
-		        throw new DomainException(TFormDinMessage::FORM_MIN_VERSION_INVALID_FORMAT);
-			}
+            self::validateFormat($minimumVersion);
 			$t = explode("-", $minimumVersion);
 			$minimumVersion = $t[0];
 			if( !FormDinHelper::versionMinimum($minimumVersion) ){
@@ -142,10 +147,7 @@ class FormDinHelper
 		if ( empty($minimumVersion) ) {
 		    throw new DomainException(TFormDinMessage::ADIANTI_MIN_VERSION_BLANK);			
 		} else {
-		    $t = explode(".", $minimumVersion);
-		    if( CountHelper::count($t) != 3 ){
-		        throw new DomainException(TFormDinMessage::FORM_MIN_VERSION_INVALID_FORMAT);
-			}
+            self::validateFormat($minimumVersion);
 			$t = explode("-", $minimumVersion);
 			$minimumVersion = $t[0];
             $adiantiVersion = self::getAdiantiFrameWorkVersion();
