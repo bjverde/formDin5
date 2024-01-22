@@ -51,7 +51,7 @@ use PHPUnit\Framework\TestCase;
 class FormDinHelperTest extends TestCase
 {
     public $formDinVersion = '5.1.1';
-    public $adiantiVersion = '7.5.1b.2';
+    public $adiantiVersion = '7.6.0.1';
 
     public function testVersion() {
         $expected = $this->formDinVersion;
@@ -73,18 +73,34 @@ class FormDinHelperTest extends TestCase
         $result = FormDinHelper::versionMinimum('5.0.0');
         $this->assertEquals( $expected , $result);
     }
+    public function testVersionMinimum_Ref1Menor() {
+        $expected = true;
+        $result = FormDinHelper::versionMinimum('5.0.0','6.0.0');
+        $this->assertEquals( $expected , $result);
+    }
+    public function testVersionMinimum_Ref1equal() {
+        $expected = true;
+        $result = FormDinHelper::versionMinimum('6.0.0','6.0.0');
+        $this->assertEquals( $expected , $result);
+    }
+    public function testVersionMinimum_Ref1Maior() {
+        $expected = false;
+        $result = FormDinHelper::versionMinimum('6.0.0','5.0.0');
+        $this->assertEquals( $expected , $result);
+    }     
+
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testAdianti_verifyFormDinMinimumVersion_okOlder() {
+        FormDinHelper::verifyFormDinMinimumVersion('1.0.0');
+    }     
     /**
      * @doesNotPerformAssertions
      */
     public function testAdianti_verifyFormDinMinimumVersion_ok() {
         FormDinHelper::verifyFormDinMinimumVersion($this->formDinVersion);
-    }
-    /**
-     * @doesNotPerformAssertions
-     */    
-    public function testAdianti_verifyFormDinMinimumVersion_okFormat4() {
-        FormDinHelper::verifyFormDinMinimumVersion($this->formDinVersion);
-    }    
+    }   
     public function testAdianti_verifyFormDinMinimumVersion_Exception() {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99.99.99');
@@ -101,15 +117,8 @@ class FormDinHelperTest extends TestCase
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99.99.99.99.99');
     }
-    /**
-     * @doesNotPerformAssertions
-     */
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_ok() {
-        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin($this->formDinVersion);
-    }
-    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_Exception() {
-        $this->expectException(DomainException::class);
-        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin('99.99.99');
+        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin();
     }
     /**
      * @doesNotPerformAssertions

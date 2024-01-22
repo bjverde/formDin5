@@ -77,9 +77,9 @@ class FormDinHelper
         return self::FORMDIN_VERSION;
     }
     /***
-     * Returns if the current formDin version meets the minimum requirements
+     * Returns whether the reported version of formDin is greater than or equal to the reference version.
      * 
-     * Retorna se a versão atual do formDin atende aos requisitos mínimos 
+     * Retorna true se a versão informada do formDin é maior ou igual a versão de referencia.
      * @param string $version    - versão informada
      * @param string $versionRef - versão de referencia
      * @return boolean
@@ -117,6 +117,7 @@ class FormDinHelper
                 $msg = TFormDinMessage::FORM_MIN_YOU_VERSION.self::version().TFormDinMessage::FORM_MIN_VERSION_NOT.$minimumVersion;
 			    throw new DomainException($msg);
 			}
+            self::verifyMinimumVersionAdiantiFrameWorkToFormDin();
 		}
 	}
 	/***
@@ -125,15 +126,12 @@ class FormDinHelper
 	 * Verifica se a versão do AdiantiFrameWork atendene o requisito minimo para o FormDin funcionar
      * @param string $minimumVersion
      */
-	public static function verifyMinimumVersionAdiantiFrameWorkToFormDin($minimumVersionSysTem) {
-		if ( empty($minimumVersionSysTem) ) {
-		    throw new DomainException(TFormDinMessage::ADIANTI_VERSION_BLANK);			
-		} else {
-			if( FormDinHelper::versionMinimum($minimumVersionSysTem,self::ADIANTI_MIN_FORMDIN) ){
-                $msg = TFormDinMessage::ADIANTI_MIN_YOU_VERSION.$minimumVersionSysTem.'.'.TFormDinMessage::FORM_MIN_VERSION_ADIANTI.self::ADIANTI_MIN_FORMDIN;
-			    throw new DomainException($msg);
-			}
-		}
+	public static function verifyMinimumVersionAdiantiFrameWorkToFormDin() {
+        $adiantiVersion = self::getAdiantiFrameWorkVersion();
+        if( !FormDinHelper::versionMinimum(self::ADIANTI_MIN_FORMDIN,$adiantiVersion) ){
+            $msg = TFormDinMessage::ADIANTI_MIN_YOU_VERSION.$adiantiVersion.'.'.TFormDinMessage::FORM_MIN_VERSION_ADIANTI.self::ADIANTI_MIN_FORMDIN;
+            throw new DomainException($msg);
+        }
 	}
 	/***
      *  Checks if the version of Adianti FrameWork meets the minimum requirement for System to work
