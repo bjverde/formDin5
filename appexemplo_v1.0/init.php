@@ -1,7 +1,7 @@
 <?php
-if (version_compare(PHP_VERSION, '7.1.0') == -1)
+if (version_compare(PHP_VERSION, '7.4.0') == -1)
 {
-    die ('The minimum version required for PHP is 7.1.0');
+    die ('The minimum version required for PHP is 7.4.0');
 }
 
 if (!file_exists('app/config/application.ini'))
@@ -32,17 +32,15 @@ define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
 
 //--- FORMDIN 5 START ---------------------------------------------------------
-FormDinHelper::verifyFormDinMinimumVersion('5.1.0');
-FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.5.1b2');
+FormDinHelper::verifyFormDinMinimumVersion($ini['system']['formdin_min_version']);
+FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem($ini['system']['adianti_min_version']);
 
 if(!defined('SYSTEM_VERSION') )  { define('SYSTEM_VERSION', $ini['system']['version']); }
+if(!defined('SYSTEM_NAME') )     { define('SYSTEM_NAME', $ini['system']['system_name']); }
 if(!defined('DS')  ) { define('DS', DIRECTORY_SEPARATOR); }
 if(!defined('EOL') ) { define('EOL', "\n"); }
 if(!defined('ESP') ) { define('ESP', chr(32).chr(32).chr(32).chr(32) ); }
 if(!defined('TAB') ) { define('TAB', chr(9)); }
-
-define('SYSTEM_VERSION', $ini['system']['version']);
-define('SYSTEM_NAME', $ini['system']['system_name']);
 // ---FIM FORMDIN 5 -----------------------
 
 // ============= SysGen For Adianti  =================//
