@@ -3,18 +3,13 @@ class AdiantiMenuBuilder
 {
     public static function parse($file, $theme)
     {
+        if (!in_array('SimpleXML', get_loaded_extensions()))
+        {
+            throw new Exception(_t('Extension not found: ^1', 'SimpleXML'));
+        }
+        
         switch ($theme)
         {
-            case 'theme3':
-                ob_start();
-                $xml = new SimpleXMLElement(file_get_contents($file));
-                $menu = new TMenu($xml, null, 1, 'treeview-menu', 'treeview', '');
-                $menu->class = 'sidebar-menu';
-                $menu->id    = 'side-menu';
-                $menu->show();
-                $menu_string = ob_get_clean();
-                return $menu_string;
-            break;
             case 'theme_formdin':
                 ob_start();
                 $xml = new SimpleXMLElement(file_get_contents($file));
@@ -26,20 +21,21 @@ class AdiantiMenuBuilder
                 $menu_string = str_replace('class="dropdown-menu level-1" id="main-menu-top"', 'class="nav navbar-nav" id="main-menu-top"', $menu_string);
                 //$menu_string = str_replace('<a href="', '<a class="dropdown-item" href="', $menu_string);
                 return $menu_string;
-            break;            
+            break;
+            case 'theme3':
             case 'theme3_v3':
             case 'theme3_v4':
             case 'theme3_v5':
             case 'theme_formdinv':
-                    ob_start();
-                    $xml = new SimpleXMLElement(file_get_contents($file));
-                    $menu = new TMenu($xml, null, 1, 'treeview-menu', 'treeview', '');
-                    $menu->class = 'sidebar-menu';
-                    $menu->id    = 'side-menu';
-                    $menu->show();
-                    $menu_string = ob_get_clean();
-                    return $menu_string;
-            break;                 
+               ob_start();
+                $xml = new SimpleXMLElement(file_get_contents($file));
+                $menu = new TMenu($xml, null, 1, 'treeview-menu', 'treeview', '');
+                $menu->class = 'sidebar-menu';
+                $menu->id    = 'side-menu';
+                $menu->show();
+                $menu_string = ob_get_clean();
+                return $menu_string;
+            break;
             default:
                 ob_start();
                 $xml = new SimpleXMLElement(file_get_contents($file));
