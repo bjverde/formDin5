@@ -117,6 +117,9 @@ class FormDinHelperTest extends TestCase
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99.99.99.99.99');
     }
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_ok() {
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin();
     }
