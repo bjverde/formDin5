@@ -80,7 +80,7 @@ class FormDinHelper
      * Returns if the current formDin version meets the minimum requirements
      * 
      * Retorna se a versão atual do formDin atende aos requisitos mínimos 
-     * @param string $version    - versão de referencia
+     * @param string $version    - versão informada
      * @param string $versionRef - versão de referencia
      * @return boolean
      */
@@ -88,11 +88,9 @@ class FormDinHelper
     {
         if(empty($versionRef)){
             $formVersion = explode("-", self::version());
-            $formVersion = $formVersion[0];
-        }else{
-            $formVersion = $versionRef;
+            $versionRef = $formVersion[0];
         }
-        return version_compare($formVersion,$version,'>=');
+        return version_compare($versionRef,$version,'>=');
     }
     public static function validateFormat($version)
     {
@@ -127,12 +125,12 @@ class FormDinHelper
 	 * Verifica se a versão do AdiantiFrameWork atendene o requisito minimo para o FormDin funcionar
      * @param string $minimumVersion
      */
-	public static function verifyMinimumVersionAdiantiFrameWorkToFormDin($minimumVersion) {
-		if ( empty($minimumVersion) ) {
+	public static function verifyMinimumVersionAdiantiFrameWorkToFormDin($minimumVersionSysTem) {
+		if ( empty($minimumVersionSysTem) ) {
 		    throw new DomainException(TFormDinMessage::ADIANTI_VERSION_BLANK);			
 		} else {
-			if( !FormDinHelper::versionMinimum($minimumVersion,self::ADIANTI_MIN_FORMDIN) ){
-                $msg = TFormDinMessage::ADIANTI_MIN_YOU_VERSION.self::ADIANTI_MIN_FORMDIN.'.'.TFormDinMessage::FORM_MIN_VERSION_ADIANTI.$minimumVersion;
+			if( FormDinHelper::versionMinimum($minimumVersionSysTem,self::ADIANTI_MIN_FORMDIN) ){
+                $msg = TFormDinMessage::ADIANTI_MIN_YOU_VERSION.$minimumVersionSysTem.'.'.TFormDinMessage::FORM_MIN_VERSION_ADIANTI.self::ADIANTI_MIN_FORMDIN;
 			    throw new DomainException($msg);
 			}
 		}
