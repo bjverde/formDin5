@@ -108,7 +108,7 @@ class OrmAdiantiHelperTest extends TestCase
         $data->nome = 'Maria';
 
 	    $expected = array();
-        $expected[] = new TFilter('nome','like',$data);
+        $expected[] = new TFilter('nome','like',$data->nome);
 
         $filters= array();
         $result = OrmAdiantiHelper::addFilter($filters,'nome','like',$data->nome,null);
@@ -119,7 +119,7 @@ class OrmAdiantiHelperTest extends TestCase
         $data->nome = 'Maria';
 
 	    $expected = array();
-        $expected[] = new TFilter('nome','=',$data);
+        $expected[] = new TFilter('nome','=',$data->nome);
 
         $filters= array();
         $result = OrmAdiantiHelper::addFilter($filters,'nome','=',$data->nome,null);
@@ -130,7 +130,7 @@ class OrmAdiantiHelperTest extends TestCase
         $data->nome = 'Maria';
 
 	    $expected = array();
-        $expected[] = new TFilter('nome','!=',$data);
+        $expected[] = new TFilter('nome','!=',$data->nome);
 
         $filters= array();
         $result = OrmAdiantiHelper::addFilter($filters,'nome','!=',$data->nome,null);
@@ -141,7 +141,7 @@ class OrmAdiantiHelperTest extends TestCase
         $data->nome = 'Maria';
 
 	    $expected = array();
-        $expected[] = new TFilter('nome','in',$data);
+        $expected[] = new TFilter('nome','in',$data->nome);
 
         $filters= array();
         $result = OrmAdiantiHelper::addFilter($filters,'nome','in',$data->nome,null);
