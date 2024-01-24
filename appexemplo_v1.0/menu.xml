@@ -24,7 +24,7 @@
                     </menuitem>            
                     <menuitem label='Rico'>
                         <icon>fa:align-left fa-fw</icon>
-                        <action>comingSoonView</action>
+                        <action>exe_TRich</action>
                     </menuitem>
                     <menuitem label='Funções'>
                         <icon>fa:align-left fa-fw</icon>

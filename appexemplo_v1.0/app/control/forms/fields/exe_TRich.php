@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_TMemo extends TPage
+class exe_TRich extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing
@@ -13,19 +13,19 @@ class exe_TMemo extends TPage
 
     public function __construct()
     {
-        parent::__construct();        
+        parent::__construct();
 
-        $frm = new TFormDin($this,'Exemplo Campo Rich Editor');
+        $frm = new TFormDin($this,'Exemplo Campo Rich');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
-        $frm->addRichTextEditor('memo1NaoObri', 'Não Obrigatório:', 365, false,'100%');
-        $frm->addRichTextEditor('memo1Obri', 'Obrigatório:', 365, true,'100%');
-        $frm->addRichTextEditor('memo2', 'Memo2:', 50, false,'100%', '10%')->setPlaceHolder('Texto de exemplo 100% largura com 10% de altura');
-        $memo3 = $frm->addRichTextEditor('memo3', 'Memo3:', 50, false,'100%', '10%',false);
-        $memo3->setReadOnly(true);
-        $memo3->setPlaceHolder('Campo somente leitura com Place Holder. Texto de exemplo 100% largura com 10% de altura');
-        $frm->addRichTextEditor('memo4', 'Memo4:', 400, false, 120, 30,true);
-        $frm->addRichTextEditor('memo5', 'Memo5:', 400, false,'80%', '15%',false,null,null,'Texto já preenchido');
-        //$frm->addRichTextEditor('memo5', 'Memo5:', 400, false,'30%', '10%',null,true,null,'Texto já preenchido');
+        $frm->addRichField('rich1NaoObri', 'Não Obrigatório:', 365, false,'100%');
+        $frm->addRichField('rich1Obri', 'Obrigatório:', 365, true,'100%');
+        $frm->addRichField('rich2', 'Rich2:', 50, false,'100%', '10%')->setPlaceHolder('Texto de exemplo 100% largura com 10% de altura');
+        $rich3 = $frm->addRichField('rich3', 'Rich3:', 50, false,'100%', '10%');
+        $rich3->setReadOnly(true);
+        $rich3->setPlaceHolder('Campo somente leitura com Place Holder. Texto de exemplo 100% largura com 10% de altura');
+        $frm->addRichField('rich4', 'Rich4:', 400, false, 120, 30);
+        $frm->addRichField('rich5', 'Rich5:', 400, false,'80%', '15%');
+        
         
         // O Adianti permite a Internacionalização - A função _t('string') serve
         //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
