@@ -17,7 +17,7 @@ class exe_TRich extends TPage
 
         $frm = new TFormDin($this,'Exemplo Campo Rich');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
-        $frm->addRichTextEditor('rich1NaoObri', 'Não Obrigatório:', 365, false,'100%');
+        $frm->addRichTextEditor('rich1NaoObri', 'Não Obrigatório:', 365, false,'100%','30vh');
         $frm->addRichTextEditor('rich1Obri', 'Obrigatório:', 365, true,'100%');
                 
         // O Adianti permite a Internacionalização - A função _t('string') serve

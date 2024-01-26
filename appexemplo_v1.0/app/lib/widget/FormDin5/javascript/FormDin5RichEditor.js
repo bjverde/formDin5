@@ -25,3 +25,16 @@ function fwCheckNumCharRickEditor(e,max)
 	} catch(e)	{}
 }
 //--------------------------------------------------------------------------------------
+function setToolBarRichEditor(id,valueToolbar){
+	try {
+		if ((!id)||(!document.getElementById(id))){
+			return false;
+		}
+	} catch {
+		return false;
+	}
+	$('#'+id+'').summernote({
+		toolbar: valueToolbar
+	  });
+	return true;  
+}
