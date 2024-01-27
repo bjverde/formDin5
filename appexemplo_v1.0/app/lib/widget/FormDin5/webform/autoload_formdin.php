@@ -50,7 +50,7 @@ if ( !function_exists( 'formdin_autoload') ) {
     function formdin_autoload( $class_name )
     {
         $path = __DIR__.DS.$class_name.'.class.php';
-        if (!file_exists($path)){        
+        if (!file_exists($path)){
             return false;
         }
         require_once $path;
