@@ -2344,11 +2344,19 @@ class TFormDin
    		                       , $boolLabelAbove=false
                                , $boolNoWrapLabel=null)
     {
-        $formField = new TFormDinRichTextEditor($id,$label,$intMaxLength,$boolRequired,$intColumns,$intRows,$boolNewLine,$boolLabelAbove,$boolNoWrapLabel);
+        $formField = new TFormDinRichTextEditor($id
+                                               ,$label
+                                               ,$intMaxLength
+                                               ,$boolRequired
+                                               ,$intColumns
+                                               ,$intRows
+                                               ,$boolNewLine
+                                               ,$boolLabelAbove
+                                               ,$boolNoWrapLabel
+                                            );
                                       
         $objField = $formField->getAdiantiObjFull();
-        $label = $formField->getLabel();
-        
+        $label = $formField->getLabel();        
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
     	return $formField;
     }
