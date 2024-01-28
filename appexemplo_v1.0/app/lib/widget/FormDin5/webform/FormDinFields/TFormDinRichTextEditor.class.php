@@ -65,7 +65,7 @@ class TFormDinRichTextEditor extends TFormDinGenericField
     public function setSize($intColumns, $intRows)
     {
         $width  = 0;
-        $height = (int)$intRows;
+        $height = empty($intRows)?100:(int)$intRows;
         $this->getAdiantiObj()->setSize($width, $height);
     }
 
