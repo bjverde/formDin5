@@ -843,7 +843,7 @@ class TFormDin
      */
     public function addRichTextEditor(string $id
                                     , string $label
-                                    , int $intMaxLength
+                                    , int|null $intMaxLength
                                     , $boolRequired=null
                                     , $intColumns=null
                                     , $intRows=null
@@ -861,8 +861,8 @@ class TFormDin
                                                ,$boolLabelAbove
                                                ,$boolNoWrapLabel
                                             );
-        $objField = $formField->getAdiantiObjFull();
-        $label = $formField->getLabel();        
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }

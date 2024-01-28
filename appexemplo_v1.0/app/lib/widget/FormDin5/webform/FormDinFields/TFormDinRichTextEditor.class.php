@@ -5,7 +5,6 @@ class TFormDinRichTextEditor extends TFormDinGenericField
     private $showCountChar;
     private $intMaxLength;
 
-    private THtmlEditor $adiantiObjRichEditor; //Somente obj Adianti Customizada
     private $adiantiObjFull;  //obj Adianti completo com todos os elementos para fazer o memo
 
     /**
@@ -28,8 +27,8 @@ class TFormDinRichTextEditor extends TFormDinGenericField
      * @return TFormDinRichTextEditor
      */
     public function __construct($id
-                               ,$label
-                               ,$intMaxLength
+                               ,string $label
+                               ,int|NULL $intMaxLength
                                ,$boolRequired=null
                                ,$intColumns='100%'
                                ,$intRows='100%'
@@ -38,64 +37,11 @@ class TFormDinRichTextEditor extends TFormDinGenericField
                                ,$boolShowCountChar=false
                                )
     {
-        TScript::importFromFile('app/lib/widget/FormDin5/javascript/FormDin5RichEditor.js?appver='.FormDinHelper::version());
-        $this->setAdiantiObjRichEditor($id);
-        parent::__construct($this->getAdiantiObjRichEditor(),$id,$label,$boolRequired,$value,$placeholder);
-        $this->setSize($intColumns, $intRows);
-        $this->setMaxLength($label,$intMaxLength);       
-
-        $this->setAdiantiObjTFull($id,$boolShowCountChar,$intMaxLength);
-        
+        $adiantiObj = new THtmlEditor($label);
+        parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
+        $this->setMaxLength($label,$intMaxLength);
+        //$this->setSize($intColumns, $intRows);
         return $this->getAdiantiObj();       
-    }
-
-    public function setAdiantiObjRichEditor($id){
-        $this->adiantiObjRichEditor = new THtmlEditor($id);              
-    }
-
-    public function getAdiantiObjRichEditor(): THtmlEditor {
-        return $this->adiantiObjRichEditor;
-    }
-
-    private function setAdiantiObjTFull( $idField, $boolShowCountChar,$intMaxLength )
-    {
-        $adiantiObjRichEditor = $this->getAdiantiObjRichEditor();                
-        $adiantiObj = null;
-        $div = new TElement('div');
-        $div->add($adiantiObjRichEditor);        
-
-        TScript::create( " setToolBarRichEditor('{$adiantiObjRichEditor->id}', [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']]
-          ]); " );
-
-        if( $boolShowCountChar && ($intMaxLength>=1) ){
-            $adiantiObjRichEditor->maxlength = $intMaxLength;
-            $adiantiObjRichEditor->setId($idField);            
-
-            $charsText  = new TElement('span');
-            $charsText->setProperty('id',$idField.'_counter');
-            $charsText->setProperty('name',$idField.'_counter');
-            $charsText->setProperty('class', 'tformdinmemo_counter');
-            $charsText->add('caracteres: 0 / '.$intMaxLength);
-
-              
-            $div->add($charsText);
-            $div->add($script);           
-           
-            
-        }
-        $adiantiObj = $div;
-               
-        $this->adiantiObjFull = $adiantiObj;
-    }
-
-    public function getAdiantiObjFull(){
-        return $this->adiantiObjFull;
     }
 
     /**
@@ -108,6 +54,7 @@ class TFormDinRichTextEditor extends TFormDinGenericField
     {
         $this->intMaxLength = (int) $intMaxLength;
         if($intMaxLength>=1){
+            $this->getAdiantiObj()->setMaxLength($intMaxLength);
             $this->getAdiantiObj()->addValidation($label, new TMaxLengthValidator, array($intMaxLength));
         }
     }
