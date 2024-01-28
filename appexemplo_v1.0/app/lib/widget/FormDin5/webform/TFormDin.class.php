@@ -774,18 +774,18 @@ class TFormDin
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * @param string  $strName         - 1: ID do campo
-     * @param string  $strLabel        - 2: Label
-     * @param integer $intMaxLength    - 3: Tamanho maximos
-     * @param boolean $boolRequired    - 4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param integer $intColumns      - 5: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
-     * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
-     * @param boolean $boolNewLine     - 7: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
-     * @param boolean $boolLabelAbove  - 8: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
-     * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
-     * @param string  $strValue       - 10: texto preenchido
-     * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
-     * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo`. DEFAULT = true
+     * @param string  $strName         -01: ID do campo
+     * @param string  $strLabel        -02: Label
+     * @param integer $intMaxLength    -03: Tamanho maximos
+     * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param integer $intColumns      -05: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
+     * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param boolean $boolNewLine     -07: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+     * @param boolean $boolLabelAbove  -08: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param boolean $boolShowCounter -09: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
+     * @param string  $strValue        -10: texto preenchido
+     * @param string $boolNoWrapLabel  -11: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+     * @param string $placeholder      -12: FORMDIN5 PlaceHolder é um Texto de exemplo`. DEFAULT = true
      * @param string $boolShowCountChar 13: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinMemoField
      */
@@ -822,18 +822,20 @@ class TFormDin
 
     /**
      * Adicionar campo de entrada de dados de varias linhas (textareas)
+     * Com a possíbilidade de formatar com elementos HTML
      * ------------------------------------------------------------------------
      * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
      * os parâmetros do metodos foram marcados veja documentação da classe para
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * @param string  $strName         - 1: ID do campo
-     * @param string  $strLabel        - 2: Label
-     * @param integer $intMaxLength    - 3: Tamanho maximos
-     * @param boolean $boolRequired    - 4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param integer $intColumns      - 5: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
-     * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param string  $strName         -01: ID do campo
+     * @param string  $strLabel        -02: Label
+     * @param integer $intMaxLength    -03: Tamanho maximos
+     * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param integer $intColumns      -05: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
+     * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param boolean $boolNewLine     -07: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @return TFormDinRichTextEditor
      */
     public function addRichTextEditor(string $id
