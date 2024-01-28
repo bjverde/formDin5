@@ -75,19 +75,16 @@ class TFormDinMemoField extends TFormDinGenericField
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * @param string  $strName         - 1: ID do campo
-     * @param string  $strLabel        - 2: Label
-     * @param integer $intMaxLength    - 3: Tamanho maximos
-     * @param boolean $boolRequired    - 4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param integer $intColumns      - 5: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
-     * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
-     * @param boolean $boolNewLine     - 7: NOT_IMPLEMENTED nova linha
-     * @param boolean $boolLabelAbove  - 8: NOT_IMPLEMENTED Label sobre o campo
-     * @param boolean $boolShowCounter - 9: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
-     * @param string  $strValue       - 10: texto preenchido
-     * @param string $boolNoWrapLabel - 11: NOT_IMPLEMENTED
-     * @param string $placeholder     - 12: FORMDIN5 PlaceHolder é um Texto de exemplo
-     * @param string $boolShowCountChar 13: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
+     * @param string  $strName         -01: ID do campo
+     * @param string  $strLabel        -02: Label
+     * @param integer $intMaxLength    -03: Tamanho maximos
+     * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param integer $intColumns      -05: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
+     * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param boolean $boolShowCounter -07: NOT_IMPLEMENTED Contador de caracteres ! Só funciona em campos não RichText
+     * @param string  $strValue       - 08: texto preenchido
+     * @param string $placeholder     - 09: FORMDIN5 PlaceHolder é um Texto de exemplo
+     * @param string $boolShowCountChar 11: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinMemoField
      */
     public function __construct($id
@@ -96,11 +93,8 @@ class TFormDinMemoField extends TFormDinGenericField
                               , $boolRequired=null
                               , $intColumns='100%'
                               , $intRows='100%'
-                              , $boolNewLine=null
-                              , $boolLabelAbove=null
                               , $boolShowCounter=null
                               , $value=null
-                              , $boolNoWrapLabel=null
                               , $placeholder=null
                               , $boolShowCountChar=true)
     {

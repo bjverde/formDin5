@@ -803,15 +803,14 @@ class TFormDin
                                , $placeholder=null 
                                , $boolShowCountChar=true)
     {
-        $formField = new TFormDinMemoField( $strName, $strLabel, $intMaxLength
+        $formField = new TFormDinMemoField( $strName
+                                      , $strLabel
+                                      , $intMaxLength
                                       , $boolRequired
                                       , $intColumns
                                       , $intRows
-                                      , $boolNewLine
-                                      , $boolLabelAbove
                                       , $boolShowCounter
                                       , $strValue
-                                      , $boolNoWrapLabel
                                       , $placeholder 
                                       , $boolShowCountChar
                                     );
@@ -862,7 +861,7 @@ class TFormDin
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
         return $formField;
     }
-    
+
     /**
      * Adicona um campo Data, comm limite minimo e maximo da intervalo da data e de acordo com o parametro strMaskType
      * Aceita máscara FormDin4 : DMY (dia/mês/ano), DM (dia/mês), MY (mês/ano) 
