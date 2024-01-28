@@ -52,7 +52,7 @@ class TFormDinRichTextEditor extends TFormDinGenericField
     {
         $this->intMaxLength = (int) $intMaxLength;
         if($intMaxLength>=1){
-            $this->getAdiantiObj()->setMaxLength($intMaxLength);
+            //$this->getAdiantiObj()->setMaxLength($intMaxLength); //Liga um contador porém IMPEDE colar
             $this->getAdiantiObj()->addValidation($label, new TMaxLengthValidator, array($intMaxLength));
         }
     }
@@ -73,14 +73,8 @@ class TFormDinRichTextEditor extends TFormDinGenericField
         $this->getAdiantiObj()->setSize($intColumns, $intRows);
     }
 
-    public function setShowCountChar($showCountChar)
-    {
-        $this->showCountChar = $showCountChar;
-    }
-
-    public function getShowCountChar()
-    {
-        return $this->showCountChar;
+    public function disableToolbar(){
+        $this->getAdiantiObj()->disableToolbar();
     }
 
 }
