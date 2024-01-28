@@ -836,6 +836,9 @@ class TFormDin
      * @param integer $intColumns      -05: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
      * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
      * @param boolean $boolNewLine     -07: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
+     * @param boolean $boolLabelAbove  -08: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
+     * @param string  $strValue        -09: Valor padrão
+     * @param string $boolNoWrapLabel  -10: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
      * @return TFormDinRichTextEditor
      */
     public function addRichTextEditor(string $id
@@ -849,15 +852,15 @@ class TFormDin
                                     , $boolNoWrapLabel=null)
     {
         $formField = new TFormDinRichTextEditor($id
-                        ,$label
-                        ,$intMaxLength
-                        ,$boolRequired
-                        ,$intColumns
-                        ,$intRows
-                        ,$boolNewLine
-                        ,$boolLabelAbove
-                        ,$boolNoWrapLabel
-                    );        
+                                               ,$label
+                                               ,$intMaxLength
+                                               ,$boolRequired
+                                               ,$intColumns
+                                               ,$intRows
+                                               ,$boolNewLine
+                                               ,$boolLabelAbove
+                                               ,$boolNoWrapLabel
+                                            );
         $objField = $formField->getAdiantiObjFull();
         $label = $formField->getLabel();        
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
