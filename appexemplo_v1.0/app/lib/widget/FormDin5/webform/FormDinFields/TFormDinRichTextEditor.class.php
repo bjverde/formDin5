@@ -16,30 +16,27 @@ class TFormDinRichTextEditor extends TFormDinGenericField
      * saber o que cada marca singinifica.
      * ------------------------------------------------------------------------
      *
-     * @param string  $id              - 1: ID do campo
-     * @param string  $label           - 2: Label
-     * @param integer $intMaxLength    - 3: Tamanho maximos
-     * @param boolean $boolRequired    - 4: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param integer $intColumns      - 5: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
-     * @param integer $intRows         - 6: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
-     * @param boolean $boolNewLine     - 7: NOT_IMPLEMENTED nova linha
-     * @param boolean $boolLabelAbove  - 8: NOT_IMPLEMENTED Label sobre o campo
-     * @param string $placeholder      - 9: FORMDIN5 PlaceHolder é um Texto de exemplo
-     * @param string $boolShowCountChar 10: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
+     * @param string  $id              -01: ID do campo
+     * @param string  $label           -02: Label
+     * @param integer $intMaxLength    -03: Tamanho maximos
+     * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param integer $intColumns      -05: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
+     * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param string  $strValue        -07: Valor padrão
+     * @param string  $placeholder     -08: FORMDIN5 PlaceHolder é um Texto de exemplo
+     * @param string $boolShowCountChar 09: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinRichTextEditor
      */
-    public function __construct($id,
-                               $label,
-                               $intMaxLength,
-                               $boolRequired=null,
-                               $intColumns='100%',
-                               $intRows='100%',
-                               $boolNewLine=null,
-   		                       $boolLabelAbove=false,
-                               $value=null,
-                               $boolNoWrapLabel=null,
-                               $placeholder=null,
-                               $boolShowCountChar=false)
+    public function __construct($id
+                               ,$label
+                               ,$intMaxLength
+                               ,$boolRequired=null
+                               ,$intColumns='100%'
+                               ,$intRows='100%'
+                               ,$value=null
+                               ,$placeholder=null
+                               ,$boolShowCountChar=false
+                               )
     {
         TScript::importFromFile('app/lib/widget/FormDin5/javascript/FormDin5RichEditor.js?appver='.FormDinHelper::version());
         $this->setAdiantiObjRichEditor($id);
@@ -53,7 +50,6 @@ class TFormDinRichTextEditor extends TFormDinGenericField
     }
 
     public function setAdiantiObjRichEditor($id){
-        //$this->adiantiObjRichEditor = new TText($id);
         $this->adiantiObjRichEditor = new THtmlEditor($id);              
     }
 
@@ -102,6 +98,12 @@ class TFormDinRichTextEditor extends TFormDinGenericField
         return $this->adiantiObjFull;
     }
 
+    /**
+     * Seta o tamanho maximo do campo
+     * @param string $label     - 01 nome do campo
+     * @param int $intMaxLength - 02 tamanho do campo
+     * @return void
+     */
     public function setMaxLength($label,$intMaxLength)
     {
         $this->intMaxLength = (int) $intMaxLength;
