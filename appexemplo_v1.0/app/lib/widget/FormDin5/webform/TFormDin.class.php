@@ -839,6 +839,7 @@ class TFormDin
      * @param boolean $boolLabelAbove  -08: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param string  $strValue        -09: Valor padrão
      * @param string $boolNoWrapLabel  -10: NOT_IMPLEMENTED true ou false para quebrar ou não o valor do label se não couber na coluna do formulario
+     * @param string $placeholder      -11: FORMDIN5 PlaceHolder é um Texto de exemplo`. DEFAULT = true
      * @return TFormDinRichTextEditor
      */
     public function addRichTextEditor(string $id
@@ -848,8 +849,11 @@ class TFormDin
                                     , $intColumns=null
                                     , $intRows=null
                                     , $boolNewLine=null
-                                    , $boolLabelAbove=false
-                                    , $boolNoWrapLabel=null)
+                                    , $boolLabelAbove=null
+                                    , $strValue=null
+                                    , $boolNoWrapLabel=null
+                                    , $placeholder=null
+                                    )
     {
         $formField = new TFormDinRichTextEditor($id
                                                ,$label
@@ -857,9 +861,8 @@ class TFormDin
                                                ,$boolRequired
                                                ,$intColumns
                                                ,$intRows
-                                               ,$boolNewLine
-                                               ,$boolLabelAbove
-                                               ,$boolNoWrapLabel
+                                               ,$strValue
+                                               ,$placeholder
                                             );
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();

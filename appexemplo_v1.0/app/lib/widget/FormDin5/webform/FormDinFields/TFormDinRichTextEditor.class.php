@@ -23,7 +23,6 @@ class TFormDinRichTextEditor extends TFormDinGenericField
      * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
      * @param string  $strValue        -07: Valor padrão
      * @param string  $placeholder     -08: FORMDIN5 PlaceHolder é um Texto de exemplo
-     * @param string $boolShowCountChar 09: FORMDIN5 Mostra o contador de caractes.  Default TRUE = mostra, FASE = não mostra
      * @return TFormDinRichTextEditor
      */
     public function __construct($id
@@ -34,7 +33,6 @@ class TFormDinRichTextEditor extends TFormDinGenericField
                                ,$intRows='100%'
                                ,$value=null
                                ,$placeholder=null
-                               ,$boolShowCountChar=false
                                )
     {
         $adiantiObj = new THtmlEditor($label);
