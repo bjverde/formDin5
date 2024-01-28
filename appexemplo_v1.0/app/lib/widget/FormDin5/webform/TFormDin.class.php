@@ -833,8 +833,8 @@ class TFormDin
      * @param string  $strLabel        -02: Label
      * @param integer $intMaxLength    -03: Tamanho maximos
      * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param integer $intColumns      -05: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
-     * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param integer $intColumns      -05: NOT_IMPLEMENTED Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
+     * @param integer $intRows         -06: Altura use px
      * @param boolean $boolNewLine     -07: Default TRUE = cria nova linha , FALSE = fica depois do campo anterior
      * @param boolean $boolLabelAbove  -08: Label sobre o campo. Default FALSE = Label mesma linha, TRUE = Label acima
      * @param string  $strValue        -09: Valor padrão

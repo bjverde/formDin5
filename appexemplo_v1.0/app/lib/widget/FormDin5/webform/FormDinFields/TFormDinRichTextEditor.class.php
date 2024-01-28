@@ -19,8 +19,8 @@ class TFormDinRichTextEditor extends TFormDinGenericField
      * @param string  $label           -02: Label
      * @param integer $intMaxLength    -03: Tamanho maximos
      * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
-     * @param integer $intColumns      -05: Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
-     * @param integer $intRows         -06: Altura use px ou %, valores inteiros serão multiplicados 4 e apresentado em px
+     * @param integer $intColumns      -05: NOT_IMPLEMENTED Largura use unidades responsivas % ou em ou rem ou vh ou vw. Valores inteiros até 100 serão convertidos para % , acima disso será 100%
+     * @param integer $intRows         -06: Altura use px
      * @param string  $strValue        -07: Valor padrão
      * @param string  $placeholder     -08: FORMDIN5 PlaceHolder é um Texto de exemplo
      * @return TFormDinRichTextEditor
@@ -38,7 +38,7 @@ class TFormDinRichTextEditor extends TFormDinGenericField
         $adiantiObj = new THtmlEditor($label);
         parent::__construct($adiantiObj,$id,$label,$boolRequired,$value,$placeholder);
         $this->setMaxLength($label,$intMaxLength);
-        //$this->setSize($intColumns, $intRows);
+        $this->setSize($intColumns, $intRows);
         return $this->getAdiantiObj();       
     }
 
@@ -64,13 +64,13 @@ class TFormDinRichTextEditor extends TFormDinGenericField
 
     public function setSize($intColumns, $intRows)
     {
-        if(is_numeric($intRows)){
-            $intRows = $intRows * 4;
-        }else{
-            FormDinHelper::validateSizeWidthAndHeight($intRows,true);
-        }
-        $intColumns = FormDinHelper::sizeWidthInPercent($intColumns);
-        $this->getAdiantiObj()->setSize($intColumns, $intRows);
+        $width  = 0;
+        $height = (int)$intRows;
+        $this->getAdiantiObj()->setSize($width, $height);
+    }
+
+    public function getSize(){
+        return $this->getAdiantiObj()->getSize()();
     }
 
     public function disableToolbar(){
