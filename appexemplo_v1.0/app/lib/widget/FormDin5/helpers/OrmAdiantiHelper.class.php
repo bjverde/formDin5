@@ -47,7 +47,13 @@
 class OrmAdiantiHelper
 {
 
-    public static function testParam($param) 
+    /**
+     * Verificar se o valor informado foi preenchido
+     *
+     * @param mixed $param
+     * @return void
+     */
+    public static function valueTest($param) 
     {
         $result = false;
         if (isset($param) AND ( (is_scalar($param) AND $param !== '') OR (is_array($param) AND (!empty($param)) )) )
@@ -58,18 +64,21 @@ class OrmAdiantiHelper
     }
 
     /**
-     * Inclui um novo elemento do tipo TFilter no ArrayFilter se $data for tiver valor
+     * Se $data ou $param tiver valor, inclui um novo elemento do tipo TFilter
+     * no ArrayFilter para ser usado como critério de filtro no sql
      *
      * @param array  $arrayFilter 01: array com os filtros já incluiso
-     * @param string $filde       02: campo que será usado
+     * @param string $filde       02: campo do banco que será usado
      * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
-     * @param mixed  $data        04: valor que será testado
-     * @param string $sql         05: String Sql para um sub select. 
+     * @param mixed  $data        04: valor do $data que será testado
+     * @param mixed  $param       05: valor do $param que será testado
+     * @param string $sql         06: String Sql para um sub select.
      * @return array
      */
-    public static function addFilter($arrayFilter,$filde,$conector,$data,$sql) 
+    public static function addFilter($arrayFilter,$filde,$conector,$data,$param,$sql) 
     {
-        if( self::testParam($data) ){
+        $data = empty($data)?$param:$data;
+        if( self::valueTest($data) ){
             if( empty($sql) ){
                 $arrayFilter[] = new TFilter($filde,$conector,$data);// create the filter 
             }else{
