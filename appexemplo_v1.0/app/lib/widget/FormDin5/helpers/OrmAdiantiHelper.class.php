@@ -46,6 +46,37 @@
 
 class OrmAdiantiHelper
 {
+    /**
+     * Verifica se uma propriedade foi setada em objeto, se não foi setada vai
+     * setar NULL ou valor informado. Retornando um objto 
+     *
+     * @param object $obj
+     * @param string|null $propertyName
+     * @param array|null|mixed $param
+     * @param string|null $paramName
+     * @return object
+     */
+    public static function objPropertyExistsSetValeu($obj,$propertyName,$param,$paramName) 
+    {
+        ValidateHelper::isString($propertyName,__METHOD__,__LINE__);
+        if( !is_object($obj)){
+            $obj = new stdClass();
+        }
+        $newValue = null;
+        if( is_array($param) ){
+            $newValue = ArrayHelper::get($param,$paramName);
+        }else{
+            $newValue = $param;
+        }
+        if (property_exists($obj,$propertyName)) {
+            $obj->{$propertyName} = empty($obj->{$propertyName})?$newValue:$obj->{$propertyName};
+        }else{
+            $obj->{$propertyName} = $newValue;
+        }
+    	return $obj;
+    }
+
+
 
     /**
      * Verificar se o valor informado foi preenchido
