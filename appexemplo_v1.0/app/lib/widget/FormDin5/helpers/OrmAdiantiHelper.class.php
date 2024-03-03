@@ -121,16 +121,20 @@ class OrmAdiantiHelper
      * @param string $filde       02: campo do banco que será usado
      * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
      * @param mixed  $data        04: valor do $data que será testado
-     * @param mixed  $param       05: valor do $param que será testado
-     * @param string $sql         06: String Sql para um sub select.
+     * @param object $obj         05: Objeto Adianti
+     * @param string|null $objPropertyName 06: Nome da atributo do objeto
+     * @param array|null|mixed $arrayParam 07: Array ou valor diretamente com possíveis valores
+     * @param string|null $arrayParamName  08: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @param string $sql         09: String Sql para um sub select.
      * @return array
      */
-    public static function addFilter($arrayFilter,$filde,$conector,$data,$param,$sql) 
+    public static function addFilter($arrayFilter,$filde,$conector,$obj,$objPropertyName,$arrayParam,$arrayParamName,$sql) 
     {
-        $data = empty($data)?$param:$data;
-        if( self::valueTest($data) ){
+        $obj = objPropertyExistsSetValeu($obj,$objPropertyName,$arrayParam,$arrayParamName);
+        $valeu = objPropertyValeu($obj,$objPropertyName);
+        if( self::valueTest($valeu) ){
             if( empty($sql) ){
-                $arrayFilter[] = new TFilter($filde,$conector,$data);// create the filter 
+                $arrayFilter[] = new TFilter($filde,$conector,$valeu);// create the filter 
             }else{
                 $arrayFilter[] = new TFilter($filde,$conector,$sql);// create the filter 
             }
