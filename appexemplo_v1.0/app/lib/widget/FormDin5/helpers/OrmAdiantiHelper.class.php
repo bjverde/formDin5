@@ -54,7 +54,7 @@ class OrmAdiantiHelper
      *
      * @param object $obj - 01: Objeto Adianti
      * @param string|null $objPropertyName - 02: Nome da atributo do objeto
-     * @param array|null|mixed $arrayParam - 03: Array com possíveis valores
+     * @param array|null|mixed $arrayParam - 03: Array ou valor diretamente com possíveis valores
      * @param string|null $arrayParamName  - 04: Nome do atributo do array que será usado para preencher o valor do objeto
      * @return object
      */
@@ -77,7 +77,7 @@ class OrmAdiantiHelper
         }
     	return $obj;
     }
-    
+
     /**
      * Verificar se o valor informado foi preenchido
      *
