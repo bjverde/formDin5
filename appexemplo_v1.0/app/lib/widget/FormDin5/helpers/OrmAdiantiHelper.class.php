@@ -56,22 +56,22 @@ class OrmAdiantiHelper
      * @param string|null $paramName
      * @return object
      */
-    public static function objPropertyExistsSetValeu($obj,$propertyName,$param,$paramName) 
+    public static function objPropertyExistsSetValeu($obj,$objPropertyName,$arrayParam,$arrayParamName) 
     {
-        ValidateHelper::isString($propertyName,__METHOD__,__LINE__);
+        ValidateHelper::isString($objPropertyName,__METHOD__,__LINE__);
         if( !is_object($obj)){
             $obj = new stdClass();
         }
         $newValue = null;
-        if( is_array($param) ){
-            $newValue = ArrayHelper::get($param,$paramName);
+        if( is_array($arrayParam) ){
+            $newValue = ArrayHelper::get($arrayParam,$arrayParamName);
         }else{
-            $newValue = $param;
+            $newValue = $arrayParam;
         }
-        if (property_exists($obj,$propertyName)) {
-            $obj->{$propertyName} = empty($obj->{$propertyName})?$newValue:$obj->{$propertyName};
+        if (property_exists($obj,$objPropertyName)) {
+            $obj->{$objPropertyName} = empty($obj->{$objPropertyName})?$newValue:$obj->{$objPropertyName};
         }else{
-            $obj->{$propertyName} = $newValue;
+            $obj->{$objPropertyName} = $newValue;
         }
     	return $obj;
     }
