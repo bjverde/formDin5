@@ -77,9 +77,7 @@ class OrmAdiantiHelper
         }
     	return $obj;
     }
-
-
-
+    
     /**
      * Verificar se o valor informado foi preenchido
      *
