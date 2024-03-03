@@ -128,10 +128,10 @@ class OrmAdiantiHelper
      * @param string $sql         09: String Sql para um sub select.
      * @return array
      */
-    public static function addFilter($arrayFilter,$filde,$conector,$obj,$objPropertyName,$arrayParam,$arrayParamName,$sql) 
+    public static function addFilter($arrayFilter,$filde,$conector,$obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null,$sql=null) 
     {
-        $obj = objPropertyExistsSetValeu($obj,$objPropertyName,$arrayParam,$arrayParamName);
-        $valeu = objPropertyValeu($obj,$objPropertyName);
+        $obj = self::objPropertyExistsSetValeu($obj,$objPropertyName,$arrayParam,$arrayParamName);
+        $valeu = self::objPropertyValeu($obj,$objPropertyName);
         if( self::valueTest($valeu) ){
             if( empty($sql) ){
                 $arrayFilter[] = new TFilter($filde,$conector,$valeu);// create the filter 
