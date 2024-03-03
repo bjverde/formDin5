@@ -48,6 +48,25 @@ class OrmAdiantiHelper
 {
 
     /**
+     * Recurpera o valor de um atributo de um Objeto
+     *
+     * @param object $obj - 01: Objeto Adianti
+     * @param string $objPropertyName - 02: Nome da atributo do objeto
+     * @return object
+     */
+    public static function objPropertyValeu($obj,$objPropertyName)
+    {
+        ValidateHelper::isObject($obj,__METHOD__,__LINE__);
+        ValidateHelper::isString($objPropertyName,__METHOD__,__LINE__);
+        $result = null;
+        if (property_exists($obj,$objPropertyName)) {
+            $result = $obj->{$objPropertyName};
+        }
+    	return $result;
+    }
+
+
+    /**
      * Verifica se uma propriedade foi setada em objeto, se não foi setada vai
      * setar NULL ou valor informado do array. Retornando um objto com valor
      * peenchido
