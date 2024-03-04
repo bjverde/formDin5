@@ -54,7 +54,7 @@ class OrmAdiantiHelper
      * @param string $objPropertyName - 02: Nome da atributo do objeto
      * @return object
      */
-    public static function objPropertyValeu($obj,$objPropertyName)
+    public static function objPropertyValue($obj,$objPropertyName)
     {
         ValidateHelper::isObject($obj,__METHOD__,__LINE__);
         ValidateHelper::isString($objPropertyName,__METHOD__,__LINE__);
@@ -77,22 +77,26 @@ class OrmAdiantiHelper
      * @param string|null $arrayParamName  - 04: Nome do atributo do array que será usado para preencher o valor do objeto
      * @return object
      */
-    public static function objPropertyExistsSetValeu($obj,$objPropertyName,$arrayParam,$arrayParamName)  
-    {
-        ValidateHelper::isString($objPropertyName,__METHOD__,__LINE__);
+    public static function objPropertyExistsSetValue($obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null)
+    {        
         if( !is_object($obj)){
             $obj = new stdClass();
         }
         $newValue = null;
         if( is_array($arrayParam) ){
+            ValidateHelper::isString($arrayParamName,__METHOD__,__LINE__);
             $newValue = ArrayHelper::get($arrayParam,$arrayParamName);
         }else{
             $newValue = $arrayParam;
         }
-        if (property_exists($obj,$objPropertyName)) {
-            $obj->{$objPropertyName} = empty($obj->{$objPropertyName})?$newValue:$obj->{$objPropertyName};
-        }else{
-            $obj->{$objPropertyName} = $newValue;
+
+        if( !empty($objPropertyName) ){
+            ValidateHelper::isString($objPropertyName,__METHOD__,__LINE__);
+            if (property_exists($obj,$objPropertyName)) {
+                $obj->{$objPropertyName} = empty($obj->{$objPropertyName})?$newValue:$obj->{$objPropertyName};
+            }else{
+                $obj->{$objPropertyName} = $newValue;
+            }
         }
     	return $obj;
     }
@@ -130,8 +134,8 @@ class OrmAdiantiHelper
      */
     public static function addFilter($arrayFilter,$filde,$conector,$obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null,$sql=null) 
     {
-        $obj = self::objPropertyExistsSetValeu($obj,$objPropertyName,$arrayParam,$arrayParamName);
-        $valeu = self::objPropertyValeu($obj,$objPropertyName);
+        $obj   = self::objPropertyExistsSetValue($obj,$objPropertyName,$arrayParam,$arrayParamName);
+        $valeu = self::objPropertyValue($obj,$objPropertyName);
         if( self::valueTest($valeu) ){
             if( empty($sql) ){
                 $arrayFilter[] = new TFilter($filde,$conector,$valeu);// create the filter 
