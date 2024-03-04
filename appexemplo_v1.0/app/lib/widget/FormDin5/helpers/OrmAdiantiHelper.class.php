@@ -163,9 +163,19 @@ class OrmAdiantiHelper
      * @param string|null $arrayParamName  07: Nome do atributo do array que será usado para preencher o valor do objeto
      * @param string $sql         08: String Sql para um sub select.
      * @param string $operator    09: TExpression::AND_OPERATOR (Default) ou TExpression::OR_OPERATOR
+     * @param string $showDump    10: show dump criteria SQL
      * @return array
      */
-    public static function addFilterTCriteria(TCriteria $criteria,$filde,$conector,$obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null,$sql=null,$logic_operator = TExpression::AND_OPERATOR) 
+    public static function addFilterTCriteria(TCriteria $criteria
+                                             ,$filde
+                                             ,$conector
+                                             ,$obj=null
+                                             ,$objPropertyName=null
+                                             ,$arrayParam=null
+                                             ,$arrayParamName=null
+                                             ,$sql=null
+                                             ,$logic_operator = TExpression::AND_OPERATOR
+                                             ,$showDump = FALSE) 
     {
         if( is_object($obj) ){
             $obj   = self::objPropertyExistsSetValue($obj,$objPropertyName,$arrayParam,$arrayParamName);
@@ -175,10 +185,14 @@ class OrmAdiantiHelper
         }
         if( self::valueTest($value) ){
             if( empty($sql) ){
-                $criteria->add(new TFilter($filde,$conector,$value));// create the filter 
+                $criteria->add(new TFilter($filde,$conector,$value), $logic_operator);// create the filter 
             }else{
-                $criteria->add(new TFilter($filde,$conector,$sql));// create the filter 
+                $criteria->add(new TFilter($filde,$conector,$sql)  , $logic_operator);// create the filter 
             }
+        }
+        if($showDump==true){
+            $dumpSql = $criteria->dump();
+            FormDinHelper::debug($dumpSql,'Debug addFilterTCriteria');
         }
     	return $criteria;
     }
