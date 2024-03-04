@@ -175,4 +175,32 @@ class OrmAdiantiHelperTest extends TestCase
         $this->assertEquals( $expected , $result);
 	}
     //--------------------------------------------------------------------------------
+    public function testAddFilterTCriteria_like() {
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = new TCriteria;
+        $expected->add(new TFilter('nome','like',$data->nome));
+
+        $criteria= new TCriteria;
+        $result  = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome','like',$data,'nome');
+        $this->assertEquals( $expected , $result);
+	}
+
+    public function testAddFilterTCriteria_like_array() {
+        $param = array();
+        $param['nome'] = 'Maria';
+
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = new TCriteria;
+        $expected->add(new TFilter('nome','like',$data->nome));
+        $expected->add(new TFilter('nome2','like',$data->nome));
+
+        $criteria= new TCriteria;
+        $criteria = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome','like',null,null,$param,'nome');
+        $result = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome2','like',null,null,$param,'nome');
+        $this->assertEquals( $expected , $result);
+	}
 }
