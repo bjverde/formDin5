@@ -119,17 +119,17 @@ class OrmAdiantiHelper
 
     /**
      * Se $data ou $param tiver valor, inclui um novo elemento do tipo TFilter
-     * no ArrayFilter para ser usado como critério de filtro no sql
+     * Se Obj estiver em branco, será preenchido com $param, no ArrayFilter
+     * pode ser usado como critério de filtro no sql
      *
      * @param array  $arrayFilter 01: array com os filtros já incluiso
      * @param string $filde       02: campo do banco que será usado
      * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
-     * @param mixed  $data        04: valor do $data que será testado
-     * @param object $obj         05: Objeto Adianti
-     * @param string|null $objPropertyName 06: Nome da atributo do objeto
-     * @param array|null|mixed $arrayParam 07: Array ou valor diretamente com possíveis valores
-     * @param string|null $arrayParamName  08: Nome do atributo do array que será usado para preencher o valor do objeto
-     * @param string $sql         09: String Sql para um sub select.
+     * @param object $obj         04: Objeto Adianti
+     * @param string|null $objPropertyName 05: Nome da atributo do objeto
+     * @param array|null|mixed $arrayParam 06: Array ou valor diretamente com possíveis valores
+     * @param string|null $arrayParamName  07: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @param string $sql         08: String Sql para um sub select.
      * @return array
      */
     public static function addFilter($arrayFilter,$filde,$conector,$obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null,$sql=null) 
