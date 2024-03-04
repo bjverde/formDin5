@@ -164,7 +164,7 @@ class OrmAdiantiHelper
      * @param string $sql         08: String Sql para um sub select.
      * @param string $operator    09: TExpression::AND_OPERATOR (Default) ou TExpression::OR_OPERATOR
      * @param string $showDump    10: show dump criteria SQL
-     * @return array
+     * @return TCriteria
      */
     public static function addFilterTCriteria(TCriteria $criteria
                                              ,$filde
