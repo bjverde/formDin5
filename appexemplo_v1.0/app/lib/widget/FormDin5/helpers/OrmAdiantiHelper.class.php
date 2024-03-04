@@ -148,6 +148,39 @@ class OrmAdiantiHelper
             }
         }
     	return $arrayFilter;
-    }    
+    }
+
+    /**
+     * Inclui TFilter no TCriteria. Se Obj estiver em branco, será preenchido com $param
+     * Pode ser informado um subselect ou operador 
+     *
+     * @param TCriteria $criteria 01: array com os filtros já incluiso
+     * @param string $filde       02: campo do banco que será usado
+     * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
+     * @param object $obj         04: Objeto Adianti
+     * @param string|null $objPropertyName 05: Nome da atributo do objeto
+     * @param array|null|mixed $arrayParam 06: Array ou valor diretamente com possíveis valores
+     * @param string|null $arrayParamName  07: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @param string $sql         08: String Sql para um sub select.
+     * @param string $operator    09: TExpression::AND_OPERATOR (Default) ou TExpression::OR_OPERATOR
+     * @return array
+     */
+    public static function addFilterTCriteria(TCriteria $criteria,$filde,$conector,$obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null,$sql=null,$logic_operator = TExpression::AND_OPERATOR) 
+    {
+        if( is_object($obj) ){
+            $obj   = self::objPropertyExistsSetValue($obj,$objPropertyName,$arrayParam,$arrayParamName);
+            $value = self::objPropertyValue($obj,$objPropertyName);
+        }else{
+            $value = ArrayHelper::get($arrayParam,$arrayParamName);
+        }
+        if( self::valueTest($value) ){
+            if( empty($sql) ){
+                $criteria->add(new TFilter($filde,$conector,$value));// create the filter 
+            }else{
+                $criteria->add(new TFilter($filde,$conector,$sql));// create the filter 
+            }
+        }
+    	return $criteria;
+    }
 }
 ?>
