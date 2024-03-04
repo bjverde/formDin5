@@ -134,11 +134,15 @@ class OrmAdiantiHelper
      */
     public static function addFilter($arrayFilter,$filde,$conector,$obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null,$sql=null) 
     {
-        $obj   = self::objPropertyExistsSetValue($obj,$objPropertyName,$arrayParam,$arrayParamName);
-        $valeu = self::objPropertyValue($obj,$objPropertyName);
-        if( self::valueTest($valeu) ){
+        if( is_object($obj) ){
+            $obj   = self::objPropertyExistsSetValue($obj,$objPropertyName,$arrayParam,$arrayParamName);
+            $value = self::objPropertyValue($obj,$objPropertyName);
+        }else{
+            $value = ArrayHelper::get($arrayParam,$arrayParamName);
+        }
+        if( self::valueTest($value) ){
             if( empty($sql) ){
-                $arrayFilter[] = new TFilter($filde,$conector,$valeu);// create the filter 
+                $arrayFilter[] = new TFilter($filde,$conector,$value);// create the filter 
             }else{
                 $arrayFilter[] = new TFilter($filde,$conector,$sql);// create the filter 
             }
