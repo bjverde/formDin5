@@ -49,24 +49,6 @@ use PHPUnit\Framework\TestCase;
 class OrmAdiantiHelperTest extends TestCase
 {	
 
-    /*
-	public function testObjPropertyValeu_notObj_Exceptio() {
-        $this->expectException(InvalidArgumentException::class);
-
-        $obj = null;
-        $objPropertyName = null;        
-        $result = OrmAdiantiHelper::objPropertyValeu($obj,$objPropertyName);
-	}
-
-	public function testObjPropertyValeu_notObj_Exceptio() {
-        $this->expectException(InvalidArgumentException::class);
-        
-        $obj = null;
-        $objPropertyName = null;        
-        $result = OrmAdiantiHelper::objPropertyValeu($obj,$objPropertyName);
-	}
-    */
-
 	public function testParam_null_false() {
 	    $expected = false;
         $param = null;
@@ -115,12 +97,7 @@ class OrmAdiantiHelperTest extends TestCase
         $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
-
-    //$filters = OrmAdiantiHelper::addFilter($filters,'nome','like',$data->nome,null);
-    //$filters = OrmAdiantiHelper::addFilter($filters,'ddi' ,'='   ,$data->ddi ,null);
-    //$filters = OrmAdiantiHelper::addFilter($filters,'ddd' ,'='   ,$data->ddd ,null);
-    //$filters = OrmAdiantiHelper::addFilter($filters,'celular' ,'like'   ,$data->celular ,null);
-
+    //--------------------------------------------------------------------------------
     public function testAddFilter_like() {
         $data = new stdClass();
         $data->nome = 'Maria';
@@ -197,4 +174,5 @@ class OrmAdiantiHelperTest extends TestCase
         $result = OrmAdiantiHelper::addFilter($filters,'nome','in',$data,'nome');
         $this->assertEquals( $expected , $result);
 	}
+    //--------------------------------------------------------------------------------
 }
