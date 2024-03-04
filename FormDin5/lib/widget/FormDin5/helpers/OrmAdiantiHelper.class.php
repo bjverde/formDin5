@@ -47,7 +47,67 @@
 class OrmAdiantiHelper
 {
 
-    public static function testParam($param) 
+    /**
+     * Recurpera o valor de um atributo de um Objeto
+     *
+     * @param object $obj - 01: Objeto Adianti
+     * @param string $objPropertyName - 02: Nome da atributo do objeto
+     * @return object
+     */
+    public static function objPropertyValue($obj,$objPropertyName)
+    {
+        ValidateHelper::isObject($obj,__METHOD__,__LINE__);
+        ValidateHelper::isString($objPropertyName,__METHOD__,__LINE__);
+        $result = null;
+        if (property_exists($obj,$objPropertyName)) {
+            $result = $obj->{$objPropertyName};
+        }
+    	return $result;
+    }
+
+
+    /**
+     * Verifica se uma propriedade foi setada em objeto, se não foi setada vai
+     * setar NULL ou valor informado do array. Retornando um objto com valor
+     * peenchido
+     *
+     * @param object $obj - 01: Objeto Adianti
+     * @param string|null $objPropertyName - 02: Nome da atributo do objeto
+     * @param array|null|mixed $arrayParam - 03: Array ou valor diretamente com possíveis valores
+     * @param string|null $arrayParamName  - 04: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @return object
+     */
+    public static function objPropertyExistsSetValue($obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null)
+    {        
+        if( !is_object($obj)){
+            $obj = new stdClass();
+        }
+        $newValue = null;
+        if( is_array($arrayParam) ){
+            ValidateHelper::isString($arrayParamName,__METHOD__,__LINE__);
+            $newValue = ArrayHelper::get($arrayParam,$arrayParamName);
+        }else{
+            $newValue = $arrayParam;
+        }
+
+        if( !empty($objPropertyName) ){
+            ValidateHelper::isString($objPropertyName,__METHOD__,__LINE__);
+            if (property_exists($obj,$objPropertyName)) {
+                $obj->{$objPropertyName} = empty($obj->{$objPropertyName})?$newValue:$obj->{$objPropertyName};
+            }else{
+                $obj->{$objPropertyName} = $newValue;
+            }
+        }
+    	return $obj;
+    }
+
+    /**
+     * Verificar se o valor informado foi preenchido
+     *
+     * @param mixed $param
+     * @return void
+     */
+    public static function valueTest($param) 
     {
         $result = false;
         if (isset($param) AND ( (is_scalar($param) AND $param !== '') OR (is_array($param) AND (!empty($param)) )) )
@@ -58,25 +118,83 @@ class OrmAdiantiHelper
     }
 
     /**
-     * Inclui um novo elemento do tipo TFilter no ArrayFilter se $data for tiver valor
+     * Se $data ou $param tiver valor, inclui um novo elemento do tipo TFilter
+     * Se Obj estiver em branco, será preenchido com $param, no ArrayFilter
+     * pode ser usado como critério de filtro no sql
      *
      * @param array  $arrayFilter 01: array com os filtros já incluiso
-     * @param string $filde       02: campo que será usado
+     * @param string $filde       02: campo do banco que será usado
      * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
-     * @param mixed  $data        04: valor que será testado
-     * @param string $sql         05: String Sql para um sub select. 
+     * @param object $obj         04: Objeto Adianti
+     * @param string|null $objPropertyName 05: Nome da atributo do objeto
+     * @param array|null|mixed $arrayParam 06: Array ou valor diretamente com possíveis valores
+     * @param string|null $arrayParamName  07: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @param string $sql         08: String Sql para um sub select.
      * @return array
      */
-    public static function addFilter($arrayFilter,$filde,$conector,$data,$sql) 
+    public static function addFilter($arrayFilter,$filde,$conector,$obj=null,$objPropertyName=null,$arrayParam=null,$arrayParamName=null,$sql=null) 
     {
-        if( self::testParam($data) ){
+        if( is_object($obj) ){
+            $obj   = self::objPropertyExistsSetValue($obj,$objPropertyName,$arrayParam,$arrayParamName);
+            $value = self::objPropertyValue($obj,$objPropertyName);
+        }else{
+            $value = ArrayHelper::get($arrayParam,$arrayParamName);
+        }
+        if( self::valueTest($value) ){
             if( empty($sql) ){
-                $arrayFilter[] = new TFilter($filde,$conector,$data);// create the filter 
+                $arrayFilter[] = new TFilter($filde,$conector,$value);// create the filter 
             }else{
                 $arrayFilter[] = new TFilter($filde,$conector,$sql);// create the filter 
             }
         }
     	return $arrayFilter;
-    }    
+    }
+
+    /**
+     * Inclui TFilter no TCriteria. Se Obj estiver em branco, será preenchido com $param
+     * Pode ser informado um subselect ou operador 
+     *
+     * @param TCriteria $criteria 01: array com os filtros já incluiso
+     * @param string $filde       02: campo do banco que será usado
+     * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
+     * @param object $obj         04: Objeto Adianti
+     * @param string|null $objPropertyName 05: Nome da atributo do objeto
+     * @param array|null|mixed $arrayParam 06: Array ou valor diretamente com possíveis valores
+     * @param string|null $arrayParamName  07: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @param string $sql         08: String Sql para um sub select.
+     * @param string $operator    09: TExpression::AND_OPERATOR (Default) ou TExpression::OR_OPERATOR
+     * @param string $showDump    10: show dump criteria SQL
+     * @return TCriteria
+     */
+    public static function addFilterTCriteria(TCriteria $criteria
+                                             ,$filde
+                                             ,$conector
+                                             ,$obj=null
+                                             ,$objPropertyName=null
+                                             ,$arrayParam=null
+                                             ,$arrayParamName=null
+                                             ,$sql=null
+                                             ,$logic_operator = TExpression::AND_OPERATOR
+                                             ,$showDump = FALSE) 
+    {
+        if( is_object($obj) ){
+            $obj   = self::objPropertyExistsSetValue($obj,$objPropertyName,$arrayParam,$arrayParamName);
+            $value = self::objPropertyValue($obj,$objPropertyName);
+        }else{
+            $value = ArrayHelper::get($arrayParam,$arrayParamName);
+        }
+        if( self::valueTest($value) ){
+            if( empty($sql) ){
+                $criteria->add(new TFilter($filde,$conector,$value), $logic_operator);// create the filter 
+            }else{
+                $criteria->add(new TFilter($filde,$conector,$sql)  , $logic_operator);// create the filter 
+            }
+        }
+        if($showDump==true){
+            $dumpSql = $criteria->dump();
+            FormDinHelper::debug($dumpSql,'Debug addFilterTCriteria');
+        }
+    	return $criteria;
+    }
 }
 ?>

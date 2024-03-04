@@ -105,7 +105,23 @@ class ValidateHelper
         if( $validadeEmptyArray && empty($array)){
             throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_ARRAY_EMP.'See the method: '.$method.' in the line: '.$line);
         }        
-    }    
+    }
+    //--------------------------------------------------------------------------------
+    /**
+     * Validade is object
+     * @param object $obj
+     * @param string $method 
+     * @param string $line
+     * @throws InvalidArgumentException
+     * @return void
+     */
+    public static function isObject($obj,$method,$line)
+    {
+        self::methodLine($method, $line, __METHOD__);
+        if( !is_object($obj) ){
+            throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_NOT_OBJ.'See the method: '.$method.' in the line: '.$line);
+        }
+    }
     //--------------------------------------------------------------------------------
     /**
      * Validate Object Type is Instance Of TFormDinPdoConnection
