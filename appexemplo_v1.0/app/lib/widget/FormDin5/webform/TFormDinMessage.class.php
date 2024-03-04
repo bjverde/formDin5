@@ -89,6 +89,7 @@ class TFormDinMessage {
     const ERROR_TYPE_NOT_STRING= 'Tipo não é string! ';
     const ERROR_TYPE_NOT_INT   = 'Tipo não númerico! ';
     const ERROR_TYPE_NOT_ARRAY = 'Tipo não é um array! ';
+    const ERROR_TYPE_NOT_OBJ   = 'Tipo não é um objeto! ';
     const ERROR_TYPE_ARRAY_EMP = 'O array está vazio! ';
     const ERROR_TYPE_NOT_SET   = 'A variable has not been defined! ';
     const ERROR_TYPE_WRONG     = 'Tipo de dados errado';
