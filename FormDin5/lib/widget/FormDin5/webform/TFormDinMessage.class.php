@@ -64,14 +64,16 @@ class TFormDinMessage {
     const CSS_FILE_FORM_DEFAULT_FAIL = 'Arquivo de CSS para o Padrão dos Forms não existe ou não está no formato CSS';
     const MENU_FILE_FAIL = 'Arquivo do Menu não existe';
 
-    const FORM_MIN_VERSION_INVALID_FORMAT = 'O formato da versão não é válido, informe no formato X.Y.Z';
+    const FORM_MIN_VERSION_INVALID_FORMAT = 'O formato da versão não é válido, informe no formato X.Y.Z ou X.Y.Z.K';
     const FORM_MIN_VERSION_BLANK = 'Informe a versão minima do formDin';
     const FORM_MIN_VERSION_NOT = ' Para esse sistema funcionar a versão mínima necessária do formDin é: ';
     const FORM_MIN_YOU_VERSION = 'Sua versão do FormDin é : ';
+    const FORM_MIN_VERSION_ADIANTI = ' Para o FormDin funcionar a versão minima do Adianti deve ser: ';
 
-    const ADIANTI_VERSION_BLANK   = 'A versão do Adianti está em branco! procure o arquivo sistema/lib/VERSION';
+    const ADIANTI_VERSION_BLANK = 'A versão do Adianti está em branco! procure o arquivo sistema/lib/VERSION';
+    const ADIANTI_MIN_VERSION_BLANK = 'Informe a versão minima do Adianti';
+    const ADIANTI_MIN_VERSION_NOT = ' Para esse sistema funcionar a versão mínima necessária do Adianti é: ';
     const ADIANTI_MIN_YOU_VERSION = 'Sua versão do Adianti é : ';
-    const ADIANTI_MIN_VERSION_FORMDIN = ' Para esse sistema funcionar a versão mínima necessária do Adianti é: ';
     
     const ARRAY_EXPECTED = 'O atribruto deveria ser um array';
     const ARRAY_KEY_NOT_EXIST = 'Não existe a chave procurada no array FormDin';
@@ -87,6 +89,7 @@ class TFormDinMessage {
     const ERROR_TYPE_NOT_STRING= 'Tipo não é string! ';
     const ERROR_TYPE_NOT_INT   = 'Tipo não númerico! ';
     const ERROR_TYPE_NOT_ARRAY = 'Tipo não é um array! ';
+    const ERROR_TYPE_NOT_OBJ   = 'Tipo não é um objeto! ';
     const ERROR_TYPE_ARRAY_EMP = 'O array está vazio! ';
     const ERROR_TYPE_NOT_SET   = 'A variable has not been defined! ';
     const ERROR_TYPE_WRONG     = 'Tipo de dados errado';

@@ -121,7 +121,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
 
         $btnScreenshot = new TButton('btnScreenshot');
         $btnScreenshot->class = 'btn btn-primary btn-sm';
-        $btnScreenshot->setLabel('Capiturar Foto');
+        $btnScreenshot->setLabel('Capturar Foto');
         $btnScreenshot->setImage('fa:camera');
         $btnScreenshot->addFunction("fd5VideoCampiturar('".$idField."','".$imgPathFeedBack."',".$imgPercent.")");
 
