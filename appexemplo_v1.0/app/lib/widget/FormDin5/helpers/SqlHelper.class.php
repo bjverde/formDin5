@@ -134,7 +134,7 @@ class SqlHelper
         return $retorno;
     }
     //----------------------------------------
-    public static function transformValidateString( $string , $dbms)
+    public static function transformValidateString( $string , $dbms=null)
     {   
         $dbms = empty($dbms)?SqlHelper::getDbms():$dbms;
         if ( $dbms == TFormDinPdoConnection::DBMS_MYSQL ) {
@@ -160,7 +160,7 @@ class SqlHelper
      * @param string $string
      * @return string`
      */
-    public static function explodeTextString( $string, $dbms )
+    public static function explodeTextString( $string, $dbms=null )
     {
         $dbms = empty($dbms)?SqlHelper::getDbms():$dbms;
         $dataBaseWithLike = ($dbms == TFormDinPdoConnection::DBMS_MYSQL) 
