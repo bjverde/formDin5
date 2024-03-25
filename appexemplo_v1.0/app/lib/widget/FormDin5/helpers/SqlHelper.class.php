@@ -134,9 +134,9 @@ class SqlHelper
         return $retorno;
     }
     //----------------------------------------
-    public static function transformValidateString( $string )
-    {
-        $dbms = SqlHelper::getDbms();
+    public static function transformValidateString( $string , $dbms)
+    {   
+        $dbms = empty($dbms)?SqlHelper::getDbms():$dbms;
         if ( $dbms == TFormDinPdoConnection::DBMS_MYSQL ) {
             //$string = addslashes($string);
             //$patterns = '/(%)/';
@@ -160,9 +160,9 @@ class SqlHelper
      * @param string $string
      * @return string`
      */
-    public static function explodeTextString( $string )
+    public static function explodeTextString( $string, $dbms )
     {
-        $dbms = SqlHelper::getDbms();
+        $dbms = empty($dbms)?SqlHelper::getDbms():$dbms;
         $dataBaseWithLike = ($dbms == TFormDinPdoConnection::DBMS_MYSQL) 
                          || ($dbms == TFormDinPdoConnection::DBMS_POSTGRES)
                          || ($dbms == TFormDinPdoConnection::DBMS_SQLITE)
@@ -338,6 +338,7 @@ class SqlHelper
      * @param string  $type            4: Type of clauses
      * @param boolean $testZero        5: 
      * @param string  $connector       6: Connector self::SQL_CONNECTOR_AND or self::SQL_CONNECTOR_OR
+     * @param string  $dbms            7: Type of Database management system, see const of TFormDinPdoConnection
      * @return string
      */
     public static function getAtributeWhereGridParameters( $stringWhere
@@ -346,12 +347,13 @@ class SqlHelper
                                                          , $type 
                                                          , $testZero=null
                                                          , $connector=null
+                                                         , $dbms=null
                                                          )
     {
         $testZero  = empty($testZero)?true:$testZero;
         $connector = empty($connector)?self::SQL_CONNECTOR_AND:$connector;
         if( ArrayHelper::has($attribute, $arrayWhereGrid) ){
-            $dbms = SqlHelper::getDbms();
+            $dbms = empty($dbms)?SqlHelper::getDbms():$dbms;
             if( empty($dbms) ){
                 throw new InvalidArgumentException(TFormDinMessage::ERROR_SQL_NULL_DBMA);
             }
