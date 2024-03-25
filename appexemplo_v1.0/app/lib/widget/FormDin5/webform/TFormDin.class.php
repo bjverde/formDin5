@@ -1116,7 +1116,7 @@ class TFormDin
 
 
     /**
-     * Video stream em HTML 5 com canvas para capiturar uma foto da Camera
+     * Video stream em HTML 5 com canvas para capturar uma foto da Camera
      * 
      * Algo semelhante ao exemplo abaixo
      * https://doug2k1.github.io/javascript-camera/

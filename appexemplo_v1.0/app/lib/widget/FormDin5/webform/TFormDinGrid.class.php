@@ -695,7 +695,7 @@ class TFormDinGrid
      * $boolSubmitAction = adicionar/remover a função fwFazerAcao(). Padrão=true
      *
      * @param string $strRotulo         - 1: Nome do Label do Botão ou Hint que irá aparecer na imagem se o Hint estiver em branco
-     * @param string $strAction         - 2: Nome da ação capitura no formDinAcao
+     * @param string $strAction         - 2: Nome da ação captura no formDinAcao
      * @param string $strName           - 3: NOT_IMPLEMENTED Nome
      * @param string $strOnClick        - 4: NOT_IMPLEMENTED JavaScript que será chamado no evento OnClick
      * @param string $strConfirmMessage - 5: NOT_IMPLEMENTED Mensagem com caixa de confirmação
