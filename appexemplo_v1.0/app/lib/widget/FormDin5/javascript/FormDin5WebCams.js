@@ -88,10 +88,13 @@ function fd5VideoAlternarDisplay(idElemento, modoExibicao) {
 
 function fd5VideoGetImgDimensoes(id){
   let divPrincipal  = document.querySelector('#'+id+'_videodiv');
-  let proporcaoAlturaLargura = 9/16;
+  let proporcaoAlturaLargura = 9/16; // Proporção 16:9 (altura:largura)
+  let largura = divPrincipal.offsetWidth;
+  let altura = largura * proporcaoAlturaLargura; // Calcula a altura com base na largura
+
   var imgDimensoes = {
-     height: (divPrincipal.offsetWidth * proporcaoAlturaLargura)
-    ,width : divPrincipal.offsetWidth
+     height: altura,
+     width : largura
   };
   return imgDimensoes;
 }
@@ -261,11 +264,29 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     var canvasCapturado = document.querySelector(idCanvas);
     fd5VideoAlternarDisplay(idCanvas,'block');
 
+    // Obter as dimensões reais do vídeo
+    let videoWidth = video.videoWidth;
+    let videoHeight = video.videoHeight;
+
+    // Obter as dimensões do contêiner
     let divPrincipal = fd5VideoGetImgDimensoes(id);
-    canvasCapturado.height = divPrincipal.height;
-    canvasCapturado.width  = divPrincipal.width;
+
+    // Calcular as dimensões do canvas mantendo a proporção do vídeo
+    let proporcao = videoWidth / videoHeight;
+    let canvasWidth = divPrincipal.width;
+    let canvasHeight = canvasWidth / proporcao;
+
+    // Limitar a altura do canvas de acordo com as dimensões máximas
+    if (canvasHeight > divPrincipal.height) {
+      canvasHeight = divPrincipal.height;
+      canvasWidth = canvasHeight * proporcao;
+    }
+
+    canvasCapturado.width = canvasWidth;
+    canvasCapturado.height = canvasHeight;
+
     let context= canvasCapturado.getContext('2d');
-    context.drawImage(video, 0, 0, divPrincipal.width, divPrincipal.height);
+    context.drawImage(video, 0, 0, canvasWidth, canvasHeight);
 
     fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent);
     fd5VideoStop(id);
