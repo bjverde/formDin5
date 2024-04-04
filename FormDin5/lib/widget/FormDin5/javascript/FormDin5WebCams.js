@@ -88,10 +88,13 @@ function fd5VideoAlternarDisplay(idElemento, modoExibicao) {
 
 function fd5VideoGetImgDimensoes(id){
   let divPrincipal  = document.querySelector('#'+id+'_videodiv');
-  let proporcaoAlturaLargura = 9/16;
+  let proporcaoAlturaLargura = 9/16; // Proporção 16:9 (altura:largura)
+  let largura = divPrincipal.offsetWidth;
+  let altura = largura * proporcaoAlturaLargura; // Calcula a altura com base na largura
+
   var imgDimensoes = {
-     height: (divPrincipal.offsetWidth * proporcaoAlturaLargura)
-    ,width : divPrincipal.offsetWidth
+     height: altura,
+     width : largura
   };
   return imgDimensoes;
 }
@@ -156,8 +159,7 @@ function dataUrltoFile(dataURL,nameFile) {
 /**
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
  * Coloca uma imagem sobre a imagem da camera para indicar que está correto
- * @param {string} id     - O ID do elemento de vídeo a ser capturado.
- * @param {object} canvas - um objeto do tipo HTMLCanvasElement
+ * @param {object} canvas         - um objeto do tipo HTMLCanvasElement
  * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
  * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
@@ -181,27 +183,12 @@ function fd5VideoCampiturarSucesso(canvas,imgPathFeedBack, imgPercent) {
   imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
 }
 
-function fd5VideoGeraImgUpload(id,video){
-  let idCanvas= '#'+id+'_videoCanvasUpload';
-  let canvasUpload = document.querySelector(idCanvas);
-  
-  // Define a largura e altura desejadas para o arquivo de upload
-  var larguraParaUpload = 1280;
-  var alturaParaUpload = 720;
-
-  canvasUpload.height = alturaParaUpload;
-  canvasUpload.width  = larguraParaUpload;
-  let context = canvasUpload.getContext('2d');
-  context.drawImage(video, 0, 0, larguraParaUpload, alturaParaUpload);  
-
-  return canvasUpload;
-}
-
 /**
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
  * Pegar o ScreenShot gerado e envia para o servidor 
- * @param {string} id     - O ID do elemento de vídeo a ser capturado.
+ * @param {string} id             - O ID do elemento de vídeo a ser capturado.
  * @param {object} canvasCapturado- um objeto do tipo HTMLCanvasElement
+ * @param {object} video          - 
  * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
  * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
@@ -212,9 +199,37 @@ function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPer
     let hiddenField = document.querySelector('#'+id);
     hiddenField.value = nameFile;
 
-    let canvasUpload = fd5VideoGeraImgUpload(id,video);
-    
-    let dataURL = canvasUpload.toDataURL();
+    // Obter as dimensões reais do vídeo
+    let videoWidth = video.videoWidth;
+    let videoHeight = video.videoHeight;
+
+    // Calcular a proporção do vídeo
+    let proporcao = videoWidth / videoHeight;
+
+    // Definir a altura máxima como 720 pixels
+    let maxHeight = 1000;
+
+    // Calcular a largura proporcional com base na altura máxima
+    let maxWidth = maxHeight * proporcao;
+
+    // Verificar se a largura excede o máximo permitido
+    if (maxWidth > videoWidth) {
+      // Se exceder, usar a largura original do vídeo
+      maxWidth = videoWidth;
+      maxHeight = maxWidth / proporcao;
+    }
+
+    // Criar um novo canvas com as dimensões corretas para a conversão
+    let scaledCanvas = document.createElement('canvas');
+    scaledCanvas.width = maxWidth;
+    scaledCanvas.height = maxHeight;
+    let context = scaledCanvas.getContext('2d');
+
+    // Desenhar a imagem capturada no novo canvas com as dimensões corretas
+    context.drawImage(canvasCapturado, 0, 0, canvasCapturado.width, canvasCapturado.height, 0, 0, maxWidth, maxHeight);
+
+    // Converter o canvas para um arquivo e enviar para o servidor
+    let dataURL = scaledCanvas.toDataURL('image/png', 0.9); // Defina o tipo de imagem e a qualidade desejada (0.9 neste exemplo)
     let file = dataUrltoFile(dataURL,nameFile);
     let formdata = new FormData();
     formdata.append(id, nameFile);
@@ -246,7 +261,7 @@ function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPer
 
 /**
  * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
- * @param {string} id - O ID do elemento de vídeo a ser capturado.
+ * @param {string} id             - O ID do elemento de vídeo a ser capturado.
  * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
  * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
@@ -261,11 +276,29 @@ function fd5VideoCampiturar(id,imgPathFeedBack, imgPercent){
     var canvasCapturado = document.querySelector(idCanvas);
     fd5VideoAlternarDisplay(idCanvas,'block');
 
+    // Obter as dimensões reais do vídeo
+    let videoWidth = video.videoWidth;
+    let videoHeight = video.videoHeight;
+
+    // Obter as dimensões do contêiner
     let divPrincipal = fd5VideoGetImgDimensoes(id);
-    canvasCapturado.height = divPrincipal.height;
-    canvasCapturado.width  = divPrincipal.width;
+
+    // Calcular as dimensões do canvas mantendo a proporção do vídeo
+    let proporcao = videoWidth / videoHeight;
+    let canvasWidth = divPrincipal.width;
+    let canvasHeight = canvasWidth / proporcao;
+
+    // Limitar a altura do canvas de acordo com as dimensões máximas
+    if (canvasHeight > divPrincipal.height) {
+      canvasHeight = divPrincipal.height;
+      canvasWidth = canvasHeight * proporcao;
+    }
+
+    canvasCapturado.width = canvasWidth;
+    canvasCapturado.height = canvasHeight;
+
     let context= canvasCapturado.getContext('2d');
-    context.drawImage(video, 0, 0, divPrincipal.width, divPrincipal.height);
+    context.drawImage(video, 0, 0, canvasWidth, canvasHeight);
 
     fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPercent);
     fd5VideoStop(id);
