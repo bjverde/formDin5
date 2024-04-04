@@ -184,27 +184,12 @@ function fd5VideoCampiturarSucesso(canvas,imgPathFeedBack, imgPercent) {
   imagemPNG.src = pathImg; // Substitua pelo caminho da imagem PNG com fundo transparente
 }
 
-function fd5VideoGeraImgUpload(id,video){
-  let idCanvas= '#'+id+'_videoCanvasUpload';
-  let canvasUpload = document.querySelector(idCanvas);
-  
-  // Define a largura e altura desejadas para o arquivo de upload
-  var larguraParaUpload = 1280;
-  var alturaParaUpload = 720;
-
-  canvasUpload.height = alturaParaUpload;
-  canvasUpload.width  = larguraParaUpload;
-  let context = canvasUpload.getContext('2d');
-  context.drawImage(video, 0, 0, larguraParaUpload, alturaParaUpload);  
-
-  return canvasUpload;
-}
-
 /**
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
  * Pegar o ScreenShot gerado e envia para o servidor 
- * @param {string} id     - O ID do elemento de vídeo a ser capturado.
+ * @param {string} id             - O ID do elemento de vídeo a ser capturado.
  * @param {object} canvasCapturado- um objeto do tipo HTMLCanvasElement
+ * @param {object} video          - 
  * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
  * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
