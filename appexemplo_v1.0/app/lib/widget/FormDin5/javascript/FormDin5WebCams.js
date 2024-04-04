@@ -159,8 +159,7 @@ function dataUrltoFile(dataURL,nameFile) {
 /**
  * Sub função do fd5VideoCampiturar só para facilitar leitura e manutenção
  * Coloca uma imagem sobre a imagem da camera para indicar que está correto
- * @param {string} id     - O ID do elemento de vídeo a ser capturado.
- * @param {object} canvas - um objeto do tipo HTMLCanvasElement
+ * @param {object} canvas         - um objeto do tipo HTMLCanvasElement
  * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
  * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
@@ -262,7 +261,7 @@ function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPer
 
 /**
  * Faz um ScreenShot de streem de vídeo e coloca no elemento canvas
- * @param {string} id - O ID do elemento de vídeo a ser capturado.
+ * @param {string} id             - O ID do elemento de vídeo a ser capturado.
  * @param {string} imgPathFeedBack- caminho da imagem para dar o FeedBack visual
  * @param {string} imgPercent     - percentual da imagem
  * @returns {void}
