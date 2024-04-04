@@ -215,9 +215,37 @@ function fd5VideoSaveTmpAdianti(id,canvasCapturado,video,imgPathFeedBack, imgPer
     let hiddenField = document.querySelector('#'+id);
     hiddenField.value = nameFile;
 
-    let canvasUpload = fd5VideoGeraImgUpload(id,video);
-    
-    let dataURL = canvasUpload.toDataURL();
+    // Obter as dimensões reais do vídeo
+    let videoWidth = video.videoWidth;
+    let videoHeight = video.videoHeight;
+
+    // Calcular a proporção do vídeo
+    let proporcao = videoWidth / videoHeight;
+
+    // Definir a altura máxima como 720 pixels
+    let maxHeight = 1000;
+
+    // Calcular a largura proporcional com base na altura máxima
+    let maxWidth = maxHeight * proporcao;
+
+    // Verificar se a largura excede o máximo permitido
+    if (maxWidth > videoWidth) {
+      // Se exceder, usar a largura original do vídeo
+      maxWidth = videoWidth;
+      maxHeight = maxWidth / proporcao;
+    }
+
+    // Criar um novo canvas com as dimensões corretas para a conversão
+    let scaledCanvas = document.createElement('canvas');
+    scaledCanvas.width = maxWidth;
+    scaledCanvas.height = maxHeight;
+    let context = scaledCanvas.getContext('2d');
+
+    // Desenhar a imagem capturada no novo canvas com as dimensões corretas
+    context.drawImage(canvasCapturado, 0, 0, canvasCapturado.width, canvasCapturado.height, 0, 0, maxWidth, maxHeight);
+
+    // Converter o canvas para um arquivo e enviar para o servidor
+    let dataURL = scaledCanvas.toDataURL('image/png', 0.9); // Defina o tipo de imagem e a qualidade desejada (0.9 neste exemplo)
     let file = dataUrltoFile(dataURL,nameFile);
     let formdata = new FormData();
     formdata.append(id, nameFile);
