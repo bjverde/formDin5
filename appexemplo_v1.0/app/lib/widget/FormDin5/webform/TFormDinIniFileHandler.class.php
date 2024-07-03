@@ -28,6 +28,13 @@ class TFormDinIniFileHandler {
         return $this->filePath;
     }
 
+    /**
+     * Recupera o valor de uma chave em uma seção
+     *
+     * @param string $section 01 - nome da seção
+     * @param string $key     02 - nome da chave
+     * @return string
+     */
     public function getValue($section, $key) {
         if (!isset($this->iniData[$section])) {
             throw new Exception("Seção '$section' não encontrada no arquivo INI.");
@@ -38,6 +45,13 @@ class TFormDinIniFileHandler {
         return $this->iniData[$section][$key];
     }
 
+    /**
+     * Recupera o valor boleano de uma chave em uma seção
+     *
+     * @param string $section 01 - nome da seção
+     * @param string $key     02 - nome da chave
+     * @return bolean
+     */    
     public function getValueWithBolean($section, $key) {
         $valor = $this->getValue($section, $key);
         return $this->testBolean($valor);
