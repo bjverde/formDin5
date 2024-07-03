@@ -85,6 +85,14 @@ class StringHelper
         return $string;
     }
 
+    /**
+     * Converte uma string para outro encoding usando MB 
+     *
+     * @param string $string        01 - string que será convertida
+     * @param string $to_encoding   02 - enconding de destino
+     * @param string $from_encoding 03 - enconding de origem
+     * @return string
+     */
     public static function convert_encoding($string,$to_encoding='UTF-8',$from_encoding='ASCII')
     {
         if ( mb_detect_encoding($string, $to_encoding, true)!=$to_encoding ){
