@@ -159,6 +159,12 @@ class TFormDinMessage {
         return $this->mixMessage;
     }
 
+    /**
+     * Transforma uma array ou string no formato do Adianti com quebra de linha
+     *
+     * @param string|array $mixMessage
+     * @return string
+     */
     public static function messageTransform($mixMessage){
         $result = null;
         if(is_array($mixMessage)){
@@ -172,6 +178,13 @@ class TFormDinMessage {
         return $result;
     }
 
+    /**
+     * Grava uma mensagem no error.log do apache com várias informações do sistema
+     * recebe uma Exception
+     *
+     * @param Exception $exception
+     * @return void
+     */
     public static function logRecord(Exception $exception)
     {
         $app = $_SESSION[APPLICATION_NAME];
@@ -190,6 +203,13 @@ class TFormDinMessage {
         error_log($log);
     }
     
+    /**
+     * Grava uma mensagem simples no error.log do apache
+     * recebe uma string
+     *
+     * @param string $message
+     * @return void
+     */
     public static function logRecordSimple($message)
     {
         $log = 'formDin: '.FormDinHelper::version().' ,sistem: '.APPLICATION_NAME.' v:'.SYSTEM_VERSION
