@@ -186,7 +186,7 @@ class TFormDinMessage {
         .PHP_EOL.'mensagem: '.$exception->getMessage()
         .PHP_EOL."Stack trace:"
         .PHP_EOL.$exception->getTraceAsString();
-        
+        $log = StringHelper::convert_encoding($log,'UTF-8','ASCII');        
         error_log($log);
     }
     
@@ -194,6 +194,7 @@ class TFormDinMessage {
     {
         $log = 'formDin: '.FormDinHelper::version().' ,sistem: '.APPLICATION_NAME.' v:'.SYSTEM_VERSION
         .PHP_EOL.TAB.'mensagem: '.$message;
+        $log = StringHelper::convert_encoding($log,'UTF-8','ASCII');
         error_log($log);
     }
 }
