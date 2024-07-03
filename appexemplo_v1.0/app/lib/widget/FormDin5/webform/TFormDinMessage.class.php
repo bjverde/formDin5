@@ -187,12 +187,15 @@ class TFormDinMessage {
      */
     public static function logRecord(Exception $exception)
     {
-        $app = $_SESSION[APPLICATION_NAME];
+        $app   = null;
         $login = null;
         $grupo = null;
-        if( ArrayHelper::has('USER',$_SESSION[APPLICATION_NAME]) ) {
-            $login = ( ArrayHelper::has('LOGIN', $_SESSION[APPLICATION_NAME]['USER']) ? $_SESSION[APPLICATION_NAME]['USER']['LOGIN']:null );
-            $grupo = ( ArrayHelper::has('GRUPO_NOME', $_SESSION[APPLICATION_NAME]['USER']) ? $_SESSION[APPLICATION_NAME]['USER']['GRUPO_NOME']:null );
+        if( ArrayHelper::has(APPLICATION_NAME,$_SESSION) ) {
+            $app = ArrayHelper::getArray($_SESSION,APPLICATION_NAME);
+        }
+        if( ArrayHelper::has('USER',$app) ) {
+            $login = ( ArrayHelper::has('LOGIN', $app['USER']) ? $app['USER']['LOGIN']:null );
+            $grupo = ( ArrayHelper::has('GRUPO_NOME', $app['USER']) ? $app['USER']['GRUPO_NOME']:null );
         }
         $log = 'formDin: '.FormDinHelper::version().' ,sistem: '.APPLICATION_NAME.' v:'.SYSTEM_VERSION.' ,usuario: '.$login
         .PHP_EOL.'type: '.get_class($exception).' ,Code: '.$exception->getCode().' ,file: '.$exception->getFile().' ,line: '.$exception->getLine()
