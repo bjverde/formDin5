@@ -67,7 +67,7 @@ class IpHelperTest extends TestCase
 	}
 
     public function testIpDentroIntervalo_10False() {
-        $expected = true;
+        $expected = false;
 		$result = IpHelper::ipDentroIntervalo('10.30.5.1','10.34.5.1','10.34.5.254');
 		$this->assertSame( $expected , $result );
 	}
