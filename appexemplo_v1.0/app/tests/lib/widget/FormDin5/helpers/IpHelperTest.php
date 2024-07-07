@@ -58,5 +58,17 @@ class IpHelperTest extends TestCase
 		$result = IpHelper::calculaPrimeiroUltimoIpCidr('172.28.0.0/16');
 		$this->assertSame( '172.28.0.1'    , $result[0] );
         $this->assertSame( '172.28.255.254', $result[1] );
-	}    
+	}
+
+    public function testIpDentroIntervalo_10True() {
+        $expected = true;
+		$result = IpHelper::ipDentroIntervalo('10.34.5.2','10.34.5.1','10.34.5.254');
+		$this->assertSame( $expected , $result );
+	}
+
+    public function testIpDentroIntervalo_10False() {
+        $expected = true;
+		$result = IpHelper::ipDentroIntervalo('10.30.5.1','10.34.5.1','10.34.5.254');
+		$this->assertSame( $expected , $result );
+	}
 }
