@@ -133,7 +133,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $scriptJsGeo = new TElement('script');
         $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
 
-        $btnGeo = new TButton('btnScreenshot');
+        $btnGeo = new TButton('btnGeo');
         $btnGeo->class = 'btn btn-primary btn-sm';
         $btnGeo->setLabel('Informar Geolocalização');
         $btnGeo->setImage('fas:map-marker');
