@@ -45,7 +45,7 @@
  */
 
 /**
- * Classe para criação do Dialogo com mensagen
+ * Classe para facilitar a criação de arquivos de log
  * ------------------------------------------------------------------------
  * Esse é o FormDin 5, que é uma reconstrução do FormDin 4 Sobre o Adianti 7.X
  * os parâmetros do metodos foram marcados com:
