@@ -52,57 +52,52 @@ class OrmAdiantiHelperTest extends TestCase
 	public function testParam_null_false() {
 	    $expected = false;
         $param = null;
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
 	public function testParam_empyt_false() {
 	    $expected = false;
         $param = '';
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
 	public function testParam_empytArray_false() {
 	    $expected = false;
         $param = array();
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
 	public function testParam_obj_false() {
 	    $expected = false;
         $param = new StdClass;
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
     public function testParam_string_true() {
 	    $expected = true;
         $param = 'ana';
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
     public function testParam_stringNumeric_true() {
 	    $expected = true;
         $param = '10';
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
     public function testParam_numeric_true() {
 	    $expected = true;
         $param = 10;
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
     public function testParam_array_true() {
 	    $expected = true;
         $param = array(1=>'ana');
-        $result = OrmAdiantiHelper::testParam($param);
+        $result = OrmAdiantiHelper::valueTest($param);
         $this->assertEquals( $expected , $result);
 	}
-
-    //$filters = OrmAdiantiHelper::addFilter($filters,'nome','like',$data->nome,null);
-    //$filters = OrmAdiantiHelper::addFilter($filters,'ddi' ,'='   ,$data->ddi ,null);
-    //$filters = OrmAdiantiHelper::addFilter($filters,'ddd' ,'='   ,$data->ddd ,null);
-    //$filters = OrmAdiantiHelper::addFilter($filters,'celular' ,'like'   ,$data->celular ,null);
-
+    //--------------------------------------------------------------------------------
     public function testAddFilter_like() {
         $data = new stdClass();
         $data->nome = 'Maria';
@@ -111,9 +106,25 @@ class OrmAdiantiHelperTest extends TestCase
         $expected[] = new TFilter('nome','like',$data->nome);
 
         $filters= array();
-        $result = OrmAdiantiHelper::addFilter($filters,'nome','like',$data->nome,null);
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','like',$data,'nome');
         $this->assertEquals( $expected , $result);
 	}
+
+    public function testAddFilter_like_array() {
+        $param = array();
+        $param['nome'] = 'Maria';
+
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = array();
+        $expected[] = new TFilter('nome','like',$data->nome);
+
+        $filters= array();
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','like',null,null,$param,'nome');
+        $this->assertEquals( $expected , $result);
+	}
+
     public function testAddFilter_equal() {
         $data = new stdClass();
         $data->nome = 'Maria';
@@ -122,9 +133,25 @@ class OrmAdiantiHelperTest extends TestCase
         $expected[] = new TFilter('nome','=',$data->nome);
 
         $filters= array();
-        $result = OrmAdiantiHelper::addFilter($filters,'nome','=',$data->nome,null);
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','=',$data,'nome');
         $this->assertEquals( $expected , $result);
 	}
+
+    public function testAddFilter_equal_array() {
+        $param = array();
+        $param['nome'] = 'Maria';
+
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = array();
+        $expected[] = new TFilter('nome','=',$data->nome);
+
+        $filters= array();
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','=',null,null,$param,'nome');
+        $this->assertEquals( $expected , $result);
+	}
+        
     public function testAddFilter_notEqual() {
         $data = new stdClass();
         $data->nome = 'Maria';
@@ -133,7 +160,7 @@ class OrmAdiantiHelperTest extends TestCase
         $expected[] = new TFilter('nome','!=',$data->nome);
 
         $filters= array();
-        $result = OrmAdiantiHelper::addFilter($filters,'nome','!=',$data->nome,null);
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','!=',$data,'nome');
         $this->assertEquals( $expected , $result);
 	}
     public function testAddFilter_In() {
@@ -144,7 +171,36 @@ class OrmAdiantiHelperTest extends TestCase
         $expected[] = new TFilter('nome','in',$data->nome);
 
         $filters= array();
-        $result = OrmAdiantiHelper::addFilter($filters,'nome','in',$data->nome,null);
+        $result = OrmAdiantiHelper::addFilter($filters,'nome','in',$data,'nome');
+        $this->assertEquals( $expected , $result);
+	}
+    //--------------------------------------------------------------------------------
+    public function testAddFilterTCriteria_like() {
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = new TCriteria;
+        $expected->add(new TFilter('nome','like',$data->nome));
+
+        $criteria= new TCriteria;
+        $result  = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome','like',$data,'nome');
+        $this->assertEquals( $expected , $result);
+	}
+
+    public function testAddFilterTCriteria_like_array() {
+        $param = array();
+        $param['nome'] = 'Maria';
+
+        $data = new stdClass();
+        $data->nome = 'Maria';
+
+	    $expected = new TCriteria;
+        $expected->add(new TFilter('nome','like',$data->nome));
+        $expected->add(new TFilter('nome2','like',$data->nome));
+
+        $criteria= new TCriteria;
+        $criteria = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome','like',null,null,$param,'nome');
+        $result = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome2','like',null,null,$param,'nome');
         $this->assertEquals( $expected , $result);
 	}
 }
