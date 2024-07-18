@@ -49,7 +49,7 @@ class CountHelper
     /**
      * Avoid the problem warning of PHP 7.2.X
      * @param array|object $element
-     * @return number
+     * @return int
      */
     public static function count($element) 
     {

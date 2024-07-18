@@ -90,7 +90,21 @@ class ValidateHelperTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         ValidateHelper::isNumeric(new StdClass,__METHOD__,__LINE__);
     }
-  
+
+    public function testIsObject_InputNullException() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isObject(null,__METHOD__,__LINE__);
+    }
+
+    public function testIsObject_InputStringException() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isObject('aaa',__METHOD__,__LINE__);
+    }
+
+    public function testIsObject_OK() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::isObject(new StdClass(),__METHOD__,__LINE__);
+    }
 
     public function testObjTypeTFormDinPdoConnection_FailLine() {
         $this->expectException(InvalidArgumentException::class);
