@@ -1,15 +1,10 @@
 <?php
 /*
- * ----------------------------------------------------------------------------
- * Formdin 5 Framework
- * SourceCode https://github.com/bjverde/formDin5
- * @author Reinaldo A. Barrêto Junior
- * 
- * É uma reconstrução do FormDin 4 Sobre o Adianti 7.X
- * @author Luís Eugênio Barbosa do FormDin 4
- * 
- * Adianti Framework é uma criação Adianti Solutions Ltd
- * @author Pablo Dall'Oglio
+ * Formdin Framework
+ * Copyright (C) 2012 Ministério do Planejamento
+ * Criado por Luís Eugênio Barbosa
+ * Essa versão é um Fork https://github.com/bjverde/formDin
+ *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -44,22 +39,36 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class CountHelper
-{
-    /**
-     * Avoid the problem warning of PHP 7.2.X
-     * @param array|object $element
-     * @return int
-     */
-    public static function count($element) 
-    {
-    	$isArray  = is_array( $element );
-    	$isObject = is_object( $element );
-    	$result   = 0;
-    	if( $isArray || $isObject ){
-    		$result = count( $element );
-    	}
-    	return $result;
-    }
+require_once  __DIR__.'/../../mockFormDinArray.php';
+
+use PHPUnit\Framework\TestCase;
+
+/**
+ * paginationSQLHelper test case.
+ */
+class IpHelperTest extends TestCase
+{	
+	public function testCalculaPrimeiroUltimoIpCidr_24() {
+		$result = IpHelper::calculaPrimeiroUltimoIpCidr('10.34.5.0/24');
+		$this->assertSame( '10.34.5.1'  , $result[0] );
+        $this->assertSame( '10.34.5.254', $result[1] );
+	}
+
+	public function testCalculaPrimeiroUltimoIpCidr_16() {
+		$result = IpHelper::calculaPrimeiroUltimoIpCidr('172.28.0.0/16');
+		$this->assertSame( '172.28.0.1'    , $result[0] );
+        $this->assertSame( '172.28.255.254', $result[1] );
+	}
+
+    public function testIpDentroIntervalo_10True() {
+        $expected = true;
+		$result = IpHelper::ipDentroIntervalo('10.34.5.2','10.34.5.1','10.34.5.254');
+		$this->assertSame( $expected , $result );
+	}
+
+    public function testIpDentroIntervalo_10False() {
+        $expected = false;
+		$result = IpHelper::ipDentroIntervalo('10.30.5.1','10.34.5.1','10.34.5.254');
+		$this->assertSame( $expected , $result );
+	}
 }
-?>
