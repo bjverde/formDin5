@@ -104,4 +104,35 @@ class pdf_html02 extends TPage
         $this->clearFilters();
         $this->onReload();
     }
+
+    private function getMockDados(){
+        $dados = array();
+        $dados['mdsoft']['nome']='João Silva';
+        $dados['mdsoft']['endereco']='Casa verde, na rua armarela';
+        $dados['mdsoft']['cidade']='azul';
+
+        $dados['cliente']['nome']='João Silva';
+        $dados['cliente']['endereco']='Casa verde, na rua armarela';
+        $dados['cliente']['cidade']='azul';
+        
+        $listItens = array();
+        $listItens = $this->getMockDadosItem($listItens,123,'produto',10,10,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,132,'serviço',10,10,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,213,'coisa',10,10,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,231,'outra coisa',10,10,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,312,'o que é isso?',10,10,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,321,'ultimo item',10,10,'10/01/2024');
+        $dados['items'] = $listItens;
+        return $dados;
+    }
+    private function getMockDadosItem($arrayList,$id,$nome,$qtd,$valor,$data){
+        $item = array();
+        $item['id']=$id;
+        $item['nome']=$nome;
+        $item['qtd']=$qtd;
+        $item['valor']=$valor;
+        $item['data']=$data;
+        $arrayList[]=$item;
+        return $arrayList;
+    }
 }
