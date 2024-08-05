@@ -33,39 +33,32 @@ class pdf_html02 extends TPage
         parent::add($vbox);
     }
 
+    private function getHtmlReport(){
+        $array_object = $this->getMockDados();
+        // load the html template
+        $html = new THtmlRenderer('app/resources/mdsoft-fatura.html');
+        $html->enableSection('main',  $array_object);
+        return $html;
+    }
 
     public function onCheckStatus( $param )
     {
-        try
-        {
-            $array_object = $this->getMockDados();
-            
-            // load the html template
-            $html = new THtmlRenderer('app/resources/mdsoft-fatura.html');
-            $html->enableSection('main',  $array_object);
-
+        try {
+            $html = $this->getHtmlReport();
             parent::add($html);
-            
             return $html;
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             new TMessage('error', $e->getMessage());
         }
     }
 
     public function onExportPDF($param)
     {
-        try
-        {
-            // process HTML
-            $html = $this->onCheckStatus($param);
-            
-            // string with HTML contents
-            $contents = $html->getContents();
-            
-            // converts the HTML template into PDF
-            $dompdf = new \Dompdf\Dompdf();
+        try {
+            $html = $this->getHtmlReport();
+            $contents = $html->getContents(); //string with HTML contents
+
+            $dompdf = new \Dompdf\Dompdf(); //converts the HTML template into PDF
             $dompdf->loadHtml($contents);
             $dompdf->setPaper('A4', 'portrait');
             $dompdf->render();
@@ -83,9 +76,7 @@ class pdf_html02 extends TPage
             $object->style = "width: 100%; height:calc(100% - 10px)";
             $window->add($object);
             $window->show();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             new TMessage('error', $e->getMessage());
         }
     }
