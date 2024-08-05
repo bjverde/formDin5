@@ -5,7 +5,7 @@ use Adianti\Registry\TSession;
 class pdf_html02 extends TPage
 {
     protected $form; // registration form
-    private $iva = '7%';
+    private $iva = 0.07;
     
     // trait com onReload, onSearch, onDelete...
     use Adianti\Base\AdiantiStandardListTrait;
@@ -111,10 +111,16 @@ class pdf_html02 extends TPage
         $listItens = $this->getMockDadosItem($listItens,312,'o que é isso?',1,45,'10/01/2024');
         $listItens = $this->getMockDadosItem($listItens,321,'ultimo item',10,10,'10/01/2024');
 
+        $facturaComplemento = $this->getComplementoFactura($listItens);
+
         $factura = new stdClass;
         $factura->id = 1010101;
         $factura->data_venda = '2024-08-05 20:12:00';
         $factura->operador = 'operador';
+        $factura->subtotal = $facturaComplemento->subtotal;
+        $factura->total_disconto = $facturaComplemento->total_disconto;
+        $factura->total_iva = $facturaComplemento->total_iva;
+        $factura->subtotal = $facturaComplemento->subtotal;
 
         $dados = array();
         $dados['mdsoft'] = $mdsoft;
@@ -124,7 +130,7 @@ class pdf_html02 extends TPage
         
         return $dados;
     }
-    private function getMockDadosItem($arrayList,$id,$nome,$quantidade,$preco_venda,$data){
+    private function getMockDadosItem($listItens,$id,$nome,$quantidade,$preco_venda,$data){
         $item = array();
         $item['id_venda_item']=$id;
         $item['cod_produto']='prod'.$id;
@@ -132,10 +138,23 @@ class pdf_html02 extends TPage
         $item['quantidade']=$quantidade;
         $item['preco_venda']=$preco_venda;
         $item['disconto']=0;
-        $item['iva_percen']=0;
+        $item['iva_percen']=100*$this->iva;
         $item['total_item']=$quantidade*$preco_venda;
         $item['data']=$data;
-        $arrayList[]=$item;
-        return $arrayList;
+        $listItens[]=$item;
+        return $listItens;
     }
+    private function getComplementoFactura($listItens){
+        $facturaComplemento = new stdClass;
+        $facturaComplemento->subtotal = 0;
+        $facturaComplemento->total_disconto = 0;
+        $facturaComplemento->total_iva = 0;
+        foreach( $listItens as $key => $item) {
+            $facturaComplemento->subtotal = $facturaComplemento->subtotal + ( $item['total_item']*$item['quantidade']  );
+            $facturaComplemento->total_disconto = $facturaComplemento->total_disconto + $item['disconto'];
+            $facturaComplemento->total_iva = $facturaComplemento->total_iva + ($item['total_item']*$this->iva);
+            $facturaComplemento->subtotal = $facturaComplemento->subtotal + $facturaComplemento->subtotal + $facturaComplemento->total_iva;
+        }
+        return $facturaComplemento;
+    }    
 }
