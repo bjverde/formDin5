@@ -5,6 +5,7 @@ use Adianti\Registry\TSession;
 class pdf_html02 extends TPage
 {
     protected $form; // registration form
+    private $iva = '7%';
     
     // trait com onReload, onSearch, onDelete...
     use Adianti\Base\AdiantiStandardListTrait;
@@ -113,11 +114,11 @@ class pdf_html02 extends TPage
         $cliente->cidade='azul';
 
         $listItens = array();
-        $listItens = $this->getMockDadosItem($listItens,123,'produto',10,10,'10/01/2024');
-        $listItens = $this->getMockDadosItem($listItens,132,'serviço',10,10,'10/01/2024');
-        $listItens = $this->getMockDadosItem($listItens,213,'coisa',10,10,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,123,'produto',10,15,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,132,'serviço',13,23,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,213,'coisa',15,33,'10/01/2024');
         $listItens = $this->getMockDadosItem($listItens,231,'outra coisa',10,10,'10/01/2024');
-        $listItens = $this->getMockDadosItem($listItens,312,'o que é isso?',10,10,'10/01/2024');
+        $listItens = $this->getMockDadosItem($listItens,312,'o que é isso?',1,45,'10/01/2024');
         $listItens = $this->getMockDadosItem($listItens,321,'ultimo item',10,10,'10/01/2024');
 
         $factura = new stdClass;
@@ -133,15 +134,16 @@ class pdf_html02 extends TPage
         
         return $dados;
     }
-    private function getMockDadosItem($arrayList,$id,$nome,$qtd,$valor,$data){
+    private function getMockDadosItem($arrayList,$id,$nome,$quantidade,$preco_venda,$data){
         $item = array();
         $item['id_venda_item']=$id;
         $item['cod_produto']='prod'.$id;
         $item['descricao']=$nome;
-        $item['quantidade']=$qtd;
-        $item['preco_venda']=$valor;
+        $item['quantidade']=$quantidade;
+        $item['preco_venda']=$preco_venda;
         $item['disconto']=0;
         $item['iva_percen']=0;
+        $item['total_item']=$quantidade*$preco_venda;
         $item['data']=$data;
         $arrayList[]=$item;
         return $arrayList;
