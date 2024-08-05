@@ -18,7 +18,7 @@ class pdf_html02 extends TPage
         $this->form->setFormTitle('Report 02 - PDF e HTML com Grid');
 
         $this->form->addFields( [new TLabel('Customer')], [new TEntry('Customer')]);
-        $this->form->addAction('Check status', new TAction(array($this, 'onCheckStatus')), 'far:check-circle green');
+        $this->form->addAction('Export to HTML', new TAction(array($this, 'onCheckStatus')), 'far:check-circle green');
         $this->form->addAction('Export to PDF', new TAction(array($this, 'onExportPDF')), 'far:file-pdf red');
         //$this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
         $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
@@ -37,17 +37,10 @@ class pdf_html02 extends TPage
     {
         try
         {
-            $array_object['id'] = 10;
-            $array_object['name'] = 'Paulo Deleo';
-            $array_object['phone'] = '1234-5678';
-            $array_object['address'] = 'Santa Rosa, Brasil';
-            $array_object['data'] = '16/05/2020';
-            $array_object['produto'] = 'Sistema Panzo';
-            $array_object['quantidade'] = '10';
-            $array_object['preco'] = '1.000,52';
+            $array_object = $this->getMockDados();
             
             // load the html template
-            $html = new THtmlRenderer('app/resources/cliente.html');
+            $html = new THtmlRenderer('app/resources/mdsoft-fatura.html');
             $html->enableSection('main',  $array_object);
 
             parent::add($html);
@@ -106,15 +99,19 @@ class pdf_html02 extends TPage
     }
 
     private function getMockDados(){
-        $dados = array();
-        $dados['mdsoft']['nome']='João Silva';
-        $dados['mdsoft']['endereco']='Casa verde, na rua armarela';
-        $dados['mdsoft']['cidade']='azul';
+        $mdsoft = new stdClass;
+        $mdsoft->nome_empresa='João Silva';
+        $mdsoft->endereco='Casa verde, na rua armarela';
+        $mdsoft->cidade='azul';
+        $mdsoft->telefone_contato='(61) 1234-5678';
+        $mdsoft->nome_sistema='FormDin5 com Adianti';
+        $mdsoft->img_logo = 'app/images/adianti.png';
 
-        $dados['cliente']['nome']='João Silva';
-        $dados['cliente']['endereco']='Casa verde, na rua armarela';
-        $dados['cliente']['cidade']='azul';
-        
+        $cliente = new stdClass;
+        $cliente->nome='João Silva';
+        $cliente->endereco='Casa verde, na rua armarela';
+        $cliente->cidade='azul';
+
         $listItens = array();
         $listItens = $this->getMockDadosItem($listItens,123,'produto',10,10,'10/01/2024');
         $listItens = $this->getMockDadosItem($listItens,132,'serviço',10,10,'10/01/2024');
@@ -122,15 +119,29 @@ class pdf_html02 extends TPage
         $listItens = $this->getMockDadosItem($listItens,231,'outra coisa',10,10,'10/01/2024');
         $listItens = $this->getMockDadosItem($listItens,312,'o que é isso?',10,10,'10/01/2024');
         $listItens = $this->getMockDadosItem($listItens,321,'ultimo item',10,10,'10/01/2024');
-        $dados['items'] = $listItens;
+
+        $factura = new stdClass;
+        $factura->id = 1010101;
+        $factura->data_venda = '2024-08-05 20:12:00';
+        $factura->operador = 'operador';
+
+        $dados = array();
+        $dados['mdsoft'] = $mdsoft;
+        $dados['cliente']= $cliente;
+        $dados['items']  = $listItens;
+        $dados['factura']= $factura;
+        
         return $dados;
     }
     private function getMockDadosItem($arrayList,$id,$nome,$qtd,$valor,$data){
         $item = array();
-        $item['id']=$id;
-        $item['nome']=$nome;
-        $item['qtd']=$qtd;
-        $item['valor']=$valor;
+        $item['id_venda_item']=$id;
+        $item['cod_produto']='prod'.$id;
+        $item['descricao']=$nome;
+        $item['quantidade']=$qtd;
+        $item['preco_venda']=$valor;
+        $item['disconto']=0;
+        $item['iva_percen']=0;
         $item['data']=$data;
         $arrayList[]=$item;
         return $arrayList;
