@@ -120,7 +120,7 @@ class pdf_html02 extends TPage
         $factura->subtotal = $facturaComplemento->subtotal;
         $factura->total_disconto = $facturaComplemento->total_disconto;
         $factura->total_iva = $facturaComplemento->total_iva;
-        $factura->subtotal = $facturaComplemento->subtotal;
+        $factura->total = $facturaComplemento->total;
 
         $dados = array();
         $dados['mdsoft'] = $mdsoft;
@@ -149,12 +149,13 @@ class pdf_html02 extends TPage
         $facturaComplemento->subtotal = 0;
         $facturaComplemento->total_disconto = 0;
         $facturaComplemento->total_iva = 0;
+        $facturaComplemento->total = 0;
         foreach( $listItens as $key => $item) {
             $facturaComplemento->subtotal = $facturaComplemento->subtotal + ( $item['total_item']*$item['quantidade']  );
             $facturaComplemento->total_disconto = $facturaComplemento->total_disconto + $item['disconto'];
             $facturaComplemento->total_iva = $facturaComplemento->total_iva + ($item['total_item']*$this->iva);
-            $facturaComplemento->subtotal = $facturaComplemento->subtotal + $facturaComplemento->subtotal + $facturaComplemento->total_iva;
         }
+        $facturaComplemento->total = $facturaComplemento->subtotal + $facturaComplemento->total_iva;
         return $facturaComplemento;
     }    
 }
