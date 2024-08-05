@@ -60,7 +60,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
      * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
      * @param string  $enableChangeCam -04: NOT_IMPLEMENTED TRUE (Default) or FALSE, Enable Change Cam
      * @param boolean $width           -05: NOT_IMPLEMENTED Default Null, largura em % ou px
-     * @param boolean $height          -06: NOT_IMPLEMENTED Default Null, altura  em % ou px
+     * @param integer $height          -06: Default 350, altura em px. Informe apenas o número
      * @param string  $imgPathFeedBack -07: Caminho da imagem que vai aparece com FeedBack visual. Valor defualt é app/images/mark-cheque-green.png
      * @param string  $imgPercent      -08: Percentual do tamanho da imagem
      * @return TElement
@@ -77,6 +77,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
     {
         $imgPathFeedBack = empty($imgPathFeedBack)?'app/images/mark-cheque-green.png':$imgPathFeedBack;
         $imgPercent = empty($imgPercent)?'0.45':$imgPercent;
+        $height = empty($height)?'350':preg_replace("/[^0-9]/", "", $height);
 
         //$adiantiObjHiden = new THidden($idField);
         //$adiantiObjHiden->setId($idField);
@@ -87,7 +88,8 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
         $adiantiObjWebCam->class = 'fd5Video';
         $adiantiObjWebCam->setProperty('id',$idField.'_video');
         $adiantiObjWebCam->setProperty('name',$idField.'_video');
-        $adiantiObjWebCam->setProperty('style','display: none;');
+        $adiantiObjWebCam->setProperty('style','height: '.$height.'px;');
+        //$adiantiObjWebCam->setProperty('style','display: none;');
         $adiantiObjWebCam->add('autoplay');
         $adiantiObjWebCam->add('Your browser does not support HTML video.');
 
@@ -95,13 +97,13 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
         $adiantiObjVideoCanvas->class = 'fd5VideoCanvas';
         $adiantiObjVideoCanvas->setProperty('id',$idField.'_videoCanvas');
         $adiantiObjVideoCanvas->setProperty('name',$idField.'_videoCanvas');
-        $adiantiObjVideoCanvas->setProperty('style','display: none;');
+        $adiantiObjVideoCanvas->setProperty('style','display: none; height: '.$height.'px;');
 
         $adiantiObjVideoCanvasUpload = new TElement('canvas');
         $adiantiObjVideoCanvasUpload->class = 'fd5VideoCanvasUpload';
         $adiantiObjVideoCanvasUpload->setProperty('id',$idField.'_videoCanvasUpload');
         $adiantiObjVideoCanvasUpload->setProperty('name',$idField.'_videoCanvasUpload');
-        $adiantiObjVideoCanvasUpload->setProperty('style','display: none;');
+        $adiantiObjVideoCanvasUpload->setProperty('style','display: none; height: '.$height.'px;');
 
         $scriptJswebCam = new TElement('script');
         $scriptJswebCam->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5WebCams.js?appver='.FormDinHelper::version());
