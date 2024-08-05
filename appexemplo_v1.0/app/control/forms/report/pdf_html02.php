@@ -33,14 +33,6 @@ class pdf_html02 extends TPage
         parent::add($vbox);
     }
 
-    private function getHtmlReport(){
-        $array_object = $this->getMockDados();
-        // load the html template
-        $html = new THtmlRenderer('app/resources/mdsoft-fatura.html');
-        $html->enableSection('main',  $array_object);
-        return $html;
-    }
-
     public function onCheckStatus( $param )
     {
         try {
@@ -90,6 +82,13 @@ class pdf_html02 extends TPage
         $this->onReload();
     }
 
+    private function getHtmlReport(){
+        $array_object = $this->getMockDados();
+        // load the html template
+        $html = new THtmlRenderer('app/resources/mdsoft-fatura.html');
+        $html->enableSection('main',  $array_object);
+        return $html;
+    }    
     private function getMockDados(){
         $mdsoft = new stdClass;
         $mdsoft->nome_empresa='João Silva';
@@ -120,7 +119,7 @@ class pdf_html02 extends TPage
         $dados = array();
         $dados['mdsoft'] = $mdsoft;
         $dados['cliente']= $cliente;
-        $dados['items']  = $listItens;
+        $dados['items']  = $listItens; //Esse precisa ser em array pois ira iterar em os vários elementos.
         $dados['factura']= $factura;
         
         return $dados;
