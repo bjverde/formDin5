@@ -159,6 +159,12 @@ class TFormDinMessage {
         return $this->mixMessage;
     }
 
+    /**
+     * Transforma uma array ou string no formato do Adianti com quebra de linha
+     *
+     * @param string|array $mixMessage
+     * @return string
+     */
     public static function messageTransform($mixMessage){
         $result = null;
         if(is_array($mixMessage)){
@@ -172,28 +178,46 @@ class TFormDinMessage {
         return $result;
     }
 
+    /**
+     * Grava uma mensagem no error.log do apache com várias informações do sistema
+     * recebe uma Exception
+     *
+     * @param Exception $exception
+     * @return void
+     */
     public static function logRecord(Exception $exception)
     {
-        $app = $_SESSION[APPLICATION_NAME];
+        $app   = null;
         $login = null;
         $grupo = null;
-        if( ArrayHelper::has('USER',$_SESSION[APPLICATION_NAME]) ) {
-            $login = ( ArrayHelper::has('LOGIN', $_SESSION[APPLICATION_NAME]['USER']) ? $_SESSION[APPLICATION_NAME]['USER']['LOGIN']:null );
-            $grupo = ( ArrayHelper::has('GRUPO_NOME', $_SESSION[APPLICATION_NAME]['USER']) ? $_SESSION[APPLICATION_NAME]['USER']['GRUPO_NOME']:null );
+        if( ArrayHelper::has(APPLICATION_NAME,$_SESSION) ) {
+            $app = ArrayHelper::getArray($_SESSION,APPLICATION_NAME);
+        }
+        if( ArrayHelper::has('USER',$app) ) {
+            $login = ( ArrayHelper::has('LOGIN', $app['USER']) ? $app['USER']['LOGIN']:null );
+            $grupo = ( ArrayHelper::has('GRUPO_NOME', $app['USER']) ? $app['USER']['GRUPO_NOME']:null );
         }
         $log = 'formDin: '.FormDinHelper::version().' ,sistem: '.APPLICATION_NAME.' v:'.SYSTEM_VERSION.' ,usuario: '.$login
         .PHP_EOL.'type: '.get_class($exception).' ,Code: '.$exception->getCode().' ,file: '.$exception->getFile().' ,line: '.$exception->getLine()
         .PHP_EOL.'mensagem: '.$exception->getMessage()
         .PHP_EOL."Stack trace:"
         .PHP_EOL.$exception->getTraceAsString();
-        
+        $log = StringHelper::convert_encoding($log,'UTF-8','ASCII');        
         error_log($log);
     }
     
+    /**
+     * Grava uma mensagem simples no error.log do apache
+     * recebe uma string
+     *
+     * @param string $message
+     * @return void
+     */
     public static function logRecordSimple($message)
     {
         $log = 'formDin: '.FormDinHelper::version().' ,sistem: '.APPLICATION_NAME.' v:'.SYSTEM_VERSION
         .PHP_EOL.TAB.'mensagem: '.$message;
+        $log = StringHelper::convert_encoding($log,'UTF-8','ASCII');
         error_log($log);
     }
 }

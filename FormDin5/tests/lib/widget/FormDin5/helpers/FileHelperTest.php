@@ -1,15 +1,10 @@
 <?php
 /*
- * ----------------------------------------------------------------------------
- * Formdin 5 Framework
- * SourceCode https://github.com/bjverde/formDin5
- * @author Reinaldo A. Barrêto Junior
- * 
- * É uma reconstrução do FormDin 4 Sobre o Adianti 7.X
- * @author Luís Eugênio Barbosa do FormDin 4
- * 
- * Adianti Framework é uma criação Adianti Solutions Ltd
- * @author Pablo Dall'Oglio
+ * Formdin Framework
+ * Copyright (C) 2012 Ministério do Planejamento
+ * Criado por Luís Eugênio Barbosa
+ * Essa versão é um Fork https://github.com/bjverde/formDin
+ *
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -44,22 +39,18 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-class CountHelper
-{
-    /**
-     * Avoid the problem warning of PHP 7.2.X
-     * @param array|object $element
-     * @return int
-     */
-    public static function count($element) 
-    {
-    	$isArray  = is_array( $element );
-    	$isObject = is_object( $element );
-    	$result   = 0;
-    	if( $isArray || $isObject ){
-    		$result = count( $element );
-    	}
-    	return $result;
-    }
+require_once  __DIR__.'/../../mockFormDinArray.php';
+
+use PHPUnit\Framework\TestCase;
+
+/**
+ * paginationSQLHelper test case.
+ */
+class FileHelperTest extends TestCase
+{	
+	public function testGetNomePastaSistema() {
+        $expected = 'appexemplo_v1.0';
+		$result = FileHelper::getNomePastaSistema();
+		$this->assertSame( $expected , $result );
+	}
 }
-?>
