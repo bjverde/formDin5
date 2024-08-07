@@ -334,6 +334,10 @@
                 <icon>fa:file-pdf fa-fw red</icon>
                 <action>pdf_html</action>
             </menuitem>
+            <menuitem label='Report 02 - PDF e HTML com Grid'>
+                <icon>fa:file-pdf fa-fw red</icon>
+                <action>pdf_html02</action>
+            </menuitem>            
         </menu>
     </menuitem>
     <menuitem label='Gride'>
