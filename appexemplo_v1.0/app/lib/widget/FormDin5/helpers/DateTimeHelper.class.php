@@ -404,6 +404,31 @@ class DateTimeHelper
     }
 
     /**
+     * Verfica se $data entra dentro do intervalo da duas datas
+     *
+     * @param string $date    - data a serverificada, recebe uma data e hora nos formatos ISO (yyyy-mm-dd hh:mm:ss) ou Br (dd/mm/yyyy hh:mm:ss)
+     * @param string $dateStar- data inicial, recebe uma data e hora nos formatos ISO (yyyy-mm-dd hh:mm:ss) ou Br (dd/mm/yyyy hh:mm:ss)
+     * @param string $dateEnd - data final, recebe uma data e hora nos formatos ISO (yyyy-mm-dd hh:mm:ss) ou Br (dd/mm/yyyy hh:mm:ss)
+     * @return boolean
+     */
+    public static function dateInRange( $date, $dateStar, $dateEnd  ){ 
+        $date = self::dateBr2Iso($date);
+		if ( empty($date) ) {
+		    throw new InvalidArgumentException('Date Time wrong format');
+		}
+        $nowAfterStart= DateTimeHelper::date1NewerThanDate2( $date, $dateStar);
+        $nowBeforeEnd = DateTimeHelper::date1NewerThanDate2( $dateEnd, $date);
+        FormDinHelper::debug($date,'$agora');
+        FormDinHelper::debug($nowAfterStart,'$agoraDepoisInicio');
+        FormDinHelper::debug($nowBeforeEnd,'$agoraAntesFim');
+        $result = false;
+	    if ($nowAfterStart && $nowBeforeEnd) {
+	        $result = true;
+	    }
+        return $result;
+    }
+
+    /**
      * Verfica se a data 1 é mais recente que a data 2
      *
      * @param string $datahora1 recebe uma data e hora nos formatos ISO (yyyy-mm-dd hh:mm:ss) ou Br (dd/mm/yyyy hh:mm:ss)
