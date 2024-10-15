@@ -1,0 +1,118 @@
+<!--[main]-->
+
+<div class="row">
+	<div class="col-sm-6">
+		<h4>{{mdsoft->nome_empresa}}</h4>
+		<br>Tel:{{mdsoft->telefone_contato}}
+		<br>Uíge,Rua Jamaica,Sede
+		<br>NIF:001679002
+	</div>
+	<div class="col-sm-6">
+		<br><img src="{{mdsoft->img_logo}}" height="100">
+	</div>
+	<hr>
+	<!--<strong><h4>Prestação de Serviços</h4></strong><br>
+	<h6>NIf:001679002036<br>Endereco Rua Jamaica<br>Localidade Uige<br>Tel:912938377</h6>-->
+</div>
+<br>
+<br>
+<div class="row">
+	<div class="col">
+		<h3>Facturado para:</h3>
+		<address>
+			<br>Cliente:{{cliente->nome}}
+			<br>Endereço: {{cliente->endereco}}
+			<br>Cidade: {{cliente->cidade}}
+		</address>
+	</div>
+	<div class="col">
+		<h6>FACTURA RECIBO<br>FR MDSoft {{factura->id}}<br/><br/>ORIGINAL</h6><br>
+		<strong>Data:</strong> date_format({{factura->data_venda}},'d/m/Y  H:i:s')<br/>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><strong>Itens</strong></h3>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-condensed" style="border-collapse:collapse">
+						<thead>
+							<tr>
+								<td><strong>Item</strong></td>
+								<td><strong>Cód.Artigo</strong></td>
+								<td><strong>Designição</strong></td>
+								<td class="text-right"><strong>Qtd<strong></td>
+								<td class="text-right"><strong>P.Unitário</strong></td>
+								<td class="text-right"><strong>Desc</strong></td>
+								<td class="text-right"><strong>Taxa.Imp</strong></td> 
+								<td class="text-right"><strong>Total</strong></td> 
+							</tr>
+						</thead>
+						<tbody>
+							<!--[items]-->
+							<tr>
+								<td>{{id_venda_item}}</td>
+								<td>{{cod_produto}}</td>
+								<td>{{descricao}}</td>
+								<td class="text-right">{{quantidade}}</td>
+								<td class="text-right">{{preco_venda}}</td>	
+								<td class="text-right">{{disconto}}%</td>
+								<td class="text-right">{{iva_percen}}%</td>
+								<td class="text-right">number_format(evaluate( {{total_item}}), 2, ',', '.')</td>
+							</tr>
+							<!--[/items]-->
+							<tr>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td style="border-top:1px solid black" class="thick-line text-center"><strong>Subtotal</strong></td>
+								<td style="border-top:1px solid black" class="thick-line text-right">number_format({{factura->subtotal}}, 2, ',', '.')</td>
+  							</tr>
+							<tr>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td style="border-top:1px solid black" class="thick-line text-center"><strong>Descontos</strong></td>
+								<td style="border-top:1px solid black" class="thick-line text-right">Kz:{{factura->total_disconto}}</td>
+							</tr>
+							<tr>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td style="border-top:1px solid black" class="thick-line text-center"><strong>Total IVA</strong></td>
+								<td style="border-top:1px solid black" class="thick-line text-right">Kz:{{factura->total_iva}}</td>
+							</tr>							
+							<tr>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td class="no-line"></td>
+								<td style="border-top:1px solid black" class="thick-line text-center"><strong>Total a pagar</strong></td>
+								<td style="border-top:1px solid black" class="thick-line text-right">Kz:{{factura->total}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><br/><br/>
+<h5>Funcionário(a): {{factura->operador}}</h5><br><br>
+	<center><h5> Agradecemos! Volte Sempre! </h5></center><br>
+
+<h5>Processado pelo {{mdsoft->nome_sistema}}: Sistema desenvolvido pelo {{mdsoft->nome_empresa}}<br/> Comercial {{mdsoft->telefone_contato}}</h5>
+<!--[/main]-->
