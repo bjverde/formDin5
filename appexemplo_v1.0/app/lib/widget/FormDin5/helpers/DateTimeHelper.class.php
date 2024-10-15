@@ -452,11 +452,11 @@ class DateTimeHelper
      * @return DateInterval
      */
     public static function getIntervalDateDiff( $datetime1, $datetime2 ){ 
-        $datetime1 = self::dateBr2Iso($datetime1);
+        $datetime1 = self::dateBr2Iso($datetime1,true);
 		if ( empty($datetime1) ) {
 		    throw new InvalidArgumentException('Date Time 1 wrong format');
 		}
-        $datetime2 = self::dateBr2Iso($datetime2);
+        $datetime2 = self::dateBr2Iso($datetime2,true);
 		if ( empty($datetime2) ) {
 		    throw new InvalidArgumentException('Date Time 2 wrong format');
 		}
