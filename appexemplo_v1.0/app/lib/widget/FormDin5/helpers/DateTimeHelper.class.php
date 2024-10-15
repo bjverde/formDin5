@@ -412,6 +412,7 @@ class DateTimeHelper
      */
     public static function date1NewerThanDate2( $datahora1, $datahora2  ){ 
         $interval = self::getIntervalDateDiff( $datahora1, $datahora2 );
+        $result = false;
 	    if( $interval->invert == 1 ){
 	        $result = true;
 	    }
@@ -426,11 +427,11 @@ class DateTimeHelper
      * @return DateInterval
      */
     public static function getIntervalDateDiff( $datetime1, $datetime2 ){ 
-        $datetime1 = self::dateBr2Iso($datetime1);
+        $datetime1 = self::dateBr2Iso($datetime1,true);
 		if ( empty($datetime1) ) {
 		    throw new InvalidArgumentException('Date Time 1 wrong format');
 		}
-        $datetime2 = self::dateBr2Iso($datetime2);
+        $datetime2 = self::dateBr2Iso($datetime2,true);
 		if ( empty($datetime2) ) {
 		    throw new InvalidArgumentException('Date Time 2 wrong format');
 		}
@@ -439,4 +440,26 @@ class DateTimeHelper
         $interval = $dtInicioObj->diff($dtFimObj); //If Date is in past then invert will 1
         return $interval;
     }
+
+    /**
+     * Verfica se $data entra dentro do intervalo da duas datas
+     *
+     * @param string $date    - data a serverificada, recebe uma data e hora nos formatos ISO (yyyy-mm-dd hh:mm:ss) ou Br (dd/mm/yyyy hh:mm:ss)
+     * @param string $dateStar- data inicial, recebe uma data e hora nos formatos ISO (yyyy-mm-dd hh:mm:ss) ou Br (dd/mm/yyyy hh:mm:ss)
+     * @param string $dateEnd - data final, recebe uma data e hora nos formatos ISO (yyyy-mm-dd hh:mm:ss) ou Br (dd/mm/yyyy hh:mm:ss)
+     * @return boolean
+     */
+    public static function dateInRange( $date, $dateStar, $dateEnd  ){ 
+        $date = self::dateBr2Iso($date,true);
+		if ( empty($date) ) {
+		    throw new InvalidArgumentException('Date Time wrong format');
+		}
+        $nowAfterStart= DateTimeHelper::date1NewerThanDate2( $date, $dateStar);
+        $nowBeforeEnd = DateTimeHelper::date1NewerThanDate2( $dateEnd, $date);
+        $result = false;
+	    if ($nowAfterStart && $nowBeforeEnd) {
+	        $result = true;
+	    }
+        return $result;
+    }    
 }
