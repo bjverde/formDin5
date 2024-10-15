@@ -456,9 +456,6 @@ class DateTimeHelper
 		}
         $nowAfterStart= DateTimeHelper::date1NewerThanDate2( $date, $dateStar);
         $nowBeforeEnd = DateTimeHelper::date1NewerThanDate2( $dateEnd, $date);
-        //FormDinHelper::debug($date,'$agora');
-        //FormDinHelper::debug($nowAfterStart,'$agoraDepoisInicio');
-        //FormDinHelper::debug($nowBeforeEnd,'$agoraAntesFim');
         $result = false;
 	    if ($nowAfterStart && $nowBeforeEnd) {
 	        $result = true;
