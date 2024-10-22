@@ -1,10 +1,10 @@
 <phpunit 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
     bootstrap="../../init.php"
     colors="true"
     verbose="true"
-    >  
+    >
   <coverage cacheDirectory="../../../phpunit-code-coverage/cache"
             processUncoveredFiles="true"
             >
@@ -24,5 +24,5 @@
   <logging>
     <testdoxText outputFile="../../../phpunit-code-coverage/testResult.txt"/>
     <testdoxHtml outputFile="../../../phpunit-code-coverage/testResult.html"/>
-  </logging>         
+  </logging>
 </phpunit>
