@@ -156,7 +156,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
         $this->assertCount(2, $result);
         $this->assertEquals(null, $result['database']);
-        $this->assertCount(6, $result['db']);
+        $this->assertCount(7, $result['db']);
         $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $result['db']['type']);
         $this->assertEquals($name, $result['db']['name']);
     }
