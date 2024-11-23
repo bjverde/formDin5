@@ -461,5 +461,5 @@ class DateTimeHelper
 	        $result = true;
 	    }
         return $result;
-    }
+    }    
 }
