@@ -117,6 +117,22 @@ class OrmAdiantiHelper
     	return $result;
     }
 
+
+    /**
+     * Undocumented function
+     *
+     * @param string $conector   01: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
+     * @param null|mixed $value  02: valor que será passado
+     * @return void
+     */
+    private static function getValueWithTextLike($conector,$value) 
+    {
+        if ($conector=='like' ){
+            $value = "%{$value}%";
+        }
+    	return $value;
+    }
+
     /**
      * Se $data ou $param tiver valor, inclui um novo elemento do tipo TFilter
      * Se Obj estiver em branco, será preenchido com $param, no ArrayFilter
@@ -142,6 +158,7 @@ class OrmAdiantiHelper
         }
         if( self::valueTest($value) ){
             if( empty($sql) ){
+                $value = self::getValueWithTextLike($conector,$value);
                 $arrayFilter[] = new TFilter($filde,$conector,$value);// create the filter 
             }else{
                 $arrayFilter[] = new TFilter($filde,$conector,$sql);// create the filter 
@@ -185,6 +202,7 @@ class OrmAdiantiHelper
         }
         if( self::valueTest($value) ){
             if( empty($sql) ){
+                $value = self::getValueWithTextLike($conector,$value);
                 $criteria->add(new TFilter($filde,$conector,$value), $logic_operator);// create the filter 
             }else{
                 $criteria->add(new TFilter($filde,$conector,$sql)  , $logic_operator);// create the filter 
