@@ -91,13 +91,26 @@ class TFormDinIniFileHandler {
     }
 
     /**
+     * Recupera o valor de uma seção
+     *
+     * @param string $section 01 - nome da seção
+     * @return string
+     */
+    public function getSection($section) {
+        if (!isset($this->iniData[$section])) {
+            throw new Exception("Seção '$section' não encontrada no arquivo INI.");
+        }
+        return $this->iniData[$section];
+    }
+
+    /**
      * Recupera o valor de uma chave em uma seção
      *
      * @param string $section 01 - nome da seção
      * @param string $key     02 - nome da chave
      * @return string
      */
-    public function getValue($section, $key) {
+    public function getKeyInSection($section, $key) {
         if (!isset($this->iniData[$section])) {
             throw new Exception("Seção '$section' não encontrada no arquivo INI.");
         }
@@ -114,8 +127,8 @@ class TFormDinIniFileHandler {
      * @param string $key     02 - nome da chave
      * @return bolean
      */    
-    public function getValueWithBolean($section, $key) {
-        $valor = $this->getValue($section, $key);
+    public function getKeyWithBolean($section, $key) {
+        $valor = $this->getKeyInSection($section, $key);
         return $this->testBolean($valor);
     }
 
