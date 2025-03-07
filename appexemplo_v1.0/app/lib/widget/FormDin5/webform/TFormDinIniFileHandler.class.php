@@ -91,6 +91,16 @@ class TFormDinIniFileHandler {
     }
 
     /**
+     * Setando o valor IniData, usando quando deseja forcar
+     * um array como parametro
+     *
+     * @param array $iniData array multidimensional
+     */
+    public function setIniData(array $iniData){
+        $this->iniData = $iniData;
+    }
+
+    /**
      * Recupera o valor de uma seção
      *
      * @param string $section 01 - nome da seção
