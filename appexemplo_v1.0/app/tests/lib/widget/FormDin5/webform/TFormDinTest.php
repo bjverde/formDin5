@@ -51,8 +51,16 @@ class TFormDinTest extends TestCase
 {
 
     private $classTest;
-    private $warningMessage = null;
-    private $errorMessage = null;
+    protected $msgErrorWarningMessage = null;
+
+    protected function setupErrorHandler()
+    {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            if (in_array($errno, [E_WARNING, E_USER_WARNING, E_USER_ERROR, E_USER_NOTICE])) {
+                $this->msgErrorWarningMessage = $errstr;
+            }
+        });
+    }    
     
     /**
      * Prepares the environment before running a test.
@@ -834,16 +842,10 @@ class TFormDinTest extends TestCase
         $formDin = new TFormDin($classForm,'Phpunit');        
         $formDin->setMaximize(true);
     }
+    
     public function testSetHelpOnLine()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            if ($errno === E_WARNING) {
-                $this->warningMessage = $errstr;
-            }
-            if ($errno === E_USER_ERROR) {
-                $this->errorMessage = $errstr;
-            }
-        });
+        $this->setupErrorHandler();
 
         $classForm = new stdClass();
         $formDin = new TFormDin($classForm, 'Phpunit');
@@ -851,12 +853,7 @@ class TFormDinTest extends TestCase
 
         restore_error_handler();
 
-        $this->assertNotNull($this->warningMessage, 'Warning was not generated');
-        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->warningMessage, 'Warning message does not match');
-
-        // Se você espera um erro fatal, você pode verificar $this->errorMessage
-        // $this->assertNotNull($this->errorMessage, 'Error was not generated');
-        // $this->assertMatchesRegularExpression('/Sua mensagem de erro aqui/', $this->errorMessage, 'Error message does not match');
-    }        
-
+        $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
+        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');
+    }
 }
