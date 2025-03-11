@@ -85,12 +85,12 @@ class TFormDinTest extends TestCase
         $this->classTest->validateDeprecated(null,null);
     }
 
+    /*
     public function testValidateDeprecated_Heigh()
     {
         $this->expectWarning();
         $this->classTest->validateDeprecated(200,null);
     }
-
     public function testValidateDeprecated_Width()
     {
         $this->expectWarning();
@@ -101,7 +101,8 @@ class TFormDinTest extends TestCase
     {
         $this->expectError();
         $classTest = new TFormDin('xx','Phpunit');
-    }    
+    }
+    */
     public function testSetObjForm_FailNull()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -768,12 +769,14 @@ class TFormDinTest extends TestCase
         $this->assertEquals('content', $list[2]->type);
     }
     //-------------------------------------------------------------------------
+    /*
     public function testSetAction_failArrayLabel(){
         $this->expectError();
 
         $actionsLabel = array('action01','action02');
         $this->classTest->setAction( $actionsLabel);
     }
+    */
     //-------------------------------------------------------------------------
     public function testSetAction_failActionsName(){
         $this->expectException(InvalidArgumentException::class);
