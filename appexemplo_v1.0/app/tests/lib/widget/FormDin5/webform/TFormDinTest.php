@@ -796,35 +796,55 @@ class TFormDinTest extends TestCase
     //-------------------------------------------------------------------------
     public function testSetColumns()
     {
-        $this->expectWarning();
-        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $this->setupErrorHandler();
+
         $classForm = new stdClass();
-        $formDin = new TFormDin($classForm,'Phpunit');        
+        $formDin = new TFormDin($classForm, 'Phpunit');
         $formDin->setColumns();
+
+        restore_error_handler();
+
+        $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
+        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');         
     }
     public function testGetColumns()
     {
-        $this->expectWarning();
-        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $this->setupErrorHandler();
+
         $classForm = new stdClass();
-        $formDin = new TFormDin($classForm,'Phpunit');        
-        $formDin->getColumns(true);
+        $formDin = new TFormDin($classForm, 'Phpunit');
+        $formDin->getColumns();
+
+        restore_error_handler();
+
+        $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
+        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');        
     }
     public function testGetcolumnWidth()
     {
-        $this->expectWarning();
-        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $this->setupErrorHandler();
+
         $classForm = new stdClass();
-        $formDin = new TFormDin($classForm,'Phpunit');        
-        $formDin->getcolumnWidth(true);
+        $formDin = new TFormDin($classForm, 'Phpunit');
+        $formDin->getcolumnWidth();
+
+        restore_error_handler();
+
+        $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
+        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');         
     }            
     public function testSetShowCloseButton()
     {
-        $this->expectWarning();
-        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $this->setupErrorHandler();
+
         $classForm = new stdClass();
-        $formDin = new TFormDin($classForm,'Phpunit');        
-        $formDin->setShowCloseButton(true);
+        $formDin = new TFormDin($classForm, 'Phpunit');
+        $formDin->setShowCloseButton();
+
+        restore_error_handler();
+
+        $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
+        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');         
     }
     public function testSetFlat()
     {
