@@ -828,19 +828,29 @@ class TFormDinTest extends TestCase
     }
     public function testSetFlat()
     {
-        $this->expectWarning();
-        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $this->setupErrorHandler();
+
         $classForm = new stdClass();
-        $formDin = new TFormDin($classForm,'Phpunit');        
-        $formDin->setFlat(true);
+        $formDin = new TFormDin($classForm, 'Phpunit');
+        $formDin->setFlat();
+
+        restore_error_handler();
+
+        $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
+        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');          
     }
     public function testSetMaximize()
     {
-        $this->expectWarning();
-        $this->expectErrorMessageMatches('/Falha na migração do FormDin 4 para 5./');
+        $this->setupErrorHandler();
+
         $classForm = new stdClass();
-        $formDin = new TFormDin($classForm,'Phpunit');        
-        $formDin->setMaximize(true);
+        $formDin = new TFormDin($classForm, 'Phpunit');
+        $formDin->setMaximize();
+
+        restore_error_handler();
+
+        $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
+        $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');        
     }
     
     public function testSetHelpOnLine()
