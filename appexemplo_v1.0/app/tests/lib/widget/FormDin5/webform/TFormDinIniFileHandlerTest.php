@@ -73,4 +73,21 @@ class TFormDinIniFileHandlerTest extends TestCase
         $result = $this->classTest->getfilePath();
         $this->assertEquals(__DIR__.'/../../mockConfigIni.ini', $result);
     }
+
+    public function testGetSection_ok()
+    {
+        $expected =array();
+        $expected['ambiente']='test';
+        $expected['nome_sistema_acesso']="mock";
+
+        $result = $this->classTest->getSection('config');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetSection_Exception()
+    {
+        $this->expectException(Exception::class);
+        $result = $this->classTest->getSection('pauli');
+        //$this->assertEquals($expected, $result);
+    }    
 }
