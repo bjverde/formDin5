@@ -89,5 +89,22 @@ class TFormDinIniFileHandlerTest extends TestCase
         $this->expectException(Exception::class);
         $result = $this->classTest->getSection('pauli');
         //$this->assertEquals($expected, $result);
-    }    
+    }
+
+    public function testGetKeyInSection_ok()
+    {
+        $expected='test';
+        $result = $this->classTest->getKeyInSection('config','ambiente');
+        $this->assertEquals($expected, $result);
+    }
+    public function testGetKeyInSection_Exception1()
+    {
+        $this->expectException(Exception::class);
+        $result = $this->classTest->getKeyInSection('config','pauli');
+    }
+    public function testGetKeyInSection_Exception2()
+    {
+        $this->expectException(Exception::class);
+        $result = $this->classTest->getKeyInSection('pauli','pauli');
+    }
 }
