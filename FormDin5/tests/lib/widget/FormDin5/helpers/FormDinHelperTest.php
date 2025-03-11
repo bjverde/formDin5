@@ -94,12 +94,14 @@ class FormDinHelperTest extends TestCase
      */
     public function testAdianti_verifyFormDinMinimumVersion_okOlder() {
         FormDinHelper::verifyFormDinMinimumVersion('1.0.0');
+        $this->assertTrue(true, 'A versão mínima do FormDin foi atendida.');
     }     
     /**
      * @doesNotPerformAssertions
      */
     public function testAdianti_verifyFormDinMinimumVersion_ok() {
         FormDinHelper::verifyFormDinMinimumVersion($this->formDinVersion);
+        $this->assertTrue(true, 'A versão mínima do FormDin foi atendida.');
     }   
     public function testAdianti_verifyFormDinMinimumVersion_Exception() {
         $this->expectException(DomainException::class);
@@ -122,12 +124,15 @@ class FormDinHelperTest extends TestCase
      */
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_ok() {
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin();
+        $this->assertTrue(true, 'A versão mínima do Adianti Framework foi atendida.');
     }
+
     /**
      * @doesNotPerformAssertions
      */
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_ok() {
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.3.0');
+        $this->assertTrue(true, 'A versão mínima do Adianti Framework foi atendida.');
     }
     public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_Exception() {
         $this->expectException(DomainException::class);

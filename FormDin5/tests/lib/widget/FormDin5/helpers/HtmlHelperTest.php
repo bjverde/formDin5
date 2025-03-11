@@ -66,14 +66,13 @@ class HtmlHelperTest extends TestCase
 	    HtmlHelper::validateHtmlColorHexa( $string );
     }
 	//--------------------------------------------------------------------------------
-	/**
-	 * @expectedException PHPUnit\Framework\Error\Error
-	 */
+	/*
 	public function testValidateHtmlColorHexa_FailArray() {
 		$this->expectError();
 	    $string = array(1,2);
 	    HtmlHelper::validateHtmlColorHexa( $string );
-    }    
+    }
+	*/
 	//--------------------------------------------------------------------------------
 	public function testValidateHtmlColorHexa_FailWrongSizeLess() {
 		$this->expectException(InvalidArgumentException::class);

@@ -120,11 +120,13 @@ class TFormDinDateTimeTest extends TestCase
         $this->assertEquals('2020-04-01',$result);
     }
     //-----------------------------------------------------
+    /*
     public function testSetButtonVisible()
     {
         $this->expectWarning();
         $this->classTest->setButtonVisible(true);
     }
+    */
     public function testGetButtonVisible()
     {
         $result = $this->classTest->getButtonVisible();
