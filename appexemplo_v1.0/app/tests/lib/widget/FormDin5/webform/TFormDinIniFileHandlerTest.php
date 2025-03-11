@@ -86,9 +86,8 @@ class TFormDinIniFileHandlerTest extends TestCase
 
     public function testGetSection_Exception()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(LogicException::class);
         $result = $this->classTest->getSection('pauli');
-        //$this->assertEquals($expected, $result);
     }
 
     public function testGetKeyInSection_ok()
@@ -99,12 +98,18 @@ class TFormDinIniFileHandlerTest extends TestCase
     }
     public function testGetKeyInSection_Exception1()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(LogicException::class);
         $result = $this->classTest->getKeyInSection('config','pauli');
     }
     public function testGetKeyInSection_Exception2()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(LogicException::class);
         $result = $this->classTest->getKeyInSection('pauli','pauli');
+    }
+
+    protected function testFile_Exception(): void {
+        $this->expectException(Exception::class);
+        $filePath = __DIR__.'/../../mockConfigIni-falha.ini';
+        $classTest = new TFormDinIniFileHandler($filePath);
     }
 }
