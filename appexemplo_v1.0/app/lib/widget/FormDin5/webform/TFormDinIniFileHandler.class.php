@@ -73,12 +73,12 @@ class TFormDinIniFileHandler {
 
     private function load() {
         if (!file_exists($this->filePath)) {
-            throw new Exception("Arquivo INI não encontrado: " . $this->filePath);
+            throw new InvalidArgumentException("Arquivo INI não encontrado: " . $this->filePath);
         }
 
         $this->iniData = parse_ini_file($this->filePath, true,$this->scannerMode);
         if ($this->iniData === false) {
-            throw new Exception("Falha ao ler o arquivo INI: " . $this->filePath);
+            throw new LogicException("Falha ao ler o arquivo INI: " . $this->filePath);
         }
     }
 
@@ -108,7 +108,7 @@ class TFormDinIniFileHandler {
      */
     public function getSection($section) {
         if (!isset($this->iniData[$section])) {
-            throw new Exception("Seção '$section' não encontrada no arquivo INI.");
+            throw new LogicException("Seção '$section' não encontrada no arquivo INI.");
         }
         return $this->iniData[$section];
     }
@@ -122,10 +122,10 @@ class TFormDinIniFileHandler {
      */
     public function getKeyInSection($section, $key) {
         if (!isset($this->iniData[$section])) {
-            throw new Exception("Seção '$section' não encontrada no arquivo INI.");
+            throw new LogicException("Seção '$section' não encontrada no arquivo INI.");
         }
         if (!isset($this->iniData[$section][$key])) {
-            throw new Exception("Chave '$key' não encontrada na seção '$section'.");
+            throw new LogicException("Chave '$key' não encontrada na seção '$section'.");
         }
         return $this->iniData[$section][$key];
     }
