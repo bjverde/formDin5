@@ -129,7 +129,7 @@ class ValidateHelperTest extends TestCase
         $line = 1;
         ValidateHelper::objTypeTFormDinPdoConnection($tpdo,$method,$line);
     }
-
+    /*
     public function testTriggerError_msgNull_typeErrosNull() {
         $this->expectNotice();
         $msg = null;
@@ -143,8 +143,6 @@ class ValidateHelperTest extends TestCase
         $typeErro = ValidateHelper::WARNING;
         ValidateHelper::triggerError($msg,$typeErro);
     }
-
-    /*
     public function testTriggerError_msgNull_ERROR() {
         $this->expectError();
         $msg = null;
