@@ -56,7 +56,7 @@ class TFormDinIniFileHandlerTest extends TestCase
      */
     protected function setUp(): void {
         parent::setUp();
-        $filePath = '../../mockConfigIni.ini';
+        $filePath = __DIR__.'/../../mockConfigIni.ini';
         $this->classTest = new TFormDinIniFileHandler($filePath);
     }
     
@@ -71,6 +71,6 @@ class TFormDinIniFileHandlerTest extends TestCase
     public function testGetfilePath()
     {
         $result = $this->classTest->getfilePath();
-        $this->assertEquals('../../mockConfigIni.ini', $result);
+        $this->assertEquals(__DIR__.'/../../mockConfigIni.ini', $result);
     }
 }
