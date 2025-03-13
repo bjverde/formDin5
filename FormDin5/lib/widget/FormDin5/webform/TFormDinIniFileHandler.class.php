@@ -64,7 +64,7 @@ class TFormDinIniFileHandler {
     private $iniData;
     private $scannerMode;
 
-    public function __construct($filePath=null, $scannerMode=null){
+    public function __construct($filePath=null, $scannerMode=INI_SCANNER_NORMAL){
         if( !empty($filePath) ){
             $this->setfilePath($filePath);
         }
@@ -75,8 +75,8 @@ class TFormDinIniFileHandler {
         if (!file_exists($this->filePath)) {
             throw new InvalidArgumentException("Arquivo INI não encontrado: " . $this->filePath);
         }
-
-        $this->iniData = parse_ini_file($this->filePath, true,$this->scannerMode);
+        $scannerMode = empty($this->scannerMode)?INI_SCANNER_NORMAL:$this->scannerMode;
+        $this->iniData = parse_ini_file($this->filePath, true,$scannerMode);
         if ($this->iniData === false) {
             throw new LogicException("Falha ao ler o arquivo INI: " . $this->filePath);
         }
