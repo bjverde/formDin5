@@ -169,7 +169,7 @@ class SqlHelper
                          || ($dbms == TFormDinPdoConnection::DBMS_POSTGRES)
                          || ($dbms == TFormDinPdoConnection::DBMS_SQLITE)
                          || ($dbms == TFormDinPdoConnection::DBMS_SQLSERVER);
-        if ( $dataBaseWithLike ) {
+        if ( $dataBaseWithLike && !empty($string) ) {
             $string = trim($string);
             $string = preg_replace('/\s/', '%', $string);
         }
