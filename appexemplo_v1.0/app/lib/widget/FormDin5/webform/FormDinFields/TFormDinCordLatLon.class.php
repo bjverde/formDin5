@@ -139,9 +139,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $btnGeo->setImage('fas:map-marker');
         $btnGeo->addFunction("fd5GetLocation('".$idField."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
 
-        $this->setIdDivGeo($idField.'_videodiv');
+        $this->setIdDivGeo($idField.'_cordlatdiv');
         $divGeo = new TElement('div');
-        $divGeo->class = 'fd5DivVideo';
+        $divGeo->class = 'fd5DivCordLat';
         $divGeo->setProperty('id',$this->getIdDivGeo());
         $divGeo->add($btnGeo);
         if($this->getFieldAllJson()){
