@@ -22,14 +22,15 @@ class exe_TFormDinCordLatLon extends TPage
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
 
 
-        $frm->addCordLatLon('cood','Coordenadas',false,false,false);
+        $frm->addCordLatLon('cood','Coordenadas',false,true,false);
 
         $msg = 'Veja classe TFormDinGeo com metodos';
         $msg = $msg.'<br>';
         $msg = $msg.'<br>isPointInQuadrilateral - Verificar se um ponto (latitude e longitude) está dentro de um quadrilatero';
         $msg = $msg.'<br>isPointWithinRadius - Verificar se um ponto (latitude e longitude) está em raio em metro de um ponto de referencia';
         
-        $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200)->setClass('notice'); 
+        $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200,true)->setClass('notice');
+        $frm->addCordLatLon('cood2','Coordenadas 2',false,true,false,false);
 
 
         $this->form = $frm->show();
