@@ -126,7 +126,17 @@ class TFormDinCordLatLon extends TFormDinGenericField
     }
     public function getIdDivGeo(){
         return $this->idDivGeo;
-    }    
+    }
+    //--------------------------------------------------------------------
+    private function getDivFeedBack($idField){
+        $html = '<i class="fas fa-check-circle"></i>';
+        $div = new TElement('div');
+        $div->class = 'fd5FeedBackCordLat';
+        $div->setProperty('id',$idField.'_feedback');
+        $div->setProperty('style', 'display:none;');        
+        $div->add($html);
+        return $div;
+    }
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
         
@@ -174,6 +184,8 @@ class TFormDinCordLatLon extends TFormDinGenericField
                 $adiantiObjAlt = $fd5Alt->getAdiantiObj();
             }
         }else{
+            $divGeo->add($this->getDivFeedBack($idField));
+
             $fd5Lat  = new TFormDinHiddenField($idField.'_lat',null,$boolRequired);
             if( $this->getFieldsReadOnly() ){
                 $fd5Lat->setReadOnly(true);
