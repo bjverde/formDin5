@@ -211,14 +211,16 @@ class TFormDinCordLatLon extends TFormDinGenericField
         if( $this->getFieldsReadOnly() ){
             $numericField->setReadOnly(true);
         }
-        return $numericField;
+        $adiantiObj = $numericField->getAdiantiObj();
+        return $adiantiObj;
     }
     private function getHiddenField($idField,$boolRequired){
         $hiddenField = new TFormDinHiddenField($idField,null,$boolRequired);
         if( $this->getFieldsReadOnly() ){
             $hiddenField->setReadOnly(true);
         }
-        return $hiddenField;
+        $adiantiObj = $hiddenField->getAdiantiObj();
+        return $adiantiObj;
     }    
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
@@ -243,22 +245,16 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $adiantiObjLon = null;
         $adiantiObjAlt = null;
         if( $this->getShowFields() == true){
-            $fd5Lat = $this->getNumericField($idField.'_lat','Latitude',$boolRequired);
-            $adiantiObjLat = $fd5Lat->getAdiantiObj();
-    
-            $fd5Lon = $this->getNumericField($idField.'_lon','Longitude',$boolRequired);
-            $adiantiObjLon = $fd5Lon->getAdiantiObj();
+            $adiantiObjLat = $this->getNumericField($idField.'_lat','Latitude',$boolRequired);    
+            $adiantiObjLon = $this->getNumericField($idField.'_lon','Longitude',$boolRequired);
     
             if( $this->getShowAltitude() == true){
                 $fd5Alt = $this->getNumericField($idField.'_alt','Altitude',$boolRequired);             
                 $adiantiObjAlt = $fd5Alt->getAdiantiObj();
             }
         }else{
-            $fd5Lat = $this->getHiddenField($idField.'_lat',$boolRequired);
-            $adiantiObjLat = $fd5Lat->getAdiantiObj();
-
-            $fd5Lon = $this->getHiddenField($idField.'_lon',$boolRequired);
-            $adiantiObjLon = $fd5Lon->getAdiantiObj();
+            $adiantiObjLat = $this->getHiddenField($idField.'_lat',$boolRequired);
+            $adiantiObjLon = $this->getHiddenField($idField.'_lon',$boolRequired);
     
             if( $this->getShowAltitude() == true){
                 $fd5Alt = $this->getHiddenField($idField.'_alt',$boolRequired);
