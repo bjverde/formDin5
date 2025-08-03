@@ -157,6 +157,7 @@ class TFormDinVideoStreamPhoto extends TFormDinGenericField
 
         $adiantiObj = $divWebCam;
         parent::__construct($adiantiObj,$idDivWebCam,$label,false,null,null);
+        $this->setLabel($label,$boolRequired);
         return $this->getAdiantiObj();
     }
 
