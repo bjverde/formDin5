@@ -237,13 +237,13 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $divGeo = new TElement('div');
         $divGeo->class = 'fd5DivCordLat';
         $divGeo->setProperty('id',$this->getIdDivGeo().'_cordlatdiv');
-        $divGeo->add($btnGeo);
+        
         if($this->getFieldAllJson()){
             $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
             $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();               
             $divGeo->add($adObjHiddenJson);
         }
-
+        
         $adiantiObjLat = null;
         $adiantiObjLon = null;
         if( $this->getShowFields() == true){
@@ -253,6 +253,8 @@ class TFormDinCordLatLon extends TFormDinGenericField
             $adiantiObjLat = $this->getHiddenField($idField.'_lat',$boolRequired);
             $adiantiObjLon = $this->getHiddenField($idField.'_lon',$boolRequired);
         }
+
+        $divGeo->add($btnGeo);
         $divGeo->add($this->getDivFeedBack());
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
