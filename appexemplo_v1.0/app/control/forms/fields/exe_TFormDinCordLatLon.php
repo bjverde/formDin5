@@ -22,7 +22,7 @@ class exe_TFormDinCordLatLon extends TPage
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
 
 
-        $frm->addCordLatLon('cood','Coordenadas',false,true,false);
+        $frm->addCordLatLon('cood','Coordenadas',true,true,false);
 
         $msg = 'Veja classe TFormDinGeo com metodos';
         $msg = $msg.'<br>';
