@@ -146,6 +146,8 @@ class TFormDinCordLatLon extends TFormDinGenericField
     {
         $buttonClass = is_null($buttonClass)?self::BUTTON_CLASS:$buttonClass;
         $this->buttonClass = $buttonClass;
+        $btnGeo = $this->getBtnGeo();
+        $btnGeo->class = $buttonClass;
     }
     public function getButtonClass(){
         return $this->buttonClass;
