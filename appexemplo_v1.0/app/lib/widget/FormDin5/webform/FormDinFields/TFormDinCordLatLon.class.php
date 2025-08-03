@@ -180,7 +180,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $btnGeo->class = self::BUTTON_CLASS;
         $btnGeo->setLabel(self::BUTTON_LABEL);
         $btnGeo->setImage(self::BUTTON_ICON);
-        $btnGeo->addFunction("fd5GetLocation('".$id."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
+        $btnGeo->addFunction("fd5GetLocation('".$id."',".json_encode($this->getShowAltitude()).",".json_encode($this->getShowAllJson()).")");
         $this->btnGeo = $btnGeo;
         return $btnGeo;
     }
@@ -255,7 +255,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
 
         $divGeo->add($this->getBtnGeo());
         $divGeo->add($this->getDivFeedBack());
-        $divGeo->add($this->getFieldAllJson());
+        $divGeo->add($this->getFieldAllJson($idField,$boolRequired));
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
         $divGeo->add($this->getAltitudeField($idField.'_alt','Altitude',$boolRequired));
