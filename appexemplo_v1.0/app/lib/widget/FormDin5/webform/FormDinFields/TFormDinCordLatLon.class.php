@@ -85,19 +85,22 @@ class TFormDinCordLatLon extends TFormDinGenericField
                                ,$fieldAllJson  =null
                                )
     {
-        $this->setButtonClass(self::BUTTON_CLASS);
-        $this->setButtonLabel(self::BUTTON_LABEL);
-        //$this->setButtonIcon(self::BUTTON_ICON);
-        //$this->setButtonIconColor(self::BUTTON_ICON_COLOR);
+        $this->setIdDivGeo($idField);
         $this->setShowFields($showFields);
         $this->setShowAltitude($showAltitude);
         $this->setFieldsReadOnly($fieldsReadOnly);
         $this->setFieldAllJson($fieldAllJson);
-        //$this->setId($idField);
         $adiantiObj = $this->getDivGeo($idField,$boolRequired);
         parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
+
+        $this->setButtonClass(self::BUTTON_CLASS);
+        $this->setButtonLabel(self::BUTTON_LABEL);
+        //$this->setButtonIcon(self::BUTTON_ICON);
+        //$this->setButtonIconColor(self::BUTTON_ICON_COLOR);
+
+
         return $this->getAdiantiObj();
-    }   
+    }
     //--------------------------------------------------------------------
     public function setShowFields($showFields)
     {
@@ -188,7 +191,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
 
         $btnGeo = $this->getBtnGeo($idField);
 
-        $this->setIdDivGeo($idField.'_cordlatdiv');
+        
         $divGeo = new TElement('div');
         $divGeo->class = 'fd5DivCordLat';
         $divGeo->setProperty('id',$this->getIdDivGeo());
