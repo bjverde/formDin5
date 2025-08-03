@@ -221,7 +221,18 @@ class TFormDinCordLatLon extends TFormDinGenericField
         }
         $adiantiObj = $hiddenField->getAdiantiObj();
         return $adiantiObj;
-    }    
+    }
+    private function getAltitudeField($idField,$label,$boolRequired){
+        $adiantiObj = null;
+        if( $this->getShowAltitude() == true){
+            if( $this->getShowFields() == true){
+                $adiantiObj = $this->getNumericField($idField.'_alt',$label,$boolRequired);
+            }else{
+                $adiantiObj = $this->getHiddenField($idField.'_alt',$boolRequired);
+            }
+        }
+        return $adiantiObj;
+    }        
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
         $this->setBtnGeo();
@@ -243,28 +254,17 @@ class TFormDinCordLatLon extends TFormDinGenericField
 
         $adiantiObjLat = null;
         $adiantiObjLon = null;
-        $adiantiObjAlt = null;
         if( $this->getShowFields() == true){
             $adiantiObjLat = $this->getNumericField($idField.'_lat','Latitude',$boolRequired);    
             $adiantiObjLon = $this->getNumericField($idField.'_lon','Longitude',$boolRequired);
-    
-            if( $this->getShowAltitude() == true){
-                $fd5Alt = $this->getNumericField($idField.'_alt','Altitude',$boolRequired);             
-                $adiantiObjAlt = $fd5Alt->getAdiantiObj();
-            }
         }else{
             $adiantiObjLat = $this->getHiddenField($idField.'_lat',$boolRequired);
             $adiantiObjLon = $this->getHiddenField($idField.'_lon',$boolRequired);
-    
-            if( $this->getShowAltitude() == true){
-                $fd5Alt = $this->getHiddenField($idField.'_alt',$boolRequired);
-                $adiantiObjAlt = $fd5Alt->getAdiantiObj();
-            }
         }
         $divGeo->add($this->getDivFeedBack());
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
-        $divGeo->add($adiantiObjAlt);
+        $divGeo->add($this->getAltitudeField($idField.'_alt','Altitude',$boolRequired));
         $divGeo->add($scriptJsGeo);
         return $divGeo;
     }    
