@@ -95,6 +95,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
         
         $adiantiObj = $this->getDivGeo($idField,$boolRequired);
         parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
+        $this->setLabel($label,$boolRequired);
 
         return $this->getAdiantiObj();
     }
