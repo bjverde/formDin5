@@ -193,6 +193,13 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $div->add($html);
         return $div;
     }
+    private function getNumericField($idField,$label,$boolRequired){
+        $numericField = new TFormDinNumericField($idField,$label,18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
+        if( $this->getFieldsReadOnly() ){
+            $numericField->setReadOnly(true);
+        }
+        return $numericField;
+    }    
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
         $this->setBtnGeo();
@@ -217,23 +224,14 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $adiantiObjLon = null;
         $adiantiObjAlt = null;
         if( $this->getShowFields() == true){
-            $fd5Lat = new TFormDinNumericField($idField.'_lat','Latitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-            if( $this->getFieldsReadOnly() ){
-                $fd5Lat->setReadOnly(true);
-            }
+            $fd5Lat = $this->getNumericField($idField.'_lat','Latitude',$boolRequired);
             $adiantiObjLat = $fd5Lat->getAdiantiObj();
     
-            $fd5Lon = new TFormDinNumericField($idField.'_lon','Longitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-            if( $this->getFieldsReadOnly() ){
-                $fd5Lon->setReadOnly(true);
-            }
+            $fd5Lon = $this->getNumericField($idField.'_lon','Longitude',$boolRequired);
             $adiantiObjLon = $fd5Lon->getAdiantiObj();
     
             if( $this->getShowAltitude() == true){
-                $fd5Alt = new TFormDinNumericField($idField.'_alt','Altitude',18,$boolRequired,16,false,null,-90,90,false,null,null,null,null,null,null,true,null,'.');
-                if( $this->getFieldsReadOnly() ){
-                    $fd5Alt->setReadOnly(true);
-                }                
+                $fd5Alt = $this->getNumericField($idField.'_alt','Altitude',$boolRequired);             
                 $adiantiObjAlt = $fd5Alt->getAdiantiObj();
             }
         }else{
