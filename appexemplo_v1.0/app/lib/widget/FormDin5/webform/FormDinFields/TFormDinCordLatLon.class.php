@@ -89,7 +89,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $this->setShowFields($showFields);
         $this->setShowAltitude($showAltitude);
         $this->setFieldsReadOnly($fieldsReadOnly);
-        $this->setFieldAllJson($fieldAllJson);
+        $this->setShowAllJson($fieldAllJson);
 
         
         
@@ -126,12 +126,12 @@ class TFormDinCordLatLon extends TFormDinGenericField
         return $this->fieldsReadOnly;
     }
     //--------------------------------------------------------------------
-    public function setFieldAllJson($fieldAllJson)
+    public function setShowAllJson($fieldAllJson)
     {
         $fieldAllJson = is_null($fieldAllJson)?true:$fieldAllJson;
         $this->fieldAllJson = $fieldAllJson;
     }
-    public function getFieldAllJson(){
+    public function getShowAllJson(){
         return $this->fieldAllJson;
     }
     //--------------------------------------------------------------------
@@ -224,26 +224,25 @@ class TFormDinCordLatLon extends TFormDinGenericField
             }
         }
         return $adiantiObj;
-    }        
+    }
+    private function getFieldAllJson($idField,$boolRequired){
+        $adiantiObj = null;
+        if( $this->getShowAllJson() == true){
+            $adiantiObj = $this->getHiddenField($idField.'_json',$boolRequired);
+        }
+        return $adiantiObj;
+    }
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
         $this->setBtnGeo();
         
         $scriptJsGeo = new TElement('script');
         $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
-
-        $btnGeo = $this->getBtnGeo();
         
         $divGeo = new TElement('div');
         $divGeo->class = 'fd5DivCordLat';
         $divGeo->setProperty('id',$this->getIdDivGeo().'_cordlatdiv');
-        
-        if($this->getFieldAllJson()){
-            $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
-            $adObjHiddenJson= $fd5HiddenJson->getAdiantiObj();               
-            $divGeo->add($adObjHiddenJson);
-        }
-        
+            
         $adiantiObjLat = null;
         $adiantiObjLon = null;
         if( $this->getShowFields() == true){
@@ -254,8 +253,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
             $adiantiObjLon = $this->getHiddenField($idField.'_lon',$boolRequired);
         }
 
-        $divGeo->add($btnGeo);
+        $divGeo->add($this->getBtnGeo());
         $divGeo->add($this->getDivFeedBack());
+        $divGeo->add($this->getFieldAllJson());
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
         $divGeo->add($this->getAltitudeField($idField.'_alt','Altitude',$boolRequired));
