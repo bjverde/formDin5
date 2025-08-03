@@ -184,11 +184,12 @@ class TFormDinCordLatLon extends TFormDinGenericField
         return $this->btnGeo;
     }
     //--------------------------------------------------------------------
-    private function getDivFeedBack($idField){
+    private function getDivFeedBack(){
+        $id = $this->getIdDivGeo();
         $html = '<i class="fas fa-check-circle"></i>';
         $div = new TElement('div');
         $div->class = 'fd5FeedBackCordLat';
-        $div->setProperty('id',$idField.'_feedback');
+        $div->setProperty('id',$id.'_feedback');
         $div->setProperty('style', 'display:none;');        
         $div->add($html);
         return $div;
@@ -199,6 +200,13 @@ class TFormDinCordLatLon extends TFormDinGenericField
             $numericField->setReadOnly(true);
         }
         return $numericField;
+    }
+    private function getHiddenField($idField,$boolRequired){
+        $hiddenField = new TFormDinHiddenField($idField,null,$boolRequired);
+        if( $this->getFieldsReadOnly() ){
+            $hiddenField->setReadOnly(true);
+        }
+        return $hiddenField;
     }    
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
@@ -208,7 +216,6 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
 
         $btnGeo = $this->getBtnGeo();
-
         
         $divGeo = new TElement('div');
         $divGeo->class = 'fd5DivCordLat';
@@ -235,25 +242,18 @@ class TFormDinCordLatLon extends TFormDinGenericField
                 $adiantiObjAlt = $fd5Alt->getAdiantiObj();
             }
         }else{
-            $divGeo->add($this->getDivFeedBack($idField));
-
-            $fd5Lat  = new TFormDinHiddenField($idField.'_lat',null,$boolRequired);
-            if( $this->getFieldsReadOnly() ){
-                $fd5Lat->setReadOnly(true);
-            }
+            $fd5Lat = $this->getHiddenField($idField.'_lat',$boolRequired);
             $adiantiObjLat = $fd5Lat->getAdiantiObj();
 
-            $fd5Lon = new TFormDinHiddenField($idField.'_lon',null,$boolRequired);
-            if( $this->getFieldsReadOnly() ){
-                $fd5Lon->setReadOnly(true);
-            }
+            $fd5Lon = $this->getHiddenField($idField.'_lon',$boolRequired);
             $adiantiObjLon = $fd5Lon->getAdiantiObj();
     
             if( $this->getShowAltitude() == true){
-                $fd5Alt = new TFormDinHiddenField($idField.'_alt',null,$boolRequired);
+                $fd5Alt = $this->getHiddenField($idField.'_alt',$boolRequired);
                 $adiantiObjAlt = $fd5Alt->getAdiantiObj();
             }
         }
+        $divGeo->add($this->getDivFeedBack());
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
         $divGeo->add($adiantiObjAlt);
