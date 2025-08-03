@@ -53,6 +53,10 @@ class TFormDinCordLatLon extends TFormDinGenericField
     private $showAltitude = null;
     private $fieldsReadOnly = null;
     private $fieldAllJson = null;
+    private $buttonClass = 'Informar Geolocalização';
+    private $buttonLabel = 'btn btn-primary btn-sm';
+    private $buttonIcon = 'fas:map-marker';
+    private $buttonIconColor = 'fas:map-marker';
 
     /**
      * Pegar informações geolocalização do navegador
