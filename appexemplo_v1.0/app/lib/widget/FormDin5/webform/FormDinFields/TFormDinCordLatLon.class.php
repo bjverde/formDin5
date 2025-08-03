@@ -59,6 +59,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     private $showAltitude = null;
     private $fieldsReadOnly = null;
     private $fieldAllJson = null;
+    private $btnGeo = null;
     private $buttonClass = 'btn btn-primary btn-sm';
     private $buttonLabel = 'Informar Geolocalização';
     private $buttonIcon = 'fas:map-marker';
@@ -90,6 +91,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $this->setShowAltitude($showAltitude);
         $this->setFieldsReadOnly($fieldsReadOnly);
         $this->setFieldAllJson($fieldAllJson);
+
+        
+        
         $adiantiObj = $this->getDivGeo($idField,$boolRequired);
         parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
 
@@ -150,7 +154,8 @@ class TFormDinCordLatLon extends TFormDinGenericField
     {
         $buttonLabel = is_null($buttonLabel)?self::BUTTON_LABEL:$buttonLabel;
         $this->buttonLabel = $buttonLabel;
-        //$this->getBtnGeo($idField);
+        $btnGeo = $this->getBtnGeo();
+        $btnGeo->setLabel($buttonLabel);
     }
     public function getButtonLabel(){
         return $this->buttonLabel;
@@ -164,14 +169,19 @@ class TFormDinCordLatLon extends TFormDinGenericField
         return $this->idDivGeo;
     }
     //--------------------------------------------------------------------
-    private function getBtnGeo($idField){
+    private function setBtnGeo(){
+        $id = $this->getIdDivGeo();
         $btnGeo = new TButton('btnGeo');
         $btnGeo->class = 'btn btn-primary btn-sm';
         $label = $this->getButtonLabel();
         $btnGeo->setLabel($label);
         $btnGeo->setImage('fas:map-marker');
-        $btnGeo->addFunction("fd5GetLocation('".$idField."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
+        $btnGeo->addFunction("fd5GetLocation('".$id."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
+        $this->btnGeo = $btnGeo;
         return $btnGeo;
+    }
+    private function getBtnGeo(){
+        return $this->btnGeo;
     }
     //--------------------------------------------------------------------
     private function getDivFeedBack($idField){
@@ -185,16 +195,17 @@ class TFormDinCordLatLon extends TFormDinGenericField
     }
     //--------------------------------------------------------------------
     private function getDivGeo($idField,$boolRequired){
+        $this->setBtnGeo();
         
         $scriptJsGeo = new TElement('script');
         $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
 
-        $btnGeo = $this->getBtnGeo($idField);
+        $btnGeo = $this->getBtnGeo();
 
         
         $divGeo = new TElement('div');
         $divGeo->class = 'fd5DivCordLat';
-        $divGeo->setProperty('id',$this->getIdDivGeo());
+        $divGeo->setProperty('id',$this->getIdDivGeo().'_cordlatdiv');
         $divGeo->add($btnGeo);
         if($this->getFieldAllJson()){
             $fd5HiddenJson  = new TFormDinHiddenField($idField.'_json',null,$boolRequired);
