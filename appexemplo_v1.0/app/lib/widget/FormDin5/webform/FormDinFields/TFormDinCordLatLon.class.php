@@ -46,6 +46,12 @@
 
 class TFormDinCordLatLon extends TFormDinGenericField
 {
+    const BUTTON_CLASS = 'btn btn-primary btn-sm';
+    const BUTTON_LABEL = 'Informar Geolocalização';
+    const BUTTON_ICON = 'fas:map-marker';
+    const BUTTON_ICON_COLOR = 'fas:map-marker';
+
+
     protected $adiantiObj;
     private $class = array();
     private $idDivGeo = null;
@@ -53,8 +59,8 @@ class TFormDinCordLatLon extends TFormDinGenericField
     private $showAltitude = null;
     private $fieldsReadOnly = null;
     private $fieldAllJson = null;
-    private $buttonClass = 'Informar Geolocalização';
-    private $buttonLabel = 'btn btn-primary btn-sm';
+    private $buttonClass = 'btn btn-primary btn-sm';
+    private $buttonLabel = 'Informar Geolocalização';
     private $buttonIcon = 'fas:map-marker';
     private $buttonIconColor = 'fas:map-marker';
 
@@ -79,10 +85,15 @@ class TFormDinCordLatLon extends TFormDinGenericField
                                ,$fieldAllJson  =null
                                )
     {
+        $this->setButtonClass(self::BUTTON_CLASS);
+        $this->setButtonLabel(self::BUTTON_LABEL);
+        //$this->setButtonIcon(self::BUTTON_ICON);
+        //$this->setButtonIconColor(self::BUTTON_ICON_COLOR);
         $this->setShowFields($showFields);
         $this->setShowAltitude($showAltitude);
         $this->setFieldsReadOnly($fieldsReadOnly);
         $this->setFieldAllJson($fieldAllJson);
+        //$this->setId($idField);
         $adiantiObj = $this->getDivGeo($idField,$boolRequired);
         parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
         return $this->getAdiantiObj();
@@ -121,7 +132,25 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $this->fieldAllJson = $fieldAllJson;
     }
     public function getFieldAllJson(){
-        return $this->fieldsReadOnly;
+        return $this->fieldAllJson;
+    }
+    //--------------------------------------------------------------------
+    public function setButtonClass($buttonClass)
+    {
+        $buttonClass = is_null($buttonClass)?self::BUTTON_CLASS:$buttonClass;
+        $this->buttonClass = $buttonClass;
+    }
+    public function getButtonClass(){
+        return $this->buttonClass;
+    }
+    public function setButtonLabel($buttonLabel)
+    {
+        $buttonLabel = is_null($buttonLabel)?self::BUTTON_LABEL:$buttonLabel;
+        $this->buttonLabel = $buttonLabel;
+        //$this->getBtnGeo($idField);
+    }
+    public function getButtonLabel(){
+        return $this->buttonLabel;
     }
     //--------------------------------------------------------------------
     public function setIdDivGeo($idDivGeo)
@@ -130,6 +159,16 @@ class TFormDinCordLatLon extends TFormDinGenericField
     }
     public function getIdDivGeo(){
         return $this->idDivGeo;
+    }
+    //--------------------------------------------------------------------
+    private function getBtnGeo($idField){
+        $btnGeo = new TButton('btnGeo');
+        $btnGeo->class = 'btn btn-primary btn-sm';
+        $label = $this->getButtonLabel();
+        $btnGeo->setLabel($label);
+        $btnGeo->setImage('fas:map-marker');
+        $btnGeo->addFunction("fd5GetLocation('".$idField."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
+        return $btnGeo;
     }
     //--------------------------------------------------------------------
     private function getDivFeedBack($idField){
@@ -147,11 +186,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $scriptJsGeo = new TElement('script');
         $scriptJsGeo->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5GeoLocation.js?appver='.FormDinHelper::version());
 
-        $btnGeo = new TButton('btnGeo');
-        $btnGeo->class = 'btn btn-primary btn-sm';
-        $btnGeo->setLabel('Informar Geolocalização');
-        $btnGeo->setImage('fas:map-marker');
-        $btnGeo->addFunction("fd5GetLocation('".$idField."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
+        $btnGeo = $this->getBtnGeo($idField);
 
         $this->setIdDivGeo($idField.'_cordlatdiv');
         $divGeo = new TElement('div');
