@@ -99,7 +99,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
 
         $this->setButtonClass(self::BUTTON_CLASS);
         $this->setButtonLabel(self::BUTTON_LABEL);
-        //$this->setButtonIcon(self::BUTTON_ICON);
+        $this->setButtonIcon(self::BUTTON_ICON);
         //$this->setButtonIconColor(self::BUTTON_ICON_COLOR);
 
 
@@ -161,6 +161,16 @@ class TFormDinCordLatLon extends TFormDinGenericField
     }
     public function getButtonLabel(){
         return $this->buttonLabel;
+    }
+    public function setButtonIcon($buttonIcon)
+    {
+        $buttonIcon = is_null($buttonIcon)?self::BUTTON_ICON:$buttonIcon;
+        $this->buttonIcon = $buttonIcon;
+        $btnGeo = $this->getBtnGeo();
+        $btnGeo->setImage($buttonIcon);
+    }
+    public function getButtonIcon(){
+        return $this->buttonIcon;
     }
     //--------------------------------------------------------------------
     public function setIdDivGeo($idDivGeo)
