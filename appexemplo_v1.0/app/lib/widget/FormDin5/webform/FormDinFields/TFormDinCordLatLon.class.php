@@ -219,9 +219,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
         $adiantiObj = null;
         if( $this->getShowAltitude() == true){
             if( $this->getShowFields() == true){
-                $adiantiObj = $this->getNumericField($idField.'_alt',$label,$boolRequired);
+                $adiantiObj = $this->getNumericField($idField,$label,$boolRequired);
             }else{
-                $adiantiObj = $this->getHiddenField($idField.'_alt',$boolRequired);
+                $adiantiObj = $this->getHiddenField($idField,$boolRequired);
             }
         }
         return $adiantiObj;
@@ -229,7 +229,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     private function getFieldAllJson($idField,$boolRequired){
         $adiantiObj = null;
         if( $this->getShowAllJson() == true){
-            $adiantiObj = $this->getHiddenField($idField.'_json',$boolRequired);
+            $adiantiObj = $this->getHiddenField($idField,$boolRequired);
         }
         return $adiantiObj;
     }
@@ -256,7 +256,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
 
         $divGeo->add($this->getBtnGeo());
         $divGeo->add($this->getDivFeedBack());
-        $divGeo->add($this->getFieldAllJson($idField,$boolRequired));
+        $divGeo->add($this->getFieldAllJson($idField.'_json',$boolRequired));
         $divGeo->add($adiantiObjLat);
         $divGeo->add($adiantiObjLon);
         $divGeo->add($this->getAltitudeField($idField.'_alt','Altitude',$boolRequired));
