@@ -60,10 +60,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
     private $fieldsReadOnly = null;
     private $fieldAllJson = null;
     private $btnGeo = null;
-    private $buttonClass = 'btn btn-primary btn-sm';
-    private $buttonLabel = 'Informar Geolocalização';
-    private $buttonIcon = 'fas:map-marker';
-    private $buttonIconColor = 'fas:map-marker';
+    private $buttonClass= null;
+    private $buttonLabel= null;
+    private $buttonIcon = null;
 
     /**
      * Pegar informações geolocalização do navegador
@@ -96,12 +95,6 @@ class TFormDinCordLatLon extends TFormDinGenericField
         
         $adiantiObj = $this->getDivGeo($idField,$boolRequired);
         parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
-
-        $this->setButtonClass(self::BUTTON_CLASS);
-        $this->setButtonLabel(self::BUTTON_LABEL);
-        $this->setButtonIcon(self::BUTTON_ICON);
-        //$this->setButtonIconColor(self::BUTTON_ICON_COLOR);
-
 
         return $this->getAdiantiObj();
     }
@@ -184,10 +177,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
     private function setBtnGeo(){
         $id = $this->getIdDivGeo();
         $btnGeo = new TButton('btnGeo');
-        $btnGeo->class = 'btn btn-primary btn-sm';
-        $label = $this->getButtonLabel();
-        $btnGeo->setLabel($label);
-        $btnGeo->setImage('fas:map-marker');
+        $btnGeo->class = self::BUTTON_CLASS;
+        $btnGeo->setLabel(self::BUTTON_LABEL);
+        $btnGeo->setImage(self::BUTTON_ICON);
         $btnGeo->addFunction("fd5GetLocation('".$id."',".json_encode($this->getShowAltitude()).",".json_encode($this->getFieldAllJson()).")");
         $this->btnGeo = $btnGeo;
         return $btnGeo;
