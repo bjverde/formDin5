@@ -35,6 +35,7 @@ class exe_TFormDinCordLatLon extends TPage
         $coord2->setButtonLabel('Geolocalização');
         $coord2->setButtonClass('btn btn-sm btn-danger');
         $coord2->setButtonIcon('fa:globe');
+        $coord2->setFeedBackSize('60px');
 
         $msg = 'Botao 02 - TFormDinGeo';
         $msg = $msg.'<br>';
