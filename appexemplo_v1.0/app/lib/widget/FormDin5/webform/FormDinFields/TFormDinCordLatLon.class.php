@@ -49,7 +49,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
     const BUTTON_CLASS = 'btn btn-primary btn-sm';
     const BUTTON_LABEL = 'Informar Geolocalização';
     const BUTTON_ICON = 'fas:map-marker';
-    const BUTTON_ICON_COLOR = 'fas:map-marker';
+    const FEEDBACK_ICON = 'fas fa-check-circle';
+    const FEEDBACK_COLOR= 'green';
+    const FEEDBACK_SIZE = '30px';
 
 
     protected $adiantiObj;
@@ -63,6 +65,9 @@ class TFormDinCordLatLon extends TFormDinGenericField
     private $buttonClass= null;
     private $buttonLabel= null;
     private $buttonIcon = null;
+    private $feedBackIcon = null;
+    private $feedBackColor= null;
+    private $feedBackSize = null;
 
     /**
      * Pegar informações geolocalização do navegador
@@ -167,6 +172,31 @@ class TFormDinCordLatLon extends TFormDinGenericField
         return $this->buttonIcon;
     }
     //--------------------------------------------------------------------
+    public function setfeedBackIcon($feedBackIcon)
+    {
+        $this->feedBackIcon = $feedBackIcon;
+    }
+    public function getfeedBackIcon(){
+        $this->feedBackIcon = is_null($this->feedBackIcon)?self::FEEDBACK_ICON:$this->feedBackIcon;
+        return $this->feedBackIcon;
+    }
+    public function setfeedBackColor($feedBackColor)
+    {
+        $this->feedBackColor = $feedBackColor;
+    }
+    public function getfeedBackColor(){
+        $this->feedBackColor = is_null($this->feedBackColor)?self::FEEDBACK_COLOR:$this->feedBackColor;
+        return $this->feedBackColor;
+    }
+    public function setfeedBackSize($feedBackSize)
+    {
+        $this->feedBackSize = $feedBackSize;
+    }
+    public function getfeedBackSize(){
+        $this->feedBackSize = is_null($this->feedBackSize)?self::FEEDBACK_SIZE:$this->feedBackSize;
+        return $this->feedBackSize;
+    }
+    //--------------------------------------------------------------------
     public function setIdDivGeo($idDivGeo)
     {
         $this->idDivGeo = $idDivGeo;
@@ -191,7 +221,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     //--------------------------------------------------------------------
     private function getDivFeedBack(){
         $id = $this->getIdDivGeo();
-        $html = '<i class="fas fa-check-circle"></i>';
+        $html = '<i class="'.$this->getfeedBackIcon().'" style="color: '.$this->getfeedBackColor().'; font-size: '.$this->getfeedBackSize().';"></i>';
         $div = new TElement('div');
         $div->class = 'fd5FeedBackCordLat';
         $div->setProperty('id',$id.'_feedback');
