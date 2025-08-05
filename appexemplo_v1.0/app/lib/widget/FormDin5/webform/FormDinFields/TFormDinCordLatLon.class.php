@@ -51,7 +51,7 @@ class TFormDinCordLatLon extends TFormDinGenericField
     const BUTTON_ICON = 'fas:map-marker';
     const FEEDBACK_ICON = 'fas fa-check-circle';
     const FEEDBACK_COLOR= 'green';
-    const FEEDBACK_SIZE = '30px';
+    const FEEDBACK_SIZE = '25px';
 
 
     protected $adiantiObj;
@@ -172,27 +172,27 @@ class TFormDinCordLatLon extends TFormDinGenericField
         return $this->buttonIcon;
     }
     //--------------------------------------------------------------------
-    public function setfeedBackIcon($feedBackIcon)
+    public function setFeedBackIcon($feedBackIcon)
     {
         $this->feedBackIcon = $feedBackIcon;
     }
-    public function getfeedBackIcon(){
+    public function getFeedBackIcon(){
         $this->feedBackIcon = is_null($this->feedBackIcon)?self::FEEDBACK_ICON:$this->feedBackIcon;
         return $this->feedBackIcon;
     }
-    public function setfeedBackColor($feedBackColor)
+    public function setFeedBackColor($feedBackColor)
     {
         $this->feedBackColor = $feedBackColor;
     }
-    public function getfeedBackColor(){
+    public function getFeedBackColor(){
         $this->feedBackColor = is_null($this->feedBackColor)?self::FEEDBACK_COLOR:$this->feedBackColor;
         return $this->feedBackColor;
     }
-    public function setfeedBackSize($feedBackSize)
+    public function setFeedBackSize($feedBackSize)
     {
         $this->feedBackSize = $feedBackSize;
     }
-    public function getfeedBackSize(){
+    public function getFeedBackSize(){
         $this->feedBackSize = is_null($this->feedBackSize)?self::FEEDBACK_SIZE:$this->feedBackSize;
         return $this->feedBackSize;
     }
