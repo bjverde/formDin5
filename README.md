@@ -32,13 +32,13 @@ O [adianti](https://www.adianti.com.br/) é um FrameWork muito bom, com mais rec
 # Sobre
 
 ## Conteúdo do Projeto
-* FormDin5 - é o FrameWork para instalar sobre o adianti 7.x
+* FormDin5 - é o FrameWork para instalar sobre o adianti 8.x
 * appexemplo_v1.0 - um software completo de exemplo, com os diversos usos dos componentes do FormDin5
 * lab - pequenos testes
 * phpunit-code-coverage - resultado da cobertura dos testes do PHPUnit
 
 # Instalação
-1. Baixar o [adianti FrameWork 7.2.2](https://adiantiframework.com.br) funciona com o template ou FrameWork Puro. Pode ser que funcione com o Adianti 7.0 ou 7.1, porém não é garantido.
+1. Baixar o [adianti FrameWork 8.1.0](https://adiantiframework.com.br) funciona com o template ou FrameWork Puro.
 1. Copiar o conteudo pasta FormDin5 conforme orientação abaixo
     1. No arquivo `app/config/application.ini` incluir as linhas abaixo
     1. No arquivo index.php da raiz do projeto incluir as linhas abaixo
