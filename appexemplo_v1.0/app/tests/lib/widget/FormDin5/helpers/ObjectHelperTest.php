@@ -44,9 +44,9 @@
 use PHPUnit\Framework\TestCase;
 
 class Pessoa {
-    public string $nome;
-    public int $idade;
-    public string $email;
+    public string|null $nome;
+    public int|null $idade;
+    public string|null $email;
 
     public function __construct(string|null $nome=null, int|null $idade=null,string|null $email=null){
         $this->nome = $nome;
@@ -59,9 +59,9 @@ class Pessoa {
 }
 
 class Cachorro {
-    public string $nome;
-    public int $idade;
-    public string $raca;
+    public string|null $nome;
+    public int|null $idade;
+    public string|null $raca;
 
     public function __construct(string $nome,int $idade,string $raca){
         $this->nome = $nome;
