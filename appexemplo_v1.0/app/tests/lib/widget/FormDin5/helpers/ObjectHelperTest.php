@@ -63,7 +63,7 @@ class Cachorro {
     public int|null $idade;
     public string|null $raca;
 
-    public function __construct(string $nome,int $idade,string $raca){
+    public function __construct(string|null $nome=null, int|null $idade=null, string|null $raca=null){
         $this->nome = $nome;
         $this->idade = $idade;
         $this->raca = $raca;
@@ -87,6 +87,16 @@ class ObjectHelperTest extends TestCase
         $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'email');
         $this->assertEquals($origem->email, $retorno->email, 'O atributo email deve ser transferido corretamente.' );
         $this->assertNull($retorno->idade, 'O atributo idade deve ser nulo.');
+    }
+
+        public function testTransferirAtributoSeExistir_objDiferentes() {
+        $origem  = new Pessoa('João', 30, 'joao@example.com');
+        $destino = new Cachorro();
+        $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'nome');
+        $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'idade');
+        $this->assertEquals($origem->nome, $retorno->nome, 'O atributo nome deve ser transferido corretamente.');
+        $this->assertEquals($origem->idade, $retorno->idade, 'O atributo email deve ser transferido corretamente.' );
+        $this->assertNull($retorno->raca, 'O atributo raca deve ser nulo.');
     }
 }
 
