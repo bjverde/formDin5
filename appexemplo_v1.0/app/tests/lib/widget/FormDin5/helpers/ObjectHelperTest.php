@@ -82,8 +82,11 @@ class ObjectHelperTest extends TestCase
     public function testTransferirAtributoSeExistir_objIguais() {
         $origem  = new Pessoa('João', 30, 'joao@example.com');
         $destino = new Pessoa();
+        $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'nome');
+        $this->assertEquals($origem->nome, $retorno->nome, 'O atributo nome deve ser transferido corretamente.');
         $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'email');
-        $this->assertEquals($origem->email, $retorno->email);
+        $this->assertEquals($origem->email, $retorno->email, 'O atributo email deve ser transferido corretamente.' );
+        $this->assertNull($retorno->idade, 'O atributo idade deve ser nulo.');
     }
 }
 
