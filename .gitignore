@@ -22,3 +22,5 @@ phpunit-code-coverage/**
 /appexemplo_v1.0/tmp/
 !/appexemplo_v1.0/tmp/.htaccess
 appexemplo_v1.0/app/tests/.phpunit.result.cache
+FormDin5/tests/.phpunit.result.cache
+FormDin5/tests/phpunit.xml
