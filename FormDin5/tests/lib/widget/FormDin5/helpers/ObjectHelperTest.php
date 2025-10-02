@@ -44,9 +44,9 @@
 use PHPUnit\Framework\TestCase;
 
 class Pessoa {
-    public string $nome;
-    public int $idade;
-    public string $email;
+    public string|null $nome;
+    public int|null $idade;
+    public string|null $email;
 
     public function __construct(string|null $nome=null, int|null $idade=null,string|null $email=null){
         $this->nome = $nome;
@@ -59,11 +59,11 @@ class Pessoa {
 }
 
 class Cachorro {
-    public string $nome;
-    public int $idade;
-    public string $raca;
+    public string|null $nome;
+    public int|null $idade;
+    public string|null $raca;
 
-    public function __construct(string $nome,int $idade,string $raca){
+    public function __construct(string|null $nome=null, int|null $idade=null, string|null $raca=null){
         $this->nome = $nome;
         $this->idade = $idade;
         $this->raca = $raca;
@@ -82,8 +82,21 @@ class ObjectHelperTest extends TestCase
     public function testTransferirAtributoSeExistir_objIguais() {
         $origem  = new Pessoa('João', 30, 'joao@example.com');
         $destino = new Pessoa();
+        $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'nome');
+        $this->assertEquals($origem->nome, $retorno->nome, 'O atributo nome deve ser transferido corretamente.');
         $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'email');
-        $this->assertEquals($origem->email, $retorno->email);
+        $this->assertEquals($origem->email, $retorno->email, 'O atributo email deve ser transferido corretamente.' );
+        $this->assertNull($retorno->idade, 'O atributo idade deve ser nulo.');
+    }
+
+        public function testTransferirAtributoSeExistir_objDiferentes() {
+        $origem  = new Pessoa('João', 30, 'joao@example.com');
+        $destino = new Cachorro();
+        $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'nome');
+        $retorno = ObjectHelper::transferirAtributoSeExistir($origem, $destino, 'idade');
+        $this->assertEquals($origem->nome, $retorno->nome, 'O atributo nome deve ser transferido corretamente.');
+        $this->assertEquals($origem->idade, $retorno->idade, 'O atributo email deve ser transferido corretamente.' );
+        $this->assertNull($retorno->raca, 'O atributo raca deve ser nulo.');
     }
 }
 
