@@ -52,8 +52,8 @@ REM ECHO PHP 8.1.28 and PHPUnit 10.0.11 Simples with Coverage
 REM c:\wamp64\bin\php\php8.1.28\php.exe c:\wamp64\bin\phpunit\phpunit-10.0.11.phar --colors=auto --bootstrap c:\wamp64\www\adiantiApp\formDin5\appexemplo_v1.0\init.php --include-coverage D:\wamp64\www\adiantiApp\formDin5\appexemplo_v1.0\app\lib\widget\FormDin5 --coverage-html c:\wamp64\www\adianti\formDin5\phpunit-code-coverage\html c:\wamp64\www\adianti\formDin5\appexemplo_v1.0\app\tests\
 
 REM ---------------- 12.0.7 -------------------------
-ECHO PHP 8.3.6 and PHPUnit 12.0.7 Simples with Coverage
-c:\wamp64\bin\php\php8.3.6\php.exe c:\wamp64\bin\phpunit\phpunit-12.0.7.phar --colors=auto --bootstrap c:\wamp64\www\adiantiApp\formDin5\appexemplo_v1.0\init.php --coverage-html c:\wamp64\www\adiantiApp\formDin5\phpunit-code-coverage\html c:\wamp64\www\adiantiApp\formDin5\appexemplo_v1.0\app\tests\
+ECHO PHP 8.3.6 and PHPUnit 12.3.6 Simples with Coverage
+d:\wamp64\bin\php\php8.3.6\php.exe d:\wamp64\bin\phpunit\phpunit-12.3.6.phar --colors=auto --bootstrap d:\wamp64\www\adiantiApp\formDin5\appexemplo_v1.0\init.php --coverage-html d:\wamp64\www\adiantiApp\formDin5\phpunit-code-coverage\html d:\wamp64\www\adiantiApp\formDin5\appexemplo_v1.0\app\tests\
 
 
 cd app\tests\
