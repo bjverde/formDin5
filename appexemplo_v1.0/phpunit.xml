@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.3/phpunit.xsd"
+         bootstrap="init.php"
+         colors="true"
+         displayDetailsOnTestsThatTriggerWarnings="true">
+
+    <testsuites>
+        <testsuite name="Default Test Suite">
+            <directory>app/tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <source>
+        <include>
+            <directory>app/lib/widget/FormDin5</directory>
+        </include>
+        <exclude>
+            <directory>app/config</directory>
+            <directory>app/control</directory>
+            <directory>app/database</directory>
+            <directory>app/images</directory>
+            <directory>app/lib/barcode</directory>
+            <directory>app/lib/html</directory>
+            <directory>app/lib/include</directory>
+            <directory>app/lib/menu</directory>
+            <directory>app/lib/reports</directory>
+            <directory>app/lib/utils</directory>
+            <directory>app/lib/validator</directory>
+            <directory>app/model</directory>
+            <directory>app/output</directory>
+            <directory>app/reports</directory>
+            <directory>app/resources</directory>
+            <directory>app/service</directory>
+            <directory>app/templates</directory>
+            <directory>app/tests</directory>
+            <directory>app/view</directory>
+        </exclude>
+    </source>
+
+</phpunit>
