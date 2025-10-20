@@ -101,7 +101,6 @@ class TotemInactivity {
         this.timer = null;
         this.warningTimer = null;
         this.lastActivity = Date.now();
-        this.sessionStart = Date.now(); // ← Adiciona rastreamento do início da sessão
         this.countdownInterval = null;
         this.currentState = 'normal'; // normal, aviso, critico
         
@@ -130,10 +129,7 @@ class TotemInactivity {
         console.log('3. Resetando timer...');
         this.resetTimer();
         
-        console.log('4. Iniciando relógio...');
-        this.startClock();
-        
-        console.log('5. Iniciando countdown...');
+        console.log('4. Iniciando countdown...');
         this.startCountdown();
         
         console.log('=== TOTEM INACTIVITY INICIALIZADO ===');
@@ -166,10 +162,7 @@ class TotemInactivity {
             this.elements.countdownTimer = document.getElementById('countdown-timer-fallback');
         }
 
-        // Elementos opcionais
-        this.elements.datetimeDisplay = document.getElementById('datetime-display');
-        this.elements.currentDate = document.getElementById('current-date');
-        this.elements.currentTime = document.getElementById('current-time');
+
 
         // Define aliases para compatibilidade com métodos existentes
         this.timerElement = this.elements.countdownTimer;
@@ -325,31 +318,7 @@ class TotemInactivity {
         }
     }
     
-    /**
-     * Inicia o relógio de data/hora
-     */
-    startClock() {
-        function updateClock() {
-            const now = new Date();
-            const timeString = now.toLocaleString('pt-BR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            
-            const display = document.getElementById('datetime-display');
-            if (display) {
-                display.innerHTML = timeString;
-            }
-        }
-        
-        updateClock();
-        setInterval(updateClock, 1000);
-    }
+
     
     /**
      * Inicia o countdown visual
@@ -421,10 +390,7 @@ class TotemInactivity {
                 }
             }
             
-            // Atualiza modal timer se existir
-            if (this.modalTimerElement) {
-                this.modalTimerElement.innerHTML = Math.floor(remaining / 1000);
-            }
+
             
             // Define o estado baseado nos limites
             const percentRemaining = remaining / this.config.inactivityTimeout;
@@ -445,9 +411,6 @@ class TotemInactivity {
             console.log('TEMPO ESGOTADO!');
             if (this.timerElement) {
                 this.timerElement.innerHTML = '0m 0s';
-            }
-            if (this.modalTimerElement) {
-                this.modalTimerElement.innerHTML = '0';
             }
             this.setState('critico');
         }
@@ -582,10 +545,7 @@ TotemInactivity.init = function(config) {
     return window.totemInactivityControl;
 };
 
-// Método estático para obter status
-TotemInactivity.getStatus = function() {
-    return window.totemInactivityControl ? window.totemInactivityControl.getStatus() : null;
-};
+
 
 // Torna disponível globalmente
 window.TotemInactivity = TotemInactivity;
