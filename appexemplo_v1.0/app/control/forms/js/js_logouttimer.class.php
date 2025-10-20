@@ -21,8 +21,8 @@ class js_logouttimer extends TPage
         $this->form = new BootstrapFormBuilder(self::$formName);
         $this->form->setFormTitle( 'LogOut por tempo' );
 
-        // Criando timer com debug ATIVADO para desenvolvimento
-        $fd5LogoutTimer = new TFormDinLogoutTimer('logoutTimer','Logout Timer', true);
+        // Criando timer 50 segundos de timeout e debug ATIVADO para desenvolvimento
+        $fd5LogoutTimer = new TFormDinLogoutTimer('logoutTimer','Logout Timer', 50, true);
         
         $fieldLogoutTimer = $fd5LogoutTimer->getAdiantiObj();
 
@@ -86,8 +86,18 @@ class js_logouttimer extends TPage
         $msg .= '</div>';
         
         $msg .= '<div style="background: #d4edda; padding: 15px; border: 1px solid #c3e6cb; border-radius: 5px; margin: 15px 0;">';
-        $msg .= '<h4 style="color: #155724; margin-top: 0;">💡 Dicas de Uso:</h4>';
+        $msg .= '<h4 style="color: #155724; margin-top: 0;">� Novo Construtor:</h4>';
+        $msg .= '<code style="background: #f8f9fa; padding: 5px; border-radius: 3px; font-family: monospace; display: block; margin: 5px 0;">';
+        $msg .= 'new TFormDinLogoutTimer($id, $label, $timeoutSeconds, $debug)<br>';
+        $msg .= '// Exemplo: 120 segundos com debug ativo<br>';
+        $msg .= 'new TFormDinLogoutTimer(\'timer\', \'Timer\', 120, true)';
+        $msg .= '</code>';
+        $msg .= '</div>';
+        
+        $msg .= '<div style="background: #d4edda; padding: 15px; border: 1px solid #c3e6cb; border-radius: 5px; margin: 15px 0;">';
+        $msg .= '<h4 style="color: #155724; margin-top: 0;">�💡 Dicas de Uso:</h4>';
         $msg .= '<ul style="margin: 0; padding-left: 20px;">';
+        $msg .= '<li><strong>Timeout:</strong> Configure o tempo em segundos no construtor (ex: 60, 120, 300)</li>';
         $msg .= '<li><strong>Desenvolvimento:</strong> Use debug = true para monitorar eventos</li>';
         $msg .= '<li><strong>Produção:</strong> Use debug = false ou omita o parâmetro</li>';
         $msg .= '<li><strong>Performance:</strong> Menos eventos = melhor performance</li>';

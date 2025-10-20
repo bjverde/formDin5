@@ -106,18 +106,21 @@ class TFormDinLogoutTimer extends TFormDinGenericField
 
 
     /**
-     * Pegar informações geolocalização do navegador
+     * Construtor do Timer de Logout por Inatividade
      *
      * @param string  $idField         -01: ID do campo
      * @param string  $label           -02: Label do campo, usado para validações
-     * @param boolean $debug           -03: Ativa debug no JavaScript. Default FALSE = sem debug, TRUE = com debug
+     * @param int     $timeoutSeconds  -03: Tempo limite em segundos para logout automático. Default: 60 segundos
+     * @param boolean $debug           -04: Ativa debug no JavaScript. Default FALSE = sem debug, TRUE = com debug
      * @return TElement
      */
     public function __construct(string $idField
                                ,string $label
+                               ,int $timeoutSeconds = 60
                                ,bool $debug = false
                                )
     {
+        $this->setTimeoutSeconds($timeoutSeconds);
         $this->debug = $debug;
         $this->setIdDivLogoutTimer($idField);     
         $adiantiObj = $this->getDivLogoutTimer($idField);
@@ -159,7 +162,7 @@ class TFormDinLogoutTimer extends TFormDinGenericField
                 
                 // Se alterar timeout_seconds, atualizar timeout_ms automaticamente
                 if ($property === 'timeout_seconds') {
-                    $this->timeout_ms = $args[0] * 1000;
+                    $this->updateTimeoutMs();
                 }
                 
                 return true;
@@ -212,7 +215,7 @@ class TFormDinLogoutTimer extends TFormDinGenericField
             
             // Se alterar timeout_seconds, atualizar timeout_ms automaticamente
             if ($key === 'timeout_seconds') {
-                $this->timeout_ms = $value * 1000;
+                $this->updateTimeoutMs();
             }
             
             return true;
@@ -232,7 +235,17 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     public function setTimeoutSeconds($seconds)
     {
         $this->timeout_seconds = (int)$seconds;
-        $this->timeout_ms = $seconds * 1000;
+        $this->updateTimeoutMs();
+    }
+    
+    /**
+     * Atualiza automaticamente timeout_ms baseado em timeout_seconds
+     * 
+     * @return void
+     */
+    private function updateTimeoutMs()
+    {
+        $this->timeout_ms = $this->timeout_seconds * 1000;
     }
     
     public function getTimeoutMs()
@@ -576,7 +589,7 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     public function resetToDefaults()
     {
         $this->timeout_seconds = 60;
-        $this->timeout_ms = 60000;
+        $this->updateTimeoutMs();  // Calcula automaticamente timeout_ms
         $this->check_interval = 1000;
         $this->msg_final = 'Sessão finalizada por inatividade';
         $this->titulo_sessao = 'Sessão Expirada';
