@@ -52,7 +52,7 @@
  * 
  * @author Reinaldo A. Barrêto Junior
  */
-class TFormDinLogoutTimer
+class TFormDinLogoutTimer extends TFormDinGenericField
 {
     // === ATRIBUTOS DE CONFIGURAÇÃO ===
     
@@ -97,6 +97,33 @@ class TFormDinLogoutTimer
     private $audio_beeps_normal = 3;
     private $audio_beeps_critical = 5;
     private $audio_volume = 0.2;
+
+
+
+    /**
+     * Pegar informações geolocalização do navegador
+     *
+     * @param string  $idField         -01: ID do campo
+     * @param string  $label           -02: Label do campo, usado para validações
+     * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @return TElement
+     */
+    public function __construct(string $idField
+                               ,string $label
+                               ,$boolRequired  =null
+                               )
+    {
+        $this->setIdDivGeo($idField);
+
+        
+        
+        $adiantiObj = $this->getDivGeo($idField,$boolRequired);
+        parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
+        $this->setLabel($label,$boolRequired);
+
+        return $this->getAdiantiObj();
+    }
+
     
     /**
      * Método mágico para GET/SET de propriedades
