@@ -13,6 +13,9 @@ class js_logouttimer extends TPage
     public function __construct()
     {
         parent::__construct();
+
+        // load the styles
+        TPage::include_css('app/resources/css_form02.css');
         
         // create the form
         $this->form = new BootstrapFormBuilder(self::$formName);
@@ -50,7 +53,14 @@ class js_logouttimer extends TPage
         
         $fieldLogoutTimer = $fd5LogoutTimer->getAdiantiObj();
 
+        $msg = 'Botao 02 - TFormDinGeo';
+        $msg = $msg.'<br>';
+        $msg = $msg.'<br>Escondendo as informações de coordenada e colocando um feedback ver deu certo';
+        $html = new TFormDinHtmlField('html1', $msg, null, 'Documentação:', null, 200,true);
+        $html->setClass('notice');
+
         $this->form->addFields( [ new TLabel('Logout Timer') ],   [ $fieldLogoutTimer ] );
+        $this->form->addFields( [ new TLabel('Dica') ],   [ $html->getAdiantiObj() ] );
 
         // wrap the page content using vertical box
         $vbox = new TVBox;
