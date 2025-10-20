@@ -457,28 +457,46 @@ class TFormDinLogoutTimer extends TFormDinGenericField
         $scriptInit = new TElement('script');
         $scriptInit->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5LogoutTimerInit.js?v='.FormDinHelper::version());
         $scriptInit->setProperty('type','text/javascript');
+       
+        $js_content = "
+        var TOTEM_CONFIG = ".$this->toJavaScript().";
         
-        $divGeo = new TElement('div');
-        $divGeo->class = 'fd5DivCordLat';
-        $divGeo->setProperty('id',$this->getIdDivGeo().'_cordlatdiv');
+        // Inicialização automática (será executada pelo TotemInactivityInit.js)
+        console.log('Totem configurado e pronto para inicialização');
+        
+        // Força inicialização após pequeno delay
+        setTimeout(function() {
+            console.log('=== FORÇANDO INICIALIZAÇÃO ===');
+            console.log('TotemInactivity disponível:', typeof TotemInactivity !== 'undefined');
+            console.log('initTotemInactivity disponível:', typeof initTotemInactivity !== 'undefined');
             
-        $adiantiObjLat = null;
-        $adiantiObjLon = null;
-        if( $this->getShowFields() == true){
-            $adiantiObjLat = $this->getNumericField($idField.'_lat','Latitude',$boolRequired);    
-            $adiantiObjLon = $this->getNumericField($idField.'_lon','Longitude',$boolRequired);
-        }else{
-            $adiantiObjLat = $this->getHiddenField($idField.'_lat',$boolRequired);
-            $adiantiObjLon = $this->getHiddenField($idField.'_lon',$boolRequired);
-        }
+            if (typeof initTotemInactivity === 'function') {
+                console.log('Chamando initTotemInactivity...');
+                initTotemInactivity(TOTEM_CONFIG);
+            } else if (typeof TotemInactivity !== 'undefined' && typeof TotemInactivity.init === 'function') {
+                console.log('Chamando TotemInactivity.init diretamente...');
+                TotemInactivity.init(TOTEM_CONFIG);
+            } else {
+                console.error('Nenhum método de inicialização encontrado!');
+                console.log('Variáveis disponíveis:', Object.keys(window));
+            }
+        }, 1000);
+        ";
+        $scriptConfig = new TElement('script');
+        $scriptConfig->type = 'text/javascript';
+        $scriptConfig->add($js_content);                                
+        
+        $divDivLogoutTimer = new TElement('div');
+        $divDivLogoutTimer->class = 'fd5DivLogoutTimer';
+        $divDivLogoutTimer->setProperty('id',$this->getIdDivLogoutTimer().'_div');
+        $divDivLogoutTimer->add('
+                <div id="countdown-display">
+                    <i class="fas fa-clock" style="margin-right: 10px;"></i><span id="countdown-timer">--</span>
+                </div>
+        ');
 
-        $divGeo->add($this->getBtnGeo());
-        $divGeo->add($this->getDivFeedBack());
-        $divGeo->add($this->getFieldAllJson($idField.'_json',$boolRequired));
-        $divGeo->add($adiantiObjLat);
-        $divGeo->add($adiantiObjLon);
-        $divGeo->add($this->getAltitudeField($idField.'_alt','Altitude',$boolRequired));
-        $divGeo->add($scriptJsGeo);
-        return $divGeo;
+        $divDivLogoutTimer->add($scriptMain);
+        $divDivLogoutTimer->add($scriptInit);
+        return $divDivLogoutTimer;
     }
 }
