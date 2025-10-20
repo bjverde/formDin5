@@ -180,6 +180,45 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     }
     
     /**
+     * Obtém configuração específica
+     * 
+     * @param string $key Chave da configuração
+     * @param mixed $default Valor padrão se não encontrar
+     * @return mixed
+     */
+    public function get($key, $default = null)
+    {
+        if (property_exists($this, $key)) {
+            return $this->$key;
+        }
+        
+        return $default;
+    }
+    
+    /**
+     * Define configuração específica
+     * 
+     * @param string $key Chave da configuração
+     * @param mixed $value Valor da configuração
+     * @return bool
+     */
+    public function set($key, $value)
+    {
+        if (property_exists($this, $key)) {
+            $this->$key = $value;
+            
+            // Se alterar timeout_seconds, atualizar timeout_ms automaticamente
+            if ($key === 'timeout_seconds') {
+                $this->timeout_ms = $value * 1000;
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
+
+    /**
      * Obtém as configurações completas do totem
      * 
      * @return array Configurações do totem
@@ -188,8 +227,8 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     {
         return [
             // === TEMPOS ===
-            'timeout_seconds' => $this->timeout_seconds,
-            'timeout_ms' => $this->timeout_ms,
+            'timeout_seconds' => $this->getTimeoutSeconds(),
+            'timeout_ms' => $this->getTimeoutMs(),
             'check_interval' => $this->check_interval,
             
             // === MENSAGENS ===
@@ -230,46 +269,8 @@ class TFormDinLogoutTimer extends TFormDinGenericField
             'audio_volume' => $this->audio_volume,
         ];
     }
-    
-    /**
-     * Obtém configuração específica
-     * 
-     * @param string $key Chave da configuração
-     * @param mixed $default Valor padrão se não encontrar
-     * @return mixed
-     */
-    public function get($key, $default = null)
-    {
-        if (property_exists($this, $key)) {
-            return $this->$key;
-        }
-        
-        return $default;
-    }
-    
-    /**
-     * Define configuração específica
-     * 
-     * @param string $key Chave da configuração
-     * @param mixed $value Valor da configuração
-     * @return bool
-     */
-    public function set($key, $value)
-    {
-        if (property_exists($this, $key)) {
-            $this->$key = $value;
-            
-            // Se alterar timeout_seconds, atualizar timeout_ms automaticamente
-            if ($key === 'timeout_seconds') {
-                $this->timeout_ms = $value * 1000;
-            }
-            
-            return true;
-        }
-        
-        return false;
-    }
-    
+
+
     /**
      * Métodos de conveniência para timeout
      */
