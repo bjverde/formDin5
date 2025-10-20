@@ -18,8 +18,12 @@ class js_logouttimer extends TPage
         $this->form = new BootstrapFormBuilder(self::$formName);
         $this->form->setFormTitle( 'LogOut por tempo' );
 
-        $fd5LogoutTimer = new TFormDinLogoutTimer('logoutTimer','Logout Timer');
+        // Criando timer com debug ATIVADO para desenvolvimento
+        $fd5LogoutTimer = new TFormDinLogoutTimer('logoutTimer','Logout Timer', false);
         $fieldLogoutTimer = $fd5LogoutTimer->getAdiantiObj();
+        
+        // Para produção, use: new TFormDinLogoutTimer('logoutTimer','Logout Timer', false);
+        // Ou simplesmente: new TFormDinLogoutTimer('logoutTimer','Logout Timer'); // false é padrão
 
         $this->form->addFields( [ new TLabel('Logout Timer') ],   [ $fieldLogoutTimer ] );
 

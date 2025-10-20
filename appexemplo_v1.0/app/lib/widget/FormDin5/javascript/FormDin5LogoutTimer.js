@@ -94,7 +94,10 @@ class TotemInactivity {
             audio_frequency_critical: config.audio_frequency_critical || 1000,
             audio_beeps_normal: config.audio_beeps_normal || 3,
             audio_beeps_critical: config.audio_beeps_critical || 5,
-            audio_volume: config.audio_volume || 0.2
+            audio_volume: config.audio_volume || 0.2,
+            
+            // Configurações de debug
+            debug: config.debug !== undefined ? config.debug : false
         };
         
         // Estados internos
@@ -109,6 +112,13 @@ class TotemInactivity {
         this.timerElement = null;
         this.parentElement = null;
         
+        // Função de debug condicional
+        this.debugLog = (...args) => {
+            if (this.config.debug) {
+                console.log(...args);
+            }
+        };
+        
         this.init();
     }
     
@@ -116,49 +126,49 @@ class TotemInactivity {
      * Inicializa o sistema
      */
     init() {
-        console.log('=== INICIANDO TOTEM INACTIVITY ===');
-        console.log('Configurações recebidas:', this.config);
+        this.debugLog('=== INICIANDO TOTEM INACTIVITY ===');
+        this.debugLog('Configurações recebidas:', this.config);
         
-        console.log('1. Procurando elementos...');
+        this.debugLog('1. Procurando elementos...');
         const elementsFound = this.findElements();
-        console.log('Elementos encontrados:', elementsFound);
+        this.debugLog('Elementos encontrados:', elementsFound);
         
-        console.log('2. Vinculando eventos...');
+        this.debugLog('2. Vinculando eventos...');
         this.bindEvents();
         
-        console.log('3. Resetando timer...');
+        this.debugLog('3. Resetando timer...');
         this.resetTimer();
         
-        console.log('4. Iniciando countdown...');
+        this.debugLog('4. Iniciando countdown...');
         this.startCountdown();
         
-        console.log('=== TOTEM INACTIVITY INICIALIZADO ===');
-        console.log('Timeout configurado:', this.config.inactivityTimeout / 1000 + 's');
-        console.log('Aviso em:', Math.round(this.config.inactivityTimeout * this.config.aviso_limite_superior / 1000) + 's');
-        console.log('Crítico em:', Math.round(this.config.inactivityTimeout * this.config.critico_limite_superior / 1000) + 's');
+        this.debugLog('=== TOTEM INACTIVITY INICIALIZADO ===');
+        this.debugLog('Timeout configurado:', this.config.inactivityTimeout / 1000 + 's');
+        this.debugLog('Aviso em:', Math.round(this.config.inactivityTimeout * this.config.aviso_limite_superior / 1000) + 's');
+        this.debugLog('Crítico em:', Math.round(this.config.inactivityTimeout * this.config.critico_limite_superior / 1000) + 's');
     }
     
     /**
      * Encontra elementos DOM necessários
      */
     findElements() {
-        console.log('=== PROCURANDO ELEMENTOS DOM ===');
+        this.debugLog('=== PROCURANDO ELEMENTOS DOM ===');
         
         // Procura primeiro pelos elementos específicos da interface TotemView.php
         this.elements.countdownDisplay = document.getElementById('countdown-display');
         this.elements.countdownTimer = document.getElementById('countdown-timer');
 
-        console.log('countdown-display encontrado:', !!this.elements.countdownDisplay);
-        console.log('countdown-timer encontrado:', !!this.elements.countdownTimer);
+        this.debugLog('countdown-display encontrado:', !!this.elements.countdownDisplay);
+        this.debugLog('countdown-timer encontrado:', !!this.elements.countdownTimer);
 
         // Elementos fallback (se não encontrar os principais)
         if (!this.elements.countdownDisplay) {
-            console.log('Procurando countdown-display-fallback...');
+            this.debugLog('Procurando countdown-display-fallback...');
             this.elements.countdownDisplay = document.getElementById('countdown-display-fallback');
         }
         
         if (!this.elements.countdownTimer) {
-            console.log('Procurando countdown-timer-fallback...');
+            this.debugLog('Procurando countdown-timer-fallback...');
             this.elements.countdownTimer = document.getElementById('countdown-timer-fallback');
         }
 
@@ -168,15 +178,15 @@ class TotemInactivity {
         this.timerElement = this.elements.countdownTimer;
         this.parentElement = this.elements.countdownDisplay;
 
-        console.log('timerElement definido:', !!this.timerElement);
-        console.log('parentElement definido:', !!this.parentElement);
+        this.debugLog('timerElement definido:', !!this.timerElement);
+        this.debugLog('parentElement definido:', !!this.parentElement);
         
         if (this.timerElement) {
-            console.log('timerElement ID:', this.timerElement.id);
-            console.log('timerElement conteúdo inicial:', this.timerElement.innerHTML);
+            this.debugLog('timerElement ID:', this.timerElement.id);
+            this.debugLog('timerElement conteúdo inicial:', this.timerElement.innerHTML);
         }
 
-        console.log('=== FIM PROCURA ELEMENTOS ===');
+        this.debugLog('=== FIM PROCURA ELEMENTOS ===');
 
         return this.elements.countdownDisplay && this.elements.countdownTimer;
     }
@@ -206,14 +216,14 @@ class TotemInactivity {
      */
     onActivity() {
         const now = Date.now();
-        console.log('*** ATIVIDADE DETECTADA ***');
-        console.log('Timestamp:', new Date(now).toLocaleTimeString());
+        this.debugLog('*** ATIVIDADE DETECTADA ***');
+        this.debugLog('Timestamp:', new Date(now).toLocaleTimeString());
         
         this.lastActivity = now;
         this.resetTimer();
         this.setState('normal');
         
-        console.log('Timer resetado, voltando ao estado normal');
+        this.debugLog('Timer resetado, voltando ao estado normal');
     }
     
     /**
@@ -293,7 +303,7 @@ class TotemInactivity {
                 if (this.config.audio_enabled) {
                     this.playAlertSound(false);
                 }
-                console.log('Estado: AVISO - ' + Math.round(this.getRemainingTime() / 1000) + 's restantes');
+                this.debugLog('Estado: AVISO - ' + Math.round(this.getRemainingTime() / 1000) + 's restantes');
                 break;
                 
             case 'critico':
@@ -313,7 +323,7 @@ class TotemInactivity {
                 if (this.config.audio_enabled) {
                     this.playAlertSound(true); // Som mais intenso
                 }
-                console.log('Estado: CRÍTICO - ' + Math.round(this.getRemainingTime() / 1000) + 's restantes');
+                this.debugLog('Estado: CRÍTICO - ' + Math.round(this.getRemainingTime() / 1000) + 's restantes');
                 break;
         }
     }
@@ -324,34 +334,34 @@ class TotemInactivity {
      * Inicia o countdown visual
      */
     startCountdown() {
-        console.log('=== INICIANDO COUNTDOWN ===');
+        this.debugLog('=== INICIANDO COUNTDOWN ===');
         
         // Mostra o elemento de countdown se estiver oculto
         if (this.parentElement) {
-            console.log('Tornando elemento visível...');
+            this.debugLog('Tornando elemento visível...');
             this.parentElement.style.display = 'block';
         } else {
             console.error('parentElement não encontrado!');
         }
         
-        console.log('Definindo estado inicial como normal...');
+        this.debugLog('Definindo estado inicial como normal...');
         this.setState('normal');
         
-        console.log('Fazendo primeira atualização do countdown...');
+        this.debugLog('Fazendo primeira atualização do countdown...');
         this.updateCountdown();
         
-        console.log('Iniciando intervalo de 1000ms...');
+        this.debugLog('Iniciando intervalo de 1000ms...');
         this.countdownInterval = setInterval(() => {
             this.updateCountdown();
             
             const remaining = this.getRemainingTime();
             if (remaining <= 0) {
-                console.log('TEMPO ESGOTADO - executando logout');
+                this.debugLog('TEMPO ESGOTADO - executando logout');
                 this.executeLogout();
             }
         }, 1000);
         
-        console.log('=== COUNTDOWN INICIADO ===');
+        this.debugLog('=== COUNTDOWN INICIADO ===');
     }
     
     /**
@@ -360,10 +370,10 @@ class TotemInactivity {
     updateCountdown() {
         const remaining = this.getRemainingTime();
         
-        console.log('=== UPDATE COUNTDOWN ===');
-        console.log('Tempo restante (ms):', remaining);
-        console.log('timerElement encontrado:', !!this.timerElement);
-        console.log('timerElement ID:', this.timerElement ? this.timerElement.id : 'N/A');
+        this.debugLog('=== UPDATE COUNTDOWN ===');
+        this.debugLog('Tempo restante (ms):', remaining);
+        this.debugLog('timerElement encontrado:', !!this.timerElement);
+        this.debugLog('timerElement ID:', this.timerElement ? this.timerElement.id : 'N/A');
         
         if (remaining > 0) {
             // Formata o tempo
@@ -371,19 +381,19 @@ class TotemInactivity {
             const seconds = Math.floor((remaining % 60000) / 1000);
             const timeString = minutes + 'm ' + seconds + 's';
             
-            console.log('Tempo formatado:', timeString);
+            this.debugLog('Tempo formatado:', timeString);
             
             // Atualiza elemento principal do countdown
             if (this.timerElement) {
-                console.log('Atualizando countdown-timer com:', timeString);
+                this.debugLog('Atualizando countdown-timer com:', timeString);
                 this.timerElement.innerHTML = timeString;
-                console.log('Conteúdo atual do elemento:', this.timerElement.innerHTML);
+                this.debugLog('Conteúdo atual do elemento:', this.timerElement.innerHTML);
             } else {
                 console.error('timerElement não encontrado! Procurando novamente...');
                 // Tenta encontrar o elemento novamente
                 this.timerElement = document.getElementById('countdown-timer');
                 if (this.timerElement) {
-                    console.log('Elemento encontrado na segunda tentativa!');
+                    this.debugLog('Elemento encontrado na segunda tentativa!');
                     this.timerElement.innerHTML = timeString;
                 } else {
                     console.error('Elemento countdown-timer ainda não foi encontrado no DOM');
@@ -394,28 +404,28 @@ class TotemInactivity {
             
             // Define o estado baseado nos limites
             const percentRemaining = remaining / this.config.inactivityTimeout;
-            console.log('Percentual restante:', Math.round(percentRemaining * 100) + '%');
+            this.debugLog('Percentual restante:', Math.round(percentRemaining * 100) + '%');
             
             if (percentRemaining <= this.config.critico_limite_superior) {
-                console.log('Mudando para estado CRÍTICO');
+                this.debugLog('Mudando para estado CRÍTICO');
                 this.setState('critico');
             } else if (percentRemaining <= this.config.aviso_limite_superior) {
-                console.log('Mudando para estado AVISO');
+                this.debugLog('Mudando para estado AVISO');
                 this.setState('aviso');
             } else {
-                console.log('Mantendo estado NORMAL');
+                this.debugLog('Mantendo estado NORMAL');
                 this.setState('normal');
             }
         } else {
             // Tempo esgotado
-            console.log('TEMPO ESGOTADO!');
+            this.debugLog('TEMPO ESGOTADO!');
             if (this.timerElement) {
                 this.timerElement.innerHTML = '0m 0s';
             }
             this.setState('critico');
         }
         
-        console.log('=== FIM UPDATE COUNTDOWN ===');
+        this.debugLog('=== FIM UPDATE COUNTDOWN ===');
     }
     
     /**
@@ -466,7 +476,7 @@ class TotemInactivity {
      * Executa o logout automático usando configurações do TotemConfig.php
      */
     executeLogout() {
-        console.log('Executando logout automático');
+        this.debugLog('Executando logout automático');
         
         this.clearTimers();
         if (this.countdownInterval) {
@@ -509,7 +519,7 @@ class TotemInactivity {
             clearInterval(this.countdownInterval);
         }
         this.setState('normal');
-        console.log('TotemInactivity parado');
+        this.debugLog('TotemInactivity parado');
     }
     
     /**
@@ -526,21 +536,28 @@ class TotemInactivity {
     }
 }
 
+// Função de debug estático
+TotemInactivity.debugLog = function(config, ...args) {
+    if (config && config.debug) {
+        console.log(...args);
+    }
+};
+
 // Método estático para inicialização rápida
 TotemInactivity.init = function(config) {
-    console.log('=== TotemInactivity.init() CHAMADO ===');
-    console.log('Config recebida:', config);
+    TotemInactivity.debugLog(config, '=== TotemInactivity.init() CHAMADO ===');
+    TotemInactivity.debugLog(config, 'Config recebida:', config);
     
     if (window.totemInactivityControl) {
-        console.log('Parando instância anterior...');
+        TotemInactivity.debugLog(config, 'Parando instância anterior...');
         window.totemInactivityControl.stop();
     }
     
-    console.log('Criando nova instância do TotemInactivity...');
+    TotemInactivity.debugLog(config, 'Criando nova instância do TotemInactivity...');
     window.totemInactivityControl = new TotemInactivity(config);
     
-    console.log('✅ TotemInactivity.init() concluído');
-    console.log('Instância criada:', !!window.totemInactivityControl);
+    TotemInactivity.debugLog(config, '✅ TotemInactivity.init() concluído');
+    TotemInactivity.debugLog(config, 'Instância criada:', !!window.totemInactivityControl);
     
     return window.totemInactivityControl;
 };

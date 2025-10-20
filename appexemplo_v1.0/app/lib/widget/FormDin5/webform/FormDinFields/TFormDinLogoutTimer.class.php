@@ -99,6 +99,9 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     private $audio_beeps_normal = 3;
     private $audio_beeps_critical = 5;
     private $audio_volume = 0.2;
+    
+    // Configurações de debug
+    private $debug = false;
 
 
 
@@ -107,13 +110,15 @@ class TFormDinLogoutTimer extends TFormDinGenericField
      *
      * @param string  $idField         -01: ID do campo
      * @param string  $label           -02: Label do campo, usado para validações
-     * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE = não obrigatório, TRUE = obrigatório
+     * @param boolean $debug           -03: Ativa debug no JavaScript. Default FALSE = sem debug, TRUE = com debug
      * @return TElement
      */
     public function __construct(string $idField
                                ,string $label
+                               ,bool $debug = false
                                )
     {
+        $this->debug = $debug;
         $this->setIdDivLogoutTimer($idField);     
         $adiantiObj = $this->getDivLogoutTimer($idField);
         parent::__construct($adiantiObj,$this->getIdDivLogoutTimer(),$label,false,null,null);
@@ -363,6 +368,9 @@ class TFormDinLogoutTimer extends TFormDinGenericField
             'audio_beeps_normal' => $this->audio_beeps_normal,
             'audio_beeps_critical' => $this->audio_beeps_critical,
             'audio_volume' => $this->audio_volume,
+            
+            // === CONFIGURAÇÕES DE DEBUG ===
+            'debug' => $this->debug,
         ];
     }    
     
@@ -397,6 +405,7 @@ class TFormDinLogoutTimer extends TFormDinGenericField
         $this->audio_beeps_normal = 3;
         $this->audio_beeps_critical = 5;
         $this->audio_volume = 0.2;
+        $this->debug = false;
     }
 
     /**
@@ -461,24 +470,31 @@ class TFormDinLogoutTimer extends TFormDinGenericField
         $js_content = "
         var TOTEM_CONFIG = ".$this->toJavaScript().";
         
+        // Função de debug inline
+        function inlineDebugLog() {
+            if (TOTEM_CONFIG && TOTEM_CONFIG.debug) {
+                console.log.apply(console, arguments);
+            }
+        }
+        
         // Inicialização automática (será executada pelo TotemInactivityInit.js)
-        console.log('Totem configurado e pronto para inicialização');
+        inlineDebugLog('Totem configurado e pronto para inicialização');
         
         // Força inicialização após pequeno delay
         setTimeout(function() {
-            console.log('=== FORÇANDO INICIALIZAÇÃO ===');
-            console.log('TotemInactivity disponível:', typeof TotemInactivity !== 'undefined');
-            console.log('initTotemInactivity disponível:', typeof initTotemInactivity !== 'undefined');
+            inlineDebugLog('=== FORÇANDO INICIALIZAÇÃO ===');
+            inlineDebugLog('TotemInactivity disponível:', typeof TotemInactivity !== 'undefined');
+            inlineDebugLog('initTotemInactivity disponível:', typeof initTotemInactivity !== 'undefined');
             
             if (typeof initTotemInactivity === 'function') {
-                console.log('Chamando initTotemInactivity...');
+                inlineDebugLog('Chamando initTotemInactivity...');
                 initTotemInactivity(TOTEM_CONFIG);
             } else if (typeof TotemInactivity !== 'undefined' && typeof TotemInactivity.init === 'function') {
-                console.log('Chamando TotemInactivity.init diretamente...');
+                inlineDebugLog('Chamando TotemInactivity.init diretamente...');
                 TotemInactivity.init(TOTEM_CONFIG);
             } else {
                 console.error('Nenhum método de inicialização encontrado!');
-                console.log('Variáveis disponíveis:', Object.keys(window));
+                inlineDebugLog('Variáveis disponíveis:', Object.keys(window));
             }
         }, 1000);
         ";

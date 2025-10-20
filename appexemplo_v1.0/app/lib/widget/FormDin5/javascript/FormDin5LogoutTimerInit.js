@@ -46,10 +46,17 @@
  * @author Reinaldo A. Barrêto Junior
  * @param {Object} config - Configurações vindas do PHP
  */
+
+// Função de debug global
+function debugLog(...args) {
+    if (typeof TOTEM_CONFIG !== 'undefined' && TOTEM_CONFIG.debug) {
+        console.log(...args);
+    }
+}
 function initTotemInactivity(config) {
     // Proteção contra múltiplas inicializações
     if (window.totemInactivityControl && window.totemInactivityControl.timer) {
-        console.log('TotemInactivity já está ativo, parando instância anterior...');
+        debugLog('TotemInactivity já está ativo, parando instância anterior...');
         window.totemInactivityControl.stop();
     }
     
@@ -76,7 +83,7 @@ function initTotemInactivity(config) {
     // Inicializa o totem
     try {
         TotemInactivity.init(config);
-        console.log('✅ Totem inicializado com sucesso');
+        debugLog('✅ Totem inicializado com sucesso');
         return true;
     } catch (error) {
         console.error('Erro ao inicializar totem:', error);
@@ -89,26 +96,26 @@ function initTotemInactivity(config) {
  * (Para compatibilidade com implementações antigas)
  */
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('TotemInactivityInit.js carregado');
+    debugLog('TotemInactivityInit.js carregado');
     
     // Aguarda um pouco para garantir que todos os scripts foram carregados
     setTimeout(function() {
-        console.log('=== VERIFICANDO INICIALIZAÇÃO ===');
+        debugLog('=== VERIFICANDO INICIALIZAÇÃO ===');
         
         // Verifica se existe configuração global definida
         if (typeof TOTEM_CONFIG !== 'undefined') {
-            console.log('TOTEM_CONFIG encontrado:', TOTEM_CONFIG);
-            console.log('Verificando se TotemInactivity está disponível...');
+            debugLog('TOTEM_CONFIG encontrado:', TOTEM_CONFIG);
+            debugLog('Verificando se TotemInactivity está disponível...');
             
             if (typeof TotemInactivity !== 'undefined') {
-                console.log('TotemInactivity disponível! Inicializando...');
+                debugLog('TotemInactivity disponível! Inicializando...');
                 initTotemInactivity(TOTEM_CONFIG);
             } else {
                 console.error('TotemInactivity não carregado ainda, aguardando mais tempo...');
                 // Tenta novamente após mais tempo
                 setTimeout(function() {
                     if (typeof TotemInactivity !== 'undefined') {
-                        console.log('TotemInactivity carregado na segunda tentativa!');
+                        debugLog('TotemInactivity carregado na segunda tentativa!');
                         initTotemInactivity(TOTEM_CONFIG);
                     } else {
                         console.error('TotemInactivity não foi carregado após segunda tentativa');
@@ -116,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 500);
             }
         } else {
-            console.log('TOTEM_CONFIG não encontrado - aguardando inicialização manual');
+            debugLog('TOTEM_CONFIG não encontrado - aguardando inicialização manual');
         }
     }, 200);
 });
