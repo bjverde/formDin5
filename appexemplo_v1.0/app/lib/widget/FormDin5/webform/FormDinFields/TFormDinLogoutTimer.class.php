@@ -102,6 +102,12 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     
     // Configurações de debug
     private $debug = false;
+    
+    // Configurações do ícone
+    private $icon_class = 'fas fa-clock';
+    private $icon_color = '';
+    private $icon_size = '';
+    private $icon_margin = '10px';
 
 
 
@@ -330,6 +336,73 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     public function setAudioVolume($volume)
     {
         $this->audio_volume = max(0.0, min(1.0, (float)$volume));
+    }
+    
+    /**
+     * Métodos de conveniência para configuração do ícone
+     */
+    public function getIconClass()
+    {
+        return $this->icon_class;
+    }
+    
+    public function setIconClass($iconClass)
+    {
+        $this->icon_class = $iconClass;
+    }
+    
+    public function getIconColor()
+    {
+        return $this->icon_color;
+    }
+    
+    public function setIconColor($color)
+    {
+        $this->icon_color = $color;
+    }
+    
+    public function getIconSize()
+    {
+        return $this->icon_size;
+    }
+    
+    public function setIconSize($size)
+    {
+        $this->icon_size = $size;
+    }
+    
+    public function getIconMargin()
+    {
+        return $this->icon_margin;
+    }
+    
+    public function setIconMargin($margin)
+    {
+        $this->icon_margin = $margin;
+    }
+    
+    /**
+     * Gera o estilo CSS inline para o ícone
+     * 
+     * @return string Estilo CSS para o ícone
+     */
+    private function getIconStyle()
+    {
+        $styles = [];
+        
+        if (!empty($this->icon_color)) {
+            $styles[] = "color: {$this->icon_color}";
+        }
+        
+        if (!empty($this->icon_size)) {
+            $styles[] = "font-size: {$this->icon_size}";
+        }
+        
+        if (!empty($this->icon_margin)) {
+            $styles[] = "margin-right: {$this->icon_margin}";
+        }
+        
+        return empty($styles) ? 'margin-right: 10px;' : implode('; ', $styles) . ';';
     }
     
     /**
@@ -580,6 +653,12 @@ class TFormDinLogoutTimer extends TFormDinGenericField
             
             // === CONFIGURAÇÕES DE DEBUG ===
             'debug' => $this->debug,
+            
+            // === CONFIGURAÇÕES DO ÍCONE ===
+            'icon_class' => $this->icon_class,
+            'icon_color' => $this->icon_color,
+            'icon_size' => $this->icon_size,
+            'icon_margin' => $this->icon_margin,
         ];
     }    
     
@@ -615,6 +694,12 @@ class TFormDinLogoutTimer extends TFormDinGenericField
         $this->audio_beeps_critical = 5;
         $this->audio_volume = 0.2;
         $this->debug = false;
+        
+        // Resetar configurações do ícone
+        $this->icon_class = 'fas fa-clock';
+        $this->icon_color = '';
+        $this->icon_size = '';
+        $this->icon_margin = '10px';
     }
 
     /**
@@ -716,7 +801,7 @@ class TFormDinLogoutTimer extends TFormDinGenericField
         $divDivLogoutTimer->setProperty('id',$this->getIdDivLogoutTimer().'_div');
         $divDivLogoutTimer->add('
                 <div id="countdown-display">
-                    <i class="fas fa-clock" style="margin-right: 10px;"></i><span id="countdown-timer">--</span>
+                    <i class="' . $this->icon_class . '" style="' . $this->getIconStyle() . '"></i><span id="countdown-timer">--</span>
                 </div>
         ');
 

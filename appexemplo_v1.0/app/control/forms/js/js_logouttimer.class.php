@@ -40,6 +40,13 @@ class js_logouttimer extends TPage
         $fd5LogoutTimer->set('critico_fundo', '#6f42c1');            // Fundo roxo
         $fd5LogoutTimer->set('critico_borda', '4px solid #5a32a3');  // Borda roxo escuro
         
+        // === EXEMPLO: CONFIGURANDO ÍCONE PERSONALIZADO ===
+        
+        $fd5LogoutTimer->setIconClass('fas fa-stopwatch');            // Ícone de cronômetro
+        $fd5LogoutTimer->setIconColor('#007bff');                     // Cor azul do ícone
+        $fd5LogoutTimer->setIconSize('1.2em');                       // Tamanho do ícone
+        $fd5LogoutTimer->setIconMargin('15px');                      // Margem do ícone
+        
         $fieldLogoutTimer = $fd5LogoutTimer->getAdiantiObj();
 
         $msg = '<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">';
@@ -141,10 +148,45 @@ class js_logouttimer extends TPage
         $msg .= '// Estado CRÍTICO (Roxo escuro)<br>';
         $msg .= '$timer->setCriticalColor(\'#ffffff\');<br>';
         $msg .= '$timer->set(\'critico_fundo\', \'#6f42c1\');<br>';
-        $msg .= '$timer->set(\'critico_borda\', \'4px solid #5a32a3\');';
+        $msg .= '$timer->set(\'critico_borda\', \'4px solid #5a32a3\');<br><br>';
+        
+        $msg .= '// Personalização do ÍCONE<br>';
+        $msg .= '$timer->setIconClass(\'fas fa-stopwatch\');<br>';
+        $msg .= '$timer->setIconColor(\'#007bff\');<br>';
+        $msg .= '$timer->setIconSize(\'1.2em\');<br>';
+        $msg .= '$timer->setIconMargin(\'15px\');';
         $msg .= '</code>';
         
         $msg .= '<p><small><strong>💡 Dica:</strong> Use cores contrastantes para melhor visibilidade. O estado crítico deve chamar mais atenção!</small></p>';
+        $msg .= '</div>';
+        
+        $msg .= '<div style="background: #fff8e1; padding: 15px; border: 1px solid #ffcc02; border-radius: 5px; margin: 15px 0;">';
+        $msg .= '<h4 style="color: #e65100; margin-top: 0;">⏰ Personalização do Ícone</h4>';
+        $msg .= '<p><strong>Este exemplo usa um ícone personalizado de cronômetro!</strong></p>';
+        
+        $msg .= '<div style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin: 10px 0;">';
+        $msg .= '<h5 style="color: #495057; margin-top: 0;">🎯 Configurações Aplicadas:</h5>';
+        $msg .= '<ul style="margin: 5px 0; padding-left: 20px; font-size: 0.9em;">';
+        $msg .= '<li><strong>Classe:</strong> fas fa-stopwatch (cronômetro)</li>';
+        $msg .= '<li><strong>Cor:</strong> #007bff (azul)</li>';
+        $msg .= '<li><strong>Tamanho:</strong> 1.2em</li>';
+        $msg .= '<li><strong>Margem:</strong> 15px à direita</li>';
+        $msg .= '</ul>';
+        $msg .= '</div>';
+        
+        $msg .= '<h5 style="color: #e65100;">🔧 Métodos Disponíveis:</h5>';
+        $msg .= '<code style="background: #f8f9fa; padding: 10px; border-radius: 3px; font-family: monospace; display: block; margin: 5px 0; font-size: 0.9em;">';
+        $msg .= 'setIconClass(\'fas fa-stopwatch\')&nbsp;&nbsp;// Cronômetro<br>';
+        $msg .= 'setIconClass(\'fas fa-clock\')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Relógio (padrão)<br>';
+        $msg .= 'setIconClass(\'fas fa-hourglass\')&nbsp;&nbsp;&nbsp;&nbsp;// Ampulheta<br>';
+        $msg .= 'setIconClass(\'fas fa-bell\')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Sino<br>';
+        $msg .= 'setIconClass(\'fas fa-exclamation\')&nbsp;&nbsp;// Exclamação<br><br>';
+        $msg .= 'setIconColor(\'#dc3545\')&nbsp;&nbsp;// Vermelho<br>';
+        $msg .= 'setIconSize(\'1.5em\')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Tamanho<br>';
+        $msg .= 'setIconMargin(\'20px\')&nbsp;&nbsp;&nbsp;// Espaço';
+        $msg .= '</code>';
+        
+        $msg .= '<p><small><strong>📱 Dica:</strong> Use ícones FontAwesome que fazem sentido com timer: clock, stopwatch, hourglass, bell</small></p>';
         $msg .= '</div>';
 
         
@@ -166,7 +208,7 @@ class js_logouttimer extends TPage
         $html = new TFormDinHtmlField('html1', $msg, null, 'Documentação:', null, 200,true);
         $html->setClass('notice');
 
-        $this->form->addFields( [ new TLabel('Logout Timer (Cores Personalizadas)') ],   [ $fieldLogoutTimer ] );
+        $this->form->addFields( [ new TLabel('Logout Timer (Cores + Ícone Personalizado)') ],   [ $fieldLogoutTimer ] );
         $this->form->addFields( [ new TLabel('📚 Documentação Completa') ],   [ $html->getAdiantiObj() ] );
 
         // wrap the page content using vertical box
