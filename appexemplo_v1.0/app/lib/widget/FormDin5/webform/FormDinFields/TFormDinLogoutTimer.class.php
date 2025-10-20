@@ -58,46 +58,46 @@ class TFormDinLogoutTimer
     // === ATRIBUTOS DE CONFIGURAÇÃO ===
     
     // Tempos
-    private static $timeout_seconds = 60;
-    private static $timeout_ms = 60000;
-    private static $check_interval = 1000;
+    private $timeout_seconds = 60;
+    private $timeout_ms = 60000;
+    private $check_interval = 1000;
     
     // Mensagens
-    private static $msg_final = 'Sessão finalizada por inatividade';
-    private static $titulo_sessao = 'Sessão Expirada';
+    private $msg_final = 'Sessão finalizada por inatividade';
+    private $titulo_sessao = 'Sessão Expirada';
     
     // Cores e estilos normais (verde)
-    private static $normal_fonte_cor = '#28a745';
-    private static $normal_fonte_size = '1.5em';
-    private static $normal_fonte_weight = 'normal';
+    private $normal_fonte_cor = '#28a745';
+    private $normal_fonte_size = '1.5em';
+    private $normal_fonte_weight = 'normal';
     
     // Configurações de aviso (amarelo/laranja)
-    private static $aviso_limite_superior = 0.5;
-    private static $aviso_fonte_cor = '#ffc107';
-    private static $aviso_fundo = '#fff3cd';
-    private static $aviso_borda = '4px solid #f39c12';
-    private static $aviso_fonte_weight = 'bold';
+    private $aviso_limite_superior = 0.5;
+    private $aviso_fonte_cor = '#ffc107';
+    private $aviso_fundo = '#fff3cd';
+    private $aviso_borda = '4px solid #f39c12';
+    private $aviso_fonte_weight = 'bold';
     
     // Configurações críticas (branco/vermelho)
-    private static $critico_limite_superior = 0.15;
-    private static $critico_fonte_cor = '#ffffff';
-    private static $critico_fundo = '#dc3545';
-    private static $critico_borda = '4px solid #bd2130';
-    private static $critico_fonte_weight = 'bold';
+    private $critico_limite_superior = 0.15;
+    private $critico_fonte_cor = '#ffffff';
+    private $critico_fundo = '#dc3545';
+    private $critico_borda = '4px solid #bd2130';
+    private $critico_fonte_weight = 'bold';
     
     // URLs
-    private static $logout_url = 'index.php?class=LoginForm&method=onLogout&static=1';
+    private $logout_url = 'index.php?class=LoginForm&method=onLogout&static=1';
     
     // Eventos monitorados
-    private static $events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keyup'];
+    private $events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keyup'];
     
     // Configurações de áudio
-    private static $audio_enabled = true;
-    private static $audio_frequency_normal = 800;
-    private static $audio_frequency_critical = 1000;
-    private static $audio_beeps_normal = 3;
-    private static $audio_beeps_critical = 5;
-    private static $audio_volume = 0.2;
+    private $audio_enabled = true;
+    private $audio_frequency_normal = 800;
+    private $audio_frequency_critical = 1000;
+    private $audio_beeps_normal = 3;
+    private $audio_beeps_critical = 5;
+    private $audio_volume = 0.2;
     
     /**
      * Método mágico para GET/SET de propriedades
@@ -108,38 +108,38 @@ class TFormDinLogoutTimer
      * @return mixed Valor da propriedade ou true para setters
      * @throws Exception Se a propriedade não existir
      */
-    public static function __callStatic($method, $args)
+    public function __call($method, $args)
     {
         // Getter mágico (ex: getTimeoutSeconds -> timeout_seconds)
         if (strpos($method, 'get') === 0) {
-            $property = self::camelToSnake(substr($method, 3));
+            $property = $this->camelToSnake(substr($method, 3));
             
-            if (property_exists(__CLASS__, $property)) {
-                return self::$$property;
+            if (property_exists($this, $property)) {
+                return $this->$property;
             }
             
-            throw new Exception("Propriedade '{$property}' não existe em TotemConfig");
+            throw new Exception("Propriedade '{$property}' não existe em TFormDinLogoutTimer");
         }
         
         // Setter mágico (ex: setTimeoutSeconds -> timeout_seconds)
         if (strpos($method, 'set') === 0) {
-            $property = self::camelToSnake(substr($method, 3));
+            $property = $this->camelToSnake(substr($method, 3));
             
-            if (property_exists(__CLASS__, $property)) {
-                self::$$property = $args[0];
+            if (property_exists($this, $property)) {
+                $this->$property = $args[0];
                 
                 // Se alterar timeout_seconds, atualizar timeout_ms automaticamente
                 if ($property === 'timeout_seconds') {
-                    self::$timeout_ms = $args[0] * 1000;
+                    $this->timeout_ms = $args[0] * 1000;
                 }
                 
                 return true;
             }
             
-            throw new Exception("Propriedade '{$property}' não existe em TotemConfig");
+            throw new Exception("Propriedade '{$property}' não existe em TFormDinLogoutTimer");
         }
         
-        throw new Exception("Método '{$method}' não existe em TotemConfig");
+        throw new Exception("Método '{$method}' não existe em TFormDinLogoutTimer");
     }
     
     /**
@@ -148,7 +148,7 @@ class TFormDinLogoutTimer
      * @param string $input String em camelCase
      * @return string String em snake_case
      */
-    private static function camelToSnake($input)
+    private function camelToSnake($input)
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $input));
     }
@@ -158,50 +158,50 @@ class TFormDinLogoutTimer
      * 
      * @return array Configurações do totem
      */
-    public static function getConfig()
+    public function getConfig()
     {
         return [
             // === TEMPOS ===
-            'timeout_seconds' => self::$timeout_seconds,
-            'timeout_ms' => self::$timeout_ms,
-            'check_interval' => self::$check_interval,
+            'timeout_seconds' => $this->timeout_seconds,
+            'timeout_ms' => $this->timeout_ms,
+            'check_interval' => $this->check_interval,
             
             // === MENSAGENS ===
-            'msg_final' => self::$msg_final,
-            'titulo_sessao' => self::$titulo_sessao,
+            'msg_final' => $this->msg_final,
+            'titulo_sessao' => $this->titulo_sessao,
             
             // === CORES E ESTILOS NORMAIS (VERDE) ===
-            'normal_fonte_cor' => self::$normal_fonte_cor,
-            'normal_fonte_size' => self::$normal_fonte_size,
-            'normal_fonte_weight' => self::$normal_fonte_weight,
+            'normal_fonte_cor' => $this->normal_fonte_cor,
+            'normal_fonte_size' => $this->normal_fonte_size,
+            'normal_fonte_weight' => $this->normal_fonte_weight,
             
             // === CONFIGURAÇÕES DE AVISO (AMARELO/LARANJA) ===
-            'aviso_limite_superior' => self::$aviso_limite_superior,
-            'aviso_fonte_cor' => self::$aviso_fonte_cor,
-            'aviso_fundo' => self::$aviso_fundo,
-            'aviso_borda' => self::$aviso_borda,
-            'aviso_fonte_weight' => self::$aviso_fonte_weight,
+            'aviso_limite_superior' => $this->aviso_limite_superior,
+            'aviso_fonte_cor' => $this->aviso_fonte_cor,
+            'aviso_fundo' => $this->aviso_fundo,
+            'aviso_borda' => $this->aviso_borda,
+            'aviso_fonte_weight' => $this->aviso_fonte_weight,
             
             // === CONFIGURAÇÕES CRÍTICAS (BRANCO/VERMELHO) ===
-            'critico_limite_superior' => self::$critico_limite_superior,
-            'critico_fonte_cor' => self::$critico_fonte_cor,
-            'critico_fundo' => self::$critico_fundo,
-            'critico_borda' => self::$critico_borda,
-            'critico_fonte_weight' => self::$critico_fonte_weight,
+            'critico_limite_superior' => $this->critico_limite_superior,
+            'critico_fonte_cor' => $this->critico_fonte_cor,
+            'critico_fundo' => $this->critico_fundo,
+            'critico_borda' => $this->critico_borda,
+            'critico_fonte_weight' => $this->critico_fonte_weight,
             
             // === URLS ===
-            'logout_url' => self::$logout_url,
+            'logout_url' => $this->logout_url,
             
             // === EVENTOS MONITORADOS ===
-            'events' => self::$events,
+            'events' => $this->events,
             
             // === CONFIGURAÇÕES DE ÁUDIO ===
-            'audio_enabled' => self::$audio_enabled,
-            'audio_frequency_normal' => self::$audio_frequency_normal,
-            'audio_frequency_critical' => self::$audio_frequency_critical,
-            'audio_beeps_normal' => self::$audio_beeps_normal,
-            'audio_beeps_critical' => self::$audio_beeps_critical,
-            'audio_volume' => self::$audio_volume,
+            'audio_enabled' => $this->audio_enabled,
+            'audio_frequency_normal' => $this->audio_frequency_normal,
+            'audio_frequency_critical' => $this->audio_frequency_critical,
+            'audio_beeps_normal' => $this->audio_beeps_normal,
+            'audio_beeps_critical' => $this->audio_beeps_critical,
+            'audio_volume' => $this->audio_volume,
         ];
     }
     
@@ -212,10 +212,10 @@ class TFormDinLogoutTimer
      * @param mixed $default Valor padrão se não encontrar
      * @return mixed
      */
-    public static function get($key, $default = null)
+    public function get($key, $default = null)
     {
-        if (property_exists(__CLASS__, $key)) {
-            return self::$$key;
+        if (property_exists($this, $key)) {
+            return $this->$key;
         }
         
         return $default;
@@ -228,14 +228,14 @@ class TFormDinLogoutTimer
      * @param mixed $value Valor da configuração
      * @return bool
      */
-    public static function set($key, $value)
+    public function set($key, $value)
     {
-        if (property_exists(__CLASS__, $key)) {
-            self::$$key = $value;
+        if (property_exists($this, $key)) {
+            $this->$key = $value;
             
             // Se alterar timeout_seconds, atualizar timeout_ms automaticamente
             if ($key === 'timeout_seconds') {
-                self::$timeout_ms = $value * 1000;
+                $this->timeout_ms = $value * 1000;
             }
             
             return true;
@@ -247,20 +247,20 @@ class TFormDinLogoutTimer
     /**
      * Métodos de conveniência para timeout
      */
-    public static function getTimeoutSeconds()
+    public function getTimeoutSeconds()
     {
-        return self::$timeout_seconds;
+        return $this->timeout_seconds;
     }
     
-    public static function setTimeoutSeconds($seconds)
+    public function setTimeoutSeconds($seconds)
     {
-        self::$timeout_seconds = (int)$seconds;
-        self::$timeout_ms = $seconds * 1000;
+        $this->timeout_seconds = (int)$seconds;
+        $this->timeout_ms = $seconds * 1000;
     }
     
-    public static function getTimeoutMs()
+    public function getTimeoutMs()
     {
-        return self::$timeout_ms;
+        return $this->timeout_ms;
     }
     
     /**
@@ -268,9 +268,9 @@ class TFormDinLogoutTimer
      * 
      * @return string JSON das configurações
      */
-    public static function toJavaScript()
+    public function toJavaScript()
     {
-        $config = self::getConfig();
+        $config = $this->getConfig();
         return json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
     
@@ -279,27 +279,27 @@ class TFormDinLogoutTimer
      * 
      * @return array
      */
-    public static function getVisualConfig()
+    public function getVisualConfig()
     {
         return [
             'normal' => [
-                'fonte_cor' => self::$normal_fonte_cor,
-                'fonte_size' => self::$normal_fonte_size,
-                'fonte_weight' => self::$normal_fonte_weight,
+                'fonte_cor' => $this->normal_fonte_cor,
+                'fonte_size' => $this->normal_fonte_size,
+                'fonte_weight' => $this->normal_fonte_weight,
             ],
             'aviso' => [
-                'fonte_cor' => self::$aviso_fonte_cor,
-                'fundo' => self::$aviso_fundo,
-                'borda' => self::$aviso_borda,
-                'fonte_weight' => self::$aviso_fonte_weight,
-                'limite' => self::$aviso_limite_superior,
+                'fonte_cor' => $this->aviso_fonte_cor,
+                'fundo' => $this->aviso_fundo,
+                'borda' => $this->aviso_borda,
+                'fonte_weight' => $this->aviso_fonte_weight,
+                'limite' => $this->aviso_limite_superior,
             ],
             'critico' => [
-                'fonte_cor' => self::$critico_fonte_cor,
-                'fundo' => self::$critico_fundo,
-                'borda' => self::$critico_borda,
-                'fonte_weight' => self::$critico_fonte_weight,
-                'limite' => self::$critico_limite_superior,
+                'fonte_cor' => $this->critico_fonte_cor,
+                'fundo' => $this->critico_fundo,
+                'borda' => $this->critico_borda,
+                'fonte_weight' => $this->critico_fonte_weight,
+                'limite' => $this->critico_limite_superior,
             ],
         ];
     }
@@ -307,112 +307,112 @@ class TFormDinLogoutTimer
     /**
      * Métodos de conveniência para cores
      */
-    public static function getNormalColor()
+    public function getNormalColor()
     {
-        return self::$normal_fonte_cor;
+        return $this->normal_fonte_cor;
     }
     
-    public static function setNormalColor($color)
+    public function setNormalColor($color)
     {
-        self::$normal_fonte_cor = $color;
+        $this->normal_fonte_cor = $color;
     }
     
-    public static function getWarningColor()
+    public function getWarningColor()
     {
-        return self::$aviso_fonte_cor;
+        return $this->aviso_fonte_cor;
     }
     
-    public static function setWarningColor($color)
+    public function setWarningColor($color)
     {
-        self::$aviso_fonte_cor = $color;
+        $this->aviso_fonte_cor = $color;
     }
     
-    public static function getCriticalColor()
+    public function getCriticalColor()
     {
-        return self::$critico_fonte_cor;
+        return $this->critico_fonte_cor;
     }
     
-    public static function setCriticalColor($color)
+    public function setCriticalColor($color)
     {
-        self::$critico_fonte_cor = $color;
+        $this->critico_fonte_cor = $color;
     }
     
     /**
      * Métodos de conveniência para limites
      */
-    public static function getWarningLimit()
+    public function getWarningLimit()
     {
-        return self::$aviso_limite_superior;
+        return $this->aviso_limite_superior;
     }
     
-    public static function setWarningLimit($limit)
+    public function setWarningLimit($limit)
     {
-        self::$aviso_limite_superior = (float)$limit;
+        $this->aviso_limite_superior = (float)$limit;
     }
     
-    public static function getCriticalLimit()
+    public function getCriticalLimit()
     {
-        return self::$critico_limite_superior;
+        return $this->critico_limite_superior;
     }
     
-    public static function setCriticalLimit($limit)
+    public function setCriticalLimit($limit)
     {
-        self::$critico_limite_superior = (float)$limit;
+        $this->critico_limite_superior = (float)$limit;
     }
     
     /**
      * Métodos de conveniência para áudio
      */
-    public static function isAudioEnabled()
+    public function isAudioEnabled()
     {
-        return self::$audio_enabled;
+        return $this->audio_enabled;
     }
     
-    public static function setAudioEnabled($enabled)
+    public function setAudioEnabled($enabled)
     {
-        self::$audio_enabled = (bool)$enabled;
+        $this->audio_enabled = (bool)$enabled;
     }
     
-    public static function getAudioVolume()
+    public function getAudioVolume()
     {
-        return self::$audio_volume;
+        return $this->audio_volume;
     }
     
-    public static function setAudioVolume($volume)
+    public function setAudioVolume($volume)
     {
-        self::$audio_volume = max(0.0, min(1.0, (float)$volume));
+        $this->audio_volume = max(0.0, min(1.0, (float)$volume));
     }
     
     /**
      * Reset para valores padrão
      */
-    public static function resetToDefaults()
+    public function resetToDefaults()
     {
-        self::$timeout_seconds = 60;
-        self::$timeout_ms = 60000;
-        self::$check_interval = 1000;
-        self::$msg_final = 'Sessão finalizada por inatividade';
-        self::$titulo_sessao = 'Sessão Expirada';
-        self::$normal_fonte_cor = '#28a745';
-        self::$normal_fonte_size = '1.5em';
-        self::$normal_fonte_weight = 'normal';
-        self::$aviso_limite_superior = 0.5;
-        self::$aviso_fonte_cor = '#ffc107';
-        self::$aviso_fundo = '#fff3cd';
-        self::$aviso_borda = '4px solid #f39c12';
-        self::$aviso_fonte_weight = 'bold';
-        self::$critico_limite_superior = 0.15;
-        self::$critico_fonte_cor = '#ffffff';
-        self::$critico_fundo = '#dc3545';
-        self::$critico_borda = '4px solid #bd2130';
-        self::$critico_fonte_weight = 'bold';
-        self::$logout_url = 'index.php?class=LoginForm&method=onLogout&static=1';
-        self::$events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keyup'];
-        self::$audio_enabled = true;
-        self::$audio_frequency_normal = 800;
-        self::$audio_frequency_critical = 1000;
-        self::$audio_beeps_normal = 3;
-        self::$audio_beeps_critical = 5;
-        self::$audio_volume = 0.2;
+        $this->timeout_seconds = 60;
+        $this->timeout_ms = 60000;
+        $this->check_interval = 1000;
+        $this->msg_final = 'Sessão finalizada por inatividade';
+        $this->titulo_sessao = 'Sessão Expirada';
+        $this->normal_fonte_cor = '#28a745';
+        $this->normal_fonte_size = '1.5em';
+        $this->normal_fonte_weight = 'normal';
+        $this->aviso_limite_superior = 0.5;
+        $this->aviso_fonte_cor = '#ffc107';
+        $this->aviso_fundo = '#fff3cd';
+        $this->aviso_borda = '4px solid #f39c12';
+        $this->aviso_fonte_weight = 'bold';
+        $this->critico_limite_superior = 0.15;
+        $this->critico_fonte_cor = '#ffffff';
+        $this->critico_fundo = '#dc3545';
+        $this->critico_borda = '4px solid #bd2130';
+        $this->critico_fonte_weight = 'bold';
+        $this->logout_url = 'index.php?class=LoginForm&method=onLogout&static=1';
+        $this->events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keyup'];
+        $this->audio_enabled = true;
+        $this->audio_frequency_normal = 800;
+        $this->audio_frequency_critical = 1000;
+        $this->audio_beeps_normal = 3;
+        $this->audio_beeps_critical = 5;
+        $this->audio_volume = 0.2;
     }
 }
