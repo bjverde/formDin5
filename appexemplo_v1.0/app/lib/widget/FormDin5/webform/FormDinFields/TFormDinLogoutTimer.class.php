@@ -54,8 +54,10 @@
  */
 class TFormDinLogoutTimer extends TFormDinGenericField
 {
+    protected $adiantiObj;
+    protected $idDivLogoutTimer;
+
     // === ATRIBUTOS DE CONFIGURAÇÃO ===
-    
     // Tempos
     private $timeout_seconds = 60;
     private $timeout_ms = 60000;
@@ -110,16 +112,12 @@ class TFormDinLogoutTimer extends TFormDinGenericField
      */
     public function __construct(string $idField
                                ,string $label
-                               ,$boolRequired  =null
                                )
     {
-        $this->setIdDivGeo($idField);
-
-        
-        
-        $adiantiObj = $this->getDivGeo($idField,$boolRequired);
-        parent::__construct($adiantiObj,$this->getIdDivGeo(),$label,false,null,null);
-        $this->setLabel($label,$boolRequired);
+        $this->setIdDivLogoutTimer($idField);     
+        $adiantiObj = $this->getDivLogoutTimer($idField);
+        parent::__construct($adiantiObj,$this->getIdDivLogoutTimer(),$label,false,null,null);
+        $this->setLabel($label,false);
 
         return $this->getAdiantiObj();
     }
@@ -440,5 +438,47 @@ class TFormDinLogoutTimer extends TFormDinGenericField
                 'limite' => $this->critico_limite_superior,
             ],
         ];
-    }    
+    }
+    //--------------------------------------------------------------------
+    public function setIdDivLogoutTimer($idDivLogoutTimer)
+    {
+        $this->idDivLogoutTimer = $idDivLogoutTimer;
+    }
+    public function getIdDivLogoutTimer(){
+        return $this->idDivLogoutTimer;
+    }
+    //--------------------------------------------------------------------
+    private function getDivLogoutTimer($idField){
+        
+        $scriptMain = new TElement('script');
+        $scriptMain->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5LogoutTimer.js?v='.FormDinHelper::version());
+        $scriptMain->setProperty('type','text/javascript');
+        
+        $scriptInit = new TElement('script');
+        $scriptInit->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5LogoutTimerInit.js?v='.FormDinHelper::version());
+        $scriptInit->setProperty('type','text/javascript');
+        
+        $divGeo = new TElement('div');
+        $divGeo->class = 'fd5DivCordLat';
+        $divGeo->setProperty('id',$this->getIdDivGeo().'_cordlatdiv');
+            
+        $adiantiObjLat = null;
+        $adiantiObjLon = null;
+        if( $this->getShowFields() == true){
+            $adiantiObjLat = $this->getNumericField($idField.'_lat','Latitude',$boolRequired);    
+            $adiantiObjLon = $this->getNumericField($idField.'_lon','Longitude',$boolRequired);
+        }else{
+            $adiantiObjLat = $this->getHiddenField($idField.'_lat',$boolRequired);
+            $adiantiObjLon = $this->getHiddenField($idField.'_lon',$boolRequired);
+        }
+
+        $divGeo->add($this->getBtnGeo());
+        $divGeo->add($this->getDivFeedBack());
+        $divGeo->add($this->getFieldAllJson($idField.'_json',$boolRequired));
+        $divGeo->add($adiantiObjLat);
+        $divGeo->add($adiantiObjLon);
+        $divGeo->add($this->getAltitudeField($idField.'_alt','Altitude',$boolRequired));
+        $divGeo->add($scriptJsGeo);
+        return $divGeo;
+    }
 }
