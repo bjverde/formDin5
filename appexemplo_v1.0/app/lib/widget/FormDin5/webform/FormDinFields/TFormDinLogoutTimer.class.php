@@ -219,59 +219,6 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     }
 
     /**
-     * Obtém as configurações completas do totem
-     * 
-     * @return array Configurações do totem
-     */
-    public function getConfig()
-    {
-        return [
-            // === TEMPOS ===
-            'timeout_seconds' => $this->getTimeoutSeconds(),
-            'timeout_ms' => $this->getTimeoutMs(),
-            'check_interval' => $this->check_interval,
-            
-            // === MENSAGENS ===
-            'msg_final' => $this->msg_final,
-            'titulo_sessao' => $this->titulo_sessao,
-            
-            // === CORES E ESTILOS NORMAIS (VERDE) ===
-            'normal_fonte_cor' => $this->normal_fonte_cor,
-            'normal_fonte_size' => $this->normal_fonte_size,
-            'normal_fonte_weight' => $this->normal_fonte_weight,
-            
-            // === CONFIGURAÇÕES DE AVISO (AMARELO/LARANJA) ===
-            'aviso_limite_superior' => $this->aviso_limite_superior,
-            'aviso_fonte_cor' => $this->aviso_fonte_cor,
-            'aviso_fundo' => $this->aviso_fundo,
-            'aviso_borda' => $this->aviso_borda,
-            'aviso_fonte_weight' => $this->aviso_fonte_weight,
-            
-            // === CONFIGURAÇÕES CRÍTICAS (BRANCO/VERMELHO) ===
-            'critico_limite_superior' => $this->critico_limite_superior,
-            'critico_fonte_cor' => $this->critico_fonte_cor,
-            'critico_fundo' => $this->critico_fundo,
-            'critico_borda' => $this->critico_borda,
-            'critico_fonte_weight' => $this->critico_fonte_weight,
-            
-            // === URLS ===
-            'logout_url' => $this->logout_url,
-            
-            // === EVENTOS MONITORADOS ===
-            'events' => $this->events,
-            
-            // === CONFIGURAÇÕES DE ÁUDIO ===
-            'audio_enabled' => $this->audio_enabled,
-            'audio_frequency_normal' => $this->audio_frequency_normal,
-            'audio_frequency_critical' => $this->audio_frequency_critical,
-            'audio_beeps_normal' => $this->audio_beeps_normal,
-            'audio_beeps_critical' => $this->audio_beeps_critical,
-            'audio_volume' => $this->audio_volume,
-        ];
-    }
-
-
-    /**
      * Métodos de conveniência para timeout
      */
     public function getTimeoutSeconds()
@@ -288,47 +235,6 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     public function getTimeoutMs()
     {
         return $this->timeout_ms;
-    }
-    
-    /**
-     * Converte configurações para JavaScript
-     * 
-     * @return string JSON das configurações
-     */
-    public function toJavaScript()
-    {
-        $config = $this->getConfig();
-        return json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-    
-    /**
-     * Obtém apenas configurações visuais
-     * 
-     * @return array
-     */
-    public function getVisualConfig()
-    {
-        return [
-            'normal' => [
-                'fonte_cor' => $this->normal_fonte_cor,
-                'fonte_size' => $this->normal_fonte_size,
-                'fonte_weight' => $this->normal_fonte_weight,
-            ],
-            'aviso' => [
-                'fonte_cor' => $this->aviso_fonte_cor,
-                'fundo' => $this->aviso_fundo,
-                'borda' => $this->aviso_borda,
-                'fonte_weight' => $this->aviso_fonte_weight,
-                'limite' => $this->aviso_limite_superior,
-            ],
-            'critico' => [
-                'fonte_cor' => $this->critico_fonte_cor,
-                'fundo' => $this->critico_fundo,
-                'borda' => $this->critico_borda,
-                'fonte_weight' => $this->critico_fonte_weight,
-                'limite' => $this->critico_limite_superior,
-            ],
-        ];
     }
     
     /**
@@ -409,6 +315,58 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     {
         $this->audio_volume = max(0.0, min(1.0, (float)$volume));
     }
+
+    /**
+     * Obtém as configurações completas do totem
+     * 
+     * @return array Configurações do totem
+     */
+    public function getConfig()
+    {
+        return [
+            // === TEMPOS ===
+            'timeout_seconds' => $this->getTimeoutSeconds(),
+            'timeout_ms' => $this->getTimeoutMs(),
+            'check_interval' => $this->check_interval,
+            
+            // === MENSAGENS ===
+            'msg_final' => $this->msg_final,
+            'titulo_sessao' => $this->titulo_sessao,
+            
+            // === CORES E ESTILOS NORMAIS (VERDE) ===
+            'normal_fonte_cor' => $this->normal_fonte_cor,
+            'normal_fonte_size' => $this->normal_fonte_size,
+            'normal_fonte_weight' => $this->normal_fonte_weight,
+            
+            // === CONFIGURAÇÕES DE AVISO (AMARELO/LARANJA) ===
+            'aviso_limite_superior' => $this->aviso_limite_superior,
+            'aviso_fonte_cor' => $this->aviso_fonte_cor,
+            'aviso_fundo' => $this->aviso_fundo,
+            'aviso_borda' => $this->aviso_borda,
+            'aviso_fonte_weight' => $this->aviso_fonte_weight,
+            
+            // === CONFIGURAÇÕES CRÍTICAS (BRANCO/VERMELHO) ===
+            'critico_limite_superior' => $this->critico_limite_superior,
+            'critico_fonte_cor' => $this->critico_fonte_cor,
+            'critico_fundo' => $this->critico_fundo,
+            'critico_borda' => $this->critico_borda,
+            'critico_fonte_weight' => $this->critico_fonte_weight,
+            
+            // === URLS ===
+            'logout_url' => $this->logout_url,
+            
+            // === EVENTOS MONITORADOS ===
+            'events' => $this->events,
+            
+            // === CONFIGURAÇÕES DE ÁUDIO ===
+            'audio_enabled' => $this->audio_enabled,
+            'audio_frequency_normal' => $this->audio_frequency_normal,
+            'audio_frequency_critical' => $this->audio_frequency_critical,
+            'audio_beeps_normal' => $this->audio_beeps_normal,
+            'audio_beeps_critical' => $this->audio_beeps_critical,
+            'audio_volume' => $this->audio_volume,
+        ];
+    }    
     
     /**
      * Reset para valores padrão
@@ -442,4 +400,45 @@ class TFormDinLogoutTimer extends TFormDinGenericField
         $this->audio_beeps_critical = 5;
         $this->audio_volume = 0.2;
     }
+
+    /**
+     * Converte configurações para JavaScript
+     * 
+     * @return string JSON das configurações
+     */
+    public function toJavaScript()
+    {
+        $config = $this->getConfig();
+        return json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+    
+    /**
+     * Obtém apenas configurações visuais
+     * 
+     * @return array
+     */
+    public function getVisualConfig()
+    {
+        return [
+            'normal' => [
+                'fonte_cor' => $this->normal_fonte_cor,
+                'fonte_size' => $this->normal_fonte_size,
+                'fonte_weight' => $this->normal_fonte_weight,
+            ],
+            'aviso' => [
+                'fonte_cor' => $this->aviso_fonte_cor,
+                'fundo' => $this->aviso_fundo,
+                'borda' => $this->aviso_borda,
+                'fonte_weight' => $this->aviso_fonte_weight,
+                'limite' => $this->aviso_limite_superior,
+            ],
+            'critico' => [
+                'fonte_cor' => $this->critico_fonte_cor,
+                'fundo' => $this->critico_fundo,
+                'borda' => $this->critico_borda,
+                'fonte_weight' => $this->critico_fonte_weight,
+                'limite' => $this->critico_limite_superior,
+            ],
+        ];
+    }    
 }
