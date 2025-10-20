@@ -497,6 +497,7 @@ class TFormDinLogoutTimer extends TFormDinGenericField
 
         $divDivLogoutTimer->add($scriptMain);
         $divDivLogoutTimer->add($scriptInit);
+        $divDivLogoutTimer->add($scriptConfig);
         return $divDivLogoutTimer;
     }
 }
