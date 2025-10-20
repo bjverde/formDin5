@@ -312,7 +312,11 @@
             <menuitem label='JS Setando img'>
                 <icon>fab:js fa-fw #f0db4f</icon>
                 <action>js_setando_img</action>
-            </menuitem>        
+            </menuitem>
+            <menuitem label='LogOutTimer'>
+                <icon>fab:js fa-fw #f0db4f</icon>
+                <action>js_logouttimer</action>
+            </menuitem>             
             <menuitem label='Ajuda'>
                 <icon>fa:life-ring fa-fw</icon>
                 <action>comingSoonView</action>
