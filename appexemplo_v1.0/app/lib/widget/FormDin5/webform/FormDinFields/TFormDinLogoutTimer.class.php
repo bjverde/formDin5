@@ -468,30 +468,30 @@ class TFormDinLogoutTimer extends TFormDinGenericField
         $scriptInit->setProperty('type','text/javascript');
        
         $js_content = "
-        var TOTEM_CONFIG = ".$this->toJavaScript().";
+        var FORMDIN5_LOGOUT_TIMER_CONFIG = ".$this->toJavaScript().";
         
         // Função de debug inline
         function inlineDebugLog() {
-            if (TOTEM_CONFIG && TOTEM_CONFIG.debug) {
+            if (FORMDIN5_LOGOUT_TIMER_CONFIG && FORMDIN5_LOGOUT_TIMER_CONFIG.debug) {
                 console.log.apply(console, arguments);
             }
         }
         
-        // Inicialização automática (será executada pelo TotemInactivityInit.js)
-        inlineDebugLog('Totem configurado e pronto para inicialização');
+        // Inicialização automática (será executada pelo FormDin5LogoutTimerInit.js)
+        inlineDebugLog('FormDin5LogoutTimer configurado e pronto para inicialização');
         
         // Força inicialização após pequeno delay
         setTimeout(function() {
             inlineDebugLog('=== FORÇANDO INICIALIZAÇÃO ===');
-            inlineDebugLog('TotemInactivity disponível:', typeof TotemInactivity !== 'undefined');
-            inlineDebugLog('initTotemInactivity disponível:', typeof initTotemInactivity !== 'undefined');
+            inlineDebugLog('FormDin5LogoutTimer disponível:', typeof FormDin5LogoutTimer !== 'undefined');
+            inlineDebugLog('initFormDin5LogoutTimer disponível:', typeof initFormDin5LogoutTimer !== 'undefined');
             
-            if (typeof initTotemInactivity === 'function') {
-                inlineDebugLog('Chamando initTotemInactivity...');
-                initTotemInactivity(TOTEM_CONFIG);
-            } else if (typeof TotemInactivity !== 'undefined' && typeof TotemInactivity.init === 'function') {
-                inlineDebugLog('Chamando TotemInactivity.init diretamente...');
-                TotemInactivity.init(TOTEM_CONFIG);
+            if (typeof initFormDin5LogoutTimer === 'function') {
+                inlineDebugLog('Chamando initFormDin5LogoutTimer...');
+                initFormDin5LogoutTimer(FORMDIN5_LOGOUT_TIMER_CONFIG);
+            } else if (typeof FormDin5LogoutTimer !== 'undefined' && typeof FormDin5LogoutTimer.init === 'function') {
+                inlineDebugLog('Chamando FormDin5LogoutTimer.init diretamente...');
+                FormDin5LogoutTimer.init(FORMDIN5_LOGOUT_TIMER_CONFIG);
             } else {
                 console.error('Nenhum método de inicialização encontrado!');
                 inlineDebugLog('Variáveis disponíveis:', Object.keys(window));

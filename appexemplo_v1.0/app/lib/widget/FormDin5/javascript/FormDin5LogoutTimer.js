@@ -47,11 +47,11 @@
  */
 
 // Proteção contra redeclaração
-if (typeof window.TotemInactivity !== 'undefined') {
-    console.warn('TotemInactivity já foi carregado, pulando redeclaração');
+if (typeof window.FormDin5LogoutTimer !== 'undefined') {
+    console.warn('FormDin5LogoutTimer já foi carregado, pulando redeclaração');
 } else {
 
-class TotemInactivity {
+class FormDin5LogoutTimer {
     constructor(config = {}) {
         // Configurações padrão (compatíveis com TotemConfig.php)
         this.config = {
@@ -126,7 +126,7 @@ class TotemInactivity {
      * Inicializa o sistema
      */
     init() {
-        this.debugLog('=== INICIANDO TOTEM INACTIVITY ===');
+        this.debugLog('=== INICIANDO FORMDIN5 LOGOUT TIMER ===');
         this.debugLog('Configurações recebidas:', this.config);
         
         this.debugLog('1. Procurando elementos...');
@@ -142,7 +142,7 @@ class TotemInactivity {
         this.debugLog('4. Iniciando countdown...');
         this.startCountdown();
         
-        this.debugLog('=== TOTEM INACTIVITY INICIALIZADO ===');
+        this.debugLog('=== FORMDIN5 LOGOUT TIMER INICIALIZADO ===');
         this.debugLog('Timeout configurado:', this.config.inactivityTimeout / 1000 + 's');
         this.debugLog('Aviso em:', Math.round(this.config.inactivityTimeout * this.config.aviso_limite_superior / 1000) + 's');
         this.debugLog('Crítico em:', Math.round(this.config.inactivityTimeout * this.config.critico_limite_superior / 1000) + 's');
@@ -519,7 +519,7 @@ class TotemInactivity {
             clearInterval(this.countdownInterval);
         }
         this.setState('normal');
-        this.debugLog('TotemInactivity parado');
+        this.debugLog('FormDin5LogoutTimer parado');
     }
     
     /**
@@ -537,34 +537,34 @@ class TotemInactivity {
 }
 
 // Função de debug estático
-TotemInactivity.debugLog = function(config, ...args) {
+FormDin5LogoutTimer.debugLog = function(config, ...args) {
     if (config && config.debug) {
         console.log(...args);
     }
 };
 
 // Método estático para inicialização rápida
-TotemInactivity.init = function(config) {
-    TotemInactivity.debugLog(config, '=== TotemInactivity.init() CHAMADO ===');
-    TotemInactivity.debugLog(config, 'Config recebida:', config);
+FormDin5LogoutTimer.init = function(config) {
+    FormDin5LogoutTimer.debugLog(config, '=== FormDin5LogoutTimer.init() CHAMADO ===');
+    FormDin5LogoutTimer.debugLog(config, 'Config recebida:', config);
     
-    if (window.totemInactivityControl) {
-        TotemInactivity.debugLog(config, 'Parando instância anterior...');
-        window.totemInactivityControl.stop();
+    if (window.formDin5LogoutTimerControl) {
+        FormDin5LogoutTimer.debugLog(config, 'Parando instância anterior...');
+        window.formDin5LogoutTimerControl.stop();
     }
     
-    TotemInactivity.debugLog(config, 'Criando nova instância do TotemInactivity...');
-    window.totemInactivityControl = new TotemInactivity(config);
+    FormDin5LogoutTimer.debugLog(config, 'Criando nova instância do FormDin5LogoutTimer...');
+    window.formDin5LogoutTimerControl = new FormDin5LogoutTimer(config);
     
-    TotemInactivity.debugLog(config, '✅ TotemInactivity.init() concluído');
-    TotemInactivity.debugLog(config, 'Instância criada:', !!window.totemInactivityControl);
+    FormDin5LogoutTimer.debugLog(config, '✅ FormDin5LogoutTimer.init() concluído');
+    FormDin5LogoutTimer.debugLog(config, 'Instância criada:', !!window.formDin5LogoutTimerControl);
     
-    return window.totemInactivityControl;
+    return window.formDin5LogoutTimerControl;
 };
 
 
 
 // Torna disponível globalmente
-window.TotemInactivity = TotemInactivity;
+window.FormDin5LogoutTimer = FormDin5LogoutTimer;
 
 } // Fim da proteção contra redeclaração

@@ -49,44 +49,44 @@
 
 // Função de debug global
 function debugLog(...args) {
-    if (typeof TOTEM_CONFIG !== 'undefined' && TOTEM_CONFIG.debug) {
+    if (typeof FORMDIN5_LOGOUT_TIMER_CONFIG !== 'undefined' && FORMDIN5_LOGOUT_TIMER_CONFIG.debug) {
         console.log(...args);
     }
 }
-function initTotemInactivity(config) {
+function initFormDin5LogoutTimer(config) {
     // Proteção contra múltiplas inicializações
-    if (window.totemInactivityControl && window.totemInactivityControl.timer) {
-        debugLog('TotemInactivity já está ativo, parando instância anterior...');
-        window.totemInactivityControl.stop();
+    if (window.formDin5LogoutTimerControl && window.formDin5LogoutTimerControl.timer) {
+        debugLog('FormDin5LogoutTimer já está ativo, parando instância anterior...');
+        window.formDin5LogoutTimerControl.stop();
     }
     
     // Aguarda o DOM estar pronto
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
-            initTotemInactivity(config);
+            initFormDin5LogoutTimer(config);
         });
         return;
     }
     
-    // Verifica se a classe TotemInactivity está disponível
-    if (typeof TotemInactivity === 'undefined') {
-        console.error('TotemInactivity.js não foi carregado');
+    // Verifica se a classe FormDin5LogoutTimer está disponível
+    if (typeof FormDin5LogoutTimer === 'undefined') {
+        console.error('FormDin5LogoutTimer.js não foi carregado');
         return false;
     }
     
     // Verifica se o método init existe
-    if (typeof TotemInactivity.init !== 'function') {
-        console.error('TotemInactivity.init() não encontrado');
+    if (typeof FormDin5LogoutTimer.init !== 'function') {
+        console.error('FormDin5LogoutTimer.init() não encontrado');
         return false;
     }
     
-    // Inicializa o totem
+    // Inicializa o timer
     try {
-        TotemInactivity.init(config);
-        debugLog('✅ Totem inicializado com sucesso');
+        FormDin5LogoutTimer.init(config);
+        debugLog('✅ FormDin5LogoutTimer inicializado com sucesso');
         return true;
     } catch (error) {
-        console.error('Erro ao inicializar totem:', error);
+        console.error('Erro ao inicializar FormDin5LogoutTimer:', error);
         return false;
     }
 }
@@ -96,50 +96,50 @@ function initTotemInactivity(config) {
  * (Para compatibilidade com implementações antigas)
  */
 document.addEventListener('DOMContentLoaded', function() {
-    debugLog('TotemInactivityInit.js carregado');
+    debugLog('FormDin5LogoutTimerInit.js carregado');
     
     // Aguarda um pouco para garantir que todos os scripts foram carregados
     setTimeout(function() {
         debugLog('=== VERIFICANDO INICIALIZAÇÃO ===');
         
         // Verifica se existe configuração global definida
-        if (typeof TOTEM_CONFIG !== 'undefined') {
-            debugLog('TOTEM_CONFIG encontrado:', TOTEM_CONFIG);
-            debugLog('Verificando se TotemInactivity está disponível...');
+        if (typeof FORMDIN5_LOGOUT_TIMER_CONFIG !== 'undefined') {
+            debugLog('FORMDIN5_LOGOUT_TIMER_CONFIG encontrado:', FORMDIN5_LOGOUT_TIMER_CONFIG);
+            debugLog('Verificando se FormDin5LogoutTimer está disponível...');
             
-            if (typeof TotemInactivity !== 'undefined') {
-                debugLog('TotemInactivity disponível! Inicializando...');
-                initTotemInactivity(TOTEM_CONFIG);
+            if (typeof FormDin5LogoutTimer !== 'undefined') {
+                debugLog('FormDin5LogoutTimer disponível! Inicializando...');
+                initFormDin5LogoutTimer(FORMDIN5_LOGOUT_TIMER_CONFIG);
             } else {
-                console.error('TotemInactivity não carregado ainda, aguardando mais tempo...');
+                console.error('FormDin5LogoutTimer não carregado ainda, aguardando mais tempo...');
                 // Tenta novamente após mais tempo
                 setTimeout(function() {
-                    if (typeof TotemInactivity !== 'undefined') {
-                        debugLog('TotemInactivity carregado na segunda tentativa!');
-                        initTotemInactivity(TOTEM_CONFIG);
+                    if (typeof FormDin5LogoutTimer !== 'undefined') {
+                        debugLog('FormDin5LogoutTimer carregado na segunda tentativa!');
+                        initFormDin5LogoutTimer(FORMDIN5_LOGOUT_TIMER_CONFIG);
                     } else {
-                        console.error('TotemInactivity não foi carregado após segunda tentativa');
+                        console.error('FormDin5LogoutTimer não foi carregado após segunda tentativa');
                     }
                 }, 500);
             }
         } else {
-            debugLog('TOTEM_CONFIG não encontrado - aguardando inicialização manual');
+            debugLog('FORMDIN5_LOGOUT_TIMER_CONFIG não encontrado - aguardando inicialização manual');
         }
     }, 200);
 });
 
 /**
- * Função para reconfigurar o totem em runtime
+ * Função para reconfigurar o timer em runtime
  * 
  * @param {Object} newConfig - Novas configurações
  */
-function reconfigureTotem(newConfig) {
-    if (window.totemInactivityControl) {
-        window.totemInactivityControl.stop();
+function reconfigureFormDin5LogoutTimer(newConfig) {
+    if (window.formDin5LogoutTimerControl) {
+        window.formDin5LogoutTimerControl.stop();
     }
-    return initTotemInactivity(newConfig);
+    return initFormDin5LogoutTimer(newConfig);
 }
 
 // Torna as funções disponíveis globalmente
-window.initTotemInactivity = initTotemInactivity;
-window.reconfigureTotem = reconfigureTotem;
+window.initFormDin5LogoutTimer = initFormDin5LogoutTimer;
+window.reconfigureFormDin5LogoutTimer = reconfigureFormDin5LogoutTimer;
