@@ -19,11 +19,36 @@ class js_logouttimer extends TPage
         $this->form->setFormTitle( 'LogOut por tempo' );
 
         // Criando timer com debug ATIVADO para desenvolvimento
-        $fd5LogoutTimer = new TFormDinLogoutTimer('logoutTimer','Logout Timer', false);
-        $fieldLogoutTimer = $fd5LogoutTimer->getAdiantiObj();
+        $fd5LogoutTimer = new TFormDinLogoutTimer('logoutTimer','Logout Timer', true);
+        
+        // === EXEMPLOS DE CONFIGURAÇÃO DE EVENTOS ===
+        
+        // OPÇÃO 1: Configuração padrão (já vem assim por padrão)
+        // $fd5LogoutTimer->setEvents(['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keyup']);
+        
+        // OPÇÃO 2: Configuração mínima (apenas interações essenciais)
+        // $fd5LogoutTimer->setEvents(['mousedown', 'keydown', 'touchstart']);
+        
+        // OPÇÃO 3: Configuração completa (máxima sensibilidade)
+        // $fd5LogoutTimer->setEvents(['mousedown', 'mouseup', 'mousemove', 'click', 'keydown', 'keyup', 'touchstart', 'touchend', 'touchmove', 'scroll', 'focus', 'input']);
+        
+        // OPÇÃO 4: Configuração personalizada - apenas teclado e mouse
+        // $fd5LogoutTimer->setEvents(['mousedown', 'click', 'keydown', 'keyup']);
+        
+        // OPÇÃO 5: Adicionando eventos individualmente
+        // $fd5LogoutTimer->addEvent('resize');        // Monitora redimensionamento da janela
+        // $fd5LogoutTimer->addEvent('beforeunload');  // Monitora tentativa de sair da página
+        // $fd5LogoutTimer->addEvent('input');         // Monitora digitação em campos
+        
+        // OPÇÃO 6: Verificando e removendo eventos
+        // if ($fd5LogoutTimer->hasEvent('mousemove')) {
+        //     $fd5LogoutTimer->removeEvent('mousemove'); // Remove monitoramento de movimento do mouse
+        // }
         
         // Para produção, use: new TFormDinLogoutTimer('logoutTimer','Logout Timer', false);
         // Ou simplesmente: new TFormDinLogoutTimer('logoutTimer','Logout Timer'); // false é padrão
+        
+        $fieldLogoutTimer = $fd5LogoutTimer->getAdiantiObj();
 
         $this->form->addFields( [ new TLabel('Logout Timer') ],   [ $fieldLogoutTimer ] );
 

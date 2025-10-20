@@ -318,6 +318,202 @@ class TFormDinLogoutTimer extends TFormDinGenericField
     {
         $this->audio_volume = max(0.0, min(1.0, (float)$volume));
     }
+    
+    /**
+     * Métodos de conveniência para eventos monitorados
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+    
+    /**
+     * Define os eventos que serão monitorados para detectar atividade do usuário
+     * 
+     * Eventos JavaScript disponíveis:
+     * 
+     * EVENTOS DE MOUSE:
+     * - 'mousedown'    : Quando o botão do mouse é pressionado
+     * - 'mouseup'      : Quando o botão do mouse é solto
+     * - 'mousemove'    : Quando o mouse se move
+     * - 'click'        : Quando ocorre um clique
+     * - 'dblclick'     : Quando ocorre um duplo clique
+     * - 'contextmenu'  : Quando o menu de contexto é aberto (botão direito)
+     * - 'wheel'        : Quando a roda do mouse é usada
+     * 
+     * EVENTOS DE TECLADO:
+     * - 'keydown'      : Quando uma tecla é pressionada
+     * - 'keyup'        : Quando uma tecla é solta
+     * - 'keypress'     : Quando uma tecla é pressionada e solta (deprecated, use keydown)
+     * 
+     * EVENTOS DE TOQUE (TOUCH):
+     * - 'touchstart'   : Quando o toque na tela inicia
+     * - 'touchend'     : Quando o toque na tela termina
+     * - 'touchmove'    : Quando o dedo se move na tela
+     * - 'touchcancel'  : Quando o toque é cancelado
+     * 
+     * EVENTOS DE FOCO:
+     * - 'focus'        : Quando um elemento ganha foco
+     * - 'blur'         : Quando um elemento perde foco
+     * - 'focusin'      : Quando um elemento ou seus filhos ganham foco
+     * - 'focusout'     : Quando um elemento ou seus filhos perdem foco
+     * 
+     * EVENTOS DE NAVEGAÇÃO:
+     * - 'scroll'       : Quando a página é rolada
+     * - 'resize'       : Quando a janela é redimensionada
+     * - 'beforeunload' : Antes da página ser descarregada
+     * - 'pagehide'     : Quando a página fica oculta
+     * - 'pageshow'     : Quando a página fica visível
+     * 
+     * EVENTOS DE FORMULÁRIO:
+     * - 'input'        : Quando o valor de um campo de entrada muda
+     * - 'change'       : Quando o valor de um elemento muda
+     * - 'select'       : Quando texto é selecionado
+     * - 'submit'       : Quando um formulário é enviado
+     * 
+     * CONFIGURAÇÃO PADRÃO RECOMENDADA:
+     * ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keyup']
+     * 
+     * CONFIGURAÇÃO MÍNIMA (apenas interações essenciais):
+     * ['mousedown', 'keydown', 'touchstart']
+     * 
+     * CONFIGURAÇÃO COMPLETA (máxima sensibilidade):
+     * ['mousedown', 'mouseup', 'mousemove', 'click', 'keydown', 'keyup', 
+     *  'touchstart', 'touchend', 'touchmove', 'scroll', 'focus', 'input']
+     * 
+     * @param array $events Array com os nomes dos eventos JavaScript a serem monitorados
+     * @return bool True se configurado com sucesso
+     * @throws InvalidArgumentException Se o array estiver vazio ou contiver eventos inválidos
+     * 
+     * @example
+     * // Configuração padrão
+     * $timer->setEvents(['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keyup']);
+     * 
+     * // Apenas eventos de mouse e teclado
+     * $timer->setEvents(['mousedown', 'keydown']);
+     * 
+     * // Incluindo eventos de toque para dispositivos móveis
+     * $timer->setEvents(['mousedown', 'keydown', 'touchstart', 'touchmove']);
+     */
+    public function setEvents(array $events)
+    {
+        // Validação: array não pode estar vazio
+        if (empty($events)) {
+            throw new InvalidArgumentException('O array de eventos não pode estar vazio');
+        }
+        
+        // Lista de eventos JavaScript válidos
+        $validEvents = [
+            // Mouse
+            'mousedown', 'mouseup', 'mousemove', 'click', 'dblclick', 'contextmenu', 'wheel',
+            // Teclado
+            'keydown', 'keyup', 'keypress',
+            // Toque
+            'touchstart', 'touchend', 'touchmove', 'touchcancel',
+            // Foco
+            'focus', 'blur', 'focusin', 'focusout',
+            // Navegação
+            'scroll', 'resize', 'beforeunload', 'pagehide', 'pageshow',
+            // Formulário
+            'input', 'change', 'select', 'submit'
+        ];
+        
+        // Validação: verificar se todos os eventos são válidos
+        $invalidEvents = array_diff($events, $validEvents);
+        if (!empty($invalidEvents)) {
+            throw new InvalidArgumentException(
+                'Eventos inválidos encontrados: ' . implode(', ', $invalidEvents) . 
+                '. Eventos válidos: ' . implode(', ', $validEvents)
+            );
+        }
+        
+        // Remove duplicatas e reindexar array
+        $this->events = array_values(array_unique($events));
+        
+        return true;
+    }
+    
+    /**
+     * Adiciona um evento à lista de eventos monitorados
+     * 
+     * @param string $event Nome do evento JavaScript a ser adicionado
+     * @return bool True se adicionado com sucesso
+     * @throws InvalidArgumentException Se o evento for inválido
+     * 
+     * @example
+     * $timer->addEvent('resize');       // Adiciona monitoramento de redimensionamento
+     * $timer->addEvent('beforeunload'); // Adiciona monitoramento antes de sair da página
+     */
+    public function addEvent(string $event)
+    {
+        // Lista de eventos JavaScript válidos
+        $validEvents = [
+            // Mouse
+            'mousedown', 'mouseup', 'mousemove', 'click', 'dblclick', 'contextmenu', 'wheel',
+            // Teclado
+            'keydown', 'keyup', 'keypress',
+            // Toque
+            'touchstart', 'touchend', 'touchmove', 'touchcancel',
+            // Foco
+            'focus', 'blur', 'focusin', 'focusout',
+            // Navegação
+            'scroll', 'resize', 'beforeunload', 'pagehide', 'pageshow',
+            // Formulário
+            'input', 'change', 'select', 'submit'
+        ];
+        
+        // Validação
+        if (!in_array($event, $validEvents)) {
+            throw new InvalidArgumentException(
+                "Evento inválido: '{$event}'. Eventos válidos: " . implode(', ', $validEvents)
+            );
+        }
+        
+        // Adiciona apenas se não existir
+        if (!in_array($event, $this->events)) {
+            $this->events[] = $event;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Remove um evento da lista de eventos monitorados
+     * 
+     * @param string $event Nome do evento JavaScript a ser removido
+     * @return bool True se removido com sucesso
+     * 
+     * @example
+     * $timer->removeEvent('scroll');    // Remove monitoramento de rolagem
+     * $timer->removeEvent('mousemove'); // Remove monitoramento de movimento do mouse
+     */
+    public function removeEvent(string $event)
+    {
+        $key = array_search($event, $this->events);
+        if ($key !== false) {
+            unset($this->events[$key]);
+            $this->events = array_values($this->events); // Reindexar array
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Verifica se um evento está sendo monitorado
+     * 
+     * @param string $event Nome do evento JavaScript
+     * @return bool True se o evento está sendo monitorado
+     * 
+     * @example
+     * if ($timer->hasEvent('touchstart')) {
+     *     echo 'Eventos de toque estão sendo monitorados';
+     * }
+     */
+    public function hasEvent(string $event)
+    {
+        return in_array($event, $this->events);
+    }
 
     /**
      * Obtém as configurações completas do totem
