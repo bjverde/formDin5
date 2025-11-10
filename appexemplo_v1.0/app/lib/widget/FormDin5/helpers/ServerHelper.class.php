@@ -194,6 +194,12 @@ class ServerHelper
                 return true;
             }
         }
+
+        $referer = ArrayHelper::get($_SERVER, 'HTTP_REFERER');
+        if (is_string($referer) && stripos($referer, 'https://') === 0) {
+            return true;
+        }
+
         return false;
     }
 }
