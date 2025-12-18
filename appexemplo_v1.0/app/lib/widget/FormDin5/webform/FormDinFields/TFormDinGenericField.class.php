@@ -85,8 +85,8 @@ class TFormDinGenericField
                                ,string $id
                                ,$label
                                ,$boolRequired = false
-                               ,string $value=null
-                               ,string $placeholder =null)
+                               ,string|null $value=null
+                               ,string|null $placeholder =null)
     {
         $this->setAdiantiObj($adiantiObj);
         $this->setLabelTxt($label);
@@ -164,6 +164,9 @@ class TFormDinGenericField
     //---------------------------------------------------------------
     public function setId($id){
         $adiantiObj = $this->getAdiantiObj();
+        if (is_null($adiantiObj)) {
+            throw new \RuntimeException("Objeto Adianti não foi inicializado antes de setId()");
+        }        
         if($adiantiObj instanceof TElement){
             $adiantiObj->id = $id;
         } elseif($adiantiObj instanceof TText){

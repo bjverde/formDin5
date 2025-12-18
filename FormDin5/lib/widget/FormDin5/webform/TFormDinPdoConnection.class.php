@@ -60,14 +60,14 @@ class TFormDinPdoConnection
     private $outputFormat = null;
     private $outputFormatDefault = ArrayHelper::TYPE_ADIANTI;
     private $caseDefault = PDO::CASE_UPPER;
-
-
+    
     private $host;
     private $port;
     private $name;
     private $user;
     private $pass;
     private $type;
+    private $opts;//optional parameters
 
     /**
      * Facilitardor de conexão com o banco de dados
@@ -250,6 +250,16 @@ class TFormDinPdoConnection
         }
         $this->type = $type;
     }
+
+    public function setOpts($opt)
+    {
+        $this->opts = $opt;        
+    }
+
+    public function getOpts()
+    {
+        return $this->opts;
+    }
     
     public function getConfigConnect()
     {
@@ -261,6 +271,10 @@ class TFormDinPdoConnection
         if( empty($databese) && $conditionArrayConnectEmpty ){
             throw new InvalidArgumentException('Fail to configure the database! Please input correct config');
         }
+
+        if ($type===self::DBMS_SQLSERVER){
+            $this->setOpts('TrustServerCertificate=yes');        
+        }
         
         $db =  null;
         if(!$conditionArrayConnectEmpty){
@@ -271,6 +285,7 @@ class TFormDinPdoConnection
             $db['user'] = $this->getUser();
             $db['pass'] = $this->getPass();
             $db['type'] = $type;
+            $db['opts'] = $this->getOpts();
         }
         
         $result['database'] = $databese;

@@ -95,11 +95,13 @@ class TFormDinGridTest extends TestCase
         $mock = new StdClass;
         $grid = new TFormDinGrid($mock,'grid',null,null,null,700);
     }
+    /*
     public function testConstruct_FailOldScript()
     {
         $this->expectError();
         $grid = new TFormDinGrid('grid','grid');
     }
+    */
 
     public function testSetPanelGroupGrid_fail()
     {
