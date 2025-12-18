@@ -204,16 +204,28 @@ class TFormDinGridTransformer
     }
 
     /**
-     * Cria um link para coordenadas Lat e Lon no Google Maps, com um ícone de marcador vermelho.
+     * Cria um link para coordenadas Lat e Lon no Google Maps, com um ícone de marcador vermelho por Default.
      *
-     * @param string $lat
-     * @param string $lon
-     * @return string
-     */
-    public static function gridCordLatLon($lat, $lon)
+     * @param string $lat          01 - latitude
+     * @param string $lon          02 - longitude
+     * @param string  $cssInLinede 03 - css in line para customizar o icone
+     * @param boolean $showIcone   04 - Mostra icone = TRUE ou texto com a coordenada = FALSE
+     * @param boolean $msg         05 - Mensagem de texto que vai aparecer do lado direito do icone
+     * @return void
+     */    
+    public static function gridCordLatLonLinkGoogleMaps($lat, $lon, $cssInLinede,$showIcone=true,$msg=null)
     {
-        $icon = "<span style='color: #ff0000;font-size: 1.5em;'><i class='fa fa-map-marker' aria-hidden='true'></i></span>";
-        $link = "<a target='newwindow' href='https://www.google.com/maps/search/?api=1&query={$lat},{$lon}'>{$icon} localização</a>";
-        return $link;
-    }
+        if(empty($lat) || empty($lon)){
+            return '';
+        }else{
+            $icon = "<span style='color: #ff0000;font-size: 1.5em;'><i class='fa fa-map-marker' aria-hidden='true'></i></span>";
+            if( !empty($cssInLinede) && $showIcone==true ){
+                $icon = "<span style='{$cssInLinede}'><i class='fa fa-map-marker' aria-hidden='true'></i></span>";
+            }elseif($showIcone==false){
+                $icon = "Lat: {$lat}, Long: {$lon}";
+            }
+            $link = "<a target='newwindow' href='https://www.google.com/maps/search/?api=1&query={$lat},{$lon}'>{$icon}{$msg}</a>";
+            return $link;
+        }
+    }    
 }
