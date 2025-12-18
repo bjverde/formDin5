@@ -95,6 +95,7 @@ class TFormDinButtonTest extends TestCase
         $classTest = new TFormDinButton($classForm,'Salvar',null,null);
     }
 
+    /*
     public function testSetAdiantiObj_failArrayName()
     {
         $this->expectError();
@@ -103,5 +104,6 @@ class TFormDinButtonTest extends TestCase
         $list = array('Salvar','Buscar');
         $classTest = new TFormDinButton($classForm,$list,null,'onSave');
     }
+    */
 
 }

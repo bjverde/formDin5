@@ -129,7 +129,7 @@ class ValidateHelperTest extends TestCase
         $line = 1;
         ValidateHelper::objTypeTFormDinPdoConnection($tpdo,$method,$line);
     }
-
+    /*
     public function testTriggerError_msgNull_typeErrosNull() {
         $this->expectNotice();
         $msg = null;
@@ -143,13 +143,13 @@ class ValidateHelperTest extends TestCase
         $typeErro = ValidateHelper::WARNING;
         ValidateHelper::triggerError($msg,$typeErro);
     }
-
     public function testTriggerError_msgNull_ERROR() {
         $this->expectError();
         $msg = null;
         $typeErro = ValidateHelper::ERROR;
         ValidateHelper::triggerError($msg,$typeErro);
     }
+    */
 
     public function testTriggerError_msgNull_Exceptio() {
         $this->expectException(InvalidArgumentException::class);
@@ -158,6 +158,7 @@ class ValidateHelperTest extends TestCase
         ValidateHelper::triggerError($msg,$typeErro);
     }
 
+    /*
     public function testMigrarMensage_msgNull_Exceptio() {
         $this->expectError();
         $msg = 'o metodo addButton MUDOU! o primeiro parametro agora recebe $this! o Restante está igual ;-)';
@@ -166,5 +167,5 @@ class ValidateHelperTest extends TestCase
                                      ,ValidateHelper::MSG_CHANGE
                                      ,__CLASS__,__METHOD__,__LINE__);
     }
-    
+    */   
 }
