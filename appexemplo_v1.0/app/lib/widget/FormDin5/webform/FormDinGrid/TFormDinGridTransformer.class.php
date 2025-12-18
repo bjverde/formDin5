@@ -202,4 +202,18 @@ class TFormDinGridTransformer
             return "<span style='color:red'>$number</span>";
         }
     }
+
+    /**
+     * Cria um link para coordenadas Lat e Lon no Google Maps, com um ícone de marcador vermelho.
+     *
+     * @param string $lat
+     * @param string $lon
+     * @return string
+     */
+    public static function gridCordLatLon($lat, $lon)
+    {
+        $icon = "<span style='color: #ff0000;font-size: 1.5em;'><i class='fa fa-map-marker' aria-hidden='true'></i></span>";
+        $link = "<a target='newwindow' href='https://www.google.com/maps/search/?api=1&query={$lat},{$lon}'>{$icon} localização</a>";
+        return $link;
+    }
 }
