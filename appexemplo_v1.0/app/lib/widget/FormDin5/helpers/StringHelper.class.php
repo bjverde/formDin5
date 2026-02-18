@@ -215,71 +215,55 @@ class StringHelper
         return $limpo;
     }
 
-    /**
-     * Recebe uma string e verifica se é um CNPJ válido (incluindo o novo padrão alfanumérico)
-     *
-     * @param string $value
-     * @return boolean
-     */
-    public static function validarCnpj(string $value): bool
-    {
-        $cnpj = self::limpaCnpjNovo($value);
+/**
+ * Valida um CNPJ (Numérico ou Alfanumérico) seguindo o novo padrão da Receita Federal.
+ * * @param string $value O CNPJ a ser validado (formatado ou não)
+ * @return bool True se for válido, false caso contrário
+ */
+public static function validarCnpj(string $value): bool
+{
+    // 1. Remove caracteres não alfanuméricos e converte para maiúsculo
+    $cnpj = strtoupper(preg_replace('/[^A-Z0-9]/', '', $value));
 
-        // Deve ter exatamente 14 caracteres
-        if (strlen($cnpj) !== 14) {
-            return false;
-        }
-
-        // Deve conter apenas números ou letras A-Z
-        if (!preg_match('/^[0-9A-Z]{14}$/', $cnpj)) {
-            return false;
-        }
-
-        // Não pode ser sequência repetida (ex: 111..., AAA...)
-        if (preg_match('/^([0-9A-Z])\1{13}$/', $cnpj)) {
-            return false;
-        }
-
-        // Os dois últimos devem ser dígitos numéricos
-        if (!ctype_digit(substr($cnpj, -2))) {
-            return false;
-        }
-
-        // Validação dos dígitos verificadores
-        for ($t = 12; $t < 14; $t++) {
-
-            $soma = 0;
-            $pos = $t - 7;
-
-            for ($i = 0; $i < $t; $i++) {
-
-                $char = $cnpj[$i];
-
-                if (ctype_digit($char)) {
-                    $valor = (int)$char;
-                } else {
-                    // 'A' = 10 ... 'Z' = 35
-                    $valor = ord($char) - 55;
-                }
-
-                $soma += $valor * $pos;
-
-                $pos--;
-                if ($pos < 2) {
-                    $pos = 9;
-                }
-            }
-
-            $resto = $soma % 11;
-            $digito = ($resto < 2) ? 0 : 11 - $resto;
-
-            if ((int)$cnpj[$t] !== $digito) {
-                return false;
-            }
-        }
-
-        return true;
+    // 2. Verifica se possui o tamanho correto [cite: 61]
+    if (strlen($cnpj) !== 14) {
+        return false;
     }
+
+    // 3. Evita sequências de números iguais conhecidas (ex: 11111111111111)
+    if (preg_match('/^(\d)\1{13}$/', $cnpj)) {
+        return false;
+    }
+
+    // Pesos para os cálculos dos dígitos verificadores [cite: 73, 86]
+    $pesos1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    $pesos2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+    // Validação do Primeiro Dígito (DV1)
+    $soma1 = 0;
+    for ($i = 0; $i < 12; $i++) {
+        // Converte caractere para valor (ASCII - 48) 
+        $valor = ord($cnpj[$i]) - 48;
+        $soma1 += $valor * $pesos1[$i];
+    }
+    $resto1 = $soma1 % 11;
+    $dv1Expected = ($resto1 < 2) ? 0 : 11 - $resto1; // [cite: 78, 79]
+
+    if ((int)$cnpj[12] !== $dv1Expected) {
+        return false;
+    }
+
+    // Validação do Segundo Dígito (DV2)
+    $soma2 = 0;
+    for ($i = 0; $i < 13; $i++) {
+        $valor = ord($cnpj[$i]) - 48;
+        $soma2 += $valor * $pesos2[$i];
+    }
+    $resto2 = $soma2 % 11;
+    $dv2Expected = ($resto2 < 2) ? 0 : 11 - $resto2; // [cite: 88, 89]
+
+    return (int)$cnpj[13] === $dv2Expected;
+}
 
 
     /**
