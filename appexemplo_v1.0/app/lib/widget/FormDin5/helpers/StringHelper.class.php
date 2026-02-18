@@ -216,45 +216,50 @@ class StringHelper
     }
 
     /**
-     * Recebe uma string e verifica se é um CNPJ válido
+     * Recebe uma string e verifica se é um CNPJ válido (incluindo o novo padrão alfanumérico)
      *
      * @param string $value
      * @return boolean
      */
     public static function validarCnpj($value)
     {
-        $cnpj = self::limpaCnpjCpf($value);
-        if ($cnpj == '' || strlen($cnpj) != 14) {
+        $cnpj = self::limpaCnpjNovo($value);
+        if (strlen($cnpj) != 14) {
             return false;
         }
 
-        // evitar sequencias de número. Ex:11111111111111
-        for ($i = 0; $i < 10; $i++) {
-            if ($cnpj == str_repeat($i, 14)) {
+        // No novo padrão, sequências repetidas de números ainda são inválidas, 
+        // mas o CNPJ agora pode conter letras.
+        if (preg_match('/^(\d)\1{13}$/', $cnpj)) {
+            return false;
+        }
+
+        // Validação dos dois dígitos verificadores
+        for ($t = 12; $t < 14; $t++) {
+            $soma = 0;
+            $pos = $t - 7;
+
+            for ($i = 0; $i < $t; $i++) {
+                // Converte o caractere para o valor de cálculo (ASCII - 48)
+                $valor = ord($cnpj[$i]) - 48; [cite: 18, 19]
+                
+                $soma += $valor * $pos;
+                $pos--;
+                if ($pos < 2) {
+                    $pos = 9;
+                }
+            }
+
+            $resto = $soma % 11; [cite: 16, 31]
+            // Se o resto for 0 ou 1, o dígito é 0. Caso contrário, é 11 - resto.
+            $dg = ($resto < 2) ? 0 : 11 - $resto; [cite: 32, 33]
+
+            if ($cnpj[$t] != $dg) {
                 return false;
             }
         }
-
-        // Valida primeiro dígito verificador
-        for ($i = 0, $j = 5, $soma = 0; $i < 12; $i++) {
-            $soma += $cnpj[$i] * $j;
-            $j = ($j == 2) ? 9 : $j - 1;
-        }
-
-        $resto = $soma % 11;
-        if ($cnpj[12] != ($resto < 2 ? 0 : 11 - $resto)) {
-            return false;
-        }
-
-        // Valida segundo dígito verificador
-        for ($i = 0, $j = 6, $soma = 0; $i < 13; $i++) {
-            $soma += $cnpj[$i] * $j;
-            $j = ($j == 2) ? 9 : $j - 1;
-        }
-
-        $resto = $soma % 11;
-        return $cnpj[13] == ($resto < 2 ? 0 : 11 - $resto);
-    }    
+        return true;
+    }
 
     /**
      * Recebe uma string e formata o numero telefone em dos 4 formatos, conforme o tamanho da string
