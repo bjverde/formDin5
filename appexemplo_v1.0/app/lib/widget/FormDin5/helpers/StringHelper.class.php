@@ -198,6 +198,47 @@ class StringHelper
 	}
 
     /**
+     * Recebe uma string e verifica se é um CNPJ válido
+     *
+     * @param string $value
+     * @return boolean
+     */
+    public static function validarCnpj($value)
+    {
+        $cnpj = self::limpaCnpjCpf($value);
+        if ($cnpj == '' || strlen($cnpj) != 14) {
+            return false;
+        }
+
+        // evitar sequencias de número. Ex:11111111111111
+        for ($i = 0; $i < 10; $i++) {
+            if ($cnpj == str_repeat($i, 14)) {
+                return false;
+            }
+        }
+
+        // Valida primeiro dígito verificador
+        for ($i = 0, $j = 5, $soma = 0; $i < 12; $i++) {
+            $soma += $cnpj[$i] * $j;
+            $j = ($j == 2) ? 9 : $j - 1;
+        }
+
+        $resto = $soma % 11;
+        if ($cnpj[12] != ($resto < 2 ? 0 : 11 - $resto)) {
+            return false;
+        }
+
+        // Valida segundo dígito verificador
+        for ($i = 0, $j = 6, $soma = 0; $i < 13; $i++) {
+            $soma += $cnpj[$i] * $j;
+            $j = ($j == 2) ? 9 : $j - 1;
+        }
+
+        $resto = $soma % 11;
+        return $cnpj[13] == ($resto < 2 ? 0 : 11 - $resto);
+    }    
+
+    /**
      * Recebe uma string e formata o numero telefone em dos 4 formatos, conforme o tamanho da string
      * (61) 91234-5678
      * (61) 1234-5678
