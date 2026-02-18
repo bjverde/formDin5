@@ -103,6 +103,7 @@ class StringHelperTest extends TestCase
 	    $this->assertEquals( 'UTF-8' , $result);
 	}
 
+	//-------------------------------------------------------------
 	public function testFormatCnpjCpf_forapadrao() {
         $expected = '123.456.789-09';
 		$result = StringHelper::formatCnpjCpf('abc 123.456.789-09 flajk') ;		
@@ -121,11 +122,37 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 
+	public function testFormatCnpjCpf_novoCnpj() {
+        $expected = 'YK.K1L.N2A/0001-60';
+		$result = StringHelper::formatCnpjCpf('YKK1LN2A000160') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testFormatCnpjCpf_novoCnpjDvInvalido() {
+        $expected = 'YKK1LN2A0001AB'; // Não deve formatar se o DV não for numérico
+		$result = StringHelper::formatCnpjCpf('YKK1LN2A0001AB') ;		
+		$this->assertEquals( $expected , $result );
+	}	
+	//-------------------------------------------------------------
+
 	public function testLimpaCnpjCpf() {
         $expected = '12345678909';
 		$result = StringHelper::limpaCnpjCpf('abc 123.456.789-09 flajk') ;		
 		$this->assertEquals( $expected , $result );
 	}
+
+	public function testLimpaCnpjNovo() {
+        $expected = 'YKK1LN2A000160';
+		$result = StringHelper::limpaCnpjNovo('YK.K1L.N2A/0001-60');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testLimpaCnpjNovo_stringlower() {
+        $expected = 'YKK1LN2A000160';
+		$result = StringHelper::limpaCnpjNovo('yk.k1l.n2a/0001-60');
+		$this->assertEquals( $expected , $result );
+	}	
+
+	//-------------------------------------------------------------
 
 	public function testFormatPhoneNumber_celularComDdd() {
         $expected = '(61) 99982-2045';
@@ -490,27 +517,4 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 	//-------------------------------------------------------------
-	public function testLimpaCnpjNovo() {
-        $expected = 'YKK1LN2A000160';
-		$result = StringHelper::limpaCnpjNovo('YK.K1L.N2A/0001-60');
-		$this->assertEquals( $expected , $result );
-	}
-	public function testLimpaCnpjNovo_stringlower() {
-        $expected = 'YKK1LN2A000160';
-		$result = StringHelper::limpaCnpjNovo('yk.k1l.n2a/0001-60');
-		$this->assertEquals( $expected , $result );
-	}
-
-	public function testFormatCnpjCpf_novoCnpj() {
-        $expected = 'YK.K1L.N2A/0001-60';
-		$result = StringHelper::formatCnpjCpf('YKK1LN2A000160') ;		
-		$this->assertEquals( $expected , $result );
-	}
-
-	public function testFormatCnpjCpf_novoCnpjDvInvalido() {
-        $expected = 'YKK1LN2A0001AB'; // Não deve formatar se o DV não for numérico
-		$result = StringHelper::formatCnpjCpf('YKK1LN2A0001AB') ;		
-		$this->assertEquals( $expected , $result );
-	}
-
 }
