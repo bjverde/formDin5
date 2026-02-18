@@ -207,9 +207,10 @@ class StringHelper
      */
     public static function limpaCnpjNovo($value) 
     {
-        $limpo = preg_replace("/\D/", '', $value);
+        $value = self::strtoupper_utf8($value); // garante que seja maiúsculo
+        $limpo = preg_replace("/[^A-Z0-9]/", '', $value);
         return $limpo;
-    }    
+    }
 
     /**
      * Recebe uma string e verifica se é um CNPJ válido
