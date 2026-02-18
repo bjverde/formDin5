@@ -490,4 +490,9 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 
+	public function testLimpaCnpjNovo() {
+        $expected = 'YKK1LN2A000160';
+		$result = StringHelper::limpaCnpjNovo('YK.K1L.N2A/0001-60');
+		$this->assertEquals( $expected , $result );
+	}
 }
