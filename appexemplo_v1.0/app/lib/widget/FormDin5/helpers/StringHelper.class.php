@@ -221,39 +221,49 @@ class StringHelper
      * @param string $value
      * @return boolean
      */
-    public static function validarCnpj($value)
+    public static function validarCnpj(string $value): bool
     {
         $cnpj = self::limpaCnpjNovo($value);
-        if (strlen($cnpj) != 14) {
+
+        // Deve ter exatamente 14 caracteres
+        if (strlen($cnpj) !== 14) {
             return false;
         }
 
-        // No novo padrão, sequências repetidas de números ainda são inválidas,
-        // mas o CNPJ agora pode conter letras.
-        if (preg_match('/^(\d)\1{13}$/', $cnpj)) {
+        // Deve conter apenas números ou letras A-Z
+        if (!preg_match('/^[0-9A-Z]{14}$/', $cnpj)) {
             return false;
         }
 
-        // Os dois últimos dígitos (verificadores) devem ser sempre numéricos
-        if (!is_numeric(substr($cnpj, -2))) {
+        // Não pode ser sequência repetida (ex: 111..., AAA...)
+        if (preg_match('/^([0-9A-Z])\1{13}$/', $cnpj)) {
             return false;
         }
 
-        // Validação dos dois dígitos verificadores
+        // Os dois últimos devem ser dígitos numéricos
+        if (!ctype_digit(substr($cnpj, -2))) {
+            return false;
+        }
+
+        // Validação dos dígitos verificadores
         for ($t = 12; $t < 14; $t++) {
+
             $soma = 0;
             $pos = $t - 7;
 
             for ($i = 0; $i < $t; $i++) {
+
                 $char = $cnpj[$i];
-                // Padrão Receita Federal: '0'-'9' => 0-9, 'A'-'Z' => 10-35
+
                 if (ctype_digit($char)) {
-                    $valor = ord($char) - 48; // '0'=48 => valor 0
+                    $valor = (int)$char;
                 } else {
-                    $valor = ord($char) - 55; // 'A'=65 => valor 10, 'Z'=90 => valor 35
+                    // 'A' = 10 ... 'Z' = 35
+                    $valor = ord($char) - 55;
                 }
 
                 $soma += $valor * $pos;
+
                 $pos--;
                 if ($pos < 2) {
                     $pos = 9;
@@ -261,15 +271,16 @@ class StringHelper
             }
 
             $resto = $soma % 11;
-            // Se o resto for 0 ou 1, o dígito verificador é 0. Caso contrário, é 11 - resto.
-            $dg = ($resto < 2) ? 0 : 11 - $resto;
+            $digito = ($resto < 2) ? 0 : 11 - $resto;
 
-            if ((int)$cnpj[$t] !== $dg) {
+            if ((int)$cnpj[$t] !== $digito) {
                 return false;
             }
         }
+
         return true;
     }
+
 
     /**
      * Recebe uma string e formata o numero telefone em dos 4 formatos, conforme o tamanho da string
