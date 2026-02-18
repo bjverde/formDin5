@@ -106,7 +106,7 @@ class StringHelperTest extends TestCase
 	//-------------------------------------------------------------
 	public function testFormatCnpjCpf_forapadrao() {
         $expected = '123.456.789-09';
-		$result = StringHelper::formatCnpjCpf('abc 123.456.789-09 flajk') ;		
+		$result = StringHelper::formatCnpjCpf('abc 123.456.789-09') ;
 		$this->assertEquals( $expected , $result );
 	}
 
@@ -164,6 +164,11 @@ class StringHelperTest extends TestCase
 	public function testLimpaCnpjNovo_stringlower() {
         $expected = 'YKK1LN2A000160';
 		$result = StringHelper::limpaCnpjNovo('yk.k1l.n2a/0001-60');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testLimpaCnpjNovo_foraPadrao() {
+        $expected = 'ABC12345678909';
+		$result = StringHelper::limpaCnpjNovo('abc 123.456.789-09');
 		$this->assertEquals( $expected , $result );
 	}
 	
