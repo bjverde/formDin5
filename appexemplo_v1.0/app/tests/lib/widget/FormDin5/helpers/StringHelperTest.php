@@ -141,6 +141,21 @@ class StringHelperTest extends TestCase
 		$this->assertEquals( $expected , $result );
 	}
 
+	//-------------------------------------------------------------
+
+	public function testValidaCpf() {
+        $expected = true;
+		$result = StringHelper::validarCpf('12345678909') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testValidaCpf_invalido() {
+        $expected = false;
+		$result = StringHelper::validarCpf('123456789098') ;
+		$this->assertEquals( $expected , $result );
+	}
+
+	//-------------------------------------------------------------
 	public function testLimpaCnpjNovo() {
         $expected = 'YKK1LN2A000160';
 		$result = StringHelper::limpaCnpjNovo('YK.K1L.N2A/0001-60');
@@ -150,8 +165,29 @@ class StringHelperTest extends TestCase
         $expected = 'YKK1LN2A000160';
 		$result = StringHelper::limpaCnpjNovo('yk.k1l.n2a/0001-60');
 		$this->assertEquals( $expected , $result );
-	}	
-
+	}
+	
+	//-------------------------------------------------------------
+	public function testValidaCnpj() {
+        $expected = true;
+		$result = StringHelper::validarCnpj('YK.K1L.N2A/0001-60');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testValidaCnpj_stringlower() {
+        $expected = true;
+		$result = StringHelper::validarCnpj('yk.k1l.n2a/0001-60');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testValidaCnpj_invalido() {
+        $expected = false;
+		$result = StringHelper::validarCnpj('yk.k1l.n2a/0001-61');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testValidaCnpj_finalAlfanumerico() {
+        $expected = false;
+		$result = StringHelper::validarCnpj('yk.k1l.n2a/0001-AA');
+		$this->assertEquals( $expected , $result );
+	}
 	//-------------------------------------------------------------
 
 	public function testFormatPhoneNumber_celularComDdd() {
