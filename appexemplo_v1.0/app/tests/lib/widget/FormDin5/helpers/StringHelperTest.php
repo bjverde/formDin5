@@ -105,10 +105,16 @@ class StringHelperTest extends TestCase
 
 	//-------------------------------------------------------------
 	public function testFormatCnpjCpf_forapadrao() {
-        $expected = '123.456.789-09';
+        $expected = 'AB.C12.345/6789-09';
 		$result = StringHelper::formatCnpjCpf('abc 123.456.789-09') ;
 		$this->assertEquals( $expected , $result );
 	}
+
+	public function testFormatCnpjCpf_forapadrao2() {
+        $expected = 'abc 123.456.789-09 aa';
+		$result = StringHelper::formatCnpjCpf('abc 123.456.789-09 aa') ;
+		$this->assertEquals( $expected , $result );
+	}	
 
 	public function testFormatCnpjCpf_cpf() {
         $expected = '123.456.789-09';
