@@ -489,10 +489,15 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::string2SnakeCase('ação deLEtar MÃO') ;		
 		$this->assertEquals( $expected , $result );
 	}
-
+	//-------------------------------------------------------------
 	public function testLimpaCnpjNovo() {
         $expected = 'YKK1LN2A000160';
 		$result = StringHelper::limpaCnpjNovo('YK.K1L.N2A/0001-60');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testLimpaCnpjNovo_stringlower() {
+        $expected = 'YKK1LN2A000160';
+		$result = StringHelper::limpaCnpjNovo('yk.k1l.n2a/0001-60');
 		$this->assertEquals( $expected , $result );
 	}
 }
