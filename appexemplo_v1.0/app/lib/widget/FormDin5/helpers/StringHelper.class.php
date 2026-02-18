@@ -131,7 +131,8 @@ class StringHelper
      * Recebe uma string e formata com CPF ou CNPJ
      * Se string não respeitar o formato do CPF ou CNPJ vai devolver a mesma string
      * https://gist.github.com/davidalves1/3c98ef866bad4aba3987e7671e404c1e
-     * Em 2026 foi criado um novo tipo de CNPJ
+     * Em 2026 foi criado um novo tipo de CNPJ que pode conter letras
+     * os dois ultimos digitos do CNPJ devem ser numeros
      * @param string $value
      * @return string
      */
@@ -140,7 +141,7 @@ class StringHelper
         $cnpj_cpf = self::limpaCnpjNovo($value);
         if (strlen($cnpj_cpf) === 11) {
             $value = preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cnpj_cpf);
-        } else if(strlen($cnpj_cpf) === 14){
+        } else if(strlen($cnpj_cpf) === 14 && is_numeric(substr($cnpj_cpf, -2))){
             $value = preg_replace("/([A-Z0-9]{2})([A-Z0-9]{3})([A-Z0-9]{3})([A-Z0-9]{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj_cpf);
         }
         return $value;
