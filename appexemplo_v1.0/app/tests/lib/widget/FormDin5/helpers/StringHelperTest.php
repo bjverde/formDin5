@@ -179,11 +179,31 @@ class StringHelperTest extends TestCase
 	}
 	
 	//-------------------------------------------------------------
-	public function testValidaCnpj() {
+	public function testValidaCnpj_numerico() {
+        $expected = true;
+		$result = StringHelper::validarCnpj('97.330.546/0001-42');
+		$this->assertEquals( $expected , $result );
+	}
+	public function testValidaCnpj_numericoNaoFormatado() {
+        $expected = true;
+		$result = StringHelper::validarCnpj('97330546000142');
+		$this->assertEquals( $expected , $result );
+	}	
+	public function testValidaCnpj_novo() {
         $expected = true;
 		$result = StringHelper::validarCnpj('YK.K1L.N2A/0001-60');
 		$this->assertEquals( $expected , $result );
 	}
+	public function testValidaCnpj_novoNaoFormatado() {
+        $expected = true;
+		$result = StringHelper::validarCnpj('YKK1LN2A000160');
+		$this->assertEquals( $expected , $result );
+	}	
+	public function testValidaCnpj_novo2() {
+        $expected = true;
+		$result = StringHelper::validarCnpj('T8.5HV.AXL/0001-71');
+		$this->assertEquals( $expected , $result );
+	}	
 	public function testValidaCnpj_stringlower() {
         $expected = true;
 		$result = StringHelper::validarCnpj('yk.k1l.n2a/0001-60');
