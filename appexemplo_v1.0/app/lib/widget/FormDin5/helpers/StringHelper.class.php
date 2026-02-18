@@ -146,7 +146,8 @@ class StringHelper
 
     /**
      * Recebe uma string e deixar apenas os números sem formatação
-     *
+     * Para CNPJ use a função limpaCnpjNovo()
+     * 
      * @param string $value
      * @return string
      */
@@ -159,7 +160,7 @@ class StringHelper
 
     /**
      * Recebe uma string e verifica se é um CPF válido
-     *
+     * 
      * @param string $value
      * @return boolean
      */
@@ -196,6 +197,19 @@ class StringHelper
 		}
 		return true;
 	}
+
+    /**
+     * Recebe uma string limpar tudo que não seja número ou letra
+     * para o novo tipo de CNPJ que inicia em 2026     
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function limpaCnpjNovo($value) 
+    {
+        $limpo = preg_replace("/\D/", '', $value);
+        return $limpo;
+    }    
 
     /**
      * Recebe uma string e verifica se é um CNPJ válido
