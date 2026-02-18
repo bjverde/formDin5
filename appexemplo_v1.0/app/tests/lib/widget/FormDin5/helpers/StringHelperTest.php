@@ -500,4 +500,17 @@ class StringHelperTest extends TestCase
 		$result = StringHelper::limpaCnpjNovo('yk.k1l.n2a/0001-60');
 		$this->assertEquals( $expected , $result );
 	}
+
+	public function testFormatCnpjCpf_novoCnpj() {
+        $expected = 'YK.K1L.N2A/0001-60';
+		$result = StringHelper::formatCnpjCpf('YKK1LN2A000160') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
+	public function testFormatCnpjCpf_novoCnpjDvInvalido() {
+        $expected = 'YKK1LN2A0001AB'; // Não deve formatar se o DV não for numérico
+		$result = StringHelper::formatCnpjCpf('YKK1LN2A0001AB') ;		
+		$this->assertEquals( $expected , $result );
+	}
+
 }
