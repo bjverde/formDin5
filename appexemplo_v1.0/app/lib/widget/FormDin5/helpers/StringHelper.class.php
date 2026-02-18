@@ -228,9 +228,14 @@ class StringHelper
             return false;
         }
 
-        // No novo padrão, sequências repetidas de números ainda são inválidas, 
+        // No novo padrão, sequências repetidas de números ainda são inválidas,
         // mas o CNPJ agora pode conter letras.
         if (preg_match('/^(\d)\1{13}$/', $cnpj)) {
+            return false;
+        }
+
+        // Os dois últimos dígitos (verificadores) devem ser sempre numéricos
+        if (!is_numeric(substr($cnpj, -2))) {
             return false;
         }
 
@@ -240,9 +245,14 @@ class StringHelper
             $pos = $t - 7;
 
             for ($i = 0; $i < $t; $i++) {
-                // Converte o caractere para o valor de cálculo (ASCII - 48)
-                $valor = ord($cnpj[$i]) - 48; [cite: 18, 19]
-                
+                $char = $cnpj[$i];
+                // Padrão Receita Federal: '0'-'9' => 0-9, 'A'-'Z' => 10-35
+                if (ctype_digit($char)) {
+                    $valor = ord($char) - 48; // '0'=48 => valor 0
+                } else {
+                    $valor = ord($char) - 55; // 'A'=65 => valor 10, 'Z'=90 => valor 35
+                }
+
                 $soma += $valor * $pos;
                 $pos--;
                 if ($pos < 2) {
@@ -250,11 +260,11 @@ class StringHelper
                 }
             }
 
-            $resto = $soma % 11; [cite: 16, 31]
-            // Se o resto for 0 ou 1, o dígito é 0. Caso contrário, é 11 - resto.
-            $dg = ($resto < 2) ? 0 : 11 - $resto; [cite: 32, 33]
+            $resto = $soma % 11;
+            // Se o resto for 0 ou 1, o dígito verificador é 0. Caso contrário, é 11 - resto.
+            $dg = ($resto < 2) ? 0 : 11 - $resto;
 
-            if ($cnpj[$t] != $dg) {
+            if ((int)$cnpj[$t] !== $dg) {
                 return false;
             }
         }
