@@ -48,6 +48,25 @@ class OrmAdiantiHelper
 {
 
     /**
+     * Recebe um valor e verifica se ele é um array, se for array
+     * o conector só ser "in" ou "not in" se for diferente disso
+     * vai gerar uma exception
+     *
+     * @param mixed  $ValueProperty - 01: valor de um property que vei do self::objPropertyValue
+     * @param string $conector - 02: conectores SQL informado no self::addFilter
+     * @return void
+     */
+    public static function objPropertyValueIsArray($ValueProperty,$conector)
+    {
+        if (is_array($ValueProperty)) {
+            $conector = StringHelper::strtolower_utf8($conector);
+            if ($conector != 'in' AND $conector != 'not in') {
+                throw new Exception("Conector $conector não é permitido para array");
+            }
+        }
+    }
+
+    /**
      * Recurpera o valor de um atributo de um Objeto
      *
      * @param object $obj - 01: Objeto Adianti
@@ -64,7 +83,6 @@ class OrmAdiantiHelper
         }
     	return $result;
     }
-
 
     /**
      * Verifica se uma propriedade foi setada em objeto, se não foi setada vai
