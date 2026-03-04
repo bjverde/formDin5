@@ -49,6 +49,46 @@ use PHPUnit\Framework\TestCase;
 class OrmAdiantiHelperTest extends TestCase
 {	
 
+    public function testObjPropertyValueIsArray_notArray_noException()
+    {
+        $value = 'string';
+        $conector = '=';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_conectorIn_noException()
+    {
+        $value = [1, 2, 3];
+        $conector = 'in';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_conectorNotIn_noException()
+    {
+        $value = [1, 2, 3];
+        $conector = 'not in';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_conectorIn_mixCase_noException()
+    {
+        $value = [1, 2, 3];
+        $conector = 'IN';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_invalidConector_exception()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Conector = não é permitido para array");
+        $value = [1, 2, 3];
+        $conector = '=';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+    }
 	public function testParam_null_false() {
 	    $expected = false;
         $param = null;
@@ -174,6 +214,44 @@ class OrmAdiantiHelperTest extends TestCase
         $result = OrmAdiantiHelper::addFilter($filters,'nome','in',$data,'nome');
         $this->assertEquals( $expected , $result);
 	}
+
+    public function testAddFilter_isArray_conectorIn_noException()
+    {
+        $data = new stdClass();
+        $data->id = [1, 2, 3];
+        $expected = [new TFilter('id', 'in', [1, 2, 3])];
+        $filters = [];
+        $result = OrmAdiantiHelper::addFilter($filters, 'id', 'in', $data, 'id');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testAddFilter_isArray_invalidConector_exception()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Conector = não é permitido para array");
+        $data = new stdClass();
+        $data->id = [1, 2, 3];
+        $filters = [];
+        OrmAdiantiHelper::addFilter($filters, 'id', '=', $data, 'id');
+    }
+
+    public function testAddFilter_arrayParam_isArray_conectorIn_noException()
+    {
+        $param = ['id' => [1, 2, 3]];
+        $expected = [new TFilter('id', 'in', [1, 2, 3])];
+        $filters = [];
+        $result = OrmAdiantiHelper::addFilter($filters, 'id', 'in', null, null, $param, 'id');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testAddFilter_arrayParam_isArray_invalidConector_exception()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Conector = não é permitido para array");
+        $param = ['id' => [1, 2, 3]];
+        $filters = [];
+        OrmAdiantiHelper::addFilter($filters, 'id', '=', null, null, $param, 'id');
+    }
     //--------------------------------------------------------------------------------
     public function testAddFilterTCriteria_like() {
         $data = new stdClass();
@@ -203,4 +281,44 @@ class OrmAdiantiHelperTest extends TestCase
         $result = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome2','like',null,null,$param,'nome');
         $this->assertEquals( $expected , $result);
 	}
+
+    public function testAddFilterTCriteria_isArray_conectorIn_noException()
+    {
+        $data = new stdClass();
+        $data->id = [1, 2, 3];
+        $expected = new TCriteria;
+        $expected->add(new TFilter('id', 'in', [1, 2, 3]));
+        $criteria = new TCriteria;
+        $result = OrmAdiantiHelper::addFilterTCriteria($criteria, 'id', 'in', $data, 'id');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testAddFilterTCriteria_isArray_invalidConector_exception()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Conector = não é permitido para array");
+        $data = new stdClass();
+        $data->id = [1, 2, 3];
+        $criteria = new TCriteria;
+        OrmAdiantiHelper::addFilterTCriteria($criteria, 'id', '=', $data, 'id');
+    }
+
+    public function testAddFilterTCriteria_arrayParam_isArray_conectorIn_noException()
+    {
+        $param = ['id' => [1, 2, 3]];
+        $expected = new TCriteria;
+        $expected->add(new TFilter('id', 'in', [1, 2, 3]));
+        $criteria = new TCriteria;
+        $result = OrmAdiantiHelper::addFilterTCriteria($criteria, 'id', 'in', null, null, $param, 'id');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testAddFilterTCriteria_arrayParam_isArray_invalidConector_exception()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Conector = não é permitido para array");
+        $param = ['id' => [1, 2, 3]];
+        $criteria = new TCriteria;
+        OrmAdiantiHelper::addFilterTCriteria($criteria, 'id', '=', null, null, $param, 'id');
+    }
 }
