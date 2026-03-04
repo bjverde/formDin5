@@ -173,6 +173,7 @@ class OrmAdiantiHelper
         }else{
             $value = ArrayHelper::get($arrayParam,$arrayParamName);
         }
+        self::objPropertyValueIsArray($value, $conector);
         if( self::valueTest($value) ){
             if( empty($sql) ){
                 $value = self::getValueWithTextLike($conector,$value);
@@ -217,6 +218,7 @@ class OrmAdiantiHelper
         }else{
             $value = ArrayHelper::get($arrayParam,$arrayParamName);
         }
+        self::objPropertyValueIsArray($value, $conector);
         if( self::valueTest($value) ){
             if( empty($sql) ){
                 $value = self::getValueWithTextLike($conector,$value);
