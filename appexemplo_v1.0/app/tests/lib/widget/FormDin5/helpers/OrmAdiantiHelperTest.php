@@ -49,6 +49,46 @@ use PHPUnit\Framework\TestCase;
 class OrmAdiantiHelperTest extends TestCase
 {	
 
+    public function testObjPropertyValueIsArray_notArray_noException()
+    {
+        $value = 'string';
+        $conector = '=';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_conectorIn_noException()
+    {
+        $value = [1, 2, 3];
+        $conector = 'in';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_conectorNotIn_noException()
+    {
+        $value = [1, 2, 3];
+        $conector = 'not in';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_conectorIn_mixCase_noException()
+    {
+        $value = [1, 2, 3];
+        $conector = 'IN';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+        $this->assertTrue(true);
+    }
+
+    public function testObjPropertyValueIsArray_isArray_invalidConector_exception()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Conector = não é permitido para array");
+        $value = [1, 2, 3];
+        $conector = '=';
+        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
+    }
 	public function testParam_null_false() {
 	    $expected = false;
         $param = null;
@@ -203,44 +243,4 @@ class OrmAdiantiHelperTest extends TestCase
         $result = OrmAdiantiHelper::addFilterTCriteria($criteria,'nome2','like',null,null,$param,'nome');
         $this->assertEquals( $expected , $result);
 	}
-    public function testObjPropertyValueIsArray_notArray_noException()
-    {
-        $value = 'string';
-        $conector = '=';
-        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
-        $this->assertTrue(true);
-    }
-
-    public function testObjPropertyValueIsArray_isArray_conectorIn_noException()
-    {
-        $value = [1, 2, 3];
-        $conector = 'in';
-        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
-        $this->assertTrue(true);
-    }
-
-    public function testObjPropertyValueIsArray_isArray_conectorNotIn_noException()
-    {
-        $value = [1, 2, 3];
-        $conector = 'not in';
-        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
-        $this->assertTrue(true);
-    }
-
-    public function testObjPropertyValueIsArray_isArray_conectorIn_mixCase_noException()
-    {
-        $value = [1, 2, 3];
-        $conector = 'IN';
-        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
-        $this->assertTrue(true);
-    }
-
-    public function testObjPropertyValueIsArray_isArray_invalidConector_exception()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("Conector = não é permitido para array");
-        $value = [1, 2, 3];
-        $conector = '=';
-        OrmAdiantiHelper::objPropertyValueIsArray($value, $conector);
-    }
 }
