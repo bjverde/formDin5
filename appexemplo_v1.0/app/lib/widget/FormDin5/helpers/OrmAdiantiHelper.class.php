@@ -119,8 +119,7 @@ class OrmAdiantiHelper
 
 
     /**
-     * Undocumented function
-     *
+     * Se $conector for like, adiciona % no início e no final do valor
      * @param string $conector   01: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
      * @param null|mixed $value  02: valor que será passado
      * @return void
@@ -142,9 +141,9 @@ class OrmAdiantiHelper
      * @param string $filde       02: campo do banco que será usado
      * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
      * @param object $obj         04: Objeto Adianti
-     * @param string|null $objPropertyName 05: Nome da atributo do objeto
+     * @param string|null $objPropertyName 05: Nome do atributo no objeto
      * @param array|null|mixed $arrayParam 06: Array ou valor diretamente com possíveis valores
-     * @param string|null $arrayParamName  07: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @param string|null $arrayParamName  07: Nome do atributo no array que será usado para preencher o valor do objeto
      * @param string $sql         08: String Sql para um sub select.
      * @return array
      */
@@ -175,9 +174,9 @@ class OrmAdiantiHelper
      * @param string $filde       02: campo do banco que será usado
      * @param string $conector    03: conectores SQL: like, =, !=, in, not in, >=, <=, >, <
      * @param object $obj         04: Objeto Adianti
-     * @param string|null $objPropertyName 05: Nome da atributo do objeto
+     * @param string|null $objPropertyName 05: Nome do atributo no objeto
      * @param array|null|mixed $arrayParam 06: Array ou valor diretamente com possíveis valores
-     * @param string|null $arrayParamName  07: Nome do atributo do array que será usado para preencher o valor do objeto
+     * @param string|null $arrayParamName  07: Nome do atributo no array que será usado para preencher o valor do objeto
      * @param string $sql         08: String Sql para um sub select.
      * @param string $operator    09: TExpression::AND_OPERATOR (Default) ou TExpression::OR_OPERATOR
      * @param string $showDump    10: show dump criteria SQL
