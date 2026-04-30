@@ -1891,7 +1891,7 @@ class TFormDin
      */       
 	public function addNumberField( string $strName
 				           		  , ?string $strLabel=null
-				           		  , int $intMaxLength
+				           		  , ?int $intMaxLength=null
 				           		, $boolRequired=null
 				           		, $intDecimalPlaces=null
 				           		, $boolNewLine=null
