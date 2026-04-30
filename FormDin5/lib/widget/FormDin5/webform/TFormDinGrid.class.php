@@ -658,7 +658,7 @@ class TFormDinGrid
      */
     public function addCheckColumn( string $strName
                                   , ?string $strTitle = null
-                                  , string $strKeyField
+                                  , ?string $strKeyField = null
                                   , ?string $strDescField = null
                                   , mixed $boolReadOnly = null
                                   , mixed $boolAllowCheckAll = null )
