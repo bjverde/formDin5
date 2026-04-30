@@ -685,7 +685,7 @@ class TFormDin
      * @param object $data  - 2: FORMDIN5 $data $this->form->getData();
      * @param array  $param - 3: FORMDIN5 $param da entrada de metodo
      */
-    public function setVO( object $vo, object $data = null, array $param = null)
+    public function setVO( object $vo, ?object $data = null, ?array $param = null)
     {
         //FormDinHelper::d($param,'$param');
         //FormDinHelper::debug($data,'$data');
