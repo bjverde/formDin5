@@ -432,7 +432,7 @@ class TFormDin
     */
     public function setMessage( $message
                               , $type = TFormDinMessage::TYPE_INFO
-                              , TAction $action = NULL
+                              , ?TAction $action = NULL
                               , $title_msg = '' )
     {
         $formDinLabelField = new TFormDinMessage($message,$type,$action,$title_msg);
@@ -454,7 +454,7 @@ class TFormDin
     */
     public function addMessage( $message
                               , $type = TFormDinMessage::TYPE_INFO
-                              , TAction $action = NULL
+                              , ?TAction $action = NULL
                               , $title_msg = '' )
     {
         $formDinLabelField = $this->setMessage($message,$type,$action,$title_msg);
@@ -490,19 +490,19 @@ class TFormDin
     * @return TButton|string|array
     */
     public function addButton( string $mixValue
-				       		 , string $strNameId=null
-				       		 , $strAction
-				       		 , string $strOnClick=null
-				       		 , string $strConfirmMessage=null
+				       		 , ?string $strNameId=null
+				       		 , $strAction=null
+				       		 , ?string $strOnClick=null
+				       		 , ?string $strConfirmMessage=null
 				       		 , $boolNewLine=null
 				       		 , $boolFooter=true
-				       		 , string $strImage=null
-				       		 , string $strImageDisabled=null
-				       		 , string $strHint=null
-				       		 , string $strVerticalAlign=null
+				       		 , ?string $strImage=null
+				       		 , ?string $strImageDisabled=null
+				       		 , ?string $strHint=null
+				       		 , ?string $strVerticalAlign=null
 				       		 , $boolLabelAbove=null
-				       		 , string $strLabel=null
-                             , string $strHorizontalAlign=null
+				       		 , ?string $strLabel=null
+                             , ?string $strHorizontalAlign=null
                              )
     {
         $objForm =  $this->getObjForm();
@@ -685,7 +685,7 @@ class TFormDin
      * @param object $data  - 2: FORMDIN5 $data $this->form->getData();
      * @param array  $param - 3: FORMDIN5 $param da entrada de metodo
      */
-    public function setVO( object $vo, object $data = null, array $param = null)
+    public function setVO( object $vo, ?object $data = null, ?array $param = null)
     {
         //FormDinHelper::d($param,'$param');
         //FormDinHelper::debug($data,'$data');
@@ -711,7 +711,7 @@ class TFormDin
     * @return TFormDinHiddenField
     */
     public function addHiddenField(string $id
-                                ,string $strValue=null
+                                ,?string $strValue=null
                                 ,$boolRequired = false)
     {
         $formField = new TFormDinHiddenField($id,$strValue,$boolRequired);
@@ -743,13 +743,13 @@ class TFormDin
      */
     public function addTextField(string $id
                                 ,string $strLabel
-                                ,int $intMaxLength = null
+                                ,?int $intMaxLength = null
                                 ,$boolRequired = false
-                                ,int $intSize=null
-                                ,string $strValue=null
+                                ,?int $intSize=null
+                                ,?string $strValue=null
                                 ,$boolNewLine = true
-                                ,string $strHint = null
-                                ,string $strExampleText =null
+                                ,?string $strHint = null
+                                ,?string $strExampleText =null
                                 ,$boolLabelAbove=false
                                 ,$boolNoWrapLabel = null)
     {
@@ -960,7 +960,7 @@ class TFormDin
     public function addSwitchField(string $id
                                   ,string $strLabel
                                   ,$boolRequired = false
-                                  ,array $itens=null
+                                  ,?array $itens=null
                                   ,$boolNewLine=null
                                   ,$boolLabelAbove=null
                                   ,$mixValue=null)
@@ -997,7 +997,7 @@ class TFormDin
      * @return TFormDinPassword
      */
     public function addPasswordField( string $id
-                                    , string $label=null
+                                    , ?string $label=null
                                     , $boolRequired=null
                                     , $boolNewLine=null
                                     , $intmaxLength=null
@@ -1389,14 +1389,14 @@ class TFormDin
                                   ,$boolLabelAbove = false
                                   ,$mixValue = null
                                   ,$boolMultiSelect = false
-                                  ,int $intSize = null
-                                  ,int $intWidth = null
-                                  ,string $strFirstOptionText = null
-                                  ,string $strFirstOptionValue = null
-                                  ,string $strKeyColumn = null
-                                  ,string $strDisplayColumn = null
-                                  ,string $boolNoWrapLabel = null
-                                  ,string $strDataColumns = null
+                                  ,?int $intSize = null
+                                  ,?int $intWidth = null
+                                  ,?string $strFirstOptionText = null
+                                  ,?string $strFirstOptionValue = null
+                                  ,?string $strKeyColumn = null
+                                  ,?string $strDisplayColumn = null
+                                  ,?string $boolNoWrapLabel = null
+                                  ,?string $strDataColumns = null
                                   ,bool $enableSearch = false
                                   )
     {
@@ -1580,7 +1580,7 @@ class TFormDin
      * @return TFormDinCheckField
      */
     public function addCheckField(string $id
-                                , string $strLabel=null
+                                , ?string $strLabel=null
                                 , $boolRequired=null
                                 , $mixOptions=null
                                 , $boolNewLine=null
@@ -1890,7 +1890,7 @@ class TFormDin
      * @return TNumber
      */       
 	public function addNumberField( string $strName
-				           		  , string $strLabel=null
+				           		  , ?string $strLabel=null
 				           		  , int $intMaxLength
 				           		, $boolRequired=null
 				           		, $intDecimalPlaces=null
@@ -1955,8 +1955,8 @@ class TFormDin
 	 * @return TFormDinEmailField
 	 */
 	public function addEmailField( string $strName
-                                 , string $strLabel=null
-                                 , int $intMaxLength=null
+                                 , ?string $strLabel=null
+                                 , ?int $intMaxLength=null
                                  , $boolRequired=null
                                  , $intSize=null
                                  , $boolNewLine=null
