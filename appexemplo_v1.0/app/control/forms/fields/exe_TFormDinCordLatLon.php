@@ -21,9 +21,29 @@ class exe_TFormDinCordLatLon extends TPage
         $frm = new TFormDin($this,'Exemplo TFormDinCordLatLon & TFormDinMapCord');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
 
+        $msg = 'Veja classe TFormDinGeo com metodos';
+        $msg = $msg.'<br>';
+        $msg = $msg.'<br>isPointInQuadrilateral - Verificar se um ponto (latitude e longitude) está dentro de um quadrilatero';
+        $msg = $msg.'<br>isPointWithinRadius - Verificar se um ponto (latitude e longitude) está em raio em metro de um ponto de referencia';
+
+
+        $msg2 = 'Botao 02 - TFormDinGeo';
+        $msg2 = $msg2.'<br>';
+        $msg2 = $msg2.'<br>Escondendo as informações de coordenada e colocando um feedback ver deu certo';
+
+
         // 1. Componente Tradicional de Geolocalização (Navegador)
         $frm->addGroupField('gp01','1. Geolocalização via Navegador (Tradicional)');
-        $frm->addCordLatLon('cood','Coordenadas GPS',true,true,false);
+            $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200,true)->setClass('notice');
+            $frm->addCordLatLon('cood','Coordenadas GPS',true,true,false);
+
+            $frm->addHtmlField('html2', $msg2, null, 'Dica:', null, 200,true)->setClass('notice');
+            
+            $coord2 = $frm->addCordLatLon('cood2','Coordenadas 2',false,true,false,false);
+            $coord2->setButtonLabel('Geolocalização');
+            $coord2->setButtonClass('btn btn-sm btn-danger');
+            $coord2->setButtonIcon('fa:globe');
+            $coord2->setFeedBackSize('60px');
         $frm->closeGroup();
 
         // 2. Novo Componente: Mapa Interativo com Inputs Visíveis (Leaflet)
@@ -87,7 +107,6 @@ class exe_TFormDinCordLatLon extends TPage
         {
             // Função do FormDin para Debug
             FormDinHelper::d($param,'$param');
-
             $text[] = '<h3>Dados Recebidos com Sucesso!</h3>';
             
             // 1. Coordenadas tradicionais
@@ -95,6 +114,13 @@ class exe_TFormDinCordLatLon extends TPage
                 $text[] = '<b>1. Geolocalização (Tradicional):</b>';
                 $text[] = 'Lat: ' . $param['cood_lat'] . ' | Lon: ' . $param['cood_lon'];
                 $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$param['cood_lat'].'&mlon='.$param['cood_lon'].'" target="_blank">Ver no OpenStreetMap</a><br>';
+            }
+
+            // 1.1 Coordenadas tradicionais
+            if (!empty($param['cood2_lat'])) {
+                $text[] = '<b>1.1 Geolocalização 2 (Tradicional) com campo oculto:</b>';
+                $text[] = 'Lat: ' . $param['cood2_lat'] . ' | Lon: ' . $param['cood2_lon'];
+                $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$param['cood2_lat'].'&mlon='.$param['cood2_lon'].'" target="_blank">Ver no OpenStreetMap</a><br>';
             }
 
             // 2. Mapa Visível
