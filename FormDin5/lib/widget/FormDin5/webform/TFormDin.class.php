@@ -2023,6 +2023,54 @@ class TFormDin
 	}
 
     /**
+     * Pegar informações geolocalização usando mapa interativo do Leaflet
+     *
+     * @param string  $idField         -01: ID do campo
+     * @param string  $label           -02: Label do campo, usado para validações
+     * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE
+     * @param boolean $boolNewLine     -04: Default TRUE = campo em nova linha, FALSE continua na linha anterior
+     * @param boolean $boolLabelAbove  -05: Label na mesma linha DEFAULT is FALSE, para label acima = TRUE
+     * @param boolean $showFields      -06: TRUE (Default) or FALSE, Mostrar campos de latitude e longitude
+     * @param boolean $fieldsReadOnly  -07: TRUE ou FALSE (Default), Campos somente leitura
+     * @param double  $defaultLat      -08: Latitude inicial padrão. Default -15.793889
+     * @param double  $defaultLon      -09: Longitude inicial padrão. Default -47.882778
+     * @param int     $zoom            -10: Nível de zoom inicial do mapa. Default 12
+     * @param int     $height          -11: Altura do mapa em pixels. Default 400
+     * @param string  $geoJsonPath     -12: Caminho do arquivo GeoJSON a plotar. Default null
+     * @return TFormDinMapCord
+     */
+	public function addMapCord(string $idField
+                              ,string $label
+                              ,$boolRequired  =null
+                              ,$boolNewLine   =null
+                              ,$boolLabelAbove=null
+                              ,$showFields    =null
+                              ,$fieldsReadOnly=null
+                              ,$defaultLat    =null
+                              ,$defaultLon    =null
+                              ,$zoom          =null
+                              ,$height        =null
+                              ,$geoJsonPath   =null
+                             )
+	{
+        $formField = new TFormDinMapCord( $idField
+                                         ,$label
+                                         ,$boolRequired
+                                         ,$showFields
+                                         ,$fieldsReadOnly
+                                         ,$defaultLat
+                                         ,$defaultLon
+                                         ,$zoom
+                                         ,$height
+                                         ,$geoJsonPath
+                                         );
+        $objField = $formField->getAdiantiObj();
+        $label = $formField->getLabel();
+        $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        return $formField;
+	}
+
+    /**
      * Adiciona uma linha simples de texto com label
      *
      * @param string $strName         -01: ID do campo
