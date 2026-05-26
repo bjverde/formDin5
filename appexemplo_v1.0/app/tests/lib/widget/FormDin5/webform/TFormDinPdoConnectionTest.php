@@ -243,7 +243,7 @@ class TFormDinPdoConnectionTest extends TestCase
         $name = $path.'database/bdApoio.s3db';
         $this->classTest->setName($name);
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
-        $sql = 'select12 * from dado_apoio order by seq_dado_apoio';
+        $sql = 'select * from dado_apoio order by seq_dado_apoio';
         
         $this->classTest->executeSql($sql);
     }
