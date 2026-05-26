@@ -70,12 +70,12 @@ class TFormDinGridColumn
     public function __construct(object $objForm
                               , string $name
                               , string $label
-                              , string $width = NULL
+                              , ?string $width = NULL
                               , string $align = 'left'
                               , bool $boolReadOnly = false
                               , bool $boolSortable = true
                               , bool $boolVisivle = true
-                              , string $autoHide = null
+                              , ?string $autoHide = null
                               )
     {
         if( !is_object($objForm) ){
