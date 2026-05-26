@@ -143,7 +143,7 @@ class TFormDinMapCord extends TFormDinGenericField
     //--------------------------------------------------------------------
     public function setDefaultLat($defaultLat)
     {
-        $this->defaultLat = is_null($defaultLat) ? -15.793889 : (double)$defaultLat;
+        $this->defaultLat = is_null($defaultLat) ? -15.793889 : (float)$defaultLat;
     }
     public function getDefaultLat()
     {
@@ -153,7 +153,7 @@ class TFormDinMapCord extends TFormDinGenericField
     //--------------------------------------------------------------------
     public function setDefaultLon($defaultLon)
     {
-        $this->defaultLon = is_null($defaultLon) ? -47.882778 : (double)$defaultLon;
+        $this->defaultLon = is_null($defaultLon) ? -47.882778 : (float)$defaultLon;
     }
     public function getDefaultLon()
     {
