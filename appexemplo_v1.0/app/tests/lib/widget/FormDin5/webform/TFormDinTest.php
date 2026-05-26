@@ -889,4 +889,96 @@ class TFormDinTest extends TestCase
         $this->assertNotNull($this->msgErrorWarningMessage, 'Warning was not generated');
         $this->assertMatchesRegularExpression('/Falha na migração do FormDin 4 para 5./', $this->msgErrorWarningMessage, 'Warning message does not match');
     }
+
+    public function testAddMapCord()
+    {
+        $field = $this->classTest->addMapCord('map_id', 'Label Map', true, true, false, true, false, -15.0, -47.0, 10, 300);
+        $this->assertInstanceOf(TFormDinMapCord::class, $field);
+
+        $list = $this->classTest->getListFormElements();
+        $this->assertCount(1, $list);
+        $this->assertEquals('Label Map', $list[0]['label']->getValue());
+    }
+
+    public function testAddSelectFieldDB()
+    {
+        $field = $this->classTest->addSelectFieldDB(
+            'select_db',
+            'Select DB',
+            true,
+            true,
+            false,
+            '1',
+            'samples',
+            'Category',
+            'id',
+            'name'
+        );
+        $this->assertInstanceOf(TFormDinSelectFieldDB::class, $field);
+
+        $list = $this->classTest->getListFormElements();
+        $this->assertCount(1, $list);
+    }
+
+    public function testAddPasswordField()
+    {
+        $field = $this->classTest->addPasswordField('pass_id', 'Senha', true, true, false, 20, 'val');
+        $this->assertInstanceOf(TFormDinPassword::class, $field);
+
+        $list = $this->classTest->getListFormElements();
+        $this->assertCount(1, $list);
+    }
+
+    public function testAddVideoHtml5()
+    {
+        $field = $this->classTest->addVideoHtml5('vid_id', 'Video Label', 'app/sample.mp4', true, true, false);
+        $this->assertInstanceOf(TFormDinVideoHtml::class, $field);
+
+        $list = $this->classTest->getListFormElements();
+        $this->assertCount(1, $list);
+    }
+
+    public function testAddVideoStreamPhoto()
+    {
+        $_SERVER['HTTPS'] = 'on';
+        $field = $this->classTest->addVideoStreamPhoto('cam_id', 'Camera', true, true, false, true, '100%', 300);
+        $this->assertInstanceOf(TFormDinVideoStreamPhoto::class, $field);
+
+        $list = $this->classTest->getListFormElements();
+        $this->assertCount(1, $list);
+        unset($_SERVER['HTTPS']);
+    }
+
+    public function testAddTextDisplay()
+    {
+        $field = $this->classTest->addTextDisplay('txt_disp', 'Display', 'Valor', true, false, '#ffffff', '12px', 'b');
+        $this->assertInstanceOf(TFormDinTextDisplay::class, $field);
+
+        $list = $this->classTest->getListFormElements();
+        $this->assertCount(1, $list);
+    }
+
+    public function testAddTextDisplayCpfCpnj()
+    {
+        $field = $this->classTest->addTextDisplayCpfCpnj('cpf_disp', 'CPF', '12345678909', true, false);
+        $this->assertInstanceOf(TFormDinTextDisplay::class, $field);
+    }
+
+    public function testAddTextDisplayPhoneNumber()
+    {
+        $field = $this->classTest->addTextDisplayPhoneNumber('phone_disp', 'Phone', '61988887777', true, false);
+        $this->assertInstanceOf(TFormDinTextDisplay::class, $field);
+    }
+
+    public function testAddTextDisplayDataTimeBr()
+    {
+        $field = $this->classTest->addTextDisplayDataTimeBr('date_disp', 'Date', '2026-05-26', false, false, true, false);
+        $this->assertInstanceOf(TFormDinTextDisplay::class, $field);
+    }
+
+    public function testAddTextDisplayNumeroBrasil()
+    {
+        $field = $this->classTest->addTextDisplayNumeroBrasil('num_disp', 'Number', '1234.56', 2, true, false);
+        $this->assertInstanceOf(TFormDinTextDisplay::class, $field);
+    }
 }
