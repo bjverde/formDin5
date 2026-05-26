@@ -1,4 +1,4 @@
-function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly) {
+function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly, geoJsonPath) {
     const mapElementId = idField + '_map';
     const mapContainer = document.getElementById(mapElementId);
     if (!mapContainer) {
@@ -97,6 +97,37 @@ function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly) {
     if (inputLat && inputLon && !fieldsReadOnly) {
         inputLat.addEventListener('change', handleManualInputChange);
         inputLon.addEventListener('change', handleManualInputChange);
+    }
+
+    // Carrega e plota o arquivo GeoJSON se fornecido
+    if (geoJsonPath) {
+        fetch(geoJsonPath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro de rede ao carregar o arquivo GeoJSON.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                L.geoJSON(data, {
+                    style: function (feature) {
+                        return {
+                            color: "#FF5722",
+                            weight: 2,
+                            opacity: 1,
+                            fillColor: "#FFC107",
+                            fillOpacity: 0.3
+                        };
+                    },
+                    onEachFeature: function (feature, layer) {
+                        let nomeRA = feature.properties.ra || feature.properties.nome || feature.properties.NM_MUN || "Região Desconhecida";
+                        layer.bindPopup("<b>Região:</b><br>" + nomeRA);
+                    }
+                }).addTo(map);
+            })
+            .catch(error => {
+                console.error("Erro ao carregar o GeoJSON (" + geoJsonPath + "):", error);
+            });
     }
 
     // Armazena a referência no container para evitar duplicações

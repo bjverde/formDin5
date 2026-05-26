@@ -55,6 +55,7 @@ class TFormDinMapCord extends TFormDinGenericField
     private $defaultLon = null;
     private $zoom = null;
     private $height = null;
+    private $geoJsonPath = null;
 
     /**
      * Geolocalização interativa usando o Leaflet.js
@@ -68,6 +69,7 @@ class TFormDinMapCord extends TFormDinGenericField
      * @param double  $defaultLon      -07: Longitude inicial padrão. Default -47.882778 (Brasília)
      * @param int     $zoom            -08: Nível de zoom inicial do mapa. Default 12
      * @param int     $height          -09: Altura do mapa em pixels. Default 400
+     * @param string  $geoJsonPath     -10: Caminho para arquivo GeoJSON a ser plotado. Default null
      * @return TElement
      */
     public function __construct(string $idField
@@ -79,6 +81,7 @@ class TFormDinMapCord extends TFormDinGenericField
                                ,$defaultLon    = null
                                ,$zoom          = null
                                ,$height        = null
+                               ,$geoJsonPath   = null
                                )
     {
         $this->setIdDivMap($idField);
@@ -88,12 +91,23 @@ class TFormDinMapCord extends TFormDinGenericField
         $this->setDefaultLon($defaultLon);
         $this->setZoom($zoom);
         $this->setHeight($height);
+        $this->setGeoJsonPath($geoJsonPath);
 
         $adiantiObj = $this->getDivMapElement($idField, $boolRequired);
         parent::__construct($adiantiObj, $this->getIdDivMap(), $label, false, null, null);
         $this->setLabel($label, $boolRequired);
 
         return $this->getAdiantiObj();
+    }
+
+    //--------------------------------------------------------------------
+    public function setGeoJsonPath($geoJsonPath)
+    {
+        $this->geoJsonPath = $geoJsonPath;
+    }
+    public function getGeoJsonPath()
+    {
+        return $this->geoJsonPath;
     }
 
     //--------------------------------------------------------------------
@@ -222,15 +236,16 @@ class TFormDinMapCord extends TFormDinGenericField
         // Script inline para inicialização do mapa de maneira assíncrona/segura
         $scriptInit = new TElement('script');
         $readOnlyStr = $this->getFieldsReadOnly() ? 'true' : 'false';
+        $geoJsonPathStr = $this->getGeoJsonPath() ? json_encode($this->getGeoJsonPath()) : 'null';
         $scriptInit->add("
             setTimeout(function() {
                 if (typeof fd5InitMap === 'function') {
-                    fd5InitMap('{$idField}', {$this->getDefaultLat()}, {$this->getDefaultLon()}, {$this->getZoom()}, {$readOnlyStr});
+                    fd5InitMap('{$idField}', {$this->getDefaultLat()}, {$this->getDefaultLon()}, {$this->getZoom()}, {$readOnlyStr}, {$geoJsonPathStr});
                 } else {
                     let checkInterval = setInterval(function() {
                         if (typeof fd5InitMap === 'function') {
                             clearInterval(checkInterval);
-                            fd5InitMap('{$idField}', {$this->getDefaultLat()}, {$this->getDefaultLon()}, {$this->getZoom()}, {$readOnlyStr});
+                            fd5InitMap('{$idField}', {$this->getDefaultLat()}, {$this->getDefaultLon()}, {$this->getZoom()}, {$readOnlyStr}, {$geoJsonPathStr});
                         }
                     }, 100);
                 }

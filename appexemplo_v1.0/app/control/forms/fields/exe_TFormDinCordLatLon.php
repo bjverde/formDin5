@@ -48,6 +48,14 @@ class exe_TFormDinCordLatLon extends TPage
         $frm->addMapCord('map_readonly', 'Ponto Histórico (Rio de Janeiro)', false, true, false, true, true, -22.906847, -43.172896, 14, 250);
         $frm->closeGroup();
 
+        // 5. Novo Componente: Mapa Interativo com GeoJSON Plotado (Regiões Administrativas do DF)
+        $frm->addGroupField('gp05','5. Mapa Interativo com Plotagem de GeoJSON (DF - Brasília)');
+        $msgMapGeoJSON = 'O mapa abaixo carrega e renderiza dinamicamente as Regiões Administrativas do Distrito Federal a partir de um arquivo GeoJSON local, colorindo os polígonos e adicionando popups interativos com os nomes das regiões ao clicar.';
+        $frm->addHtmlField('hint_geojson', $msgMapGeoJSON, null, 'GeoJSON:', null, null, true)->setClass('notice');
+        // addMapCord params: idField, label, required, newLine, labelAbove, showFields, readOnly, defaultLat, defaultLon, zoom, height, geoJsonPath
+        $frm->addMapCord('map_geojson', 'Mapa DF GeoJSON', false, true, false, true, false, -15.793889, -47.882778, 10, 450, 'app/lib/widget/FormDin5/leaflet/ras_df.geojson');
+        $frm->closeGroup();
+
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
@@ -101,6 +109,13 @@ class exe_TFormDinCordLatLon extends TPage
                 $text[] = '<b>3. Mapa com Inputs Ocultos (Leaflet):</b>';
                 $text[] = 'Lat: ' . $param['map_hidden_lat'] . ' | Lon: ' . $param['map_hidden_lon'];
                 $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$param['map_hidden_lat'].'&mlon='.$param['map_hidden_lon'].'" target="_blank">Ver no OpenStreetMap</a><br>';
+            }
+
+            // 5. Mapa com GeoJSON
+            if (!empty($param['map_geojson_lat'])) {
+                $text[] = '<b>5. Mapa com GeoJSON (DF - Brasília):</b>';
+                $text[] = 'Lat: ' . $param['map_geojson_lat'] . ' | Lon: ' . $param['map_geojson_lon'];
+                $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$param['map_geojson_lat'].'&mlon='.$param['map_geojson_lon'].'" target="_blank">Ver no OpenStreetMap</a><br>';
             }
 
             $text = TFormDinMessage::messageTransform($text);
