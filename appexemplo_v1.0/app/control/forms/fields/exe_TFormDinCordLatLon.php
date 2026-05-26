@@ -18,37 +18,40 @@ class exe_TFormDinCordLatLon extends TPage
         // load the styles
         TPage::include_css('app/resources/css_form02.css');             
 
-        $frm = new TFormDin($this,'Exemplo TFormDinCordLatLon');
+        $frm = new TFormDin($this,'Exemplo TFormDinCordLatLon & TFormDinMapCord');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
 
+        // 1. Componente Tradicional de Geolocalização (Navegador)
+        $frm->addGroupField('gp01','1. Geolocalização via Navegador (Tradicional)');
+        $frm->addCordLatLon('cood','Coordenadas GPS',true,true,false);
+        $frm->closeGroup();
 
-        $frm->addCordLatLon('cood','Coordenadas',true,true,false);
+        // 2. Novo Componente: Mapa Interativo com Inputs Visíveis (Leaflet)
+        $frm->addGroupField('gp02','2. Mapa Interativo (Leaflet) - Inputs Visíveis e Arrastável');
+        $msgMapVisible = 'Arraste o marcador ou clique no mapa para definir as coordenadas. Os campos de input abaixo atualizarão automaticamente. Você também pode digitar nos inputs para reposicionar o marcador no mapa.';
+        $frm->addHtmlField('hint_visible', $msgMapVisible, null, 'Como usar:', null, null, true)->setClass('notice');
+        // addMapCord params: idField, label, required, newLine, labelAbove, showFields, readOnly, defaultLat, defaultLon, zoom, height
+        $frm->addMapCord('map_visible', 'Coordenadas Mapa', true, true, false, true, false, -15.793889, -47.882778, 12, 350);
+        $frm->closeGroup();
 
-        $msg = 'Veja classe TFormDinGeo com metodos';
-        $msg = $msg.'<br>';
-        $msg = $msg.'<br>isPointInQuadrilateral - Verificar se um ponto (latitude e longitude) está dentro de um quadrilatero';
-        $msg = $msg.'<br>isPointWithinRadius - Verificar se um ponto (latitude e longitude) está em raio em metro de um ponto de referencia';
-        
-        $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200,true)->setClass('notice');
+        // 3. Novo Componente: Mapa Interativo com Inputs Escondidos (Leaflet)
+        $frm->addGroupField('gp03','3. Mapa Interativo (Leaflet) - Inputs Ocultos');
+        $msgMapHidden = 'O mapa abaixo interage com campos de input invisíveis (hidden). Excelente para interfaces mais limpas.';
+        $frm->addHtmlField('hint_hidden', $msgMapHidden, null, 'Dica:', null, null, true)->setClass('notice');
+        $frm->addMapCord('map_hidden', 'Localização Oculta', false, true, false, false, false, -23.550520, -46.633308, 13, 300);
+        $frm->closeGroup();
 
-        $coord2 = $frm->addCordLatLon('cood2','Coordenadas 2',false,true,false,false);
-        $coord2->setButtonLabel('Geolocalização');
-        $coord2->setButtonClass('btn btn-sm btn-danger');
-        $coord2->setButtonIcon('fa:globe');
-        $coord2->setFeedBackSize('60px');
-
-        $msg = 'Botao 02 - TFormDinGeo';
-        $msg = $msg.'<br>';
-        $msg = $msg.'<br>Escondendo as informações de coordenada e colocando um feedback ver deu certo';
-        $frm->addHtmlField('html1', $msg, null, 'Dica:', null, 200,true)->setClass('notice');
+        // 4. Novo Componente: Mapa Interativo em Modo Somente Leitura (Read-Only)
+        $frm->addGroupField('gp04','4. Mapa Interativo (Leaflet) - Modo Somente Leitura');
+        $msgMapReadOnly = 'O mapa abaixo está em modo somente leitura (ReadOnly). O marcador não pode ser arrastado e cliques no mapa estão desabilitados. Útil para exibição estática de pontos geográficos cadastrados.';
+        $frm->addHtmlField('hint_readonly', $msgMapReadOnly, null, 'Nota:', null, null, true)->setClass('notice');
+        $frm->addMapCord('map_readonly', 'Ponto Histórico (Rio de Janeiro)', false, true, false, true, true, -22.906847, -43.172896, 14, 250);
+        $frm->closeGroup();
 
         $this->form = $frm->show();
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
 
         // add form actions
-        // O Adianti permite a Internacionalização - A função _t('string') serve
-        //para traduzir termos no sistema. Veja ApplicationTranslator escrevendo
-        //primeiro em ingles e depois traduzindo
         $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'far:check-circle green');
         $this->form->addActionLink(_t('Clear'),  new TAction([$this, 'clear']), 'fa:eraser red');
 
@@ -74,19 +77,32 @@ class exe_TFormDinCordLatLon extends TPage
     {
         try
         {
-            //$data = $this->form->getData();
-            //$this->form->setData($data);
-            //$this->form->validate();
-            //Função do FormDin para Debug
+            // Função do FormDin para Debug
             FormDinHelper::d($param,'$param');
-            $latitude  = $param['cood_lat'];
-            $longitude = $param['cood_lon'];
 
-            $text[] = 'Tudo OK!';
-            $text[] = '<a href="https://www.google.com/maps?q='.$latitude.','.$longitude.'" target="_blank">Abrir no google Maps</a>';
-            $text[] = '<a href="https://www.bing.com/maps?cp='.$latitude.'~'.$longitude.'" target="_blank">Bing Maps</a>';
-            $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$latitude.'&mlon='.$longitude.'" target="_blank">OpenStreetMap (OSM)</a>';
-            $text[] = '<a href="https://www.here.com/directions/drive/mylocation='.$latitude.','.$longitude.'" target="_blank">HERE Maps</a>';
+            $text[] = '<h3>Dados Recebidos com Sucesso!</h3>';
+            
+            // 1. Coordenadas tradicionais
+            if (!empty($param['cood_lat'])) {
+                $text[] = '<b>1. Geolocalização (Tradicional):</b>';
+                $text[] = 'Lat: ' . $param['cood_lat'] . ' | Lon: ' . $param['cood_lon'];
+                $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$param['cood_lat'].'&mlon='.$param['cood_lon'].'" target="_blank">Ver no OpenStreetMap</a><br>';
+            }
+
+            // 2. Mapa Visível
+            if (!empty($param['map_visible_lat'])) {
+                $text[] = '<b>2. Mapa com Inputs Visíveis (Leaflet):</b>';
+                $text[] = 'Lat: ' . $param['map_visible_lat'] . ' | Lon: ' . $param['map_visible_lon'];
+                $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$param['map_visible_lat'].'&mlon='.$param['map_visible_lon'].'" target="_blank">Ver no OpenStreetMap</a><br>';
+            }
+
+            // 3. Mapa Oculto
+            if (!empty($param['map_hidden_lat'])) {
+                $text[] = '<b>3. Mapa com Inputs Ocultos (Leaflet):</b>';
+                $text[] = 'Lat: ' . $param['map_hidden_lat'] . ' | Lon: ' . $param['map_hidden_lon'];
+                $text[] = '<a href="https://www.openstreetmap.org/?mlat='.$param['map_hidden_lat'].'&mlon='.$param['map_hidden_lon'].'" target="_blank">Ver no OpenStreetMap</a><br>';
+            }
+
             $text = TFormDinMessage::messageTransform($text);
             new TMessage(TFormDinMessage::TYPE_INFO, $text);
         }
