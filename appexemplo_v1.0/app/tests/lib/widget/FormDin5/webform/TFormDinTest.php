@@ -981,4 +981,202 @@ class TFormDinTest extends TestCase
         $field = $this->classTest->addTextDisplayNumeroBrasil('num_disp', 'Number', '1234.56', 2, true, false);
         $this->assertInstanceOf(TFormDinTextDisplay::class, $field);
     }
+
+    public function testAddtElementInRow()
+    {
+        $obj = new \stdClass();
+        $list = array(
+            0 => array(
+                'label' => 'Label',
+                'obj' => $obj,
+                'boolLabelAbove' => true,
+                'boolNewLine' => true
+            )
+        );
+        $row = array();
+        $result = $this->classTest->addtElementInRow($list, 0, $row);
+        $this->assertNotEmpty($result);
+    }
+
+    public function testAddFieldsAndAddContent()
+    {
+        $this->classTest->addTextField('field_id', 'Label text');
+        $this->classTest->addFields();
+        $this->classTest->addContent('Custom Content');
+        $this->assertNotEmpty($this->classTest->getListFormElements());
+    }
+
+    public function testGetLabelField()
+    {
+        $ref = new \ReflectionMethod(TFormDin::class, 'getLabelField');
+        $ref->setAccessible(true);
+        $label = $ref->invoke($this->classTest, 'My Label', true);
+        $this->assertInstanceOf(TLabel::class, $label);
+    }
+
+    public function testEnableCSRFProtection()
+    {
+        $this->expectNotToPerformAssertions();
+        $this->classTest->enableCSRFProtection();
+    }
+
+    public function testSetMessageAndAddMessage()
+    {
+        $this->expectNotToPerformAssertions();
+        ob_start();
+        $this->classTest->setMessage('Msg', 'info');
+        $this->classTest->addMessage('Msg 2', 'warning');
+        ob_end_clean();
+    }
+
+    public function testAddButton()
+    {
+        $btn = $this->classTest->addButton('Click Me', 'btn_id', 'onSave');
+        $this->assertInstanceOf(TButton::class, $btn);
+    }
+
+    public function testSetActionHeaderLinkHeaderLink()
+    {
+        $this->classTest->setActionHeader(_t('Save Header'), 'onSave', false);
+        $this->classTest->setActionLink(_t('Link'), 'onClear');
+        $this->classTest->setActionHeaderLink(_t('Header Link'), 'onSave');
+        
+        $objForm = $this->classTest->show();
+        $this->assertNotNull($objForm);
+    }
+
+    public function testSetVO()
+    {
+        $vo = new \stdClass();
+        $vo->id = 1;
+        $vo->name = 'Test';
+        $this->expectNotToPerformAssertions();
+        $this->classTest->setVO($vo, null, ['id' => 1, 'name' => 'Test']);
+    }
+
+    public function testAddHiddenField()
+    {
+        $field = $this->classTest->addHiddenField('hidden_id', 'value');
+        $this->assertInstanceOf(TFormDinGenericField::class, $field);
+    }
+
+    public function testAddTextField()
+    {
+        $field = $this->classTest->addTextField('txt_id', 'Text Label', 50, true);
+        $this->assertInstanceOf(TFormDinTextField::class, $field);
+    }
+
+    public function testAddMemoField()
+    {
+        $field = $this->classTest->addMemoField('memo_id', 'Memo Label', 200);
+        $this->assertInstanceOf(TFormDinMemoField::class, $field);
+    }
+
+    public function testAddDateField()
+    {
+        $field = $this->classTest->addDateField('date_id', 'Date Label');
+        $this->assertInstanceOf(TFormDinDate::class, $field);
+    }
+
+    public function testAddDateTimeField()
+    {
+        $field = $this->classTest->addDateTimeField('datetime_id', 'DateTime Label');
+        $this->assertInstanceOf(TFormDinDateTime::class, $field);
+    }
+
+    public function testAddSwitchField()
+    {
+        $field = $this->classTest->addSwitchField('switch_id', 'Switch Label', false, ['Y' => 'Yes', 'N' => 'No']);
+        $this->assertInstanceOf(TFormDinSwitch::class, $field);
+    }
+
+    public function testAddFileFieldAndMulti()
+    {
+        $field = $this->classTest->addFileField('file_id', 'File Label', false, ['png', 'jpg']);
+        $this->assertInstanceOf(TFormDinFileField::class, $field);
+
+        $fieldMulti = $this->classTest->addFileFieldMulti('file_multi_id', 'File Multi', false, ['png', 'jpg']);
+        $this->assertInstanceOf(TFormDinFileFieldMulti::class, $fieldMulti);
+    }
+
+    public function testAddMaskField()
+    {
+        $field = $this->classTest->addMaskField('mask_id', 'Mask Label', false, '999.999.999-99');
+        $this->assertInstanceOf(TFormDinMaskField::class, $field);
+    }
+
+    public function testAddTimeField()
+    {
+        $field = $this->classTest->addTimeField('time_id', 'Time Label');
+        $this->assertInstanceOf(TFormDinTime::class, $field);
+    }
+
+    public function testAddSelectField()
+    {
+        $field = $this->classTest->addSelectField('select_id', 'Select Label', false, ['1' => 'One', '2' => 'Two']);
+        $this->assertInstanceOf(TFormDinSelectField::class, $field);
+    }
+
+    public function testAddRadioField()
+    {
+        $field = $this->classTest->addRadioField('radio_id', 'Radio Label', false, ['Y' => 'Yes', 'N' => 'No']);
+        $this->assertInstanceOf(TFormDinRadio::class, $field);
+    }
+
+    public function testAddCheckField()
+    {
+        $field = $this->classTest->addCheckField('check_id', 'Check Label', false, ['A' => 'A', 'B' => 'B']);
+        $this->assertInstanceOf(TFormDinCheckField::class, $field);
+    }
+
+    public function testAddGroupFieldAndCloseGroup()
+    {
+        $this->expectNotToPerformAssertions();
+        $this->classTest->addGroupField('group_name', 'Group Legend');
+        $this->classTest->closeGroup();
+    }
+
+    public function testAddHtmlField()
+    {
+        $field = $this->classTest->addHtmlField('html_id', '<b>Bold</b>');
+        $this->assertInstanceOf(TFormDinHtmlField::class, $field);
+    }
+
+    public function testAddCpfField()
+    {
+        $field = $this->classTest->addCpfField('cpf_id', 'CPF Label');
+        $this->assertInstanceOf(TFormDinCpfField::class, $field);
+    }
+
+    public function testAddCnpjField()
+    {
+        $field = $this->classTest->addCnpjField('cnpj_id', 'CNPJ Label');
+        $this->assertInstanceOf(TFormDinCnpjField::class, $field);
+    }
+
+    public function testAddCheckList()
+    {
+        $checkList = new TFormDinCheckList('chk_list_id', 'Label', false, ['1' => 'One']);
+        $this->classTest->addCheckList($checkList, true);
+        $list = $this->classTest->getListFormElements();
+        $this->assertCount(1, $list);
+    }
+
+    public function testAddNumberField()
+    {
+        $field = $this->classTest->addNumberField('num_id', 'Number Label', 10);
+        $this->assertInstanceOf(TFormDinNumericField::class, $field);
+    }
+
+    public function testAddEmailField()
+    {
+        $field = $this->classTest->addEmailField('email_id', 'Email Label', 100);
+        $this->assertInstanceOf(TFormDinEmailField::class, $field);
+    }
+
+    public function testAddCordLatLon()
+    {
+        $field = $this->classTest->addCordLatLon('cord_id', 'Cord Label');
+        $this->assertInstanceOf(TFormDinCordLatLon::class, $field);
+    }
 }

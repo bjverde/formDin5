@@ -107,9 +107,93 @@ class TFormDinIniFileHandlerTest extends TestCase
         $result = $this->classTest->getKeyInSection('pauli','pauli');
     }
 
-    protected function testFile_Exception(): void {
+    public function testFile_Exception(): void {
         $this->expectException(Exception::class);
         $filePath = __DIR__.'/../../mockConfigIni-falha.ini';
         $classTest = new TFormDinIniFileHandler($filePath);
+    }
+
+    public function testConstructWithoutPath()
+    {
+        $handler = new TFormDinIniFileHandler();
+        $this->assertNull($handler->getfilePath());
+
+        $handler2 = new TFormDinIniFileHandler(null, INI_SCANNER_TYPED);
+        $this->assertNull($handler2->getfilePath());
+    }
+
+    public function testSetIniData()
+    {
+        $handler = new TFormDinIniFileHandler();
+        $data = ['sec' => ['key' => 'val']];
+        $handler->setIniData($data);
+        $this->assertEquals('val', $handler->getKeyInSection('sec', 'key'));
+    }
+
+    public function testGetKeyWithBolean()
+    {
+        $handler = new TFormDinIniFileHandler();
+        $data = [
+            'sec' => [
+                't1' => '1',
+                't2' => 'true',
+                't3' => 'SIM',
+                'f1' => '0',
+                'f2' => 'false',
+                'f3' => 'N'
+            ]
+        ];
+        $handler->setIniData($data);
+        $this->assertTrue($handler->getKeyWithBolean('sec', 't1'));
+        $this->assertTrue($handler->getKeyWithBolean('sec', 't2'));
+        $this->assertTrue($handler->getKeyWithBolean('sec', 't3'));
+        $this->assertFalse($handler->getKeyWithBolean('sec', 'f1'));
+        $this->assertFalse($handler->getKeyWithBolean('sec', 'f2'));
+        $this->assertFalse($handler->getKeyWithBolean('sec', 'f3'));
+    }
+
+    public function testSetValue()
+    {
+        $handler = new TFormDinIniFileHandler();
+        $handler->setIniData([]);
+        $handler->setValue('sec', 'key', 'val');
+        $this->assertEquals('val', $handler->getKeyInSection('sec', 'key'));
+
+        $handler->setValue('sec', 'key', 'newval');
+        $this->assertEquals('newval', $handler->getKeyInSection('sec', 'key'));
+    }
+
+    public function testSave()
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'ini_');
+        $handler = new TFormDinIniFileHandler();
+        $handler->setfilePath($tempFile);
+        $handler->setValue('sec1', 'k1', 'v1');
+        $handler->setValue('sec2', 'k2', 'v2');
+        $handler->save();
+
+        $reader = new TFormDinIniFileHandler($tempFile);
+        $this->assertEquals('v1', $reader->getKeyInSection('sec1', 'k1'));
+        $this->assertEquals('v2', $reader->getKeyInSection('sec2', 'k2'));
+
+        @unlink($tempFile);
+    }
+
+    public function testStaticBolean()
+    {
+        $this->assertTrue(TFormDinIniFileHandler::testBolean('1'));
+        $this->assertTrue(TFormDinIniFileHandler::testBolean('true'));
+        $this->assertTrue(TFormDinIniFileHandler::testBolean('TRUE'));
+        $this->assertTrue(TFormDinIniFileHandler::testBolean('SIM'));
+        $this->assertTrue(TFormDinIniFileHandler::testBolean('S'));
+        $this->assertTrue(TFormDinIniFileHandler::testBolean('YES'));
+        $this->assertTrue(TFormDinIniFileHandler::testBolean('Y'));
+
+        $this->assertFalse(TFormDinIniFileHandler::testBolean('0'));
+        $this->assertFalse(TFormDinIniFileHandler::testBolean('false'));
+        $this->assertFalse(TFormDinIniFileHandler::testBolean('FALSE'));
+        $this->assertFalse(TFormDinIniFileHandler::testBolean('NAO'));
+        $this->assertFalse(TFormDinIniFileHandler::testBolean('N'));
+        $this->assertFalse(TFormDinIniFileHandler::testBolean('NO'));
     }
 }
