@@ -97,17 +97,19 @@ class TFormDinSelectFieldTest extends TestCase
 
     public function testSetWidth_Warning()
     {
-        set_error_handler(function($errno, $errstr) {
+        $triggered = false;
+        $capturedMsg = '';
+        set_error_handler(function($errno, $errstr) use (&$triggered, &$capturedMsg) {
             if ($errno === E_USER_WARNING) {
-                $this->assertStringContainsString('intWidth', $errstr);
+                $triggered = true;
+                $capturedMsg = $errstr;
                 return true;
             }
             return false;
         });
-        try {
-            $this->classTest->setWidth(200);
-        } finally {
-            restore_error_handler();
-        }
+        $this->classTest->setWidth(200);
+        restore_error_handler();
+        $this->assertTrue($triggered);
+        $this->assertStringContainsString('intWidth', $capturedMsg);
     }
 }

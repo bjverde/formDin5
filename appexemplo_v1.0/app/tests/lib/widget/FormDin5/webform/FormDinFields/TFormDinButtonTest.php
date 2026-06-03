@@ -121,18 +121,20 @@ class TFormDinButtonTest extends TestCase
 
     public function testSetLabel_Array()
     {
-        set_error_handler(function($errno, $errstr) {
+        $triggered = false;
+        $capturedMsg = '';
+        set_error_handler(function($errno, $errstr) use (&$triggered, &$capturedMsg) {
             if ($errno === E_USER_ERROR) {
-                $this->assertStringContainsString('O parametro $mixValue não recebe mais um array', $errstr);
+                $triggered = true;
+                $capturedMsg = $errstr;
                 return true;
             }
             return false;
         });
-        try {
-            $this->classTest->setLabel(['Save', 'Cancel']);
-        } finally {
-            restore_error_handler();
-        }
+        $this->classTest->setLabel(['Save', 'Cancel']);
+        restore_error_handler();
+        $this->assertTrue($triggered);
+        $this->assertStringContainsString('O parametro $mixValue não recebe mais um array', $capturedMsg);
     }
 
     public function testSetAdiantiObj_Null()
@@ -143,18 +145,20 @@ class TFormDinButtonTest extends TestCase
 
     public function testSetAdiantiObj_NotObject()
     {
-        set_error_handler(function($errno, $errstr) {
+        $triggered = false;
+        $capturedMsg = '';
+        set_error_handler(function($errno, $errstr) use (&$triggered, &$capturedMsg) {
             if ($errno === E_USER_ERROR) {
-                $this->assertStringContainsString('o metodo addButton MUDOU!', $errstr);
+                $triggered = true;
+                $capturedMsg = $errstr;
                 return true;
             }
             return false;
         });
-        try {
-            $this->classTest->setAdiantiObj('not_an_object');
-        } finally {
-            restore_error_handler();
-        }
+        $this->classTest->setAdiantiObj('not_an_object');
+        restore_error_handler();
+        $this->assertTrue($triggered);
+        $this->assertStringContainsString('o metodo addButton MUDOU!', $capturedMsg);
     }
 
     public function testSetAction_Conflict()
