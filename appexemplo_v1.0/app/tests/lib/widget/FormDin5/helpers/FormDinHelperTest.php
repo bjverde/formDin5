@@ -344,6 +344,95 @@ class FormDinHelperTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
         FormDinHelper::validateSizeWidthAndHeight('100px',true);
-    }    
-    
+    }
+
+    public function testSizeWidthInPercent_NumericLessThan100() {
+        $result = FormDinHelper::sizeWidthInPercent(80);
+        $this->assertEquals('80%', $result);
+    }
+
+    public function testSizeWidthInPercent_NumericGreaterThan100() {
+        $result = FormDinHelper::sizeWidthInPercent(120);
+        $this->assertEquals('100%', $result);
+    }
+
+    public function testSizeWidthInPercent_StringPercent() {
+        $result = FormDinHelper::sizeWidthInPercent('50%');
+        $this->assertEquals('50%', $result);
+    }
+
+    public function testValidateMethodLine_Deprecated() {
+        $this->expectNotToPerformAssertions();
+        FormDinHelper::validateMethodLine('method', 'line', 'validate');
+    }
+
+    public function testValidateObjTypeTPDOConnectionObj_Deprecated() {
+        $this->expectNotToPerformAssertions();
+        $tpdo = new TFormDinPdoConnection();
+        FormDinHelper::validateObjTypeTPDOConnectionObj($tpdo, 'method', 'line');
+    }
+
+    public function testVerifyFormDinMinimumVersion_ExceptionEmpty() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyFormDinMinimumVersion('');
+    }
+
+    public function testVerifyMinimumVersionAdiantiFrameWorkToSystem_ExceptionEmpty() {
+        $this->expectException(DomainException::class);
+        FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('');
+    }
+
+    public function testGetAdiantiFrameWorkVersion_ExceptionFileNotFound() {
+        $reflector = new ReflectionClass(FormDinHelper::class);
+        $fileHelperDir = dirname($reflector->getFileName());
+        $fileVersion = $fileHelperDir . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'VERSION';
+        $tempFile = $fileVersion . '.bak';
+        
+        if (file_exists($fileVersion)) {
+            rename($fileVersion, $tempFile);
+        }
+        
+        try {
+            FormDinHelper::getAdiantiFrameWorkVersion();
+            $this->fail('Expected InvalidArgumentException was not thrown');
+        } catch (InvalidArgumentException $e) {
+            $this->assertStringContainsString('VERSION do Adianti', $e->getMessage());
+        } finally {
+            if (file_exists($tempFile)) {
+                rename($tempFile, $fileVersion);
+            }
+        }
+    }
+
+    public function testVerifyMinimumVersionAdiantiFrameWorkToFormDin_Exception() {
+        $reflector = new ReflectionClass(FormDinHelper::class);
+        $fileHelperDir = dirname($reflector->getFileName());
+        $fileVersion = $fileHelperDir . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'VERSION';
+        $tempFile = $fileVersion . '.bak';
+        
+        if (file_exists($fileVersion)) {
+            rename($fileVersion, $tempFile);
+        }
+        
+        file_put_contents($fileVersion, "7.4.0\n");
+        
+        try {
+            $this->expectException(DomainException::class);
+            FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin();
+        } finally {
+            if (file_exists($tempFile)) {
+                if (file_exists($fileVersion)) {
+                    unlink($fileVersion);
+                }
+                rename($tempFile, $fileVersion);
+            }
+        }
+    }
+
+    public function testValidateSizeWidthAndHeight_failWithPxEnabled()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('use px ou % ou em ou rem ou vh ou vw');
+        FormDinHelper::validateSizeWidthAndHeight('100abc', true);
+    }
 }

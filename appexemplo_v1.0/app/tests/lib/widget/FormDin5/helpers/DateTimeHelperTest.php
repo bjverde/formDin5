@@ -404,4 +404,80 @@ class DateTimeHelperTest extends TestCase
         $retorno = DateTimeHelper::dateInRange($datahora,$datahoraStar,$datahoraEnd);
         $this->assertEquals($esperado, $retorno);
     }
+
+    public function testGetListMesesExtenso_WithZero() {
+        $result = DateTimeHelper::getListMesesExtenso(true);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('01', $result);
+        $this->assertEquals('Janeiro', $result['01']);
+    }
+
+    public function testGetListMesesExtenso_WithoutZero() {
+        $result = DateTimeHelper::getListMesesExtenso(false);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('1', $result);
+        $this->assertEquals('Janeiro', $result['1']);
+    }
+
+    public function testDateIso2DateBr_FormatYmd() {
+        $result = DateTimeHelper::DateIso2DateBr('2023-10-27');
+        $this->assertEquals('27/10/2023', $result);
+    }
+
+    public function testDateIso2DateBr_FormatYmdHi_ShowSeconds() {
+        $result = DateTimeHelper::DateIso2DateBr('2023-10-27 15:30', false, true);
+        $this->assertEquals('27/10/2023 15:30:00', $result);
+    }
+
+    public function testDateIso2DateBr_FormatYmdHi_ShowTime() {
+        $result = DateTimeHelper::DateIso2DateBr('2023-10-27 15:30', true, false);
+        $this->assertEquals('27/10/2023 15:30', $result);
+    }
+
+    public function testDateIso2DateBr_FormatYmdHi_NoShowTime() {
+        $result = DateTimeHelper::DateIso2DateBr('2023-10-27 15:30', false, false);
+        $this->assertEquals('27/10/2023', $result);
+    }
+
+    public function testDateIso2DateBr_FormatDmy() {
+        $result = DateTimeHelper::DateIso2DateBr('27/10/2023');
+        $this->assertEquals('27/10/2023', $result);
+    }
+
+    public function testDateIso2DateBr_NullInput() {
+        $result = DateTimeHelper::DateIso2DateBr(null);
+        $this->assertNull($result);
+    }
+
+    public function testGetWorkingDaysBetweenDates() {
+        $start = new DateTime('2023-10-23'); // Monday
+        $end = new DateTime('2023-10-27'); // Friday
+        $result = DateTimeHelper::getWorkingDaysBetweenDates($start, $end);
+        $this->assertEquals(5, $result);
+    }
+
+    public function testGetIntervalDateDiff_ExceptionDateTime1() {
+        $this->expectException(InvalidArgumentException::class);
+        DateTimeHelper::getIntervalDateDiff('wrong-date', '20/10/2023 12:00');
+    }
+
+    public function testGetIntervalDateDiff_ExceptionDateTime2() {
+        $this->expectException(InvalidArgumentException::class);
+        DateTimeHelper::getIntervalDateDiff('20/10/2023 12:00', 'wrong-date');
+    }
+
+    public function testMaskDateFormDin4ToAdianit_RemainingCases() {
+        $this->assertEquals('dd', DateTimeHelper::maskDateFormDin4ToAdianit('d'));
+        $this->assertEquals('mm', DateTimeHelper::maskDateFormDin4ToAdianit('m'));
+        $this->assertEquals('yyyy', DateTimeHelper::maskDateFormDin4ToAdianit('y'));
+        $this->assertEquals('hh:ii:ss', DateTimeHelper::maskDateFormDin4ToAdianit('HMS'));
+        $this->assertEquals('hh:ii:ss', DateTimeHelper::maskDateFormDin4ToAdianit('hms'));
+        $this->assertEquals('unknown', DateTimeHelper::maskDateFormDin4ToAdianit('unknown'));
+    }
+
+    public function testDateInRange_ExceptionEmptyDate() {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Date Time wrong format');
+        DateTimeHelper::dateInRange('', '17/12/2022 00:30', '20/12/2022 00:00');
+    }
 }

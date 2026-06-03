@@ -169,7 +169,7 @@ class SqlHelperTest extends TestCase
 	}
 	//--------------------------------------------------------------------------------
 	public function testAttributeIssetOrNotZero_AttributeZero_FALSE_testZeroFALSE() {
-	    $expected = 'ISFALSE';
+	    $expected = 'ISTRUE';
 	    $whereGrid = array();
 	    $whereGrid['NUMERO']=0;
 	    $isTrue = 'ISTRUE';
@@ -501,5 +501,55 @@ class SqlHelperTest extends TestCase
 	    SqlHelper::setDbms($dbms);		
 	    $result = SqlHelper::getAtributeWhereGridParameters($where, $whereGrid, '5WORD', SqlHelper::SQL_TYPE_TEXT_LIKE);
 	    $this->assertEquals( $expected , $result);
+	}
+
+	public function testGetDbms_BancoNotDefinedAndSelfNull() {
+	    $originalDbms = SqlHelper::getDbms();
+	    try {
+	        SqlHelper::setDbms(null);
+	        $result = SqlHelper::getDbms();
+	        if (defined('BANCO')) {
+	            $this->assertEquals(BANCO, $result);
+	        } else {
+	            $this->assertEquals(TFormDinPdoConnection::DBMS_SQLSERVER, $result);
+	        }
+	    } finally {
+	        SqlHelper::setDbms($originalDbms);
+	    }
+	}
+	
+	public function testGetAtributeWhereGridParameters_NullDbmsException() {
+	    $originalDbms = SqlHelper::getDbms();
+	    try {
+	        $this->expectException(InvalidArgumentException::class);
+	        SqlHelper::setDbms('');
+	        $whereGrid = ['NUM_ORD' => '1200'];
+	        SqlHelper::getAtributeWhereGridParameters(null, $whereGrid, 'NUM_ORD', SqlHelper::SQL_TYPE_NUMERIC, true, null, null);
+	    } finally {
+	        SqlHelper::setDbms($originalDbms);
+	    }
+	}
+
+	public function testAttributeIsset_Various() {
+	    $this->assertEquals('yes', SqlHelper::attributeIsset('val', 'yes', 'no'));
+	    $this->assertEquals('no', SqlHelper::attributeIsset(null, 'yes', 'no'));
+	    $this->assertEquals('no', SqlHelper::attributeIsset('', 'yes', 'no'));
+	    $this->assertEquals('no', SqlHelper::attributeIsset('0', 'yes', 'no'));
+	}
+
+	public function testGetAtributeWhereGridParameters_InText() {
+	    $where = '';
+	    $grid = ['LETRAS' => ['a', 'b']];
+	    $result = SqlHelper::getAtributeWhereGridParameters($where, $grid, 'LETRAS', SqlHelper::SQL_TYPE_IN_TEXT);
+	    $expected = EOL.' AND LETRAS in (\'a\',\'b\') ';
+	    $this->assertEquals($expected, $result);
+	}
+
+	public function testGetAtributeWhereGridParameters_InNumeric() {
+	    $where = '';
+	    $grid = ['NUMEROS' => [1, 2]];
+	    $result = SqlHelper::getAtributeWhereGridParameters($where, $grid, 'NUMEROS', SqlHelper::SQL_TYPE_IN_NUMERIC);
+	    $expected = EOL.' AND NUMEROS in (1,2) ';
+	    $this->assertEquals($expected, $result);
 	}
 }

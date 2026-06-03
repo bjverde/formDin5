@@ -167,5 +167,113 @@ class ValidateHelperTest extends TestCase
                                      ,ValidateHelper::MSG_CHANGE
                                      ,__CLASS__,__METHOD__,__LINE__);
     }
-    */   
+    */
+
+    public function testIsSet_Success() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::isSet('some value', __METHOD__, __LINE__);
+    }
+
+    public function testIsSet_ExceptionNull() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isSet(null, __METHOD__, __LINE__);
+    }
+
+    public function testIsArray_Success() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::isArray([1, 2], __METHOD__, __LINE__);
+    }
+
+    public function testIsArray_ExceptionNotArray() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isArray('string', __METHOD__, __LINE__);
+    }
+
+    public function testIsArray_ExceptionEmptyArray() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::isArray([], __METHOD__, __LINE__, true);
+    }
+
+    public function testIsArray_SuccessEmptyArrayNoValidation() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::isArray([], __METHOD__, __LINE__, false);
+    }
+
+    public function testValidadeParam_SuccessNoValue() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::validadeParam('param', null, ValidateHelper::EXECEPTION, ValidateHelper::MSG_CHANGE, __CLASS__, __METHOD__, __LINE__);
+    }
+
+    public function testValidadeParam_ExceptionWithValue() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::validadeParam('param', 'value', ValidateHelper::EXECEPTION, ValidateHelper::MSG_CHANGE, __CLASS__, __METHOD__, __LINE__);
+    }
+
+    public function testValidadeMethod_Exception() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::validadeMethod(ValidateHelper::EXECEPTION, ValidateHelper::MSG_NOT_IMPLEMENTED, __METHOD__, 'complement', __FILE__, __LINE__);
+    }
+
+    public function testMigrarMensage_SuccessNoMsg() {
+        $this->expectNotToPerformAssertions();
+        ValidateHelper::migrarMensage(null, ValidateHelper::EXECEPTION, ValidateHelper::MSG_DECREP, __CLASS__, __METHOD__, __LINE__);
+    }
+
+    public function testMigrarMensage_ExceptionWithMsg() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::migrarMensage('some message', ValidateHelper::EXECEPTION, ValidateHelper::MSG_DECREP, __CLASS__, __METHOD__, __LINE__, 'someFile.php');
+    }
+
+    public function testTriggerError_Exception() {
+        $this->expectException(InvalidArgumentException::class);
+        ValidateHelper::triggerError('error message', ValidateHelper::EXECEPTION);
+    }
+
+    public function testTypeErrorMsg_VariousCases() {
+        $this->assertEquals(' não foi implementado!', ValidateHelper::typeErrorMsg(ValidateHelper::MSG_NOT_IMPLEMENTED));
+        $this->assertEquals(' FOI ALTERADO!', ValidateHelper::typeErrorMsg(ValidateHelper::MSG_CHANGE));
+        $this->assertEquals(' FOI DESCONTINUADO!!', ValidateHelper::typeErrorMsg('any_other'));
+    }
+
+    public function testTriggerError_UserWarning() {
+        $msg = 'warning msg';
+        $triggered = false;
+        set_error_handler(function($errno, $errstr) use (&$triggered, $msg) {
+            if ($errno === E_USER_WARNING && $errstr === $msg) {
+                $triggered = true;
+            }
+            return true;
+        });
+        ValidateHelper::triggerError($msg, ValidateHelper::WARNING);
+        restore_error_handler();
+        $this->assertTrue($triggered);
+    }
+
+    public function testTriggerError_UserError() {
+        $msg = 'error msg';
+        $triggered = false;
+        set_error_handler(function($errno, $errstr) use (&$triggered, $msg) {
+            if ($errno === E_USER_ERROR && $errstr === $msg) {
+                $triggered = true;
+            }
+            return true;
+        });
+        ValidateHelper::triggerError($msg, ValidateHelper::ERROR);
+        restore_error_handler();
+        $this->assertTrue($triggered);
+    }
+
+    public function testTriggerError_UserNotice() {
+        $msg = 'notice msg';
+        $triggered = false;
+        set_error_handler(function($errno, $errstr) use (&$triggered, $msg) {
+            if ($errno === E_USER_NOTICE && $errstr === $msg) {
+                $triggered = true;
+            }
+            return true;
+        });
+        ValidateHelper::triggerError($msg, 'some_other_type');
+        restore_error_handler();
+        $this->assertTrue($triggered);
+    }
 }

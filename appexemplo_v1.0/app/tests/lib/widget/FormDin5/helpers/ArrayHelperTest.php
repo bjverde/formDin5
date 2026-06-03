@@ -973,5 +973,76 @@ class ArrayHelperTest extends TestCase
         $retorno   = ArrayHelper::convertArray2PhpKeyValue($arrayData,'IDPESSOA','TPPESSOA');
         
         $this->assertEquals($esperado, $retorno);
-    }    
+    }
+
+    public function testValidateUndefined_NotSet() {
+        $array = ['a' => 1];
+        $result = ArrayHelper::validateUndefined($array, 'b');
+        $this->assertNull($result);
+    }
+
+    public function testValidateUndefined_SetNull() {
+        $array = ['a' => null];
+        $result = ArrayHelper::validateUndefined($array, 'a');
+        $this->assertNull($result);
+    }
+
+    public function testValidateUndefined_SetVal() {
+        $array = ['a' => '  hello  '];
+        $result = ArrayHelper::validateUndefined($array, 'a');
+        $this->assertEquals('hello', $result);
+    }
+
+    public function testArray_keys2_NotArray() {
+        $result = ArrayHelper::array_keys2('string');
+        $this->assertEquals([], $result);
+    }
+
+    public function testArray_keys2_IsArray() {
+        $result = ArrayHelper::array_keys2(['a' => 1, 'b' => 2], 1);
+        $this->assertEquals(['a'], $result);
+    }
+
+    public function testGetArray_WithNullValue() {
+        $array = ['a' => null];
+        $result = ArrayHelper::getArray($array, 'a');
+        $this->assertEquals([], $result);
+    }
+
+    public function testGetTypeArrayMixUpdateFields_Empty() {
+        $this->assertNull(ArrayHelper::getTypeArrayMixUpdateFields([]));
+        $this->assertNull(ArrayHelper::getTypeArrayMixUpdateFields(''));
+    }
+
+    public function testGetTypeArrayMixUpdateFields_InvalidFormat() {
+        $input = 'invalid';
+        $this->assertFalse(ArrayHelper::getTypeArrayMixUpdateFields($input));
+    }
+
+    public function testGetArrayFormKey() {
+        $array = ['a' => ['key' => 'val']];
+        $this->assertEquals('val', ArrayHelper::getArrayFormKey($array, 'a', 'key'));
+    }
+
+    public function testConvertArray2Adianti_FormDin() {
+        $data = ['ID' => [1], 'NAME' => ['test']];
+        $result = ArrayHelper::convertArray2Adianti($data);
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertEquals('test', $result[0]->NAME);
+    }
+
+    public function testConvertAdianti2Pdo_TRecord() {
+        $recordMock = $this->createMock(TRecord::class);
+        $recordMock->method('toArray')->willReturn(['id' => 1, 'name' => 'test']);
+        
+        $arrayData = [$recordMock];
+        $result = ArrayHelper::convertAdianti2Pdo($arrayData);
+        $this->assertEquals([['id' => 1, 'name' => 'test']], $result);
+    }
+
+    public function testConvertArray2OutputFormat_InvalidInputFormat() {
+        $this->expectException(InvalidArgumentException::class);
+        ArrayHelper::convertArray2OutputFormat('col|form');
+    }
 }

@@ -581,7 +581,82 @@ class StringHelperTest extends TestCase
 	public function testString2SnakeCase() {
         $expected = 'acao_deletar_mao';
 		$result = StringHelper::string2SnakeCase('ação deLEtar MÃO') ;		
-		$this->assertEquals( $expected , $result );
+		$this->assertEquals( $expected , $result);
 	}
 	//-------------------------------------------------------------
+    public function testStr2utf8_emptyString() {
+        $this->assertEquals('', StringHelper::str2utf8(''));
+    }
+
+    public function testStr2utf8_failDetection() {
+        // \x80 is detected as Windows-1252, which converts to Euro symbol in UTF-8
+        $this->assertEquals(mb_convert_encoding("\x80", 'UTF-8', 'Windows-1252'), StringHelper::str2utf8("\x80"));
+    }
+
+    public function testStr2utf8_alreadyUtf8() {
+        $this->assertEquals('teste', StringHelper::str2utf8('teste'));
+    }
+
+    public function testConvertEncoding_needsConversion() {
+        $this->assertEquals('teste', StringHelper::convert_encoding('teste', 'UTF-8', 'ASCII'));
+    }
+
+    public function testConvertEncoding_actualConversion() {
+        $this->assertEquals('á', StringHelper::convert_encoding("\xe1", 'UTF-8', 'ISO-8859-1'));
+    }
+
+    public function testValidarCpf_empty() {
+        $this->assertFalse(StringHelper::validarCpf(''));
+    }
+
+    public function testValidarCpf_sequences() {
+        $this->assertFalse(StringHelper::validarCpf('111.111.111-11'));
+    }
+
+    public function testValidarCnpj_wrongLength() {
+        $this->assertFalse(StringHelper::validarCnpj('123456'));
+    }
+
+    public function testValidarCnpj_sequences() {
+        $this->assertFalse(StringHelper::validarCnpj('11111111111111'));
+    }
+
+    public function testIsNumeroBrasil_naoNumero() {
+        $this->assertFalse(StringHelper::is_numeroBrasil('12.34'));
+        $this->assertTrue(StringHelper::is_numeroBrasil('12.3456'));
+    }
+
+    public function testIsNumeroBrasil_matchSpecialRegex() {
+        $this->assertFalse(StringHelper::is_numeroBrasil('1abc.1234'));
+    }
+
+    public function testIsNumeroEua_naoNumero() {
+        $this->assertFalse(StringHelper::is_numeroEua('12,34'));
+        $this->assertTrue(StringHelper::is_numeroEua('12,3456'));
+    }
+
+    public function testIsNumeroEua_matchSpecialRegex() {
+        $this->assertFalse(StringHelper::is_numeroEua('1abc,1234'));
+    }
+
+    public function testNumeroBrasil_length5() {
+        $this->assertEquals('12,34', StringHelper::numeroBrasil('12,34'));
+        $this->assertEquals('12,34', StringHelper::numeroBrasil('12.34'));
+    }
+
+    public function testNumeroBrasil_specialLength5() {
+        $this->assertEquals('1,2,3', StringHelper::numeroBrasil('1.2.3'));
+        $this->assertEquals('1,23', StringHelper::numeroBrasil('1.234'));
+    }
+
+    public function testNumeroEua_length5() {
+        $this->assertEquals('12.34', StringHelper::numeroEua('12.34'));
+        $this->assertEquals('12.34', StringHelper::numeroEua('12,34'));
+    }
+
+    public function testNumeroEua_specialLength5() {
+        $this->assertEquals('1,2.3', StringHelper::numeroEua('1,2.3'));
+        $this->assertEquals('1.234', StringHelper::numeroEua('1,234'));
+        $this->assertEquals('1.23', StringHelper::numeroEua('1.234'));
+    }
 }

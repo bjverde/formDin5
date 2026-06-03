@@ -44,68 +44,66 @@ require_once  __DIR__.'/../../mockFormDinArray.php';
 use PHPUnit\Framework\TestCase;
 
 /**
- * paginationSQLHelper test case.
+ * UrlHelper test case.
  */
-class PostHelperTest extends TestCase
-{	
+class UrlHelperTest extends TestCase
+{
+    /**
+     * @var array
+     */
+    private $originalServer;
 
-	public function testGetInt_OkInputInt() {
-	    $atributeName = 'test';
-        $_POST[$atributeName] = 1;
-        $expected = 1;
-	    $result = PostHelper::getInt( $atributeName );
-        $this->assertSame( $expected , $result);
-	}
-
-	public function testGetInt_OkInputString() {
-	    $atributeName = 'test';
-        $_POST[$atributeName] = '10';
-        $expected = 10;
-	    $result = PostHelper::getInt( $atributeName );
-        $this->assertSame( $expected , $result);
-	}
-
-	public function testGetInt_OkPostNull() {
-        $expected = null;
-	    $result = PostHelper::getInt( 'novo' );
-        $this->assertSame( $expected , $result);
-	}
-
-    public function testGetInt_FailInputString() {
-	    $atributeName = 'test';
-        $_POST[$atributeName] = 'casa';
-        $expected = null;
-	    $result = PostHelper::getInt( $atributeName );
-        $this->assertSame( $expected , $result);
-	}
-
-    public function testGetBool_TrueUppercase() {
-        $atributeName = 'test_bool';
-        $_POST[$atributeName] = 'S';
-        $this->assertTrue(PostHelper::getBool($atributeName));
+    /**
+     * Preserva o estado original do $_SERVER antes de cada teste
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->originalServer = $_SERVER;
     }
 
-    public function testGetBool_TrueLowercase() {
-        $atributeName = 'test_bool';
-        $_POST[$atributeName] = 's';
-        $this->assertTrue(PostHelper::getBool($atributeName));
+    /**
+     * Restaura o estado original do $_SERVER após cada teste
+     */
+    protected function tearDown(): void
+    {
+        $_SERVER = $this->originalServer;
+        parent::tearDown();
     }
 
-    public function testGetBool_FalseValue() {
-        $atributeName = 'test_bool';
-        $_POST[$atributeName] = 'N';
-        $this->assertFalse(PostHelper::getBool($atributeName));
+    /**
+     * Método auxiliar para configurar dados do $_SERVER
+     */
+    private function setServerData($data)
+    {
+        foreach ($data as $key => $value) {
+            $_SERVER[$key] = $value;
+        }
     }
 
-    public function testGetBool_NullValue() {
-        $atributeName = 'test_bool';
-        $_POST[$atributeName] = null;
-        $this->assertFalse(PostHelper::getBool($atributeName));
+    /**
+     * Testa o método curPageURL
+     */
+    public function testCurPageURL()
+    {
+        $this->setServerData([
+            'HTTPS' => 'on',
+            'SERVER_NAME' => 'www.example.com',
+            'SERVER_PORT' => '80',
+            'REQUEST_URI' => '/test/page?param=value'
+        ]);
+
+        $expected = 'https://www.example.com/test/page?param=value';
+        $result = UrlHelper::curPageURL();
+        $this->assertEquals($expected, $result);
     }
 
-    public function testGetBool_NotSet() {
-        $atributeName = 'non_existent_bool';
-        unset($_POST[$atributeName]);
-        $this->assertFalse(PostHelper::getBool($atributeName));
+    /**
+     * Testa o método homeUrl que lança erro devido ao método inexistente em ServerHelper
+     */
+    public function testHomeUrl_throwsError()
+    {
+        $this->expectException(\Error::class);
+        UrlHelper::homeUrl();
     }
 }

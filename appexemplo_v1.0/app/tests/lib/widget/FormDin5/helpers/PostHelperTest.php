@@ -78,4 +78,34 @@ class PostHelperTest extends TestCase
 	    $result = PostHelper::getInt( $atributeName );
         $this->assertSame( $expected , $result);
 	}
+
+    public function testGetBool_TrueUppercase() {
+        $atributeName = 'test_bool';
+        $_POST[$atributeName] = 'S';
+        $this->assertTrue(PostHelper::getBool($atributeName));
+    }
+
+    public function testGetBool_TrueLowercase() {
+        $atributeName = 'test_bool';
+        $_POST[$atributeName] = 's';
+        $this->assertTrue(PostHelper::getBool($atributeName));
+    }
+
+    public function testGetBool_FalseValue() {
+        $atributeName = 'test_bool';
+        $_POST[$atributeName] = 'N';
+        $this->assertFalse(PostHelper::getBool($atributeName));
+    }
+
+    public function testGetBool_NullValue() {
+        $atributeName = 'test_bool';
+        $_POST[$atributeName] = null;
+        $this->assertFalse(PostHelper::getBool($atributeName));
+    }
+
+    public function testGetBool_NotSet() {
+        $atributeName = 'non_existent_bool';
+        unset($_POST[$atributeName]);
+        $this->assertFalse(PostHelper::getBool($atributeName));
+    }
 }

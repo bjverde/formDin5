@@ -321,4 +321,56 @@ class OrmAdiantiHelperTest extends TestCase
         $criteria = new TCriteria;
         OrmAdiantiHelper::addFilterTCriteria($criteria, 'id', '=', null, null, $param, 'id');
     }
+
+    public function testObjPropertyValue_OK() {
+        $obj = new stdClass();
+        $obj->prop = 'val';
+        $this->assertEquals('val', OrmAdiantiHelper::objPropertyValue($obj, 'prop'));
+        $this->assertNull(OrmAdiantiHelper::objPropertyValue($obj, 'non_existent'));
+    }
+
+    public function testObjPropertyExistsSetValue_WithNullObj() {
+        $result = OrmAdiantiHelper::objPropertyExistsSetValue(null, 'prop', 'val');
+        $this->assertInstanceOf(stdClass::class, $result);
+        $this->assertEquals('val', $result->prop);
+    }
+
+    public function testObjPropertyExistsSetValue_WithArray() {
+        $obj = new stdClass();
+        $arrayParam = ['param' => 'val'];
+        $result = OrmAdiantiHelper::objPropertyExistsSetValue($obj, 'prop', $arrayParam, 'param');
+        $this->assertEquals('val', $result->prop);
+    }
+
+    public function testObjPropertyExistsSetValue_WithPropertyNameSet() {
+        $obj = new stdClass();
+        $obj->prop = 'old';
+        $result = OrmAdiantiHelper::objPropertyExistsSetValue($obj, 'prop', 'new');
+        $this->assertEquals('old', $result->prop);
+        
+        $obj2 = new stdClass();
+        $result2 = OrmAdiantiHelper::objPropertyExistsSetValue($obj2, 'prop', 'new');
+        $this->assertEquals('new', $result2->prop);
+    }
+
+    public function testAddFilter_WithSql() {
+        $filters = [];
+        $result = OrmAdiantiHelper::addFilter($filters, 'field', '=', null, null, ['val' => 'x'], 'val', 'SELECT 1');
+        $expected = [new TFilter('field', '=', 'SELECT 1')];
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testAddFilterTCriteria_WithSql() {
+        $criteria = new TCriteria();
+        $result = OrmAdiantiHelper::addFilterTCriteria($criteria, 'field', '=', null, null, ['val' => 'x'], 'val', 'SELECT 1');
+        $expected = new TCriteria();
+        $expected->add(new TFilter('field', '=', 'SELECT 1'));
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testAddFilterTCriteria_WithShowDump() {
+        $this->expectOutputRegex('/.*/');
+        $criteria = new TCriteria();
+        OrmAdiantiHelper::addFilterTCriteria($criteria, 'field', '=', null, null, ['val' => 'x'], 'val', null, TExpression::AND_OPERATOR, true);
+    }
 }

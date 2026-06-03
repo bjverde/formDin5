@@ -98,5 +98,14 @@ class ObjectHelperTest extends TestCase
         $this->assertEquals($origem->idade, $retorno->idade, 'O atributo email deve ser transferido corretamente.' );
         $this->assertNull($retorno->raca, 'O atributo raca deve ser nulo.');
     }
+
+    public function testTransferirAtributos() {
+        $origem = new Pessoa('João', 30, 'joao@example.com');
+        $destino = new Pessoa();
+        $retorno = ObjectHelper::transferirAtributos($origem, $destino, ['nome', 'idade']);
+        $this->assertEquals('João', $retorno->nome);
+        $this->assertEquals(30, $retorno->idade);
+        $this->assertNull($retorno->email);
+    }
 }
 

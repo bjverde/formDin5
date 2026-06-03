@@ -53,4 +53,66 @@ class FileHelperTest extends TestCase
 		$result = FileHelper::getNomePastaSistema();
 		$this->assertSame( $expected , $result );
 	}
+
+    public function testGetCaminhoSistema() {
+        $result = FileHelper::getCaminhoSistema();
+        $this->assertIsString($result);
+        $this->assertStringContainsString('appexemplo_v1.0', $result);
+    }
+
+    public function testExists_WithValidFile() {
+        $filePath = __FILE__;
+        $this->assertTrue(FileHelper::exists($filePath));
+    }
+
+    public function testExists_WithInvalidFile() {
+        $filePath = 'non_existent_file.txt';
+        $this->assertFalse(FileHelper::exists($filePath));
+    }
+
+    public function testExists_WithEmptyInput() {
+        $this->assertFalse(FileHelper::exists(null));
+        $this->assertFalse(FileHelper::exists(''));
+    }
+
+    public function testMove_Success() {
+        $tempDir = __DIR__ . '/temp_test_move';
+        if (!is_dir($tempDir)) {
+            mkdir($tempDir, 0755, true);
+        }
+        $from = $tempDir . '/source.txt';
+        $to = $tempDir . '/dest_subdir/dest.txt';
+
+        file_put_contents($from, 'test content');
+
+        $result = FileHelper::move($from, $to);
+        $this->assertTrue($result);
+        $this->assertTrue(file_exists($to));
+        $this->assertFalse(file_exists($from));
+
+        // Clean up
+        unlink($to);
+        rmdir($tempDir . '/dest_subdir');
+        rmdir($tempDir);
+    }
+
+    public function testMove_SourceDoesNotExistException() {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('File not exist:');
+        FileHelper::move('non_existent_source.txt', 'dest.txt');
+    }
+
+    public function testMove_MkdirFailureException() {
+        $from = __DIR__ . '/temp_source_mkdir_fail.txt';
+        file_put_contents($from, 'test');
+        try {
+            $this->expectException(\Exception::class);
+            $this->expectExceptionMessage('Falha ao criar os diretórios:');
+            FileHelper::move($from, __DIR__ . '/temp_source_invalid_dir?/dest.txt');
+        } finally {
+            if (file_exists($from)) {
+                unlink($from);
+            }
+        }
+    }
 }

@@ -93,4 +93,33 @@ class HtmlHelperTest extends TestCase
 	    $string = '#123456';
 	    $this->assertNull( HtmlHelper::validateHtmlColorHexa( $string ) );
 	}
+
+    public function testLinkApiWhatsApp_WithGreenIcon() {
+        $result = HtmlHelper::linkApiWhatsApp('+55 (61) 99999-9999', 'Olá', true);
+        $this->assertStringContainsString('fab fa-whatsapp green', $result);
+        $this->assertStringContainsString('phone=5561999999999', $result);
+        $this->assertStringContainsString('text=Olá', $result);
+    }
+
+    public function testLinkApiWhatsApp_WithoutGreenIcon() {
+        $result = HtmlHelper::linkApiWhatsApp('+55 (61) 99999-9999', 'Olá', false);
+        $this->assertStringContainsString('fab fa-whatsapp', $result);
+        $this->assertStringNotContainsString('green', $result);
+        $this->assertStringContainsString('phone=5561999999999', $result);
+        $this->assertStringContainsString('text=Olá', $result);
+    }
+
+    public function testGetListDdd() {
+        $result = HtmlHelper::getListDdd();
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey(61, $result);
+        $this->assertEquals('Distrito Federal - 61', $result[61]);
+    }
+
+    public function testGetListDdi() {
+        $result = HtmlHelper::getListDdi();
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('+55', $result);
+        $this->assertEquals('+55 🇧🇷 Brasil', $result['+55']);
+    }
 }
