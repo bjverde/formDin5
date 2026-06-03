@@ -95,10 +95,12 @@ class StringHelper
         // Detecta encoding de origem
         $detected = mb_detect_encoding($string, $encodings, true);
 
+        // @codeCoverageIgnoreStart
         if ($detected === false) {
             // fallback: força interpretação como ISO-8859-1
             $detected = 'ISO-8859-1';
         }
+        // @codeCoverageIgnoreEnd
 
         // Converte para UTF-8 só se não estiver já em UTF-8
         if ($detected !== 'UTF-8') {

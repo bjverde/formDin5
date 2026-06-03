@@ -96,7 +96,7 @@ class FormDinHelper
     {
         $t = explode(".", $version);
         $qtd = CountHelper::count($t);
-        if( ($qtd<3)&&($qtd>4) ){
+        if( ($qtd<3)||($qtd>4) ){
             throw new DomainException(TFormDinMessage::FORM_MIN_VERSION_INVALID_FORMAT);
         }
     }    
@@ -156,9 +156,11 @@ class FormDinHelper
 	}
     //--------------------------------------------------------------------------------
     public static function getAdiantiFrameWorkVersion(){
+        // @codeCoverageIgnoreStart
         if(!defined('DS') ) { 
             define('DS', DIRECTORY_SEPARATOR); 
         }
+        // @codeCoverageIgnoreEnd
         $fileVersion = __DIR__.DS.'..'.DS.'..'.DS.'..'.DS.'..'.DS.'..'.DS.'lib'.DS.'VERSION';
         if ( !file_exists($fileVersion) ) {
             throw new InvalidArgumentException(TFormDinMessage::ERROR_FILE_NOT_FOUND.' VERSION do Adianti');
@@ -247,7 +249,7 @@ class FormDinHelper
      */
     public static function validateObjTypeTPDOConnectionObj($tpdo,$method,$line)
     {
-        ValidateHelper::objTypeTPDOConnectionObj($tpdo, $method, $line);
+        ValidateHelper::objTypeTFormDinPdoConnection($tpdo, $method, $line);
     }
     //--------------------------------------------------------------------------------
     /**
