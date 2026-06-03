@@ -59,7 +59,7 @@ class exe_TMemo extends TPage
         $chars02->add('caracteres: 0 / '.$maxlength);
         
         $script02 = new TElement('script');
-        $script02->setProperty('src', 'app/lib/include/FormDin5.js');
+        $script02->setProperty('src', 'app/lib/widget/FormDin5/javascript/FormDin5.js');
         
         $div02    = new TElement('div');
         $div02->add($fieldTxt02);
