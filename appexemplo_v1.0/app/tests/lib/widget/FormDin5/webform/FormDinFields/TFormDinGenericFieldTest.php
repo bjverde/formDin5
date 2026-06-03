@@ -247,4 +247,33 @@ class TFormDinGenericFieldTest extends TestCase
         $result = $this->classTest->getClass();
         $this->assertEquals('formdin5 btn', $result);
     }
+
+    public function testSetId_Exception()
+    {
+        $reflection = new ReflectionClass(TFormDinGenericField::class);
+        $fieldObj = $reflection->newInstanceWithoutConstructor();
+        $this->expectException(RuntimeException::class);
+        $fieldObj->setId('test');
+    }
+
+    public function testGetId()
+    {
+        $this->assertEquals('id1', $this->classTest->getId());
+    }
+
+    public function testRemoveValidation()
+    {
+        $val1 = new TRequiredValidator();
+        $val2 = new TMaxLengthValidator();
+        $this->classTest->addValidation('xx', $val1);
+        $this->classTest->addValidation('yy', $val2, array(5));
+        $this->expectOutputRegex('/.*/');
+        $this->classTest->removeValidation($val1);
+    }
+
+    public function testSetHelpOnLine()
+    {
+        $this->classTest->setHelpOnLine();
+        $this->assertTrue(true);
+    }
 }

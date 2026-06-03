@@ -88,10 +88,19 @@ class TFormDinLabelFieldTest extends TestCase
         $this->assertEquals('aaa bbb', $result);
     }
 
-    public function test_GetToottip()
+    public function test_GetTooltip()
     {
         $this->classTest->setTooltip('vaii');
         $result =  $this->classTest->getTooltip();
         $this->assertEquals('vaii', $result);
+    }
+
+    public function testFontSetters()
+    {
+        $this->classTest->setFontSize('12px');
+        $this->classTest->setFontStyle('b');
+        $this->classTest->setFontFace('Arial');
+        $this->classTest->setFontColor('blue');
+        $this->assertTrue(true);
     }
 }

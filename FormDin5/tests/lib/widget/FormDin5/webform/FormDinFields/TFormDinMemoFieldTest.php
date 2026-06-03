@@ -87,4 +87,19 @@ class TFormDinMemoFieldTest extends TestCase
         $this->assertEquals(true,$readOnly);
     }
 
+    public function testGetMaxLength()
+    {
+        $this->assertEquals(300, $this->classTest->getMaxLength());
+    }
+
+    public function testSetSizeNumericRows()
+    {
+        $field = new TFormDinMemoField('memo', 'Memo', 100, false, '100%', 15);
+        $this->assertInstanceOf(TText::class, $field->getAdiantiObj());
+    }
+
+    public function testGetShowCountChar()
+    {
+        $this->assertTrue($this->classTest->getShowCountChar());
+    }
 }

@@ -128,11 +128,31 @@ class TFormDinCheckListTest extends TestCase
         $this->assertInstanceOf(TEntry::class, $adiantiObj);
     }
     
-    /*
-    public function testInstanceOff_THBox_showTitle()
+    public function testRequired_true()
     {
-        $adiantiObj = $this->classTest->showTitle();
-        $this->assertInstanceOf(THBox::class, $adiantiObj);
+        $this->classTest->setRequired(true);
+        $this->assertTrue(true); // validates method runs
     }
-    */
+
+    public function testGetRequired()
+    {
+        $this->assertInstanceOf(TCheckList::class, $this->classTest->getRequired());
+    }
+
+    public function testSetHeight_numeric()
+    {
+        $this->classTest->setHeight(150);
+        $this->assertTrue($this->classTest->getObjCheck()->isScrollable());
+    }
+
+    public function testShowTitle()
+    {
+        $this->assertInstanceOf(THBox::class, $this->classTest->showTitle());
+    }
+
+    public function testShowBody()
+    {
+        $this->assertInstanceOf(TCheckList::class, $this->classTest->showBody());
+    }
+
 }

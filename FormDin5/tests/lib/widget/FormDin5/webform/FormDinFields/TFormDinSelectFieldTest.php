@@ -87,4 +87,27 @@ class TFormDinSelectFieldTest extends TestCase
         $adiantiObj = $select->getAdiantiObj();
         $this->assertInstanceOf(TSelect::class, $adiantiObj);
     } 
+
+    public function testUniqueSearch()
+    {
+        $field = new TFormDinSelectField('sel', 'Select', false, [1 => 'A'], true, false, null, false, null, null, null, null, null, null, null, null, true);
+        $field->enableSearch(true);
+        $this->assertInstanceOf(TUniqueSearch::class, $field->getAdiantiObj());
+    }
+
+    public function testSetWidth_Warning()
+    {
+        set_error_handler(function($errno, $errstr) {
+            if ($errno === E_USER_WARNING) {
+                $this->assertStringContainsString('intWidth', $errstr);
+                return true;
+            }
+            return false;
+        });
+        try {
+            $this->classTest->setWidth(200);
+        } finally {
+            restore_error_handler();
+        }
+    }
 }

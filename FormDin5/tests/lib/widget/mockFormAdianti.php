@@ -15,6 +15,10 @@ class mockFormDinComAdianti extends TPage
     {
     }
 
+    public static function onSaveStatic()
+    {
+    }
+
     public function onClear()
     {
     }

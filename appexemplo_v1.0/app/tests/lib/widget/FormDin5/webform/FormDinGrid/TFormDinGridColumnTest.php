@@ -90,4 +90,60 @@ class TFormDinGridColumnTest extends TestCase
         $this->assertInstanceOf(TDataGridColumn::class, $result);
         $this->assertEquals('right', $result->getAlign());
     }
+
+    public function testSetObjForm_Empty()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm(null);
+    }
+
+    public function testSetObjForm_NotObject()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm('not-an-object');
+    }
+
+    public function testSetAdiantiObj_Empty()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setAdiantiObj(null);
+    }
+
+    public function testEnableAutoHide()
+    {
+        // autoHide is empty, nothing happens
+        $this->classTest->enableAutoHide(null);
+        
+        // autoHide has value
+        $this->classTest->enableAutoHide('200px');
+        $this->expectNotToPerformAssertions();
+    }
+
+    public function testTransformer()
+    {
+        $callback = function($val) { return $val; };
+        $this->classTest->setTransformer($callback);
+        $this->assertSame($callback, $this->classTest->getTransformer());
+    }
+
+    public function testAction()
+    {
+        $action = new TAction(array($this->objForm, 'onReload'));
+        $this->classTest->setAction($action);
+        $this->assertSame($action, $this->classTest->getAction());
+    }
+
+    public function testGetSortable()
+    {
+        // Default sortable is true
+        $this->assertTrue($this->classTest->getSortable());
+        
+        // Set false
+        $this->classTest->setSortable(false);
+        $this->assertFalse($this->classTest->getSortable());
+        
+        // Set true
+        $this->classTest->setSortable(true);
+        $this->assertTrue($this->classTest->getSortable());
+    }
 }

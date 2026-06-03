@@ -43,60 +43,50 @@
 require_once  __DIR__.'/../../../mockFormAdianti.php';
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Error\Notice;
-use PHPUnit\Framework\Error\Warning;
 
-class TFormDinGridActionTest extends TestCase
+class TFormDinGridColumnFormatCpfCnpjTest extends TestCase
 {
-
     private $classTest;
     private $objForm;
-    
-    /**
-     * Prepares the environment before running a test.
-     */
+
     protected function setUp(): void {
         parent::setUp();
         $this->objForm = new mockFormDinComAdianti();
-        $actionName = 'onSave';
-        $arrayMixUpdateFields = ['code'=>'{code}'];
-        $this->classTest = new TFormDinGridAction($this->objForm,'Salvar',$actionName, $arrayMixUpdateFields);
+        $this->classTest = new TFormDinGridColumnFormatCpfCnpj($this->objForm, 'cpf_cnpj', 'CPF/CNPJ');
     }
-    
-    /**
-     * Cleans up the environment after running a test.
-     */
+
     protected function tearDown(): void {
         $this->classTest = null;
         parent::tearDown();
     }
 
-    public function testTypeObje()
+    public function testConstructor()
     {
         $result = $this->classTest->getAdiantiObj();
-        $this->assertInstanceOf(TDataGridAction::class, $result);
-    }
-
-    public function testAlignCenter()
-    {
-        $column = new TFormDinGridColumn($this->objForm,'TEST', 'TEST',null,'center');
-        $result =  $column->getAdiantiObj();
         $this->assertInstanceOf(TDataGridColumn::class, $result);
-        $this->assertEquals('center', $result->getAlign());
+        $this->assertEquals('cpf_cnpj', $result->getName());
+        
+        $transformer = $result->getTransformer();
+        $this->assertIsArray($transformer);
+        $this->assertInstanceOf(TFormDinGridColumnFormatCpfCnpj::class, $transformer[0]);
+        $this->assertEquals('format', $transformer[1]);
     }
 
-    public function testSetAdiantiObj_Empty()
+    public function testFormatCpf()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->classTest->setAdiantiObj(null);
+        $formatted = $this->classTest->format('12345678909');
+        $this->assertEquals('123.456.789-09', $formatted);
     }
 
-    public function testDisplayCondition()
+    public function testFormatCnpj()
     {
-        $condition = function($object) {
-            return true;
-        };
-        $this->classTest->setDisplayCondition($condition);
-        $this->assertSame($condition, $this->classTest->getDisplayCondition());
+        $formatted = $this->classTest->format('12345678000199');
+        $this->assertEquals('12.345.678/0001-99', $formatted);
+    }
+
+    public function testFormatInvalid()
+    {
+        $formatted = $this->classTest->format('123');
+        $this->assertEquals('123', $formatted);
     }
 }

@@ -243,7 +243,6 @@ class TFormDinOptionTest extends TestCase
         
         $this->assertEquals($esperado, $result);
     }
-
     public function testGetOptions_MixNull()
     {   
         $esperado = array('S'=>'');
@@ -255,4 +254,230 @@ class TFormDinOptionTest extends TestCase
         $this->assertEquals($esperado, $result);
     }
 
+    public function testNowrapText()
+    {
+        $this->classTest->setNowrapText(true);
+        $this->assertTrue($this->classTest->getNowrapText());
+        $this->classTest->setNowrapText(false);
+        $this->assertFalse($this->classTest->getNowrapText());
+    }
+
+    public function testOracleFormatOptions()
+    {
+        $mixOptions = [
+            'id' => [1, 2, 3],
+            'name' => ['Alice', 'Bob', 'Charlie'],
+            'info' => ["A\nB", "C\nD", "E\nF"]
+        ];
+        $field = new TFormDinOption(
+            new TCombo('option_test'),
+            'option_test',
+            'Option Test',
+            false,
+            $mixOptions,
+            null,
+            null,
+            null,
+            null,
+            null,
+            'select',
+            null,
+            'ID',
+            'NAME',
+            true,
+            'info'
+        );
+        $this->assertEquals(['1' => 'Alice', '2' => 'Bob', '3' => 'Charlie'], $field->getOptions());
+    }
+
+    public function testOracleFormatOptionsCaseInsensitive()
+    {
+        // Test case 1: uppercase key in mixOptions, lowercase in strDataColumns (triggers strtoupper branches)
+        $mixOptions1 = [
+            'id' => [1, 2, 3],
+            'name' => ['Alice', 'Bob', 'Charlie'],
+            'INFO' => ["A\nB", "C\nD", "E\nF"]
+        ];
+        $field1 = new TFormDinOption(
+            new TCombo('option_test'),
+            'option_test',
+            'Option Test',
+            false,
+            $mixOptions1,
+            null,
+            null,
+            null,
+            null,
+            null,
+            'select',
+            null,
+            'ID',
+            'NAME',
+            true,
+            'info'
+        );
+        $this->assertEquals(['1' => 'Alice', '2' => 'Bob', '3' => 'Charlie'], $field1->getOptions());
+
+        // Test case 2: lowercase key in mixOptions, uppercase in strDataColumns (triggers strtolower branches)
+        $mixOptions2 = [
+            'id' => [1, 2, 3],
+            'name' => ['Alice', 'Bob', 'Charlie'],
+            'info' => ["A\nB", "C\nD", "E\nF"]
+        ];
+        $field2 = new TFormDinOption(
+            new TCombo('option_test'),
+            'option_test',
+            'Option Test',
+            false,
+            $mixOptions2,
+            null,
+            null,
+            null,
+            null,
+            null,
+            'select',
+            null,
+            'ID',
+            'NAME',
+            true,
+            'INFO'
+        );
+        $this->assertEquals(['1' => 'Alice', '2' => 'Bob', '3' => 'Charlie'], $field2->getOptions());
+    }
+
+    public function testOracleFormatSingleColumn()
+    {
+        $mixOptions = [
+            'id' => [1, 2, 3]
+        ];
+        set_error_handler(function($errno, $errstr) {
+            if ($errno === E_WARNING && strpos($errstr, 'Undefined array key 1') !== false) {
+                return true;
+            }
+            return false;
+        });
+        try {
+            $field = new TFormDinOption(
+                new TCombo('option_test'),
+                'option_test',
+                'Option Test',
+                false,
+                $mixOptions,
+                null,
+                null,
+                null,
+                null,
+                null,
+                'select',
+                null,
+                null,
+                null,
+                true,
+                null
+            );
+        } finally {
+            restore_error_handler();
+        }
+        $this->assertEquals(['1' => '1', '2' => '2', '3' => '3'], $field->getOptions());
+    }
+
+    public function testUseButton_SelectException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setUseButton(true);
+    }
+
+    public function testUseButton_RadioSuccess()
+    {
+        $radio = new TFormDinOption(
+            new TRadioGroup('radio_test'),
+            'radio_test',
+            'Radio Test',
+            false,
+            ['M' => 'Masculino', 'F' => 'Feminino'],
+            null,
+            null,
+            null,
+            null,
+            null,
+            'radio'
+        );
+        $radio->setUseButton(true);
+        $this->assertIsArray($radio->getButtons());
+    }
+
+    public function testLayout_SelectException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setLayout('horizontal');
+    }
+
+    public function testLayout_RadioSuccess()
+    {
+        $radio = new TFormDinOption(
+            new TRadioGroup('radio_test'),
+            'radio_test',
+            'Radio Test',
+            false,
+            ['M' => 'Masculino', 'F' => 'Feminino'],
+            null,
+            null,
+            null,
+            null,
+            null,
+            'radio'
+        );
+        $radio->setLayout('horizontal');
+        $this->assertEquals('horizontal', $radio->getLayout());
+    }
+
+    public function testBreakItems_SelectException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setBreakItems(2);
+    }
+
+    public function testBreakItems_RadioSuccess()
+    {
+        $radio = new TFormDinOption(
+            new TRadioGroup('radio_test'),
+            'radio_test',
+            'Radio Test',
+            false,
+            ['M' => 'Masculino', 'F' => 'Feminino'],
+            null,
+            null,
+            null,
+            null,
+            null,
+            'radio'
+        );
+        $radio->setBreakItems(2);
+        $this->assertTrue(true);
+    }
+
+    public function testSearchFieldsAndItems()
+    {
+        $this->classTest->setSearchFields('some_fields');
+        $this->assertEquals('some_fields', $this->classTest->getSearchFields());
+        $this->assertIsArray($this->classTest->getItems());
+    }
+
+    public function testGetLabels()
+    {
+        $radio = new TFormDinOption(
+            new TRadioGroup('radio_test'),
+            'radio_test',
+            'Radio Test',
+            false,
+            ['M' => 'Masculino', 'F' => 'Feminino'],
+            null,
+            null,
+            null,
+            null,
+            null,
+            'radio'
+        );
+        $this->assertIsArray($radio->getLabels());
+    }
 }

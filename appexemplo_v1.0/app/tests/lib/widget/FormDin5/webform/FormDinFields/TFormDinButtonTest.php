@@ -106,4 +106,122 @@ class TFormDinButtonTest extends TestCase
     }
     */
 
+    public function testConstructor_ActionArray()
+    {
+        $classForm = new mockFormDinComAdianti();
+        $btn = new TFormDinButton($classForm, 'Salvar', null, ['mockFormDinComAdianti', 'onSave']);
+        $this->assertInstanceOf(TButton::class, $btn->getAdiantiObj());
+    }
+
+    public function testSetObjForm_NotObject()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setObjForm('not_an_object');
+    }
+
+    public function testSetLabel_Array()
+    {
+        set_error_handler(function($errno, $errstr) {
+            if ($errno === E_USER_ERROR) {
+                $this->assertStringContainsString('O parametro $mixValue não recebe mais um array', $errstr);
+                return true;
+            }
+            return false;
+        });
+        try {
+            $this->classTest->setLabel(['Save', 'Cancel']);
+        } finally {
+            restore_error_handler();
+        }
+    }
+
+    public function testSetAdiantiObj_Null()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setAdiantiObj(null);
+    }
+
+    public function testSetAdiantiObj_NotObject()
+    {
+        set_error_handler(function($errno, $errstr) {
+            if ($errno === E_USER_ERROR) {
+                $this->assertStringContainsString('o metodo addButton MUDOU!', $errstr);
+                return true;
+            }
+            return false;
+        });
+        try {
+            $this->classTest->setAdiantiObj('not_an_object');
+        } finally {
+            restore_error_handler();
+        }
+    }
+
+    public function testSetAction_Conflict()
+    {
+        $this->classTest->addFunction('alert(1);');
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setAction('onSave');
+    }
+
+    public function testSetAction_Array()
+    {
+        $this->classTest->setAction(['mockFormDinComAdianti', 'onSave']);
+        $this->assertInstanceOf(TAction::class, $this->classTest->getAdiantiObj()->getAction());
+    }
+
+    public function testGetAction()
+    {
+        $this->classTest->getAction();
+        $this->assertTrue(true);
+    }
+
+    public function testSetImage()
+    {
+        $this->classTest->setImage('fa:save');
+        $this->assertTrue(true);
+    }
+
+    public function testSetPopover()
+    {
+        $this->classTest->setPopover('title', 'top', 'content');
+        $this->assertEquals('content', $this->classTest->getAdiantiObj()->popcontent);
+    }
+
+    public function testParameters()
+    {
+        $this->classTest->setParameter('param1', 'val1');
+        $this->assertEquals('val1', $this->classTest->getParameter('param1'));
+        $this->assertEquals(['param1' => 'val1'], $this->classTest->getParameters());
+    }
+
+    public function testAddFunction()
+    {
+        $this->classTest->addFunction('alert(1);');
+        $this->assertEquals('alert(1);', $this->classTest->getStrOnClick());
+    }
+
+    public function testSetConfirmMessage_Conflict()
+    {
+        $this->classTest->addFunction('alert(1);');
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setConfirmMessage('Are you sure?');
+    }
+
+    public function testSetConfirmMessage_Success()
+    {
+        $this->classTest->setConfirmMessage('Are you sure?');
+        $this->assertEquals('Are you sure?', $this->classTest->getConfirmMessage());
+    }
+
+    public function testGetConfirmMessage()
+    {
+        $this->assertNull($this->classTest->getConfirmMessage());
+    }
+
+    public function testGetHint()
+    {
+        $this->assertNull($this->classTest->getHint());
+    }
+
 }

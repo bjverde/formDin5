@@ -85,4 +85,18 @@ class TFormDinGridActionTest extends TestCase
         $this->assertEquals('center', $result->getAlign());
     }
 
+    public function testSetAdiantiObj_Empty()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setAdiantiObj(null);
+    }
+
+    public function testDisplayCondition()
+    {
+        $condition = function($object) {
+            return true;
+        };
+        $this->classTest->setDisplayCondition($condition);
+        $this->assertSame($condition, $this->classTest->getDisplayCondition());
+    }
 }

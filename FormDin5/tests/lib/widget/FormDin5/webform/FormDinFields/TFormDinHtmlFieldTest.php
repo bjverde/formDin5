@@ -82,4 +82,29 @@ class TFormDinHtmlFieldTest extends TestCase
         $this->assertEquals('id',$id);
     }
 
+    public function testIncludeFile_DoesNotExist()
+    {
+        $field = new TFormDinHtmlField('p1', 'html', 'non_existing_file.html');
+        $this->assertInstanceOf(TElement::class, $field->getAdiantiObj());
+    }
+
+    public function testIncludeFile_Exists()
+    {
+        $originalServer = $_SERVER;
+        $_SERVER['SERVER_NAME'] = 'localhost';
+        $_SERVER['SERVER_PORT'] = '80';
+        $_SERVER['REQUEST_URI'] = '/';
+        try {
+            $field = new TFormDinHtmlField('p1', 'html', 'composer.json');
+            $this->assertInstanceOf(TElement::class, $field->getAdiantiObj());
+        } finally {
+            $_SERVER = $originalServer;
+        }
+    }
+
+    public function testAdd()
+    {
+        $this->classTest->add('some other element');
+        $this->assertTrue(true);
+    }
 }

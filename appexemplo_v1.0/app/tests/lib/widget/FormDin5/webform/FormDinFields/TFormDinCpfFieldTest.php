@@ -100,4 +100,10 @@ class TFormDinCpfFieldTest extends TestCase
         $result = $this->classTest->getAlwaysValidate();
         $this->assertEquals(true, $result);
     }
+
+    public function testSetAlwaysValidate_invalidType()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setAlwaysValidate('not_a_bool');
+    }
 }

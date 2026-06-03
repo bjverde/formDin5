@@ -80,4 +80,47 @@ class TFormDinFileFieldTest extends TestCase
         $this->assertEquals($expect, $result);
     }
 
+    public function testConstructor_ExtraArgs()
+    {
+        $field = new TFormDinFileField('testFileExtra', 'Upload', false, 'jpg', null, null, null, false, false, null);
+        $field->setValue('default_val');
+        $this->assertEquals('default_val', $field->getAdiantiObj()->getValue());
+    }
+
+    public function testGetId()
+    {
+        $this->assertEquals('testFile1', $this->classTest->getId());
+    }
+
+    public function testCompleteAndErrorActions()
+    {
+        $action = new TAction(array('mockFormDinComAdianti', 'onSaveStatic'));
+        $this->classTest->setCompleteAction($action);
+        $this->classTest->setErrorAction($action);
+        $this->assertTrue(true);
+    }
+
+    public function testEnableFileHandling()
+    {
+        $this->classTest->enableFileHandling(true);
+        $this->assertTrue(true);
+    }
+
+    public function testEnablePopover()
+    {
+        $this->classTest->enablePopover('Title', 'Content');
+        $this->assertTrue(true);
+    }
+
+    public function testSetService()
+    {
+        $this->classTest->setService('MyService');
+        $this->assertTrue(true);
+    }
+
+    public function testEnableImageGallery()
+    {
+        $this->classTest->enableImageGallery(150, 150);
+        $this->assertTrue(true);
+    }
 }
