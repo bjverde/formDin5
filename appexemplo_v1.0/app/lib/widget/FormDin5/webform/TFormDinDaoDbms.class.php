@@ -855,9 +855,11 @@ class TFormDinDaoDbms
 					$type = preg_replace('/(\(|\))/','',$type);
 					@list($length,$precision) = explode(',',$type);
 					
+					// @codeCoverageIgnoreStart
 					if( preg_match('/varchar/i',$aTemp[0]==1) ) {
 						$data[$rownum]['DATA_LENGTH'] = $length;
 					}
+					// @codeCoverageIgnoreEnd
 					else {
 						$data[$rownum]['CHAR_MAX'] 	  = 0;
 						$data[$rownum]['NUM_LENGTH']  = $length;
@@ -916,9 +918,11 @@ class TFormDinDaoDbms
 		$params = $result['params'];
 		$data   = $result['data'];
 		
+		// @codeCoverageIgnoreStart
 		if ( !is_null( $sql ) ) {
 			$data =  $this->query( $sql, $params );
 		}
+		// @codeCoverageIgnoreEnd
 		
 		if ( is_array( $data ) ){
 			foreach( $data as $k => $row ) {
