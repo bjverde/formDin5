@@ -78,6 +78,7 @@ class TFormDinGridColumn
                               , ?string $autoHide = null
                               )
     {
+        // @codeCoverageIgnoreStart
         if( !is_object($objForm) ){
             $track = debug_backtrace();
             $msg = 'A classe TFormDinGridColumn MUDOU! o primeiro parametro agora recebe object form! o Restante está igual ;-)';
@@ -90,6 +91,7 @@ class TFormDinGridColumn
                                          ,$track[0]['file']
                                         );
         }else{
+        // @codeCoverageIgnoreEnd
             $this->setObjForm($objForm);
             $column = new TDataGridColumn($name, $label,$align,$width);
             $this->setAdiantiObj($column);
