@@ -1,5 +1,5 @@
 <?php
-class TGenericDAO
+class TFormDinGenericDAO
 {
     private $database  = null;
     private $repository = null;

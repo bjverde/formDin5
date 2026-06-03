@@ -1,5 +1,5 @@
 <?php
-class TGenericController
+class TFormDinGenericController
 {
     private $dao;
 
