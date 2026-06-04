@@ -1,25 +1,35 @@
 <?php
 class TFormDinSystemPermController
 {
-    private static $database = Constantes::DATABASE_PERMISSION;
+    private string|null $database = null;
 
-    public function __construct(){
+    public function __construct(string|null $database = null){
+        $this->setDatabase($database);
+    }
+    public function getDatabase()
+    {
+        return $this->database;
+    }
+
+    public function setDatabase(string $database)
+    {
+        $this->database = $database;
     }
     //--------------------------------------------------------------------------------    
     /**
      * Cria um combo de usuários para usar em formulários compativel com diferentes versões do Adianti
      * @param string $idCombo - ID do combo
-     * @return TDBCombo | null
+     * @return TDBCombo|null
      */
-    public static function getTDBComboUser(string $idCombo, TCriteria|null $criteria=null){
+    public function getTDBComboUser(string $idCombo, TCriteria|null $criteria=null){
         $combo = null;
         if (class_exists('SystemUser')) {
-            $combo = new TDBCombo($idCombo, Constantes::DATABASE_PERMISSION, 'SystemUser', 'id', '{name}','name asc' , $criteria);
+            $combo = new TDBCombo($idCombo, $this->getDatabase(), 'SystemUser', 'id', '{name}','name asc' , $criteria);
             $combo->enableSearch();
-            $combo->setSize('100%');        
+            $combo->setSize('100%');
         }
         if (class_exists('SystemUsers')) {
-            $combo = new TDBCombo($idCombo, Constantes::DATABASE_PERMISSION, 'SystemUsers', 'id', '{name}','name asc' , $criteria);
+            $combo = new TDBCombo($idCombo, $this->getDatabase(), 'SystemUsers', 'id', '{name}','name asc' , $criteria);
             $combo->enableSearch();
             $combo->setSize('100%');
         }
@@ -31,9 +41,9 @@ class TFormDinSystemPermController
      * @param int $system_user_id - ID do usuário
      * @return object | null
      */        
-    public static function getUserById($system_user_id){
+    public function getUserById(int $system_user_id){
         try{
-            $conn = TTransaction::open(self::$database); // open transaction
+            $conn = TTransaction::open($this->getDatabase()); // open transaction
             $usuario = null;
             if (class_exists('SystemUser')) {
                 $usuario = SystemUser::find($system_user_id);
@@ -49,14 +59,13 @@ class TFormDinSystemPermController
             TTransaction::close();
             return $usuario; // retorna o objeto salvo
         }catch (Exception $e) {
-            TTransaction::rollback();
             throw $e;
         }
     }    
-    public static function getNomeUserById($system_user_id){
+    public function getNomeUserById(int $system_user_id):string{
         try{
             if( is_numeric($system_user_id) && $system_user_id>0 ){
-                $usuario = SystemPermController::getUserById($system_user_id);
+                $usuario = $this->getUserById($system_user_id);
                 if(is_object($usuario) && isset($usuario->name)){
                     return $usuario->name; // retorna o objeto salvo
                 }else{
@@ -66,14 +75,13 @@ class TFormDinSystemPermController
                 return '';
             }
         }catch (Exception $e) {
-            TTransaction::rollback();
             throw $e;
         }
     }
     //--------------------------------------------------------------------------------    
-    public static function getUnitById($system_unit_id){
+    public function getUnitById(int $system_unit_id){
         try{
-            $conn = TTransaction::open(self::$database); // open transaction
+            $conn = TTransaction::open($this->getDatabase()); // open transaction
             $unidade = SystemUnit::find($system_unit_id);
             TTransaction::close();
             return $unidade; // retorna o objeto salvo
@@ -83,9 +91,9 @@ class TFormDinSystemPermController
         }
     }
     //--------------------------------------------------------------------------------    
-    public static function getNomeUnitById($system_unit_id){
+    public function getNomeUnitById(int $system_unit_id):string{
         try{
-            $unidade = SystemPermController::getUnitById($system_unit_id);
+            $unidade = $this->getUnitById($system_unit_id);
             return $unidade->name; // retorna o objeto salvo
         }catch (Exception $e) {
             TTransaction::rollback();
