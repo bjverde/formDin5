@@ -1,9 +1,9 @@
 <?php
 class TFormDinGenericDAO
 {
-    private $database  = null;
-    private $repository = null;
-    private $tpdo = null;
+    private string|null $database = null;
+    private string|null $repository = null;
+    private TFormDinPdoConnection|null $tpdo = null;
 
     /**
      * Seta os elmentos basicos para conectar no banco
@@ -34,7 +34,7 @@ class TFormDinGenericDAO
     {
         return $this->database;
     }
-    public function setDatabase($database)
+    public function setDatabase(string|null $database)
     {
         $this->database = $database;
     }
@@ -42,7 +42,7 @@ class TFormDinGenericDAO
     {
         return $this->repository;
     }
-    public function setRepository($repository)
+    public function setRepository(string|null $repository)
     {
         $this->repository = $repository;
     }
@@ -57,7 +57,7 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
-    public function executeSelect($sql)
+    public function executeSelect(string $sql)
     {
         try {
             TTransaction::open($this->getDatabase());
@@ -71,7 +71,7 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
-    public function executeSelectCount($sql)
+    public function executeSelectCount(string $sql)
     {
         try {
             $result = $this->executeSelect($sql);
@@ -80,7 +80,7 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
-    public function execute($sql, $values)
+    public function execute(string $sql, array $values)
     {
         try {
             TTransaction::open($this->getDatabase());
