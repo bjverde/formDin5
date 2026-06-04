@@ -3,6 +3,33 @@ use PHPUnit\Framework\TestCase;
 
 class TFormDinSystemPermControllerTest extends TestCase
 {
+    public static function setUpBeforeClass(): void
+    {
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $conn->exec("CREATE TABLE IF NOT EXISTS system_user (id INTEGER PRIMARY KEY, name VARCHAR(100))");
+        $conn->exec("CREATE TABLE IF NOT EXISTS system_unit (id INTEGER PRIMARY KEY, name VARCHAR(100))");
+        TTransaction::close();
+    }
+
+    protected function tearDown(): void
+    {
+        try {
+            TTransaction::rollback();
+        } catch (Throwable $e) {
+            // Ignore if no transaction was active
+        }
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $conn->exec("DROP TABLE IF EXISTS system_user");
+        $conn->exec("DROP TABLE IF EXISTS system_unit");
+        TTransaction::close();
+    }
+
     public function testConstructAndGettersSetters()
     {
         $controller = new TFormDinSystemPermController('my_database');
@@ -14,8 +41,10 @@ class TFormDinSystemPermControllerTest extends TestCase
 
     public function testGetTDBComboUser()
     {
-        $controller = new TFormDinSystemPermController('my_database');
+        $controller = new TFormDinSystemPermController('dbapoio');
+        TTransaction::open('dbapoio');
         $combo = $controller->getTDBComboUser('user_combo');
+        TTransaction::close();
         if (class_exists('SystemUser') || class_exists('SystemUsers')) {
             $this->assertNotNull($combo);
         } else {
@@ -116,16 +145,11 @@ class TFormDinSystemPermControllerTest extends TestCase
 
     public function testGetUserById_Success()
     {
-        // Utiliza um banco que exista (ex: dbapoio) para cobrir o branch de sucesso do TTransaction::open
         $controller = new TFormDinSystemPermController('dbapoio');
-        // Vai abrir a transacao. Se SystemUser e SystemUsers não estiverem mapeados para esse bd,
-        // a exceção ocorrerá mais adiante, cobrindo as linhas dentro do try antes do throw.
-        // Ou se funcionarem, retornará o usuário (null ou obj).
         try {
             $user = $controller->getUserById(1);
-            $this->assertTrue(true); // Se passou, ok
+            $this->assertTrue(true);
         } catch (Exception $e) {
-            // Caso as tabelas não existam no dbapoio, ainda sim cobrimos o interior do método!
             $this->assertInstanceOf(Exception::class, $e);
         }
     }
@@ -151,5 +175,88 @@ class TFormDinSystemPermControllerTest extends TestCase
         } catch (Exception $e) {
             $this->assertInstanceOf(Exception::class, $e);
         }
+    }
+
+    public function testGetTDBComboUser_WithClasses()
+    {
+        $controller = new TFormDinSystemPermController('dbapoio');
+        TTransaction::open('dbapoio');
+        $combo = $controller->getTDBComboUser('test_combo');
+        TTransaction::close();
+        $this->assertNotNull($combo);
+        $this->assertInstanceOf(TDBCombo::class, $combo);
+    }
+
+    public function testGetUserAndUnitById_Success()
+    {
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $conn->exec("INSERT INTO system_user (id, name) VALUES (999, 'Test Name')");
+        $conn->exec("INSERT INTO system_unit (id, name) VALUES (999, 'Test Unit')");
+        TTransaction::close();
+
+        try {
+            $controller = new TFormDinSystemPermController('dbapoio');
+            
+            $user = $controller->getUserById(999);
+            $this->assertNotNull($user);
+            $this->assertEquals('Test Name', $user->name);
+
+            $name = $controller->getNomeUserById(999);
+            $this->assertEquals('Test Name', $name);
+
+            $unit = $controller->getUnitById(999);
+            $this->assertNotNull($unit);
+            $this->assertEquals('Test Unit', $unit->name);
+
+            $unitName = $controller->getNomeUnitById(999);
+            $this->assertEquals('Test Unit', $unitName);
+
+        } finally {
+            TTransaction::open('dbapoio');
+            $conn = TTransaction::get();
+            $conn->exec("DELETE FROM system_user WHERE id = 999");
+            $conn->exec("DELETE FROM system_unit WHERE id = 999");
+            TTransaction::close();
+        }
+    }
+}
+
+class SystemUser extends TRecord
+{
+    const TABLENAME = 'system_user';
+    const PRIMARYKEY = 'id';
+    const IDPOLICY = 'serial';
+    
+    public function __construct($id = NULL, $callObjectLoad = TRUE)
+    {
+        parent::__construct($id, $callObjectLoad);
+        parent::addAttribute('name');
+    }
+}
+
+class SystemUsers extends TRecord
+{
+    const TABLENAME = 'system_user';
+    const PRIMARYKEY = 'id';
+    const IDPOLICY = 'serial';
+    
+    public function __construct($id = NULL, $callObjectLoad = TRUE)
+    {
+        parent::__construct($id, $callObjectLoad);
+        parent::addAttribute('name');
+    }
+}
+
+class SystemUnit extends TRecord
+{
+    const TABLENAME = 'system_unit';
+    const PRIMARYKEY = 'id';
+    const IDPOLICY = 'serial';
+    
+    public function __construct($id = NULL, $callObjectLoad = TRUE)
+    {
+        parent::__construct($id, $callObjectLoad);
+        parent::addAttribute('name');
     }
 }
