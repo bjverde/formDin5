@@ -129,7 +129,7 @@
 /htaccess.ldap
 /htaccess.sem-acesso-pasta-linux
 /index.php
-/init.php
+#/init.php #Controlado para o exemplo do FormDin5
 /LICENSE
 /htaccess-dist
 /menu-sem-acesso.xml
