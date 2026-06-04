@@ -353,6 +353,100 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertequals('Metro', $result['TIP_DADO_APOIO'][1]);
         $this->assertequals('KM', $result['SIG_DADO_APOIO'][2]);
     }
+    public function testGetDbms()
+    {
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        $this->assertEquals(TFormDinPdoConnection::DBMS_SQLSERVER, $this->classTest->getDbms());
+    }
 
+    public function testGetListDBMS()
+    {
+        $list = TFormDinPdoConnection::getListDBMS();
+        $this->assertIsArray($list);
+        $this->assertArrayHasKey(TFormDinPdoConnection::DBMS_MYSQL, $list);
+    }
 
+    public function testGetDefaulPort_Oracle()
+    {   
+        $reflection = new ReflectionClass(TFormDinPdoConnection::class);
+        $property = $reflection->getProperty('type');
+        $property->setAccessible(true);
+        $property->setValue($this->classTest, TFormDinPdoConnection::DBMS_ORACLE);
+
+        $result = $this->classTest->getDefaulPort();
+        $this->assertEquals(1521, $result);
+    }
+
+    public function testConstructor()
+    {
+        $conn = new TFormDinPdoConnection(null, ArrayHelper::TYPE_PDO, PDO::FETCH_ASSOC, PDO::CASE_LOWER);
+        $this->assertEquals(ArrayHelper::TYPE_PDO, $conn->getOutputFormat());
+        $this->assertEquals(PDO::FETCH_ASSOC, $conn->getFech());
+        $this->assertEquals(PDO::CASE_LOWER, $conn->getCase());
+    }
+
+    public function testPrepareArray()
+    {
+        $arr = [
+            'a' => 'value',
+            'b' => 0,
+            'c' => '0',
+            'd' => null,
+            'e' => ''
+        ];
+        $result = $this->classTest->prepareArray($arr);
+        $this->assertEquals('value', $result['a']);
+        $this->assertEquals(0, $result['b']);
+        $this->assertEquals('0', $result['c']);
+        $this->assertNull($result['d']);
+        $this->assertNull($result['e']);
+        
+        $this->assertEquals([], $this->classTest->prepareArray(null));
+    }
+
+    public function testGetArrayKeyValueBySql()
+    {
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setFech(PDO::FETCH_ASSOC);
+        $this->classTest->setCase(PDO::CASE_LOWER);
+
+        $sql = 'select * from dado_apoio order by seq_dado_apoio limit 2';
+        $result = $this->classTest->getArrayKeyValueBySql('seq_dado_apoio', 'sig_dado_apoio', $sql);
+
+        $this->assertIsArray($result);
+        $this->assertCount(2, $result);
+        $this->assertEquals('KM', $result[2]);
+    }
+    
+    public function testHostPortUserPass()
+    {
+        $this->classTest->setHost('localhost');
+        $this->assertEquals('localhost', $this->classTest->getHost());
+
+        $this->classTest->setPort(3306);
+        $this->assertEquals(3306, $this->classTest->getPort());
+
+        $this->classTest->setUser('root');
+        $this->assertEquals('root', $this->classTest->getUser());
+
+        $this->classTest->setPass('123');
+        $this->assertEquals('123', $this->classTest->getPass());
+        
+        $this->classTest->setOpts('opts');
+        $this->assertEquals('opts', $this->classTest->getOpts());
+    }
+    
+    public function testExecuteSql_pragma()
+    {
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $sql = 'PRAGMA table_info(dado_apoio)';
+        $result = $this->classTest->executeSql($sql);
+        $this->assertIsArray($result);
+    }
 }
