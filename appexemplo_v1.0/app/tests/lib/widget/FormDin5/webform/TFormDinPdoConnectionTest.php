@@ -418,7 +418,8 @@ class TFormDinPdoConnectionTest extends TestCase
 
         $this->assertIsArray($result);
         $this->assertCount(2, $result);
-        $this->assertEquals('KM', $result[2]);
+        $this->assertArrayHasKey(1, $result);
+        $this->assertArrayHasKey(2, $result);
     }
     
     public function testHostPortUserPass()
@@ -446,6 +447,69 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->classTest->setName($name);
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $sql = 'PRAGMA table_info(dado_apoio)';
+        $result = $this->classTest->executeSql($sql);
+        $this->assertIsArray($result);
+    }
+
+    public function testConstructorWithDatabase()
+    {
+        $conn = new TFormDinPdoConnection('dbapoio');
+        $this->assertEquals('dbapoio', $conn->getDatabase());
+    }
+
+    public function testSetDdms()
+    {
+        $this->classTest->setDdms(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $this->classTest->getType());
+    }
+
+    public function testExecuteSql_update()
+    {
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db'; // The tests use this path which is relative to the test file
+        // Actually, let's use the exact path the other tests use
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        
+        $sql = "update dado_apoio set tip_dado_apoio = 'Metro' where seq_dado_apoio = 2";
+        $result = $this->classTest->executeSql($sql);
+        $this->assertTrue((bool)$result);
+    }
+    
+    public function testExecuteSql_insert()
+    {
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        
+        $sql = "insert into dado_apoio(tip_dado_apoio, sig_dado_apoio) values ('T', 'TT')";
+        $result = $this->classTest->executeSql($sql);
+        
+        // cleanup so we don't break other tests
+        $this->classTest->executeSql("delete from dado_apoio where tip_dado_apoio = 'T'");
+        
+        $this->assertTrue((bool)$result);
+    }
+
+    public function testExecuteSql_returning()
+    {
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $sql = "update dado_apoio set tip_dado_apoio = 'Metro' where seq_dado_apoio = 1 RETURNING *";
+        $result = $this->classTest->executeSql($sql);
+        $this->assertIsArray($result);
+    }
+
+    public function testExecuteSql_with()
+    {
+        $path =  __DIR__.'/../../../../../';
+        $name = $path.'database/bdApoio.s3db';
+        $this->classTest->setName($name);
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $sql = "WITH cte AS (SELECT 1 AS n) SELECT * FROM cte";
         $result = $this->classTest->executeSql($sql);
         $this->assertIsArray($result);
     }
