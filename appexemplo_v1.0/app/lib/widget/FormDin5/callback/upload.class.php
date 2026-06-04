@@ -49,7 +49,7 @@ if (! defined ( 'DS' )) {
 }
 $currentl_dir = dirname ( __FILE__ );
 
-require_once '..'.DS.'helpers'.DS.'autoload_formdin_helper.php';
+require_once $currentl_dir . DS . '..' . DS . 'helpers' . DS . 'autoload_formdin_helper.php';
 
 class upload {
 
