@@ -23,9 +23,9 @@ class mockFormDinComAdianti extends TPage
     {
     }
 
-    public function onReload()
-    {
-    }
+    public function onReload($param = null){}
+    public function onAction($param = null){}
+    public function onCustom($param = null){}
 
     public function onEdit()    
     {
