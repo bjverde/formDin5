@@ -44,9 +44,11 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+// @codeCoverageIgnoreStart
 if (! defined ( 'DS' )) {
 	define ( 'DS', DIRECTORY_SEPARATOR );
 }
+// @codeCoverageIgnoreEnd
 $currentl_dir = dirname ( __FILE__ );
 
 require_once $currentl_dir . DS . '..' . DS . 'helpers' . DS . 'autoload_formdin_helper.php';
