@@ -1,5 +1,5 @@
 <?php
-class SystemPermController
+class TFormDinSystemPermController
 {
     private static $database = Constantes::DATABASE_PERMISSION;
 
