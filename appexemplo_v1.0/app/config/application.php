@@ -3,8 +3,8 @@ return [
     'general' =>  [
         'timezone' => 'America/Sao_Paulo',
         'language' => 'pt',
-        'application' => 'sample',
-        'title' => 'Adianti Framework 8.1',
+        'application' => 'APPEV1',
+        'title' => 'Exemplos FormDin5',
         'theme' => 'adminbs5_v3',
         'debug' => '1',
         'strict_request' => '0'
@@ -24,8 +24,8 @@ return [
     ],
     'system' =>  [
         'system_version' => '8.1.0.1',
-        'system_name_sub'=> 'Fork do Adianti FrameWork',
-        'adianti_min_version'=> '8.0.0',
-        'formdin_min_version'=> '5.4.0',
+        'system_name_sub'=> 'Aplicação de Exemplo 1 do FormDin5 com Adianti',
+        'adianti_min_version'=> '8.4.0',
+        'formdin_min_version'=> '5.10.0',
     ],
 ];
