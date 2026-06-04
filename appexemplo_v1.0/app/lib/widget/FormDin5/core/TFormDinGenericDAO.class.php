@@ -3,17 +3,32 @@ class TFormDinGenericDAO
 {
     private $database  = null;
     private $repository = null;
+    private $tpdo = null;
 
     /**
      * Seta os elmentos basicos para conectar no banco
      *
      * @param string $database   Nome da conexão ou novo do arquivo em /app/config
      * @param string $repository Nome da Classe do tipo Active Record no diretorio /app/model/maindatabase
+     * @param object $tpdo objeto do tipo TFormDinPdoConnection
      */
-    public function __construct($database = null, $repository = null)
+    public function __construct($database = null, $repository = null, $tpdo = null)
     {
         $this->setDatabase($database);
         $this->setRepository($repository);
+        if (empty($tpdo)) {
+            $tpdo = new TFormDinPdoConnection($this->getDatabase());
+        }
+        $this->setTPDOConnection($tpdo);
+    }
+    public function getTPDOConnection()
+    {
+        return $this->tpdo;
+    }
+    public function setTPDOConnection(TFormDinPdoConnection $tpdo)
+    {
+        //FormDinHelper::validateObjTypeTPDOConnectionObj($tpdo,__METHOD__,__LINE__);
+        $this->tpdo = $tpdo;
     }
     public function getDatabase()
     {
