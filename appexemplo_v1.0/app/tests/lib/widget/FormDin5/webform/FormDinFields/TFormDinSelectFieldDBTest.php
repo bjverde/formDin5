@@ -47,8 +47,10 @@ class TFormDinSelectFieldDBTest extends TestCase
 
     public function test_enableSearch()
     {
+        ob_start();
         $this->classTest->enableSearch(true);
         $this->classTest->enableSearch(false);
+        ob_end_clean();
         $this->assertTrue(true);
     }
 }

@@ -147,7 +147,10 @@ class TFormDinCheckListTest extends TestCase
 
     public function testShowTitle()
     {
-        $this->assertInstanceOf(THBox::class, $this->classTest->showTitle());
+        ob_start();
+        $title = $this->classTest->showTitle();
+        ob_end_clean();
+        $this->assertInstanceOf(THBox::class, $title);
     }
 
     public function testShowBody()
