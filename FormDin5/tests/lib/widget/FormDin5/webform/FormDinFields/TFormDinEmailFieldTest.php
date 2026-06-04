@@ -6,10 +6,6 @@
  * @author Reinaldo A. Barrêto Junior
  * 
  * É uma reconstrução do FormDin 4 Sobre o Adianti 7.X
- * @author Luís Eugênio Barbosa do FormDin 4
- * 
- * Adianti Framework é uma criação Adianti Solutions Ltd
- * @author Pablo Dall'Oglio
  * ----------------------------------------------------------------------------
  * This file is part of Formdin Framework.
  *
@@ -40,31 +36,43 @@
  *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
  * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
- * ou escreva para a Fundação do Software Livre (FSF) Inc.,
- * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
  */
 
-// @codeCoverageIgnoreStart
-if (! defined ( 'DS' )) {
-	define ( 'DS', DIRECTORY_SEPARATOR );
-}
-// @codeCoverageIgnoreEnd
-$currentl_dir = dirname ( __FILE__ );
+use PHPUnit\Framework\TestCase;
 
-require_once $currentl_dir . DS . '..' . DS . 'helpers' . DS . 'autoload_formdin_helper.php';
+class TFormDinEmailFieldTest extends TestCase
+{
+    private $classTest;
 
-class upload {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->classTest = new TFormDinEmailField('email_test', 'E-mail', 100);
+    }
 
-}
+    protected function tearDown(): void
+    {
+        $this->classTest = null;
+        parent::tearDown();
+    }
 
-// Verifica se foi recebido um arquivo e se não houve erros durante o envio
-if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-    $diretorioDestino = FileHelper::getCaminhoSistema().DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR;
+    public function test_instanceOff()
+    {
+        $adiantiObj = $this->classTest->getAdiantiObj();
+        $this->assertInstanceOf(TEntry::class, $adiantiObj);
+    }
 
-    $caminhoArquivo = $diretorioDestino . $_FILES['arquivo']['name'];
-    move_uploaded_file($_FILES['arquivo']['tmp_name'], $caminhoArquivo);
+    public function test_getAlwaysValidate()
+    {
+        $this->assertTrue($this->classTest->getAlwaysValidate());
+    }
 
-    echo "Arquivo recebido e salvo com sucesso em: $caminhoArquivo";
-} else {
-    echo "Erro no envio do arquivo ou nenhum arquivo recebido.";
+    public function test_setAlwaysValidate()
+    {
+        $this->classTest->setAlwaysValidate(false);
+        $this->assertFalse($this->classTest->getAlwaysValidate());
+    }
 }

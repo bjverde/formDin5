@@ -288,4 +288,281 @@ class TFormDinDaoDbmsTest extends TestCase
         $length = mb_strlen($result);
         $this->assertEquals(2457, $length);
     }
+
+    public function testConstructWithFullParameters()
+    {
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
+        $dao = new TFormDinDaoDbms('dado_apoio', TFormDinPdoConnection::DBMS_SQLITE, null, null, $dbPath, null, null, null);
+        $this->assertEquals('dado_apoio', $dao->getTableName());
+        $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $dao->getType());
+        $this->assertEquals($dbPath, $dao->getConnection()->getName());
+    }
+
+    public function testAddFieldAndGetField()
+    {
+        $this->classTest->addField('id', 'integer', 10, 0, '0', false, true, true);
+        $field = $this->classTest->getField('id');
+        $this->assertNotNull($field);
+        $this->assertEquals('id', $field->fieldName);
+        $this->assertEquals('integer', $field->fieldType);
+        $this->assertEquals(10, $field->size);
+        $this->assertEquals(0, $field->precision);
+        $this->assertEquals('0', $field->defaultValue);
+        $this->assertFalse($field->nullable);
+        $this->assertTrue($field->autoincrement);
+        $this->assertTrue($field->primaryKey);
+
+        $this->assertNull($this->classTest->getField('non_existent'));
+        
+        $fields = $this->classTest->getFields();
+        $this->assertArrayHasKey('ID', $fields);
+    }
+
+    public function testErrorMethods()
+    {
+        $this->classTest->setError('Some database error');
+        $this->assertEquals('Some database error', $this->classTest->getError());
+    }
+
+    public function testMetadataDirMethods()
+    {
+        $tempDir = __DIR__ . '/../../../../../app/tests/temp_metadata';
+        $this->classTest->setMetadataDir($tempDir);
+        
+        $normalized = $this->classTest->getMetadataDir();
+        $this->assertNotNull($normalized);
+        $this->assertDirectoryExists($tempDir);
+        
+        @rmdir($tempDir);
+        
+        $this->classTest->setMetadataDir(null);
+        $this->assertNull($this->classTest->getMetadataDir());
+    }
+
+    public function testSerializeFields()
+    {
+        $tempDir = __DIR__ . '/../../../../../app/tests/temp_metadata';
+        $this->classTest->setMetadataDir($tempDir);
+        $this->classTest->setTableName('dado_apoio');
+        $this->classTest->addField('id', 'integer');
+        
+        $this->classTest->serializeFields();
+        
+        $serFile = $tempDir . '/sqlite-dado_apoio.ser';
+        $this->assertFileExists($serFile);
+        
+        $content = file_get_contents($serFile);
+        $fields = unserialize($content);
+        $this->assertArrayHasKey('ID', $fields);
+        
+        @unlink($serFile);
+        @rmdir($tempDir);
+    }
+
+    public function testExecuteSqlReal()
+    {
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
+        $this->classTest->getConnection()->setName($dbPath);
+        
+        $result = $this->classTest->executeSql('SELECT * FROM dado_apoio');
+        $this->assertCount(3, $result);
+    }
+
+    public function testLoadTablesFromDatabase()
+    {
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
+        $this->classTest->getConnection()->setName($dbPath);
+        
+        $tables = $this->classTest->loadTablesFromDatabase();
+        $this->assertNotEmpty($tables);
+        $this->assertArrayHasKey('TABLE_NAME', $tables);
+        $this->assertTrue(in_array('dado_apoio', $tables['TABLE_NAME']));
+    }
+
+    public function testLoadFieldsOneTableFromDatabase()
+    {
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
+        $this->classTest->getConnection()->setName($dbPath);
+        $this->classTest->setTableName('dado_apoio');
+        
+        $result = $this->classTest->loadFieldsOneTableFromDatabase();
+        $this->assertNotEmpty($result);
+        $this->assertEquals('seq_dado_apoio', $result['COLUMN_NAME'][0]);
+    }
+
+    public function testLoadFieldsFromDatabase()
+    {
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
+        $this->classTest->getConnection()->setName($dbPath);
+        $this->classTest->setTableName('dado_apoio');
+        
+        $tempDir = __DIR__ . '/../../../../../app/tests/temp_metadata';
+        $this->classTest->setMetadataDir($tempDir);
+        
+        $this->classTest->loadFieldsFromDatabase();
+        
+        $fields = $this->classTest->getFields();
+        $this->assertNotEmpty($fields);
+        $this->assertArrayHasKey('SEQ_DADO_APOIO', $fields);
+        
+        $serFile = $tempDir . '/sqlite-dado_apoio.ser';
+        $this->assertFileExists($serFile);
+        @unlink($serFile);
+        @rmdir($tempDir);
+        
+        $daoNull = new TFormDinDaoDbms(null, TFormDinPdoConnection::DBMS_SQLITE);
+        $this->assertNull($daoNull->loadFieldsFromDatabase());
+    }
+
+    public function testLoadFieldsOneStoredProcedureFromDatabase_FailNullTable()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->loadFieldsOneStoredProcedureFromDatabase();
+    }
+
+    public function testLoadFieldsOneStoredProcedureFromDatabase_FailNotImplemented()
+    {
+        $this->expectException(DomainException::class);
+        $this->classTest->setTableName('proc');
+        
+        $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
+        $ref->setAccessible(true);
+        $ref->setValue($this->classTest, 'oracle');
+        
+        $this->classTest->loadFieldsOneStoredProcedureFromDatabase();
+    }
+
+    public function testGetSqlToFieldsFromDatabase_Oracle()
+    {
+        $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
+        $ref->setAccessible(true);
+        $ref->setValue($this->classTest, 'oracle');
+        
+        $this->classTest->setTableName('tbl');
+        $result = $this->classTest->getSqlToFieldsFromDatabase();
+        $this->assertEquals(347, mb_strlen($result['sql']));
+    }
+
+    public function testGetSqlToFieldsFromDatabase_Firebird()
+    {
+        $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
+        $ref->setAccessible(true);
+        $ref->setValue($this->classTest, 'ibase');
+        
+        $this->classTest->setTableName('tbl');
+        $result = $this->classTest->getSqlToFieldsFromDatabase();
+        $this->assertEquals(935, mb_strlen($result['sql']));
+    }
+
+    public function testLoadFieldsOneTableFromDatabase_FailNotImplemented()
+    {
+        $this->expectException(DomainException::class);
+        
+        $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
+        $ref->setAccessible(true);
+        $ref->setValue($this->classTest, 'oracle');
+        
+        $this->classTest->setTableName('tbl');
+        $this->classTest->loadFieldsOneTableFromDatabase();
+    }
+
+    public function testGetSchemaWithConn()
+    {
+        $dao = new TFormDinDaoDbmsSubclass('dado_apoio', TFormDinPdoConnection::DBMS_SQLITE, null, null, 'app/database/bdApoio.s3db');
+        
+        $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'conn');
+        $ref->setAccessible(true);
+        $ref->setValue($dao, true);
+
+        $schema = $dao->getSchema();
+        $this->assertEquals('subclass_schema', $schema);
+    }
+
+    public function testLoadSqlTablesFromDatabase_FailDefault()
+    {
+        $this->expectException(DomainException::class);
+        $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
+        $ref->setAccessible(true);
+        $ref->setValue($this->classTest, 'oracle');
+        $this->classTest->loadSqlTablesFromDatabase();
+    }
+
+    public function testLoadFieldsOneStoredProcedureFromDatabase_MySql()
+    {
+        $mock = $this->getMockBuilder(TFormDinDaoDbms::class)
+            ->setConstructorArgs(['proc_name', TFormDinPdoConnection::DBMS_MYSQL])
+            ->onlyMethods(['executeSql'])
+            ->getMock();
+        
+        $mock->method('executeSql')->willReturn([['COLUMN_NAME' => 'param1']]);
+        
+        $result = $mock->loadFieldsOneStoredProcedureFromDatabase();
+        $this->assertEquals([['COLUMN_NAME' => 'param1']], $result);
+    }
+
+    public function testLoadFieldsOneStoredProcedureFromDatabase_SqlServer()
+    {
+        $mock = $this->getMockBuilder(TFormDinDaoDbms::class)
+            ->setConstructorArgs(['proc_name', TFormDinPdoConnection::DBMS_SQLSERVER])
+            ->onlyMethods(['executeSql'])
+            ->getMock();
+        
+        $mock->method('executeSql')->willReturn([['COLUMN_NAME' => 'param1']]);
+        
+        $result = $mock->loadFieldsOneStoredProcedureFromDatabase();
+        $this->assertEquals([['COLUMN_NAME' => 'param1']], $result);
+    }
+
+    public function testLoadFieldsOneTableFromDatabase_MySql()
+    {
+        $mock = $this->getMockBuilder(TFormDinDaoDbms::class)
+            ->setConstructorArgs(['table_name', TFormDinPdoConnection::DBMS_MYSQL])
+            ->onlyMethods(['executeSql'])
+            ->getMock();
+        
+        $mock->method('executeSql')->willReturn([['COLUMN_NAME' => 'col1']]);
+        
+        $result = $mock->loadFieldsOneTableFromDatabase();
+        $this->assertEquals([['COLUMN_NAME' => 'col1']], $result);
+    }
+
+    public function testLoadFieldsOneTableFromDatabase_SqlServer()
+    {
+        $mock = $this->getMockBuilder(TFormDinDaoDbms::class)
+            ->setConstructorArgs(['table_name', TFormDinPdoConnection::DBMS_SQLSERVER])
+            ->onlyMethods(['executeSql'])
+            ->getMock();
+        
+        $mock->method('executeSql')->willReturn([['COLUMN_NAME' => 'col1']]);
+        
+        $result = $mock->loadFieldsOneTableFromDatabase();
+        $this->assertEquals([['COLUMN_NAME' => 'col1']], $result);
+    }
+
+    public function testLoadFieldsOneTableFromDatabase_Postgres()
+    {
+        $mock = $this->getMockBuilder(TFormDinDaoDbms::class)
+            ->setConstructorArgs(['table_name', TFormDinPdoConnection::DBMS_POSTGRES])
+            ->onlyMethods(['executeSql'])
+            ->getMock();
+        
+        $mock->method('executeSql')->willReturn([['COLUMN_NAME' => 'col1']]);
+        
+        $result = $mock->loadFieldsOneTableFromDatabase();
+        $this->assertEquals([['COLUMN_NAME' => 'col1']], $result);
+    }
+
+    public function testLoadFieldsOneTableFromDatabase_FailNullTable()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->loadFieldsOneTableFromDatabase();
+    }
+}
+
+class TFormDinDaoDbmsSubclass extends TFormDinDaoDbms
+{
+    public function getConnSchema()
+    {
+        return 'subclass_schema';
+    }
 }

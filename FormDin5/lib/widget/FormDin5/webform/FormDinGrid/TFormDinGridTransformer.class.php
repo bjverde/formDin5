@@ -78,7 +78,7 @@ class TFormDinGridTransformer
         return $action;
     }    
 
-    public static function simNao($value)
+    public static function simNao(mixed $value)
     {
         if($value === true || $value == 't' || $value === 1 || $value == '1' || $value == 's' || $value == 'S' || $value == 'T'){
             return 'Sim';

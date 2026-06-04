@@ -122,18 +122,20 @@ class TFormDinDateTimeTest extends TestCase
     //-----------------------------------------------------
     public function testSetButtonVisible()
     {
-        set_error_handler(function($errno, $errstr) {
+        $triggered = false;
+        $capturedMsg = '';
+        set_error_handler(function($errno, $errstr) use (&$triggered, &$capturedMsg) {
             if ($errno === E_USER_WARNING) {
-                $this->assertStringContainsString('setButtonVisible()', $errstr);
+                $triggered = true;
+                $capturedMsg = $errstr;
                 return true;
             }
             return false;
         });
-        try {
-            $this->classTest->setButtonVisible(true);
-        } finally {
-            restore_error_handler();
-        }
+        $this->classTest->setButtonVisible(true);
+        restore_error_handler();
+        $this->assertTrue($triggered);
+        $this->assertStringContainsString('setButtonVisible()', $capturedMsg);
     }
 
     public function testGetButtonVisible()
