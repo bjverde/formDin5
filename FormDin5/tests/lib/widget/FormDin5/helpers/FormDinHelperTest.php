@@ -435,4 +435,24 @@ class FormDinHelperTest extends TestCase
         $this->expectExceptionMessage('use px ou % ou em ou rem ou vh ou vw');
         FormDinHelper::validateSizeWidthAndHeight('100abc', true);
     }
+
+    public function testGetObjTLabel_Default()
+    {
+        $labelObj = FormDinHelper::getObjTLabel('Teste Label');
+        $this->assertInstanceOf('TLabel', $labelObj);
+        // By default, required is false, fontSize is '14px'
+    }
+
+    public function testGetObjTLabel_Required()
+    {
+        $labelObj = FormDinHelper::getObjTLabel('Teste Label Required', true);
+        $this->assertInstanceOf('TLabel', $labelObj);
+        // Required is true, fontColor is '#ff0000', fontSize is '14px'
+    }
+
+    public function testGetObjTLabel_CustomStyle()
+    {
+        $labelObj = FormDinHelper::getObjTLabel('Teste Label Custom', true, '16px', '#00ff00');
+        $this->assertInstanceOf('TLabel', $labelObj);
+    }
 }
