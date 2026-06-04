@@ -414,14 +414,15 @@ class FormDinHelper
      * padrão para campos obrigatórios ou não
      * @param string $label
      * @param bool $required
+     * @param string|null $fontSizev default '14px'
+     * @param string|null $fontColor default '#ff0000' se $required for true, senão null
      * @return TLabel
      */
-    public static function getObjTLabel(string $label, bool $required = FALSE): TLabel
+    public static function getObjTLabel(string $label, bool $required = FALSE, ?string $fontSize = '14px', ?string $fontColor = '#ff0000'): TLabel
     {
-        // Certifique-se de que a classe Constantes está acessível ou importada
-        $objLabel = new TLabel($label, null, Constantes::LAYOUT_FONT_SIZE);
+        $objLabel = new TLabel($label, null, $fontSize);
         if ($required) {
-            $objLabel = new TLabel($label, Constantes::LAYOUT_COR_CAMPO_OBRIGATORIO, Constantes::LAYOUT_FONT_SIZE);
+            $objLabel = new TLabel($label, $fontColor, $fontSize);
         }
         return $objLabel;
     }    
