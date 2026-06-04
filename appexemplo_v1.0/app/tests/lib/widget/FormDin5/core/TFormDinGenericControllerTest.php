@@ -8,7 +8,19 @@ class TFormDinGenericControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->daoMock = $this->createMock(TFormDinGenericDAO::class);
+        $this->daoMock = $this->getMockBuilder(TFormDinGenericDAO::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'selectById', 
+                'selectCount', 
+                'selectAllPagination', 
+                'selectAll', 
+                'selectByTCriteria', 
+                'selectByTCriteriaCount', 
+                'getArrayByCriteria', 
+                'getListObjByCriteria'
+            ])
+            ->getMock();
         $this->controller = new TFormDinGenericController($this->daoMock);
     }
 
