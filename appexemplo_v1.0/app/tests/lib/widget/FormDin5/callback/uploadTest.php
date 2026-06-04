@@ -5,6 +5,10 @@ class uploadTest extends TestCase
 {
     public function testUploadClassExists()
     {
-        $this->assertTrue(class_exists('upload'));
+        ob_start();
+        $exists = class_exists('upload');
+        ob_end_clean();
+        
+        $this->assertTrue($exists);
     }
 }

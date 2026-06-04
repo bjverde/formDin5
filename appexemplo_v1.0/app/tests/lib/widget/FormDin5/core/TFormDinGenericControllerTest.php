@@ -8,19 +8,7 @@ class TFormDinGenericControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->daoMock = $this->getMockBuilder(TFormDinGenericDAO::class)
-            ->disableOriginalConstructor()
-            ->setMethods([
-                'selectById', 
-                'selectCount', 
-                'selectAllPagination', 
-                'selectAll', 
-                'selectByTCriteria', 
-                'selectByTCriteriaCount', 
-                'getArrayByCriteria', 
-                'getListObjByCriteria'
-            ])
-            ->getMock();
+        $this->daoMock = $this->createMock(DummyDAO::class);
         $this->controller = new TFormDinGenericController($this->daoMock);
     }
 
@@ -146,4 +134,14 @@ class TFormDinGenericControllerTest extends TestCase
         $result = $this->controller->getListObjByCriteria($criteria, $showDumpLogTela);
         $this->assertEquals($expectedResult, $result);
     }
+}
+
+class DummyDAO extends TFormDinGenericDAO
+{
+    public function selectById($id) { return []; }
+    public function selectCount($where=null) { return 0; }
+    public function selectAllPagination($orderBy=null, $where=null, $page=null, $rowsPerPage=null) { return []; }
+    public function selectAll($orderBy=null, $where=null) { return []; }
+    public function selectByTCriteria(TCriteria $criteria=null) { return []; }
+    public function selectByTCriteriaCount(TCriteria $criteria=null) { return 0; }
 }
