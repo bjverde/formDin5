@@ -42,6 +42,7 @@
 
 $path =  __DIR__.'/../../../../../';
 //require_once $path.'tests/initTest.php';
+require_once  __DIR__.'/../../mockDatabaseApoio.php';
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
@@ -66,7 +67,6 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->classTest = null;
         parent::tearDown();
     }
-    
 
     public function testSetType_null()
     {
@@ -239,9 +239,7 @@ class TFormDinPdoConnectionTest extends TestCase
     public function testExecuteSql_sqllite_FailSql()
     {   
         $this->expectException(Exception::class);
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $sql = 'select12 * from dado_apoio order by seq_dado_apoio';
         
@@ -256,13 +254,11 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_sqllite_upperCase_Adianti()
     {   
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $this->classTest->setCase(PDO::CASE_UPPER);
         $sql = 'select * from dado_apoio order by seq_dado_apoio';
-        $result = $this->classTest->executeSql($sql);
+            $result = $this->classTest->executeSql($sql);
 
         $this->assertCount(3, $result);
         $this->assertEquals(1, $result[0]->SEQ_DADO_APOIO);
@@ -272,9 +268,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_sqllite_lowerCase_Adianti()
     {   
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $this->classTest->setCase(PDO::CASE_LOWER);
         $sql = 'select * from dado_apoio order by seq_dado_apoio';
@@ -288,9 +282,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_sqllite_upperCase_pdo()
     {   
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $this->classTest->setFech(PDO::FETCH_ASSOC);
         $this->classTest->setCase(PDO::CASE_UPPER);
@@ -305,9 +297,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_sqllite_lowerCase_pdo()
     {   
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $this->classTest->setFech(PDO::FETCH_ASSOC);
         $this->classTest->setCase(PDO::CASE_LOWER);
@@ -322,9 +312,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_sqllite_lowerCase_formDin()
     {   
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $this->classTest->setCase(PDO::CASE_LOWER);
         $this->classTest->setOutputFormat(ArrayHelper::TYPE_FORMDIN);
@@ -339,9 +327,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_sqllite_upperCase_formDin()
     {   
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $this->classTest->setCase(PDO::CASE_UPPER);
         $this->classTest->setOutputFormat(ArrayHelper::TYPE_FORMDIN);
@@ -406,9 +392,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testGetArrayKeyValueBySql()
     {
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $this->classTest->setFech(PDO::FETCH_ASSOC);
         $this->classTest->setCase(PDO::CASE_LOWER);
@@ -442,9 +426,7 @@ class TFormDinPdoConnectionTest extends TestCase
     
     public function testExecuteSql_pragma()
     {
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $sql = 'PRAGMA table_info(dado_apoio)';
         $result = $this->classTest->executeSql($sql);
@@ -465,10 +447,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_update()
     {
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db'; // The tests use this path which is relative to the test file
-        // Actually, let's use the exact path the other tests use
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         
         $sql = "update dado_apoio set tip_dado_apoio = 'Metro' where seq_dado_apoio = 2";
@@ -478,9 +457,7 @@ class TFormDinPdoConnectionTest extends TestCase
     
     public function testExecuteSql_insert()
     {
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         
         $sql = "insert into dado_apoio(tip_dado_apoio, sig_dado_apoio) values ('T', 'TT')";
@@ -494,9 +471,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_returning()
     {
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $sql = "update dado_apoio set tip_dado_apoio = 'Metro' where seq_dado_apoio = 1 RETURNING *";
         $result = $this->classTest->executeSql($sql);
@@ -505,9 +480,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testExecuteSql_with()
     {
-        $path =  __DIR__.'/../../../../../';
-        $name = $path.'database/bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $sql = "WITH cte AS (SELECT 1 AS n) SELECT * FROM cte";
         $result = $this->classTest->executeSql($sql);
