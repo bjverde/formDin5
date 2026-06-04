@@ -149,8 +149,7 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testGetConfigConnect_nullDatabaseGetDb()
     {   
-        $name = 'bdApoio.s3db';
-        $this->classTest->setName($name);
+        $this->classTest->setName(mockDatabaseApoio::getNameDatabaseApoio());
         $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
         $result = $this->classTest->getConfigConnect();
 
@@ -158,7 +157,7 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertEquals(null, $result['database']);
         $this->assertCount(7, $result['db']);
         $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $result['db']['type']);
-        $this->assertEquals($name, $result['db']['name']);
+        $this->assertEquals(mockDatabaseApoio::getNameDatabaseApoio(), $result['db']['name']);
     }
     //----------------------------------------------------------------------
     //----------------------------------------------------------------------
