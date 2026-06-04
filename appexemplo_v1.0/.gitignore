@@ -120,6 +120,7 @@
 !/.htaccess
 
 /composer.json
+/composer.json.bak
 /composer.lock
 /cmd.php
 /crontab.php
