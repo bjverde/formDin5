@@ -408,4 +408,37 @@ class FormDinHelper
         FormDinHelper::validateSizeWidthAndHeight($value);
         return $value;
     }
+
+    /**
+     * Retorna um objeto TLabel com o label, fonte padrão e a cor
+     * padrão para campos obrigatórios ou não
+     * @param string $label
+     * @param bool $required
+     * @return TLabel
+     */
+    public static function getObjTLabel(string $label, bool $required = FALSE): TLabel
+    {
+        // Certifique-se de que a classe Constantes está acessível ou importada
+        $objLabel = new TLabel($label, null, Constantes::LAYOUT_FONT_SIZE);
+        if ($required) {
+            $objLabel = new TLabel($label, Constantes::LAYOUT_COR_CAMPO_OBRIGATORIO, Constantes::LAYOUT_FONT_SIZE);
+        }
+        return $objLabel;
+    }    
+
+	/**
+	 * Limpa os filtros do formulário de listagem e recarrega a grid.
+	 * @param object $pageObject Instância da classe de listagem (TPage)
+	 * @param string $className Nome da classe de listagem
+	 */
+	public static function clearListFilter($pageObject, $className)
+	{
+		$cleaner = function() use ($className) {
+			TSession::setValue($className.'_filter_data', NULL);
+			TSession::setValue($className.'_filters', NULL);
+			$this->form->clear();
+			$this->onReload(['offset' => 0, 'first_page' => 1]);
+		};
+		$cleaner->call($pageObject);
+	}
 }
