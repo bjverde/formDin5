@@ -291,8 +291,7 @@ class TFormDinDaoDbmsTest extends TestCase
 
     public function testConstructWithFullParameters()
     {
-        $path = __DIR__.'/../../../../../';
-        $dbPath = $path.'database/bdApoio.s3db';
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
         $dao = new TFormDinDaoDbms('dado_apoio', TFormDinPdoConnection::DBMS_SQLITE, null, null, $dbPath, null, null, null);
         $this->assertEquals('dado_apoio', $dao->getTableName());
         $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $dao->getType());
@@ -362,8 +361,7 @@ class TFormDinDaoDbmsTest extends TestCase
 
     public function testExecuteSqlReal()
     {
-        $path = __DIR__.'/../../../../../';
-        $dbPath = $path.'database/bdApoio.s3db';
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
         $this->classTest->getConnection()->setName($dbPath);
         
         $result = $this->classTest->executeSql('SELECT * FROM dado_apoio');
@@ -372,8 +370,7 @@ class TFormDinDaoDbmsTest extends TestCase
 
     public function testLoadTablesFromDatabase()
     {
-        $path = __DIR__.'/../../../../../';
-        $dbPath = $path.'database/bdApoio.s3db';
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
         $this->classTest->getConnection()->setName($dbPath);
         
         $tables = $this->classTest->loadTablesFromDatabase();
@@ -384,8 +381,7 @@ class TFormDinDaoDbmsTest extends TestCase
 
     public function testLoadFieldsOneTableFromDatabase()
     {
-        $path = __DIR__.'/../../../../../';
-        $dbPath = $path.'database/bdApoio.s3db';
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
         $this->classTest->getConnection()->setName($dbPath);
         $this->classTest->setTableName('dado_apoio');
         
@@ -396,8 +392,7 @@ class TFormDinDaoDbmsTest extends TestCase
 
     public function testLoadFieldsFromDatabase()
     {
-        $path = __DIR__.'/../../../../../';
-        $dbPath = $path.'database/bdApoio.s3db';
+        $dbPath = mockDatabaseApoio::getPathDatabaseApoio();
         $this->classTest->getConnection()->setName($dbPath);
         $this->classTest->setTableName('dado_apoio');
         
