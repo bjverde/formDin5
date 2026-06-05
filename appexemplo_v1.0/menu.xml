@@ -284,14 +284,6 @@
                     <menuitem label='Ajuda com arquivo HTM'>
                         <icon>fas:question fa-question-circle #2965f1</icon>
                         <action>exe_campo_ajuda</action>
-                    </menuitem>      
-                    <menuitem label='Ajuda On-line (sqlite)'>
-                        <icon>fa:cube fa-fw</icon>
-                        <action>comingSoonView</action>
-                    </menuitem>
-                    <menuitem label='Ajuda'>
-                        <icon>fa:code fa-fw</icon>
-                        <action>comingSoonView</action>
                     </menuitem>
                 </menu>
             </menuitem>
@@ -307,18 +299,6 @@
             <menuitem label='LogOutTimer'>
                 <icon>fab:js fa-fw #f0db4f</icon>
                 <action>js_logouttimer</action>
-            </menuitem>             
-            <menuitem label='Ajuda'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>comingSoonView</action>
-            </menuitem>
-            <menuitem label='Ver módulos'>
-                <icon>fa:cube fa-fw</icon>
-                <action>comingSoonView</action>
-            </menuitem>
-            <menuitem label='Setup PHP'>
-                <icon>fa:code fa-fw</icon>
-                <action>comingSoonView</action>
             </menuitem>
         </menu>
     </menuitem>
