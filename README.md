@@ -4,6 +4,8 @@
 
 FormDin or Dynamic Form is a simple PHP framework for creating web systems quickly and easily.
 
+[See this documentation in English](README.en.md)
+
 ---
 
 O FormDin ou Formulário Dinâmico é um framework PHP antigo e simples para criar sistemas web de forma rápida e fácil. O FormDin 4 foi criado em 2004 por Luís Eugênio Barbosa, baseado nas ideias dos livros de [Pablo Dall'Oglio](http://www.dalloglio.net/c5?livros).
