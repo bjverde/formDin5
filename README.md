@@ -4,62 +4,41 @@
 
 FormDin or Dynamic Form is a simple php Framework for creating web system quickly and easily.
 
-FormDin created in 2004 by Luís Eugênio Barbosa to increase the speed of development in IBAMA. Version 4 is based on the ideas in the Books [Pablo Dall'Oglio](http://www.dalloglio.net/c5?livros).
-
-This version has the proposal to be the next version of **[FormDin 4 in GitHub.](https://github.com/bjverde/formDin)**. FormDin 5 is a FrameWork meta, as it is built on the [adianti FrameWork 7.X](https://adiantiframework.com.br) of [Pablo Dall'Oglio](http://www.dalloglio.net/). Therefore, it is not a complete FrameWork, it has total dependence on [adianti FrameWork 7.1](https://adiantiframework.com.br).
-
-*unfortunately the documentation in English is not complete. The first language is Brazilian Portuguese. Translations are made as soon as possible.*
-
-
-## About
-
-Used libraries
-
-* [adianti FrameWork 7.6.0](https://adiantiframework.com.br)
-* BootStrap 4.1.3
-* Jquery 3.3.1
-* FPF 1.8.2
-* Font Awesome
-
 ---
 
-FormDin ou Formulário Dinâmico é um Framework php simples para criar sistema web de forma rápida e fácil.
+FormDin ou Formulário Dinâmico é um Framework php antigo e simples para criar sistema web de forma rápida e fácil. O Formdin 4 foi criado em 2004 por Luís Eugênio Barbosa baseado nas ideias dos livros de [Pablo Dall'Oglio](http://www.dalloglio.net/c5?livros).
 
-O FormDin 5 é um meta FrameWork ou um adaptador ou uma extensão, por ser construído sobre o [adianti FrameWork 7.X](https://adiantiframework.com.br) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total dependência do [adianti](https://www.adianti.com.br/). É um Framework de transição do [FormDin 4](https://github.com/bjverde/formDin) para o Adianti FrameWork, facilitando a migração. É uma abstração das chamadas do FormDin 4 no Adianti. 
+O FormDin 5 é um meta FrameWork ou um adaptador ou uma extensão, por ser construído sobre o [adianti FrameWork 7.0.0 ou superior](https://adiantiframework.com.br) do [Pablo Dall'Oglio](http://www.dalloglio.net/). Portando não é um FrameWork completo, ele tem total dependência do [adianti](https://www.adianti.com.br/). É um FrameWork de transição do [FormDin 4](https://github.com/bjverde/formDin) para o Adianti FrameWork, facilitando a migração. É uma abstração das chamadas do FormDin 4 no Adianti. 
 
 O [adianti](https://www.adianti.com.br/) é um FrameWork muito bom, com mais recursos e uma comunidade muito maior. Logo o ideal é juntar forçar pegando o que tem de melhor dos dois.
+
+Em 2026 com o avança das IAs o projeto FormDin 5 vai cair em desuso, se deseja migrar do FormDin 4 para o Adianti use o projeto [skill-antigravity](https://github.com/bjverde/skill-antigravity) que tem várias skill para auxiliar com adianti e migração do FormDin 4 para Adianti.
 
 # Sobre
 
 ## Conteúdo do Projeto
-* FormDin5 - é o FrameWork para instalar sobre o adianti 8.x
+* FormDin5 - é o FrameWork para instalar sobre o adianti 8.4
 * appexemplo_v1.0 - um software completo de exemplo, com os diversos usos dos componentes do FormDin5
 * lab - pequenos testes
 * phpunit-code-coverage - resultado da cobertura dos testes do PHPUnit
 
 # Instalação
-1. Baixar o [adianti FrameWork 8.1.0](https://adiantiframework.com.br) funciona com o template ou FrameWork Puro.
+1. Baixar o [adianti FrameWork 8.4.0](https://adiantiframework.com.br) funciona com o template ou FrameWork Puro.
 1. Copiar o conteudo pasta FormDin5 conforme orientação abaixo
-    1. No arquivo `app/config/application.ini` incluir as linhas abaixo
+    1. No arquivo `app/config/application.php` incluir as linhas abaixo
     1. No arquivo index.php da raiz do projeto incluir as linhas abaixo
     1. No arquivo init.php da raiz do projeto incluir as linhas abaixo
     1. Copiar a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`
 
-## Arquivo application.ini
-Editar `app/config/application.ini` incluir as linhas abaixo. Depois alterar conforme a necessidade
-```ini
-[system]
-formdin_min_version=5.1.1
-adianti_min_version=7.6.0
-system_version = 1.0.0
-head_title  = "App Exemplo1"
-system_name = 'Aplicação de Exemplo 1 do FormDin5 com Adianti'
-system_name_sub = 'APPEV1'
-logo-lg = APPEV1
-;logo-mini = /images/favicon-96x96.png ; logo minimo com imagem
-logo-mini = E1 ; logo minimo com texto 
-logo-link-class = 'index.php?class=AjudaView'
-login-link = https://github.com/bjverde/FormDin5
+## Arquivo application.php
+Editar `app/config/application.php` incluir as linhas abaixo no final do array.
+```php
+    'system' =>  [
+        'system_version' => '5.11.0',
+        'system_name_sub'=> 'Aplicação de Exemplo 1 do FormDin5 com Adianti',
+        'adianti_min_version'=> '8.4.0',
+        'formdin_min_version'=> '5.10.0',
+    ],
 ```
 
 ## Arquivo index.php
