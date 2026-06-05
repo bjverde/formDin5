@@ -37,7 +37,7 @@ Edit the `app/config/application.php` file and include the lines below at the en
         'system_version' => '5.11.0',
         'system_name_sub'=> 'FormDin5 Example Application 1 with Adianti',
         'adianti_min_version'=> '8.4.0',
-        'formdin_min_version'=> '5.10.0',
+        'formdin_min_version'=> '5.11.0',
     ],
 ```
 

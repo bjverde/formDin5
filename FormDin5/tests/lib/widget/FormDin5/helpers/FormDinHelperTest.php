@@ -50,8 +50,8 @@ use PHPUnit\Framework\TestCase;
 
 class FormDinHelperTest extends TestCase
 {
-    public $formDinVersion = '5.10.0';
-    public $adiantiVersion = '7.6.0.4';
+    public $formDinVersion = '5.11.0';
+    public $adiantiVersion = '8.4.0.1';
 
     public function testVersion() {
         $expected = $this->formDinVersion;
