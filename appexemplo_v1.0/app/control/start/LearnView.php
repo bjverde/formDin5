@@ -21,7 +21,6 @@ class LearnView extends TPage
     {
         parent::__construct();
         
-        TPage::include_css('app/resources/styles.css');
         $this->html = new THtmlRenderer('app/resources/learn.html');
 
         // define replacements for the main section
@@ -32,7 +31,7 @@ class LearnView extends TPage
         
         $container = new TVBox;
         $container->style = 'width: 100%';
-        $container->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
+        //$container->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
         $container->add($this->html);
         
         // add the build to the page
