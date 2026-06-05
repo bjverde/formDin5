@@ -62,8 +62,8 @@
 class FormDinHelper
 {
 
-    const FORMDIN_VERSION = '5.10.0';
-    const ADIANTI_MIN_FORMDIN = '7.5.1';
+    const FORMDIN_VERSION = '5.11.0';
+    const ADIANTI_MIN_FORMDIN = '8.4.0';
     const GRID_SIMPLE = 'GRID_SIMPLE';
     const GRID_SCREEN_PAGINATION = 'GRID_SCREEN_PAGINATION';
     const GRID_SQL_PAGINATION    = 'GRID_SQL_PAGINATION';
