@@ -34,10 +34,10 @@ In 2026, with the advancement of AI, the FormDin 5 project will become obsolete.
 Edit the `app/config/application.php` file and include the lines below at the end of the `system` array.
 ```php
     'system' =>  [
-        'system_version' => '5.11.0',
+        'system_version' => '5.12.00',
         'system_name_sub'=> 'FormDin5 Example Application 1 with Adianti',
         'adianti_min_version'=> '8.4.0',
-        'formdin_min_version'=> '5.11.0',
+        'formdin_min_version'=> '5.12.00',
     ],
 ```
 
