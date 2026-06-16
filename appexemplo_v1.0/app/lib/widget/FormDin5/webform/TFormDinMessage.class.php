@@ -199,7 +199,7 @@ class TFormDinMessage {
         $app   = null;
         $login = null;
         $grupo = null;
-        if( ArrayHelper::has(APPLICATION_NAME,$_SESSION) ) {
+        if( isset($_SESSION) && ArrayHelper::has(APPLICATION_NAME,$_SESSION) ) {
             $app = ArrayHelper::getArray($_SESSION,APPLICATION_NAME);
         }
         if( ArrayHelper::has('USER',$app) ) {
