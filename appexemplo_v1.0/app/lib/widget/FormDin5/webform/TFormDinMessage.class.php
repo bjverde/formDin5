@@ -143,7 +143,7 @@ class TFormDinMessage {
      */
     public function __construct($mixMessage
                               , $type = TFormDinMessage::TYPE_INFO
-                              , TAction $action = NULL
+                              , ?TAction $action = NULL
                               , $title_msg = '')
     {
         $this->setMixMessage($mixMessage);
