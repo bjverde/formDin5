@@ -51,6 +51,47 @@ class TFormDinGridColumn
     protected $action;
     protected $name;
     protected $sortable;
+
+
+	/**
+	 * Cria um objeto TDataGridColumn com configurações padrão
+	 * com coluna ordenavél por padrão sempre tiver o mesmo metodo onReload na classe
+	 * 
+     * ==========================================
+	 * DETALHES DO PARÂMETRO: $sortName
+	 * ==========================================
+     * Se o sortName não for informado, a coluna será ordenada pelo próprio name.
+     * Além disso será usado no metodo onReload da tela que tem o list. 
+     * Isso pode ser muito util para não preciso fazer uma view para conseguir ordenar
+     * 
+     * Exemplo: 
+     * No metodo onReload vai colocar o filtro como abaixo informando o string que passou no parameto 6
+     * Quando a colune tem um relacinamento para carregar a descrição no onRelod deve informar como ser ordenação
+     * 
+     *  if (!empty($param['order']) && $param['order'] == 'sort_nome_da_coluna'){
+     *    $subQueryOrder = 'sort_nome_da_coluna';
+     *    $param['order'] = '(SELECT system_users.name FROM venda_certificado, system_users WHERE venda_certificado.id = venda_certificado_produtos.venda_certificado_id AND system_users.id = venda_certificado.vendedor_id)';    
+     *  }
+     * 
+     * @param object $nomeClassTela 01 - Nome da classe a tela que tem o grid
+	 * @param string $name          02 - nome da coluna da tabela ou view. Não use sobre lazy loaded fields
+	 * @param string $label         03 - rótulo da coluna
+	 * @param string $align         04 - alinhamento da coluna (padrão: right) (left, center, right)
+	 * @param int|null $width       05 - largura da coluna em pixels (padrão: NULL)
+     * @param string|null $sortName 06 - nome da coluna para ordenação (padrão: name)
+	 * @return TDataGridColumn
+	 */
+	public static function getObjTDataGridColumn(object $nomeClassTela, string $name, string $label, string $align = 'right', int|null $width = null, string|null $sortName = null): TDataGridColumn
+	{
+		$column = new TDataGridColumn($name, $label, $align, $width);
+
+        $sortName = empty($sortName) ? $name : $sortName;
+        $orderAction = new TAction([$nomeClassTela, 'onReload']);
+        $orderAction->setParameter('order', $sortName);
+        $column->setAction($orderAction);
+
+		return $column;
+	}    
     
     /**
      * Coluna do Grid Padronizado em BoorStrap
