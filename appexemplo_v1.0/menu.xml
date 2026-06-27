@@ -327,11 +327,11 @@
                     </menuitem>
                     <menuitem label='Gride 05 - Paginação Scroll Horizontal'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride05_paginacao_scrollhorizontal</action>
+                        <action>exe_grid05_paginacao_scrollhorizontal</action>
                     </menuitem>
                     <menuitem label='Gride 05 - Paginação Scroll Vertical'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride05_paginacao_scrollvertical</action>
+                        <action>exe_grid05_paginacao_scrollvertical</action>
                     </menuitem>
                     <menuitem label='Grides 17 simples - Bootstrap'>
                         <icon>fas:th fa-fw #2965f1</icon>
