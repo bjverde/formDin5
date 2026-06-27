@@ -461,6 +461,22 @@ class TFormDin
         return $formDinLabelField;
     }
 
+	/**
+	 * Limpa os filtros do formulário de listagem e recarrega a grid.
+	 * @param object $pageObject Instância da classe de listagem (TPage)
+	 * @param string $className Nome da classe de listagem
+	 */
+	public static function clearListFilter($pageObject, $className)
+	{
+		$cleaner = function() use ($className) {
+			TSession::setValue($className.'_filter_data', NULL);
+			TSession::setValue($className.'_filters', NULL);
+			$this->form->clear();
+			$this->onReload(['offset' => 0, 'first_page' => 1]);
+		};
+		$cleaner->call($pageObject);
+	}
+
     /**
     * Adicionar botão no layout
     *
