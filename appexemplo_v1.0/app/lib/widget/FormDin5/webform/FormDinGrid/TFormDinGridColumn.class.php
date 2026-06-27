@@ -52,32 +52,33 @@ class TFormDinGridColumn
     protected $name;
     protected $sortable;
 
+
 	/**
-	 * Cria um objeto TDataGridColumn com configurações padrão
-	 * com coluna ordenavél por padrão sempre tiver o mesmo metodo onReload na classe
+	 * Instancia um objeto TDataGridColumn com configurações padronizadas.
+	 * Por padrão, a coluna será ordenável e acionará o método `onReload` da classe informada.
 	 * 
      * ==========================================
 	 * DETALHES DO PARÂMETRO: $sortName
 	 * ==========================================
-     * Se o sortName não for informado, a coluna será ordenada pelo próprio name.
-     * Além disso será usado no metodo onReload da tela que tem o list. 
-     * Isso pode ser muito util para não preciso fazer uma view para conseguir ordenar
+     * Se o `$sortName` não for informado, a ordenação usará o próprio `$name` da coluna.
+     * Este parâmetro é repassado ao método `onReload` da tela de listagem para definir a ordenação.
      * 
-     * Exemplo: 
-     * No metodo onReload vai colocar o filtro como abaixo informando o string que passou no parameto 6
-     * Quando a colune tem um relacinamento para carregar a descrição no onRelod deve informar como ser ordenação
+     * Utilizar um `$sortName` customizado é excelente para ordenar colunas de relacionamentos 
+     * (chaves estrangeiras) sem a necessidade de criar uma View no banco de dados.
      * 
-     *  if (!empty($param['order']) && $param['order'] == 'sort_nome_da_coluna'){
-     *    $subQueryOrder = 'sort_nome_da_coluna';
-     *    $param['order'] = '(SELECT system_users.name FROM venda_certificado, system_users WHERE venda_certificado.id = venda_certificado_produtos.venda_certificado_id AND system_users.id = venda_certificado.vendedor_id)';    
+     * Exemplo de uso no método `onReload` da sua tela: 
+     * Intercepte a ordenação verificando a string que você passou no parâmetro `$sortName`.
+     * 
+     *  if (!empty($param['order']) && $param['order'] == 'sort_nome_da_coluna') {
+     *      $param['order'] = '(SELECT system_users.name FROM venda_certificado, system_users WHERE venda_certificado.id = venda_certificado_produtos.venda_certificado_id AND system_users.id = venda_certificado.vendedor_id)';    
      *  }
      * 
-     * @param object $nomeClassTela 01 - Nome da classe a tela que tem o grid
-	 * @param string $name          02 - nome da coluna da tabela ou view. Não use sobre lazy loaded fields
-	 * @param string $label         03 - rótulo da coluna
-	 * @param string $align         04 - alinhamento da coluna (padrão: right) (left, center, right)
-	 * @param int|null $width       05 - largura da coluna em pixels (padrão: NULL)
-     * @param string|null $sortName 06 - nome da coluna para ordenação (padrão: name)
+     * @param object $nomeClassTela        01 - Instância da classe da tela que possui a grid (onde está o onReload).
+	 * @param string $name                 02 - Nome da coluna da tabela/view (Evite usar em propriedades carregadas por Lazy Loading).
+	 * @param string $label                03 - Rótulo (título) da coluna.
+	 * @param string $align                04 - Alinhamento do texto na coluna ('left', 'center', 'right'). Padrão: 'right'.
+	 * @param int|null $width              05 - Largura da coluna em pixels. Padrão: null.
+     * @param string|null $sortName        06 - Nome customizado para ordenação. Se omitido, usa o `$name`. Padrão: null.
 	 * @return TDataGridColumn
 	 */
 	public static function getObjTDataGridColumn(object $nomeClassTela, string $name, string $label, string $align = 'right', int|null $width = null, string|null $sortName = null): TDataGridColumn
@@ -90,7 +91,7 @@ class TFormDinGridColumn
         $column->setAction($orderAction);
 
 		return $column;
-	}
+	}    
     
     /**
      * Coluna do Grid Padronizado em BoorStrap
