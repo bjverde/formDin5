@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_gride19_grupo extends TPage
+class exe_grid19 extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing
@@ -19,11 +19,11 @@ class exe_gride19_grupo extends TPage
         $this->setActiveRecord('tb_paginacao');// defines the active record
         $this->setDefaultOrder('id', 'asc');   // define the default order
 
-        $frm = new TFormDin($this,'Grid 19 - Ações em Grupo');
+        $frm = new TFormDin($this,'Grid 19 - Desativando Edit');
         $frm->addHiddenField('id'); //POG para evitar problema de noticie
         $msg = '<b>Este exemplo utiliza a tabela tb_paginacao do banco de dados app/database/bdApoio.s3db (sqlite).</b>';
         $msg = $msg.'<br>';
-        $msg = $msg.'<br>Criando novas ações';
+        $msg = $msg.'<br>Desativando ação Edit';
         $frm->addHtmlField('mensagem', $msg);
 
         // O Adianti permite a Internacionalização - A função _t('string') serve
@@ -39,10 +39,7 @@ class exe_gride19_grupo extends TPage
         $grid->addColumn('id',  'id', null, 'center');
         $grid->addColumn('descricao',  'Descrição', null, 'left');
 
-        $grid->enableActionGroup(true);
-        $grid->addButton(_t('Delete'),'onDelete',null,null,null,'far:trash-alt red');
-        $grid->addButton('Detalhar','onDetalhar',null,null,null,'fas:th fa-fw #2965f1');
-        $grid->addButton('Abrir Painel','onPainelLateral',null,null,null,'fas:link fa-link');
+        $grid->setCreateDefaultEditButton(false);
 
         $grid->setExportPdf(false);
         $grid->setExportExcel(false);
@@ -50,7 +47,7 @@ class exe_gride19_grupo extends TPage
 
         $this->datagrid = $grid->show();
         $this->pageNavigation = $grid->getPageNavigation();
-        $panelGroupGrid = $grid->getPanelGroupGrid();;
+        $panelGroupGrid = $grid->getPanelGroupGrid();
 
 
         //$this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
@@ -95,7 +92,7 @@ class exe_gride19_grupo extends TPage
         }
     }
 
-     /**
+    /**
      * Executed when the user clicks at the delete button
      * STATIC Method, does't reload the page when executed
      */
@@ -103,22 +100,7 @@ class exe_gride19_grupo extends TPage
     {
         // get the parameter and shows the message
         $code = $param['id'];
-        new TMessage('error', "Você clicou para deletar o registro <b>{$code}</b> e não será deletado");
-    }
-
-    public static function onDetalhar($param)
-    {
-        // get the parameter and shows the message
-        $code = $param['id'];
-        new TMessage('info', "Você clicou para DETALHAR o registro <b>{$code}</b>");
-    }
-
-    public static function onPainelLateral($param)
-    {
-        // get the parameter and shows the message
-        $code = $param['id'];
-        new TMessage('info', "Você clicou para abrir o registro <b>{$code}</b> em painel lateral");
-        AdiantiCoreApplication::loadPage('form_right_panel', 'onReload', ['adianti_target_container' => 'adianti_right_panel', 'register_state' => 'false']);
+        new TMessage('error', "Você tentou clicou para deletar o registro <b>{$code}</b> e não será deletado");
     }
 
 }

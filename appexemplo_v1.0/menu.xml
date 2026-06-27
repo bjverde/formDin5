@@ -365,15 +365,15 @@
                 <menu>
                     <menuitem label='Gride 19 - Desativando Edit'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride19</action>
+                        <action>exe_grid19</action>
                     </menuitem>
                     <menuitem label='Gride 19 - Incluindo Nova Ação'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride19_nova_acao</action>
+                        <action>exe_grid19_nova_acao</action>
                     </menuitem>
                     <menuitem label='Gride 19 - Ações em grupo'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride19_grupo</action>
+                        <action>exe_grid19_grupo</action>
                     </menuitem>                    
                 </menu> 
             </menuitem>            
