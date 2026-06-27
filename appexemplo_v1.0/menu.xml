@@ -323,7 +323,7 @@
                 <menu>
                     <menuitem label='Gride 05 - Paginação'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride05_paginacao</action>
+                        <action>exe_grid05_paginacao</action>
                     </menuitem>
                     <menuitem label='Gride 05 - Paginação Scroll Horizontal'>
                         <icon>fas:th fa-fw #2965f1</icon>
