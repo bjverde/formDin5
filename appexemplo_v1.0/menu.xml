@@ -389,6 +389,10 @@
             <menuitem label='Grides Draw - desenhando Dinamicamente'>
                 <icon>fas:th fa-fw #2965f1</icon>
                 <menu>
+                    <menuitem label='Gride Draw 03 - ações condicionais'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_grid_draw_03_botoes_condicionais</action>
+                    </menuitem>                
                     <menuitem label='Gride Draw 07 - ações a direita'>
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_grid_draw_07</action>

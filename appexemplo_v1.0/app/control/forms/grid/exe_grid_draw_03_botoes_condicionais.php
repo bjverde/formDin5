@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_gride_draw_03_botoes_condicionais extends TPage
+class exe_grid_draw_03_botoes_condicionais extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing
