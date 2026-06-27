@@ -2,7 +2,7 @@
 
 use Adianti\Registry\TSession;
 
-class exe_gride_draw_07 extends TPage
+class exe_grid_draw_07 extends TPage
 {
     protected $form; // registration form
     protected $datagrid; // listing

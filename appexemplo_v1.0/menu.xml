@@ -382,7 +382,7 @@
                 <menu>
                     <menuitem label='Gride Campos 01 - CheckColumn'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride_field01_check</action>
+                        <action>exe_grid_field01_check</action>
                     </menuitem>
                 </menu>
             </menuitem>
@@ -391,7 +391,7 @@
                 <menu>
                     <menuitem label='Gride Draw 07 - ações a direita'>
                         <icon>fas:th fa-fw #2965f1</icon>
-                        <action>exe_gride_draw_07</action>
+                        <action>exe_grid_draw_07</action>
                     </menuitem>
                 </menu>
             </menuitem>
