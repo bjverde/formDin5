@@ -62,7 +62,7 @@
 class FormDinHelper
 {
 
-    const FORMDIN_VERSION = '5.11.0';
+    const FORMDIN_VERSION = '5.12.00';
     const ADIANTI_MIN_FORMDIN = '8.4.0';
     const GRID_SIMPLE = 'GRID_SIMPLE';
     const GRID_SCREEN_PAGINATION = 'GRID_SCREEN_PAGINATION';
@@ -410,21 +410,12 @@ class FormDinHelper
     }
 
     /**
-     * Retorna um objeto TLabel com o label, fonte padrão e a cor
-     * padrão para campos obrigatórios ou não
-     * @param string $label
-     * @param bool $required
-     * @param string|null $fontSizev default '14px'
-     * @param string|null $fontColor default '#ff0000' se $required for true, senão null
+     * @deprecated change to TFormDinLabelField::getObjTLabel
      * @return TLabel
      */
     public static function getObjTLabel(string $label, bool $required = FALSE, ?string $fontSize = '14px', ?string $fontColor = '#ff0000'): TLabel
     {
-        $objLabel = new TLabel($label, null, $fontSize);
-        if ($required) {
-            $objLabel = new TLabel($label, $fontColor, $fontSize);
-        }
-        return $objLabel;
+        return TFormDinLabelField::getObjTLabel($label, $required, $fontSize, $fontColor);
     }    
 
 	/**
