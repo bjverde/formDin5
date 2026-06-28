@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class mockBanco
 {
@@ -16,7 +16,6 @@ class mockBanco
         $item->state   = 'Tennessee (US)';
         $item->date    = '2010-10-01';
         $item->dateTime= '2010-10-01 01:01:00';
-        $item->sim1    = 's';
         $item->sim2    = 'sim';
         $banco[]=$item;
         
@@ -29,7 +28,6 @@ class mockBanco
         $item->state   = 'Surrey (UK)';
         $item->date    = '2010-10-10';
         $item->dateTime= '2010-10-01 15:01:00';
-        $item->sim1    = 'n';
         $item->sim2    = 'não';        
         $banco[]=$item;
         
@@ -337,7 +335,7 @@ class mockBanco
         $banco[]=$item;
 
         $images = ['2-code-gen-database-first.png', 'adianti.png', 'builder.png', 'favicon-16x16.png', 'favicon-32x32.png', 'favicon-96x96.png', 'formdin_logo.png', 'formdin_logo_small.png', 'ico_wellcome.png', 'icon.png', 'mark-cheque-green.png', 'mov_bbb.mp4', 'studio.png', 'template.png', 'template3.png', 'template4.png'];
-        $text = str_repeat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", 9);
+        $text = str_repeat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", 12);
         
         foreach ($banco as $itemObj) {
             $ddd = str_pad(rand(11, 99), 2, '0', STR_PAD_LEFT);
@@ -353,6 +351,8 @@ class mockBanco
             
             $valEua = mt_rand(-1000000, 1000000) / 100;
             $itemObj->numEua = number_format($valEua, 2, '.', '');
+
+            $itemObj->sim1 = rand(0, 1) ? 'S' : 'N';
         }
 
         return $banco;

@@ -32,7 +32,7 @@ class exe_grid21 extends TPage
 
         $sim1 = new TDataGridColumn('sim1', 'sim1','center');
         $sim1->setTransformer(function($value, $object, $row) {
-            $value = StringHelper::strtolower_utf8($value);
+            $value = StringHelper::strtoupper_utf8($value);
             return TFormDinGridTransformer::simNaoComLabel($value, $object, $row);
         });
 
