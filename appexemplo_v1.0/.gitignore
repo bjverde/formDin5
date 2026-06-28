@@ -69,6 +69,7 @@
 /app/lib/util/
 /app/lib/validator/
 /app/lib/widget/
+!/app/lib/widget/FormDin5
 
 /app/model/admin/
 /app/model/communication/
