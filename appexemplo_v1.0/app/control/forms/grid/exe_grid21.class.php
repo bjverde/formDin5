@@ -11,24 +11,24 @@ class exe_grid21 extends TPage
         
         // creates one datagrid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
-        $this->datagrid->enablePopover('Details', '<b>Code:</b> {code} <br> <b>Name:</b> {name} <br> <b>City:</b> {city} <br> <b>State:</b> {state}');
+        //$this->datagrid->enablePopover('Details', '<b>Code:</b> {code} <br> <b>Name:</b> {name} <br> <b>City:</b> {city} <br> <b>State:</b> {state}');
         
         // create the datagrid columns
         $code       = new TDataGridColumn('code',    'Code',    'center', '10%');
         $name       = new TDataGridColumn('name',    'Name',    'left',   '30%');
-        $city       = new TDataGridColumn('city',    'City',    'left',   '30%');
-        $state      = new TDataGridColumn('state',   'State',   'left',   '30%');
+        //$city       = new TDataGridColumn('city',    'City',    'left',   '30%');
+        //$state      = new TDataGridColumn('state',   'State',   'left',   '30%');
         
         // add the columns to the datagrid, with actions on column titles, passing parameters
-        $this->datagrid->addColumn($code,   new TAction([$this, 'onColumnAction'], ['column' => 'code']) );
-        $this->datagrid->addColumn($name,   new TAction([$this, 'onColumnAction'], ['column' => 'name']) );
-        $this->datagrid->addColumn($city,   new TAction([$this, 'onColumnAction'], ['column' => 'city']) );
-        $this->datagrid->addColumn($state,  new TAction([$this, 'onColumnAction'], ['column' => 'state']) );
+        $this->datagrid->addColumn($code);
+        $this->datagrid->addColumn($name);
+        //$this->datagrid->addColumn($city);
+        //$this->datagrid->addColumn($state);
         
         $code->title  = 'Here is the code';
         $name->title  = 'Here is the name';
-        $city->title  = 'Here is the city';
-        $state->title = 'Here is the state';
+        //$city->title  = 'Here is the city';
+        //$state->title = 'Here is the state';
         
         // creates two datagrid actions
         $action1 = new TDataGridAction([$this, 'onView'],   ['code'=>'{code}',  'name' => '{name}'] );
@@ -64,8 +64,12 @@ class exe_grid21 extends TPage
     function onReload()
     {
         $this->datagrid->clear();
-        $mixData = mockBanco::getExemploAdianti();
-        $this->datagrid->addItem($mixData);
+        $listData = mockBanco::getExemploAdianti();
+        if ($listData) {
+            foreach ($listData as $item) {
+                $this->datagrid->addItem( (object) $item );
+            }
+        }
     }
     
     /**
