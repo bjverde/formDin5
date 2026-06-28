@@ -81,7 +81,7 @@ class TFormDinGridColumn
      * @param string|null $sortName        06 - Nome customizado para ordenação. Se omitido, usa o `$name`. Padrão: null.
 	 * @return TDataGridColumn
 	 */
-	public static function getObjTDataGridColumn(object $nomeClassTela, string $name, string $label, string $align = 'right', int|null $width = null, string|null $sortName = null): TDataGridColumn
+	public static function getObjTDataGridColumnOrder(object $nomeClassTela, string $name, string $label, string $align = 'right', int|null $width = null, string|null $sortName = null): TDataGridColumn
 	{
 		$column = new TDataGridColumn($name, $label, $align, $width);
 
