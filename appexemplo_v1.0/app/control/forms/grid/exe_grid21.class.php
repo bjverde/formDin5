@@ -4,14 +4,28 @@ use Adianti\Registry\TSession;
 class exe_grid21 extends TPage
 {
     private $datagrid;
+    private static $formName = 'form_exe_grid21';
     
     public function __construct()
     {
         parent::__construct();
+
+
+        // creates a Datagrid
+        $this->datagrid = new TDataGrid;
+        $this->datagrid->setId(__CLASS__.'_datagrid');
+
+        $this->datagrid_form = new TForm('datagrid_'.self::$formName);
+        $this->datagrid_form->onsubmit = 'return false';
+
+        $this->filter_criteria = new TCriteria;
+        $this->datagrid = new BootstrapDatagridWrapper($this->datagrid);
+        $this->datagrid->disableDefaultClick();
+        $this->datagrid->datatable = 'true';
+        $this->datagrid->style = 'width: 100%';
+        $this->datagrid->setHeight(250);        
         
-        // creates one datagrid
-        $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
-        //$this->datagrid->enablePopover('Details', '<b>Code:</b> {code} <br> <b>Name:</b> {name} <br> <b>City:</b> {city} <br> <b>State:</b> {state}');
+        $this->datagrid->enablePopover('Details', '<b>Code:</b> {code} <br> <b>Name:</b> {name} <br> <b>City:</b> {city} <br> <b>State:</b> {state}');
         
         // create the datagrid columns
         $code       = new TDataGridColumn('code',    'Code','center');

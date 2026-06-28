@@ -335,7 +335,7 @@ class mockBanco
         $banco[]=$item;
 
         $images = ['2-code-gen-database-first.png', 'adianti.png', 'builder.png', 'favicon-16x16.png', 'favicon-32x32.png', 'favicon-96x96.png', 'formdin_logo.png', 'formdin_logo_small.png', 'ico_wellcome.png', 'icon.png', 'mark-cheque-green.png', 'mov_bbb.mp4', 'studio.png', 'template.png', 'template3.png', 'template4.png'];
-        $text = str_repeat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", 12);
+        $text = str_repeat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", 20);
         
         foreach ($banco as $itemObj) {
             $ddd = str_pad(rand(11, 99), 2, '0', STR_PAD_LEFT);
