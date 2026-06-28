@@ -18,24 +18,41 @@ class exe_grid21 extends TPage
         $name       = new TDataGridColumn('name',    'Name','left');
         $date       = new TDataGridColumn('date',    'Date','center');
         $date->setTransformer(function($value, $object, $row) {
-            return TFormDinGridTransformer::dateTime($value);
+            return TFormDinGridTransformer::date($value);
         });
-        $dateTime   = new TDataGridColumn('dateTime',    'Date Time','center');
+        $dateTime   = new TDataGridColumn('dateTime', 'Date Time','center');
         $dateTime->setTransformer(function($value, $object, $row) {
             return TFormDinGridTransformer::gridDateTime($value, $object, $row);
         });
-        $numero = new TDataGridColumn('telefone', 'Number','center');
+
+        $telefone = new TDataGridColumn('telefone', 'telefone','center');
+        $telefone->setTransformer(function($value, $object, $row) {
+            return TFormDinGridTransformer::linkApiWhatsApp($value, $object, $row, '',true);
+        });
+
+        $sim1 = new TDataGridColumn('sim1', 'sim1','center');
+        $sim1->setTransformer(function($value, $object, $row) {
+            return TFormDinGridTransformer::simNaoComLabel($value, $object, $row);
+        });
+
+        $numBr = new TDataGridColumn('numBr', 'numBr','center');
+        $numBr->setTransformer(function($value, $object, $row) {
+            return gridNumeroBrasilFormatStyle($value, $object, $row);
+        });
+
         $img    = new TDataGridColumn('img','Image','center');
         $img->setTransformer(function($value, $object, $row) {
             return TFormDinGridTransformer::gridImg($value, $object, $row,'app/images/','80px','app/images/icon.png');
-        });        
+        });
         
         // add the columns to the datagrid, with actions on column titles, passing parameters
         $this->datagrid->addColumn($code);
         $this->datagrid->addColumn($name);
         $this->datagrid->addColumn($date);
         $this->datagrid->addColumn($dateTime);
-        $this->datagrid->addColumn($numero);
+        $this->datagrid->addColumn($sim1);
+        $this->datagrid->addColumn($numBr);
+        $this->datagrid->addColumn($telefone);
         $this->datagrid->addColumn($img);
         
         $code->title  = 'Here is the code';
