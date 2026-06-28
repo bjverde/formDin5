@@ -14,16 +14,29 @@ class exe_grid21 extends TPage
         //$this->datagrid->enablePopover('Details', '<b>Code:</b> {code} <br> <b>Name:</b> {name} <br> <b>City:</b> {city} <br> <b>State:</b> {state}');
         
         // create the datagrid columns
-        $code       = new TDataGridColumn('code',    'Code',    'center', '10%');
-        $name       = new TDataGridColumn('name',    'Name',    'left',   '30%');
-        //$city       = new TDataGridColumn('city',    'City',    'left',   '30%');
-        //$state      = new TDataGridColumn('state',   'State',   'left',   '30%');
+        $code       = new TDataGridColumn('code',    'Code','center');
+        $name       = new TDataGridColumn('name',    'Name','left');
+        $date       = new TDataGridColumn('date',    'Date','center');
+        $date->setTransformer(function($value, $object, $row) {
+            return TFormDinGridTransformer::dateTime($value);
+        });
+        $dateTime   = new TDataGridColumn('dateTime',    'Date Time','center');
+        $dateTime->setTransformer(function($value, $object, $row) {
+            return TFormDinGridTransformer::gridDateTime($value, $object, $row);
+        });
+        $numero = new TDataGridColumn('telefone', 'Number','center');
+        $img    = new TDataGridColumn('img','Image','center');
+        $img->setTransformer(function($value, $object, $row) {
+            return TFormDinGridTransformer::gridImg($value, $object, $row,'app/images/','80px','app/images/icon.png');
+        });        
         
         // add the columns to the datagrid, with actions on column titles, passing parameters
         $this->datagrid->addColumn($code);
         $this->datagrid->addColumn($name);
-        //$this->datagrid->addColumn($city);
-        //$this->datagrid->addColumn($state);
+        $this->datagrid->addColumn($date);
+        $this->datagrid->addColumn($dateTime);
+        $this->datagrid->addColumn($numero);
+        $this->datagrid->addColumn($img);
         
         $code->title  = 'Here is the code';
         $name->title  = 'Here is the name';
