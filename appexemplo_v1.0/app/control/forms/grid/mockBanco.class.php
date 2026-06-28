@@ -373,6 +373,19 @@ class mockBanco
         $item->numero1 = '123456.06';
         $banco[]=$item;
 
+        $images = ['2-code-gen-database-first.png', 'adianti.png', 'builder.png', 'favicon-16x16.png', 'favicon-32x32.png', 'favicon-96x96.png', 'formdin_logo.png', 'formdin_logo_small.png', 'ico_wellcome.png', 'icon.png', 'mark-cheque-green.png', 'mov_bbb.mp4', 'studio.png', 'template.png', 'template3.png', 'template4.png'];
+        $text = str_repeat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", 9);
+        
+        foreach ($banco as $itemObj) {
+            $ddd = str_pad(rand(11, 99), 2, '0', STR_PAD_LEFT);
+            $numero = '9' . rand(1000, 9999) . '-' . rand(1000, 9999);
+            $itemObj->telefone = rand(0, 1) ? "($ddd) $numero" : $numero;
+            $itemObj->img = $images[array_rand($images)];
+            $itemObj->lat = mt_rand(-90000000, 90000000) / 1000000;
+            $itemObj->lon = mt_rand(-180000000, 180000000) / 1000000;
+            $itemObj->texto = substr($text, 0, rand(50, 1000));
+        }
+
         return $banco;
     }
 }
