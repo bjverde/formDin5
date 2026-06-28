@@ -47,9 +47,12 @@ class exe_grid21 extends TPage
 
         $img    = new TDataGridColumn('img','Image','center');
         $img->setTransformer(function($value, $object, $row) {
-            return TFormDinGridTransformer::gridImg($value, $object, $row,'app/images/','80px','app/images/icon.png');
+            return TFormDinGridTransformer::gridImg($value, $object, $row,'app/images/','100px','app/images/icon.png');
         });
-        $texto    = new TDataGridColumn('texto','Image','center');
+        $texto    = new TDataGridColumn('texto','Text','center');
+        $texto->setTransformer(function($value, $object, $row) {
+            return TFormDinGridTransformer::gridTextoScroll($value, $object, $row,'100px');
+        });        
         
         // add the columns to the datagrid, with actions on column titles, passing parameters
         $this->datagrid->addColumn($code);
