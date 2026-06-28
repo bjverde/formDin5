@@ -32,18 +32,24 @@ class exe_grid21 extends TPage
 
         $sim1 = new TDataGridColumn('sim1', 'sim1','center');
         $sim1->setTransformer(function($value, $object, $row) {
+            $value = StringHelper::strtolower_utf8($value);
             return TFormDinGridTransformer::simNaoComLabel($value, $object, $row);
         });
 
         $numBr = new TDataGridColumn('numBr', 'numBr','center');
         $numBr->setTransformer(function($value, $object, $row) {
-            return gridNumeroBrasilFormatStyle($value, $object, $row);
+            return TFormDinGridTransformer::gridNumeroBrasilFormatStyle($value, $object, $row);
         });
+        $lat = new TDataGridColumn('lat', 'Maps','center');
+        $lat->setTransformer(function($value, $object, $row) {
+            return TFormDinGridTransformer::gridCordLatLonLinkGoogleMaps($object->lat, $object->lon, null,true,'Google Maps');
+        });        
 
         $img    = new TDataGridColumn('img','Image','center');
         $img->setTransformer(function($value, $object, $row) {
             return TFormDinGridTransformer::gridImg($value, $object, $row,'app/images/','80px','app/images/icon.png');
         });
+        $texto    = new TDataGridColumn('texto','Image','center');
         
         // add the columns to the datagrid, with actions on column titles, passing parameters
         $this->datagrid->addColumn($code);
@@ -52,8 +58,10 @@ class exe_grid21 extends TPage
         $this->datagrid->addColumn($dateTime);
         $this->datagrid->addColumn($sim1);
         $this->datagrid->addColumn($numBr);
+        $this->datagrid->addColumn($lat);
         $this->datagrid->addColumn($telefone);
         $this->datagrid->addColumn($img);
+        $this->datagrid->addColumn($texto);
         
         $code->title  = 'Here is the code';
         $name->title  = 'Here is the name';
@@ -61,16 +69,13 @@ class exe_grid21 extends TPage
         //$state->title = 'Here is the state';
         
         // creates two datagrid actions
-        $action1 = new TDataGridAction([$this, 'onView'],   ['code'=>'{code}',  'name' => '{name}'] );
-        $action2 = new TDataGridAction([$this, 'onDelete'], ['code'=>'{code}'] );
+        $action1 = new TDataGridAction([$this, 'onView'], ['code'=>'{code}',  'name' => '{name}'] );
         
         // custom button presentation
         $action1->setUseButton(TRUE);
-        $action2->setUseButton(TRUE);
         
         // add the actions to the datagrid
         $this->datagrid->addAction($action1, 'View', 'fa:search blue');
-        $this->datagrid->addAction($action2, 'Delete', 'far:trash-alt red');
         
         // creates the datagrid model
         $this->datagrid->createModel();
