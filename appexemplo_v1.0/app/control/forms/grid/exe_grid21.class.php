@@ -23,7 +23,7 @@ class exe_grid21 extends TPage
         $this->datagrid->disableDefaultClick();
         $this->datagrid->datatable = 'true';
         $this->datagrid->style = 'width: 100%';
-        $this->datagrid->setHeight(250);        
+        $this->datagrid->setHeight(250);
         
         $this->datagrid->enablePopover('Details', '<b>Code:</b> {code} <br> <b>Name:</b> {name} <br> <b>City:</b> {city} <br> <b>State:</b> {state}');
         
