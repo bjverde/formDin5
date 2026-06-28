@@ -347,6 +347,15 @@
                     </menuitem>                    
                 </menu> 
             </menuitem>
+            <menuitem label='Grides Transformar dados'>
+                <icon>fas:th fa-fw #2965f1</icon>
+                <menu>
+                    <menuitem label='Gride 21 - Adianti fortando dados'>
+                        <icon>fas:th fa-fw #2965f1</icon>
+                        <action>exe_grid21</action>
+                    </menuitem>
+                </menu> 
+            </menuitem>            
             <menuitem label='Grides Exportar'>
                 <icon>fas:th fa-fw #2965f1</icon>
                 <menu>
