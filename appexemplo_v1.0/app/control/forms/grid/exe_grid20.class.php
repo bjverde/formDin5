@@ -44,8 +44,8 @@ class exe_grid20 extends TPage
         $grid->addColumn('name',  'Name', null, 'left',false,true,false);        
         $grid->addColumn('city',  'City', null, 'left',false,true,true,800);
         $grid->addColumn('state','State', null, 'left',false,true,true,900);
-        $grid->addColumn('numero1' ,'Número 1' , null, 'left',false,true,true,1100);
-        $grid->addColumn('numero2' ,'Número 2' , null, 'left',false,true,true,1200);
+        $grid->addColumn('numBr' ,'numBr' , null, 'left',false,true,true,1100);
+        $grid->addColumn('numEua' ,'numEua' , null, 'left',false,true,true,1200);
         $sim1 = $grid->addColumn('sim1' ,'Sim 1' , null, 'left',false,true,true,1300);
         $sim1->setTransformer( function($value, $object, $row){return TFormDinGridTransformer::simNaoComLabel($value, $object, $row);} );
         $grid->addColumn('sim2' ,'Sim 2' , null, 'left',false,true,true,1400);

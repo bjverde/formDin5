@@ -46,9 +46,9 @@ class exe_grid18 extends TPage
         //$grid->addColumn('city',  'City', null, 'left');
         //$grid->addColumn('state','State', null, 'left');
         $grid->addColumnFormatDate('date' ,'Data Brasil' , null, 'left');
-        $numero = $grid->addColumn('numero1' ,'Número 1' , null, 'right');
+        $numero = $grid->addColumn('numBr' ,'Número 1' , null, 'right');
         $numero->setTransformer( function($value, $object, $row){return TFormDinGridTransformer::gridNumeroBrasil($value, $object, $row);} );
-        $numero2 = $grid->addColumn('numero2' ,'Número 2' , null, 'right');
+        $numero2 = $grid->addColumn('numEua' ,'Número 2' , null, 'right');
         $numero2->setTransformer( function($value, $object, $row){return TFormDinGridTransformer::gridNumeroBrasilFormatStyle($value, $object, $row);} );
         $sim1 = $grid->addColumn('sim1' ,'Sim 1' , null, 'right');
         $sim1->setTransformer( function($value, $object, $row){return TFormDinGridTransformer::simNaoComLabel($value, $object, $row);} );                     
