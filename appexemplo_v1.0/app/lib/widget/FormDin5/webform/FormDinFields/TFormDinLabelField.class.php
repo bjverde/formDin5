@@ -80,9 +80,9 @@ class TFormDinLabelField
 
         if (!empty($cssClass)) {
             if ($cssReplace) {
-                $objLabel->setProperty('class', $cssClass, TRUE));
+                $objLabel->setProperty('class', $cssClass, TRUE);
             } else {
-                $objLabel->setProperty('class', $newClass);
+                $objLabel->setProperty('class', $cssClass);
             }
         }
 
