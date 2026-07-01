@@ -62,7 +62,7 @@
 class FormDinHelper
 {
 
-    const FORMDIN_VERSION = '5.12.00';
+    const FORMDIN_VERSION = '5.13.00';
     const ADIANTI_MIN_FORMDIN = '8.4.0';
     const GRID_SIMPLE = 'GRID_SIMPLE';
     const GRID_SCREEN_PAGINATION = 'GRID_SCREEN_PAGINATION';
@@ -420,6 +420,9 @@ class FormDinHelper
 
 	/**
      * @deprecated change to TFormDin::clearListFilter
+	 * Limpa os filtros do formulário de listagem e recarrega a grid.
+	 * @param object $pageObject Instância da classe de listagem (TPage)
+	 * @param string $className Nome da classe de listagem
 	 */
 	public static function clearListFilter($pageObject, $className)
 	{
