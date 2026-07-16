@@ -87,7 +87,7 @@ class TFormDinGenericDAO
             $connPdo = TTransaction::get();
             $connPdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $stmt  = $connPdo->prepare($sql);
-            $resultSql = $stmt->execute($values);
+            $result = $stmt->execute($values);
 
             if (preg_match('/^insert/i', $sql) > 0) {
                 $result = $connPdo->lastInsertId();
