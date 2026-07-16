@@ -88,18 +88,18 @@ class TFormDinGenericDAO
             $connPdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $stmt  = $connPdo->prepare($sql);
 
-            if (preg_match('/^select/i', $sql) > 0) {
+            if (preg_match('/^\s*select/i', $sql) > 0) {
                 $stmt = $connPdo->query($sql);
                 $result = $stmt->fetchAll();
             } else {
                 $result = $stmt->execute($values);
             }
 
-            if (preg_match('/^insert/i', $sql) > 0) {
+            if (preg_match('/^\s*insert/i', $sql) > 0) {
                 $result = $connPdo->lastInsertId();
-            } elseif (preg_match('/^update/i', $sql)) {
+            } elseif (preg_match('/^\s*update/i', $sql)) {
                 $result = $stmt->rowCount();
-            } elseif (preg_match('/^delete/i', $sql)) {
+            } elseif (preg_match('/^\s*delete/i', $sql)) {
                 $result = $stmt->rowCount();
             }
             TTransaction::close();
