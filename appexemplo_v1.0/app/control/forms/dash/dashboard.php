@@ -107,13 +107,13 @@ class dashboard extends TPage
 
         $saida = new TFormDinNumericIndicator();
         $saida->setTitle('Total Vendido');
+        $saida->setFontColor('#fcff31ff');
         $saida->setIcon('fa fa-car fa-fw');
         $saida->setIconColor('#d88f21ff');
         $saida->setIconColorBackground('#27ae60');
         $saida->setNumberPrefix('R$ ');
         $saida->setNumericMask(2, ',', '.');
         $saida->setValue(15000.00);
-        $saida->setFontColor('#fcff31ff');
         $saida->setCardColor('#782eccff');
 
         //$saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
@@ -199,12 +199,14 @@ class dashboard extends TPage
     public function getDivInfoStatusMock(){
         $qtd_vencidos = new TFormDinNumericIndicator();
         $qtd_vencidos->setTitle('Qtd Vencidos');
+        $qtd_vencidos->setFontColor('#ffffffff');
         $qtd_vencidos->setLayout('v3');
         $qtd_vencidos->setValue(3);
         $qtd_vencidos->setIcon('fa-solid fa-circle-xmark');
-        $qtd_vencidos->setIconColorBackground('#723ba0ff');
-        $qtd_vencidos->setLinkText('Link sitema');
-        $qtd_vencidos->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
+        $qtd_vencidos->setCardColor('#c2424a');
+        //$qtd_vencidos->setIconColorBackground('#723ba0ff');
+        //$qtd_vencidos->setLinkText('Link sitema');
+        //$qtd_vencidos->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
 
         $qtd_avencer           = TFormDinGraph::showInfoBox('Qtd a Vencer', 'exclamation-triangle', 'yellow', 15);
         $qtd_ativo             = TFormDinGraph::showInfoBox('Qtd Ativo', 'check-circle', 'green', 100);
