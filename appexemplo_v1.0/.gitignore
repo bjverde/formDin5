@@ -77,7 +77,7 @@
 /app/output/
 /app/reports/
 
-/app/resources/*
+/app/resources/
 
 /app/service/auth/
 /app/service/cli/
