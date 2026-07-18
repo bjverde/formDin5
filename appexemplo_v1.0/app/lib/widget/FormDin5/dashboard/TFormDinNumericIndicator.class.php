@@ -62,6 +62,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
     protected $linkText;
     protected $linkTarget = '_blank';
     protected $numberSuffix = '';
+    protected $layout = 'v2';
     
     /**
      * Construtor da classe
@@ -93,6 +94,27 @@ class TFormDinNumericIndicator extends TNumericIndicator
         $this->cardColor = $color;
     }
     
+    /**
+     * Define o layout do componente ('v2' ou 'v3').
+     * @param string $layout Versão do layout
+     */
+    public function setLayout($layout)
+    {
+        if (!in_array($layout, ['v2', 'v3'])) {
+            throw new \Exception("Layout inválido ('{$layout}'). O método setLayout() aceita apenas 'v2' ou 'v3'.");
+        }
+        $this->layout = $layout;
+    }
+    
+    /**
+     * Retorna o layout atual.
+     * @return string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
     /**
      * Define a classe do ícone a ser exibido.
      * ATENÇÃO: É necessário informar o nome completo da classe da biblioteca de ícones.
@@ -287,12 +309,23 @@ class TFormDinNumericIndicator extends TNumericIndicator
      */
     public function show()
     {
-        // Renderiza usando o SEU template v2
-        $infoBox = new THtmlRenderer('app/lib/widget/FormDin5/resources/info-box-v2.html');
+        $iconColor = $this->getIconColor();
+        
+        // Regra específica solicitada: se for v3 e não mudou a cor do ícone (branco default), ele assume a cor do cartão
+        // Obs: No HTML da v3, coloquei uma opacidade no ícone, portanto ele ficará com um tom mais escuro perfeitamente como na imagem
+        if ($this->getLayout() === 'v3' && $iconColor === '#ffffff') {
+            $iconColor = $this->getCardColor();
+        }
+
+        // Seleciona o template correto
+        $templateFile = "app/lib/widget/FormDin5/resources/info-box-{$this->getLayout()}.html";
+        
+        // Renderiza usando o template
+        $infoBox = new THtmlRenderer($templateFile);
         $infoBox->enableSection('main', [
             'title'      => $this->getTitle(), //Herdado do TChartBase
             'icon'       => $this->getIcon(),
-            'iconColor'  => $this->getIconColor(),
+            'iconColor'  => $iconColor,
             'background' => $this->getColor(),
             'value'      => $this->getFormattedValue(),
             'fontColor'  => $this->getFontColor(),

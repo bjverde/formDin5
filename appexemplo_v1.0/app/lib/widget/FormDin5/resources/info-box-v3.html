@@ -1,0 +1,17 @@
+<!--[main]-->
+<div class="small-box" style="background-color: {$cardColor}; color: {$fontColor}; border-radius: .25rem; display: block; position: relative; overflow: hidden;">
+    <div class="inner" style="padding: 10px;">
+        <h3 style="font-size: 2.2rem; font-weight: 700; margin: 0 0 10px 0; white-space: nowrap; padding: 0; color: {$fontColor};">{$value}</h3>
+        <p style="font-size: 1rem; margin: 0; color: {$fontColor};">{$title}</p>
+    </div>
+    <div class="icon" style="position: absolute; right: 15px; top: 15px; z-index: 0;">
+        <i class="{$icon}" style="color: {$iconColor}; font-size: 70px; opacity: 0.3;" aria-hidden="true"></i>
+    </div>
+    
+    <!--[has_link]-->
+    <a href="{$linkUrl}" target="{$linkTarget}" class="small-box-footer" style="color: {$fontColor}; display: block; padding: 3px 0; position: relative; text-align: center; text-decoration: none; z-index: 10; transition: background .3s;">
+        {$linkText} <i class="fas fa-arrow-circle-right" style="margin-left: 5px;"></i>
+    </a>
+    <!--[/has_link]-->
+</div>
+<!--[/main]-->
