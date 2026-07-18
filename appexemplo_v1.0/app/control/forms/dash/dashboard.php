@@ -198,7 +198,14 @@ class dashboard extends TPage
         $qtd_vencidos          = TFormDinGraph::showInfoBox('Qtd Vencidos', 'times-circle', 'red', 5);
         $qtd_avencer           = TFormDinGraph::showInfoBox('Qtd a Vencer', 'exclamation-triangle', 'yellow', 15);
         $qtd_ativo             = TFormDinGraph::showInfoBox('Qtd Ativo', 'check-circle', 'green', 100);
-        $certificados_vendidos = TFormDinGraph::showInfoBox('Certificados Vendidos', 'certificate', 'purple', 80);
+        
+        $link = new TFormDinNumericIndicator();
+        $link->setTitle('Qtd com link');
+        $link->setValue(25);
+        $link->setIcon('fa-solid fa-temperature-arrow-down');
+        $link->setColor('#723ba0ff');
+        $link->setLinkText('Mais informações');
+        $link->setLinkUrl('https://www.google.com');
 
         $div = new TElement('div');
         $div->class = 'row';
@@ -213,7 +220,7 @@ class dashboard extends TPage
         $i3 = TElement::tag('div', $qtd_ativo);
         $i3->class = 'col-sm-3';
 
-        $i4 = TElement::tag('div', $certificados_vendidos);
+        $i4 = TElement::tag('div', $link);
         $i4->class = 'col-sm-3';
 
         $div->add( $i1 );
