@@ -1,5 +1,5 @@
 <?php
-namespace app\lib\widget\FormDin5\dash;
+//namespace app\lib\widget\FormDin5\dashboard;
 
 use Adianti\Widget\Chart\TNumericIndicator;
 
@@ -43,6 +43,6 @@ class TFormDinNumericIndicator extends TNumericIndicator
         ]);
         
         parent::add($infoBox);
-        parent::show();
+        \Adianti\Widget\Base\TElement::show();
     }
 }
