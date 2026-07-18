@@ -2,7 +2,7 @@
 
 use app\lib\widget\FormDin5\dash\TFormDinNumericIndicator;
 
-class DashboardGeral extends TPage
+class dashboard extends TPage
 {
     // PSR-12 / PER Coding Style)
     // 1. Constantes
@@ -114,7 +114,7 @@ class DashboardGeral extends TPage
         $saida  ->setValue('R$ 15.000,00');
         $saida  ->setFontColor('#ffffff');
         $saida  ->setCardColor('#2ecc71');
-        
+
         $saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
 
         $divInfoVagas = new TElement('div');
