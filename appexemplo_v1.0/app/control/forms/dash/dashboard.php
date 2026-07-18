@@ -83,62 +83,10 @@ class DashboardGeral extends TPage
         try {
             $data = $this->form->getData();
 
-            $data_inicial = $data->vc_dt_include_inicial;
-            $data_final = $data->vc_dt_include_final;
-            $vendedor_id = $data->vc_vendedor_id;
-            $system_unit_id = $data->vc_system_unit_id;
-
-            //parent::add(new TFormSeparator("Vagas", null, '18', '#eee'));
-            //parent::add( $this->getDivInfoVagas() );
-            parent::add(new TFormSeparator("Certificados", null, '18', '#eee'));
-            parent::add( $this->getDivInfoCertificados($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
-            parent::add( $this->getDivInfoVendasMock() );
+            parent::add(new TFormSeparator("Separador", null, '18', '#eee'));
+            parent::add( $this->getDivInfoCertificados() );
             parent::add( $this->getDivInfoStatusMock() );
-            parent::add( $this->getDivCertificadosAvencer($vendedor_id, $system_unit_id) );
-            parent::add( $this->getDivGrafPizza($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
-            parent::add( $this->getDivGrafVendaDia($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
-            //parent::add(new TFormSeparator("Passageiros", null, '18', '#eee'));
-            //parent::add( $this->getDivInfoResumoPassageirosDia($data->dtInclusao) );
-            //parent::add( $this->getDivTipoVeiculo($data->dtInclusao) );
-            //parent::add( $this->getDivTipoCracha($data->dtInclusao) );
-
-
-            // FIM OLD Dashboard --------------------------------------------------
-
-            /*
-            $saidaVeiculosController = new Saidas_veiculosController();
-            $listVeiculos = $saidaVeiculosController->selectGroupByVeiculo($data);
-            $resultQtdVeiculo = CountHelper::count($listVeiculos);
-            $listMotoristas = $saidaVeiculosController->selectGroupByMotorista($data);
-            $resultQtdMotorista = CountHelper::count($listMotoristas);            
-
-            $infoBoxRegistro = $this->showInfoBox('Quantidade de saídas','car-side','orange',$qtdRegistro);
-            $i1 = TElement::tag('div', $infoBoxRegistro);
-            $i1->class = 'col-sm-4';
-
-            $infoBoxVeiculos = $this->showInfoBox('Quantidade de carros','car','green',$resultQtdVeiculo);
-            $i2 = TElement::tag('div', $infoBoxVeiculos);
-            $i2->class = 'col-sm-4';
-
-            $infoBoxMotoristas = $this->showInfoBox('Quantidade de motoristas','user',null,$resultQtdMotorista);
-            $i3 = TElement::tag('div', $infoBoxMotoristas);
-            $i3->class = 'col-sm-4';
-
-            $div = new TElement('div');
-            $div->class = "row";                                            
-            $div->add( $i1 );
-            $div->add( $i2 );
-            $div->add( $i3 );
-            $div->add( $this->showPieChartVeiculos($listVeiculos) );
-            $div->add( $this->showPieChartMotoristas($listMotoristas) );
-            $div->add( $this->showBarChartVeiculos($listVeiculos) );
-            $div->add( $this->showBarChartMotoristas($listMotoristas) );
-            parent::add($div);
-            $this->showGridVeiculos($listVeiculos);
-            $this->showGridMotoristas($listMotoristas);
-            */
-
-
+            parent::add( $this->getDivTipoCracha() );
         }
         catch (Exception $e){
             // shows the exception error message
@@ -157,11 +105,8 @@ class DashboardGeral extends TPage
         $this->onGenerate($param);
     }
 
-
-    public function getDivInfoCertificados($data_inicial, $data_final, $vendedor_id, $system_unit_id){
-        $qtd_vendas_item = $this->controllerVendaInfo->getQtdVendasCertificadoItem(true,$data_inicial, $data_final, $vendedor_id, $system_unit_id);
-
-        $entrada= TFormDinGraph::showInfoBox('Certificados vendidos','sign-in-alt','blue',$qtd_vendas_item);
+    public function getDivInfoCertificados(){
+        $entrada= TFormDinGraph::showInfoBox('Certificados vendidos','sign-in-alt','blue',50);
         $saida  = TFormDinGraph::showInfoBox('XXXX','sign-out-alt','red',0);
         $saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
 
@@ -183,24 +128,6 @@ class DashboardGeral extends TPage
         $divInfoVagas->add( $i3 );
 
         return $divInfoVagas;
-    }
-
-
-
-    ///-----------------------------------------------
-    /// Métricas
-    ///-----------------------------------------------
-
-    public function getGridTipoVeiculo($titulo,$listDados){
-        $gridSocios = new BootstrapDatagridWrapper(new TDataGrid);
-        $gridSocios->width = '100%';        
-
-        $gridSocios->addColumn(new TDataGridColumn('DSTIPOACESSOVEICULO',"Tipo", 'right'));
-        $gridSocios->addColumn(new TDataGridColumn('QTD', "Saída", 'right'));
-        $gridSocios->createModel();
-        $gridSocios->addItems($listDados);
-        $panel = TPanelGroup::pack($titulo, $gridSocios);
-        return $panel;
     }  
 
     public function getGridTipoCracha($titulo,$listDados){
@@ -215,10 +142,17 @@ class DashboardGeral extends TPage
         return $panel;
     }
 
-    public function getDivTipoCracha($dtInclusao){
-        $listDados = $this->controller->selectGroupBySituacaoCracha($dtInclusao);
+    public function getDivTipoCracha(){
 
-        $titulo = Dash::LABEL_CRACHA;
+        $titulo = 'Titulo do gráfico';
+
+        // Mock de dados para $listDados
+        $listDados = [
+            (object) ['DSTIPOSITUACAOCRACHA' => 'Visitante', 'QTD' => 45],
+            (object) ['DSTIPOSITUACAOCRACHA' => 'Provisório', 'QTD' => 15],
+            (object) ['DSTIPOSITUACAOCRACHA' => 'Definitivo', 'QTD' => 120]
+        ];
+
         $grid = $this->getGridTipoCracha($titulo,$listDados);
 
         $dadosGraf = [ ['Tipo', 'Quantidade'] ];        
