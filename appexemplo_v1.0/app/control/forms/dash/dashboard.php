@@ -40,11 +40,8 @@ class DashboardGeral extends TPage
         $vc_dt_include_final->setMask('dd/mm/yyyy hh:ii');
         $vc_dt_include_final->setSize('100%');
 
-        $this->form->addFields([Constantes::getObjTLabel("Unidade")],[$vc_system_unit_id]
-                              ,[Constantes::getObjTLabel("Vendedor")],[$vc_vendedor_id]);
-
-        $this->form->addFields([Constantes::getObjTLabel("Data venda de")],[$vc_dt_include_inicial]
-                              ,[Constantes::getObjTLabel("Data venda até")],[$vc_dt_include_final]);
+        $this->form->addFields([TFormDinLabelField::getObjTLabel("Data venda de")],[$vc_dt_include_inicial]
+                              ,[TFormDinLabelField::getObjTLabel("Data venda até")],[$vc_dt_include_final]);
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data') );
