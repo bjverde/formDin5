@@ -107,11 +107,12 @@ class dashboard extends TPage
 
         $saida = new TFormDinNumericIndicator();
         $saida->setTitle('Total Vendido');
-        $saida->setIcon('car fa-fw');
+        $saida->setIcon('fa fa-car fa-fw');
+        $saida->setIconColor('#d88f21ff');
         $saida->setColor('#27ae60');
         $saida->setValue('R$ 15.000,00');
-        $saida->setFontColor('#ffffff');
-        $saida->setCardColor('#2ecc71');
+        $saida->setFontColor('#fcff31ff');
+        $saida->setCardColor('#782eccff');
 
         $saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
 
