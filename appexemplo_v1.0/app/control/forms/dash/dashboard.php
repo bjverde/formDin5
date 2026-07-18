@@ -111,6 +111,7 @@ class dashboard extends TPage
         $saida->setIconColor('#d88f21ff');
         $saida->setColor('#27ae60');
         $saida->setNumberPrefix('R$ ');
+        $saida->setNumericMask(2, ',', '.');
         $saida->setValue(15000.00);
         $saida->setFontColor('#fcff31ff');
         $saida->setCardColor('#782eccff');
@@ -120,8 +121,9 @@ class dashboard extends TPage
         $saldo = new TFormDinNumericIndicator();
         $saldo->setTitle('Temperatura');
         $saldo->setFontColor('#767722ff');
-        $saldo->setValue(25);
+        $saldo->setValue(25,00);
         $saldo->setNumberSuffix(' °C');
+        //$saldo->setNumericMask(1, ',', '.');
         $saldo->setIcon('fa-solid fa-temperature-arrow-down');
         $saldo->setIconColor('#bec7c6ff');
         $saldo->setColor('#3b5ba0ff');
