@@ -119,6 +119,11 @@ class TFormDinNumericIndicator extends TNumericIndicator
      */
     public function setValue($value)
     {
+        // Verifica se o usuário passou uma string contendo vírgula (tentando formatar manualmente)
+        if (is_string($value) && strpos($value, ',') !== false) {
+            throw new \Exception("O valor informado ('{$value}') contém vírgula. O PHP exige números puros com ponto (.) para casas decimais no setValue(). Para formatar a visualização com vírgula na tela, passe o número puro e utilize o método setNumericMask(casas_decimais, separador_decimal, separador_milhar). Exemplo: setNumericMask(2, ',', '.').");
+        }
+
         if (!is_numeric($value)) {
             throw new \Exception("O valor informado no método setValue() no TFormDinNumericIndicator não é numérico ('{$value}'). Para inserir prefixos de moeda, utilize o método setNumberPrefix('R$ ').");
         }
