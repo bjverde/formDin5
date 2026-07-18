@@ -204,8 +204,8 @@ class dashboard extends TPage
         $link->setValue(25);
         $link->setIcon('fa-solid fa-temperature-arrow-down');
         $link->setColor('#723ba0ff');
-        $link->setLinkText('Mais informações');
-        $link->setLinkUrl('https://www.google.com');
+        $link->setLinkText('Link sitema');
+        $link->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
 
         $div = new TElement('div');
         $div->class = 'row';
