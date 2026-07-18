@@ -109,7 +109,7 @@ class dashboard extends TPage
         $saida->setTitle('Total Vendido');
         $saida->setIcon('fa fa-car fa-fw');
         $saida->setIconColor('#d88f21ff');
-        $saida->setColor('#27ae60');
+        $saida->setIconColorBackground('#27ae60');
         $saida->setNumberPrefix('R$ ');
         $saida->setNumericMask(2, ',', '.');
         $saida->setValue(15000.00);
@@ -126,7 +126,7 @@ class dashboard extends TPage
         //$saldo->setNumericMask(1, ',', '.');
         $saldo->setIcon('fa-solid fa-temperature-arrow-down');
         $saldo->setIconColor('#bec7c6ff');
-        $saldo->setColor('#3b5ba0ff');
+        $saldo->setIconColorBackground('#3b5ba0ff');
         $saldo->setCardColor('#76d6e2ff');
 
         $divInfoVagas = new TElement('div');
@@ -202,7 +202,7 @@ class dashboard extends TPage
         $qtd_vencidos->setLayout('v3');
         $qtd_vencidos->setValue(3);
         $qtd_vencidos->setIcon('fa-solid fa-circle-xmark');
-        $qtd_vencidos->setColor('#723ba0ff');
+        $qtd_vencidos->setIconColorBackground('#723ba0ff');
         $qtd_vencidos->setLinkText('Link sitema');
         $qtd_vencidos->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
 
@@ -213,7 +213,7 @@ class dashboard extends TPage
         $link->setTitle('Qtd com link');
         $link->setValue(25);
         $link->setIcon('fa-solid fa-temperature-arrow-down');
-        $link->setColor('#723ba0ff');
+        $link->setIconColorBackground('#723ba0ff');
         $link->setLinkText('Link sitema');
         $link->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
 
