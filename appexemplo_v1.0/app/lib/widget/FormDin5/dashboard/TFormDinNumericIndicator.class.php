@@ -57,7 +57,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
     protected $icon;
     protected $iconColor = '#ffffff'; // Cor padrão do ícone
     protected $value;
-    protected $color;
+    protected $iconColorBackground;
     protected $linkUrl;
     protected $linkText;
     protected $linkTarget = '_blank';
@@ -156,9 +156,9 @@ class TFormDinNumericIndicator extends TNumericIndicator
      * Define a cor de fundo primária do container do ícone.
      * @param string $color Cor de fundo (classe ou hexadecimal)
      */
-    public function setColor($color)
+    public function setIconColorBackground($color)
     {
-        $this->color = $color;
+        $this->iconColorBackground = $color;
     }
     
     /**
@@ -263,9 +263,9 @@ class TFormDinNumericIndicator extends TNumericIndicator
      * Retorna a cor de fundo primária do container do ícone.
      * @return string
      */
-    public function getColor()
+    public function getIconColorBackground()
     {
-        return $this->color;
+        return $this->iconColorBackground;
     }
 
     /**
@@ -327,7 +327,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
             'title'      => $this->getTitle(), //Herdado do TChartBase
             'icon'       => $this->getIcon(),
             'iconColor'  => $iconColor,
-            'background' => $this->getColor(),
+            'background' => $this->getIconColorBackground(),
             'value'      => $this->getFormattedValue(),
             'fontColor'  => $this->getFontColor(),
             'cardColor'  => $this->getCardColor()
