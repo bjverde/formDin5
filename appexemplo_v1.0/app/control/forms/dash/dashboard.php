@@ -83,60 +83,60 @@ class DashboardGeral extends TPage
         try {
             $data = $this->form->getData();
 
-                $data_inicial = $data->vc_dt_include_inicial;
-                $data_final = $data->vc_dt_include_final;
-                $vendedor_id = $data->vc_vendedor_id;
-                $system_unit_id = $data->vc_system_unit_id;
+            $data_inicial = $data->vc_dt_include_inicial;
+            $data_final = $data->vc_dt_include_final;
+            $vendedor_id = $data->vc_vendedor_id;
+            $system_unit_id = $data->vc_system_unit_id;
 
-                //parent::add(new TFormSeparator("Vagas", null, '18', '#eee'));
-                //parent::add( $this->getDivInfoVagas() );
-                parent::add(new TFormSeparator("Certificados", null, '18', '#eee'));
-                parent::add( $this->getDivInfoCertificados($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
-                parent::add( $this->getDivInfoVendasMock() );
-                parent::add( $this->getDivInfoStatusMock() );
-                parent::add( $this->getDivCertificadosAvencer($vendedor_id, $system_unit_id) );
-                parent::add( $this->getDivGrafPizza($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
-                parent::add( $this->getDivGrafVendaDia($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
-                //parent::add(new TFormSeparator("Passageiros", null, '18', '#eee'));
-                //parent::add( $this->getDivInfoResumoPassageirosDia($data->dtInclusao) );
-                //parent::add( $this->getDivTipoVeiculo($data->dtInclusao) );
-                //parent::add( $this->getDivTipoCracha($data->dtInclusao) );
+            //parent::add(new TFormSeparator("Vagas", null, '18', '#eee'));
+            //parent::add( $this->getDivInfoVagas() );
+            parent::add(new TFormSeparator("Certificados", null, '18', '#eee'));
+            parent::add( $this->getDivInfoCertificados($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
+            parent::add( $this->getDivInfoVendasMock() );
+            parent::add( $this->getDivInfoStatusMock() );
+            parent::add( $this->getDivCertificadosAvencer($vendedor_id, $system_unit_id) );
+            parent::add( $this->getDivGrafPizza($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
+            parent::add( $this->getDivGrafVendaDia($data_inicial, $data_final, $vendedor_id, $system_unit_id) );
+            //parent::add(new TFormSeparator("Passageiros", null, '18', '#eee'));
+            //parent::add( $this->getDivInfoResumoPassageirosDia($data->dtInclusao) );
+            //parent::add( $this->getDivTipoVeiculo($data->dtInclusao) );
+            //parent::add( $this->getDivTipoCracha($data->dtInclusao) );
 
 
-                // FIM OLD Dashboard --------------------------------------------------
+            // FIM OLD Dashboard --------------------------------------------------
 
-                /*
-                $saidaVeiculosController = new Saidas_veiculosController();
-                $listVeiculos = $saidaVeiculosController->selectGroupByVeiculo($data);
-                $resultQtdVeiculo = CountHelper::count($listVeiculos);
-                $listMotoristas = $saidaVeiculosController->selectGroupByMotorista($data);
-                $resultQtdMotorista = CountHelper::count($listMotoristas);            
+            /*
+            $saidaVeiculosController = new Saidas_veiculosController();
+            $listVeiculos = $saidaVeiculosController->selectGroupByVeiculo($data);
+            $resultQtdVeiculo = CountHelper::count($listVeiculos);
+            $listMotoristas = $saidaVeiculosController->selectGroupByMotorista($data);
+            $resultQtdMotorista = CountHelper::count($listMotoristas);            
 
-                $infoBoxRegistro = $this->showInfoBox('Quantidade de saídas','car-side','orange',$qtdRegistro);
-                $i1 = TElement::tag('div', $infoBoxRegistro);
-                $i1->class = 'col-sm-4';
+            $infoBoxRegistro = $this->showInfoBox('Quantidade de saídas','car-side','orange',$qtdRegistro);
+            $i1 = TElement::tag('div', $infoBoxRegistro);
+            $i1->class = 'col-sm-4';
 
-                $infoBoxVeiculos = $this->showInfoBox('Quantidade de carros','car','green',$resultQtdVeiculo);
-                $i2 = TElement::tag('div', $infoBoxVeiculos);
-                $i2->class = 'col-sm-4';
+            $infoBoxVeiculos = $this->showInfoBox('Quantidade de carros','car','green',$resultQtdVeiculo);
+            $i2 = TElement::tag('div', $infoBoxVeiculos);
+            $i2->class = 'col-sm-4';
 
-                $infoBoxMotoristas = $this->showInfoBox('Quantidade de motoristas','user',null,$resultQtdMotorista);
-                $i3 = TElement::tag('div', $infoBoxMotoristas);
-                $i3->class = 'col-sm-4';
+            $infoBoxMotoristas = $this->showInfoBox('Quantidade de motoristas','user',null,$resultQtdMotorista);
+            $i3 = TElement::tag('div', $infoBoxMotoristas);
+            $i3->class = 'col-sm-4';
 
-                $div = new TElement('div');
-                $div->class = "row";                                            
-                $div->add( $i1 );
-                $div->add( $i2 );
-                $div->add( $i3 );
-                $div->add( $this->showPieChartVeiculos($listVeiculos) );
-                $div->add( $this->showPieChartMotoristas($listMotoristas) );
-                $div->add( $this->showBarChartVeiculos($listVeiculos) );
-                $div->add( $this->showBarChartMotoristas($listMotoristas) );
-                parent::add($div);
-                $this->showGridVeiculos($listVeiculos);
-                $this->showGridMotoristas($listMotoristas);
-                */
+            $div = new TElement('div');
+            $div->class = "row";                                            
+            $div->add( $i1 );
+            $div->add( $i2 );
+            $div->add( $i3 );
+            $div->add( $this->showPieChartVeiculos($listVeiculos) );
+            $div->add( $this->showPieChartMotoristas($listMotoristas) );
+            $div->add( $this->showBarChartVeiculos($listVeiculos) );
+            $div->add( $this->showBarChartMotoristas($listMotoristas) );
+            parent::add($div);
+            $this->showGridVeiculos($listVeiculos);
+            $this->showGridMotoristas($listMotoristas);
+            */
 
 
         }
@@ -185,115 +185,11 @@ class DashboardGeral extends TPage
         return $divInfoVagas;
     }
 
-    /**
-     * Carrega tabela de certificados a vencer
-     * @param int $vendedor_id = id do vendedor
-     * @param int $system_unit_id = id da empresa
-     */
-    public function getDivCertificadosAvencer($vendedor_id = null, $system_unit_id = null){
-        $lista_avencer     = DashboardElementos::getListaCertificadosAvencer($vendedor_id, $system_unit_id);
-        
-        $div = new TElement('div');
-        $div->class = 'row';
-        $div->setProperty('id','lista_avencer');
-        $div->add( $lista_avencer );
-
-        return $div;
-    }// fim getDivCertificadosAvencer
-
-    public function getDivGrafPizza($data_inicial, $data_final, $vendedor_id, $system_unit_id){
-
-        $dadosVendedor = $this->controllerVendaInfo->selectVendasPorVendedor($data_inicial, $data_final, $vendedor_id, $system_unit_id);
-        $dadosGraf = [ ['Vendedor', 'Quantidade'] ];
-        foreach ($dadosVendedor as $vendedor) {
-            $item = [$vendedor['nome'], (int)$vendedor['qtd']];
-            array_push($dadosGraf,$item);
-        }
-        $grafVendedor = TFormDinGraph::gerarPieChart($dadosGraf,'100%','400px','Quantidade de Vendas por Vendedor','Quantidade','Vendedor');
-
-
-        $dadosCertificados = $this->controllerVendaInfo->selectVendasPorProduto($data_inicial, $data_final, $vendedor_id, $system_unit_id);
-        $dadosGrafCertificados = [ ['Produto', 'Quantidade'] ];
-        foreach ($dadosCertificados as $certificado) {
-            $item = [$certificado['produto_name'], (int)$certificado['qtd']];
-            array_push($dadosGrafCertificados,$item);
-        }
-        $grafCertificados = TFormDinGraph::gerarPieChart($dadosGrafCertificados,'100%','400px','Quantidade de Vendas por Produto','Quantidade','Produto');
-
-
-        $div = new TElement('div');
-        $div->class = 'row';
-        $div->setProperty('id','grafPizza');
-
-        $i1 = TElement::tag('div', $grafVendedor);
-        $i1->class = 'col-sm-6';
-
-        $i2 = TElement::tag('div', $grafCertificados);
-        $i2->class = 'col-sm-6';
-
-        $div->add( $i1 );
-        $div->add( $i2 );
-        return $div;
-    }
-
-    public function getDivGrafVendaDia($data_inicial, $data_final, $vendedor_id, $system_unit_id){
-
-        $dadosVendaDia = $this->controllerVendaInfo->selectVendasPorDia($data_inicial, $data_final, $vendedor_id, $system_unit_id);
-        $arrayDeDatas = array_column($dadosVendaDia, 'data');
-        $arrayDeQtds = array_map('intval', array_column($dadosVendaDia, 'qtd'));
-
-        $chart = new TLineChart;
-        $chart->setTitle('Quantidade de vendas por dia');
-        $chart->setXLabels($arrayDeDatas);
-        $chart->addDataset('Quantidade', $arrayDeQtds);
-
-        $div = new TElement('div');
-        $div->class = 'row';
-        $div->setProperty('id','grafVendaDia');
-
-        $i1 = TElement::tag('div', $chart);
-        $i1->class = 'col-sm-12';
-
-        $div->add( $i1 );
-        return $div;
-    }    
-
 
 
     ///-----------------------------------------------
     /// Métricas
     ///-----------------------------------------------
-
-
-    public function getDivInfoResumoPassageirosDia($dtInclusao){
-        $dtinicio = $dtInclusao.' 00:00:00';
-        $dtfim    = $dtInclusao.' 23:59:59';
-        $listResumo = $this->controller->selectResumoSaldo($dtinicio,$dtfim);
-        $objDia = ArrayHelper::get($listResumo,0);
-
-        $entrada= TFormDinGraph::showInfoBox('Entrada','sign-in-alt','blue',$objDia->QTPASSAGEIROS_ENTRADA);
-        $saida  = TFormDinGraph::showInfoBox('Saída','sign-out-alt','red',$objDia->QTPASSAGEIROS_SAIDA);
-        $saldo  = TFormDinGraph::showInfoBox('Saldo','car fa-fw','black',$objDia->QTPASSAGEIROS_ENTRADA-$objDia->QTPASSAGEIROS_SAIDA);
-
-        $divInfoVagas = new TElement('div');
-        $divInfoVagas->class = 'row';
-        $divInfoVagas->setProperty('id','info_vagas');
-
-        $i1 = TElement::tag('div', $entrada);
-        $i1->class = 'col-sm-4';
-
-        $i2 = TElement::tag('div', $saida);
-        $i2->class = 'col-sm-4';
-
-        $i3 = TElement::tag('div', $saldo);
-        $i3->class = 'col-sm-4';
-
-        $divInfoVagas->add( $i1 );
-        $divInfoVagas->add( $i2 );
-        $divInfoVagas->add( $i3 );
-
-        return $divInfoVagas;
-    }
 
     public function getGridTipoVeiculo($titulo,$listDados){
         $gridSocios = new BootstrapDatagridWrapper(new TDataGrid);
@@ -344,31 +240,6 @@ class DashboardGeral extends TPage
 
         $div->add( $i1 );
         $div->add( $i2 );
-        return $div;
-    }     
-
-    public function getDivInfoVendasMock(){
-        $qtd_vendas    = TFormDinGraph::showInfoBox('Qtd Vendas', 'shopping-cart', 'green', 150);
-        $total_vendido = TFormDinGraph::showInfoBoxv2('Total Vendido', 'dollar-sign', '#27ae60', 'R$ 15.000,00', '#ffffff', '#2ecc71');
-        $clientes      = TFormDinGraph::showInfoBox('Clientes', 'users', 'orange', 120);
-
-        $div = new TElement('div');
-        $div->class = 'row';
-        $div->setProperty('id','info_vendas_mock');
-
-        $i1 = TElement::tag('div', $qtd_vendas);
-        $i1->class = 'col-sm-4';
-
-        $i2 = TElement::tag('div', $total_vendido);
-        $i2->class = 'col-sm-4';
-
-        $i3 = TElement::tag('div', $clientes);
-        $i3->class = 'col-sm-4';
-
-        $div->add( $i1 );
-        $div->add( $i2 );
-        $div->add( $i3 );
-
         return $div;
     }
 
