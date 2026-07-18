@@ -1,7 +1,5 @@
 <?php
 
-use app\lib\widget\FormDin5\dash\TFormDinNumericIndicator;
-
 class dashboard extends TPage
 {
     // PSR-12 / PER Coding Style)
