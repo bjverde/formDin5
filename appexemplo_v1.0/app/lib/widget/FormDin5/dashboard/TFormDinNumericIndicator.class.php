@@ -8,6 +8,11 @@ class TFormDinNumericIndicator extends TNumericIndicator
     private $fontColor = '#000000';
     private $cardColor = '#ffffff';
     
+    // Propriedades re-declaradas porque são private no TNumericIndicator
+    protected $icon;
+    protected $value;
+    protected $color;
+    
     // Novos comportamentos encapsulados
     public function setFontColor($color)
     {
@@ -19,10 +24,50 @@ class TFormDinNumericIndicator extends TNumericIndicator
         $this->cardColor = $color;
     }
     
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+    
+    public function getFontColor()
+    {
+        return $this->fontColor;
+    }
+    
+    public function getCardColor()
+    {
+        return $this->cardColor;
+    }
+    
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+    
+    public function getValue()
+    {
+        return $this->value;
+    }
+    
+    public function getColor()
+    {
+        return $this->color;
+    }
+
     public function show()
     {
         // Se usar TChartBase, você tem acesso à formatação de números nativa do Adianti
-        $value = (float) $this->value;
+        $value = (float) $this->getValue();
         if (isset($this->numericMask)) {
             $value = number_format($value, $this->numericMask[0], $this->numericMask[1], $this->numericMask[2]);
         }
@@ -34,15 +79,16 @@ class TFormDinNumericIndicator extends TNumericIndicator
         // Renderiza usando o SEU template v2
         $infoBox = new THtmlRenderer('app/lib/widget/FormDin5/resources/info-box-v2.html');
         $infoBox->enableSection('main', [
-            'title'      => $this->title, //Herdado do TNumericIndicator
-            'icon'       => $this->icon,  //Herdado do TNumericIndicator
-            'background' => $this->color, //Herdado do TNumericIndicator
-            'value'      => $value,       //Herdado do TNumericIndicator
-            'fontColor'  => $this->fontColor,
-            'cardColor'  => $this->cardColor
+            'title'      => $this->getTitle(), //Herdado do TChartBase
+            'icon'       => $this->getIcon(),
+            'background' => $this->getColor(),
+            'value'      => $value,
+            'fontColor'  => $this->getFontColor(),
+            'cardColor'  => $this->getCardColor()
         ]);
         
         parent::add($infoBox);
+        //Chamando show do parente do parente
         \Adianti\Widget\Base\TElement::show();
     }
 }
