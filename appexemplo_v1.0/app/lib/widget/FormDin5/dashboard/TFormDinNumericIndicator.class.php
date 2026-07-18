@@ -63,6 +63,17 @@ class TFormDinNumericIndicator extends TNumericIndicator
     protected $linkTarget = '_blank';
     protected $numberSuffix = '';
     
+    /**
+     * Construtor da classe
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        // Remove a máscara padrão imposta pelo TChartBase do Adianti.
+        // A partir de agora, a formatação só ocorrerá se for chamada explicitamente no objeto.
+        $this->numericMask = null;
+    }
+    
     // Novos comportamentos encapsulados
     /**
      * Define a cor da fonte (texto) do indicador.
@@ -187,12 +198,37 @@ class TFormDinNumericIndicator extends TNumericIndicator
     }
     
     /**
-     * Retorna o valor que está sendo exibido.
+     * Retorna o valor que está sendo exibido, de forma pura (sem formatações).
      * @return mixed
      */
     public function getValue()
     {
         return $this->value;
+    }
+    
+    /**
+     * Retorna o valor formatado de acordo com a máscara, prefixo e sufixo configurados.
+     * @return string
+     */
+    public function getFormattedValue()
+    {
+        $value = $this->getValue();
+        
+        // Aplica a máscara apenas se foi explicitamente configurada
+        if (!empty($this->numericMask) && is_numeric($value)) {
+            $value = (float) $value;
+            $value = number_format($value, $this->numericMask[0], $this->numericMask[1], $this->numericMask[2]);
+        }
+        
+        if (!empty($this->numberPrefix)) {
+            $value = $this->numberPrefix . ' ' . $value;
+        }
+        
+        if (!empty($this->numberSuffix)) {
+            $value = $value . $this->numberSuffix;
+        }
+        
+        return $value;
     }
     
     /**
@@ -246,20 +282,6 @@ class TFormDinNumericIndicator extends TNumericIndicator
      */
     public function show()
     {
-        // Se usar TChartBase, você tem acesso à formatação de números nativa do Adianti
-        $value = (float) $this->getValue();
-        if (isset($this->numericMask)) {
-            $value = number_format($value, $this->numericMask[0], $this->numericMask[1], $this->numericMask[2]);
-        }
-        
-        if (!empty($this->numberPrefix)) {
-            $value = $this->numberPrefix . ' ' . $value;
-        }
-        
-        if (!empty($this->numberSuffix)) {
-            $value = $value . $this->numberSuffix;
-        }
-        
         // Renderiza usando o SEU template v2
         $infoBox = new THtmlRenderer('app/lib/widget/FormDin5/resources/info-box-v2.html');
         $infoBox->enableSection('main', [
@@ -267,7 +289,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
             'icon'       => $this->getIcon(),
             'iconColor'  => $this->getIconColor(),
             'background' => $this->getColor(),
-            'value'      => $value,
+            'value'      => $this->getFormattedValue(),
             'fontColor'  => $this->getFontColor(),
             'cardColor'  => $this->getCardColor()
         ]);
