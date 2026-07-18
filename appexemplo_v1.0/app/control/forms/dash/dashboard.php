@@ -105,13 +105,13 @@ class dashboard extends TPage
     public function getDivInfoCertificados(){
         $entrada= TFormDinGraph::showInfoBox('Certificados vendidos','sign-in-alt','blue',50);
 
-        $saida  = new TFormDinNumericIndicator();
-        $saida  ->setTitle('Total Vendido');
-        $saida  ->setIcon('dollar-sign');
-        $saida  ->setColor('#27ae60');
-        $saida  ->setValue('R$ 15.000,00');
-        $saida  ->setFontColor('#ffffff');
-        $saida  ->setCardColor('#2ecc71');
+        $saida = new TFormDinNumericIndicator();
+        $saida->setTitle('Total Vendido');
+        $saida->setIcon('car fa-fw');
+        $saida->setColor('#27ae60');
+        $saida->setValue('R$ 15.000,00');
+        $saida->setFontColor('#ffffff');
+        $saida->setCardColor('#2ecc71');
 
         $saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
 
