@@ -57,7 +57,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
     protected $icon;
     protected $iconColor = '#ffffff'; // Cor padrão do ícone
     protected $value;
-    protected $iconColorBackground;
+    protected $iconColorBackground = '#0d6efd'; //Cor padrão do background do icone
     protected $linkUrl;
     protected $linkText;
     protected $linkTarget = '_blank';
@@ -311,11 +311,15 @@ class TFormDinNumericIndicator extends TNumericIndicator
     public function show()
     {
         $iconColor = $this->getIconColor();
+        $iconColorBackground = $this->getIconColorBackground();
         
-        // Regra específica solicitada: se for v3 e não mudou a cor do ícone (branco default), ele assume a cor do cartão
+        // Regra específica solicitada: se for v3 e não mudou iconColorBackground, ele assume a cor do cartão
         // Obs: No HTML da v3, coloquei uma opacidade no ícone, portanto ele ficará com um tom mais escuro perfeitamente como na imagem
         if ($this->getLayout() === 'v3' && $iconColor === '#ffffff') {
-            $iconColor = $this->getCardColor();
+            $iconColor = '#000000';
+        }
+        if ($this->getLayout() === 'v3' && $iconColorBackground === '#0d6efd') {
+            $iconColorBackground = $this->getCardColor();
         }
 
         // Seleciona o template correto
@@ -327,7 +331,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
             'title'      => $this->getTitle(), //Herdado do TChartBase
             'icon'       => $this->getIcon(),
             'iconColor'  => $iconColor,
-            'background' => $this->getIconColorBackground(),
+            'background' => $iconColorBackground,
             'value'      => $this->getFormattedValue(),
             'fontColor'  => $this->getFontColor(),
             'cardColor'  => $this->getCardColor()
