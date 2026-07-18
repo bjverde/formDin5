@@ -110,11 +110,22 @@ class dashboard extends TPage
         $saida->setIcon('fa fa-car fa-fw');
         $saida->setIconColor('#d88f21ff');
         $saida->setColor('#27ae60');
-        $saida->setValue('R$ 15.000,00');
+        $saida->setNumberPrefix('R$ ');
+        $saida->setValue(15000.00);
         $saida->setFontColor('#fcff31ff');
         $saida->setCardColor('#782eccff');
 
-        $saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
+        //$saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
+
+        $saldo = new TFormDinNumericIndicator();
+        $saldo->setTitle('Temperatura');
+        $saldo->setFontColor('#767722ff');
+        $saldo->setValue(25);
+        $saldo->setNumberSuffix(' °C');
+        $saldo->setIcon('fa-solid fa-temperature-arrow-down');
+        $saldo->setIconColor('#bec7c6ff');
+        $saldo->setColor('#3b5ba0ff');
+        $saldo->setCardColor('#76d6e2ff');
 
         $divInfoVagas = new TElement('div');
         $divInfoVagas->class = 'row';
