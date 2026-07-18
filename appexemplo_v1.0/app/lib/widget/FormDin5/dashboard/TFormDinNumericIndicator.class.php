@@ -235,6 +235,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
     
     /**
      * Retorna o valor formatado de acordo com a máscara, prefixo e sufixo configurados.
+     * para formatar o valor use setNumericMask(0, ',', '.') ou setNumericMask(2, ',', '.') etc.
      * @return string
      */
     public function getFormattedValue()
