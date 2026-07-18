@@ -60,6 +60,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
     protected $color;
     protected $linkUrl;
     protected $linkText;
+    protected $linkTarget = '_blank';
     protected $numberSuffix = '';
     
     // Novos comportamentos encapsulados
@@ -141,6 +142,15 @@ class TFormDinNumericIndicator extends TNumericIndicator
     }
     
     /**
+     * Define o target do link (ex: '_blank' para nova aba).
+     * @param string $target Target do link
+     */
+    public function setLinkTarget($target)
+    {
+        $this->linkTarget = $target;
+    }
+    
+    /**
      * Retorna a cor atual da fonte.
      * @return string
      */
@@ -213,6 +223,15 @@ class TFormDinNumericIndicator extends TNumericIndicator
     }
 
     /**
+     * Retorna o target do link.
+     * @return string
+     */
+    public function getLinkTarget()
+    {
+        return $this->linkTarget;
+    }
+
+    /**
      * Define o sufixo a ser exibido após o número.
      * @param string $suffix Sufixo (ex: ' °C', ' %')
      */
@@ -255,9 +274,10 @@ class TFormDinNumericIndicator extends TNumericIndicator
         
         if (!empty($this->linkUrl) && !empty($this->linkText)) {
             $infoBox->enableSection('has_link', [
-                'linkUrl'  => $this->getLinkUrl(),
-                'linkText' => $this->getLinkText(),
-                'fontColor'=> $this->getFontColor()
+                'linkUrl'    => $this->getLinkUrl(),
+                'linkText'   => $this->getLinkText(),
+                'linkTarget' => $this->getLinkTarget(),
+                'fontColor'  => $this->getFontColor()
             ]);
         }
         
