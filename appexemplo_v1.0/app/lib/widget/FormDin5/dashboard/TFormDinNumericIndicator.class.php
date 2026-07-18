@@ -13,13 +13,16 @@ class TFormDinNumericIndicator extends TNumericIndicator
     protected $iconColor = '#ffffff'; // Cor padrão do ícone
     protected $value;
     protected $color;
+    protected $linkUrl;
+    protected $linkText;
+    protected $numberSuffix = '';
     
     // Novos comportamentos encapsulados
     /**
      * Define a cor da fonte (texto) do indicador.
      * @param string $color Cor no formato hexadecimal, rgb, etc. Ex: '#000000'
      */
-    public function setFontColor($color)
+    public function setFontColor($color = '#000000')
     {
         $this->fontColor = $color;
     }
@@ -28,7 +31,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
      * Define a cor de fundo do cartão principal.
      * @param string $color Cor no formato hexadecimal, rgb, etc. Ex: '#ffffff'
      */
-    public function setCardColor($color)
+    public function setCardColor($color = '#ffffff')
     {
         $this->cardColor = $color;
     }
@@ -48,7 +51,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
      * Define a cor do ícone.
      * @param string $color Cor no formato hexadecimal, rgb, etc. Ex: '#ff0000'
      */
-    public function setIconColor($color)
+    public function setIconColor($color = '#ffffff')
     {
         $this->iconColor = $color;
     }
@@ -59,6 +62,9 @@ class TFormDinNumericIndicator extends TNumericIndicator
      */
     public function setValue($value)
     {
+        if (!is_numeric($value)) {
+            throw new \Exception("O valor informado no método setValue() no TFormDinNumericIndicator não é numérico ('{$value}'). Para inserir prefixos de moeda, utilize o método setNumberPrefix('R$ ').");
+        }
         $this->value = $value;
     }
 
@@ -69,6 +75,24 @@ class TFormDinNumericIndicator extends TNumericIndicator
     public function setColor($color)
     {
         $this->color = $color;
+    }
+    
+    /**
+     * Define o texto do link no rodapé do componente.
+     * @param string $text Texto do link (ex: 'Mais informações')
+     */
+    public function setLinkText($text)
+    {
+        $this->linkText = $text;
+    }
+
+    /**
+     * Define a URL de destino do link do rodapé.
+     * @param string $url URL para qual o usuário será redirecionado
+     */
+    public function setLinkUrl($url)
+    {
+        $this->linkUrl = $url;
     }
     
     /**
@@ -126,6 +150,33 @@ class TFormDinNumericIndicator extends TNumericIndicator
     }
 
     /**
+     * Retorna o texto do link.
+     * @return string
+     */
+    public function getLinkText()
+    {
+        return $this->linkText;
+    }
+
+    /**
+     * Retorna a URL do link.
+     * @return string
+     */
+    public function getLinkUrl()
+    {
+        return $this->linkUrl;
+    }
+
+    /**
+     * Define o sufixo a ser exibido após o número.
+     * @param string $suffix Sufixo (ex: ' °C', ' %')
+     */
+    public function setNumberSuffix($suffix)
+    {
+        $this->numberSuffix = $suffix;
+    }
+
+    /**
      * Renderiza o componente carregando o template HTML do FormDin5 e 
      * processando as variáveis encapsuladas no componente.
      */
@@ -141,6 +192,10 @@ class TFormDinNumericIndicator extends TNumericIndicator
             $value = $this->numberPrefix . ' ' . $value;
         }
         
+        if (!empty($this->numberSuffix)) {
+            $value = $value . $this->numberSuffix;
+        }
+        
         // Renderiza usando o SEU template v2
         $infoBox = new THtmlRenderer('app/lib/widget/FormDin5/resources/info-box-v2.html');
         $infoBox->enableSection('main', [
@@ -152,6 +207,14 @@ class TFormDinNumericIndicator extends TNumericIndicator
             'fontColor'  => $this->getFontColor(),
             'cardColor'  => $this->getCardColor()
         ]);
+        
+        if (!empty($this->linkUrl) && !empty($this->linkText)) {
+            $infoBox->enableSection('has_link', [
+                'linkUrl'  => $this->getLinkUrl(),
+                'linkText' => $this->getLinkText(),
+                'fontColor'=> $this->getFontColor()
+            ]);
+        }
         
         parent::add($infoBox);
         //Chamando show do parente do parente
