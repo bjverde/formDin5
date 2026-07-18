@@ -121,7 +121,7 @@ class dashboard extends TPage
         $saldo = new TFormDinNumericIndicator();
         $saldo->setTitle('Temperatura');
         $saldo->setFontColor('#767722ff');
-        $saldo->setValue(25,00);
+        $saldo->setValue(25.00);
         $saldo->setNumberSuffix(' °C');
         //$saldo->setNumericMask(1, ',', '.');
         $saldo->setIcon('fa-solid fa-temperature-arrow-down');
@@ -197,7 +197,15 @@ class dashboard extends TPage
     }
 
     public function getDivInfoStatusMock(){
-        $qtd_vencidos          = TFormDinGraph::showInfoBox('Qtd Vencidos', 'times-circle', 'red', 5);
+        $qtd_vencidos = new TFormDinNumericIndicator();
+        $qtd_vencidos->setTitle('Qtd Vencidos');
+        $qtd_vencidos->setLayout('v3');
+        $qtd_vencidos->setValue(3);
+        $qtd_vencidos->setIcon('fa-solid fa-circle-xmark');
+        $qtd_vencidos->setColor('#723ba0ff');
+        $qtd_vencidos->setLinkText('Link sitema');
+        $qtd_vencidos->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
+
         $qtd_avencer           = TFormDinGraph::showInfoBox('Qtd a Vencer', 'exclamation-triangle', 'yellow', 15);
         $qtd_ativo             = TFormDinGraph::showInfoBox('Qtd Ativo', 'check-circle', 'green', 100);
         
