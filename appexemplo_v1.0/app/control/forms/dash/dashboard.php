@@ -1,5 +1,7 @@
 <?php
 
+use app\lib\widget\FormDin5\dash\TFormDinNumericIndicator;
+
 class DashboardGeral extends TPage
 {
     // PSR-12 / PER Coding Style)
@@ -104,7 +106,15 @@ class DashboardGeral extends TPage
 
     public function getDivInfoCertificados(){
         $entrada= TFormDinGraph::showInfoBox('Certificados vendidos','sign-in-alt','blue',50);
-        $saida  = TFormDinGraph::showInfoBox('XXXX','sign-out-alt','red',0);
+
+        $saida  = new TFormDinNumericIndicator();
+        $saida  ->setTitle('Total Vendido');
+        $saida  ->setIcon('dollar-sign');
+        $saida  ->setColor('#27ae60');
+        $saida  ->setValue('R$ 15.000,00');
+        $saida  ->setFontColor('#ffffff');
+        $saida  ->setCardColor('#2ecc71');
+        
         $saldo  = TFormDinGraph::showInfoBox('XXX','car fa-fw','black',0);
 
         $divInfoVagas = new TElement('div');
