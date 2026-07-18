@@ -205,8 +205,8 @@ class dashboard extends TPage
         $qtd_vencidos->setIcon('fa-solid fa-circle-xmark');
         $qtd_vencidos->setCardColor('#c2424a');
         //$qtd_vencidos->setIconColorBackground('#723ba0ff');
-        //$qtd_vencidos->setLinkText('Link sitema');
-        //$qtd_vencidos->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
+        $qtd_vencidos->setLinkText('Link sitema');
+        $qtd_vencidos->setLinkUrl('index.php?class=exe_TFormDinCordLatLon');
 
         $qtd_avencer           = TFormDinGraph::showInfoBox('Qtd a Vencer', 'exclamation-triangle', 'yellow', 15);
         $qtd_ativo             = TFormDinGraph::showInfoBox('Qtd Ativo', 'check-circle', 'green', 100);
