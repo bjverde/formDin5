@@ -453,6 +453,19 @@
             </menuitem>            
         </menu>
     </menuitem>
+    <menuitem label="Dashboard">
+        <icon>fas:chart-pie fa-fw #2563EB</icon>
+        <menu>
+            <menuitem label='UF FormDin5'>
+                <icon>far:edit fa-fw green</icon>
+                <action>tb_ufFormDin</action>
+            </menuitem>
+            <menuitem label='UF Adianti'>
+                <icon>far:edit fa-fw green</icon>
+                <action>tb_ufFormAdianti</action>
+            </menuitem>            
+        </menu>        
+    </menuitem>    
     <menuitem label='Gerador de Sistemas'>
         <icon>fa:magic fa-fw #f0db4f</icon>
         <action>sysgenView</action>
