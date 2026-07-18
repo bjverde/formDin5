@@ -10,6 +10,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
     
     // Propriedades re-declaradas porque são private no TNumericIndicator
     protected $icon;
+    protected $iconColor = '#ffffff'; // Cor padrão do ícone
     protected $value;
     protected $color;
     
@@ -27,6 +28,11 @@ class TFormDinNumericIndicator extends TNumericIndicator
     public function setIcon($icon)
     {
         $this->icon = $icon;
+    }
+
+    public function setIconColor($color)
+    {
+        $this->iconColor = $color;
     }
 
     public function setValue($value)
@@ -52,6 +58,11 @@ class TFormDinNumericIndicator extends TNumericIndicator
     public function getIcon()
     {
         return $this->icon;
+    }
+
+    public function getIconColor()
+    {
+        return $this->iconColor;
     }
     
     public function getValue()
@@ -81,6 +92,7 @@ class TFormDinNumericIndicator extends TNumericIndicator
         $infoBox->enableSection('main', [
             'title'      => $this->getTitle(), //Herdado do TChartBase
             'icon'       => $this->getIcon(),
+            'iconColor'  => $this->getIconColor(),
             'background' => $this->getColor(),
             'value'      => $value,
             'fontColor'  => $this->getFontColor(),
