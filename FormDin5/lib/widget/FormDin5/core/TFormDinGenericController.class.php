@@ -61,13 +61,39 @@ class TFormDinGenericController
         return $result;
     }
     
+    /**
+     * Busca arrays baseado em uma criteria
+     *
+     * @param TCriteria $criteria
+     * @param bool $showDumpLogTela
+     * @return mixed|null
+     */    
     public function getArrayByCriteria(TCriteria $criteria,bool $showDumpLogTela=false){
         $result = $this->getDao()->getArrayByCriteria($criteria,$showDumpLogTela);
         return $result;
     }
 
+    /**
+     * Busca objetos baseados em uma criteria
+     *
+     * @param TCriteria $criteria
+     * @param bool $showDumpLogTela
+     * @return mixed|null
+     */
     public function getListObjByCriteria(TCriteria $criteria,bool $showDumpLogTela=false){
         $result = $this->getDao()->getListObjByCriteria($criteria,$showDumpLogTela);
         return $result;
     }
+
+    /**
+     * Conta registros baseado em uma criteria
+     *
+     * @param TCriteria $criteria
+     * @param bool $showDumpLogTela
+     * @return mixed|null
+     */    
+    public function getCountByCriteria(TCriteria $criteria,bool $showDumpLogTela=false){
+        $result = $this->getDao()->getCountByCriteria($criteria,$showDumpLogTela);
+        return $result;
+    }    
 }//fim classe
