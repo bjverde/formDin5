@@ -98,7 +98,7 @@ class FileHelper
         }
         $dirname = dirname($to);
         if( !is_dir($dirname) ){
-            if (!mkdir($dirname, 0755, true)) {
+            if (!@mkdir($dirname, 0755, true)) {
                 throw new Exception('Falha ao criar os diretórios: '.$dirname);
             }
         }
