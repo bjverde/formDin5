@@ -1,4 +1,5 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
 
 class TFormDinGenericDAOTest extends TestCase
@@ -51,7 +52,7 @@ class TFormDinGenericDAOTest extends TestCase
         // Cenário 2b: $tpdo informado com bancoA, mas $database passado como bancoB.
         // getDatabase deve retornar bancoB e atualizar a conexão do $tpdo para bancoB.
         $tpdo = new TFormDinPdoConnection('dbapoio');
-        $dao = new TFormDinGenericDAO('dbapoio', 'MyRepository', $tpdo);
+        $dao = new TFormDinGenericDAO('sample', 'MyRepository', $tpdo);
         $this->assertEquals('dbapoio', $dao->getDatabase());
         $this->assertEquals('dbapoio', $tpdo->getDatabase());
     }
@@ -106,7 +107,7 @@ class TFormDinGenericDAOTest extends TestCase
     public function testExecuteWriteAndExceptions()
     {
         $dao = new TFormDinGenericDAO('dbapoio');
-        
+
         // Test Insert
         $insertSql = "INSERT INTO dado_apoio (tip_dado_apoio, sig_dado_apoio) VALUES (?, ?)";
         $newId = $dao->execute($insertSql, ['TempType', 'TT']);
@@ -133,11 +134,11 @@ class TFormDinGenericDAOTest extends TestCase
         $dao = new TFormDinGenericDAO('dbapoio', 'ApoioRecord');
         $criteria = new TCriteria();
         $criteria->add(new TFilter('seq_dado_apoio', '=', 1));
-        
+
         ob_start();
         $result = $dao->getArrayByCriteria($criteria, true);
         $output = ob_get_clean();
-        
+
         $this->assertIsArray($result);
         $this->assertCount(1, $result);
         $this->assertEquals('1', $result[0]->seq_dado_apoio);
@@ -156,11 +157,11 @@ class TFormDinGenericDAOTest extends TestCase
         $dao = new TFormDinGenericDAO('dbapoio', 'ApoioRecord');
         $criteria = new TCriteria();
         $criteria->add(new TFilter('seq_dado_apoio', '=', 1));
-        
+
         ob_start();
         $result = $dao->getListObjByCriteria($criteria, true);
         $output = ob_get_clean();
-        
+
         $this->assertIsArray($result);
         $this->assertCount(1, $result);
         $this->assertInstanceOf(ApoioRecord::class, $result[0]);
