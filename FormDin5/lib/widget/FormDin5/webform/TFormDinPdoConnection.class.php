@@ -140,7 +140,7 @@ class TFormDinPdoConnection
      */
     public function setCase($case)
     {
-        if(empty($case)){
+        if(is_null($case) || $case === ''){
             $case = $this->caseDefault;
         }
         $this->case = $case;
@@ -294,6 +294,21 @@ class TFormDinPdoConnection
         return $result;
     }
 
+    public function getDatabaseInfo()
+    {
+        try {
+            $configConnect = $this->getConfigConnect();
+            $database = $configConnect['database'];
+            $db = $configConnect['db'];
+            TTransaction::open($database, $db);
+            $dbinfo = TConnection::getDatabaseInfo($database);
+            var_dump($dbinfo);
+            TTransaction::close();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     /**
      * Retorna o valor Default da porta do SGBD
      *
@@ -418,6 +433,10 @@ class TFormDinPdoConnection
                     $result = $this->convertArrayResult($result);
                 }else if( preg_match( '/^insert/i', $sql ) > 0  ){
                     $result = $conn->lastInsertId();
+                }else if( preg_match( '/^update/i', $sql ) > 0  ){
+                    $result = $stmt->rowCount();
+                }else if( preg_match( '/^delete/i', $sql ) > 0  ){
+                    $result = $stmt->rowCount();
                 // @codeCoverageIgnoreStart
                 }else if( preg_match( '/^exec/i', $sql ) > 0  ){ // Para stored procedure do MS SQL Server                                        
                     $res = array();
@@ -470,7 +489,7 @@ class TFormDinPdoConnection
      * @param string $repositoryName - 02: nome de classe em app/model
      * @return array Adianti
      */    
-    public function selectByTCriteria(?TCriteria $criteria=null, $repositoryName=null)
+    public function selectByTCriteria(?TCriteria $criteria=null, $repositoryName=null, bool $showDumpLogTela = false)
     {
         try {
             $configConnect = $this->getConfigConnect();
@@ -478,6 +497,12 @@ class TFormDinPdoConnection
             $db = $configConnect['db'];
             
             TTransaction::open($database,$db); // abre uma transação
+            if ($showDumpLogTela == true) {
+                TTransaction::dump();
+                TTransaction::setLoggerFunction(function ($message) {
+                    echo $message . '<br>';
+                });
+            }
             $repository = new TRepository($repositoryName);
             $collections = $repository->load($criteria);
             $collections = $this->convertArrayResult($collections);
