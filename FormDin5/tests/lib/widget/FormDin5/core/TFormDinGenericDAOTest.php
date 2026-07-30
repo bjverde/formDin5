@@ -28,6 +28,34 @@ class TFormDinGenericDAOTest extends TestCase
         $this->assertEquals('NewRepo', $dao->getRepository());
     }
 
+    public function testConstructWithNullTpdo()
+    {
+        // Cenário 1: $tpdo = null. getDatabase e o tpdo interno devem usar o banco informado
+        $dao = new TFormDinGenericDAO('dbapoio', 'MyRepository');
+        $this->assertEquals('dbapoio', $dao->getDatabase());
+        $this->assertInstanceOf(TFormDinPdoConnection::class, $dao->getTPDOConnection());
+        $this->assertEquals('dbapoio', $dao->getTPDOConnection()->getDatabase());
+    }
+
+    public function testConstructWithTpdoAndOmittedDatabase()
+    {
+        // Cenário 2a: $tpdo informado e $database vazio/nulo. getDatabase deve assumir o banco da conexão $tpdo
+        $tpdo = new TFormDinPdoConnection('dbapoio');
+        $dao = new TFormDinGenericDAO(null, 'MyRepository', $tpdo);
+        $this->assertEquals('dbapoio', $dao->getDatabase());
+        $this->assertSame($tpdo, $dao->getTPDOConnection());
+    }
+
+    public function testConstructWithTpdoAndDifferentDatabase()
+    {
+        // Cenário 2b: $tpdo informado com bancoA, mas $database passado como bancoB.
+        // getDatabase deve retornar bancoB e atualizar a conexão do $tpdo para bancoB.
+        $tpdo = new TFormDinPdoConnection('dbapoio');
+        $dao = new TFormDinGenericDAO('dbapoio', 'MyRepository', $tpdo);
+        $this->assertEquals('dbapoio', $dao->getDatabase());
+        $this->assertEquals('dbapoio', $tpdo->getDatabase());
+    }
+
     public function testGetDatabaseInfo()
     {
         $dao = new TFormDinGenericDAO('dbapoio');
