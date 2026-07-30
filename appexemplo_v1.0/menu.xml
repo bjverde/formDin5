@@ -453,6 +453,10 @@
             </menuitem>            
         </menu>
     </menuitem>
+    <menuitem label="Dashboard">
+        <icon>fas:chart-pie fa-fw #2563EB</icon>
+        <action>dashboard</action>
+    </menuitem>    
     <menuitem label='Gerador de Sistemas'>
         <icon>fa:magic fa-fw #f0db4f</icon>
         <action>sysgenView</action>

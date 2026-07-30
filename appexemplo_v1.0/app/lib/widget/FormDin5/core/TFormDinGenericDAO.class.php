@@ -37,10 +37,23 @@ class TFormDinGenericDAO
             $this->setDatabase($tpdo->getDatabase());
         }
     }
+
+    /**
+     * Busca o nome do banco de dados
+     *
+     * @return string|null
+     */
     public function getDatabase()
     {
         return $this->database;
     }
+
+    /**
+     * Seta o nome do banco de dados
+     *
+     * @param string|null $database
+     * @return void
+     */
     public function setDatabase(string|null $database)
     {
         $this->database = $database;
@@ -48,6 +61,12 @@ class TFormDinGenericDAO
             $this->tpdo->setDatabase($database);
         }
     }
+
+    /**
+     * Busca o nome do repository
+     *
+     * @return string|null
+     */
     public function getRepository()
     {
         return $this->repository;
@@ -56,10 +75,23 @@ class TFormDinGenericDAO
     {
         $this->repository = $repository;
     }
+
+    /**
+     * Busca informações do banco de dados
+     *
+     * @return array
+     */
     public function getDatabaseInfo()
     {
         $this->getTPDOConnection()->getDatabaseInfo();
     }
+    
+    /**
+     * Executa comandos SQL e retorna os registros
+     *
+     * @param string $sql
+     * @return mixed|null
+     */
     public function executeSelect(string $sql)
     {
         try {
@@ -72,6 +104,13 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
+
+    /**
+     * Executa comandos SQL e retorna a quantidade de registros
+     *
+     * @param string $sql
+     * @return mixed|null
+     */
     public function executeSelectCount(string $sql)
     {
         try {
@@ -81,6 +120,14 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
+
+    /**
+     * Executa comandos SQL
+     *
+     * @param string $sql
+     * @param array $values
+     * @return mixed|null
+     */
     public function execute(string $sql, array $values)
     {
         try {
@@ -89,6 +136,14 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
+
+    /**
+     * Busca arrays baseado em uma criteria
+     *
+     * @param TCriteria $criteria
+     * @param bool $showDumpLogTela
+     * @return mixed|null
+     */
     public function getArrayByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
     {
         try {
@@ -98,6 +153,14 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
+
+    /**
+     * Busca objetos baseados em uma criteria
+     *
+     * @param TCriteria $criteria
+     * @param bool $showDumpLogTela
+     * @return mixed|null
+     */
     public function getListObjByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
     {
         try {
@@ -107,4 +170,34 @@ class TFormDinGenericDAO
             throw new Exception($e->getMessage());
         }
     }
+
+    /**
+     * Conta registros baseado em uma criteria
+     *
+     * @param TCriteria $criteria
+     * @param bool $showDumpLogTela
+     * @return mixed|null
+     */
+    public function getCountByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
+    {
+        try {
+            TTransaction::open($this->getDatabase());
+
+            //Mostra SQL na tela
+            if ($showDumpLogTela == true) {
+                TTransaction::dump( /* '/tmp/log.txt' */);
+                TTransaction::setLoggerFunction(function ($message) {
+                    echo $message . '<br>';
+                });
+            }
+
+            //load using repository
+            $repository = new TRepository($this->getRepository());
+            $count = $repository->count($criteria); 
+            TTransaction::close();
+            return $count;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }    
 }//fim classe

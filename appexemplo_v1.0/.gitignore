@@ -68,7 +68,7 @@
 /app/lib/reports/
 /app/lib/util/
 /app/lib/validator/
-/app/lib/widget/
+/app/lib/widget/*
 !/app/lib/widget/FormDin5
 
 /app/model/admin/
@@ -77,7 +77,7 @@
 /app/output/
 /app/reports/
 
-/app/resources/*
+/app/resources/
 
 /app/service/auth/
 /app/service/cli/
