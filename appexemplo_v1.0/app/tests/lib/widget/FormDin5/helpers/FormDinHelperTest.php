@@ -40,89 +40,103 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
-$path =  __DIR__.'/../../../../../../';
+$path =  __DIR__ . '/../../../../../../';
 //require_once $path.'init.php';
 //require_once $path.'tests/initTest.php';
 
-require_once  __DIR__.'/../../mockMunicipioVO.class.php';
+require_once  __DIR__ . '/../../mockMunicipioVO.class.php';
 
 use PHPUnit\Framework\TestCase;
 
 class FormDinHelperTest extends TestCase
 {
-    public $formDinVersion = '5.14.00';
+    public $formDinVersion = '5.14.1';
     public $adiantiVersion = '8.4.0.1';
 
-    public function testVersion() {
+    public function testVersion()
+    {
         $expected = $this->formDinVersion;
         $result =  FormDinHelper::version();
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    public function testVersionMinimum_false() {
+    public function testVersionMinimum_false()
+    {
         $expected = false;
         $result = FormDinHelper::versionMinimum('99.99.99');
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    public function testVersionMinimum_true() {
+    public function testVersionMinimum_true()
+    {
         $expected = true;
         $result = FormDinHelper::versionMinimum('1.0.0');
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    public function testVersionMinimum_equal() {
+    public function testVersionMinimum_equal()
+    {
         $expected = true;
         $result = FormDinHelper::versionMinimum('5.0.0');
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    public function testVersionMinimum_Ref1Menor() {
+    public function testVersionMinimum_Ref1Menor()
+    {
         $expected = true;
-        $result = FormDinHelper::versionMinimum('5.0.0','6.0.0');
-        $this->assertEquals( $expected , $result);
+        $result = FormDinHelper::versionMinimum('5.0.0', '6.0.0');
+        $this->assertEquals($expected, $result);
     }
-    public function testVersionMinimum_Ref1equal() {
+    public function testVersionMinimum_Ref1equal()
+    {
         $expected = true;
-        $result = FormDinHelper::versionMinimum('6.0.0','6.0.0');
-        $this->assertEquals( $expected , $result);
+        $result = FormDinHelper::versionMinimum('6.0.0', '6.0.0');
+        $this->assertEquals($expected, $result);
     }
-    public function testVersionMinimum_Ref1Maior() {
+    public function testVersionMinimum_Ref1Maior()
+    {
         $expected = false;
-        $result = FormDinHelper::versionMinimum('6.0.0','5.0.0');
-        $this->assertEquals( $expected , $result);
-    }     
+        $result = FormDinHelper::versionMinimum('6.0.0', '5.0.0');
+        $this->assertEquals($expected, $result);
+    }
 
     /**
      * @doesNotPerformAssertions
      */
-    public function testAdianti_verifyFormDinMinimumVersion_okOlder() {
+    public function testAdianti_verifyFormDinMinimumVersion_okOlder()
+    {
         FormDinHelper::verifyFormDinMinimumVersion('1.0.0');
         $this->assertTrue(true, 'A versão mínima do FormDin foi atendida.');
-    }     
+    }
     /**
      * @doesNotPerformAssertions
      */
-    public function testAdianti_verifyFormDinMinimumVersion_ok() {
+    public function testAdianti_verifyFormDinMinimumVersion_ok()
+    {
         FormDinHelper::verifyFormDinMinimumVersion($this->formDinVersion);
         $this->assertTrue(true, 'A versão mínima do FormDin foi atendida.');
-    }   
-    public function testAdianti_verifyFormDinMinimumVersion_Exception() {
+    }
+    public function testAdianti_verifyFormDinMinimumVersion_Exception()
+    {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99.99.99');
     }
-    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat1() {
+    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat1()
+    {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99');
     }
-    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat2() {
+    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat2()
+    {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99.99');
     }
-    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat5() {
+    public function testAdianti_verifyFormDinMinimumVersion_ExceptionWrongFormat5()
+    {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('99.99.99.99.99');
     }
     /**
      * @doesNotPerformAssertions
      */
-    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_ok() {
+    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToFormDin_ok()
+    {
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin();
         $this->assertTrue(true, 'A versão mínima do Adianti Framework foi atendida.');
     }
@@ -130,158 +144,177 @@ class FormDinHelperTest extends TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_ok() {
+    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_ok()
+    {
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('7.3.0');
         $this->assertTrue(true, 'A versão mínima do Adianti Framework foi atendida.');
     }
-    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_Exception() {
+    public function testAdianti_verifyMinimumVersionAdiantiFrameWorkToSystem_Exception()
+    {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('99.99.99');
     }
     //-----------------------------------------------------------------------------------
-    public function testAdiantiVersion() {
+    public function testAdiantiVersion()
+    {
         $expected = $this->adiantiVersion;
         $result =  FormDinHelper::getAdiantiFrameWorkVersion();
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    public function testSetPropertyVo_noSet(){
+    public function testSetPropertyVo_noSet()
+    {
         $bodyRequest = array();
         $bodyRequest['IDPESSOA'] = 10;
         $bodyRequest['NMPESSOA'] = 'Paulo Deleo';
-        
+
         $vo = new mockMunicipioVO();
-        
-        $vo =  FormDinHelper::setPropertyVo($bodyRequest,$vo);
+
+        $vo =  FormDinHelper::setPropertyVo($bodyRequest, $vo);
         $expected = null;
-        $this->assertEquals( $expected , $vo->getCod_municipio());
-        $this->assertEquals( $expected , $vo->getCod_uf());
-        $this->assertEquals( $expected , $vo->getNom_municipio());
-        $this->assertEquals( $expected , $vo->getSit_ativo());
+        $this->assertEquals($expected, $vo->getCod_municipio());
+        $this->assertEquals($expected, $vo->getCod_uf());
+        $this->assertEquals($expected, $vo->getNom_municipio());
+        $this->assertEquals($expected, $vo->getSit_ativo());
     }
     //-----------------------------------------------------------------------------------
-    public function testSetPropertyVo_setOnlyCodMunicipio_lowerCase(){
+    public function testSetPropertyVo_setOnlyCodMunicipio_lowerCase()
+    {
         $bodyRequest = array();
         $bodyRequest['cod_municipio'] = 10;
         $bodyRequest['NMPESSOA'] = 'Paulo Deleo';
-        
+
         $vo = new mockMunicipioVO();
-        
-        $vo =  FormDinHelper::setPropertyVo($bodyRequest,$vo);
+
+        $vo =  FormDinHelper::setPropertyVo($bodyRequest, $vo);
         $expected = 10;
-        $this->assertEquals( $expected , $vo->getCod_municipio());
+        $this->assertEquals($expected, $vo->getCod_municipio());
         $expected = null;
-        $this->assertEquals( $expected , $vo->getCod_uf());
-        $this->assertEquals( $expected , $vo->getNom_municipio());
-        $this->assertEquals( $expected , $vo->getSit_ativo());
+        $this->assertEquals($expected, $vo->getCod_uf());
+        $this->assertEquals($expected, $vo->getNom_municipio());
+        $this->assertEquals($expected, $vo->getSit_ativo());
     }
 
-    public function testSetPropertyVo_MixCase(){
+    public function testSetPropertyVo_MixCase()
+    {
         $bodyRequest = array();
         $bodyRequest['COD_MUNICIPIO'] = 10;
         $bodyRequest['COD_UF'] = 'DF';
         $bodyRequest['nom_municipio'] = 'Divinopolis';
         $bodyRequest['sit_ativo'] = 'N';
-        
+
         $vo = new mockMunicipioVO();
-        
-        $vo =  FormDinHelper::setPropertyVo($bodyRequest,$vo);
-        $this->assertEquals( 10 , $vo->getCod_municipio());
-        $this->assertEquals( 'DF' , $vo->getCod_uf());
-        $this->assertEquals( 'Divinopolis' , $vo->getNom_municipio());
-        $this->assertEquals( 'N' , $vo->getSit_ativo());
-    }    
+
+        $vo =  FormDinHelper::setPropertyVo($bodyRequest, $vo);
+        $this->assertEquals(10, $vo->getCod_municipio());
+        $this->assertEquals('DF', $vo->getCod_uf());
+        $this->assertEquals('Divinopolis', $vo->getNom_municipio());
+        $this->assertEquals('N', $vo->getSit_ativo());
+    }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    public function testConvertVo2ArrayFormDin_failNull(){
+    public function testConvertVo2ArrayFormDin_failNull()
+    {
         $this->expectException(InvalidArgumentException::class);
         FormDinHelper::convertVo2ArrayFormDin(null);
     }
-    
+
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testConvertVo2ArrayFormDin_failString(){
+    public function testConvertVo2ArrayFormDin_failString()
+    {
         $this->expectException(InvalidArgumentException::class);
-        FormDinHelper::convertVo2ArrayFormDin('xx');        
+        FormDinHelper::convertVo2ArrayFormDin('xx');
     }
-    
-    public function testConvertVo2ArrayFormDin_failInt(){
+
+    public function testConvertVo2ArrayFormDin_failInt()
+    {
         $this->expectException(InvalidArgumentException::class);
         FormDinHelper::convertVo2ArrayFormDin(120);
     }
-    
-    public function testConvertVo2ArrayFormDin_OK(){
+
+    public function testConvertVo2ArrayFormDin_OK()
+    {
         $vo = new mockMunicipioVO();
         $vo->setCod_municipio(1);
         $vo->setCod_uf(2);
         $vo->setNom_municipio('Brasília');
         $vo->setSit_ativo('S');
-        
+
         $arrayFormDin =  FormDinHelper::convertVo2ArrayFormDin($vo);
-        $this->assertEquals( 1 , $arrayFormDin['COD_MUNICIPIO'][0]);
-        $this->assertEquals( 'Brasília' , $arrayFormDin['NOM_MUNICIPIO'][0]);
-        $this->assertEquals( 2 , $arrayFormDin['COD_UF'][0]);
-        $this->assertEquals( 'S' , $arrayFormDin['SIT_ATIVO'][0]);
+        $this->assertEquals(1, $arrayFormDin['COD_MUNICIPIO'][0]);
+        $this->assertEquals('Brasília', $arrayFormDin['NOM_MUNICIPIO'][0]);
+        $this->assertEquals(2, $arrayFormDin['COD_UF'][0]);
+        $this->assertEquals('S', $arrayFormDin['SIT_ATIVO'][0]);
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    public function testValidateIdIsNumeric_FailNull(){
+    public function testValidateIdIsNumeric_FailNull()
+    {
         $this->expectException(InvalidArgumentException::class);
-        FormDinHelper::validateIdIsNumeric(null,__METHOD__,__LINE__);
+        FormDinHelper::validateIdIsNumeric(null, __METHOD__, __LINE__);
     }
-    public function testValidateIdIsNumeric_OkInteger(){
-        $this->assertNull( FormDinHelper::validateIdIsNumeric(10,__METHOD__,__LINE__) );
+    public function testValidateIdIsNumeric_OkInteger()
+    {
+        $this->assertNull(FormDinHelper::validateIdIsNumeric(10, __METHOD__, __LINE__));
     }
-    public function testValidateIdIsNumeric_OkString(){
-        $this->assertNull( FormDinHelper::validateIdIsNumeric('10',__METHOD__,__LINE__) );
+    public function testValidateIdIsNumeric_OkString()
+    {
+        $this->assertNull(FormDinHelper::validateIdIsNumeric('10', __METHOD__, __LINE__));
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
-    public function testIssetOrNotZero_arrayNull() {
+    public function testIssetOrNotZero_arrayNull()
+    {
         $expected = false;
         $variable = array();
         $result = FormDinHelper::issetOrNotZero($variable);
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    
-    public function testIssetOrNotZero_arrayNotNull() {
+
+    public function testIssetOrNotZero_arrayNotNull()
+    {
         $expected = true;
-        $variable = array(0,1);
+        $variable = array(0, 1);
         $result = FormDinHelper::issetOrNotZero($variable);
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    
-    public function testIssetOrNotZero_stringBlank() {
+
+    public function testIssetOrNotZero_stringBlank()
+    {
         $expected = false;
         $variable = '';
         $result = FormDinHelper::issetOrNotZero($variable);
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    
-    public function testIssetOrNotZero_stringNull() {
+
+    public function testIssetOrNotZero_stringNull()
+    {
         $expected = false;
         $variable = null;
         $result = FormDinHelper::issetOrNotZero($variable);
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    
-    public function testIssetOrNotZero_stringZero() {
+
+    public function testIssetOrNotZero_stringZero()
+    {
         $expected = false;
         $variable = '0';
         $result = FormDinHelper::issetOrNotZero($variable);
-        $this->assertEquals( $expected , $result);
+        $this->assertEquals($expected, $result);
     }
-    
-    public function testIssetOrNotZero_stringZeroNoTest() {
+
+    public function testIssetOrNotZero_stringZeroNoTest()
+    {
         $expected = true;
         $variable = '0';
-        $result = FormDinHelper::issetOrNotZero($variable,false);
-        $this->assertEquals( $expected , $result);
+        $result = FormDinHelper::issetOrNotZero($variable, false);
+        $this->assertEquals($expected, $result);
     }
     //-----------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------
@@ -303,7 +336,7 @@ class FormDinHelperTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
         FormDinHelper::validateSizeWidthAndHeight('100em');
-    }    
+    }
 
     public function testValidateSizeWidthAndHeight_okRem()
     {
@@ -343,55 +376,63 @@ class FormDinHelperTest extends TestCase
     public function testValidateSizeWidthAndHeight_okPx()
     {
         $this->expectNotToPerformAssertions();
-        FormDinHelper::validateSizeWidthAndHeight('100px',true);
+        FormDinHelper::validateSizeWidthAndHeight('100px', true);
     }
 
-    public function testSizeWidthInPercent_NumericLessThan100() {
+    public function testSizeWidthInPercent_NumericLessThan100()
+    {
         $result = FormDinHelper::sizeWidthInPercent(80);
         $this->assertEquals('80%', $result);
     }
 
-    public function testSizeWidthInPercent_NumericGreaterThan100() {
+    public function testSizeWidthInPercent_NumericGreaterThan100()
+    {
         $result = FormDinHelper::sizeWidthInPercent(120);
         $this->assertEquals('100%', $result);
     }
 
-    public function testSizeWidthInPercent_StringPercent() {
+    public function testSizeWidthInPercent_StringPercent()
+    {
         $result = FormDinHelper::sizeWidthInPercent('50%');
         $this->assertEquals('50%', $result);
     }
 
-    public function testValidateMethodLine_Deprecated() {
+    public function testValidateMethodLine_Deprecated()
+    {
         $this->expectNotToPerformAssertions();
         FormDinHelper::validateMethodLine('method', 'line', 'validate');
     }
 
-    public function testValidateObjTypeTPDOConnectionObj_Deprecated() {
+    public function testValidateObjTypeTPDOConnectionObj_Deprecated()
+    {
         $this->expectNotToPerformAssertions();
         $tpdo = new TFormDinPdoConnection();
         FormDinHelper::validateObjTypeTPDOConnectionObj($tpdo, 'method', 'line');
     }
 
-    public function testVerifyFormDinMinimumVersion_ExceptionEmpty() {
+    public function testVerifyFormDinMinimumVersion_ExceptionEmpty()
+    {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyFormDinMinimumVersion('');
     }
 
-    public function testVerifyMinimumVersionAdiantiFrameWorkToSystem_ExceptionEmpty() {
+    public function testVerifyMinimumVersionAdiantiFrameWorkToSystem_ExceptionEmpty()
+    {
         $this->expectException(DomainException::class);
         FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToSystem('');
     }
 
-    public function testGetAdiantiFrameWorkVersion_ExceptionFileNotFound() {
+    public function testGetAdiantiFrameWorkVersion_ExceptionFileNotFound()
+    {
         $reflector = new ReflectionClass(FormDinHelper::class);
         $fileHelperDir = dirname($reflector->getFileName());
         $fileVersion = $fileHelperDir . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'VERSION';
         $tempFile = $fileVersion . '.bak';
-        
+
         if (file_exists($fileVersion)) {
             rename($fileVersion, $tempFile);
         }
-        
+
         try {
             FormDinHelper::getAdiantiFrameWorkVersion();
             $this->fail('Expected InvalidArgumentException was not thrown');
@@ -404,18 +445,19 @@ class FormDinHelperTest extends TestCase
         }
     }
 
-    public function testVerifyMinimumVersionAdiantiFrameWorkToFormDin_Exception() {
+    public function testVerifyMinimumVersionAdiantiFrameWorkToFormDin_Exception()
+    {
         $reflector = new ReflectionClass(FormDinHelper::class);
         $fileHelperDir = dirname($reflector->getFileName());
         $fileVersion = $fileHelperDir . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'VERSION';
         $tempFile = $fileVersion . '.bak';
-        
+
         if (file_exists($fileVersion)) {
             rename($fileVersion, $tempFile);
         }
-        
+
         file_put_contents($fileVersion, "7.4.0\n");
-        
+
         try {
             $this->expectException(DomainException::class);
             FormDinHelper::verifyMinimumVersionAdiantiFrameWorkToFormDin();
