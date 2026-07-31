@@ -5,17 +5,22 @@ use PHPUnit\Framework\TestCase;
 class TFormDinGenericDAOTest extends TestCase
 {
     private $oldErrorLog;
+    private $tempLogFile;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->oldErrorLog = ini_get('error_log');
-        ini_set('error_log', DIRECTORY_SEPARATOR === '\\' ? 'nul' : '/dev/null');
+        $this->tempLogFile = __DIR__ . '/temp_error.log';
+        ini_set('error_log', $this->tempLogFile);
     }
 
     protected function tearDown(): void
     {
         ini_set('error_log', $this->oldErrorLog);
+        if (file_exists($this->tempLogFile)) {
+            @unlink($this->tempLogFile);
+        }
         try {
             TTransaction::rollback();
         } catch (Throwable $e) {
