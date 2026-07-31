@@ -105,14 +105,35 @@ class FileHelperTest extends TestCase
     public function testMove_MkdirFailureException() {
         $from = __DIR__ . '/temp_source_mkdir_fail.txt';
         file_put_contents($from, 'test');
+
+        $warningTriggered = false;
+        $warningMsg = '';
+        
+        // Captura o warning nativo do PHP
+        set_error_handler(function($errno, $errstr) use (&$warningTriggered, &$warningMsg) {
+            if ($errno === E_WARNING && strpos($errstr, 'mkdir()') !== false) {
+                $warningTriggered = true;
+                $warningMsg = $errstr;
+                return true; // Suprime para não falhar o PHPUnit
+            }
+            return false;
+        });
+
+        $exceptionThrown = false;
         try {
-            $this->expectException(\Exception::class);
-            $this->expectExceptionMessage('Falha ao criar os diretórios:');
             FileHelper::move($from, __DIR__ . '/temp_source_invalid_dir?/dest.txt');
+        } catch (\Exception $e) {
+            $exceptionThrown = true;
+            $this->assertStringContainsString('Falha ao criar os diretórios:', $e->getMessage());
         } finally {
+            restore_error_handler();
             if (file_exists($from)) {
                 unlink($from);
             }
         }
+
+        $this->assertTrue($exceptionThrown, 'Uma exceção de falha ao criar diretórios deveria ter sido lançada.');
+        $this->assertTrue($warningTriggered, 'Um warning de mkdir() deveria ter sido disparado.');
+        $this->assertStringContainsString('mkdir():', $warningMsg);
     }
 }
