@@ -461,7 +461,6 @@ class TFormDinPdoConnection
             return $result;
         }
         catch (Exception $e) {
-            error_log($e->getMessage());
             throw new Exception($e->getMessage());
         }
     }
@@ -510,7 +509,6 @@ class TFormDinPdoConnection
             return $collections;
         }
         catch (Exception $e) {
-            error_log($e->getMessage());
             throw new Exception($e->getMessage());
         }
     }
@@ -536,7 +534,6 @@ class TFormDinPdoConnection
             return $count;
         }
         catch (Exception $e) {
-            error_log($e->getMessage());
             throw new Exception($e->getMessage());
         }
     }
