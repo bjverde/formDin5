@@ -4,13 +4,29 @@ use PHPUnit\Framework\TestCase;
 
 class TFormDinGenericDAOTest extends TestCase
 {
+    private $oldErrorLog;
+    private $tempLogFile;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->oldErrorLog = ini_get('error_log');
+        $this->tempLogFile = __DIR__ . '/temp_error.log';
+        ini_set('error_log', $this->tempLogFile);
+    }
+
     protected function tearDown(): void
     {
+        ini_set('error_log', $this->oldErrorLog);
+        if (file_exists($this->tempLogFile)) {
+            @unlink($this->tempLogFile);
+        }
         try {
             TTransaction::rollback();
         } catch (Throwable $e) {
             // Ignore if no transaction was active
         }
+        parent::tearDown();
     }
 
     public function testConstructAndGettersSetters()
@@ -173,6 +189,42 @@ class TFormDinGenericDAOTest extends TestCase
         $criteria = new TCriteria();
         $this->expectException(Exception::class);
         $dao->getListObjByCriteria($criteria);
+    }
+
+    public function testGetCountByCriteria()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio', 'ApoioRecord');
+        $criteria = new TCriteria();
+        $criteria->add(new TFilter('seq_dado_apoio', '>', 0));
+
+        ob_start();
+        $count = $dao->getCountByCriteria($criteria, true);
+        $output = ob_get_clean();
+
+        $this->assertIsInt($count);
+        $this->assertGreaterThanOrEqual(3, $count);
+    }
+
+    public function testGetCountByCriteriaException()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio', 'InvalidRecordClass');
+        $criteria = new TCriteria();
+        
+        $this->expectException(Exception::class);
+        $dao->getCountByCriteria($criteria);
+    }
+
+    public function testSetTPDOConnectionSyncsDatabase()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio');
+        $tpdoNew = new TFormDinPdoConnection(null);
+        $tpdoNew->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $tpdoNew->setDatabase('outro_banco');
+
+        $dao->setTPDOConnection($tpdoNew);
+        
+        $this->assertEquals('outro_banco', $dao->getDatabase());
+        $this->assertSame($tpdoNew, $dao->getTPDOConnection());
     }
 }
 
