@@ -111,6 +111,20 @@ class ArrayHelperTest extends TestCase
     	$retorno = ArrayHelper::has('x',$arrayTest);
     	$this->assertEquals($esperado, $retorno);
     }    
+
+    public function testHas_nullKey() {
+        $esperado = TRUE;
+        $arrayTest = array("" => "null_key_value", "x" => "foo");
+        $retorno = ArrayHelper::has(null, $arrayTest);
+        $this->assertEquals($esperado, $retorno);
+    }
+
+    public function testHas_nullKeyNotInArray() {
+        $esperado = FALSE;
+        $arrayTest = array("foo" => "bar", "x" => "foo");
+        $retorno = ArrayHelper::has(null, $arrayTest);
+        $this->assertEquals($esperado, $retorno);
+    }
     
     public function testArray_keys2_true() {
         $esperado  = array(0=>'x');
