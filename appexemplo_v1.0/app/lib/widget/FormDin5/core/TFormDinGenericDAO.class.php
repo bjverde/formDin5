@@ -17,10 +17,12 @@ class TFormDinGenericDAO
         if (empty($database) && empty($tpdo)) {
             throw new InvalidArgumentException('É necessário informar $database ou $tpdo');
         }
-        $this->setDatabase($database);
         $this->setRepository($repository);
         if (!empty($tpdo)) {
             $this->setTPDOConnection($tpdo);
+            $this->setDatabase($tpdo->getDatabase());
+        } else {
+            $this->setDatabase($database);
         }
     }
     public function getTPDOConnection()
