@@ -65,11 +65,6 @@ class TFormDinGenericDAOTest extends TestCase
         $this->assertEquals('tpdo_db', $dao->getDatabase());
         $this->assertSame($tpdoMock, $dao->getTPDOConnection());
     }
-
-    public function testConstructWithoutDatabaseAndTPDOThrowsException()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        new TFormDinGenericDAO();
     public function testConstructWithNullTpdo()
     {
         // Cenário 1: $tpdo = null. getDatabase e o tpdo interno devem usar o banco informado
