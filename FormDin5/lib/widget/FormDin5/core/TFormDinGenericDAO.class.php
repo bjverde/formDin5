@@ -14,12 +14,14 @@ class TFormDinGenericDAO
      */
     public function __construct($database = null, $repository = null, $tpdo = null)
     {
+        if (empty($database) && empty($tpdo)) {
+            throw new InvalidArgumentException('É necessário informar $database ou $tpdo');
+        }
         $this->setDatabase($database);
         $this->setRepository($repository);
-        if (empty($tpdo)) {
-            $tpdo = new TFormDinPdoConnection($this->getDatabase());
+        if (!empty($tpdo)) {
+            $this->setTPDOConnection($tpdo);
         }
-        $this->setTPDOConnection($tpdo);
     }
     public function getTPDOConnection()
     {
