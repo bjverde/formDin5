@@ -15,6 +15,8 @@ class TFormDinGenericDAOTest extends TestCase
     public function testConstructAndGettersSetters()
     {
         $tpdoMock = $this->createMock(TFormDinPdoConnection::class);
+        $tpdoMock->method('getDatabase')->willReturn('my_db');
+
         $dao = new TFormDinGenericDAO('my_db', 'MyRepository', $tpdoMock);
 
         $this->assertEquals('my_db', $dao->getDatabase());
@@ -26,6 +28,31 @@ class TFormDinGenericDAOTest extends TestCase
 
         $dao->setRepository('NewRepo');
         $this->assertEquals('NewRepo', $dao->getRepository());
+    }
+
+    public function testConstructWithDatabaseOnlyDoesNotCreateTPDOConnection()
+    {
+        $dao = new TFormDinGenericDAO('my_db');
+
+        $this->assertEquals('my_db', $dao->getDatabase());
+        $this->assertNull($dao->getTPDOConnection());
+    }
+
+    public function testConstructWithDatabaseAndTPDOUsesGivenTPDO()
+    {
+        $tpdoMock = $this->createMock(TFormDinPdoConnection::class);
+        $tpdoMock->method('getDatabase')->willReturn('tpdo_db');
+
+        $dao = new TFormDinGenericDAO('my_db', null, $tpdoMock);
+
+        $this->assertEquals('tpdo_db', $dao->getDatabase());
+        $this->assertSame($tpdoMock, $dao->getTPDOConnection());
+    }
+
+    public function testConstructWithoutDatabaseAndTPDOThrowsException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new TFormDinGenericDAO();
     }
 
     public function testGetDatabaseInfo()
