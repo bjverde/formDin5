@@ -485,4 +485,83 @@ class TFormDinPdoConnectionTest extends TestCase
         $result = $this->classTest->executeSql($sql);
         $this->assertIsArray($result);
     }
+
+    public function testGetDatabaseInfo()
+    {
+        $this->classTest->setDatabase('dbapoio');
+        
+        ob_start();
+        $this->classTest->getDatabaseInfo();
+        $output = ob_get_clean();
+        
+        $this->assertNotEmpty($output);
+        $this->assertStringContainsString('type', $output);
+    }
+
+    public function testSelectByTCriteria()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setCase(PDO::CASE_LOWER);
+        
+        $criteria = new TCriteria();
+        $criteria->add(new TFilter('seq_dado_apoio', '=', 1));
+        
+        $result = $this->classTest->selectByTCriteria($criteria, 'ApoioRecordConnectionTest');
+        
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertEquals(1, $result[0]->seq_dado_apoio);
+    }
+
+    public function testSelectByTCriteriaCount()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        
+        $criteria = new TCriteria();
+        $criteria->add(new TFilter('seq_dado_apoio', '>', 0));
+        
+        $count = $this->classTest->selectByTCriteriaCount($criteria, 'ApoioRecordConnectionTest');
+        
+        $this->assertIsInt($count);
+        $this->assertGreaterThanOrEqual(3, $count);
+    }
+
+    public function testGetConfigConnect_SqlServer_AddsTrustServerCertificate()
+    {
+        $this->classTest->setName('bancosql');
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLSERVER);
+        
+        $config = $this->classTest->getConfigConnect();
+        
+        $this->assertEquals('TrustServerCertificate=yes', $config['db']['opts']);
+    }
+
+    public function testExecuteSql_delete()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        
+        // Insere temporariamente um registro
+        $this->classTest->executeSql("insert into dado_apoio(tip_dado_apoio, sig_dado_apoio) values ('DelTest', 'DT')");
+        
+        // Executa o DELETE e valida o rowCount()
+        $affectedRows = $this->classTest->executeSql("delete from dado_apoio where tip_dado_apoio = 'DelTest'");
+        $this->assertEquals(1, $affectedRows);
+    }
+}
+
+class ApoioRecordConnectionTest extends TRecord
+{
+    const TABLENAME = 'dado_apoio';
+    const PRIMARYKEY = 'seq_dado_apoio';
+    const IDPOLICY = 'serial';
+
+    public function __construct($id = NULL, $callObjectLoad = TRUE)
+    {
+        parent::__construct($id, $callObjectLoad);
+        parent::addAttribute('tip_dado_apoio');
+        parent::addAttribute('sig_dado_apoio');
+    }
 }

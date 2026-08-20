@@ -1,15 +1,32 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
 
 class TFormDinGenericDAOTest extends TestCase
 {
+    private $oldErrorLog;
+    private $tempLogFile;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->oldErrorLog = ini_get('error_log');
+        $this->tempLogFile = __DIR__ . '/temp_error.log';
+        ini_set('error_log', $this->tempLogFile);
+    }
+
     protected function tearDown(): void
     {
+        ini_set('error_log', $this->oldErrorLog);
+        if (file_exists($this->tempLogFile)) {
+            @unlink($this->tempLogFile);
+        }
         try {
             TTransaction::rollback();
         } catch (Throwable $e) {
             // Ignore if no transaction was active
         }
+        parent::tearDown();
     }
 
     public function testConstructAndGettersSetters()
@@ -53,6 +70,32 @@ class TFormDinGenericDAOTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new TFormDinGenericDAO();
+    public function testConstructWithNullTpdo()
+    {
+        // Cenário 1: $tpdo = null. getDatabase e o tpdo interno devem usar o banco informado
+        $dao = new TFormDinGenericDAO('dbapoio', 'MyRepository');
+        $this->assertEquals('dbapoio', $dao->getDatabase());
+        $this->assertInstanceOf(TFormDinPdoConnection::class, $dao->getTPDOConnection());
+        $this->assertEquals('dbapoio', $dao->getTPDOConnection()->getDatabase());
+    }
+
+    public function testConstructWithTpdoAndOmittedDatabase()
+    {
+        // Cenário 2a: $tpdo informado e $database vazio/nulo. getDatabase deve assumir o banco da conexão $tpdo
+        $tpdo = new TFormDinPdoConnection('dbapoio');
+        $dao = new TFormDinGenericDAO(null, 'MyRepository', $tpdo);
+        $this->assertEquals('dbapoio', $dao->getDatabase());
+        $this->assertSame($tpdo, $dao->getTPDOConnection());
+    }
+
+    public function testConstructWithTpdoAndDifferentDatabase()
+    {
+        // Cenário 2b: $tpdo informado com bancoA, mas $database passado como bancoB.
+        // getDatabase deve retornar bancoB e atualizar a conexão do $tpdo para bancoB.
+        $tpdo = new TFormDinPdoConnection('dbapoio');
+        $dao = new TFormDinGenericDAO('sample', 'MyRepository', $tpdo);
+        $this->assertEquals('dbapoio', $dao->getDatabase());
+        $this->assertEquals('dbapoio', $tpdo->getDatabase());
     }
 
     public function testGetDatabaseInfo()
@@ -105,7 +148,7 @@ class TFormDinGenericDAOTest extends TestCase
     public function testExecuteWriteAndExceptions()
     {
         $dao = new TFormDinGenericDAO('dbapoio');
-        
+
         // Test Insert
         $insertSql = "INSERT INTO dado_apoio (tip_dado_apoio, sig_dado_apoio) VALUES (?, ?)";
         $newId = $dao->execute($insertSql, ['TempType', 'TT']);
@@ -132,11 +175,11 @@ class TFormDinGenericDAOTest extends TestCase
         $dao = new TFormDinGenericDAO('dbapoio', 'ApoioRecord');
         $criteria = new TCriteria();
         $criteria->add(new TFilter('seq_dado_apoio', '=', 1));
-        
+
         ob_start();
         $result = $dao->getArrayByCriteria($criteria, true);
         $output = ob_get_clean();
-        
+
         $this->assertIsArray($result);
         $this->assertCount(1, $result);
         $this->assertEquals('1', $result[0]->seq_dado_apoio);
@@ -155,11 +198,11 @@ class TFormDinGenericDAOTest extends TestCase
         $dao = new TFormDinGenericDAO('dbapoio', 'ApoioRecord');
         $criteria = new TCriteria();
         $criteria->add(new TFilter('seq_dado_apoio', '=', 1));
-        
+
         ob_start();
         $result = $dao->getListObjByCriteria($criteria, true);
         $output = ob_get_clean();
-        
+
         $this->assertIsArray($result);
         $this->assertCount(1, $result);
         $this->assertInstanceOf(ApoioRecord::class, $result[0]);
@@ -171,6 +214,42 @@ class TFormDinGenericDAOTest extends TestCase
         $criteria = new TCriteria();
         $this->expectException(Exception::class);
         $dao->getListObjByCriteria($criteria);
+    }
+
+    public function testGetCountByCriteria()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio', 'ApoioRecord');
+        $criteria = new TCriteria();
+        $criteria->add(new TFilter('seq_dado_apoio', '>', 0));
+
+        ob_start();
+        $count = $dao->getCountByCriteria($criteria, true);
+        $output = ob_get_clean();
+
+        $this->assertIsInt($count);
+        $this->assertGreaterThanOrEqual(3, $count);
+    }
+
+    public function testGetCountByCriteriaException()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio', 'InvalidRecordClass');
+        $criteria = new TCriteria();
+        
+        $this->expectException(Exception::class);
+        $dao->getCountByCriteria($criteria);
+    }
+
+    public function testSetTPDOConnectionSyncsDatabase()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio');
+        $tpdoNew = new TFormDinPdoConnection(null);
+        $tpdoNew->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $tpdoNew->setDatabase('outro_banco');
+
+        $dao->setTPDOConnection($tpdoNew);
+        
+        $this->assertEquals('outro_banco', $dao->getDatabase());
+        $this->assertSame($tpdoNew, $dao->getTPDOConnection());
     }
 }
 
