@@ -70,6 +70,8 @@ class TFormDinGenericDAOTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new TFormDinGenericDAO();
+    }
+
     public function testConstructWithNullTpdo()
     {
         // Cenário 1: $tpdo = null. getDatabase e o tpdo interno devem usar o banco informado
