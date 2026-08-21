@@ -29,24 +29,6 @@ class TFormDinGenericDAOTest extends TestCase
         parent::tearDown();
     }
 
-    public function testConstructAndGettersSetters()
-    {
-        $tpdoMock = $this->createMock(TFormDinPdoConnection::class);
-        $tpdoMock->method('getDatabase')->willReturn('my_db');
-
-        $dao = new TFormDinGenericDAO('my_db', 'MyRepository', $tpdoMock);
-
-        $this->assertEquals('my_db', $dao->getDatabase());
-        $this->assertEquals('MyRepository', $dao->getRepository());
-        $this->assertSame($tpdoMock, $dao->getTPDOConnection());
-
-        $dao->setDatabase('new_db');
-        $this->assertEquals('new_db', $dao->getDatabase());
-
-        $dao->setRepository('NewRepo');
-        $this->assertEquals('NewRepo', $dao->getRepository());
-    }
-
     public function testConstructWithDatabaseOnlyDoesNotCreateTPDOConnection()
     {
         $dao = new TFormDinGenericDAO('my_db');
@@ -70,13 +52,32 @@ class TFormDinGenericDAOTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new TFormDinGenericDAO();
+    }    
+
+    public function testConstructAndGettersSetters()
+    {
+        $tpdoMock = $this->createMock(TFormDinPdoConnection::class);
+        $tpdoMock->method('getDatabase')->willReturn('my_db');
+
+        $dao = new TFormDinGenericDAO('my_db', 'MyRepository', $tpdoMock);
+
+        $this->assertEquals('my_db', $dao->getDatabase());
+        $this->assertEquals('MyRepository', $dao->getRepository());
+        $this->assertSame($tpdoMock, $dao->getTPDOConnection());
+
+        $dao->setDatabase('new_db');
+        $this->assertEquals('new_db', $dao->getDatabase());
+
+        $dao->setRepository('NewRepo');
+        $this->assertEquals('NewRepo', $dao->getRepository());
+    }
+
     public function testConstructWithNullTpdo()
     {
-        // Cenário 1: $tpdo = null. getDatabase e o tpdo interno devem usar o banco informado
+        // Cenário 1: $tpdo = null. getDatabase deve usar o banco informado e o tpdo interno deve ser null
         $dao = new TFormDinGenericDAO('dbapoio', 'MyRepository');
         $this->assertEquals('dbapoio', $dao->getDatabase());
-        $this->assertInstanceOf(TFormDinPdoConnection::class, $dao->getTPDOConnection());
-        $this->assertEquals('dbapoio', $dao->getTPDOConnection()->getDatabase());
+        $this->assertNull($dao->getTPDOConnection());
     }
 
     public function testConstructWithTpdoAndOmittedDatabase()
