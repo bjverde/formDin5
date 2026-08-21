@@ -1,6 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+#[AllowMockObjectsWithoutExpectations]
 class TFormDinSystemPermControllerTest extends TestCase
 {
     public static function setUpBeforeClass(): void

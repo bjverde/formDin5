@@ -45,7 +45,9 @@ $path =  __DIR__.'/../../../../../';
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+#[AllowMockObjectsWithoutExpectations]
 class TFormDinDaoDbmsTest extends TestCase
 {
 

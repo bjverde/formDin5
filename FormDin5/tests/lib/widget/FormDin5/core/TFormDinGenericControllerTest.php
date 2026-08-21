@@ -1,6 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+#[AllowMockObjectsWithoutExpectations]
 class TFormDinGenericControllerTest extends TestCase
 {
     private $daoMock;

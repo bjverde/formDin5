@@ -43,10 +43,12 @@
 require_once  __DIR__.'/../../mockFormDinArray.php';
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
  * ArrayHelper test case.
  */
+#[AllowMockObjectsWithoutExpectations]
 class ArrayHelperTest extends TestCase
 {
 
