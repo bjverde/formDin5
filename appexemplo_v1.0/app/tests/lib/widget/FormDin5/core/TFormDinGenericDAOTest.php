@@ -1,7 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+#[AllowMockObjectsWithoutExpectations]
 class TFormDinGenericDAOTest extends TestCase
 {
     private $oldErrorLog;
@@ -52,7 +54,7 @@ class TFormDinGenericDAOTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new TFormDinGenericDAO();
-    }    
+    }
 
     public function testConstructAndGettersSetters()
     {

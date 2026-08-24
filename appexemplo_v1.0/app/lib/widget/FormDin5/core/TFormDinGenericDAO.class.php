@@ -23,11 +23,20 @@ class TFormDinGenericDAO
             $this->setDatabase($tpdo->getDatabase());
         } else {
             $this->setDatabase($database);
+            if (!empty($repository)) {
+                $this->setTPDOConnection(new TFormDinPdoConnection($database));
+            }
         }
     }
     public function getTPDOConnection()
     {
         return $this->tpdo;
+    }
+    private function initTPDOConnection()
+    {
+        if ($this->tpdo === null && $this->database !== null) {
+            $this->setTPDOConnection(new TFormDinPdoConnection($this->database));
+        }
     }
     public function setTPDOConnection(TFormDinPdoConnection $tpdo)
     {
@@ -83,6 +92,7 @@ class TFormDinGenericDAO
      */
     public function getDatabaseInfo()
     {
+        $this->initTPDOConnection();
         $this->getTPDOConnection()->getDatabaseInfo();
     }
     
@@ -95,6 +105,7 @@ class TFormDinGenericDAO
     public function executeSelect(string $sql)
     {
         try {
+            $this->initTPDOConnection();
             $tpdo = clone $this->getTPDOConnection();
             $tpdo->setFech(PDO::FETCH_ASSOC);
             $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
@@ -131,6 +142,7 @@ class TFormDinGenericDAO
     public function execute(string $sql, array $values)
     {
         try {
+            $this->initTPDOConnection();
             return $this->getTPDOConnection()->executeSql($sql, $values);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -147,6 +159,7 @@ class TFormDinGenericDAO
     public function getArrayByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
     {
         try {
+            $this->initTPDOConnection();
             $tpdo = $this->getTPDOConnection();
             return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
@@ -164,6 +177,7 @@ class TFormDinGenericDAO
     public function getListObjByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
     {
         try {
+            $this->initTPDOConnection();
             $tpdo = $this->getTPDOConnection();
             return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
