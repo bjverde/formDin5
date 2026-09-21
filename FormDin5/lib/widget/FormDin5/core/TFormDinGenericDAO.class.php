@@ -30,8 +30,13 @@ class TFormDinGenericDAO
     }
     public function getTPDOConnection()
     {
+        $this->initTPDOConnection();// Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)
         return $this->tpdo;
     }
+    /**
+     * Inicializa a conexão PDO se não estiver inicializada
+     * @return void
+     */
     private function initTPDOConnection()
     {
         if ($this->tpdo === null && $this->database !== null) {
@@ -92,10 +97,10 @@ class TFormDinGenericDAO
      */
     public function getDatabaseInfo()
     {
-        $this->initTPDOConnection();
+        $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
         $this->getTPDOConnection()->getDatabaseInfo();
     }
-    
+
     /**
      * Executa comandos SQL e retorna os registros
      *
@@ -105,7 +110,7 @@ class TFormDinGenericDAO
     public function executeSelect(string $sql)
     {
         try {
-            $this->initTPDOConnection();
+            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             $tpdo = clone $this->getTPDOConnection();
             $tpdo->setFech(PDO::FETCH_ASSOC);
             $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
@@ -142,7 +147,7 @@ class TFormDinGenericDAO
     public function execute(string $sql, array $values)
     {
         try {
-            $this->initTPDOConnection();
+            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             return $this->getTPDOConnection()->executeSql($sql, $values);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -159,7 +164,7 @@ class TFormDinGenericDAO
     public function getArrayByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
     {
         try {
-            $this->initTPDOConnection();
+            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             $tpdo = $this->getTPDOConnection();
             return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
@@ -177,7 +182,7 @@ class TFormDinGenericDAO
     public function getListObjByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
     {
         try {
-            $this->initTPDOConnection();
+            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             $tpdo = $this->getTPDOConnection();
             return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
@@ -207,11 +212,11 @@ class TFormDinGenericDAO
 
             //load using repository
             $repository = new TRepository($this->getRepository());
-            $count = $repository->count($criteria); 
+            $count = $repository->count($criteria);
             TTransaction::close();
             return $count;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-    }    
+    }
 }//fim classe
