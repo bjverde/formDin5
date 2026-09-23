@@ -43,7 +43,7 @@ class TFormDinGenericController
      * @param string $repositoryName - 02: nome de classe
      * @return array Adianti
      */
-    public function selectByTCriteria( TCriteria $criteria)
+    public function selectByTCriteria( ?TCriteria $criteria=null)
     {
         $result = $this->getDao()->selectByTCriteria($criteria);
         return $result;
@@ -55,7 +55,7 @@ class TFormDinGenericController
      * @param string $repositoryName - 02: nome de classe
      * @return array Adianti
      */
-    public function selectByTCriteriaCount( TCriteria $criteria)
+    public function selectByTCriteriaCount( ?TCriteria $criteria=null)
     {
         $result = $this->getDao()->selectByTCriteriaCount($criteria);
         return $result;
@@ -95,5 +95,5 @@ class TFormDinGenericController
     public function getCountByCriteria(TCriteria $criteria,bool $showDumpLogTela=false){
         $result = $this->getDao()->getCountByCriteria($criteria,$showDumpLogTela);
         return $result;
-    }    
+    }
 }//fim classe
