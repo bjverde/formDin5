@@ -722,4 +722,47 @@ class StringHelperTest extends TestCase
         $this->assertEquals('... oficial da portaria ministerial foi ...', $resultado);
         $this->assertStringNotContainsString('<', $resultado);
     }
+
+    public function testLimparTextoUtf8() {
+        $html = '<div class="alert">Aviso: <b>Publica&ccedil;&atilde;o &amp; Notifica&ccedil;&atilde;o</b></div>';
+        $resultado = StringHelper::limparTextoUtf8($html);
+        $this->assertEquals('Aviso: Publicação & Notificação', $resultado);
+    }
+
+    public function testCortaTexto_nuloOuVazio() {
+        $this->assertNull(StringHelper::cortaTexto(null));
+        $this->assertNull(StringHelper::cortaTexto(''));
+        $this->assertNull(StringHelper::cortaTexto('   '));
+    }
+
+    public function testCortaTexto_porPalavras() {
+        $texto = 'Um dois três quatro cinco seis sete oito nove dez';
+        $resultado = StringHelper::cortaTexto($texto, 4, true);
+        $this->assertEquals('Um dois três quatro ...', $resultado);
+    }
+
+    public function testCortaTexto_porPalavras_textoMenorQueLimite() {
+        $texto = 'Um dois três';
+        $resultado = StringHelper::cortaTexto($texto, 5, true);
+        $this->assertEquals('Um dois três', $resultado);
+    }
+
+    public function testCortaTexto_porCaracteres() {
+        $texto = 'Desenvolvimento em PHP';
+        $resultado = StringHelper::cortaTexto($texto, 15, false);
+        $this->assertEquals('Desenvolvimento...', $resultado);
+    }
+
+    public function testCortaTexto_comHtmlEntrada() {
+        $html = '<p>Este é um <b>texto longo com formatação</b> HTML para teste</p>';
+        $resultado = StringHelper::cortaTexto($html, 5, true);
+        $this->assertEquals('Este é um texto longo ...', $resultado);
+        $this->assertStringNotContainsString('<', $resultado);
+    }
+
+    public function testCortaTexto_sufixoCustomizado() {
+        $texto = 'Primeira segunda terceira quarta quinta';
+        $resultado = StringHelper::cortaTexto($texto, 3, true, ' [ver mais]');
+        $this->assertEquals('Primeira segunda terceira [ver mais]', $resultado);
+    }
 }
