@@ -579,17 +579,17 @@ class StringHelper
     }
 
     /**
-     * Corta um texto do início para o fim baseado em quantidade de palavras ou de caracteres,
+     * Corta um texto do início para o fim baseado em quantidade de caracteres ou de palavras,
      * adicionando reticências (...) caso o texto ultrapasse o limite.
      * Remove tags HTML e converte para UTF-8 normalizado.
      *
      * @param string|null $texto Texto original (puro ou com HTML).
-     * @param int $limite Quantidade máxima de palavras ou caracteres (default: 20).
-     * @param bool $porPalavras Se true, corta por quantidade de palavras; se false, por quantidade de caracteres (default: true).
+     * @param int $limite Quantidade máxima de caracteres ou palavras (default: 250).
+     * @param bool $porCaracteres Se true, corta por quantidade de caracteres; se false, por quantidade de palavras (default: true).
      * @param string $sufixo Sufixo adicionado caso o texto seja cortado (default: '...').
      * @return string|null Texto cortado ou null se a entrada for nula/vazia.
      */
-    public static function cortaTexto(?string $texto, int $limite = 20, bool $porPalavras = true, string $sufixo = '...'): ?string
+    public static function cortaTexto(?string $texto, int $limite = 250, bool $porCaracteres = true, string $sufixo = '...'): ?string
     {
         $texto = self::limparTextoUtf8($texto);
         if ($texto === '') {
@@ -599,27 +599,27 @@ class StringHelper
         $limite = max(1, $limite);
         $sufixoLimpo = trim($sufixo);
 
-        // 1. Corte por quantidade de palavras
-        if ($porPalavras) {
-            $palavras = preg_split('/\s+/u', $texto, -1, PREG_SPLIT_NO_EMPTY);
-            $totalPalavras = count($palavras);
-
-            if ($totalPalavras <= $limite) {
+        // 1. Corte por quantidade de caracteres (default)
+        if ($porCaracteres) {
+            $totalCaracteres = mb_strlen($texto, 'UTF-8');
+            if ($totalCaracteres <= $limite) {
                 return $texto;
             }
 
-            $trechoArray = array_slice($palavras, 0, $limite);
-            return implode(' ', $trechoArray) . ($sufixoLimpo !== '' ? ' ' . $sufixoLimpo : '');
+            $trecho = mb_substr($texto, 0, $limite, 'UTF-8');
+            return trim($trecho) . ($sufixoLimpo !== '' ? $sufixoLimpo : '');
         }
 
-        // 2. Corte por quantidade de caracteres
-        $totalCaracteres = mb_strlen($texto, 'UTF-8');
-        if ($totalCaracteres <= $limite) {
+        // 2. Corte por quantidade de palavras
+        $palavras = preg_split('/\s+/u', $texto, -1, PREG_SPLIT_NO_EMPTY);
+        $totalPalavras = count($palavras);
+
+        if ($totalPalavras <= $limite) {
             return $texto;
         }
 
-        $trecho = mb_substr($texto, 0, $limite, 'UTF-8');
-        return trim($trecho) . ($sufixoLimpo !== '' ? $sufixoLimpo : '');
+        $trechoArray = array_slice($palavras, 0, $limite);
+        return implode(' ', $trechoArray) . ($sufixoLimpo !== '' ? ' ' . $sufixoLimpo : '');
     }
 
     /**

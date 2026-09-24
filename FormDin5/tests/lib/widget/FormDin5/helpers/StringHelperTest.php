@@ -735,34 +735,47 @@ class StringHelperTest extends TestCase
         $this->assertNull(StringHelper::cortaTexto('   '));
     }
 
+    public function testCortaTexto_porCaracteresDefault() {
+        $texto = 'Desenvolvimento em PHP com FormDin5';
+        $resultado = StringHelper::cortaTexto($texto, 15);
+        $this->assertEquals('Desenvolvimento...', $resultado);
+    }
+
+    public function testCortaTexto_porCaracteres_menorQueLimite() {
+        $texto = 'Texto curto';
+        $resultado = StringHelper::cortaTexto($texto);
+        $this->assertEquals('Texto curto', $resultado);
+    }
+
     public function testCortaTexto_porPalavras() {
         $texto = 'Um dois três quatro cinco seis sete oito nove dez';
-        $resultado = StringHelper::cortaTexto($texto, 4, true);
+        $resultado = StringHelper::cortaTexto($texto, 4, false);
         $this->assertEquals('Um dois três quatro ...', $resultado);
     }
 
     public function testCortaTexto_porPalavras_textoMenorQueLimite() {
         $texto = 'Um dois três';
-        $resultado = StringHelper::cortaTexto($texto, 5, true);
+        $resultado = StringHelper::cortaTexto($texto, 5, false);
         $this->assertEquals('Um dois três', $resultado);
-    }
-
-    public function testCortaTexto_porCaracteres() {
-        $texto = 'Desenvolvimento em PHP';
-        $resultado = StringHelper::cortaTexto($texto, 15, false);
-        $this->assertEquals('Desenvolvimento...', $resultado);
     }
 
     public function testCortaTexto_comHtmlEntrada() {
         $html = '<p>Este é um <b>texto longo com formatação</b> HTML para teste</p>';
-        $resultado = StringHelper::cortaTexto($html, 5, true);
+        $resultado = StringHelper::cortaTexto($html, 5, false);
         $this->assertEquals('Este é um texto longo ...', $resultado);
         $this->assertStringNotContainsString('<', $resultado);
     }
 
     public function testCortaTexto_sufixoCustomizado() {
         $texto = 'Primeira segunda terceira quarta quinta';
-        $resultado = StringHelper::cortaTexto($texto, 3, true, ' [ver mais]');
+        $resultado = StringHelper::cortaTexto($texto, 3, false, ' [ver mais]');
         $this->assertEquals('Primeira segunda terceira [ver mais]', $resultado);
+    }
+
+    public function testCortaTexto_limitePadrao250() {
+        $textoLongo = str_repeat('ABCDEFGHIJ ', 30); // 330 caracteres
+        $resultado = StringHelper::cortaTexto($textoLongo);
+        $this->assertEquals(253, mb_strlen($resultado, 'UTF-8')); // 250 chars + '...'
+        $this->assertStringEndsWith('...', $resultado);
     }
 }
