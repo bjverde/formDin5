@@ -397,5 +397,129 @@ class HtmlHelper
         );
         return $listPaises;
     }
+
+    /**
+     * Destaca (realça) palavras ou termos de pesquisa dentro de um texto com tags HTML.
+     * Sanitiza o texto contra XSS garantindo segurança.
+     *
+     * @param string|null $texto Texto onde as palavras serão destacadas.
+     * @param string|array|null $palavrasPesquisa Palavra, termo ou lista de termos a destacar.
+     * @param string $tag Tag HTML a ser utilizada para o destaque (default: 'mark').
+     * @param string $classeCss Classe CSS opcional para a tag HTML (default: '').
+     * @return string O texto em HTML com as palavras destacadas e sanitizado contra XSS.
+     */
+    public static function highlight(?string $texto, $palavrasPesquisa = [], string $tag = 'mark', string $classeCss = ''): string
+    {
+        if ($texto === null || $texto === '') {
+            return '';
+        }
+
+        $texto = StringHelper::str2utf8((string) $texto);
+        if (class_exists('Normalizer')) {
+            $norm = Normalizer::normalize($texto, Normalizer::FORM_C);
+            $texto = $norm !== false ? $norm : $texto;
+        }
+
+        $textoEscapado = htmlspecialchars($texto, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        $termos = [];
+        if (is_array($palavrasPesquisa)) {
+            foreach ($palavrasPesquisa as $termo) {
+                if (is_string($termo) && trim($termo) !== '') {
+                    $termos[] = trim($termo);
+                }
+            }
+        } elseif (is_string($palavrasPesquisa) && trim($palavrasPesquisa) !== '') {
+            $termos[] = trim($palavrasPesquisa);
+        }
+
+        if (empty($termos)) {
+            return $textoEscapado;
+        }
+
+        $termosNormalizados = [];
+        foreach ($termos as $termo) {
+            $tNorm = StringHelper::str2utf8($termo);
+            if (class_exists('Normalizer')) {
+                $normT = Normalizer::normalize($tNorm, Normalizer::FORM_C);
+                $tNorm = $normT !== false ? $normT : $tNorm;
+            }
+            $tNorm = trim($tNorm);
+            if ($tNorm !== '') {
+                $termosNormalizados[] = htmlspecialchars($tNorm, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            }
+        }
+
+        $termosNormalizados = array_unique($termosNormalizados);
+        if (empty($termosNormalizados)) {
+            return $textoEscapado;
+        }
+
+        // Ordena por tamanho decrescente para priorizar termos mais longos/frases
+        usort($termosNormalizados, function ($a, $b) {
+            return mb_strlen($b, 'UTF-8') <=> mb_strlen($a, 'UTF-8');
+        });
+
+        $quotedWords = array_map(function ($word) {
+            return preg_quote($word, '/');
+        }, $termosNormalizados);
+
+        $pattern = '/(' . implode('|', $quotedWords) . ')/iu';
+        $tagSanitizada = preg_replace('/[^a-zA-Z0-9_-]/', '', $tag);
+        if (empty($tagSanitizada)) {
+            $tagSanitizada = 'mark';
+        }
+
+        $classAttr = !empty($classeCss) ? ' class="' . htmlspecialchars($classeCss, ENT_QUOTES, 'UTF-8') . '"' : '';
+        $replace = "<{$tagSanitizada}{$classAttr}>$1</{$tagSanitizada}>";
+
+        return preg_replace($pattern, $replace, $textoEscapado) ?? $textoEscapado;
+    }
+
+    /**
+     * Extrai um trecho do texto em torno das palavras pesquisadas e aplica destaque HTML.
+     * Método completo que integra a extração (StringHelper::extrairTrecho) com o destaque (HtmlHelper::highlight).
+     *
+     * @param string|null $texto Texto original completo.
+     * @param string|array|null $palavrasPesquisa Palavra ou lista de palavras a pesquisar.
+     * @param int $palavrasAntesDepois Quantidade de palavras antes e depois do termo (default: 10).
+     * @param string|null $fraseExata Frase exata para busca prioritária (opcional).
+     * @param string $tag Tag HTML a ser utilizada para o destaque (default: 'mark').
+     * @param string $classeCss Classe CSS opcional para a tag HTML (default: '').
+     * @return string HTML com o trecho extraído e termos destacados.
+     */
+    public static function highlightTexto(
+        ?string $texto,
+        $palavrasPesquisa = [],
+        int $palavrasAntesDepois = 10,
+        ?string $fraseExata = null,
+        string $tag = 'mark',
+        string $classeCss = ''
+    ): string {
+        if ($texto === null || trim($texto) === '') {
+            return '';
+        }
+
+        $trecho = StringHelper::extrairTrecho($texto, $palavrasPesquisa, $palavrasAntesDepois, $fraseExata);
+        if ($trecho === null || $trecho === '') {
+            return '';
+        }
+
+        $termos = [];
+        if ($fraseExata !== null && trim($fraseExata) !== '') {
+            $termos[] = trim($fraseExata);
+        }
+        if (is_array($palavrasPesquisa)) {
+            foreach ($palavrasPesquisa as $p) {
+                if (is_string($p) && trim($p) !== '') {
+                    $termos[] = trim($p);
+                }
+            }
+        } elseif (is_string($palavrasPesquisa) && trim($palavrasPesquisa) !== '') {
+            $termos[] = trim($palavrasPesquisa);
+        }
+
+        return self::highlight($trecho, array_unique($termos), $tag, $classeCss);
+    }
 }
 ?>
