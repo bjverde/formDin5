@@ -118,7 +118,7 @@ class StringHelper
      * garantindo que caracteres acentuados compostos (ex.: 'á' U+00E1)
      * e decompostos (ex.: 'a' + '´' U+0061 U+0301) sejam comparáveis
      * com mb_stripos e preg_match. Se a extensão intl não estiver
-     * disponível, retorna o texto original sem alterações.
+     * disponível, registra no log de erro e retorna o texto original sem alterações.
      *
      * @param string $texto
      * @return string
@@ -126,6 +126,7 @@ class StringHelper
     public static function normalizarUnicode(string $texto): string
     {
         if (!class_exists('Normalizer')) {
+            error_log('[FormDin5][StringHelper::normalizarUnicode] A extensão PHP "intl" (Normalizer) não está instalada ou habilitada. Recomenda-se instalá-la para normalização Unicode adequada.');
             return $texto;
         }
         $normalizado = Normalizer::normalize($texto, Normalizer::FORM_C);
