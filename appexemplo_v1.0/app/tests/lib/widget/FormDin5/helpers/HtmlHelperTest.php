@@ -171,4 +171,48 @@ class HtmlHelperTest extends TestCase
         $resultado = HtmlHelper::highlightTexto($texto, [], 2, 'portaria ministerial');
         $this->assertEquals('... sobre a <mark>portaria ministerial</mark> número cem ...', $resultado);
     }
+
+    public function testHighlightHtml_naoAlteraAtributosHtml() {
+        $html = '<div class="portaria"><a href="http://site.com/portaria">Texto da portaria</a></div>';
+        $resultado = HtmlHelper::highlightHtml($html, 'portaria');
+        $this->assertStringContainsString('class="portaria"', $resultado);
+        $this->assertStringContainsString('href="http://site.com/portaria"', $resultado);
+        $this->assertStringContainsString('Texto da <mark>portaria</mark>', $resultado);
+    }
+
+    public function testHighlightTexto_cenario1LimpoComHtmlEntrada() {
+        $html = '<div class="card"><p>O documento <b>oficial</b> sobre a portaria ministerial foi publicado</p></div>';
+        $resultado = HtmlHelper::highlightTexto($html, 'portaria', 2);
+        $this->assertStringNotContainsString('<div', $resultado);
+        $this->assertStringNotContainsString('<p', $resultado);
+        $this->assertEquals('... sobre a <mark>portaria</mark> ministerial foi ...', $resultado);
+    }
+
+    public function testHighlightTextoHtml_cenario2PreservaHtml() {
+        $html = '<p>Primeira parte com <b>texto oficial</b> sobre a <i>portaria ministerial</i> número cem de teste</p>';
+        $resultado = HtmlHelper::highlightTextoHtml($html, 'portaria', 2);
+        $this->assertStringContainsString('<mark>portaria</mark>', $resultado);
+        $this->assertStringContainsString('<i>', $resultado);
+        $this->assertStringContainsString('</i>', $resultado);
+    }
+
+    public function testBalancearTagsHtml() {
+        $htmlIncompleto = '<div class="alerta"><p>Texto com <b>negrito';
+        $resultado = HtmlHelper::balancearTagsHtml($htmlIncompleto);
+        $this->assertEquals('<div class="alerta"><p>Texto com <b>negrito</b></p></div>', $resultado);
+    }
+
+    public function testBalancearTagsHtml_comVoidTags() {
+        $htmlComImg = '<p>Imagem: <img src="foto.jpg"><br>Legenda';
+        $resultado = HtmlHelper::balancearTagsHtml($htmlComImg);
+        $this->assertEquals('<p>Imagem: <img src="foto.jpg"><br>Legenda</p>', $resultado);
+    }
+
+    public function testExtrairTrechoHtml_preservaTagsHtml() {
+        $html = '<p>Primeira parte com <b>texto em negrito</b> sobre a <i>portaria ministerial</i> número cem de teste</p>';
+        $resultado = HtmlHelper::extrairTrechoHtml($html, 'portaria', 2);
+        $this->assertStringContainsString('portaria', $resultado);
+        $this->assertStringContainsString('<i>', $resultado);
+        $this->assertStringContainsString('</i>', $resultado);
+    }
 }
