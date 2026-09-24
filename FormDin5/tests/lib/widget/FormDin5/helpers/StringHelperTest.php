@@ -695,4 +695,24 @@ class StringHelperTest extends TestCase
         $resultado = StringHelper::extrairTrecho($texto, 'pequeno', 10);
         $this->assertEquals('Texto pequeno', $resultado);
     }
+
+    public function testNormalizarUnicode_vazio() {
+        $this->assertEquals('', StringHelper::normalizarUnicode(''));
+    }
+
+    public function testNormalizarUnicode_nfdParaNfc() {
+        if (!class_exists('Normalizer')) {
+            $this->markTestSkipped('Extensão intl (Normalizer) não disponível');
+        }
+        // 'á' em NFD (U+0061 + U+0301)
+        $nfd = Normalizer::normalize('á', Normalizer::FORM_D);
+        $this->assertNotEquals('á', $nfd); // em bytes/pontos de código NFD difere de NFC
+        $resultado = StringHelper::normalizarUnicode($nfd);
+        $this->assertEquals('á', $resultado);
+    }
+
+    public function testNormalizarUnicode_preservaTextoComum() {
+        $texto = 'Portaria Ministerial de Eleição';
+        $this->assertEquals($texto, StringHelper::normalizarUnicode($texto));
+    }
 }

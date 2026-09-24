@@ -415,10 +415,7 @@ class HtmlHelper
         }
 
         $texto = StringHelper::str2utf8((string) $texto);
-        if (class_exists('Normalizer')) {
-            $norm = Normalizer::normalize($texto, Normalizer::FORM_C);
-            $texto = $norm !== false ? $norm : $texto;
-        }
+        $texto = StringHelper::normalizarUnicode($texto);
 
         $textoEscapado = htmlspecialchars($texto, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
@@ -440,11 +437,7 @@ class HtmlHelper
         $termosNormalizados = [];
         foreach ($termos as $termo) {
             $tNorm = StringHelper::str2utf8($termo);
-            if (class_exists('Normalizer')) {
-                $normT = Normalizer::normalize($tNorm, Normalizer::FORM_C);
-                $tNorm = $normT !== false ? $normT : $tNorm;
-            }
-            $tNorm = trim($tNorm);
+            $tNorm = trim(StringHelper::normalizarUnicode($tNorm));
             if ($tNorm !== '') {
                 $termosNormalizados[] = htmlspecialchars($tNorm, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             }

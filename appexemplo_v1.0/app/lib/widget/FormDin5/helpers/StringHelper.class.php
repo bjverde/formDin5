@@ -114,6 +114,25 @@ class StringHelper
     }
 
     /**
+     * Normaliza uma string para NFC (Unicode Normalization Form C),
+     * garantindo que caracteres acentuados compostos (ex.: 'á' U+00E1)
+     * e decompostos (ex.: 'a' + '´' U+0061 U+0301) sejam comparáveis
+     * com mb_stripos e preg_match. Se a extensão intl não estiver
+     * disponível, retorna o texto original sem alterações.
+     *
+     * @param string $texto
+     * @return string
+     */
+    public static function normalizarUnicode(string $texto): string
+    {
+        if (!class_exists('Normalizer')) {
+            return $texto;
+        }
+        $normalizado = Normalizer::normalize($texto, Normalizer::FORM_C);
+        return $normalizado === false ? $texto : $normalizado;
+    }
+
+    /**
      * Converte uma string para outro encoding usando MB 
      *
      * @param string $string        01 - string que será convertida
@@ -554,10 +573,7 @@ class StringHelper
 
         $texto = str_replace('\\', '', $texto);
         $texto = self::str2utf8($texto);
-        if (class_exists('Normalizer')) {
-            $norm = Normalizer::normalize($texto, Normalizer::FORM_C);
-            $texto = $norm !== false ? $norm : $texto;
-        }
+        $texto = self::normalizarUnicode($texto);
 
         $palavrasAntesDepois = max(0, $palavrasAntesDepois);
 
@@ -574,11 +590,7 @@ class StringHelper
         // 1. Busca por frase exata (se informada)
         if ($fraseExata !== null && trim($fraseExata) !== '') {
             $fraseExataNorm = self::str2utf8($fraseExata);
-            if (class_exists('Normalizer')) {
-                $normFrase = Normalizer::normalize($fraseExataNorm, Normalizer::FORM_C);
-                $fraseExataNorm = $normFrase !== false ? $normFrase : $fraseExataNorm;
-            }
-            $fraseExataNorm = trim($fraseExataNorm);
+            $fraseExataNorm = trim(self::normalizarUnicode($fraseExataNorm));
 
             $posChar = mb_stripos($texto, $fraseExataNorm, 0, 'UTF-8');
             if ($posChar !== false) {
@@ -606,11 +618,7 @@ class StringHelper
                     continue;
                 }
                 $termoNorm = self::str2utf8($termo);
-                if (class_exists('Normalizer')) {
-                    $normTermo = Normalizer::normalize($termoNorm, Normalizer::FORM_C);
-                    $termoNorm = $normTermo !== false ? $normTermo : $termoNorm;
-                }
-                $termoNorm = trim($termoNorm);
+                $termoNorm = trim(self::normalizarUnicode($termoNorm));
 
                 $posChar = mb_stripos($texto, $termoNorm, 0, 'UTF-8');
                 if ($posChar !== false) {
