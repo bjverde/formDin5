@@ -535,4 +535,112 @@ class StringHelper
         $string = preg_replace('/[-]/', '_', $string);
         return $string;
     }
+
+    /**
+     * Extrai um trecho do texto em torno de uma palavra, lista de palavras ou frase exata de pesquisa.
+     * Converte o texto para UTF-8 e normaliza caracteres Unicode.
+     *
+     * @param string|null $texto Texto de onde o trecho será extraído.
+     * @param string|array|null $palavrasPesquisa Palavra ou array de palavras a pesquisar.
+     * @param int $palavrasAntesDepois Quantidade de palavras antes e depois do termo localizado (default: 10).
+     * @param string|null $fraseExata Frase exata para busca prioritária (opcional).
+     * @return string|null Trecho extraído com reticências (...) ou null se o texto for nulo/vazio.
+     */
+    public static function extrairTrecho(?string $texto, $palavrasPesquisa = [], int $palavrasAntesDepois = 10, ?string $fraseExata = null): ?string
+    {
+        if ($texto === null || trim($texto) === '') {
+            return null;
+        }
+
+        $texto = str_replace('\\', '', $texto);
+        $texto = self::str2utf8($texto);
+        if (class_exists('Normalizer')) {
+            $norm = Normalizer::normalize($texto, Normalizer::FORM_C);
+            $texto = $norm !== false ? $norm : $texto;
+        }
+
+        $palavrasAntesDepois = max(0, $palavrasAntesDepois);
+
+        // Divide o texto em palavras preservando separadores unicode
+        $palavras = preg_split('/\s+/u', trim($texto), -1, PREG_SPLIT_NO_EMPTY);
+        if (empty($palavras)) {
+            return null;
+        }
+
+        $totalPalavras = count($palavras);
+        $indiceInicioMatch = null;
+        $tamanhoMatch = 1;
+
+        // 1. Busca por frase exata (se informada)
+        if ($fraseExata !== null && trim($fraseExata) !== '') {
+            $fraseExataNorm = self::str2utf8($fraseExata);
+            if (class_exists('Normalizer')) {
+                $normFrase = Normalizer::normalize($fraseExataNorm, Normalizer::FORM_C);
+                $fraseExataNorm = $normFrase !== false ? $normFrase : $fraseExataNorm;
+            }
+            $fraseExataNorm = trim($fraseExataNorm);
+
+            $posChar = mb_stripos($texto, $fraseExataNorm, 0, 'UTF-8');
+            if ($posChar !== false) {
+                // Descobre em qual índice de palavra a frase exata começa
+                $textoAntes = mb_substr($texto, 0, $posChar, 'UTF-8');
+                $palavrasAntes = preg_split('/\s+/u', trim($textoAntes), -1, PREG_SPLIT_NO_EMPTY);
+                $indiceInicioMatch = empty($textoAntes) || empty($palavrasAntes) ? 0 : count($palavrasAntes);
+
+                $palavrasFrase = preg_split('/\s+/u', $fraseExataNorm, -1, PREG_SPLIT_NO_EMPTY);
+                $tamanhoMatch = max(1, count($palavrasFrase));
+            }
+        }
+
+        // 2. Se não encontrou por frase exata, busca pelas palavras de pesquisa
+        if ($indiceInicioMatch === null) {
+            $listaTermos = [];
+            if (is_array($palavrasPesquisa)) {
+                $listaTermos = $palavrasPesquisa;
+            } elseif (is_string($palavrasPesquisa) && trim($palavrasPesquisa) !== '') {
+                $listaTermos = [$palavrasPesquisa];
+            }
+
+            foreach ($listaTermos as $termo) {
+                if (!is_string($termo) || trim($termo) === '') {
+                    continue;
+                }
+                $termoNorm = self::str2utf8($termo);
+                if (class_exists('Normalizer')) {
+                    $normTermo = Normalizer::normalize($termoNorm, Normalizer::FORM_C);
+                    $termoNorm = $normTermo !== false ? $normTermo : $termoNorm;
+                }
+                $termoNorm = trim($termoNorm);
+
+                $posChar = mb_stripos($texto, $termoNorm, 0, 'UTF-8');
+                if ($posChar !== false) {
+                    $textoAntes = mb_substr($texto, 0, $posChar, 'UTF-8');
+                    $palavrasAntes = preg_split('/\s+/u', trim($textoAntes), -1, PREG_SPLIT_NO_EMPTY);
+                    $indiceInicioMatch = empty($textoAntes) || empty($palavrasAntes) ? 0 : count($palavrasAntes);
+                    $tamanhoMatch = 1;
+                    break;
+                }
+            }
+        }
+
+        // 3. Monta o trecho com base na janela de palavras antes e depois
+        if ($indiceInicioMatch !== null) {
+            $inicio = max(0, $indiceInicioMatch - $palavrasAntesDepois);
+            $fim = min($totalPalavras, $indiceInicioMatch + $tamanhoMatch + $palavrasAntesDepois);
+            $qtd = $fim - $inicio;
+
+            $trechoArray = array_slice($palavras, $inicio, $qtd);
+            $prefixo = ($inicio > 0) ? '... ' : '';
+            $sufixo = ($fim < $totalPalavras) ? ' ...' : '';
+
+            return $prefixo . implode(' ', $trechoArray) . $sufixo;
+        }
+
+        // Fallback: não encontrou termo ou busca vazia, retorna as primeiras palavras
+        $qtdPadrao = min($totalPalavras, max(1, $palavrasAntesDepois * 2));
+        $trechoArray = array_slice($palavras, 0, $qtdPadrao);
+        $sufixo = ($totalPalavras > $qtdPadrao) ? ' ...' : '';
+
+        return implode(' ', $trechoArray) . $sufixo;
+    }
 }
