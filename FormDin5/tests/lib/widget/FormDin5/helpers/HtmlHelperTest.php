@@ -122,4 +122,53 @@ class HtmlHelperTest extends TestCase
         $this->assertArrayHasKey('+55', $result);
         $this->assertEquals('+55 🇧🇷 Brasil', $result['+55']);
     }
+
+    public function testHighlight_nuloOuVazio() {
+        $this->assertEquals('', HtmlHelper::highlight(null));
+        $this->assertEquals('', HtmlHelper::highlight(''));
+    }
+
+    public function testHighlight_simples() {
+        $texto = 'O FormDin5 facilita o desenvolvimento em PHP';
+        $resultado = HtmlHelper::highlight($texto, 'FormDin5');
+        $this->assertEquals('O <mark>FormDin5</mark> facilita o desenvolvimento em PHP', $resultado);
+    }
+
+    public function testHighlight_preservaCaseOriginal() {
+        $texto = 'PORTARIA MINISTERIAL número 123';
+        $resultado = HtmlHelper::highlight($texto, ['portaria', 'ministerial']);
+        $this->assertEquals('<mark>PORTARIA</mark> <mark>MINISTERIAL</mark> número 123', $resultado);
+    }
+
+    public function testHighlight_tagCustomizadaEClasseCss() {
+        $texto = 'Texto com destaque especial';
+        $resultado = HtmlHelper::highlight($texto, 'especial', 'span', 'badge bg-warning');
+        $this->assertEquals('Texto com destaque <span class="badge bg-warning">especial</span>', $resultado);
+    }
+
+    public function testHighlight_protegeXss() {
+        $texto = 'Texto perigoso <script>alert("xss")</script> com termo';
+        $resultado = HtmlHelper::highlight($texto, 'termo');
+        $this->assertStringNotContainsString('<script>', $resultado);
+        $this->assertStringContainsString('&lt;script&gt;', $resultado);
+        $this->assertStringContainsString('<mark>termo</mark>', $resultado);
+    }
+
+    public function testHighlight_acentuacaoUtf8() {
+        $texto = 'Publicação de nova eleição para o órgão colegiado';
+        $resultado = HtmlHelper::highlight($texto, ['órgão', 'eleição']);
+        $this->assertEquals('Publicação de nova <mark>eleição</mark> para o <mark>órgão</mark> colegiado', $resultado);
+    }
+
+    public function testHighlightTexto_completo() {
+        $texto = 'O rato roeu a roupa do rei de Roma e fugiu rapidamente para a toca escondida no jardim';
+        $resultado = HtmlHelper::highlightTexto($texto, 'rei', 3);
+        $this->assertEquals('... a roupa do <mark>rei</mark> de Roma e ...', $resultado);
+    }
+
+    public function testHighlightTexto_fraseExata() {
+        $texto = 'Primeira parte do documento oficial com texto longo sobre a portaria ministerial número cem do ano corrente';
+        $resultado = HtmlHelper::highlightTexto($texto, [], 2, 'portaria ministerial');
+        $this->assertEquals('... sobre a <mark>portaria ministerial</mark> número cem ...', $resultado);
+    }
 }
