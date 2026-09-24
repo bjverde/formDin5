@@ -60,11 +60,11 @@
  * @author Reinaldo A. Barrêto Junior
  */ 
 class TFormDinIniFileHandler {
-    private $filePath;
-    private $iniData;
-    private $scannerMode;
+    private string $filePath;
+    private array $iniData;
+    private int $scannerMode;
 
-    public function __construct($filePath=null, $scannerMode=INI_SCANNER_NORMAL){
+    public function __construct(?string $filePath, ?int $scannerMode = INI_SCANNER_NORMAL){
         if( !empty($filePath) ){
             $this->setfilePath($filePath);
         }
@@ -82,11 +82,14 @@ class TFormDinIniFileHandler {
         }
     }
 
-    public function setfilePath($filePath){
+    public function setfilePath(string $filePath){
+        if (empty($filePath)) {
+            throw new InvalidArgumentException("Arquivo INI não informado");
+        }
         $this->filePath = $filePath;
         $this->load();
     }
-    public function getfilePath(){
+    public function getfilePath(): string{
         return $this->filePath;
     }
 
