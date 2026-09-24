@@ -557,6 +557,72 @@ class StringHelper
     }
 
     /**
+     * Limpa uma string removendo tags HTML, decodificando entidades,
+     * removendo barras invertidas, convertendo para UTF-8 e normalizando para Unicode NFC.
+     *
+     * @param string|null $texto Texto a ser limpo e normalizado.
+     * @return string Texto limpo em UTF-8 normalizado.
+     */
+    public static function limparTextoUtf8(?string $texto): string
+    {
+        if ($texto === null || $texto === '') {
+            return '';
+        }
+
+        $texto = strip_tags($texto);
+        $texto = html_entity_decode($texto, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $texto = str_replace('\\', '', $texto);
+        $texto = self::str2utf8($texto);
+        $texto = self::normalizarUnicode($texto);
+
+        return trim($texto);
+    }
+
+    /**
+     * Corta um texto do início para o fim baseado em quantidade de palavras ou de caracteres,
+     * adicionando reticências (...) caso o texto ultrapasse o limite.
+     * Remove tags HTML e converte para UTF-8 normalizado.
+     *
+     * @param string|null $texto Texto original (puro ou com HTML).
+     * @param int $limite Quantidade máxima de palavras ou caracteres (default: 20).
+     * @param bool $porPalavras Se true, corta por quantidade de palavras; se false, por quantidade de caracteres (default: true).
+     * @param string $sufixo Sufixo adicionado caso o texto seja cortado (default: '...').
+     * @return string|null Texto cortado ou null se a entrada for nula/vazia.
+     */
+    public static function cortaTexto(?string $texto, int $limite = 20, bool $porPalavras = true, string $sufixo = '...'): ?string
+    {
+        $texto = self::limparTextoUtf8($texto);
+        if ($texto === '') {
+            return null;
+        }
+
+        $limite = max(1, $limite);
+        $sufixoLimpo = trim($sufixo);
+
+        // 1. Corte por quantidade de palavras
+        if ($porPalavras) {
+            $palavras = preg_split('/\s+/u', $texto, -1, PREG_SPLIT_NO_EMPTY);
+            $totalPalavras = count($palavras);
+
+            if ($totalPalavras <= $limite) {
+                return $texto;
+            }
+
+            $trechoArray = array_slice($palavras, 0, $limite);
+            return implode(' ', $trechoArray) . ($sufixoLimpo !== '' ? ' ' . $sufixoLimpo : '');
+        }
+
+        // 2. Corte por quantidade de caracteres
+        $totalCaracteres = mb_strlen($texto, 'UTF-8');
+        if ($totalCaracteres <= $limite) {
+            return $texto;
+        }
+
+        $trecho = mb_substr($texto, 0, $limite, 'UTF-8');
+        return trim($trecho) . ($sufixoLimpo !== '' ? $sufixoLimpo : '');
+    }
+
+    /**
      * Extrai um trecho do texto em torno de uma palavra, lista de palavras ou frase exata de pesquisa.
      * Remove tags HTML e entidades para extrair texto limpo (Cenário 1: Texto Puro).
      * Converte o texto para UTF-8 e normaliza caracteres Unicode.
@@ -569,20 +635,15 @@ class StringHelper
      */
     public static function extrairTrecho(?string $texto, $palavrasPesquisa = [], int $palavrasAntesDepois = 10, ?string $fraseExata = null): ?string
     {
-        if ($texto === null || trim($texto) === '') {
+        $texto = self::limparTextoUtf8($texto);
+        if ($texto === '') {
             return null;
         }
-
-        $texto = strip_tags($texto);
-        $texto = html_entity_decode($texto, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $texto = str_replace('\\', '', $texto);
-        $texto = self::str2utf8($texto);
-        $texto = self::normalizarUnicode($texto);
 
         $palavrasAntesDepois = max(0, $palavrasAntesDepois);
 
         // Divide o texto em palavras preservando separadores unicode
-        $palavras = preg_split('/\s+/u', trim($texto), -1, PREG_SPLIT_NO_EMPTY);
+        $palavras = preg_split('/\s+/u', $texto, -1, PREG_SPLIT_NO_EMPTY);
         if (empty($palavras)) {
             return null;
         }
@@ -593,8 +654,7 @@ class StringHelper
 
         // 1. Busca por frase exata (se informada)
         if ($fraseExata !== null && trim($fraseExata) !== '') {
-            $fraseExataNorm = self::str2utf8($fraseExata);
-            $fraseExataNorm = trim(self::normalizarUnicode($fraseExataNorm));
+            $fraseExataNorm = self::limparTextoUtf8($fraseExata);
 
             $posChar = mb_stripos($texto, $fraseExataNorm, 0, 'UTF-8');
             if ($posChar !== false) {
@@ -621,8 +681,7 @@ class StringHelper
                 if (!is_string($termo) || trim($termo) === '') {
                     continue;
                 }
-                $termoNorm = self::str2utf8($termo);
-                $termoNorm = trim(self::normalizarUnicode($termoNorm));
+                $termoNorm = self::limparTextoUtf8($termo);
 
                 $posChar = mb_stripos($texto, $termoNorm, 0, 'UTF-8');
                 if ($posChar !== false) {
