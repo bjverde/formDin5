@@ -558,6 +558,7 @@ class StringHelper
 
     /**
      * Extrai um trecho do texto em torno de uma palavra, lista de palavras ou frase exata de pesquisa.
+     * Remove tags HTML e entidades para extrair texto limpo (Cenário 1: Texto Puro).
      * Converte o texto para UTF-8 e normaliza caracteres Unicode.
      *
      * @param string|null $texto Texto de onde o trecho será extraído.
@@ -572,6 +573,8 @@ class StringHelper
             return null;
         }
 
+        $texto = strip_tags($texto);
+        $texto = html_entity_decode($texto, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $texto = str_replace('\\', '', $texto);
         $texto = self::str2utf8($texto);
         $texto = self::normalizarUnicode($texto);

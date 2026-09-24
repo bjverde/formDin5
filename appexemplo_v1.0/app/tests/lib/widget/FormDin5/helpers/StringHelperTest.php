@@ -715,4 +715,11 @@ class StringHelperTest extends TestCase
         $texto = 'Portaria Ministerial de Eleição';
         $this->assertEquals($texto, StringHelper::normalizarUnicode($texto));
     }
+
+    public function testExtrairTrecho_removeTagsHtml() {
+        $textoHtml = '<p>O documento <strong>oficial</strong> da <i>portaria</i> ministerial foi publicado no diário</p>';
+        $resultado = StringHelper::extrairTrecho($textoHtml, 'portaria', 2);
+        $this->assertEquals('... oficial da portaria ministerial foi ...', $resultado);
+        $this->assertStringNotContainsString('<', $resultado);
+    }
 }
