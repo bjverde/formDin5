@@ -659,4 +659,40 @@ class StringHelperTest extends TestCase
         $this->assertEquals('1.234', StringHelper::numeroEua('1,234'));
         $this->assertEquals('1.23', StringHelper::numeroEua('1.234'));
     }
+
+    public function testExtrairTrecho_nuloOuVazio() {
+        $this->assertNull(StringHelper::extrairTrecho(null));
+        $this->assertNull(StringHelper::extrairTrecho(''));
+        $this->assertNull(StringHelper::extrairTrecho('   '));
+    }
+
+    public function testExtrairTrecho_termoNoMeio() {
+        $texto = 'O rato roeu a roupa do rei de Roma e fugiu rapidamente para a toca escondida no jardim';
+        $resultado = StringHelper::extrairTrecho($texto, 'rei', 3);
+        $this->assertEquals('... a roupa do rei de Roma e ...', $resultado);
+    }
+
+    public function testExtrairTrecho_fraseExata() {
+        $texto = 'Primeira parte do documento oficial com texto longo sobre a portaria ministerial número cem do ano corrente';
+        $resultado = StringHelper::extrairTrecho($texto, [], 2, 'portaria ministerial');
+        $this->assertEquals('... sobre a portaria ministerial número cem ...', $resultado);
+    }
+
+    public function testExtrairTrecho_arrayPalavrasUtf8() {
+        $texto = 'Declaração oficial sobre eleição e votação pública no tribunal regional eleitoral';
+        $resultado = StringHelper::extrairTrecho($texto, ['ELEIÇÃO', 'votação'], 2);
+        $this->assertEquals('... oficial sobre eleição e votação ...', $resultado);
+    }
+
+    public function testExtrairTrecho_termoNaoEncontrado() {
+        $texto = 'Texto com apenas algumas palavras simples aqui';
+        $resultado = StringHelper::extrairTrecho($texto, 'inexistente', 3);
+        $this->assertEquals('Texto com apenas algumas palavras simples ...', $resultado);
+    }
+
+    public function testExtrairTrecho_textoCurtoSemTruncamento() {
+        $texto = 'Texto pequeno';
+        $resultado = StringHelper::extrairTrecho($texto, 'pequeno', 10);
+        $this->assertEquals('Texto pequeno', $resultado);
+    }
 }
