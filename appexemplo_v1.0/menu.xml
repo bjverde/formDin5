@@ -130,6 +130,7 @@
                 <icon>fa:check-square fa-fw</icon>
                 <action>exe_NumberField</action>
             </menuitem>
+            <!--
             <menuitem label='Brasil'>
                 <icon>fa:flag fa-fw green</icon>
                 <menu>
@@ -147,6 +148,7 @@
                     </menuitem>            
                 </menu>
             </menuitem>
+            -->
             <menuitem label='Data e hora'>
                 <icon>fas:calendar-alt fa-fw</icon>
                 <menu>            
@@ -164,10 +166,12 @@
                     </menuitem>                    
                 </menu>
             </menuitem>
+            <!--
             <menuitem label='Select Diretorio/Pasta'>
                 <icon>fa:flag fa-fw</icon>
                 <action>comingSoonView</action>
-            </menuitem>            
+            </menuitem>
+            -->
             <menuitem label='Campo Senha'>
                 <icon>fas:key fa-key #FFD700</icon>
                 <action>exe_TPasswordField</action>
@@ -200,6 +204,7 @@
                         <icon>fa:cube fa-fw</icon>
                         <action>exe_GroupField01</action>
                     </menuitem>
+                    <!--
                     <menuitem label='Grupo 02 Combinados, ( Efeito Sanfona )'>
                         <icon>fa:cube fa-fw</icon>
                         <action>comingSoonView</action>
@@ -208,8 +213,10 @@
                         <icon>fa:cube fa-fw</icon>
                         <action>comingSoonView</action>
                     </menuitem>
+                    -->
                 </menu>
-            </menuitem>      
+            </menuitem>
+            <!--
             <menuitem label='Abas'>
                 <icon>fa:cube fa-fw</icon>
                 <menu>
@@ -252,6 +259,7 @@
                     </menuitem>
                 </menu>
             </menuitem>
+            -->
         </menu>
     </menuitem>
     <menuitem label='Mensagens e Ajuda'>
