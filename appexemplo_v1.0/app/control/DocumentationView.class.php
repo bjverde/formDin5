@@ -7,28 +7,18 @@
  * @subpackage tutor
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
- * @license    http://www.adianti.com.br/framework-license
+ * @license    https://adiantiframework.com.br/license-tutor
  */
-class DocumentationView extends TPage
+class DocumentationView extends TWindow
 {
     private $label;
     private $source;
-    protected $form; // registration form
     
     public function __construct()
     {
         // parent classs constructor
         parent::__construct();
-
-        $class = empty(TSession::getValue('classCode'))?'':TSession::getValue('classCode');
-        // creates form
-        $this->form = new BootstrapFormBuilder('form');
-        $this->form->setFormTitle('Source Code class: '.$class);
-
-        $objhtml  = new TElement('div');
-        $html = '<a href="index.php?class='.$class.'">Voltar para a Class:'.$class.'</a>';
-        $objhtml->add($html);
-        $this->form->addFields( [$objhtml]);
+        parent::setSize(0.95, 0.8);
         
         $config = AdiantiApplicationConfig::get();
         ini_set('highlight.comment', $config['highlight']['comment']);
@@ -44,15 +34,7 @@ class DocumentationView extends TPage
         $this->source = new TSourceCode;
         $this->source->generateRowNumbers();
         $wrapper->add($this->source);
-        //parent::add($wrapper);
-        $this->form->addContent([$wrapper]);
-
-        // wrap the page content using vertical box
-        $vbox = new TVBox;
-        $vbox->style = 'width:100%';
-        //$vbox->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
-        $vbox->add($this->form);
-        parent::add($vbox);
+        parent::add($wrapper);
     }
     
     /**
@@ -64,18 +46,26 @@ class DocumentationView extends TPage
         if (isset($param['classname']) AND $param['classname'])
         {
             $folder    = 'app/control';
-            $classname = TSession::getValue('classCode');
-            $list = new RecursiveDirectoryIterator($folder);
-            $it   = new RecursiveIteratorIterator($list,RecursiveIteratorIterator::SELF_FIRST);
-
-            foreach ($it as $entry){
-                if ( strpos($entry, $classname) !== false ) {
-                    $this->source->loadFile("$entry");
-                    return;
+            $classname = $param['classname'];
+            foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($folder),
+                                                   RecursiveIteratorIterator::SELF_FIRST) as $entry)
+            {
+                if (is_dir($entry))
+                {
+                    if (file_exists("{$entry}/{$classname}.class.php"))
+                    {
+                        $resource = str_replace('app/control', 'app/resources', "{$entry}/{$classname}.txt");
+                        $this->source->loadFile("{$entry}/{$classname}.class.php");
+                        parent::setTitle("{$entry}/{$classname}.class.php");
+                        return;
+                    }
                 }
             }
-        } else {
+        }
+        else
+        {
             $this->source->loadFile('index.php');
+            parent::setTitle('index.php');
         }
     }
 }
