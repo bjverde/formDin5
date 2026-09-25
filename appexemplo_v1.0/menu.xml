@@ -21,7 +21,8 @@
                                 <action>exe_TMemo</action>
                             </menuitem>          
                         </menu>
-                    </menuitem>            
+                    </menuitem>
+                    <!--
                     <menuitem label='Rico'>
                         <icon>fa:align-left fa-fw</icon>
                         <action>comingSoonView</action>
@@ -29,7 +30,8 @@
                     <menuitem label='Funções'>
                         <icon>fa:align-left fa-fw</icon>
                         <action>comingSoonView</action>
-                    </menuitem>          
+                    </menuitem>
+                    -->
                 </menu>
             </menuitem>            
             <menuitem label='HTML'>
@@ -280,10 +282,12 @@
                         <icon>fa:life-ring fa-fw</icon>
                         <action>exe_mensagemv2</action>
                     </menuitem>
+                    <!--
                     <menuitem label='Caixa de Confirmação'>
                         <icon>fa:life-ring fa-fw</icon>
                         <action>comingSoonView</action>
                     </menuitem>
+                    -->
                 </menu>
             </menuitem>
             <menuitem label='Ajuda'>
@@ -418,10 +422,12 @@
             </menuitem>
         </menu>        
     </menuitem>
+    <!--
     <menuitem label='Banco e PDO'>
         <icon>fas:database fa-fw</icon>
         <action>comingSoonView</action>
     </menuitem>
+    -->
     <menuitem label='Formulário'>
         <icon>far:edit fa-fw green</icon>
         <menu>
