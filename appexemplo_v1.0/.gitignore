@@ -39,7 +39,7 @@
 /app/control/CommonPage.php
 /app/control/MessageList.php
 /app/control/NotificationList.php
-/app/control/SearchBox.php
+!/app/control/SearchBox.php
 /app/control/SearchInputBox.php
 !/app/control/WelcomeView.php
 
