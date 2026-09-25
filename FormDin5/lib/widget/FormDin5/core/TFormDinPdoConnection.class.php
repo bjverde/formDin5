@@ -54,6 +54,11 @@ class TFormDinPdoConnection
     const DBMS_SQLITE   = 'sqlite';
     const DBMS_SQLSERVER= 'sqlsrv';
 
+    const DEBUG_TARGET_SCREEN = 'screen';
+    const DEBUG_TARGET_LOG    = 'log';
+    const DEBUG_DESTINO_TELA  = 'tela';
+    const DEBUG_DESTINO_LOG   = 'log';
+
     private $database = null;
     private $fech = null;
     private $case = null;
@@ -294,7 +299,7 @@ class TFormDinPdoConnection
         return $result;
     }
 
-    public function getDatabaseInfo()
+    public function getDatabaseInfo(string $debugDestino = self::DEBUG_DESTINO_TELA)
     {
         try {
             $configConnect = $this->getConfigConnect();
@@ -302,10 +307,44 @@ class TFormDinPdoConnection
             $db = $configConnect['db'];
             TTransaction::open($database, $db);
             $dbinfo = TConnection::getDatabaseInfo($database);
-            var_dump($dbinfo);
+            $this->outputDebug($dbinfo, $debugDestino, 'DATABASE INFO');
             TTransaction::close();
+            return $dbinfo;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Exibe ou grava em log informações de debug
+     *
+     * @param mixed $data Dados a serem exibidos (string ou array)
+     * @param string $debugDestino Destino do debug ('tela'/'screen' ou 'log')
+     * @param string|null $title Título opcional
+     * @return void
+     */
+    public function outputDebug($data, string $debugDestino = self::DEBUG_DESTINO_TELA, ?string $title = null)
+    {
+        $isLog = in_array(strtolower($debugDestino), ['log', 'php_log', 'error_log', self::DEBUG_TARGET_LOG]);
+        
+        $msg = '';
+        if (!empty($title)) {
+            $msg .= "=== {$title} ===" . PHP_EOL;
+        }
+        if (is_string($data)) {
+            $msg .= $data . PHP_EOL;
+        } else {
+            $msg .= print_r($data, true) . PHP_EOL;
+        }
+
+        if ($isLog) {
+            error_log($msg);
+        } else {
+            if (php_sapi_name() === 'cli') {
+                echo $msg;
+            } else {
+                echo '<pre>' . htmlspecialchars($msg) . '</pre>';
+            }
         }
     }
 
@@ -401,13 +440,28 @@ class TFormDinPdoConnection
      * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
      * se a operação foi bem sucedida.
      *
-     * @param string $sql      -1: string sql do comando
-     * @param array $arrParams -2: array com o valores para bind do sql
+     * @param string $sql           -1: string sql do comando
+     * @param array $arrParams      -2: array com o valores para bind do sql
+     * @param bool $showDebugParam  -3: mostra o valor de $sql e $arrParams
+     * @param bool $showInfo        -4: chama o getDatabaseInfo
+     * @param string $debugDestino  -5: destino do debug ('tela' ou 'log')
      * @return mixed
      */
-    public function executeSql($sql, $arrParams = null)
+    public function executeSql($sql, $arrParams = null, bool $showDebugParam = false, bool $showInfo = false, string $debugDestino = 'tela')
     {
         try {
+            if ($showInfo) {
+                $this->getDatabaseInfo($debugDestino);
+            }
+
+            if ($showDebugParam) {
+                $debugData = [
+                    'sql' => $sql,
+                    'arrParams' => $arrParams
+                ];
+                $this->outputDebug($debugData, $debugDestino, 'DEBUG PARAMETERS');
+            }
+
             $this->validarQtdParametros($sql, $arrParams);
             $arrParams = $this->prepareArray( $arrParams );
             $configConnect = $this->getConfigConnect();
