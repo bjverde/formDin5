@@ -9,6 +9,13 @@ return [
         'debug' => '1',
         'strict_request' => '0'
     ],
+    'highlight' => [
+        'comment' => '#808080',
+        'default' => '#FFFFFF',
+        'html' => '#C0C0C0',
+        'keyword' => '#62d3ea',
+        'string' => '#FFC472',
+    ],    
     'template' => [
         'navbar' => [
             'has_menu_mode_switch' => '1',
