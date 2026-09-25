@@ -550,6 +550,98 @@ class TFormDinPdoConnectionTest extends TestCase
         $affectedRows = $this->classTest->executeSql("delete from dado_apoio where tip_dado_apoio = 'DelTest'");
         $this->assertEquals(1, $affectedRows);
     }
+
+    public function testExecuteSql_showDebugParam_tela()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $sql = "select * from dado_apoio where seq_dado_apoio = ?";
+        $params = [1];
+        
+        ob_start();
+        $result = $this->classTest->executeSql($sql, $params, true, false, TFormDinPdoConnection::DEBUG_DESTINO_TELA);
+        $output = ob_get_clean();
+        
+        $this->assertIsArray($result);
+        $this->assertStringContainsString('DEBUG PARAMETERS', $output);
+        $this->assertStringContainsString('select * from dado_apoio', $output);
+        $this->assertStringContainsString('[0] => 1', $output);
+    }
+
+    public function testExecuteSql_showDebugParam_log()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $sql = "select * from dado_apoio where seq_dado_apoio = ?";
+        $params = [1];
+
+        $tempLog = tempnam(sys_get_temp_dir(), 'fd5_log_');
+        $oldErrorLog = ini_get('error_log');
+        ini_set('error_log', $tempLog);
+
+        try {
+            $result = $this->classTest->executeSql($sql, $params, true, false, TFormDinPdoConnection::DEBUG_DESTINO_LOG);
+            $logContent = file_get_contents($tempLog);
+        } finally {
+            ini_set('error_log', $oldErrorLog);
+            if (file_exists($tempLog)) {
+                @unlink($tempLog);
+            }
+        }
+
+        $this->assertIsArray($result);
+        $this->assertStringContainsString('DEBUG PARAMETERS', $logContent);
+        $this->assertStringContainsString('select * from dado_apoio', $logContent);
+    }
+
+    public function testExecuteSql_showInfo_tela()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setDatabase('dbapoio');
+        $sql = "select * from dado_apoio where seq_dado_apoio = 1";
+
+        ob_start();
+        $result = $this->classTest->executeSql($sql, null, false, true, TFormDinPdoConnection::DEBUG_TARGET_SCREEN);
+        $output = ob_get_clean();
+
+        $this->assertIsArray($result);
+        $this->assertStringContainsString('DATABASE INFO', $output);
+        $this->assertStringContainsString('type', $output);
+    }
+
+    public function testExecuteSql_showInfo_log()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+        $this->classTest->setDatabase('dbapoio');
+        $sql = "select * from dado_apoio where seq_dado_apoio = 1";
+
+        $tempLog = tempnam(sys_get_temp_dir(), 'fd5_log_');
+        $oldErrorLog = ini_get('error_log');
+        ini_set('error_log', $tempLog);
+
+        try {
+            $result = $this->classTest->executeSql($sql, null, false, true, TFormDinPdoConnection::DEBUG_TARGET_LOG);
+            $logContent = file_get_contents($tempLog);
+        } finally {
+            ini_set('error_log', $oldErrorLog);
+            if (file_exists($tempLog)) {
+                @unlink($tempLog);
+            }
+        }
+
+        $this->assertIsArray($result);
+        $this->assertStringContainsString('DATABASE INFO', $logContent);
+    }
+
+    public function testConstantsDebug()
+    {
+        $this->assertEquals('screen', TFormDinPdoConnection::DEBUG_TARGET_SCREEN);
+        $this->assertEquals('log', TFormDinPdoConnection::DEBUG_TARGET_LOG);
+        $this->assertEquals('tela', TFormDinPdoConnection::DEBUG_DESTINO_TELA);
+        $this->assertEquals('log', TFormDinPdoConnection::DEBUG_DESTINO_LOG);
+    }
 }
 
 class ApoioRecordConnectionTest extends TRecord
