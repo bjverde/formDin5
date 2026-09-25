@@ -5,7 +5,7 @@ return [
         'language' => 'pt',
         'application' => 'APPEV1',
         'title' => 'Exemplos FormDin5',
-        'theme' => 'adminbs5_v6',
+        'theme' => 'adminbs5',
         'debug' => '1',
         'strict_request' => '0'
     ],
