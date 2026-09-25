@@ -86,7 +86,7 @@
 /app/service/rest/
 /app/service/system/
 
-/app/templates/adminbs5/
+!/app/templates/adminbs5/
 /app/templates/adminbs5_t/
 /app/templates/adminbs5_v3/
 /app/templates/adminbs5_v4/
