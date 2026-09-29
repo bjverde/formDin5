@@ -476,8 +476,19 @@ class TFormDinPdoConnection
             $conn->setAttribute(PDO::ATTR_CASE, $case);
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
             
+            // No SQL Server o lastInsertId() do pdo_sqlsrv executa SELECT @@IDENTITY, que retorna
+            // o ultimo IDENTITY da sessão em qualquer escopo. Se a tabela tiver trigger (ex: auditoria)
+            // que insere em outra tabela com IDENTITY, o ID retornado é o da tabela de log.
+            // SCOPE_IDENTITY() precisa estar no mesmo batch do INSERT para ficar no mesmo escopo.
+            $isSqlServerInsert = ( $conn->getAttribute(PDO::ATTR_DRIVER_NAME) == self::DBMS_SQLSERVER )
+                              && ( preg_match( '/^insert/i', $sql ) > 0 );
+            $sqlExecute = $sql;
+            if ( $isSqlServerInsert ) {
+                $sqlExecute = rtrim($sql, " \t\n\r\0\x0B;").'; SELECT SCOPE_IDENTITY() AS last_inserted_id';
+            }
+
             //$stmt = $conn->query($sql);    // realiza a consulta
-            $stmt = $conn->prepare( $sql );
+            $stmt = $conn->prepare( $sqlExecute );
             $result = $stmt->execute( $arrParams );
 
             if ( $result ) {
@@ -485,6 +496,11 @@ class TFormDinPdoConnection
                 if ( preg_match( '/^select/i', $sql ) > 0 || preg_match( '/returning/i', $sql ) > 0 || preg_match( '/^with/i', $sql ) > 0  ) {
                     $result = $stmt->fetchall();
                     $result = $this->convertArrayResult($result);
+                }else if( $isSqlServerInsert ){
+                    // Avança pelos resultsets sem colunas (rowcount do INSERT e das triggers) até o do SCOPE_IDENTITY
+                    while ( $stmt->columnCount() == 0 && $stmt->nextRowset() ) {
+                    }
+                    $result = $stmt->fetchColumn();
                 }else if( preg_match( '/^insert/i', $sql ) > 0  ){
                     $result = $conn->lastInsertId();
                 }else if( preg_match( '/^update/i', $sql ) > 0  ){
