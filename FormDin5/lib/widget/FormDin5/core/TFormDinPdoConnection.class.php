@@ -88,7 +88,9 @@ class TFormDinPdoConnection
             $this->setDatabase($database);
             $arrParams = TConnection::getDatabaseInfo($database);
             $type = ArrayHelper::get($arrParams,'type');
-            $this->setDdms($type);
+            if(!empty($type)){
+                $this->setDdms($type);
+            }
         }
         $this->setOutputFormat($outputFormat);
         $this->setFech($fech);
