@@ -60,15 +60,15 @@
  * @author Reinaldo A. Barrêto Junior
  */ 
 class TFormDinIniFileHandler {
-    private string $filePath;
+    private ?string $filePath = null;
     private array $iniData;
     private int $scannerMode;
 
-    public function __construct(?string $filePath, ?int $scannerMode = INI_SCANNER_NORMAL){
+    public function __construct(?string $filePath = null, ?int $scannerMode = INI_SCANNER_NORMAL){
         if( !empty($filePath) ){
             $this->setfilePath($filePath);
         }
-        $this->scannerMode = $scannerMode;
+        $this->scannerMode = $scannerMode ?? INI_SCANNER_NORMAL;
     }
 
     private function load() {
@@ -89,7 +89,7 @@ class TFormDinIniFileHandler {
         $this->filePath = $filePath;
         $this->load();
     }
-    public function getfilePath(): string{
+    public function getfilePath(): ?string{
         return $this->filePath;
     }
 
