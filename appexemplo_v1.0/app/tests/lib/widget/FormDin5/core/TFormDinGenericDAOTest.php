@@ -36,7 +36,8 @@ class TFormDinGenericDAOTest extends TestCase
         $dao = new TFormDinGenericDAO('my_db');
 
         $this->assertEquals('my_db', $dao->getDatabase());
-        $this->assertNull($dao->getTPDOConnection());
+        $this->assertInstanceOf(TFormDinPdoConnection::class, $dao->getTPDOConnection());
+        $this->assertEquals('my_db', $dao->getTPDOConnection()->getDatabase());
     }
 
     public function testConstructWithDatabaseAndTPDOUsesGivenTPDO()
@@ -76,10 +77,11 @@ class TFormDinGenericDAOTest extends TestCase
 
     public function testConstructWithNullTpdo()
     {
-        // Cenário 1: $tpdo = null. getDatabase deve usar o banco informado e o tpdo interno deve ser null
+        // Cenário 1: $tpdo = null. getDatabase deve usar o banco informado e getTPDOConnection() inicializa a conexão sob demanda
         $dao = new TFormDinGenericDAO('dbapoio', 'MyRepository');
         $this->assertEquals('dbapoio', $dao->getDatabase());
-        $this->assertNull($dao->getTPDOConnection());
+        $this->assertInstanceOf(TFormDinPdoConnection::class, $dao->getTPDOConnection());
+        $this->assertEquals('dbapoio', $dao->getTPDOConnection()->getDatabase());
     }
 
     public function testConstructWithTpdoAndOmittedDatabase()
