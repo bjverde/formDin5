@@ -43,6 +43,16 @@ class dashboard extends TPage
         $this->form->addFields([TFormDinLabelField::getObjTLabel("Data venda de")],[$vc_dt_include_inicial]
                               ,[TFormDinLabelField::getObjTLabel("Data venda até")],[$vc_dt_include_final]);
 
+        // Mensagem com instruções para gerar o Private Token
+        $instruction = new TElement('div');
+        $instruction->class = 'alert alert-info';
+        $instruction->style = 'margin-bottom: 15px; font-size: 13px; line-height: 1.5;';
+        $instruction->add('Clique gerar para ver o dashboard.'
+                          );
+
+        $row_instruction = $this->form->addFields([$instruction]);
+        $row_instruction->layout = ['col-sm-12'];                              
+
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue(__CLASS__.'_filter_data') );
 
