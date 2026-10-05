@@ -93,7 +93,6 @@ class TFormDinSwitchTest extends TestCase
     public function test_UseButton()
     {
         $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'useButton');
-        $reflectionProperty->setAccessible(true);
 
         $adiantiObj = $this->classTest->getAdiantiObj();
         $useButton = $reflectionProperty->getValue($adiantiObj);
@@ -104,7 +103,6 @@ class TFormDinSwitchTest extends TestCase
     public function test_readOnly()
     {
         $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'editable');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setReadOnly(true);
         $readOnly = $this->classTest->getReadOnly();

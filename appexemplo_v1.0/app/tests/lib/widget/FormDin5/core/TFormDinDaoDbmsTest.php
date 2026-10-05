@@ -428,7 +428,6 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->classTest->setTableName('proc');
         
         $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
-        $ref->setAccessible(true);
         $ref->setValue($this->classTest, 'oracle');
         
         $this->classTest->loadFieldsOneStoredProcedureFromDatabase();
@@ -437,7 +436,6 @@ class TFormDinDaoDbmsTest extends TestCase
     public function testGetSqlToFieldsFromDatabase_Oracle()
     {
         $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
-        $ref->setAccessible(true);
         $ref->setValue($this->classTest, 'oracle');
         
         $this->classTest->setTableName('tbl');
@@ -448,7 +446,6 @@ class TFormDinDaoDbmsTest extends TestCase
     public function testGetSqlToFieldsFromDatabase_Firebird()
     {
         $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
-        $ref->setAccessible(true);
         $ref->setValue($this->classTest, 'ibase');
         
         $this->classTest->setTableName('tbl');
@@ -461,7 +458,6 @@ class TFormDinDaoDbmsTest extends TestCase
         $this->expectException(DomainException::class);
         
         $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
-        $ref->setAccessible(true);
         $ref->setValue($this->classTest, 'oracle');
         
         $this->classTest->setTableName('tbl');
@@ -473,7 +469,6 @@ class TFormDinDaoDbmsTest extends TestCase
         $dao = new TFormDinDaoDbmsSubclass('dado_apoio', TFormDinPdoConnection::DBMS_SQLITE, null, null, 'app/database/bdApoio.s3db');
         
         $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'conn');
-        $ref->setAccessible(true);
         $ref->setValue($dao, true);
 
         $schema = $dao->getSchema();
@@ -484,7 +479,6 @@ class TFormDinDaoDbmsTest extends TestCase
     {
         $this->expectException(DomainException::class);
         $ref = new \ReflectionProperty(TFormDinDaoDbms::class, 'type');
-        $ref->setAccessible(true);
         $ref->setValue($this->classTest, 'oracle');
         $this->classTest->loadSqlTablesFromDatabase();
     }

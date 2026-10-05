@@ -142,7 +142,6 @@ class TFormDinNumericFieldTest extends TestCase
     public function test_readOnly()
     {
         $reflectionProperty = new \ReflectionProperty(TNumeric::class, 'editable');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setReadOnly(true);
         $readOnly = $this->classTest->getReadOnly();

@@ -21,7 +21,6 @@ class TFormDinTextDisplayTest extends TestCase
     {
         $reflection = new ReflectionClass(get_class($obj));
         $property = $reflection->getProperty('value');
-        $property->setAccessible(true);
         return $property->getValue($obj);
     }
 

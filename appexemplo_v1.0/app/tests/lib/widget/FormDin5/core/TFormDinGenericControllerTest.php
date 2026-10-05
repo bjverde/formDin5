@@ -144,6 +144,6 @@ class DummyDAO extends TFormDinGenericDAO
     public function selectCount($where=null) { return 0; }
     public function selectAllPagination($orderBy=null, $where=null, $page=null, $rowsPerPage=null) { return []; }
     public function selectAll($orderBy=null, $where=null) { return []; }
-    public function selectByTCriteria(TCriteria $criteria=null) { return []; }
-    public function selectByTCriteriaCount(TCriteria $criteria=null) { return 0; }
+    public function selectByTCriteria(?TCriteria $criteria=null) { return []; }
+    public function selectByTCriteriaCount(?TCriteria $criteria=null) { return 0; }
 }

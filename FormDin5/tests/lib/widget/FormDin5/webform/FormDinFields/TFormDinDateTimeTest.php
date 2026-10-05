@@ -78,7 +78,6 @@ class TFormDinDateTimeTest extends TestCase
     public function test_readOnly()
     {
         $reflectionProperty = new \ReflectionProperty(TDateTime::class, 'editable');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setReadOnly(true);
         $readOnly = $this->classTest->getReadOnly();

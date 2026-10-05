@@ -473,13 +473,11 @@ class TFormDinGridTest extends TestCase
     {
         $reflection = new ReflectionClass(TFormDinGrid::class);
         $method = $reflection->getMethod('setDataGrid');
-        $method->setAccessible(true);
         
         $dataGrid = new TDataGrid();
         $method->invokeArgs($this->classTest, [$dataGrid]);
 
         $getMethod = $reflection->getMethod('getDataGrid');
-        $getMethod->setAccessible(true);
         $result = $getMethod->invokeArgs($this->classTest, []);
 
         $this->assertSame($dataGrid, $result);
@@ -491,7 +489,6 @@ class TFormDinGridTest extends TestCase
         
         $reflection = new ReflectionClass(TFormDinGrid::class);
         $method = $reflection->getMethod('setDataGrid');
-        $method->setAccessible(true);
         
         $method->invokeArgs($this->classTest, ['not_an_object']);
     }

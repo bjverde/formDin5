@@ -78,7 +78,6 @@ class TFormDinRadioTest extends TestCase
     public function test_readOnly()
     {
         $reflectionProperty = new \ReflectionProperty(TRadioGroup::class, 'editable');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setReadOnly(true);
         $readOnly = $this->classTest->getReadOnly();

@@ -76,7 +76,6 @@ class TFormDinMemoFieldTest extends TestCase
     public function test_readOnly()
     {
         $reflectionProperty = new \ReflectionProperty(TText::class, 'editable');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setReadOnly(true);
         $readOnly = $this->classTest->getReadOnly();

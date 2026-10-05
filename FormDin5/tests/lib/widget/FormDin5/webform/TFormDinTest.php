@@ -661,7 +661,6 @@ class TFormDinTest extends TestCase
     {
         $bootForm = new BootstrapFormBuilder('bootForm');
         $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'title');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setAdiantiObj($bootForm,'b1','title form');
         $adiantiObj = $this->classTest->getAdiantiObj();
@@ -686,7 +685,6 @@ class TFormDinTest extends TestCase
     public function testGetAdiantiObj2GetAdiantiObj2_2FieldText1Content(){
         $bootForm = new BootstrapFormBuilder('bootForm');
         $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'tabcontent');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setAdiantiObj( $bootForm );
 
@@ -749,7 +747,6 @@ class TFormDinTest extends TestCase
     public function testAddGroupField(){
         $bootForm = new BootstrapFormBuilder('bootForm');
         $reflectionProperty = new \ReflectionProperty(BootstrapFormBuilder::class, 'tabcontent');
-        $reflectionProperty->setAccessible(true);
 
         $this->classTest->setAdiantiObj( $bootForm );
         $this->classTest->addGroupField(null,'Grupo Texto');
@@ -1009,7 +1006,6 @@ class TFormDinTest extends TestCase
     public function testGetLabelField()
     {
         $ref = new \ReflectionMethod(TFormDin::class, 'getLabelField');
-        $ref->setAccessible(true);
         $label = $ref->invoke($this->classTest, 'My Label', true);
         $this->assertInstanceOf(TLabel::class, $label);
     }

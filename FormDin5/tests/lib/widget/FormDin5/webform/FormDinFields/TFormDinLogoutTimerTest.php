@@ -185,19 +185,15 @@ class TFormDinLogoutTimerTest extends TestCase
         $refObj = new ReflectionObject($this->classTest);
         
         $propColor = $refObj->getProperty('icon_color');
-        $propColor->setAccessible(true);
         $propColor->setValue($this->classTest, '#ffffff');
 
         $propSize = $refObj->getProperty('icon_size');
-        $propSize->setAccessible(true);
         $propSize->setValue($this->classTest, '2em');
 
         $propMargin = $refObj->getProperty('icon_margin');
-        $propMargin->setAccessible(true);
         $propMargin->setValue($this->classTest, '5px');
 
         $methodGetIconStyle = $refObj->getMethod('getIconStyle');
-        $methodGetIconStyle->setAccessible(true);
         $style = $methodGetIconStyle->invoke($this->classTest);
         
         $this->assertStringContainsString('color: #ffffff', $style);

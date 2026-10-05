@@ -355,7 +355,6 @@ class TFormDinPdoConnectionTest extends TestCase
     {   
         $reflection = new ReflectionClass(TFormDinPdoConnection::class);
         $property = $reflection->getProperty('type');
-        $property->setAccessible(true);
         $property->setValue($this->classTest, TFormDinPdoConnection::DBMS_ORACLE);
 
         $result = $this->classTest->getDefaulPort();
