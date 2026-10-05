@@ -127,7 +127,6 @@ class TFormDinRest {
         // Verifica se houve algum erro no cURL
         if (curl_errno($ch)) {
             $error_msg = curl_error($ch);
-            curl_close($ch);
             //var_dump("cURL error: " . $error_msg);
             throw new Exception("cURL error: " . $error_msg);
         }
@@ -137,7 +136,6 @@ class TFormDinRest {
         
         // Códigos HTTP de erro (4xx e 5xx)
         if ($httpCode >= 400) {
-            curl_close($ch);
             $errorMessage = "HTTP Error {$httpCode}";
             
             // Tenta decodificar a resposta de erro se for JSON
@@ -151,7 +149,6 @@ class TFormDinRest {
             throw new Exception($errorMessage);
         }
         
-        curl_close ($ch);
         return $output;
     }
 
