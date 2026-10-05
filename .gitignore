@@ -2,6 +2,16 @@
 # Ignore * all files in directories
 # Ignore **/ alll subdirectories 
 
+# Agent files
+/.agents/
+/.agent/
+/.claude/
+/.antigravity/
+/.gemini/
+/AGENTS.md
+/CLAUDE.md
+/GEMINI.md
+
 # VsCode files
 .vscode/
 
