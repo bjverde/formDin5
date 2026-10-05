@@ -107,9 +107,10 @@ class TFormDinGenericDAOTest extends TestCase
     {
         $dao = new TFormDinGenericDAO('dbapoio');
         ob_start();
-        $dao->getDatabaseInfo();
+        $info = $dao->getDatabaseInfo();
         $output = ob_get_clean();
         $this->assertNotEmpty($output);
+        $this->assertIsArray($info);
     }
 
     public function testGetDatabaseInfoException()
