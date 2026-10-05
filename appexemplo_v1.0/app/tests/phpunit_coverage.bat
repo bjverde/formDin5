@@ -13,7 +13,7 @@ REM d:\wamp64\bin\php\php8.3.28\php.exe d:\wamp64\bin\phpunit\phpunit-12.5.29.ph
 
 REM ---------------- 13.1.14 -------------------------
 ECHO PHP 8.5.0 and PHPUnit 13.1.14 Simples with Coverage
-d:\wamp64\bin\php\php8.5.0\php.exe d:\wamp64\bin\phpunit\phpunit-13.1.14.phar --coverage-html app\tests\phpunit-reports\code-coverage --testdox-html app\tests\phpunit-reports\code-report.html
+d:\wamp64\bin\php\php8.5.0\php.exe -d xdebug.mode=coverage d:\wamp64\bin\phpunit\phpunit-13.1.14.phar --coverage-html app\tests\phpunit-reports\code-coverage --testdox-html app\tests\phpunit-reports\code-report.html
 
 
 cd app\tests\
