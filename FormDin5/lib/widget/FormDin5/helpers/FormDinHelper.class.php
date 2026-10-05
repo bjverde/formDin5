@@ -197,7 +197,6 @@ class FormDinHelper
             $name =  $attribut->getName();
             if (array_key_exists($name, $bodyRequest)) {
                 $reflection = new \ReflectionProperty(get_class($vo), $name);
-                $reflection->setAccessible(true);
                 $reflection->setValue($vo, $bodyRequest[$name]);
                 //echo $bodyRequest[$name];
             }
@@ -223,7 +222,6 @@ class FormDinHelper
         foreach ($properties as $attribut) {
             $name =  $attribut->getName();
             $property = $class->getProperty($name);
-            $property->setAccessible(true);
             $arrayFormDin[strtoupper($name)][0] = $property->getValue($vo);
         }
         return $arrayFormDin;
