@@ -93,12 +93,13 @@ class TFormDinGenericDAO
     /**
      * Busca informações do banco de dados
      *
+     * @param string $debugDestino Destino do debug ('tela' ou 'log')
      * @return array
      */
-    public function getDatabaseInfo()
+    public function getDatabaseInfo(string $debugDestino = TFormDinPdoConnection::DEBUG_DESTINO_TELA)
     {
         $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
-        $this->getTPDOConnection()->getDatabaseInfo();
+        return $this->getTPDOConnection()->getDatabaseInfo($debugDestino);
     }
 
     /**
