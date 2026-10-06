@@ -103,20 +103,23 @@ class TFormDinGenericDAO
     }
 
     /**
-     * Executa comandos SQL e retorna os registros
+     * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
+     * se a operação foi bem sucedida.
      *
-     * @param string $sql
-     * @return mixed|null
+     * @param string $sql           -1: string sql do comando
+     * @param array $arrParams      -2: array com o valores para bind do sql
+     * @param bool $showDebugParam  -3: mostra o valor de $sql e $arrParams
+     * @param bool $showInfo        -4: chama o getDatabaseInfo
+     * @param string $debugDestino  -5: destino do debug ('tela' ou 'log')
+     * @return mixed
      */
-    public function executeSelect(string $sql)
+    public function executeSql($sql, $arrParams = null, bool $showDebugParam = false, bool $showInfo = false, string $debugDestino = 'tela')
     {
         try {
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             $tpdo = clone $this->getTPDOConnection();
-            $tpdo->setFech(PDO::FETCH_ASSOC);
-            $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
-            $tpdo->setCase(PDO::CASE_NATURAL);
-            return $tpdo->executeSql($sql);
+            $result = $tpdo->executeSql($sql, $arrParams, $showDebugParam, $showInfo, $debugDestino);
+            return $result;
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
@@ -125,18 +128,16 @@ class TFormDinGenericDAO
     /**
      * Executa comandos SQL
      *
+     * @deprecated Utilize executeSql() em seu lugar.
+     * @see TFormDinGenericDAO::executeSql()
+     *
      * @param string $sql
      * @param array $values
      * @return mixed|null
      */
     public function execute(string $sql, array $values)
     {
-        try {
-            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
-            return $this->getTPDOConnection()->executeSql($sql, $values);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
-        }
+        return $this->executeSql($sql, $values);
     }
 
 
