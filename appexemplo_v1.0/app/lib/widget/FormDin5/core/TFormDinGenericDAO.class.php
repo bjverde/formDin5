@@ -140,6 +140,26 @@ class TFormDinGenericDAO
         return $this->executeSql($sql, $values);
     }
 
+    /**
+     * Executa comandos SQL e retorna os registros
+     *
+     * @param string $sql
+     * @return array|null Array associativo (chave => valor)
+     */
+    public function executeSelect(string $sql)
+    {
+        try {
+            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
+            $tpdo = clone $this->getTPDOConnection();
+            $tpdo->setFech(PDO::FETCH_ASSOC);
+            $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
+            $tpdo->setCase(PDO::CASE_NATURAL);
+            return $tpdo->executeSql($sql);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
+        }
+    }    
+
 
     /**
      * Executa comandos SQL e retorna a quantidade de registros
