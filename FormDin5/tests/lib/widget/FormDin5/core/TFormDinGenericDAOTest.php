@@ -188,7 +188,8 @@ class TFormDinGenericDAOTest extends TestCase
 
         $this->assertIsArray($result);
         $this->assertCount(1, $result);
-        $this->assertEquals('1', $result[0]->seq_dado_apoio);
+        $this->assertIsArray($result[0]);
+        $this->assertEquals('1', $result[0]['SEQ_DADO_APOIO'] ?? $result[0]['seq_dado_apoio']);
     }
 
     public function testGetArrayByCriteriaException()
