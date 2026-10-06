@@ -48,7 +48,9 @@ class TFormDinGenericDAO
         //FormDinHelper::validateObjTypeTPDOConnectionObj($tpdo,__METHOD__,__LINE__);
         $this->tpdo = $tpdo;
         if (!empty($tpdo->getDatabase())) {
-            $this->setDatabase($tpdo->getDatabase());
+            $this->database = $tpdo->getDatabase();
+        } elseif (!empty($this->database)) {
+            $tpdo->setDatabase($this->database);
         }
     }
 
@@ -57,8 +59,11 @@ class TFormDinGenericDAO
      *
      * @return string|null
      */
-    public function getDatabase()
+    public function getDatabase(): string|null
     {
+        if ($this->tpdo !== null && !empty($this->tpdo->getDatabase())) {
+            $this->database = $this->tpdo->getDatabase();
+        }
         return $this->database;
     }
 
@@ -68,7 +73,7 @@ class TFormDinGenericDAO
      * @param string|null $database
      * @return void
      */
-    public function setDatabase(string|null $database)
+    public function setDatabase(string|null $database): void
     {
         $this->database = $database;
         if ($this->tpdo !== null && $database !== null) {
