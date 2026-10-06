@@ -59,8 +59,14 @@ class TFormDinGenericDAOTest extends TestCase
 
     public function testConstructAndGettersSetters()
     {
+        $currentDb = 'my_db';
         $tpdoMock = $this->createMock(TFormDinPdoConnection::class);
-        $tpdoMock->method('getDatabase')->willReturn('my_db');
+        $tpdoMock->method('getDatabase')->willReturnCallback(function() use (&$currentDb) {
+            return $currentDb;
+        });
+        $tpdoMock->method('setDatabase')->willReturnCallback(function($db) use (&$currentDb) {
+            $currentDb = $db;
+        });
 
         $dao = new TFormDinGenericDAO('my_db', 'MyRepository', $tpdoMock);
 
@@ -275,6 +281,15 @@ class TFormDinGenericDAOTest extends TestCase
         $result = $dao->getArrayKeyValueBySql('seq_dado_apoio', 'sig_dado_apoio', 'SELECT seq_dado_apoio, sig_dado_apoio FROM dado_apoio WHERE seq_dado_apoio = ?', [1]);
         $this->assertIsArray($result);
         $this->assertArrayHasKey(1, $result);
+    }
+
+    public function testChangingDatabaseOnTPDOUpdatesDAODatabase()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio');
+        $this->assertEquals('dbapoio', $dao->getDatabase());
+
+        $dao->getTPDOConnection()->setDatabase('novo_banco');
+        $this->assertEquals('novo_banco', $dao->getDatabase());
     }
 }
 
