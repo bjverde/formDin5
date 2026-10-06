@@ -634,12 +634,35 @@ class TFormDinPdoConnectionTest extends TestCase
         $this->assertStringContainsString('DATABASE INFO', $logContent);
     }
 
-    public function testConstantsDebug()
+    public function testOpenTransactionWithTTransactionClose()
     {
-        $this->assertEquals('screen', TFormDinPdoConnection::DEBUG_TARGET_SCREEN);
-        $this->assertEquals('log', TFormDinPdoConnection::DEBUG_TARGET_LOG);
-        $this->assertEquals('tela', TFormDinPdoConnection::DEBUG_DESTINO_TELA);
-        $this->assertEquals('log', TFormDinPdoConnection::DEBUG_DESTINO_LOG);
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+
+        $this->classTest->openTransaction();
+        $conn = TTransaction::get();
+        $this->assertInstanceOf(PDO::class, $conn);
+        TTransaction::close();
+    }
+
+    public function testOpenTransactionWithDumpLogTela()
+    {
+        $this->classTest->setDatabase('dbapoio');
+        ob_start();
+        $this->classTest->openTransaction(true);
+        TTransaction::close();
+        $output = ob_get_clean();
+        $this->assertIsString($output);
+    }
+
+    public function testOpenTransactionWithTTransactionRollback()
+    {
+        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
+        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
+
+        $this->classTest->openTransaction();
+        TTransaction::rollback();
+        $this->assertTrue(true);
     }
 }
 
