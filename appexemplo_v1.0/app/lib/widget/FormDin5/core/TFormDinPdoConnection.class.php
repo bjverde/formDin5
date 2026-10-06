@@ -554,40 +554,86 @@ class TFormDinPdoConnection
     }
 
     /**
+     * Abre a transação com as configurações da conexão atual (por arquivo INI/PHP ou array dinâmico)
+     *
+     * @param bool $showDumpLogTela Ativa dump de SQL na tela
+     * @return void
+     */
+    public function openTransaction(bool $showDumpLogTela = false): void
+    {
+        $configConnect = $this->getConfigConnect();
+        $database = $configConnect['database'];
+        $db = $configConnect['db'];
+
+        TTransaction::open($database, $db);
+        if ($showDumpLogTela) {
+            TTransaction::dump();
+            TTransaction::setLoggerFunction(function ($message) {
+                echo $message . '<br>';
+            });
+        }
+    }
+
+    /**
+     * Fecha a transação ativa
+     *
+     * @return void
+     */
+    public function closeTransaction(): void
+    {
+        TTransaction::close();
+    }
+
+    /**
+     * Desfaz a transação ativa em caso de erro
+     *
+     * @return void
+     */
+    public function rollbackTransaction(): void
+    {
+        try {
+            TTransaction::rollback();
+        } catch (Throwable $e) {
+            // Ignora se não houver transação ativa
+        }
+    }
+
+    /**
      * @codeCoverageIgnore
      * Faz um Select usando o TCriteria
-     * @param TCriteria $criteria    - 01: Obj TCriteria
-     * @param string $repositoryName - 02: nome de classe em app/model
+     *
+     * @deprecated Utilize TFormDinGenericDAO::getArrayByCriteria() ou TFormDinGenericDAO::getListObjByCriteria()
+     * @see TFormDinGenericDAO::getArrayByCriteria()
+     * @see TFormDinGenericDAO::getListObjByCriteria()
+     *
+     * @param TCriteria|null $criteria       - 01: Obj TCriteria
+     * @param string|null    $repositoryName - 02: nome de classe em app/model
+     * @param bool           $showDumpLogTela - 03: se exibe o log SQL na tela
      * @return array Adianti
      */    
     public function selectByTCriteria(?TCriteria $criteria=null, $repositoryName=null, bool $showDumpLogTela = false)
     {
         try {
-            $configConnect = $this->getConfigConnect();
-            $database = $configConnect['database'];
-            $db = $configConnect['db'];
-            
-            TTransaction::open($database,$db); // abre uma transação
-            if ($showDumpLogTela == true) {
-                TTransaction::dump();
-                TTransaction::setLoggerFunction(function ($message) {
-                    echo $message . '<br>';
-                });
-            }
+            $this->openTransaction($showDumpLogTela);
             $repository = new TRepository($repositoryName);
             $collections = $repository->load($criteria);
             $collections = $this->convertArrayResult($collections);
-            TTransaction::close();         // fecha a transação.
+            $this->closeTransaction();
             return $collections;
         }
         catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            $this->rollbackTransaction();
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
     /**
      * @codeCoverageIgnore
      * Faz um Select Count usando o TCriteria
+     *
+     * @deprecated Utilize TFormDinGenericDAO::getCountByCriteria()
+     * @see TFormDinGenericDAO::getCountByCriteria()
+     *
      * @param TCriteria|null $criteria       - 01: Obj TCriteria
      * @param string|null    $repositoryName  - 02: nome de classe
      * @param bool           $showDumpLogTela - 03: se exibe o log SQL na tela
@@ -596,23 +642,14 @@ class TFormDinPdoConnection
     public function selectByTCriteriaCount(?TCriteria $criteria = null, $repositoryName = null, bool $showDumpLogTela = false)
     {
         try {
-            $configConnect = $this->getConfigConnect();
-            $database = $configConnect['database'];
-            $db = $configConnect['db'];
-            
-            TTransaction::open($database, $db); // abre uma transação
-            if ($showDumpLogTela == true) {
-                TTransaction::dump();
-                TTransaction::setLoggerFunction(function ($message) {
-                    echo $message . '<br>';
-                });
-            }
+            $this->openTransaction($showDumpLogTela);
             $repository = new TRepository($repositoryName);
             $count = $repository->count($criteria);
-            TTransaction::close();         // fecha a transação.
+            $this->closeTransaction();
             return $count;
         }
         catch (Exception $e) {
+            $this->rollbackTransaction();
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
