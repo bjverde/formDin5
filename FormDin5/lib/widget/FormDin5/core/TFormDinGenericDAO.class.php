@@ -177,31 +177,36 @@ class TFormDinGenericDAO
     }
 
     /**
-     * Transforma uma lista de arrays em um array associativo chave => valor
+     * Transforma uma lista de registros em um array associativo chave => valor
      *
-     * @param string|int $colunaChave
-     * @param string|int $colunaValor
-     * @param array $list
+     * @param string $colunaChave Nome da coluna chave
+     * @param string $colunaValor Nome da coluna valor
+     * @param array|null $list Lista de registros
+     * @param int $typeCase PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
      * @return array
      */
-    public static function getArrayKeyValue($colunaChave, $colunaValor, array $list)
+    public static function getArrayKeyValue(string $colunaChave, string $colunaValor, ?array $list, int $typeCase = PDO::CASE_NATURAL): array
     {
-        return TFormDinPdoConnection::getArrayKeyValue($colunaChave, $colunaValor, $list);
+        if (empty($list)) {
+            return [];
+        }
+        return ArrayHelper::convertArray2PhpKeyValue($list, $colunaChave, $colunaValor, $typeCase);
     }
 
     /**
      * Executa comandos SQL e retorna um array associativo chave => valor
      *
-     * @param string|int $colunaChave
-     * @param string|int $colunaValor
-     * @param string $sql
-     * @param array|null $values
+     * @param string $colunaChave Nome da coluna chave
+     * @param string $colunaValor Nome da coluna valor
+     * @param string $sql Comando SQL
+     * @param array|null $values Valores para bind
      * @return array
      */
-    public function getArrayKeyValueBySql($colunaChave, $colunaValor, string $sql, ?array $values = null)
+    public function getArrayKeyValueBySql(string $colunaChave, string $colunaValor, string $sql, ?array $values = null): array
     {
         $resultList = $this->executeSql($sql, $values);
-        return self::getArrayKeyValue($colunaChave, $colunaValor, is_array($resultList) ? $resultList : []);
+        $case = $this->getTPDOConnection()?->getCase() ?? PDO::CASE_NATURAL;
+        return self::getArrayKeyValue($colunaChave, $colunaValor, $resultList, $case);
     }
 
     /**
