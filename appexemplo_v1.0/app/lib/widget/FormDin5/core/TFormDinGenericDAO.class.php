@@ -160,13 +160,14 @@ class TFormDinGenericDAO
      *
      * @param TCriteria $criteria
      * @param bool $showDumpLogTela
-     * @return mixed|null
+     * @return array|null Array associativo (chave => valor)
      */
-    public function getArrayByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
+    public function getArrayByCriteria(?TCriteria $criteria = null, bool $showDumpLogTela = false)
     {
         try {
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             $tpdo = $this->getTPDOConnection();
+            $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
             return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -178,16 +179,17 @@ class TFormDinGenericDAO
      *
      * @param TCriteria $criteria
      * @param bool $showDumpLogTela
-     * @return mixed|null
+     * @return array|null Array de objetos (TRecord)
      */
-    public function getListObjByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
+    public function getListObjByCriteria(?TCriteria $criteria = null, bool $showDumpLogTela = false)
     {
         try {
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)
             $tpdo = $this->getTPDOConnection();
+            $tpdo->setOutputFormat(ArrayHelper::TYPE_ADIANTI);
             return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
