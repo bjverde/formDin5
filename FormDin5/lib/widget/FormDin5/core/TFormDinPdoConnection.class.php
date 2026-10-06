@@ -313,7 +313,7 @@ class TFormDinPdoConnection
             TTransaction::close();
             return $dbinfo;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -533,7 +533,7 @@ class TFormDinPdoConnection
             return $result;
         }
         catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -581,7 +581,7 @@ class TFormDinPdoConnection
             return $collections;
         }
         catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -606,7 +606,7 @@ class TFormDinPdoConnection
             return $count;
         }
         catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 }
