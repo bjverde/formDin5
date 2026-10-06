@@ -258,6 +258,24 @@ class TFormDinGenericDAOTest extends TestCase
         $this->assertEquals('outro_banco', $dao->getDatabase());
         $this->assertSame($tpdoNew, $dao->getTPDOConnection());
     }
+
+    public function testGetArrayKeyValue()
+    {
+        $list = [
+            ['id' => 1, 'nome' => 'Opcao 1'],
+            ['id' => 2, 'nome' => 'Opcao 2']
+        ];
+        $result = TFormDinGenericDAO::getArrayKeyValue('id', 'nome', $list);
+        $this->assertEquals([1 => 'Opcao 1', 2 => 'Opcao 2'], $result);
+    }
+
+    public function testGetArrayKeyValueBySql()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio');
+        $result = $dao->getArrayKeyValueBySql('seq_dado_apoio', 'sig_dado_apoio', 'SELECT seq_dado_apoio, sig_dado_apoio FROM dado_apoio WHERE seq_dado_apoio = ?', [1]);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey(1, $result);
+    }
 }
 
 class ApoioRecord extends TRecord
