@@ -313,7 +313,7 @@ class TFormDinPdoConnection
             TTransaction::close();
             return $dbinfo;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -533,7 +533,7 @@ class TFormDinPdoConnection
             return $result;
         }
         catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -589,7 +589,7 @@ class TFormDinPdoConnection
      */    
     public function selectByTCriteria(?TCriteria $criteria=null, $repositoryName=null, bool $showDumpLogTela = false)
     {
-        throw new Exception('Troque por TFormDinGenericDAO::getCountByCriteria()');
+        throw new Exception('Troque por TFormDinGenericDAO::getArrayByCriteria() ou getListObjByCriteria()');
     }
 
     /**
