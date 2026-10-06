@@ -575,30 +575,6 @@ class TFormDinPdoConnection
     }
 
     /**
-     * Fecha a transação ativa
-     *
-     * @return void
-     */
-    public function closeTransaction(): void
-    {
-        TTransaction::close();
-    }
-
-    /**
-     * Desfaz a transação ativa em caso de erro
-     *
-     * @return void
-     */
-    public function rollbackTransaction(): void
-    {
-        try {
-            TTransaction::rollback();
-        } catch (Throwable $e) {
-            // Ignora se não houver transação ativa
-        }
-    }
-
-    /**
      * @codeCoverageIgnore
      * Faz um Select usando o TCriteria
      *
@@ -618,11 +594,11 @@ class TFormDinPdoConnection
             $repository = new TRepository($repositoryName);
             $collections = $repository->load($criteria);
             $collections = $this->convertArrayResult($collections);
-            $this->closeTransaction();
+            TTransaction::close();
             return $collections;
         }
         catch (Exception $e) {
-            $this->rollbackTransaction();
+            TTransaction::rollback();
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -645,11 +621,11 @@ class TFormDinPdoConnection
             $this->openTransaction($showDumpLogTela);
             $repository = new TRepository($repositoryName);
             $count = $repository->count($criteria);
-            $this->closeTransaction();
+            TTransaction::close();
             return $count;
         }
         catch (Exception $e) {
-            $this->rollbackTransaction();
+            TTransaction::rollback();
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
