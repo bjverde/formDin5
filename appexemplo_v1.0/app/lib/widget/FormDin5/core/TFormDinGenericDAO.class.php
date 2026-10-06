@@ -184,6 +184,10 @@ class TFormDinGenericDAO
     /**
      * Transforma uma lista de registros em um array associativo chave => valor
      *
+     * @deprecated Utilize ArrayHelper::convertArray2PhpKeyValue()
+     * @see ArrayHelper::convertArray2PhpKeyValue()
+     * @codeCoverageIgnore
+     *
      * @param string $colunaChave Nome da coluna chave
      * @param string $colunaValor Nome da coluna valor
      * @param array|null $list Lista de registros

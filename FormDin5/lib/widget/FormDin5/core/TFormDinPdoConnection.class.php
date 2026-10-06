@@ -537,6 +537,19 @@ class TFormDinPdoConnection
         }
     }
 
+    /**
+     * Transforma uma lista de registros em um array associativo chave => valor
+     *
+     * @deprecated Utilize ArrayHelper::convertArray2PhpKeyValue()
+     * @see ArrayHelper::convertArray2PhpKeyValue()
+     * @codeCoverageIgnore
+     *
+     * @param string $colunaChave Nome da coluna chave
+     * @param string $colunaValor Nome da coluna valor
+     * @param array|null $list Lista de registros
+     * @param int $typeCase PDO::CASE_NATURAL, PDO::CASE_UPPER, PDO::CASE_LOWER
+     * @return array
+     */
     public static function getArrayKeyValue($colunaChave, $colunaValor, $list, $typeCase = PDO::CASE_NATURAL)
     {
         if (empty($list)) {
