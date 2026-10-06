@@ -589,7 +589,7 @@ class TFormDinPdoConnection
      */    
     public function selectByTCriteria(?TCriteria $criteria=null, $repositoryName=null, bool $showDumpLogTela = false)
     {
-throw new Exception('Troque por TFormDinGenericDAO::getCountByCriteria()');
+        throw new Exception('Troque por TFormDinGenericDAO::getCountByCriteria()');
     }
 
     /**
