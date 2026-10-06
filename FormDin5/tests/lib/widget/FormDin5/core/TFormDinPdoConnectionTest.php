@@ -499,32 +499,16 @@ class TFormDinPdoConnectionTest extends TestCase
 
     public function testSelectByTCriteria()
     {
-        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
-        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
-        $this->classTest->setCase(PDO::CASE_LOWER);
-        
-        $criteria = new TCriteria();
-        $criteria->add(new TFilter('seq_dado_apoio', '=', 1));
-        
-        $result = $this->classTest->selectByTCriteria($criteria, 'ApoioRecordConnectionTest');
-        
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertEquals(1, $result[0]->seq_dado_apoio);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Troque por TFormDinGenericDAO::getArrayByCriteria()');
+        $this->classTest->selectByTCriteria(new TCriteria(), 'ApoioRecordConnectionTest');
     }
 
     public function testSelectByTCriteriaCount()
     {
-        $this->classTest->setName(mockDatabaseApoio::getPathDatabaseApoio());
-        $this->classTest->setType(TFormDinPdoConnection::DBMS_SQLITE);
-        
-        $criteria = new TCriteria();
-        $criteria->add(new TFilter('seq_dado_apoio', '>', 0));
-        
-        $count = $this->classTest->selectByTCriteriaCount($criteria, 'ApoioRecordConnectionTest');
-        
-        $this->assertIsInt($count);
-        $this->assertGreaterThanOrEqual(3, $count);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Troque por TFormDinGenericDAO::getCountByCriteria()');
+        $this->classTest->selectByTCriteriaCount(new TCriteria(), 'ApoioRecordConnectionTest');
     }
 
     public function testGetConfigConnect_SqlServer_AddsTrustServerCertificate()
