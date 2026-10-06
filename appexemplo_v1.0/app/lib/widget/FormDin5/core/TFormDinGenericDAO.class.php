@@ -121,7 +121,7 @@ class TFormDinGenericDAO
             $result = $tpdo->executeSql($sql, $arrParams, $showDebugParam, $showInfo, $debugDestino);
             return $result;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -156,10 +156,9 @@ class TFormDinGenericDAO
             $tpdo->setCase(PDO::CASE_NATURAL);
             return $tpdo->executeSql($sql);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }    
-
 
     /**
      * Executa comandos SQL e retorna a quantidade de registros
@@ -173,8 +172,36 @@ class TFormDinGenericDAO
             $result = $this->executeSelect($sql);
             return ArrayHelper::get($result, 0);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
+    }
+
+    /**
+     * Transforma uma lista de arrays em um array associativo chave => valor
+     *
+     * @param string|int $colunaChave
+     * @param string|int $colunaValor
+     * @param array $list
+     * @return array
+     */
+    public static function getArrayKeyValue($colunaChave, $colunaValor, array $list)
+    {
+        return TFormDinPdoConnection::getArrayKeyValue($colunaChave, $colunaValor, $list);
+    }
+
+    /**
+     * Executa comandos SQL e retorna um array associativo chave => valor
+     *
+     * @param string|int $colunaChave
+     * @param string|int $colunaValor
+     * @param string $sql
+     * @param array|null $values
+     * @return array
+     */
+    public function getArrayKeyValueBySql($colunaChave, $colunaValor, string $sql, ?array $values = null)
+    {
+        $resultList = $this->executeSql($sql, $values);
+        return self::getArrayKeyValue($colunaChave, $colunaValor, is_array($resultList) ? $resultList : []);
     }
 
     /**
@@ -197,7 +224,7 @@ class TFormDinGenericDAO
             return $result;
         } catch (Exception $e) {
             TTransaction::rollback();
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -221,7 +248,7 @@ class TFormDinGenericDAO
             return $result;
         } catch (Exception $e) {
             TTransaction::rollback();
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -244,7 +271,7 @@ class TFormDinGenericDAO
             return $count;
         } catch (Exception $e) {
             TTransaction::rollback();
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 }//fim classe
