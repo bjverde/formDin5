@@ -123,22 +123,6 @@ class TFormDinGenericDAO
     }
 
     /**
-     * Executa comandos SQL e retorna a quantidade de registros
-     *
-     * @param string $sql
-     * @return mixed|null
-     */
-    public function executeSelectCount(string $sql)
-    {
-        try {
-            $result = $this->executeSelect($sql);
-            return ArrayHelper::get($result, 0);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
-        }
-    }
-
-    /**
      * Executa comandos SQL
      *
      * @param string $sql
@@ -150,6 +134,23 @@ class TFormDinGenericDAO
         try {
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             return $this->getTPDOConnection()->executeSql($sql, $values);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+
+    /**
+     * Executa comandos SQL e retorna a quantidade de registros
+     *
+     * @param string $sql
+     * @return mixed|null
+     */
+    public function executeSelectCount(string $sql)
+    {
+        try {
+            $result = $this->executeSelect($sql);
+            return ArrayHelper::get($result, 0);
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
