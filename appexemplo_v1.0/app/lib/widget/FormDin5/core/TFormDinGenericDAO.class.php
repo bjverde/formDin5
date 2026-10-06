@@ -180,7 +180,7 @@ class TFormDinGenericDAO
     /**
      * Busca arrays baseado em uma criteria
      *
-     * @param TCriteria $criteria
+     * @param TCriteria|null $criteria
      * @param bool $showDumpLogTela
      * @return array|null Array associativo (chave => valor)
      */
@@ -189,9 +189,14 @@ class TFormDinGenericDAO
         try {
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             $tpdo = $this->getTPDOConnection();
-            $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
-            return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
+            $tpdo->openTransaction($showDumpLogTela);
+            $repository = new TRepository($this->getRepository());
+            $collections = $repository->load($criteria);
+            $result = ArrayHelper::convertArray2OutputFormat($collections, ArrayHelper::TYPE_PDO, $tpdo->getCase());
+            TTransaction::close();
+            return $result;
         } catch (Exception $e) {
+            TTransaction::rollback();
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -199,7 +204,7 @@ class TFormDinGenericDAO
     /**
      * Busca objetos baseados em uma criteria
      *
-     * @param TCriteria $criteria
+     * @param TCriteria|null $criteria
      * @param bool $showDumpLogTela
      * @return array|null Array de objetos (TRecord)
      */
@@ -208,9 +213,14 @@ class TFormDinGenericDAO
         try {
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)
             $tpdo = $this->getTPDOConnection();
-            $tpdo->setOutputFormat(ArrayHelper::TYPE_ADIANTI);
-            return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
+            $tpdo->openTransaction($showDumpLogTela);
+            $repository = new TRepository($this->getRepository());
+            $collections = $repository->load($criteria);
+            $result = ArrayHelper::convertArray2OutputFormat($collections, ArrayHelper::TYPE_ADIANTI, $tpdo->getCase());
+            TTransaction::close();
+            return $result;
         } catch (Exception $e) {
+            TTransaction::rollback();
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -227,8 +237,13 @@ class TFormDinGenericDAO
         try {
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)
             $tpdo = $this->getTPDOConnection();
-            return $tpdo->selectByTCriteriaCount($criteria, $this->getRepository(), $showDumpLogTela);
+            $tpdo->openTransaction($showDumpLogTela);
+            $repository = new TRepository($this->getRepository());
+            $count = $repository->count($criteria);
+            TTransaction::close();
+            return $count;
         } catch (Exception $e) {
+            TTransaction::rollback();
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
