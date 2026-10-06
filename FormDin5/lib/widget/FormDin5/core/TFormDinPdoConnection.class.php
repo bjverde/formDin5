@@ -589,18 +589,7 @@ class TFormDinPdoConnection
      */    
     public function selectByTCriteria(?TCriteria $criteria=null, $repositoryName=null, bool $showDumpLogTela = false)
     {
-        try {
-            $this->openTransaction($showDumpLogTela);
-            $repository = new TRepository($repositoryName);
-            $collections = $repository->load($criteria);
-            $collections = $this->convertArrayResult($collections);
-            TTransaction::close();
-            return $collections;
-        }
-        catch (Exception $e) {
-            TTransaction::rollback();
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
-        }
+throw new Exception('Troque por TFormDinGenericDAO::getCountByCriteria()');
     }
 
     /**
@@ -617,16 +606,6 @@ class TFormDinPdoConnection
      */
     public function selectByTCriteriaCount(?TCriteria $criteria = null, $repositoryName = null, bool $showDumpLogTela = false)
     {
-        try {
-            $this->openTransaction($showDumpLogTela);
-            $repository = new TRepository($repositoryName);
-            $count = $repository->count($criteria);
-            TTransaction::close();
-            return $count;
-        }
-        catch (Exception $e) {
-            TTransaction::rollback();
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
-        }
+        throw new Exception('Troque por TFormDinGenericDAO::getCountByCriteria()');
     }
 }
