@@ -118,7 +118,7 @@ class TFormDinGenericDAO
             $tpdo->setCase(PDO::CASE_NATURAL);
             return $tpdo->executeSql($sql);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -134,7 +134,7 @@ class TFormDinGenericDAO
             $result = $this->executeSelect($sql);
             return ArrayHelper::get($result, 0);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -151,7 +151,7 @@ class TFormDinGenericDAO
             $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
             return $this->getTPDOConnection()->executeSql($sql, $values);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -170,7 +170,7 @@ class TFormDinGenericDAO
             $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
             return $tpdo->selectByTCriteria($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -219,7 +219,7 @@ class TFormDinGenericDAO
             TTransaction::close();
             return $count;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 }//fim classe
