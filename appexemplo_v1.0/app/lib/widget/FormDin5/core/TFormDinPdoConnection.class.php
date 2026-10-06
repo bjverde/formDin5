@@ -537,19 +537,19 @@ class TFormDinPdoConnection
         }
     }
 
-    public static function getArrayKeyValue($colunaChave,$colunaValor,$list)
+    public static function getArrayKeyValue($colunaChave, $colunaValor, $list, $typeCase = PDO::CASE_NATURAL)
     {
-        $result = array();
-        foreach ($list as $row) {
-            $result[$row[$colunaChave]]=$row[$colunaValor];
+        if (empty($list)) {
+            return array();
         }
-        return $result;
+        return ArrayHelper::convertArray2PhpKeyValue($list, $colunaChave, $colunaValor, $typeCase);
     }
 
-    public function getArrayKeyValueBySql($colunaChave,$colunaValor,$sql, $values = null)
+    public function getArrayKeyValueBySql($colunaChave, $colunaValor, $sql, $values = null)
     {
         $resultList = $this->executeSql($sql, $values);
-        $result = self::getArrayKeyValue($colunaChave,$colunaValor,$resultList);
+        $case = $this->getCase() ?? PDO::CASE_NATURAL;
+        $result = self::getArrayKeyValue($colunaChave, $colunaValor, $resultList, $case);
         return $result;
     }
 
