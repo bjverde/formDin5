@@ -196,30 +196,18 @@ class TFormDinGenericDAO
     /**
      * Conta registros baseado em uma criteria
      *
-     * @param TCriteria $criteria
+     * @param TCriteria|null $criteria
      * @param bool $showDumpLogTela
-     * @return mixed|null
+     * @return int|null
      */
-    public function getCountByCriteria(TCriteria $criteria, bool $showDumpLogTela = false)
+    public function getCountByCriteria(?TCriteria $criteria = null, bool $showDumpLogTela = false)
     {
         try {
-            TTransaction::open($this->getDatabase());
-
-            //Mostra SQL na tela
-            if ($showDumpLogTela == true) {
-                TTransaction::dump( /* '/tmp/log.txt' */);
-                TTransaction::setLoggerFunction(function ($message) {
-                    echo $message . '<br>';
-                });
-            }
-
-            //load using repository
-            $repository = new TRepository($this->getRepository());
-            $count = $repository->count($criteria);
-            TTransaction::close();
-            return $count;
+            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)
+            $tpdo = $this->getTPDOConnection();
+            return $tpdo->selectByTCriteriaCount($criteria, $this->getRepository(), $showDumpLogTela);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 }//fim classe

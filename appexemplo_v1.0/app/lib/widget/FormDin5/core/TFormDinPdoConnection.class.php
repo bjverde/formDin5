@@ -588,25 +588,32 @@ class TFormDinPdoConnection
     /**
      * @codeCoverageIgnore
      * Faz um Select Count usando o TCriteria
-     * @param TCriteria $criteria    - 01: Obj TCriteria
-     * @param string $repositoryName - 02: nome de classe
-     * @return array Adianti
+     * @param TCriteria|null $criteria       - 01: Obj TCriteria
+     * @param string|null    $repositoryName  - 02: nome de classe
+     * @param bool           $showDumpLogTela - 03: se exibe o log SQL na tela
+     * @return int
      */
-    public function selectByTCriteriaCount(?TCriteria $criteria=null, $repositoryName=null)
+    public function selectByTCriteriaCount(?TCriteria $criteria = null, $repositoryName = null, bool $showDumpLogTela = false)
     {
         try {
             $configConnect = $this->getConfigConnect();
             $database = $configConnect['database'];
             $db = $configConnect['db'];
             
-            TTransaction::open($database,$db); // abre uma transação
+            TTransaction::open($database, $db); // abre uma transação
+            if ($showDumpLogTela == true) {
+                TTransaction::dump();
+                TTransaction::setLoggerFunction(function ($message) {
+                    echo $message . '<br>';
+                });
+            }
             $repository = new TRepository($repositoryName);
             $count = $repository->count($criteria);
             TTransaction::close();         // fecha a transação.
             return $count;
         }
         catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 }
