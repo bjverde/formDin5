@@ -86,11 +86,6 @@ class TFormDinPdoConnection
     {
         if(!empty($database)){
             $this->setDatabase($database);
-            $arrParams = TConnection::getDatabaseInfo($database);
-            $type = ArrayHelper::get($arrParams,'type');
-            if(!empty($type)){
-                $this->setDdms($type);
-            }
         }
         $this->setOutputFormat($outputFormat);
         $this->setFech($fech);
@@ -106,6 +101,15 @@ class TFormDinPdoConnection
             throw new InvalidArgumentException(TFormDinMessage::ERROR_TYPE_WRONG.' o nome data base dever ser uma string');
         }
         $this->database = $database;
+        try {
+            $arrParams = TConnection::getDatabaseInfo($database);
+            $type = ArrayHelper::get($arrParams,'type');
+            if(!empty($type)){
+                $this->setDdms($type);
+            }
+        } catch (Throwable $e) {
+            // Ignora se o arquivo de configuração não existir (ex: conexões dinâmicas por array)
+        }
     }
     public function getDatabase()
     {
@@ -307,10 +311,15 @@ class TFormDinPdoConnection
             $configConnect = $this->getConfigConnect();
             $database = $configConnect['database'];
             $db = $configConnect['db'];
-            TTransaction::open($database, $db);
-            $dbinfo = TConnection::getDatabaseInfo($database);
+            if (!empty($db)) {
+                $dbinfo = $db;
+            } else {
+                $dbinfo = TConnection::getDatabaseInfo($database);
+            }
+            if (empty($dbinfo)) {
+                throw new Exception("Database config not found for '{$database}'");
+            }
             $this->outputDebug($dbinfo, $debugDestino, 'DATABASE INFO');
-            TTransaction::close();
             return $dbinfo;
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
@@ -439,18 +448,33 @@ class TFormDinPdoConnection
     }
 
     /**
-     * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
-     * se a operação foi bem sucedida.
+     * Executa comandos SQL (SELECT, INSERT, UPDATE, DELETE, Stored Procedures, etc.)
      *
-     * @param string $sql           -1: string sql do comando
-     * @param array $arrParams      -2: array com o valores para bind do sql
-     * @param bool $showDebugParam  -3: mostra o valor de $sql e $arrParams
-     * @param bool $showInfo        -4: chama o getDatabaseInfo
-     * @param string $debugDestino  -5: destino do debug ('tela' ou 'log')
-     * @return mixed
+     * Gerenciamento Transacional (Integridade de Dados):
+     * - Transação Ativa: Se uma transação do Adianti já estiver aberta para o banco de dados
+     *   (via TTransaction::open()), a conexão ativa é reutilizada e o método NÃO fecha a transação,
+     *   permitindo múltiplos comandos dentro do mesmo escopo transacional de negócio.
+     * - Transação Local: Caso não exista transação ativa, o método abre uma transação local,
+     *   executa o comando, realiza TTransaction::close() no sucesso e TTransaction::rollback()
+     *   em caso de erro, garantindo que não haja transações vazadas ou órfãs.
+     *
+     * Retornos por tipo de instrução:
+     * - SELECT / RETURNING / WITH: Array de registros formatado conforme outputFormat e case.
+     * - INSERT: ID do último registro inserido (com suporte a SCOPE_IDENTITY no SQL Server).
+     * - UPDATE / DELETE: Quantidade de linhas afetadas (rowCount).
+     * - Procedures / PRAGMA: Resultados retornados pela execução.
+     *
+     * @param string $sql           Instrução SQL a ser executada
+     * @param array|null $arrParams Array de parâmetros para bind (posicional '?')
+     * @param bool $showDebugParam  Se true, exibe/grava em log a query e os parâmetros
+     * @param bool $showInfo        Se true, exibe/grava em log as informações do banco de dados
+     * @param string $debugDestino  Destino do debug ('tela' ou 'log')
+     * @return mixed Array de resultados, ID gerado, quantidade de linhas afetadas ou boolean
+     * @throws Exception Em caso de erro na preparação, validação ou execução do SQL
      */
     public function executeSql($sql, $arrParams = null, bool $showDebugParam = false, bool $showInfo = false, string $debugDestino = 'tela')
     {
+        $isLocalTransaction = false;
         try {
             if ($showInfo) {
                 $this->getDatabaseInfo($debugDestino);
@@ -472,8 +496,13 @@ class TFormDinPdoConnection
             $case     = $this->getCase();
             $fech     = $this->getFech();
             
-            TTransaction::open($database,$db); // abre uma transação
-            $conn = TTransaction::get();   // obtém a conexão  
+            if (TTransaction::get() && TTransaction::getDatabase() === $database) {
+                $conn = TTransaction::get();
+            } else {
+                TTransaction::open($database, $db); // abre uma transação local
+                $conn = TTransaction::get();
+                $isLocalTransaction = true;
+            }
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $conn->setAttribute(PDO::ATTR_CASE, $case);
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fech);
@@ -529,10 +558,15 @@ class TFormDinPdoConnection
                     $result = $this->convertArrayResult($result);
                 }
             }
-            TTransaction::close();         // fecha a transação.
+            if ($isLocalTransaction) {
+                TTransaction::close();         // fecha a transação apenas se foi aberta localmente neste método
+            }
             return $result;
         }
         catch (Exception $e) {
+            if ($isLocalTransaction) {
+                TTransaction::rollback();
+            }
             throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
         }
     }
