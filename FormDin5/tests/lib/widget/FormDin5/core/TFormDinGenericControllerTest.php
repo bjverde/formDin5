@@ -136,6 +136,21 @@ class TFormDinGenericControllerTest extends TestCase
         $result = $this->controller->getListObjByCriteria($criteria, $showDumpLogTela);
         $this->assertEquals($expectedResult, $result);
     }
+
+    public function testGetArrayKeyValueByCriteria()
+    {
+        $criteria = $this->createMock(TCriteria::class);
+        $showDumpLogTela = false;
+        $expectedResult = [1 => 'Item 1', 2 => 'Item 2'];
+
+        $this->daoMock->expects($this->once())
+            ->method('getArrayKeyValueByCriteria')
+            ->with('id', 'name', $criteria, $showDumpLogTela)
+            ->willReturn($expectedResult);
+
+        $result = $this->controller->getArrayKeyValueByCriteria('id', 'name', $criteria, $showDumpLogTela);
+        $this->assertEquals($expectedResult, $result);
+    }
 }
 
 class DummyDAO extends TFormDinGenericDAO

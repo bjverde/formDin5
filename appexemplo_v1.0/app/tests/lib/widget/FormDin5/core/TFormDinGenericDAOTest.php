@@ -283,6 +283,17 @@ class TFormDinGenericDAOTest extends TestCase
         $this->assertArrayHasKey(1, $result);
     }
 
+    public function testGetArrayKeyValueByCriteria()
+    {
+        $dao = new TFormDinGenericDAO('dbapoio', 'ApoioRecord');
+        $criteria = new TCriteria();
+        $criteria->add(new TFilter('seq_dado_apoio', '=', 1));
+
+        $result = $dao->getArrayKeyValueByCriteria('seq_dado_apoio', 'sig_dado_apoio', $criteria);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey(1, $result);
+    }
+
     public function testChangingDatabaseOnTPDOUpdatesDAODatabase()
     {
         $dao = new TFormDinGenericDAO('dbapoio');
