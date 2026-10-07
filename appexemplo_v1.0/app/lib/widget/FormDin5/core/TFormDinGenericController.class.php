@@ -96,4 +96,19 @@ class TFormDinGenericController
         $result = $this->getDao()->getCountByCriteria($criteria,$showDumpLogTela);
         return $result;
     }
+
+    /**
+     * Busca registros baseado em uma criteria e transforma em um array associativo chave => valor
+     *
+     * @param string $colunaChave
+     * @param string $colunaValor
+     * @param TCriteria|null $criteria
+     * @param bool $showDumpLogTela
+     * @return array
+     */
+    public function getArrayKeyValueByCriteria(string $colunaChave, string $colunaValor, ?TCriteria $criteria = null, bool $showDumpLogTela = false): array
+    {
+        $result = $this->getDao()->getArrayKeyValueByCriteria($colunaChave, $colunaValor, $criteria, $showDumpLogTela);
+        return $result;
+    }
 }//fim classe
