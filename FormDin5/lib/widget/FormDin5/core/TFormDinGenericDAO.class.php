@@ -227,6 +227,23 @@ class TFormDinGenericDAO
     }
 
     /**
+     * Busca registros baseado em uma criteria e transforma a lista em um array associativo chave => valor
+     *
+     * @param string $colunaChave   Nome da coluna a ser usada como chave no array de saída
+     * @param string $colunaValor   Nome da coluna a ser usada como valor no array de saída
+     * @param TCriteria|null $criteria Criteria de filtro/ordenação
+     * @param bool $showDumpLogTela Se true, exibe dump de SQL na tela
+     * @return array Array no formato key => value
+     * @throws Exception Em caso de erro na consulta ou no repositório
+     */
+    public function getArrayKeyValueByCriteria(string $colunaChave, string $colunaValor, ?TCriteria $criteria = null, bool $showDumpLogTela = false): array
+    {
+        $resultList = $this->getArrayByCriteria($criteria, $showDumpLogTela);
+        $case = $this->getTPDOConnection()?->getCase() ?? PDO::CASE_NATURAL;
+        return ArrayHelper::convertArray2PhpKeyValue($resultList, $colunaChave, $colunaValor, $case);
+    }
+
+    /**
      * Busca arrays baseado em uma criteria
      *
      * @param TCriteria|null $criteria
