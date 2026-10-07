@@ -596,8 +596,8 @@ class TFormDinPdoConnection
     /**
      * Executa um SELECT e transforma a lista de registros em um array associativo chave => valor
      *
-     * @deprecated Utilize TFormDinGenericDAO::getArrayKeyValueByCriteria()
-     * @see TFormDinGenericDAO::getArrayKeyValueByCriteria()
+     * @deprecated Utilize TFormDinGenericDAO::getArrayKeyValueBySql()
+     * @see TFormDinGenericDAO::getArrayKeyValueBySql()
      * @codeCoverageIgnore
      *
      * @param string $colunaChave   Nome da coluna a ser usada como chave no array de saída
