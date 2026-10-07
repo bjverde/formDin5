@@ -648,6 +648,50 @@ class TFormDinPdoConnectionTest extends TestCase
         TTransaction::rollback();
         $this->assertTrue(true);
     }
+
+    public function testExecuteSqlWithinExistingTransactionDoesNotCloseIt()
+    {
+        $this->classTest->setDatabase('dbapoio');
+        TTransaction::open('dbapoio');
+        $initialConn = TTransaction::get();
+        $this->assertInstanceOf(PDO::class, $initialConn);
+
+        // Execute SQL - should NOT close the active transaction
+        $result = $this->classTest->executeSql("SELECT 1 AS test");
+        $this->assertIsArray($result);
+
+        // Transaction should still be active
+        $currentConn = TTransaction::get();
+        $this->assertSame($initialConn, $currentConn);
+
+        TTransaction::close();
+    }
+
+    public function testExecuteSqlRollsBackOnExceptionWhenLocallyOpened()
+    {
+        $this->classTest->setDatabase('dbapoio');
+        
+        try {
+            $this->classTest->executeSql("SELECT * FROM non_existent_table_xyz");
+            $this->fail("Deveria ter lançado Exception");
+        } catch (Exception $e) {
+            $this->assertNull(TTransaction::get());
+        }
+    }
+
+    public function testSetDatabaseUpdatesTypeWhenIniExists()
+    {
+        $conn = new TFormDinPdoConnection();
+        $conn->setDatabase('dbapoio');
+        $this->assertEquals(TFormDinPdoConnection::DBMS_SQLITE, $conn->getType());
+    }
+
+    public function testSetDatabaseDoesNotThrowWhenIniDoesNotExist()
+    {
+        $conn = new TFormDinPdoConnection();
+        $conn->setDatabase('dynamic_memory_db');
+        $this->assertEquals('dynamic_memory_db', $conn->getDatabase());
+    }
 }
 
 class ApoioRecordConnectionTest extends TRecord
