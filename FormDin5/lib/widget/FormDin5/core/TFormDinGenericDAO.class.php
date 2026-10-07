@@ -203,26 +203,26 @@ class TFormDinGenericDAO
      */
     public static function getArrayKeyValue(string $colunaChave, string $colunaValor, ?array $list, int $typeCase = PDO::CASE_NATURAL): array
     {
-        if (empty($list)) {
-            return [];
-        }
-        return ArrayHelper::convertArray2PhpKeyValue($list, $colunaChave, $colunaValor, $typeCase);
+        return TFormDinPdoConnection::getArrayKeyValue($colunaChave, $colunaValor, $list, $typeCase);
     }
 
     /**
-     * Executa comandos SQL e retorna um array associativo chave => valor
+     * Executa um SELECT e transforma a lista de registros em um array associativo chave => valor
      *
-     * @param string $colunaChave Nome da coluna chave
-     * @param string $colunaValor Nome da coluna valor
-     * @param string $sql Comando SQL
-     * @param array|null $values Valores para bind
-     * @return array
+     * @deprecated Utilize ArrayHelper::getArrayKeyValueBySql()
+     * @see ArrayHelper::getArrayKeyValueBySql()
+     * @codeCoverageIgnore
+     *
+     * @param string $colunaChave   Nome da coluna a ser usada como chave no array de saída
+     * @param string $colunaValor   Nome da coluna a ser usada como valor no array de saída
+     * @param string $sql           Instrução SELECT SQL a ser executada
+     * @param array|null $values    Array de parâmetros para bind (posicional '?')
+     * @return array Array no formato key => value
+     * @throws Exception Em caso de erro na execução do SQL
      */
     public function getArrayKeyValueBySql(string $colunaChave, string $colunaValor, string $sql, ?array $values = null): array
     {
-        $resultList = $this->executeSql($sql, $values);
-        $case = $this->getTPDOConnection()?->getCase() ?? PDO::CASE_NATURAL;
-        return self::getArrayKeyValue($colunaChave, $colunaValor, $resultList, $case);
+        return $this->getTPDOConnection()->getArrayKeyValue($colunaChave, $colunaValor, $sql, $values);
     }
 
     /**
