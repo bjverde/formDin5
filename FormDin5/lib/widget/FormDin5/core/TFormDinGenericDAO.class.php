@@ -108,26 +108,28 @@ class TFormDinGenericDAO
     }
 
     /**
-     * Executa o comando sql recebido retornando o cursor ou verdadeiro o falso
-     * se a operação foi bem sucedida.
+     * Executa comandos SQL (SELECT, INSERT, UPDATE, DELETE, Stored Procedures, etc.)
      *
-     * @param string $sql           -1: string sql do comando
-     * @param array $arrParams      -2: array com o valores para bind do sql
-     * @param bool $showDebugParam  -3: mostra o valor de $sql e $arrParams
-     * @param bool $showInfo        -4: chama o getDatabaseInfo
-     * @param string $debugDestino  -5: destino do debug ('tela' ou 'log')
-     * @return mixed
+     * Gerenciamento Transacional (Integridade de Dados):
+     * - Transação Ativa: Se uma transação do Adianti já estiver aberta para o banco de dados
+     *   (via TTransaction::open()), a conexão ativa é reutilizada e o método NÃO fecha a transação,
+     *   permitindo múltiplos comandos dentro do mesmo escopo transacional de negócio.
+     * - Transação Local: Caso não exista transação ativa, o método abre uma transação local,
+     *   executa o comando, realiza TTransaction::close() no sucesso e TTransaction::rollback()
+     *   em caso de erro, garantindo que não haja transações vazadas ou órfãs.
+     *
+     * @param string $sql           Instrução SQL a ser executada
+     * @param array|null $arrParams Array de parâmetros para bind (posicional '?')
+     * @param bool $showDebugParam  Se true, exibe/grava em log a query e os parâmetros
+     * @param bool $showInfo        Se true, exibe/grava em log as informações do banco de dados
+     * @param string $debugDestino  Destino do debug ('tela' ou 'log')
+     * @return mixed Array de resultados, ID gerado, quantidade de linhas afetadas ou boolean
+     * @throws Exception Em caso de erro na preparação, validação ou execução do SQL
      */
     public function executeSql($sql, $arrParams = null, bool $showDebugParam = false, bool $showInfo = false, string $debugDestino = 'tela')
     {
-        try {
-            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
-            $tpdo = clone $this->getTPDOConnection();
-            $result = $tpdo->executeSql($sql, $arrParams, $showDebugParam, $showInfo, $debugDestino);
-            return $result;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
-        }
+        $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
+        return $this->getTPDOConnection()->executeSql($sql, $arrParams, $showDebugParam, $showInfo, $debugDestino);
     }
 
     /**
@@ -153,15 +155,20 @@ class TFormDinGenericDAO
      */
     public function executeSelect(string $sql)
     {
+        $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
+        $tpdo = $this->getTPDOConnection();
+        $prevFetch = $tpdo->getFech();
+        $prevFormat = $tpdo->getOutputFormat();
+        $prevCase = $tpdo->getCase();
         try {
-            $this->initTPDOConnection(); //Garante que a conexão PDO seja inicializada sob demanda (lazy initialization)    
-            $tpdo = clone $this->getTPDOConnection();
             $tpdo->setFech(PDO::FETCH_ASSOC);
             $tpdo->setOutputFormat(ArrayHelper::TYPE_PDO);
             $tpdo->setCase(PDO::CASE_NATURAL);
             return $tpdo->executeSql($sql);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), (int) $e->getCode(), $e);
+        } finally {
+            $tpdo->setFech($prevFetch);
+            $tpdo->setOutputFormat($prevFormat);
+            $tpdo->setCase($prevCase);
         }
     }    
 
