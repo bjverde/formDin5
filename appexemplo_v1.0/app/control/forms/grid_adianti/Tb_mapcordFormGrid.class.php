@@ -12,7 +12,9 @@ class Tb_mapcordFormGrid extends TPage
     protected $pageNavigation;  // pagination component
     
     // trait with onSave, onEdit, onDelete, onReload, onSearch...
-    use Adianti\Base\AdiantiStandardFormListTrait;
+    use Adianti\Base\AdiantiStandardFormListTrait {
+        onSave as onSaveTrait;
+    }
     
     /**
      * Class constructor
@@ -34,8 +36,8 @@ class Tb_mapcordFormGrid extends TPage
         // create the form fields
         $idtmapcord  = new TEntry('idtmapcord');
         $txnome      = new TEntry('txnome');
-        $mapcord_lat = new TEntry('mapcord_lat');
-        $mapcord_lon = new TEntry('mapcord_lon');
+        //$mapcord_lat = new TEntry('mapcord_lat');
+        //$mapcord_lon = new TEntry('mapcord_lon');
         //$mapcord_lat->addValidation('Latitude', new TRequiredValidator);
 
         $formField = new TFormDinMapCord( 'mapcord'
@@ -50,8 +52,8 @@ class Tb_mapcordFormGrid extends TPage
         $this->form->addFields( [new TLabel('ID')], [$idtmapcord] );
         $this->form->addFields( [new TLabel('Nome / Descrição')], [$txnome] );
 
-        $this->form->addFields( [new TLabel('Latitude', 'red')], [$mapcord_lat] );
-        $this->form->addFields( [new TLabel('Longitude')], [$mapcord_lon] );
+        //$this->form->addFields( [new TLabel('Latitude', 'red')], [$mapcord_lat] );
+        //$this->form->addFields( [new TLabel('Longitude')], [$mapcord_lon] );
          $this->form->addFields( [new TLabel('lat / lon ')],[$objField ] );
         
         
@@ -101,5 +103,26 @@ class Tb_mapcordFormGrid extends TPage
         
         // pack the table inside the page
         parent::add($vbox);
+    }
+
+    /**
+     * Executed whenever the user clicks at the save button
+     *
+     * @param $param Request parameters
+     */
+    public function onSave($param = null)
+    {
+        $data = $this->form->getData(); // get form data as array
+        echo "<pre>";
+        echo "param: ";
+        var_dump($param);
+        echo "<hr>";
+        echo "data: ";
+        var_dump($data);
+        echo "</pre>";
+        // Custom logic before saving can be placed here
+
+        // Call the trait onSave method
+        //return $this->onSaveTrait();
     }
 }
