@@ -892,6 +892,11 @@ class TFormDinTest extends TestCase
         $field = $this->classTest->addMapCord('map_id', 'Label Map', true, true, false, true, false, -15.0, -47.0, 10, 300);
         $this->assertInstanceOf(TFormDinMapCord::class, $field);
 
+        $bootForm = $this->classTest->getAdiantiObj();
+        $this->assertSame($bootForm, $field->getAdiantiForm());
+        $this->assertNotNull($bootForm->getField('map_id_lat'));
+        $this->assertNotNull($bootForm->getField('map_id_lon'));
+
         $list = $this->classTest->getListFormElements();
         $this->assertCount(1, $list);
         $this->assertEquals('Label Map', $list[0]['label']->getValue());
