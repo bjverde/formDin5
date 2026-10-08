@@ -2083,6 +2083,10 @@ class TFormDin
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();
         $this->addElementFormList($objField,self::TYPE_FIELD,$label,$boolNewLine,$boolLabelAbove);
+        //Registra os campos internos (lat/lon) no form, para aparecerem no getData()
+        foreach ($formField->getAdiantiChildFields() as $childField) {
+            $this->getAdiantiObj()->addField($childField);
+        }
         return $formField;
 	}
 
