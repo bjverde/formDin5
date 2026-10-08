@@ -56,6 +56,8 @@ class TFormDinMapCord extends TFormDinGenericField
     private $zoom = null;
     private $height = null;
     private $geoJsonPath = null;
+    private $adiantiFieldLat = null;
+    private $adiantiFieldLon = null;
 
     /**
      * Geolocalização interativa usando o Leaflet.js
@@ -181,6 +183,35 @@ class TFormDinMapCord extends TFormDinGenericField
     }
 
     //--------------------------------------------------------------------
+    /**
+     * Retorna o campo Adianti de Latitude ( {idField}_lat )
+     * @return TField
+     */
+    public function getAdiantiFieldLat()
+    {
+        return $this->adiantiFieldLat;
+    }
+    /**
+     * Retorna o campo Adianti de Longitude ( {idField}_lon )
+     * @return TField
+     */
+    public function getAdiantiFieldLon()
+    {
+        return $this->adiantiFieldLon;
+    }
+    /**
+     * Retorna a lista de campos Adianti internos do componente.
+     * O objeto principal é uma TElement (div), que não é registrada pelo
+     * BootstrapFormBuilder::addFields. Por isso esses campos precisam ser
+     * registrados no form com addField, senão não aparecem no getData()
+     * @return array
+     */
+    public function getAdiantiChildFields()
+    {
+        return [$this->getAdiantiFieldLat(), $this->getAdiantiFieldLon()];
+    }
+
+    //--------------------------------------------------------------------
     private function getNumericField($idField, $label, $boolRequired)
     {
         $numericField = new TFormDinNumericField($idField, $label, 18, $boolRequired, 16, false, null, -90, 90, false, null, null, null, null, null, null, true, null, '.');
@@ -232,6 +263,8 @@ class TFormDinMapCord extends TFormDinGenericField
             $adiantiObjLat = $this->getHiddenField($idField . '_lat', $boolRequired);
             $adiantiObjLon = $this->getHiddenField($idField . '_lon', $boolRequired);
         }
+        $this->adiantiFieldLat = $adiantiObjLat;
+        $this->adiantiFieldLon = $adiantiObjLon;
 
         // Script inline para inicialização do mapa de maneira assíncrona/segura
         $scriptInit = new TElement('script');
