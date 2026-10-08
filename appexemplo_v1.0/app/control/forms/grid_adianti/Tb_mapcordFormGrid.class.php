@@ -54,7 +54,11 @@ class Tb_mapcordFormGrid extends TPage
 
         //$this->form->addFields( [new TLabel('Latitude', 'red')], [$mapcord_lat] );
         //$this->form->addFields( [new TLabel('Longitude')], [$mapcord_lon] );
-         $this->form->addFields( [new TLabel('lat / lon ')],[$objField ] );
+        $this->form->addFields( [new TLabel('lat / lon ')],[$objField ] );
+        // a div do mapa não é um widget, registra os campos internos para o getData()
+        foreach ($formField->getAdiantiChildFields() as $childField) {
+            $this->form->addField($childField);
+        }
         
         
         // define the form actions
