@@ -357,6 +357,10 @@
                         <icon>fas:th fa-fw #2965f1</icon>
                         <action>exe_grid20</action>
                     </menuitem>                    
+                    <menuitem label='Gride Padrão Adianti - tb_mapcord'>
+                        <icon>fas:map-marker-alt fa-fw #2965f1</icon>
+                        <action>Tb_mapcordFormGrid</action>
+                    </menuitem>                    
                 </menu> 
             </menuitem>
             <menuitem label='Grides Transformar dados'>
