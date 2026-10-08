@@ -48,6 +48,7 @@
 class TFormDinMapCord extends TFormDinGenericField
 {
     protected $adiantiObj;
+    private $adiantiForm = null;
     private $idDivMap = null;
     private $showFields = null;
     private $fieldsReadOnly = null;
@@ -62,19 +63,24 @@ class TFormDinMapCord extends TFormDinGenericField
     /**
      * Geolocalização interativa usando o Leaflet.js
      *
-     * @param string  $idField         -01: ID do campo base
-     * @param string  $label           -02: Label do campo, usado para validações
-     * @param boolean $boolRequired    -03: Campo obrigatório ou não. Default FALSE
-     * @param boolean $showFields      -04: TRUE (Default) or FALSE, Mostrar campos numéricos de lat e lon
-     * @param boolean $fieldsReadOnly  -05: TRUE ou FALSE (Default), Campos somente leitura
-     * @param double  $defaultLat      -06: Latitude inicial padrão. Default -15.793889 (Brasília)
-     * @param double  $defaultLon      -07: Longitude inicial padrão. Default -47.882778 (Brasília)
-     * @param int     $zoom            -08: Nível de zoom inicial do mapa. Default 12
-     * @param int     $height          -09: Altura do mapa em pixels. Default 400
-     * @param string  $geoJsonPath     -10: Caminho para arquivo GeoJSON a ser plotado. Default null
+     * Os campos internos {idField}_lat e {idField}_lon são registrados
+     * automaticamente no $adiantiForm, para aparecerem no getData()
+     *
+     * @param BootstrapFormBuilder $adiantiForm -01: Form Adianti onde os campos lat/lon serão registrados
+     * @param string  $idField         -02: ID do campo base
+     * @param string  $label           -03: Label do campo, usado para validações
+     * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE
+     * @param boolean $showFields      -05: TRUE (Default) or FALSE, Mostrar campos numéricos de lat e lon
+     * @param boolean $fieldsReadOnly  -06: TRUE ou FALSE (Default), Campos somente leitura
+     * @param double  $defaultLat      -07: Latitude inicial padrão. Default -15.793889 (Brasília)
+     * @param double  $defaultLon      -08: Longitude inicial padrão. Default -47.882778 (Brasília)
+     * @param int     $zoom            -09: Nível de zoom inicial do mapa. Default 12
+     * @param int     $height          -10: Altura do mapa em pixels. Default 400
+     * @param string  $geoJsonPath     -11: Caminho para arquivo GeoJSON a ser plotado. Default null
      * @return TElement
      */
-    public function __construct(string $idField
+    public function __construct(BootstrapFormBuilder $adiantiForm
+                               ,string $idField
                                ,string $label
                                ,$boolRequired  = null
                                ,$showFields    = null
@@ -86,6 +92,7 @@ class TFormDinMapCord extends TFormDinGenericField
                                ,$geoJsonPath   = null
                                )
     {
+        $this->setAdiantiForm($adiantiForm);
         $this->setIdDivMap($idField);
         $this->setShowFields($showFields);
         $this->setFieldsReadOnly($fieldsReadOnly);
@@ -98,8 +105,31 @@ class TFormDinMapCord extends TFormDinGenericField
         $adiantiObj = $this->getDivMapElement($idField, $boolRequired);
         parent::__construct($adiantiObj, $this->getIdDivMap(), $label, false, null, null);
         $this->setLabel($label, $boolRequired);
+        $this->registerChildFields();
 
         return $this->getAdiantiObj();
+    }
+
+    //--------------------------------------------------------------------
+    public function setAdiantiForm(BootstrapFormBuilder $adiantiForm)
+    {
+        $this->adiantiForm = $adiantiForm;
+    }
+    public function getAdiantiForm()
+    {
+        return $this->adiantiForm;
+    }
+
+    /**
+     * O objeto principal é uma TElement (div), que não é registrada pelo
+     * BootstrapFormBuilder::addFields. Por isso os campos internos são
+     * registrados no form aqui, senão não aparecem no getData()
+     */
+    private function registerChildFields()
+    {
+        foreach ($this->getAdiantiChildFields() as $childField) {
+            $this->getAdiantiForm()->addField($childField);
+        }
     }
 
     //--------------------------------------------------------------------
@@ -201,9 +231,6 @@ class TFormDinMapCord extends TFormDinGenericField
     }
     /**
      * Retorna a lista de campos Adianti internos do componente.
-     * O objeto principal é uma TElement (div), que não é registrada pelo
-     * BootstrapFormBuilder::addFields. Por isso esses campos precisam ser
-     * registrados no form com addField, senão não aparecem no getData()
      * @return array
      */
     public function getAdiantiChildFields()
