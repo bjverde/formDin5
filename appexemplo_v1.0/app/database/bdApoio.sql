@@ -1,7 +1,7 @@
 -- ========================================================
 -- Banco de Dados: bdApoio.s3db
--- Exportação da Estrutura de Dados
--- Data de Exportação: 2026-10-08 14:20:50
+-- Exportação da Estrutura de Dados e Cargas
+-- Data de Exportação: 2026-10-08 14:43:18
 -- ========================================================
 
 -- --------------------------------------------------------
@@ -68,6 +68,17 @@ CREATE TABLE [tb_forma_pagamento]
      [idform_pagamento] INTEGER PRIMARY KEY NOT NULL,
      [descricao] VARCHAR(60) NOT NULL
   );
+
+-- Estrutura da tabela `tb_mapcord`
+CREATE TABLE [tb_mapcord] ( 
+  [idtmapcord] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+, [txnome] varCHAR(100) NULL
+, [mapcord_lat] varCHAR(100) NOT NULL
+, [mapcord_lon] varCHAR(100) NULL
+, [dat_inclusao] date NOT NULL default current_timestamp
+, [dat_update] date NULL
+, [dat_del] date NULL
+);
 
 -- Estrutura da tabela `tb_municipio`
 CREATE TABLE [tb_municipio] (
@@ -203,4 +214,14 @@ union all
 
 select  'mu'||cod_municipio as codigo, 'uf'||cod_uf as codigo_pai , nom_municipio as descricao
 from tb_municipio;
+
+-- --------------------------------------------------------
+-- DADOS DA TABELA `tb_mapcord`
+-- --------------------------------------------------------
+
+INSERT INTO [tb_mapcord] ([idtmapcord], [txnome], [mapcord_lat], [mapcord_lon], [dat_inclusao], [dat_update], [dat_del]) VALUES (1, 'Congresso Nacional - Brasília', '-15.799722', '-47.864167', '2026-10-08 14:43:18', NULL, NULL);
+INSERT INTO [tb_mapcord] ([idtmapcord], [txnome], [mapcord_lat], [mapcord_lon], [dat_inclusao], [dat_update], [dat_del]) VALUES (2, 'Avenida Paulista - São Paulo', '-23.561414', '-46.655881', '2026-10-08 14:43:18', NULL, NULL);
+INSERT INTO [tb_mapcord] ([idtmapcord], [txnome], [mapcord_lat], [mapcord_lon], [dat_inclusao], [dat_update], [dat_del]) VALUES (3, 'Cristo Redentor - Rio de Janeiro', '-22.951916', '-43.210487', '2026-10-08 14:43:18', NULL, NULL);
+INSERT INTO [tb_mapcord] ([idtmapcord], [txnome], [mapcord_lat], [mapcord_lon], [dat_inclusao], [dat_update], [dat_del]) VALUES (4, 'Pelourinho - Salvador', '-12.971400', '-38.510800', '2026-10-08 14:43:18', NULL, NULL);
+INSERT INTO [tb_mapcord] ([idtmapcord], [txnome], [mapcord_lat], [mapcord_lon], [dat_inclusao], [dat_update], [dat_del]) VALUES (5, 'Praça da Liberdade - Belo Horizonte', '-19.932000', '-43.937800', '2026-10-08 14:43:18', NULL, NULL);
 
