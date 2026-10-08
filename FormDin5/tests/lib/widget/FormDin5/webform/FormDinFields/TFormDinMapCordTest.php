@@ -46,6 +46,7 @@ use PHPUnit\Framework\TestCase;
 class TFormDinMapCordTest extends TestCase
 {
     private $classTest;
+    private $form;
 
     /**
      * Prepares the environment before running a test.
@@ -53,7 +54,8 @@ class TFormDinMapCordTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->classTest = new TFormDinMapCord('map_test', 'Interactive Map');
+        $this->form = new BootstrapFormBuilder('form_map_test');
+        $this->classTest = new TFormDinMapCord($this->form, 'map_test', 'Interactive Map');
     }
 
     /**
@@ -62,6 +64,7 @@ class TFormDinMapCordTest extends TestCase
     protected function tearDown(): void
     {
         $this->classTest = null;
+        $this->form = null;
         parent::tearDown();
     }
 
@@ -110,6 +113,7 @@ class TFormDinMapCordTest extends TestCase
     public function test_constructorWithParameters()
     {
         $field = new TFormDinMapCord(
+            $this->form,
             'map_custom',
             'Custom Map',
             true,          // boolRequired
@@ -134,13 +138,13 @@ class TFormDinMapCordTest extends TestCase
 
     public function test_getNumericFieldReadOnly()
     {
-        $field = new TFormDinMapCord('map_ro', 'Map', false, true, true);
+        $field = new TFormDinMapCord($this->form, 'map_ro', 'Map', false, true, true);
         $this->assertInstanceOf(TElement::class, $field->getAdiantiObj());
     }
 
     public function test_getAdiantiChildFields()
     {
-        $field = new TFormDinMapCord('map_child', 'Map');
+        $field = new TFormDinMapCord($this->form, 'map_child', 'Map');
         $this->assertEquals('map_child_lat', $field->getAdiantiFieldLat()->getName());
         $this->assertEquals('map_child_lon', $field->getAdiantiFieldLon()->getName());
         $this->assertCount(2, $field->getAdiantiChildFields());
@@ -148,20 +152,28 @@ class TFormDinMapCordTest extends TestCase
 
     public function test_getAdiantiChildFieldsHidden()
     {
-        $field = new TFormDinMapCord('map_hidden', 'Map', false, false);
+        $field = new TFormDinMapCord($this->form, 'map_hidden', 'Map', false, false);
         $this->assertInstanceOf(THidden::class, $field->getAdiantiFieldLat());
         $this->assertInstanceOf(THidden::class, $field->getAdiantiFieldLon());
     }
 
     public function test_childFieldsRegisteredInForm()
     {
-        $form  = new BootstrapFormBuilder('form_map_test');
-        $field = new TFormDinMapCord('map_form', 'Map');
-        $form->addFields([new TLabel('Map')], [$field->getAdiantiObj()]);
-        foreach ($field->getAdiantiChildFields() as $childField) {
-            $form->addField($childField);
-        }
-        $this->assertNotNull($form->getField('map_form_lat'));
-        $this->assertNotNull($form->getField('map_form_lon'));
+        $this->assertSame($this->form, $this->classTest->getAdiantiForm());
+        $this->assertNotNull($this->form->getField('map_test_lat'));
+        $this->assertNotNull($this->form->getField('map_test_lon'));
+    }
+
+    public function test_childFieldsRegisteredInFormHidden()
+    {
+        new TFormDinMapCord($this->form, 'map_form_hidden', 'Map', false, false);
+        $this->assertInstanceOf(THidden::class, $this->form->getField('map_form_hidden_lat'));
+        $this->assertInstanceOf(THidden::class, $this->form->getField('map_form_hidden_lon'));
+    }
+
+    public function test_childFieldsDuplicatedIdInForm()
+    {
+        $this->expectException(Exception::class);
+        new TFormDinMapCord($this->form, 'map_test', 'Interactive Map');
     }
 }
