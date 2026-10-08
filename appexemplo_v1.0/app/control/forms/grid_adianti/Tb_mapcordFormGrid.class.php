@@ -36,14 +36,24 @@ class Tb_mapcordFormGrid extends TPage
         $txnome      = new TEntry('txnome');
         $mapcord_lat = new TEntry('mapcord_lat');
         $mapcord_lon = new TEntry('mapcord_lon');
+        //$mapcord_lat->addValidation('Latitude', new TRequiredValidator);
+
+        $formField = new TFormDinMapCord( 'mapcord'
+                                                ,'Coordenadas'
+                                                ,true
+                                                ,true
+                                                ,false
+                                                );
+        $objField = $formField->getAdiantiObj();        
         
         // add the form fields
         $this->form->addFields( [new TLabel('ID')], [$idtmapcord] );
         $this->form->addFields( [new TLabel('Nome / Descrição')], [$txnome] );
+
         $this->form->addFields( [new TLabel('Latitude', 'red')], [$mapcord_lat] );
         $this->form->addFields( [new TLabel('Longitude')], [$mapcord_lon] );
+         $this->form->addFields( [new TLabel('lat / lon ')],[$objField ] );
         
-        $mapcord_lat->addValidation('Latitude', new TRequiredValidator);
         
         // define the form actions
         $this->form->addAction('Salvar', new TAction([$this, 'onSave']), 'fa:save green');
