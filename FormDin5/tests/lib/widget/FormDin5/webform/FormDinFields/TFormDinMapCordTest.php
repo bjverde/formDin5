@@ -236,4 +236,99 @@ class TFormDinMapCordTest extends TestCase
         $this->expectException(Exception::class);
         new TFormDinMapCord($this->form, 'map_test', 'Interactive Map');
     }
+
+    public function test_fieldNamesDefault()
+    {
+        $this->assertEquals('map_test_lat', $this->classTest->getFieldNameLat());
+        $this->assertEquals('map_test_lon', $this->classTest->getFieldNameLon());
+    }
+
+    public function test_fieldNamesCustom()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_names', 'Map'
+                                    ,fieldNameLat: 'nu_latitude'
+                                    ,fieldNameLon: 'nu_longitude');
+        $this->assertEquals('nu_latitude', $field->getFieldNameLat());
+        $this->assertEquals('nu_longitude', $field->getFieldNameLon());
+        $this->assertEquals('nu_latitude', $field->getAdiantiFieldLat()->getName());
+        $this->assertEquals('nu_longitude', $field->getAdiantiFieldLon()->getName());
+        $this->assertEquals('nu_latitude', $field->getAdiantiFieldLat()->getId());
+        $this->assertEquals('nu_longitude', $field->getAdiantiFieldLon()->getId());
+
+        $this->assertNotNull($this->form->getField('nu_latitude'));
+        $this->assertNotNull($this->form->getField('nu_longitude'));
+        $this->assertNull($this->form->getField('map_names_lat'));
+        $this->assertNull($this->form->getField('map_names_lon'));
+    }
+
+    public function test_fieldNamesCustomGetData()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_data', 'Map'
+                                    ,decimalsSeparator: ','
+                                    ,fieldNameLat: 'nu_latitude'
+                                    ,fieldNameLon: 'nu_longitude');
+        $_POST['nu_latitude']  = '-15,818081';
+        $_POST['nu_longitude'] = '-47,882778';
+        $data = $this->form->getData();
+        unset($_POST['nu_latitude'], $_POST['nu_longitude']);
+
+        $this->assertEquals('-15.818081', $data->nu_latitude);
+        $this->assertEquals('-47.882778', $data->nu_longitude);
+        $this->assertFalse(property_exists($data, 'map_data_lat'));
+    }
+
+    public function test_fieldNamesCustomHidden()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_names_hidden', 'Map', false, false
+                                    ,fieldNameLat: 'nu_lat_hidden'
+                                    ,fieldNameLon: 'nu_lon_hidden');
+        $this->assertInstanceOf(THidden::class, $this->form->getField('nu_lat_hidden'));
+        $this->assertInstanceOf(THidden::class, $this->form->getField('nu_lon_hidden'));
+    }
+
+    public function test_fieldNamesOnlyLat()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_only_lat', 'Map'
+                                    ,fieldNameLat: 'nu_latitude');
+        $this->assertEquals('nu_latitude', $field->getFieldNameLat());
+        $this->assertEquals('map_only_lat_lon', $field->getFieldNameLon());
+    }
+
+    public function test_fieldNamesEmptyUsesDefault()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_empty', 'Map'
+                                    ,fieldNameLat: '  '
+                                    ,fieldNameLon: '');
+        $this->assertEquals('map_empty_lat', $field->getFieldNameLat());
+        $this->assertEquals('map_empty_lon', $field->getFieldNameLon());
+    }
+
+    public function test_fieldNamesEqualFail()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new TFormDinMapCord($this->form, 'map_equal', 'Map'
+                           ,fieldNameLat: 'nu_coord'
+                           ,fieldNameLon: 'nu_coord');
+    }
+
+    public function test_fieldNamesPositional()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_pos', 'Map', false, true, false
+                                    , null, null, null, null, null, null, null
+                                    , 'nu_lat_pos', 'nu_lon_pos');
+        $this->assertEquals('nu_lat_pos', $field->getFieldNameLat());
+        $this->assertEquals('nu_lon_pos', $field->getFieldNameLon());
+    }
+
+    public function test_fieldNamesInJsInit()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_js', 'Map'
+                                    ,fieldNameLat: 'nu_latitude'
+                                    ,fieldNameLon: 'nu_longitude');
+        ob_start();
+        $field->getAdiantiObj()->show();
+        $html = ob_get_clean();
+        $this->assertStringContainsString('fd5InitMap(\'map_js\'', $html);
+        $this->assertStringContainsString('"nu_latitude", "nu_longitude")', $html);
+    }
 }

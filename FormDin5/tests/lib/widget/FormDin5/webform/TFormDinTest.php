@@ -902,6 +902,20 @@ class TFormDinTest extends TestCase
         $this->assertEquals('Label Map', $list[0]['label']->getValue());
     }
 
+    public function testAddMapCordFieldNames()
+    {
+        $field = $this->classTest->addMapCord('map_id', 'Label Map', true
+                                             ,fieldNameLat: 'nu_latitude'
+                                             ,fieldNameLon: 'nu_longitude');
+        $this->assertEquals('nu_latitude', $field->getFieldNameLat());
+        $this->assertEquals('nu_longitude', $field->getFieldNameLon());
+
+        $bootForm = $this->classTest->getAdiantiObj();
+        $this->assertNotNull($bootForm->getField('nu_latitude'));
+        $this->assertNotNull($bootForm->getField('nu_longitude'));
+        $this->assertNull($bootForm->getField('map_id_lat'));
+    }
+
     public function testAddSelectFieldDB()
     {
         $field = $this->classTest->addSelectFieldDB(
