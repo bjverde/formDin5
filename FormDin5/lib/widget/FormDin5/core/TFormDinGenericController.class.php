@@ -68,7 +68,7 @@ class TFormDinGenericController
      * @param bool $showDumpLogTela
      * @return mixed|null
      */    
-    public function getArrayByCriteria(TCriteria $criteria,bool $showDumpLogTela=false){
+    public function getArrayByCriteria(?TCriteria $criteria = null,bool $showDumpLogTela=false){
         $result = $this->getDao()->getArrayByCriteria($criteria,$showDumpLogTela);
         return $result;
     }
@@ -80,7 +80,7 @@ class TFormDinGenericController
      * @param bool $showDumpLogTela
      * @return mixed|null
      */
-    public function getListObjByCriteria(TCriteria $criteria,bool $showDumpLogTela=false){
+    public function getListObjByCriteria(?TCriteria $criteria = null,bool $showDumpLogTela=false){
         $result = $this->getDao()->getListObjByCriteria($criteria,$showDumpLogTela);
         return $result;
     }
@@ -92,7 +92,7 @@ class TFormDinGenericController
      * @param bool $showDumpLogTela
      * @return mixed|null
      */    
-    public function getCountByCriteria(TCriteria $criteria,bool $showDumpLogTela=false){
+    public function getCountByCriteria(?TCriteria $criteria = null,bool $showDumpLogTela=false){
         $result = $this->getDao()->getCountByCriteria($criteria,$showDumpLogTela);
         return $result;
     }
