@@ -15,13 +15,32 @@ function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly, geoJs
     const inputLat = document.getElementById(idField + '_lat');
     const inputLon = document.getElementById(idField + '_lon');
 
+    // Casas decimais e separador definidos no PHP (TFormDinMapCord), lidos da div wrapper
+    const wrapper = document.getElementById(idField + '_mapwrapper');
+    function getDecimals() {
+        const decimals = wrapper ? parseInt(wrapper.dataset.decimals, 10) : NaN;
+        return isNaN(decimals) ? 6 : decimals;
+    }
+    function getSeparator() {
+        return (wrapper && wrapper.dataset.separator === ',') ? ',' : '.';
+    }
+    function formatCoord(value) {
+        return value.toFixed(getDecimals()).replace('.', getSeparator());
+    }
+    function parseCoord(value) {
+        if (typeof value !== 'string') {
+            return NaN;
+        }
+        return parseFloat(value.replace(',', '.'));
+    }
+
     // Determina a coordenada inicial prioritariamente do valor atual dos campos (se existirem)
     let initialLat = defaultLat;
     let initialLon = defaultLon;
 
     if (inputLat && inputLon) {
-        let latVal = parseFloat(inputLat.value);
-        let lonVal = parseFloat(inputLon.value);
+        let latVal = parseCoord(inputLat.value);
+        let lonVal = parseCoord(inputLon.value);
         if (!isNaN(latVal) && !isNaN(lonVal)) {
             initialLat = latVal;
             initialLon = lonVal;
@@ -59,11 +78,11 @@ function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly, geoJs
     // Função auxiliar para atualizar os campos de input e disparar o evento change
     function updateInputs(lat, lon) {
         if (inputLat) {
-            inputLat.value = lat.toFixed(6);
+            inputLat.value = formatCoord(lat);
             inputLat.dispatchEvent(new Event('change'));
         }
         if (inputLon) {
-            inputLon.value = lon.toFixed(6);
+            inputLon.value = formatCoord(lon);
             inputLon.dispatchEvent(new Event('change'));
         }
     }
@@ -85,8 +104,8 @@ function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly, geoJs
 
     // Atualização em tempo real caso o usuário digite nos inputs (caso estejam visíveis e não readOnly)
     function handleManualInputChange() {
-        const latVal = parseFloat(inputLat.value);
-        const lonVal = parseFloat(inputLon.value);
+        const latVal = parseCoord(inputLat.value);
+        const lonVal = parseCoord(inputLon.value);
         if (!isNaN(latVal) && !isNaN(lonVal)) {
             const newPos = [latVal, lonVal];
             marker.setLatLng(newPos);

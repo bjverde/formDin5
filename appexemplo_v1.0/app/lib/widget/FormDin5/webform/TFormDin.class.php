@@ -2053,6 +2053,8 @@ class TFormDin
      * @param int     $zoom            -10: Nível de zoom inicial do mapa. Default 12
      * @param int     $height          -11: Altura do mapa em pixels. Default 400
      * @param string  $geoJsonPath     -12: Caminho do arquivo GeoJSON a plotar. Default null
+     * @param int     $decimalPlaces   -13: Quantidade de casas decimais de lat e lon. Default 6
+     * @param string  $decimalsSeparator -14: Separador decimal na tela, '.' (Default) ou ','. No getData() o valor sempre vem com '.'
      * @return TFormDinMapCord
      */
 	public function addMapCord(string $idField
@@ -2067,6 +2069,8 @@ class TFormDin
                               ,$zoom          =null
                               ,$height        =null
                               ,$geoJsonPath   =null
+                              ,$decimalPlaces =null
+                              ,$decimalsSeparator=null
                              )
 	{
         $formField = new TFormDinMapCord( $this->getAdiantiObj()
@@ -2080,6 +2084,8 @@ class TFormDin
                                          ,$zoom
                                          ,$height
                                          ,$geoJsonPath
+                                         ,$decimalPlaces
+                                         ,$decimalsSeparator
                                          );
         $objField = $formField->getAdiantiObj();
         $label = $formField->getLabel();

@@ -47,6 +47,8 @@
 
 class TFormDinMapCord extends TFormDinGenericField
 {
+    const DECIMAL_PLACES = 6;
+
     protected $adiantiObj;
     private $adiantiForm = null;
     private $idDivMap = null;
@@ -57,6 +59,8 @@ class TFormDinMapCord extends TFormDinGenericField
     private $zoom = null;
     private $height = null;
     private $geoJsonPath = null;
+    private $decimalPlaces = null;
+    private $decimalsSeparator = null;
     private $adiantiFieldLat = null;
     private $adiantiFieldLon = null;
 
@@ -77,6 +81,8 @@ class TFormDinMapCord extends TFormDinGenericField
      * @param int     $zoom            -09: Nível de zoom inicial do mapa. Default 12
      * @param int     $height          -10: Altura do mapa em pixels. Default 400
      * @param string  $geoJsonPath     -11: Caminho para arquivo GeoJSON a ser plotado. Default null
+     * @param int     $decimalPlaces   -12: Quantidade de casas decimais de lat e lon. Default 6 (precisão de ~11cm)
+     * @param string  $decimalsSeparator -13: Separador decimal na tela, '.' (Default) ou ','. No getData() o valor sempre vem com '.'
      * @return TElement
      */
     public function __construct(BootstrapFormBuilder $adiantiForm
@@ -90,6 +96,8 @@ class TFormDinMapCord extends TFormDinGenericField
                                ,$zoom          = null
                                ,$height        = null
                                ,$geoJsonPath   = null
+                               ,$decimalPlaces = null
+                               ,$decimalsSeparator = null
                                )
     {
         $this->setAdiantiForm($adiantiForm);
@@ -101,6 +109,8 @@ class TFormDinMapCord extends TFormDinGenericField
         $this->setZoom($zoom);
         $this->setHeight($height);
         $this->setGeoJsonPath($geoJsonPath);
+        $this->setDecimalPlaces($decimalPlaces);
+        $this->setDecimalsSeparator($decimalsSeparator);
 
         $adiantiObj = $this->getDivMapElement($idField, $boolRequired);
         parent::__construct($adiantiObj, $this->getIdDivMap(), $label, false, null, null);
@@ -214,6 +224,71 @@ class TFormDinMapCord extends TFormDinGenericField
 
     //--------------------------------------------------------------------
     /**
+     * Quantidade de casas decimais de latitude e longitude.
+     * Pode ser chamado depois do construtor, a máscara é atualizada.
+     * @param int $decimalPlaces - Default 6 (precisão de ~11cm)
+     */
+    public function setDecimalPlaces($decimalPlaces)
+    {
+        $decimalPlaces = is_null($decimalPlaces) ? self::DECIMAL_PLACES : (int)$decimalPlaces;
+        if ($decimalPlaces < 0) {
+            throw new InvalidArgumentException('decimalPlaces deve ser maior ou igual a zero');
+        }
+        $this->decimalPlaces = $decimalPlaces;
+        $this->applyNumericFormat();
+    }
+    public function getDecimalPlaces()
+    {
+        return $this->decimalPlaces;
+    }
+
+    /**
+     * Separador decimal exibido na tela: '.' (Default) ou ','.
+     * O getData() sempre devolve o valor com '.', pronto para gravar no banco.
+     * Pode ser chamado depois do construtor, a máscara é atualizada.
+     * @param string $decimalsSeparator
+     */
+    public function setDecimalsSeparator($decimalsSeparator)
+    {
+        $comma = TFormDinNumericField::COMMA;
+        $this->decimalsSeparator = ($decimalsSeparator === $comma) ? $comma : TFormDinNumericField::DOT;
+        $this->applyNumericFormat();
+    }
+    public function getDecimalsSeparator()
+    {
+        return $this->decimalsSeparator;
+    }
+
+    /**
+     * Separador usado de fato nos campos. Campos ocultos não têm máscara
+     * e são postados como estão, por isso usam sempre '.'
+     * @return string
+     */
+    private function getFieldDecimalsSeparator()
+    {
+        return $this->getShowFields() ? $this->getDecimalsSeparator() : TFormDinNumericField::DOT;
+    }
+
+    /**
+     * Aplica casas decimais e separador nos campos lat/lon e na div do mapa,
+     * de onde o FormDin5MapCord.js lê a formatação
+     */
+    private function applyNumericFormat()
+    {
+        $separator = $this->getFieldDecimalsSeparator();
+        foreach ([$this->adiantiFieldLat, $this->adiantiFieldLon] as $field) {
+            if ($field instanceof TNumeric) {
+                $field->setNumericMask($this->getDecimalPlaces(), $separator, '', true);
+            }
+        }
+        if ($this->adiantiObj instanceof TElement) {
+            $this->adiantiObj->setProperty('data-decimals', $this->getDecimalPlaces());
+            $this->adiantiObj->setProperty('data-separator', $separator);
+        }
+    }
+
+    //--------------------------------------------------------------------
+    /**
      * Retorna o campo Adianti de Latitude ( {idField}_lat )
      * @return TField
      */
@@ -239,9 +314,9 @@ class TFormDinMapCord extends TFormDinGenericField
     }
 
     //--------------------------------------------------------------------
-    private function getNumericField($idField, $label, $boolRequired)
+    private function getNumericField($idField, $label, $boolRequired, $minValue, $maxValue)
     {
-        $numericField = new TFormDinNumericField($idField, $label, 18, $boolRequired, 16, false, null, -90, 90, false, null, null, null, null, null, null, true, null, '.');
+        $numericField = new TFormDinNumericField($idField, $label, 18, $boolRequired, $this->getDecimalPlaces(), false, null, $minValue, $maxValue, false, null, null, null, null, null, null, true, null, $this->getFieldDecimalsSeparator());
         if ($this->getFieldsReadOnly()) {
             $numericField->setReadOnly(true);
         }
@@ -263,6 +338,8 @@ class TFormDinMapCord extends TFormDinGenericField
         $divWrapper = new TElement('div');
         $divWrapper->class = 'fd5DivMapCordWrapper';
         $divWrapper->setProperty('id', $this->getIdDivMap() . '_mapwrapper');
+        $divWrapper->setProperty('data-decimals', $this->getDecimalPlaces());
+        $divWrapper->setProperty('data-separator', $this->getFieldDecimalsSeparator());
 
         // Cria o elemento da DIV do mapa
         $divMap = new TElement('div');
@@ -284,8 +361,8 @@ class TFormDinMapCord extends TFormDinGenericField
         $adiantiObjLat = null;
         $adiantiObjLon = null;
         if ($this->getShowFields() == true) {
-            $adiantiObjLat = $this->getNumericField($idField . '_lat', 'Latitude', $boolRequired);
-            $adiantiObjLon = $this->getNumericField($idField . '_lon', 'Longitude', $boolRequired);
+            $adiantiObjLat = $this->getNumericField($idField . '_lat', 'Latitude', $boolRequired, -90, 90);
+            $adiantiObjLon = $this->getNumericField($idField . '_lon', 'Longitude', $boolRequired, -180, 180);
         } else {
             $adiantiObjLat = $this->getHiddenField($idField . '_lat', $boolRequired);
             $adiantiObjLon = $this->getHiddenField($idField . '_lon', $boolRequired);
