@@ -1,4 +1,9 @@
-function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly, geoJsonPath) {
+/**
+ * Inicializa o mapa do TFormDinMapCord
+ * fieldIdLat e fieldIdLon: ids dos campos de latitude e longitude.
+ * Se não informados, usa idField + '_lat' e idField + '_lon'
+ */
+function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly, geoJsonPath, fieldIdLat, fieldIdLon) {
     const mapElementId = idField + '_map';
     const mapContainer = document.getElementById(mapElementId);
     if (!mapContainer) {
@@ -12,8 +17,8 @@ function fd5InitMap(idField, defaultLat, defaultLon, zoom, fieldsReadOnly, geoJs
     }
 
     // Referência aos campos de input
-    const inputLat = document.getElementById(idField + '_lat');
-    const inputLon = document.getElementById(idField + '_lon');
+    const inputLat = document.getElementById(fieldIdLat || (idField + '_lat'));
+    const inputLon = document.getElementById(fieldIdLon || (idField + '_lon'));
 
     // Casas decimais e separador definidos no PHP (TFormDinMapCord), lidos da div wrapper
     const wrapper = document.getElementById(idField + '_mapwrapper');

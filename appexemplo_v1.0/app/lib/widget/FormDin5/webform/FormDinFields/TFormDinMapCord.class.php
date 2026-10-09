@@ -61,28 +61,60 @@ class TFormDinMapCord extends TFormDinGenericField
     private $geoJsonPath = null;
     private $decimalPlaces = null;
     private $decimalsSeparator = null;
+    private $fieldNameLat = null;
+    private $fieldNameLon = null;
     private $adiantiFieldLat = null;
     private $adiantiFieldLon = null;
 
     /**
      * Geolocalização interativa usando o Leaflet.js
      *
-     * Os campos internos {idField}_lat e {idField}_lon são registrados
-     * automaticamente no $adiantiForm, para aparecerem no getData()
+     * Exibe um mapa onde o usuário clica ou arrasta o marcador para informar
+     * a coordenada. O valor fica em dois campos internos, latitude e longitude,
+     * que podem ser visíveis (TNumeric) ou ocultos (THidden).
+     *
+     * Nome dos campos internos:
+     *  - Default: {idField}_lat e {idField}_lon
+     *  - Com $fieldNameLat e $fieldNameLon é possível usar outros nomes, por
+     *    exemplo os nomes das colunas no banco, para o getData() já vir pronto
+     *    para o onSave
+     *
+     * Os campos internos são registrados automaticamente no $adiantiForm,
+     * para aparecerem no getData(). Não chame $adiantiForm->addField() para
+     * eles, o Adianti lança exceção de campo duplicado.
+     *
+     * Todo o HTML/JS é montado no construtor. Por isso as opções devem ser
+     * informadas aqui. Só setDecimalPlaces() e setDecimalsSeparator()
+     * continuam funcionando se chamados depois do construtor.
+     *
+     * Exemplos:
+     *   // padrão: campos mapcord_lat e mapcord_lon
+     *   $map = new TFormDinMapCord($this->form, 'mapcord', 'Coordenadas');
+     *
+     *   // parâmetros nomeados, com nomes das colunas do banco e vírgula decimal
+     *   $map = new TFormDinMapCord($this->form, 'mapcord', 'Coordenadas'
+     *                             ,boolRequired: true
+     *                             ,decimalsSeparator: ','
+     *                             ,fieldNameLat: 'nu_latitude'
+     *                             ,fieldNameLon: 'nu_longitude');
+     *   $this->form->addFields([$map->getLabel()], [$map->getAdiantiObj()]);
      *
      * @param BootstrapFormBuilder $adiantiForm -01: Form Adianti onde os campos lat/lon serão registrados
-     * @param string  $idField         -02: ID do campo base
+     * @param string  $idField         -02: ID do componente. Base do id da div do mapa e, por padrão, do nome dos campos lat/lon
      * @param string  $label           -03: Label do campo, usado para validações
      * @param boolean $boolRequired    -04: Campo obrigatório ou não. Default FALSE
-     * @param boolean $showFields      -05: TRUE (Default) or FALSE, Mostrar campos numéricos de lat e lon
-     * @param boolean $fieldsReadOnly  -06: TRUE ou FALSE (Default), Campos somente leitura
-     * @param double  $defaultLat      -07: Latitude inicial padrão. Default -15.793889 (Brasília)
-     * @param double  $defaultLon      -08: Longitude inicial padrão. Default -47.882778 (Brasília)
+     * @param boolean $showFields      -05: TRUE (Default) or FALSE, Mostrar campos numéricos de lat e lon. FALSE usa campos ocultos
+     * @param boolean $fieldsReadOnly  -06: TRUE ou FALSE (Default), Campos somente leitura. TRUE também bloqueia clique e arraste no mapa
+     * @param double  $defaultLat      -07: Latitude inicial padrão, usada se o campo estiver vazio. Default -15.793889 (Brasília)
+     * @param double  $defaultLon      -08: Longitude inicial padrão, usada se o campo estiver vazio. Default -47.882778 (Brasília)
      * @param int     $zoom            -09: Nível de zoom inicial do mapa. Default 12
      * @param int     $height          -10: Altura do mapa em pixels. Default 400
      * @param string  $geoJsonPath     -11: Caminho para arquivo GeoJSON a ser plotado. Default null
      * @param int     $decimalPlaces   -12: Quantidade de casas decimais de lat e lon. Default 6 (precisão de ~11cm)
      * @param string  $decimalsSeparator -13: Separador decimal na tela, '.' (Default) ou ','. No getData() o valor sempre vem com '.'
+     * @param string  $fieldNameLat    -14: Nome do campo de latitude no form/getData(). Default {idField}_lat
+     * @param string  $fieldNameLon    -15: Nome do campo de longitude no form/getData(). Default {idField}_lon
+     * @throws InvalidArgumentException se $fieldNameLat e $fieldNameLon forem iguais
      * @return TElement
      */
     public function __construct(BootstrapFormBuilder $adiantiForm
@@ -98,10 +130,13 @@ class TFormDinMapCord extends TFormDinGenericField
                                ,$geoJsonPath   = null
                                ,$decimalPlaces = null
                                ,$decimalsSeparator = null
+                               ,$fieldNameLat  = null
+                               ,$fieldNameLon  = null
                                )
     {
         $this->setAdiantiForm($adiantiForm);
         $this->setIdDivMap($idField);
+        $this->setFieldNames($idField, $fieldNameLat, $fieldNameLon);
         $this->setShowFields($showFields);
         $this->setFieldsReadOnly($fieldsReadOnly);
         $this->setDefaultLat($defaultLat);
@@ -289,7 +324,41 @@ class TFormDinMapCord extends TFormDinGenericField
 
     //--------------------------------------------------------------------
     /**
-     * Retorna o campo Adianti de Latitude ( {idField}_lat )
+     * Define o nome dos campos lat/lon. Privado porque o nome é usado ao
+     * criar os campos, registrar no form e iniciar o JS, tudo no construtor
+     */
+    private function setFieldNames($idField, $fieldNameLat, $fieldNameLon)
+    {
+        $fieldNameLat = is_null($fieldNameLat) ? '' : trim($fieldNameLat);
+        $fieldNameLon = is_null($fieldNameLon) ? '' : trim($fieldNameLon);
+        $fieldNameLat = ($fieldNameLat === '') ? $idField . '_lat' : $fieldNameLat;
+        $fieldNameLon = ($fieldNameLon === '') ? $idField . '_lon' : $fieldNameLon;
+        if ($fieldNameLat === $fieldNameLon) {
+            throw new InvalidArgumentException('fieldNameLat e fieldNameLon devem ser diferentes: ' . $fieldNameLat);
+        }
+        $this->fieldNameLat = $fieldNameLat;
+        $this->fieldNameLon = $fieldNameLon;
+    }
+    /**
+     * Nome do campo de latitude no form/getData(). Default {idField}_lat
+     * @return string
+     */
+    public function getFieldNameLat()
+    {
+        return $this->fieldNameLat;
+    }
+    /**
+     * Nome do campo de longitude no form/getData(). Default {idField}_lon
+     * @return string
+     */
+    public function getFieldNameLon()
+    {
+        return $this->fieldNameLon;
+    }
+
+    //--------------------------------------------------------------------
+    /**
+     * Retorna o campo Adianti de Latitude ( getFieldNameLat() )
      * @return TField
      */
     public function getAdiantiFieldLat()
@@ -297,7 +366,7 @@ class TFormDinMapCord extends TFormDinGenericField
         return $this->adiantiFieldLat;
     }
     /**
-     * Retorna o campo Adianti de Longitude ( {idField}_lon )
+     * Retorna o campo Adianti de Longitude ( getFieldNameLon() )
      * @return TField
      */
     public function getAdiantiFieldLon()
@@ -361,11 +430,11 @@ class TFormDinMapCord extends TFormDinGenericField
         $adiantiObjLat = null;
         $adiantiObjLon = null;
         if ($this->getShowFields() == true) {
-            $adiantiObjLat = $this->getNumericField($idField . '_lat', 'Latitude', $boolRequired, -90, 90);
-            $adiantiObjLon = $this->getNumericField($idField . '_lon', 'Longitude', $boolRequired, -180, 180);
+            $adiantiObjLat = $this->getNumericField($this->getFieldNameLat(), 'Latitude', $boolRequired, -90, 90);
+            $adiantiObjLon = $this->getNumericField($this->getFieldNameLon(), 'Longitude', $boolRequired, -180, 180);
         } else {
-            $adiantiObjLat = $this->getHiddenField($idField . '_lat', $boolRequired);
-            $adiantiObjLon = $this->getHiddenField($idField . '_lon', $boolRequired);
+            $adiantiObjLat = $this->getHiddenField($this->getFieldNameLat(), $boolRequired);
+            $adiantiObjLon = $this->getHiddenField($this->getFieldNameLon(), $boolRequired);
         }
         $this->adiantiFieldLat = $adiantiObjLat;
         $this->adiantiFieldLon = $adiantiObjLon;
@@ -374,15 +443,18 @@ class TFormDinMapCord extends TFormDinGenericField
         $scriptInit = new TElement('script');
         $readOnlyStr = $this->getFieldsReadOnly() ? 'true' : 'false';
         $geoJsonPathStr = $this->getGeoJsonPath() ? json_encode($this->getGeoJsonPath()) : 'null';
+        $fieldLatStr = json_encode($this->getFieldNameLat());
+        $fieldLonStr = json_encode($this->getFieldNameLon());
+        $initArgs = "'{$idField}', {$this->getDefaultLat()}, {$this->getDefaultLon()}, {$this->getZoom()}, {$readOnlyStr}, {$geoJsonPathStr}, {$fieldLatStr}, {$fieldLonStr}";
         $scriptInit->add("
             setTimeout(function() {
                 if (typeof fd5InitMap === 'function') {
-                    fd5InitMap('{$idField}', {$this->getDefaultLat()}, {$this->getDefaultLon()}, {$this->getZoom()}, {$readOnlyStr}, {$geoJsonPathStr});
+                    fd5InitMap({$initArgs});
                 } else {
                     let checkInterval = setInterval(function() {
                         if (typeof fd5InitMap === 'function') {
                             clearInterval(checkInterval);
-                            fd5InitMap('{$idField}', {$this->getDefaultLat()}, {$this->getDefaultLon()}, {$this->getZoom()}, {$readOnlyStr}, {$geoJsonPathStr});
+                            fd5InitMap({$initArgs});
                         }
                     }, 100);
                 }
