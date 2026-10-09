@@ -171,6 +171,66 @@ class TFormDinMapCordTest extends TestCase
         $this->assertInstanceOf(THidden::class, $this->form->getField('map_form_hidden_lon'));
     }
 
+    public function test_decimalsDefault()
+    {
+        $this->assertEquals(6, $this->classTest->getDecimalPlaces());
+        $this->assertEquals('.', $this->classTest->getDecimalsSeparator());
+        $this->assertEquals('6.', $this->classTest->getAdiantiFieldLat()->getProperty('data-nmask'));
+        $this->assertEquals(6, $this->classTest->getAdiantiObj()->getProperty('data-decimals'));
+        $this->assertEquals('.', $this->classTest->getAdiantiObj()->getProperty('data-separator'));
+
+        $fieldLat = $this->classTest->getAdiantiFieldLat();
+        $fieldLat->setValue(-15.818081);
+        $this->assertEquals('-15.818081', $fieldLat->getValue());
+    }
+
+    public function test_decimalsCommaInConstructor()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_comma', 'Map', false, true, false
+                                    , null, null, null, null, null, 4, ',');
+        $this->assertEquals(4, $field->getDecimalPlaces());
+        $this->assertEquals(',', $field->getDecimalsSeparator());
+        $this->assertEquals(',', $field->getAdiantiObj()->getProperty('data-separator'));
+
+        $fieldLon = $field->getAdiantiFieldLon();
+        $fieldLon->setValue(-47.882778);
+        $this->assertEquals('-47,8828', $fieldLon->getValue());
+
+        $_POST['map_comma_lon'] = '-47,8828';
+        $this->assertEquals('-47.8828', $fieldLon->getPostData());
+        unset($_POST['map_comma_lon']);
+    }
+
+    public function test_decimalsSetterAfterConstructor()
+    {
+        $this->classTest->setDecimalPlaces(3);
+        $this->classTest->setDecimalsSeparator(',');
+        $this->assertEquals('3,', $this->classTest->getAdiantiFieldLat()->getProperty('data-nmask'));
+        $this->assertEquals('3,', $this->classTest->getAdiantiFieldLon()->getProperty('data-nmask'));
+        $this->assertEquals(3, $this->classTest->getAdiantiObj()->getProperty('data-decimals'));
+        $this->assertEquals(',', $this->classTest->getAdiantiObj()->getProperty('data-separator'));
+    }
+
+    public function test_decimalsSeparatorInvalidUsesDot()
+    {
+        $this->classTest->setDecimalsSeparator(';');
+        $this->assertEquals('.', $this->classTest->getDecimalsSeparator());
+    }
+
+    public function test_decimalsHiddenAlwaysDot()
+    {
+        $field = new TFormDinMapCord($this->form, 'map_hidden_comma', 'Map', false, false, false
+                                    , null, null, null, null, null, 4, ',');
+        $this->assertEquals(',', $field->getDecimalsSeparator());
+        $this->assertEquals('.', $field->getAdiantiObj()->getProperty('data-separator'));
+    }
+
+    public function test_decimalsNegativeFail()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->classTest->setDecimalPlaces(-1);
+    }
+
     public function test_childFieldsDuplicatedIdInForm()
     {
         $this->expectException(Exception::class);
