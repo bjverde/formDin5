@@ -30,9 +30,9 @@ return [
         ],
     ],
     'system' =>  [
-        'system_version' => '5.15.1',
+        'system_version' => '5.15.2',
         'system_name_sub' => 'Aplicação de Exemplo 1 do FormDin5 com Adianti',
         'adianti_min_version' => '8.4.0',
-        'formdin_min_version' => '5.15.1',
+        'formdin_min_version' => '5.15.2',
     ],
 ];
