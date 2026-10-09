@@ -124,6 +124,6 @@ class Tb_mapcordFormGrid extends TPage
         // Custom logic before saving can be placed here
 
         // Call the trait onSave method
-        //return $this->onSaveTrait();
+        return $this->onSaveTrait();
     }
 }
