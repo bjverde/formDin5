@@ -57,12 +57,12 @@ class UrlHelper
     }
     
     /**
-     * @deprecated use ServerHelper::homeUrl()
+     * @deprecated use ServerHelper::getCurrentUrl()
      * @codeCoverageIgnore
      */
     public static function homeUrl() 
     {
-        return ServerHelper::homeUrl();
+        return ServerHelper::getCurrentUrl();
     }
 
 }
