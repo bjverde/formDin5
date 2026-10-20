@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MigrationRunner
+ * FormDinMigrationRunner
  *
  * Responsável por:
  *  1. Garantir que a tabela de controle (db_migrations) exista no banco DATABASE_PERMISSION.
@@ -13,13 +13,13 @@
  *    (application[system][system_version]) usando versionamento semântico.
  *
  * Uso:
- *   $runner = new MigrationRunner();
+ *   $runner = new FormDinMigrationRunner();
  *   $runner->run();
  *
  * Para listar o status sem executar:
  *   $runner->status();
  */
-class MigrationRunner
+class FormDinMigrationRunner
 {
     /** Versão do runner de migrations */
     public const MIGRATION_VERSION = '1.0.0';

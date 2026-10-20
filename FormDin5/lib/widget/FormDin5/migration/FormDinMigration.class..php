@@ -13,7 +13,8 @@
  * no MySQL/MariaDB e NÃO podem ser revertidas via rollback. O método down() serve como
  * procedimento de desfazer manual, não como rollback transacional.
  */
-abstract class Migration
+abstract class FormDinMigration
+ 
 {
     /**
      * Identificador único da migration (ex: 'V001').
