@@ -25,15 +25,58 @@ class FormDinMigrationRunner
     public const MIGRATION_VERSION = '1.0.0';
 
     /** Banco onde a tabela db_migrations é mantida */
-    private string $trackingDb = Constantes::DATABASE_PERMISSION;
+    private string $trackingDb;
 
     /** Diretório onde ficam os arquivos de migration */
     private string $migrationsPath;
 
-    public function __construct()
+    public function __construct(?string $migrationsPath = null, ?string $trackingDb = null)
     {
-        $this->migrationsPath = __DIR__;
+        $this->setMigrationsPath($migrationsPath);
+        $this->setTrackingDb($trackingDb);
     }
+
+    /**
+     * Retorna o banco onde a tabela db_migrations é mantida.
+     */
+    public function getTrackingDb(): string
+    {
+        return $this->trackingDb;
+    }
+
+    /**
+     * Define o banco onde a tabela db_migrations é mantida.
+     * Regra: parâmetro -> application.php -> fallback 'permission'
+     */
+    public function setTrackingDb(?string $trackingDb = null): void
+    {
+        $ini = $this->getInfoApplication();
+        // 1. Banco de rastreamento: parâmetro -> application.php -> fallback 'permission'
+        $this->trackingDb = $trackingDb 
+            ?? $ini['migration']['database'] 
+            ?? (defined('Constantes::DATABASE_PERMISSION') ? Constantes::DATABASE_PERMISSION : 'permission');
+    }
+
+    /**
+     * Retorna o diretório onde ficam os arquivos de migration.
+     */
+    public function getMigrationsPath(): string
+    {
+        return $this->migrationsPath;
+    }
+
+    /**
+     * Define o diretório onde ficam os arquivos de migration.
+     * Regra: parâmetro -> PATH/app/database/migrations
+     */
+    public function setMigrationsPath(?string $migrationsPath = null): void
+    {
+        // 2. Pasta das migrations: parâmetro -> PATH/app/database/migrations
+        $this->migrationsPath = $migrationsPath 
+            ?? (defined('PATH') ? PATH . '/app/database/migrations' : dirname(__DIR__, 4) . '/database/migrations');
+    }
+    // Métodos run(), status(), scanMigrationFiles(), execute()...
+    // Gravando o histórico de forma agnóstica a qualquer banco (compatível com MySQL, PgSQL, etc.)
 
     // -------------------------------------------------------------------------
     // API pública
@@ -107,7 +150,7 @@ class FormDinMigrationRunner
      */
     private function ensureTableAndGetExecuted(): array
     {
-        TTransaction::open($this->trackingDb);
+        TTransaction::open($this->getTrackingDb());
         $conn = TTransaction::get();
 
         // Cria a tabela com o schema completo caso ainda não exista
@@ -150,7 +193,7 @@ class FormDinMigrationRunner
      */
     private function scanMigrationFiles(): array
     {
-        $files = glob($this->migrationsPath . '/V*.php');
+        $files = glob($this->getMigrationsPath() . '/V*.php');
         sort($files); // garante ordem lexicográfica (V001 < V002 < ...)
 
         $result = [];
@@ -174,7 +217,9 @@ class FormDinMigrationRunner
 
     public function getInfoApplication(): array|null
     {
-        $ini = \Adianti\Core\AdiantiApplicationConfig::get();
+        $ini = class_exists(\Adianti\Core\AdiantiApplicationConfig::class)
+            ? \Adianti\Core\AdiantiApplicationConfig::get()
+            : null;
         return $ini;
     }
 
@@ -267,7 +312,7 @@ class FormDinMigrationRunner
         try {
             $migration->up();
 
-            TTransaction::open($this->trackingDb);
+            TTransaction::open($this->getTrackingDb());
             $conn = TTransaction::get();
             $stmt = $conn->prepare("
                 INSERT INTO db_migrations
@@ -295,7 +340,7 @@ class FormDinMigrationRunner
             // Tenta fechar qualquer transação aberta antes de registrar o erro
             try { TTransaction::rollback(); } catch (Exception $ignored) {}
 
-            TTransaction::open($this->trackingDb);
+            TTransaction::open($this->getTrackingDb());
             $conn = TTransaction::get();
             $stmt = $conn->prepare("
                 INSERT INTO db_migrations
