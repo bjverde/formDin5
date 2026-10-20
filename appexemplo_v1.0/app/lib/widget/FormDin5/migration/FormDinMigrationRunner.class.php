@@ -50,11 +50,10 @@ class FormDinMigrationRunner
      */
     public function setTrackingDb(?string $trackingDb = null): void
     {
-        $ini = $this->getInfoApplication();
-        // 1. Banco de rastreamento: parâmetro -> application.php -> fallback 'permission'
-        $this->trackingDb = $trackingDb 
-            ?? $ini['migration']['database'] 
-            ?? (defined('Constantes::DATABASE_PERMISSION') ? Constantes::DATABASE_PERMISSION : 'permission');
+        if(empty($trackingDb)){
+            throw new InvalidArgumentException("Banco de rastreamento não informado.");
+        };
+        $this->trackingDb = $trackingDb;
     }
 
     /**
@@ -68,12 +67,23 @@ class FormDinMigrationRunner
     /**
      * Define o diretório onde ficam os arquivos de migration.
      * Regra: parâmetro -> PATH/app/database/migrations
+     * Valor Default: PATH/app/database/migrations
      */
     public function setMigrationsPath(?string $migrationsPath = null): void
     {
-        // 2. Pasta das migrations: parâmetro -> PATH/app/database/migrations
-        $this->migrationsPath = $migrationsPath 
-            ?? (defined('PATH') ? PATH . '/app/database/migrations' : dirname(__DIR__, 4) . '/database/migrations');
+        $path = FileHelper::getCaminhoSistema();
+        if(empty($migrationsPath)){
+            $path .= '/app/database/migrations';
+        }else{
+            $path .= $migrationsPath;
+        }
+
+        // Valida se o diretório existe
+        $realPath = realpath($path);
+        if ($realPath === false || !is_dir($realPath)) {
+            throw new InvalidArgumentException("Diretório de migrations inválido: '{$path}'.");
+        }
+        $this->migrationsPath = $path;
     }
     // Métodos run(), status(), scanMigrationFiles(), execute()...
     // Gravando o histórico de forma agnóstica a qualquer banco (compatível com MySQL, PgSQL, etc.)
