@@ -52,6 +52,10 @@ class ServerHelper
     const DEVICE_TYPE_DESKTOP = 'desktop';
 
     /**
+     * Retorna um atributo do array $_SERVER
+     *
+     * @param string $atributeName
+     * @return string|mixed
      * @codeCoverageIgnore
      */     
     public static function get($atributeName) 
@@ -60,7 +64,8 @@ class ServerHelper
         return $result;
     }    
     
-    /**
+    /**`
+     * Retorna a URL atual completa
      * https://stackoverflow.com/questions/6768793/get-the-full-url-in-php
      *
      * @param  boolean $trim_query_string
@@ -81,6 +86,12 @@ class ServerHelper
         }
     }
 
+    /**
+     * Retorna a Query String da URL atual
+     *
+     * @return string
+     * @codeCoverageIgnore
+     */
     public static function getQueryString() 
     {
         $pageURL = self::getCurrentUrl(true);
@@ -88,6 +99,12 @@ class ServerHelper
         return $url[0];
     }
 
+    /**
+     * Retorna a URL Raiz do Projeto
+     *
+     * @return string
+     * @codeCoverageIgnore
+     */
     public static function getHomeUrl() 
     {
         $pageURL = self::getCurrentUrl();

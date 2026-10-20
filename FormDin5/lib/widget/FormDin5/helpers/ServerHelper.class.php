@@ -52,15 +52,20 @@ class ServerHelper
     const DEVICE_TYPE_DESKTOP = 'desktop';
 
     /**
+     * Retorna um atributo do array $_SERVER
+     *
+     * @param string $atributeName
+     * @return string|mixed
      * @codeCoverageIgnore
-     */     
-    public static function get($atributeName) 
+     */
+    public static function get($atributeName)
     {
         $result = ArrayHelper::get($_SERVER,$atributeName);
         return $result;
-    }    
-    
+    }
+
     /**
+     * Retorna a URL atual completa
      * https://stackoverflow.com/questions/6768793/get-the-full-url-in-php
      *
      * @param  boolean $trim_query_string
@@ -81,14 +86,26 @@ class ServerHelper
         }
     }
 
-    public static function getQueryString() 
+    /**
+     * Retorna a Query String da URL atual
+     *
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public static function getQueryString()
     {
         $pageURL = self::getCurrentUrl(true);
         $url = explode('?', $pageURL);
         return $url[0];
     }
 
-    public static function getHomeUrl() 
+    /**
+     * Retorna a URL Raiz do Projeto
+     *
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public static function getHomeUrl()
     {
         $pageURL = self::getCurrentUrl();
         $url = explode('engine.php', $pageURL);
@@ -135,8 +152,8 @@ class ServerHelper
 
     public static function getClientAgent(){
         $agent = ArrayHelper::get($_SERVER,'HTTP_USER_AGENT');
-        return $agent; 
-    }     
+        return $agent;
+    }
 
     /**
      * Return string with Device Type of client
@@ -185,7 +202,7 @@ class ServerHelper
                 return true;
             }
         }
-        
+
         if($testPort==true){
             // 4. Fallback: verificar a porta do servidor. A porta 443 é a padrão para HTTPS.
             // É menos comum, mas pode ser um último recurso útil.
