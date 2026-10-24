@@ -140,7 +140,7 @@ class FormDinMigrationRunner
 
         foreach ($allFiles as ['version' => $version, 'class' => $class, 'file' => $file]) {
             require_once $file;
-            /** @var Migration $m */
+            /** @var FormDinMigration $m */
             $m = new $class();
 
             $row = $executed[$version] ?? null;
@@ -271,7 +271,7 @@ class FormDinMigrationRunner
      * Verifica se a versão da migration é compatível com a versão corrente do sistema.
      * Retorna false (e imprime aviso) se a migration exige uma versão ainda não implantada.
      */
-    private function isCompatibleWithSystemVersion(Migration $migration): bool
+    private function isCompatibleWithSystemVersion(FormDinMigration $migration): bool
     {
         $migrationSysVersion = $migration->getSystemVersion();
         $currentVersion      = $this->getCurrentSystemVersion();
@@ -289,7 +289,7 @@ class FormDinMigrationRunner
     /**
      * Retorna instâncias das migrations ainda não executadas com sucesso.
      *
-     * @return Migration[]
+     * @return FormDinMigration[]
      */
     private function getPendingMigrations(): array
     {
@@ -315,7 +315,7 @@ class FormDinMigrationRunner
     /**
      * Executa uma migration e registra o resultado em db_migrations.
      */
-    private function execute(Migration $migration): void
+    private function execute(FormDinMigration $migration): void
     {
         $version       = $migration->getVersion();
         $desc          = $migration->getDescription();
