@@ -24,6 +24,9 @@ class FormDinMigrationRunner
     /** Versão do runner de migrations */
     public const MIGRATION_VERSION = '1.0.0';
 
+    /** Banco padrão de rastreamento caso não seja informado */
+    public const DEFAULT_TRACKING_DB = 'permission';
+
     /** Banco onde a tabela db_migrations é mantida */
     private string $trackingDb;
 
@@ -50,9 +53,15 @@ class FormDinMigrationRunner
      */
     public function setTrackingDb(?string $trackingDb = null): void
     {
-        if(empty($trackingDb)){
-            throw new InvalidArgumentException("Banco de rastreamento não informado.");
-        };
+        $trackingDb = trim((string) $trackingDb);
+
+        if (empty($trackingDb)) {
+            $ini = $this->getInfoApplication();
+            $trackingDb = $ini['general']['tracking_db'] 
+                ?? $ini['system']['tracking_db'] 
+                ?? self::DEFAULT_TRACKING_DB;
+        }
+
         $this->trackingDb = $trackingDb;
     }
 
