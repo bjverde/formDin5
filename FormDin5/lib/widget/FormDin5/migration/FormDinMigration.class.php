@@ -179,4 +179,96 @@ abstract class FormDinMigration
     {
         return $this->getDriverName($database, $conn) === self::DBMS_SQLSERVER;
     }
+
+    // -------------------------------------------------------------------------
+    // Gerenciamento de Conexão e Transações
+    // -------------------------------------------------------------------------
+
+    /**
+     * Retorna a conexão PDO ativa da transação atual.
+     * Se nenhuma transação estiver aberta, abre automaticamente para o banco padrão da migration.
+     */
+    public function getConnection(?string $database = null): PDO
+    {
+        $database = $database ?: $this->getDatabase();
+
+        if (class_exists(\Adianti\Database\TTransaction::class)) {
+            $conn = \Adianti\Database\TTransaction::get();
+            if ($conn instanceof PDO) {
+                return $conn;
+            }
+
+            return \Adianti\Database\TTransaction::open($database);
+        }
+
+        throw new \RuntimeException("Classe TTransaction do Adianti não encontrada.");
+    }
+
+    /**
+     * Inicia uma transação explicitamente no banco informado.
+     */
+    public function beginTransaction(?string $database = null): PDO
+    {
+        $database = $database ?: $this->getDatabase();
+        return \Adianti\Database\TTransaction::open($database);
+    }
+
+    /**
+     * Comita a transação ativa tratando commits implícitos em SGBDs como MySQL.
+     */
+    public function commitTransaction(): void
+    {
+        if (class_exists(\Adianti\Database\TTransaction::class)) {
+            try {
+                \Adianti\Database\TTransaction::close();
+            } catch (\Throwable $e) {
+                // Em MySQL comandos DDL causam commit implícito, fazendo close() disparar "no active transaction"
+                if (strpos($e->getMessage(), 'active transaction') === false) {
+                    throw $e;
+                }
+            }
+        }
+    }
+
+    /**
+     * Cancela a transação ativa.
+     */
+    public function rollbackTransaction(): void
+    {
+        if (class_exists(\Adianti\Database\TTransaction::class)) {
+            try {
+                \Adianti\Database\TTransaction::rollback();
+            } catch (\Throwable $e) {
+                // Ignora se não houver transação ativa
+            }
+        }
+    }
+
+    /**
+     * Executa uma função/callback dentro de uma transação com commit e rollback automáticos.
+     *
+     * Exemplo de uso:
+     *   $this->transaction(function(PDO $conn) {
+     *       $conn->exec("INSERT INTO ...");
+     *       $conn->exec("UPDATE ...");
+     *   });
+     *
+     * @param callable(PDO): mixed $callback
+     * @param string|null $database
+     * @return mixed
+     */
+    public function transaction(callable $callback, ?string $database = null): mixed
+    {
+        $database = $database ?: $this->getDatabase();
+        $conn = $this->beginTransaction($database);
+
+        try {
+            $result = $callback($conn);
+            $this->commitTransaction();
+            return $result;
+        } catch (\Throwable $e) {
+            $this->rollbackTransaction();
+            throw $e;
+        }
+    }
 }
