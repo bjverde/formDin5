@@ -169,4 +169,23 @@ class FormDinMigrationRunnerTest extends TestCase
             @unlink($tempDb);
         }
     }
+
+    public function test_close_and_rollback_open_transactions(): void
+    {
+        $runner = new FormDinMigrationRunner();
+
+        // 1. Abre transação e testa fechamento automático
+        TTransaction::open('dbapoio');
+        $this->assertInstanceOf(PDO::class, TTransaction::get());
+
+        $runner->closeOpenTransactions();
+        $this->assertNull(TTransaction::get());
+
+        // 2. Abre transação novamente e testa rollback automático
+        TTransaction::open('dbapoio');
+        $this->assertInstanceOf(PDO::class, TTransaction::get());
+
+        $runner->rollbackOpenTransactions();
+        $this->assertNull(TTransaction::get());
+    }
 }

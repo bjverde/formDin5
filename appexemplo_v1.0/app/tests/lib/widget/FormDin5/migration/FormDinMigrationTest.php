@@ -93,4 +93,29 @@ class FormDinMigrationTest extends TestCase
         $this->assertFalse($migration->isSqlite());
         $this->assertFalse($migration->isSqlServer());
     }
+
+    public function test_transaction_management_helpers(): void
+    {
+        $migration = new ConcreteMigrationForTest('V001', 'dbapoio');
+
+        // Testa transaction com callback de sucesso
+        $result = $migration->transaction(function(PDO $conn) {
+            $this->assertInstanceOf(PDO::class, $conn);
+            return 'sucesso';
+        });
+        $this->assertEquals('sucesso', $result);
+
+        // Testa transaction com rollback automático em caso de exceção
+        try {
+            $migration->transaction(function(PDO $conn) {
+                throw new \DomainException("Erro simulado dentro da transacao");
+            });
+            $this->fail("Deveria ter lançado DomainException");
+        } catch (\DomainException $e) {
+            $this->assertEquals("Erro simulado dentro da transacao", $e->getMessage());
+        }
+
+        // Garante que não sobrou transação aberta
+        $this->assertNull(\Adianti\Database\TTransaction::get());
+    }
 }
