@@ -488,7 +488,53 @@ class FormDinMigrationRunner
     }
 
     /**
+     * Executa com segurança o commit/fechamento de todas as transações que
+     * possam ter ficado abertas pela migration ou pelo runner.
+     */
+    public function closeOpenTransactions(): void
+    {
+        if (!class_exists(\Adianti\Database\TTransaction::class)) {
+            return;
+        }
+
+        while (\Adianti\Database\TTransaction::get() instanceof PDO) {
+            try {
+                \Adianti\Database\TTransaction::close();
+            } catch (\Throwable $e) {
+                // Em MySQL comandos DDL causam commit implícito, fazendo close() disparar "no active transaction"
+                if (strpos($e->getMessage(), 'active transaction') === false) {
+                    throw $e;
+                }
+            }
+        }
+    }
+
+    /**
+     * Executa com segurança o rollback de todas as transações abertas em caso de falha.
+     */
+    public function rollbackOpenTransactions(): void
+    {
+        if (!class_exists(\Adianti\Database\TTransaction::class)) {
+            return;
+        }
+
+        try {
+            \Adianti\Database\TTransaction::rollbackAll();
+        } catch (\Throwable $ignored) {
+            while (\Adianti\Database\TTransaction::get() instanceof PDO) {
+                try {
+                    \Adianti\Database\TTransaction::rollback();
+                } catch (\Throwable $e) {
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
      * Executa uma migration e registra o resultado em db_migrations.
+     * O ciclo de transação é gerenciado automaticamente para evitar que a migration
+     * precise abrir/fechar transações manualmente ou deixe transações pendentes.
      */
     private function execute(FormDinMigration $migration): void
     {
@@ -503,14 +549,23 @@ class FormDinMigrationRunner
             return;
         }
 
+        // Abre transação no banco alvo se não houver nenhuma aberta
+        if (class_exists(\Adianti\Database\TTransaction::class) && !\Adianti\Database\TTransaction::get()) {
+            \Adianti\Database\TTransaction::open($database);
+        }
+
         try {
             $migration->up();
+
+            // Garante o fechamento/commit de todas as transações abertas
+            $this->closeOpenTransactions();
+
             $this->recordMigration($version, $desc, $database, $systemVersion, 'success');
             echo "  -> Concluida com sucesso.\n\n";
 
         } catch (\Throwable $e) {
-            // Tenta fechar qualquer transação aberta antes de registrar o erro
-            try { TTransaction::rollback(); } catch (\Throwable $ignored) {}
+            // Em caso de falha, cancela qualquer transação pendente em qualquer banco
+            $this->rollbackOpenTransactions();
 
             try {
                 $this->recordMigration($version, $desc, $database, $systemVersion, 'error');
