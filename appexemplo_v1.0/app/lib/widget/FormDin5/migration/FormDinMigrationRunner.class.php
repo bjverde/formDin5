@@ -161,6 +161,119 @@ class FormDinMigrationRunner
         }
     }
 
+    /**
+     * Reverte as últimas N migrations executadas (default: 1).
+     * Executa o método down() de cada migration em ordem reversa.
+     *
+     * @param int|null $steps Quantidade de migrations para reverter
+     */
+    public function rollback(?int $steps = 1): void
+    {
+        $steps = $steps ?? 1;
+        if ($steps <= 0) {
+            echo "Nenhum passo de rollback especificado.\n";
+            return;
+        }
+
+        $executed = $this->getExecutedMigrationsDescending();
+
+        if (empty($executed)) {
+            echo "Nenhuma migration executada encontrada para reverter.\n";
+            return;
+        }
+
+        $toRollback = array_slice($executed, 0, $steps);
+
+        echo "Iniciando rollback de " . count($toRollback) . " migration(s)...\n\n";
+
+        foreach ($toRollback as $migration) {
+            $this->executeDown($migration);
+        }
+
+        echo "\nRollback concluido com sucesso.\n";
+    }
+
+    /**
+     * Reverte todas as migrations executadas até atingir a versão alvo especificada.
+     * Exemplo: rollbackTo('V010') reverte todas as versões > V010, deixando V010 como a última ativa.
+     *
+     * @param string $targetVersion Versão alvo (ex: 'V010', ou 'V000' para reverter todas)
+     */
+    public function rollbackTo(string $targetVersion): void
+    {
+        $targetVersion = strtoupper(trim($targetVersion));
+        $executed = $this->getExecutedMigrationsDescending();
+
+        $toRollback = [];
+        foreach ($executed as $migration) {
+            // Se a versão da migration for maior que a versão alvo, deve ser revertida
+            if (strnatcasecmp($migration->getVersion(), $targetVersion) > 0) {
+                $toRollback[] = $migration;
+            }
+        }
+
+        if (empty($toRollback)) {
+            echo "Nenhuma migration com versao superior a '{$targetVersion}' para reverter.\n";
+            return;
+        }
+
+        echo "Iniciando rollback de " . count($toRollback) . " migration(s) ate a versao '{$targetVersion}'...\n\n";
+
+        foreach ($toRollback as $migration) {
+            $this->executeDown($migration);
+        }
+
+        echo "\nRollback ate a versao '{$targetVersion}' concluido com sucesso.\n";
+    }
+
+    /**
+     * Reverte todas as migrations executadas no sistema.
+     */
+    public function reset(): void
+    {
+        $this->rollbackTo('V000');
+    }
+
+    /**
+     * Retorna a lista de instâncias das migrations já executadas com sucesso,
+     * em ordem decrescente de versão.
+     *
+     * @return FormDinMigration[]
+     */
+    public function getExecutedMigrationsDescending(): array
+    {
+        $executed = $this->ensureTableAndGetExecuted();
+        $allFiles = $this->scanMigrationFiles();
+
+        $fileMap = [];
+        foreach ($allFiles as $item) {
+            $fileMap[$item['version']] = $item;
+        }
+
+        // Filtra apenas as que tiveram status 'success'
+        $executedVersions = [];
+        foreach ($executed as $version => $row) {
+            if (($row['status'] ?? '') === 'success') {
+                $executedVersions[] = $version;
+            }
+        }
+
+        // Ordena em ordem decrescente natural (ex: V028, V027, ..., V001)
+        usort($executedVersions, fn($a, $b) => strnatcasecmp($b, $a));
+
+        $migrations = [];
+        foreach ($executedVersions as $version) {
+            if (isset($fileMap[$version])) {
+                $file  = $fileMap[$version]['file'];
+                $class = $fileMap[$version]['class'];
+                require_once $file;
+                $migrations[] = new $class();
+            }
+        }
+
+        return $migrations;
+    }
+
     // -------------------------------------------------------------------------
     // Internos
     // -------------------------------------------------------------------------
@@ -576,6 +689,62 @@ class FormDinMigrationRunner
             echo "  -> ERRO: " . $e->getMessage() . "\n\n";
 
             // Relança para interromper o runner
+            throw $e;
+        }
+    }
+
+    /**
+     * Remove o registro de uma migration revertida da tabela de controle db_migrations.
+     */
+    public function deleteMigrationRecord(string $version): void
+    {
+        $this->ensureTable();
+
+        TTransaction::open($this->getTrackingDb());
+        $conn = TTransaction::get();
+
+        $stmt = $conn->prepare("DELETE FROM db_migrations WHERE script_id = :script_id");
+        $stmt->execute([':script_id' => $version]);
+
+        try {
+            TTransaction::close();
+        } catch (\Throwable $e) {
+            if (strpos($e->getMessage(), 'active transaction') === false) {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * Executa a reversão (down) de uma migration e remove seu registro de db_migrations.
+     */
+    private function executeDown(FormDinMigration $migration): void
+    {
+        $version  = $migration->getVersion();
+        $desc     = $migration->getDescription();
+        $database = $migration->getDatabase();
+
+        echo "[{$version}] Revertendo: {$desc}\n";
+
+        // Abre transação no banco alvo se não houver nenhuma aberta
+        if (class_exists(\Adianti\Database\TTransaction::class) && !\Adianti\Database\TTransaction::get()) {
+            \Adianti\Database\TTransaction::open($database);
+        }
+
+        try {
+            $migration->down();
+
+            // Garante o fechamento/commit de todas as transações abertas
+            $this->closeOpenTransactions();
+
+            // Remove o registro da tabela db_migrations para que possa ser executada novamente no futuro
+            $this->deleteMigrationRecord($version);
+            echo "  -> Revertida com sucesso.\n\n";
+
+        } catch (\Throwable $e) {
+            $this->rollbackOpenTransactions();
+
+            echo "  -> ERRO no rollback de [{$version}]: " . $e->getMessage() . "\n\n";
             throw $e;
         }
     }
