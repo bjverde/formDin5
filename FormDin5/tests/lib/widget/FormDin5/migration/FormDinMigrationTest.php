@@ -118,4 +118,107 @@ class FormDinMigrationTest extends TestCase
         // Garante que não sobrou transação aberta
         $this->assertNull(\Adianti\Database\TTransaction::get());
     }
+
+    public function test_supported_dbms_default_and_custom(): void
+    {
+        $defaultMigration = new ConcreteMigrationForTest();
+        $this->assertEquals(FormDinMigration::DBMS_ALL, $defaultMigration->getSupportedDbms());
+        $this->assertTrue($defaultMigration->isDbmsSupported('mysql'));
+        $this->assertTrue($defaultMigration->isDbmsSupported('pgsql'));
+        $this->assertTrue($defaultMigration->isDbmsSupported('sqlite'));
+        $this->assertTrue($defaultMigration->isDbmsSupported('sqlsrv'));
+
+        $mysqlOnly = new class extends FormDinMigration {
+            public function getVersion(): string { return 'V099'; }
+            public function getDescription(): string { return 'MySQL Only'; }
+            public function getDatabase(): string { return 'test_db'; }
+            public function getSystemVersion(): string { return '1.0.0'; }
+            public function getSupportedDbms(): array|string { return self::DBMS_MYSQL; }
+            public function up(): void {}
+            public function down(): void {}
+        };
+
+        $this->assertEquals(FormDinMigration::DBMS_MYSQL, $mysqlOnly->getSupportedDbms());
+        $this->assertTrue($mysqlOnly->isDbmsSupported('mysql'));
+        $this->assertTrue($mysqlOnly->isDbmsSupported('mariadb'));
+        $this->assertFalse($mysqlOnly->isDbmsSupported('pgsql'));
+        $this->assertFalse($mysqlOnly->isDbmsSupported('sqlite'));
+        $this->assertFalse($mysqlOnly->isDbmsSupported('sqlsrv'));
+
+        $multiDbms = new class extends FormDinMigration {
+            public function getVersion(): string { return 'V100'; }
+            public function getDescription(): string { return 'Multi'; }
+            public function getDatabase(): string { return 'test_db'; }
+            public function getSystemVersion(): string { return '1.0.0'; }
+            public function getSupportedDbms(): array|string { return [self::DBMS_MYSQL, self::DBMS_POSTGRES]; }
+            public function up(): void {}
+            public function down(): void {}
+        };
+
+        $this->assertTrue($multiDbms->isDbmsSupported('mysql'));
+        $this->assertTrue($multiDbms->isDbmsSupported('pgsql'));
+        $this->assertFalse($multiDbms->isDbmsSupported('sqlite'));
+        $this->assertFalse($multiDbms->isDbmsSupported('sqlsrv'));
+    }
+
+    public function test_schema_helpers_on_sqlite_memory(): void
+    {
+        $pdo = new PDO('sqlite::memory:');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $migration = new ConcreteMigrationForTest();
+        $migration->setConnection($pdo);
+
+        // 1. Tabela inicial
+        $this->assertFalse($migration->tableExists('clientes'));
+        $migration->executeSql("CREATE TABLE clientes (id INTEGER PRIMARY KEY, nome VARCHAR(100))");
+        $this->assertTrue($migration->tableExists('clientes'));
+
+        // 2. Colunas
+        $this->assertTrue($migration->columnExists('clientes', 'nome'));
+        $this->assertFalse($migration->columnExists('clientes', 'cpf'));
+
+        // Adiciona coluna
+        $migration->addColumn('clientes', 'cpf', 'VARCHAR(14) NULL');
+        $this->assertTrue($migration->columnExists('clientes', 'cpf'));
+
+        // 3. Índices
+        $this->assertFalse($migration->indexExists('clientes', 'idx_clientes_cpf'));
+        $migration->executeSql("CREATE INDEX idx_clientes_cpf ON clientes (cpf)");
+        $this->assertTrue($migration->indexExists('clientes', 'idx_clientes_cpf'));
+
+        // Remove índice
+        $migration->dropIndex('clientes', 'idx_clientes_cpf');
+        $this->assertFalse($migration->indexExists('clientes', 'idx_clientes_cpf'));
+
+        // Remove coluna
+        $migration->dropColumn('clientes', 'cpf');
+        $this->assertFalse($migration->columnExists('clientes', 'cpf'));
+
+        // 4. Views
+        $this->assertFalse($migration->tableExists('vw_clientes_ativos'));
+        $migration->createOrReplaceView('vw_clientes_ativos', 'SELECT id, nome FROM clientes');
+        $this->assertTrue($migration->tableExists('vw_clientes_ativos'));
+
+        // Remove view
+        $migration->dropView('vw_clientes_ativos');
+        $this->assertFalse($migration->tableExists('vw_clientes_ativos'));
+
+        // 5. executeByDbms
+        $migration->executeByDbms([
+            'sqlite' => "INSERT INTO clientes (nome) VALUES ('Fulano')",
+            'mysql'  => "INSERT INTO clientes (nome) VALUES ('Ciclano')",
+        ]);
+
+        $count = $pdo->query("SELECT count(*) FROM clientes WHERE nome = 'Fulano'")->fetchColumn();
+        $this->assertEquals(1, $count);
+
+        // Testa exceção em executeByDbms quando não há chave para o driver
+        try {
+            $migration->executeByDbms(['mysql' => 'SELECT 1']);
+            $this->fail("Deveria ter lançado RuntimeException para SGBD não suportado no array");
+        } catch (\RuntimeException $e) {
+            $this->assertStringContainsString("Nenhum SQL definido para o SGBD 'sqlite'", $e->getMessage());
+        }
+    }
 }

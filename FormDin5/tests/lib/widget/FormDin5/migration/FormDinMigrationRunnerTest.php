@@ -294,4 +294,81 @@ class FormDinMigrationRunnerTest extends TestCase
         @unlink($tempDir . '/V002Second.php');
         @rmdir($tempDir);
     }
+
+    public function test_default_legacy_dbms_configuration(): void
+    {
+        $runner = new FormDinMigrationRunner();
+        $this->assertNull($runner->getDefaultLegacyDbms());
+
+        $runner->setDefaultLegacyDbms(FormDinMigration::DBMS_MYSQL);
+        $this->assertEquals('mysql', $runner->getDefaultLegacyDbms());
+
+        // Migration padrão que não sobrescreve getSupportedDbms()
+        $migration = new class extends FormDinMigration {
+            public function getVersion(): string { return 'V001'; }
+            public function getDescription(): string { return 'Desc'; }
+            public function getDatabase(): string { return 'dbapoio'; }
+            public function getSystemVersion(): string { return '1.0.0'; }
+            public function up(): void {}
+            public function down(): void {}
+        };
+
+        // Quando defaultLegacyDbms está ativo, deve retornar ['mysql']
+        $supported = $runner->getMigrationSupportedDbms($migration);
+        $this->assertEquals(['mysql'], $supported);
+
+        // Se a migration sobrescrever explicitamente, prevalece a sobrescrita
+        $customMigration = new class extends FormDinMigration {
+            public function getVersion(): string { return 'V002'; }
+            public function getDescription(): string { return 'Desc'; }
+            public function getDatabase(): string { return 'dbapoio'; }
+            public function getSystemVersion(): string { return '1.0.0'; }
+            public function getSupportedDbms(): array|string { return [self::DBMS_SQLITE, self::DBMS_POSTGRES]; }
+            public function up(): void {}
+            public function down(): void {}
+        };
+
+        $this->assertEquals(['sqlite', 'pgsql'], $runner->getMigrationSupportedDbms($customMigration));
+    }
+
+    public function test_runner_skips_incompatible_migration(): void
+    {
+        $tempDir = sys_get_temp_dir() . '/test_mig_incompat_' . uniqid();
+        mkdir($tempDir, 0777, true);
+
+        // Cria uma migration exclusiva para MySQL, tentando rodar no banco SQLite 'dbapoio'
+        $code = '<?php
+class V001MysqlOnly extends FormDinMigration {
+    public function getVersion(): string { return "V001"; }
+    public function getDescription(): string { return "MySQL Only Feature"; }
+    public function getDatabase(): string { return "dbapoio"; }
+    public function getSystemVersion(): string { return "1.0.0"; }
+    public function getSupportedDbms(): array|string { return self::DBMS_MYSQL; }
+    public function up(): void {
+        throw new \RuntimeException("NÃO DEVERIA TER EXECUTADO NO SQLITE!");
+    }
+    public function down(): void {}
+}';
+        file_put_contents($tempDir . '/V001MysqlOnly.php', $code);
+
+        $runner = new FormDinMigrationRunner($tempDir, 'dbapoio');
+
+        ob_start();
+        $runner->run();
+        $output = ob_get_clean();
+
+        // Deve ter ignorado sem lançar exceção
+        $this->assertStringContainsString('IGNORADA: migration desenvolvida para [mysql]', $output);
+        $this->assertStringContainsString('incompativel com o banco \'dbapoio\' (sqlite)', $output);
+
+        // Status deve indicar incompatível
+        ob_start();
+        $runner->status();
+        $statusOutput = ob_get_clean();
+        $this->assertStringContainsString('incompativel', $statusOutput);
+
+        // Limpeza
+        @unlink($tempDir . '/V001MysqlOnly.php');
+        @rmdir($tempDir);
+    }
 }
