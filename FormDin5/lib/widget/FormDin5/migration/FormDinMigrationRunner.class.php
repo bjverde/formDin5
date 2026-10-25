@@ -194,10 +194,49 @@ class FormDinMigrationRunner
     }
 
     /**
-     * Reverte todas as migrations executadas até atingir a versão alvo especificada.
-     * Exemplo: rollbackTo('V010') reverte todas as versões > V010, deixando V010 como a última ativa.
+     * Reverte todas as migrations executadas até atingir a versão alvo especificada,
+     * deixando a versão alvo como a última versão ativa no banco de dados.
      *
-     * @param string $targetVersion Versão alvo (ex: 'V010', ou 'V000' para reverter todas)
+     * As migrations superiores à versão alvo têm seu método down() executado em
+     * ordem decrescente (cronológica inversa). Se a reversão for bem-sucedida, o
+     * registro de cada uma é removido da tabela de controle (db_migrations), fazendo
+     * com que voltem ao status 'pendente' e fiquem disponíveis para uma nova aplicação via run().
+     *
+     * -------------------------------------------------------------------------
+     * Exemplo Detalhado de Uso:
+     * -------------------------------------------------------------------------
+     * Suponha que o banco esteja atualmente na versão V015 (com V001 até V015
+     * executadas com sucesso registradas em db_migrations):
+     *
+     *   $runner = new FormDinMigrationRunner();
+     *   $runner->rollbackTo('V010');
+     *
+     * Fluxo de Execução:
+     *   1. O runner identifica as migrations ativas com versão estritamente maior que 'V010':
+     *      [V015, V014, V013, V012, V011].
+     *   2. Executa o rollback em ordem cronológica inversa:
+     *      - V015: executa down() -> commit -> remove V015 de db_migrations
+     *      - V014: executa down() -> commit -> remove V014 de db_migrations
+     *      - V013: executa down() -> commit -> remove V013 de db_migrations
+     *      - V012: executa down() -> commit -> remove V012 de db_migrations
+     *      - V011: executa down() -> commit -> remove V011 de db_migrations
+     *   3. A migration alvo 'V010' NÃO é revertida; ela permanece intacta e ativa.
+     *
+     * Estado Resultante:
+     *   - Versão corrente ativa do banco: V010.
+     *   - Ao chamar $runner->status():
+     *       V001 a V010 : status 'success'
+     *       V011 a V015 : status 'pendente' (registro removido de db_migrations)
+     *   - Ao chamar $runner->run() posteriormente:
+     *       O runner reaplicará V011, V012, V013, V014 e V015 via up() normalmente.
+     *
+     * Observações:
+     *   - Para reverter TODAS as migrations do sistema (zerar o banco), utilize
+     *     $runner->rollbackTo('V000') ou o atalho $runner->reset().
+     *   - Se $targetVersion for igual ou superior à versão atual executada, nenhuma ação é realizada.
+     *
+     * @param string $targetVersion Versão alvo limite (ex: 'V010' para parar nela, ou 'V000' para reverter todas)
+     * @return void
      */
     public function rollbackTo(string $targetVersion): void
     {
