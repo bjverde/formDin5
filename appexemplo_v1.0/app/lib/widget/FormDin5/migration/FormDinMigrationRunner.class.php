@@ -80,19 +80,19 @@ class FormDinMigrationRunner
      */
     public function setMigrationsPath(?string $migrationsPath = null): void
     {
-        $path = FileHelper::getCaminhoSistema();
-        if(empty($migrationsPath)){
-            $path .= '/app/database/migrations';
-        }else{
-            $path .= $migrationsPath;
+        $migrationsPath = trim((string) $migrationsPath);
+
+        if (empty($migrationsPath)) {
+            $this->migrationsPath = FileHelper::getCaminhoSistema() . '/app/database/migrations';
+            return;
         }
 
-        // Valida se o diretório existe
-        $realPath = realpath($path);
-        if ($realPath === false || !is_dir($realPath)) {
-            throw new InvalidArgumentException("Diretório de migrations inválido: '{$path}'.");
+        // Se for caminho relativo, anexa ao caminho do sistema
+        if (!preg_match('#^([a-zA-Z]:|[\\\\/])#', $migrationsPath)) {
+            $migrationsPath = FileHelper::getCaminhoSistema() . '/' . ltrim($migrationsPath, '/\\');
         }
-        $this->migrationsPath = $path;
+
+        $this->migrationsPath = $migrationsPath;
     }
     // Métodos run(), status(), scanMigrationFiles(), execute()...
     // Gravando o histórico de forma agnóstica a qualquer banco (compatível com MySQL, PgSQL, etc.)
@@ -212,7 +212,12 @@ class FormDinMigrationRunner
      */
     private function scanMigrationFiles(): array
     {
-        $files = glob($this->getMigrationsPath() . '/V*.php');
+        $path = $this->getMigrationsPath();
+        if (!is_dir($path)) {
+            throw new InvalidArgumentException("Diretório de migrations inválido ou não encontrado: '{$path}'.");
+        }
+
+        $files = glob(rtrim($path, '/\\') . '/V*.php') ?: [];
         sort($files); // garante ordem lexicográfica (V001 < V002 < ...)
 
         $result = [];
