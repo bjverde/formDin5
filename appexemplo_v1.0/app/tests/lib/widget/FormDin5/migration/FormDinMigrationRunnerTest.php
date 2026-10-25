@@ -16,6 +16,15 @@ class FormDinMigrationRunnerTest extends TestCase
         require_once dirname(__DIR__, 6) . '/app/lib/widget/FormDin5/migration/FormDinMigrationRunner.class.php';
     }
 
+    protected function tearDown(): void
+    {
+        $dbFile = dirname(__DIR__, 6) . '/app/database/bdApoio.s3db';
+        if (file_exists($dbFile)) {
+            @exec('git checkout -- ' . escapeshellarg($dbFile));
+        }
+        parent::tearDown();
+    }
+
     public function test_default_values(): void
     {
         $runner = new FormDinMigrationRunner();
@@ -187,5 +196,102 @@ class FormDinMigrationRunnerTest extends TestCase
 
         $runner->rollbackOpenTransactions();
         $this->assertNull(TTransaction::get());
+    }
+
+    public function test_delete_migration_record(): void
+    {
+        $runner = new FormDinMigrationRunner(null, 'dbapoio');
+        $runner->recordMigration('V998_DEL', 'Descricao', 'dbapoio', '1.0.0', 'success');
+
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $row = $conn->query("SELECT * FROM db_migrations WHERE script_id = 'V998_DEL'")->fetch(PDO::FETCH_ASSOC);
+        TTransaction::close();
+        $this->assertNotEmpty($row);
+
+        // Deleta registro
+        $runner->deleteMigrationRecord('V998_DEL');
+
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $row = $conn->query("SELECT * FROM db_migrations WHERE script_id = 'V998_DEL'")->fetch(PDO::FETCH_ASSOC);
+        $conn->exec("DROP TABLE IF EXISTS db_migrations");
+        TTransaction::close();
+
+        $this->assertFalse($row);
+    }
+
+    public function test_rollback_steps_and_rollback_to(): void
+    {
+        $tempDir = sys_get_temp_dir() . '/migrations_test_' . uniqid();
+        mkdir($tempDir, 0777, true);
+
+        // Cria V001
+        file_put_contents($tempDir . '/V001First.php', '<?php
+            class V001First extends FormDinMigration {
+                public function getVersion(): string { return "V001"; }
+                public function getDescription(): string { return "First"; }
+                public function getDatabase(): string { return "dbapoio"; }
+                public function getSystemVersion(): string { return "1.0.0"; }
+                public function up(): void { $conn = TTransaction::get(); $conn->exec("CREATE TABLE IF NOT EXISTS tbl_m1 (id INT)"); }
+                public function down(): void { $conn = TTransaction::get(); $conn->exec("DROP TABLE IF EXISTS tbl_m1"); }
+            }
+        ');
+
+        // Cria V002
+        file_put_contents($tempDir . '/V002Second.php', '<?php
+            class V002Second extends FormDinMigration {
+                public function getVersion(): string { return "V002"; }
+                public function getDescription(): string { return "Second"; }
+                public function getDatabase(): string { return "dbapoio"; }
+                public function getSystemVersion(): string { return "1.0.0"; }
+                public function up(): void { $conn = TTransaction::get(); $conn->exec("CREATE TABLE IF NOT EXISTS tbl_m2 (id INT)"); }
+                public function down(): void { $conn = TTransaction::get(); $conn->exec("DROP TABLE IF EXISTS tbl_m2"); }
+            }
+        ');
+
+        $runner = new FormDinMigrationRunner($tempDir, 'dbapoio');
+
+        // Executa ambas
+        $runner->run();
+
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $hasTbl1 = (bool) $conn->query("SELECT name FROM sqlite_master WHERE type='table' AND name='tbl_m1'")->fetch();
+        $hasTbl2 = (bool) $conn->query("SELECT name FROM sqlite_master WHERE type='table' AND name='tbl_m2'")->fetch();
+        TTransaction::close();
+
+        $this->assertTrue($hasTbl1);
+        $this->assertTrue($hasTbl2);
+
+        // Rollback de 1 passo (deve reverter V002)
+        $runner->rollback(1);
+
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $hasTbl1 = (bool) $conn->query("SELECT name FROM sqlite_master WHERE type='table' AND name='tbl_m1'")->fetch();
+        $hasTbl2 = (bool) $conn->query("SELECT name FROM sqlite_master WHERE type='table' AND name='tbl_m2'")->fetch();
+        $rowV2 = $conn->query("SELECT * FROM db_migrations WHERE script_id = 'V002'")->fetch();
+        TTransaction::close();
+
+        $this->assertTrue($hasTbl1);
+        $this->assertFalse($hasTbl2);
+        $this->assertFalse($rowV2);
+
+        // Reset (reverte V001 restante)
+        $runner->reset();
+
+        TTransaction::open('dbapoio');
+        $conn = TTransaction::get();
+        $hasTbl1 = (bool) $conn->query("SELECT name FROM sqlite_master WHERE type='table' AND name='tbl_m1'")->fetch();
+        $conn->exec("DROP TABLE IF EXISTS db_migrations");
+        TTransaction::close();
+
+        $this->assertFalse($hasTbl1);
+
+        // Limpeza dos arquivos temporários
+        @unlink($tempDir . '/V001First.php');
+        @unlink($tempDir . '/V002Second.php');
+        @rmdir($tempDir);
     }
 }
