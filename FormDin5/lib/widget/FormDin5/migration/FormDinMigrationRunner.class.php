@@ -36,6 +36,15 @@ class FormDinMigrationRunner
     /** Flag indicando se a tabela de controle já foi verificada/criada */
     private bool $tableEnsured = false;
 
+    /** SGBD padrão assumido para migrations legadas que não sobrescrevem getSupportedDbms() */
+    private ?string $defaultLegacyDbms = null;
+
+    /**
+     * Construtor da classe FormDinMigrationRunner.
+     *
+     * @param string|null $migrationsPath Caminho do diretório contendo as migrations (default: PATH/app/database/migrations)
+     * @param string|null $trackingDb Nome da conexão onde a tabela db_migrations é mantida (default: 'permission')
+     */
     public function __construct(?string $migrationsPath = null, ?string $trackingDb = null)
     {
         $this->setMigrationsPath($migrationsPath);
@@ -44,6 +53,8 @@ class FormDinMigrationRunner
 
     /**
      * Retorna o banco onde a tabela db_migrations é mantida.
+     *
+     * @return string Nome/alias da conexão de rastreamento
      */
     public function getTrackingDb(): string
     {
@@ -52,7 +63,10 @@ class FormDinMigrationRunner
 
     /**
      * Define o banco onde a tabela db_migrations é mantida.
-     * Regra: parâmetro -> application.php -> fallback 'permission'
+     * Regra: parâmetro -> application.ini -> fallback 'permission'
+     *
+     * @param string|null $trackingDb Nome da conexão de rastreamento
+     * @return void
      */
     public function setTrackingDb(?string $trackingDb = null): void
     {
@@ -69,12 +83,12 @@ class FormDinMigrationRunner
         $this->tableEnsured = false;
     }
 
-    /** SGBD padrão assumido para migrations legadas que não sobrescrevem getSupportedDbms() */
-    private ?string $defaultLegacyDbms = null;
-
     /**
      * Define o SGBD padrão para migrations legadas que não sobrescrevem getSupportedDbms().
      * Exemplo: $runner->setDefaultLegacyDbms(FormDinMigration::DBMS_MYSQL);
+     *
+     * @param string|null $dbms Identificador do SGBD padrão (ex: 'mysql') ou null para desabilitar
+     * @return void
      */
     public function setDefaultLegacyDbms(?string $dbms): void
     {
@@ -83,6 +97,8 @@ class FormDinMigrationRunner
 
     /**
      * Retorna o SGBD padrão para migrations legadas.
+     *
+     * @return string|null Identificador do SGBD configurado ou null se não definido
      */
     public function getDefaultLegacyDbms(): ?string
     {
@@ -92,7 +108,8 @@ class FormDinMigrationRunner
     /**
      * Retorna a lista de SGBDs suportados pela migration, aplicando o default legado se configurado.
      *
-     * @return string[]
+     * @param FormDinMigration $migration Instância da migration
+     * @return string[] Lista de drivers suportados
      */
     public function getMigrationSupportedDbms(FormDinMigration $migration): array
     {
@@ -108,6 +125,10 @@ class FormDinMigrationRunner
 
     /**
      * Verifica se a migration é suportada no banco de dados alvo.
+     *
+     * @param FormDinMigration $migration Instância da migration
+     * @param string|null $targetDbms Identificador do driver alvo (default: obtido do banco da migration)
+     * @return bool True se o SGBD for compatível com a migration, false caso contrário
      */
     public function isMigrationSupported(FormDinMigration $migration, ?string $targetDbms = null): bool
     {
@@ -126,6 +147,8 @@ class FormDinMigrationRunner
 
     /**
      * Retorna o diretório onde ficam os arquivos de migration.
+     *
+     * @return string Caminho absoluto do diretório de migrations
      */
     public function getMigrationsPath(): string
     {
@@ -136,6 +159,9 @@ class FormDinMigrationRunner
      * Define o diretório onde ficam os arquivos de migration.
      * Regra: parâmetro -> PATH/app/database/migrations
      * Valor Default: PATH/app/database/migrations
+     *
+     * @param string|null $migrationsPath Caminho relativo ou absoluto para as migrations
+     * @return void
      */
     public function setMigrationsPath(?string $migrationsPath = null): void
     {
@@ -153,8 +179,6 @@ class FormDinMigrationRunner
 
         $this->migrationsPath = $migrationsPath;
     }
-    // Métodos run(), status(), scanMigrationFiles(), execute()...
-    // Gravando o histórico de forma agnóstica a qualquer banco (compatível com MySQL, PgSQL, etc.)
 
     // -------------------------------------------------------------------------
     // API pública
@@ -162,6 +186,8 @@ class FormDinMigrationRunner
 
     /**
      * Executa todas as migrations pendentes em ordem.
+     *
+     * @return void
      */
     public function run(): void
     {
@@ -183,6 +209,8 @@ class FormDinMigrationRunner
 
     /**
      * Exibe o status de todas as migrations (executadas e pendentes) sem executar nada.
+     *
+     * @return void
      */
     public function status(): void
     {
@@ -229,6 +257,7 @@ class FormDinMigrationRunner
      * Executa o método down() de cada migration em ordem reversa.
      *
      * @param int|null $steps Quantidade de migrations para reverter
+     * @return void
      */
     public function rollback(?int $steps = 1): void
     {
@@ -329,7 +358,9 @@ class FormDinMigrationRunner
     }
 
     /**
-     * Reverte todas as migrations executadas no sistema.
+     * Reverte todas as migrations executadas no sistema (atalho para rollbackTo('V000')).
+     *
+     * @return void
      */
     public function reset(): void
     {
@@ -340,7 +371,7 @@ class FormDinMigrationRunner
      * Retorna a lista de instâncias das migrations já executadas com sucesso,
      * em ordem decrescente de versão.
      *
-     * @return FormDinMigration[]
+     * @return FormDinMigration[] Lista de instâncias de migration em ordem decrescente
      */
     public function getExecutedMigrationsDescending(): array
     {
@@ -383,6 +414,10 @@ class FormDinMigrationRunner
     /**
      * Identifica o tipo de SGBD (driver) da conexão informada.
      * Retorna em minúsculo: 'mysql', 'pgsql', 'sqlite', 'sqlsrv', etc.
+     *
+     * @param string|null $database Nome da conexão (default: trackingDb)
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return string Identificador do driver em minúsculo
      */
     public function getDatabaseType(?string $database = null, ?PDO $conn = null): string
     {
@@ -416,6 +451,9 @@ class FormDinMigrationRunner
     /**
      * Retorna o comando SQL DDL para criar a tabela de controle db_migrations
      * de acordo com o SGBD configurado.
+     *
+     * @param string $dbType Identificador do SGBD ('mysql', 'pgsql', 'sqlite', 'sqlsrv')
+     * @return string Instrução DDL CREATE TABLE compatível com o SGBD
      */
     public function getCreateTableSql(string $dbType): string
     {
@@ -477,6 +515,9 @@ class FormDinMigrationRunner
 
     /**
      * Garante que a tabela de controle db_migrations exista no SGBD configurado.
+     *
+     * @return void
+     * @throws \Throwable Se ocorrer erro na criação da tabela
      */
     public function ensureTable(): void
     {
@@ -508,7 +549,7 @@ class FormDinMigrationRunner
      * Garante que a tabela de controle existe (conforme o SGBD configurado) e retorna
      * as versões já executadas.
      *
-     * @return array indexado por script_id com dados das migrations executadas
+     * @return array<string, array{script_id: string, status: string, executed_at: string}> Mapa indexado por script_id
      */
     public function ensureTableAndGetExecuted(): array
     {
@@ -537,8 +578,10 @@ class FormDinMigrationRunner
     }
 
     /**
-     * Escaneia a pasta e retorna metadados de todos os arquivos V*.php em ordem.
-     * Retorna array de ['version' => 'V001', 'class' => 'V001InitialSchema', 'file' => '...']
+     * Escaneia a pasta e retorna metadados de todos os arquivos V*.php em ordem lexicográfica.
+     *
+     * @return array<int, array{version: string, class: string, file: string}> Lista de metadados dos arquivos de migration
+     * @throws \InvalidArgumentException Se o diretório de migrations não existir
      */
     private function scanMigrationFiles(): array
     {
@@ -569,6 +612,11 @@ class FormDinMigrationRunner
         return $result;
     }
 
+    /**
+     * Retorna as configurações da aplicação a partir de AdiantiApplicationConfig.
+     *
+     * @return array|null Array com as configurações do application.ini ou null se indisponível
+     */
     public function getInfoApplication(): array|null
     {
         $ini = class_exists(\Adianti\Core\AdiantiApplicationConfig::class)
@@ -577,18 +625,33 @@ class FormDinMigrationRunner
         return $ini;
     }
 
+    /**
+     * Retorna o título da aplicação configurado em application.ini.
+     *
+     * @return string Título da aplicação
+     */
     public function getTitleApplication(): string
     {
         $ini = $this->getInfoApplication();
         return (string) ($ini['general']['title'] ?? '');
     }
 
+    /**
+     * Retorna a versão corrente do sistema configurada em application.ini (ex: '1.0.0').
+     *
+     * @return string Versão do sistema
+     */
     public function getSystemVersion(): string
     {
         $ini = $this->getInfoApplication();
         return (string) ($ini['system']['system_version'] ?? '0.0.0');
     }
 
+    /**
+     * Retorna o título concatenado com a versão do sistema.
+     *
+     * @return string Título e versão (ex: 'MeuApp 1.0.0')
+     */
     public function getTitleVersion(): string
     {
         return $this->getTitleApplication() . ' ' . $this->getSystemVersion();
@@ -596,6 +659,8 @@ class FormDinMigrationRunner
 
     /**
      * Retorna a versão corrente do sistema a partir de application.ini.
+     *
+     * @return string Versão semântica corrente do sistema
      */
     private function getCurrentSystemVersion(): string
     {
@@ -605,6 +670,9 @@ class FormDinMigrationRunner
     /**
      * Verifica se a versão da migration é compatível com a versão corrente do sistema.
      * Retorna false (e imprime aviso) se a migration exige uma versão ainda não implantada.
+     *
+     * @param FormDinMigration $migration Instância da migration a ser verificada
+     * @return bool True se for compatível com a versão do sistema, false caso contrário
      */
     private function isCompatibleWithSystemVersion(FormDinMigration $migration): bool
     {
@@ -624,7 +692,7 @@ class FormDinMigrationRunner
     /**
      * Retorna instâncias das migrations ainda não executadas com sucesso.
      *
-     * @return FormDinMigration[]
+     * @return FormDinMigration[] Lista de instâncias de migration pendentes
      */
     private function getPendingMigrations(): array
     {
@@ -650,6 +718,13 @@ class FormDinMigrationRunner
     /**
      * Registra o resultado da migration na tabela de controle db_migrations
      * de forma agnóstica a qualquer SGBD (sem ON DUPLICATE KEY e sem NOW()).
+     *
+     * @param string $version Identificador da versão (ex: 'V001')
+     * @param string $desc Descrição da migration
+     * @param string $database Nome do banco onde atuou
+     * @param string $systemVersion Versão do sistema da migration
+     * @param string $status Status da execução ('success' ou 'error')
+     * @return void
      */
     public function recordMigration(string $version, string $desc, string $database, string $systemVersion, string $status): void
     {
@@ -705,6 +780,9 @@ class FormDinMigrationRunner
     /**
      * Executa com segurança o commit/fechamento de todas as transações que
      * possam ter ficado abertas pela migration ou pelo runner.
+     *
+     * @return void
+     * @throws \Throwable Se ocorrer erro inesperado no fechamento de transação ativa
      */
     public function closeOpenTransactions(): void
     {
@@ -726,6 +804,8 @@ class FormDinMigrationRunner
 
     /**
      * Executa com segurança o rollback de todas as transações abertas em caso de falha.
+     *
+     * @return void
      */
     public function rollbackOpenTransactions(): void
     {
@@ -750,6 +830,10 @@ class FormDinMigrationRunner
      * Executa uma migration e registra o resultado em db_migrations.
      * O ciclo de transação é gerenciado automaticamente para evitar que a migration
      * precise abrir/fechar transações manualmente ou deixe transações pendentes.
+     *
+     * @param FormDinMigration $migration Instância da migration a ser executada
+     * @return void
+     * @throws \Throwable Relança a exceção para interromper o runner em caso de erro
      */
     private function execute(FormDinMigration $migration): void
     {
@@ -805,6 +889,10 @@ class FormDinMigrationRunner
 
     /**
      * Remove o registro de uma migration revertida da tabela de controle db_migrations.
+     *
+     * @param string $version Identificador da versão a ser removida (ex: 'V001')
+     * @return void
+     * @throws \Throwable Se ocorrer erro ao fechar transação no banco de rastreamento
      */
     public function deleteMigrationRecord(string $version): void
     {
@@ -827,6 +915,10 @@ class FormDinMigrationRunner
 
     /**
      * Executa a reversão (down) de uma migration e remove seu registro de db_migrations.
+     *
+     * @param FormDinMigration $migration Instância da migration a ser revertida
+     * @return void
+     * @throws \Throwable Relança a exceção em caso de falha na reversão
      */
     private function executeDown(FormDinMigration $migration): void
     {

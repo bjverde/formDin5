@@ -6,6 +6,8 @@
  * Cada migration deve implementar:
  *  - getVersion()     : identificador único (ex: 'V001')
  *  - getDescription() : descrição legível do que a migration faz
+ *  - getDatabase()    : identificador/alias da conexão do banco de dados
+ *  - getSystemVersion(): versão semântica do sistema à qual pertence (ex: '1.0.0')
  *  - up()             : aplica a migration
  *  - down()           : reverte a migration (melhor esforço — DDL não é transacional no MySQL)
  *
@@ -14,39 +16,50 @@
  * procedimento de desfazer manual, não como rollback transacional.
  */
 abstract class FormDinMigration
- 
 {
     /**
      * Identificador único da migration (ex: 'V001').
      * Usado como chave na tabela db_migrations.
+     *
+     * @return string Identificador da versão (ex: 'V001')
      */
     abstract public function getVersion(): string;
 
     /**
      * Descrição legível do que esta migration faz.
+     *
+     * @return string Descrição da finalidade da migration
      */
     abstract public function getDescription(): string;
 
     /**
      * Nome do banco de dados principal que esta migration atua.
      * Exemplos: 'erpcertificadodigital', 'permission'.
+     *
+     * @return string Identificador/alias da conexão do banco de dados
      */
     abstract public function getDatabase(): string;
 
     /**
      * Versão do sistema à qual esta migration pertence (semântico: ex. '1.1.0').
      * O runner recusará a execução se esta versão for superior à versão corrente do sistema.
+     *
+     * @return string Versão do sistema
      */
     abstract public function getSystemVersion(): string;
 
     /**
      * Aplica a migration (cria tabelas, altera colunas, migra dados, etc.).
+     *
+     * @return void
      */
     abstract public function up(): void;
 
     /**
      * Reverte a migration.
-     * ATENÇÃO: DDL não é transacional — use com cuidado em produção.
+     * ATENÇÃO: DDL não é transacional no MySQL/MariaDB — use com cuidado em produção.
+     *
+     * @return void
      */
     abstract public function down(): void;
 
@@ -66,7 +79,7 @@ abstract class FormDinMigration
      * Se uma migration for feita exclusivamente para MySQL (como V001 a V028),
      * ela pode sobrescrever este método retornando self::DBMS_MYSQL.
      *
-     * @return array|string
+     * @return array|string Lista ou identificador dos SGBDs suportados
      */
     public function getSupportedDbms(): array|string
     {
@@ -78,7 +91,7 @@ abstract class FormDinMigration
      *
      * @param string|null $driver Nome do driver a testar (default: driver do banco atual da migration)
      * @param string|null $database Nome da conexão opcional
-     * @return bool
+     * @return bool True se o SGBD for suportado, false caso contrário
      */
     public function isDbmsSupported(?string $driver = null, ?string $database = null): bool
     {
@@ -100,6 +113,9 @@ abstract class FormDinMigration
     /**
      * Retorna o nome real do banco de dados configurado para uma conexão.
      * Útil para referenciar tabelas de outros bancos em Foreign Keys (onde suportado).
+     *
+     * @param string $connection Nome/alias da conexão configurada
+     * @return string Nome físico do banco de dados
      */
     protected function getDatabaseName(string $connection): string
     {
@@ -109,6 +125,9 @@ abstract class FormDinMigration
 
     /**
      * Normaliza os diferentes nomes de driver/SGBD para um padrão consistente.
+     *
+     * @param string $driver Nome ou alias do driver recebido
+     * @return string Nome padronizado do driver (mysql, pgsql, sqlite, sqlsrv)
      */
     public function normalizeDriverName(string $driver): string
     {
@@ -129,7 +148,7 @@ abstract class FormDinMigration
      *
      * @param string|null $database Nome da conexão (default: $this->getDatabase())
      * @param PDO|null $conn Conexão PDO ativa opcional
-     * @return string
+     * @return string Identificador normalizado do driver
      */
     public function getDriverName(?string $database = null, ?PDO $conn = null): string
     {
@@ -185,6 +204,10 @@ abstract class FormDinMigration
 
     /**
      * Alias para getDriverName().
+     *
+     * @param string|null $database Nome da conexão (default: $this->getDatabase())
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return string Identificador normalizado do driver
      */
     public function getDriver(?string $database = null, ?PDO $conn = null): string
     {
@@ -193,6 +216,10 @@ abstract class FormDinMigration
 
     /**
      * Verifica se o banco de dados conectado é MySQL ou MariaDB.
+     *
+     * @param string|null $database Nome da conexão opcional
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return bool True se for MySQL/MariaDB
      */
     public function isMysql(?string $database = null, ?PDO $conn = null): bool
     {
@@ -201,6 +228,10 @@ abstract class FormDinMigration
 
     /**
      * Verifica se o banco de dados conectado é PostgreSQL.
+     *
+     * @param string|null $database Nome da conexão opcional
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return bool True se for PostgreSQL
      */
     public function isPostgres(?string $database = null, ?PDO $conn = null): bool
     {
@@ -209,6 +240,10 @@ abstract class FormDinMigration
 
     /**
      * Verifica se o banco de dados conectado é SQLite.
+     *
+     * @param string|null $database Nome da conexão opcional
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return bool True se for SQLite
      */
     public function isSqlite(?string $database = null, ?PDO $conn = null): bool
     {
@@ -217,6 +252,10 @@ abstract class FormDinMigration
 
     /**
      * Verifica se o banco de dados conectado é SQL Server.
+     *
+     * @param string|null $database Nome da conexão opcional
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return bool True se for SQL Server
      */
     public function isSqlServer(?string $database = null, ?PDO $conn = null): bool
     {
@@ -231,6 +270,9 @@ abstract class FormDinMigration
 
     /**
      * Define uma conexão PDO customizada (útil para testes ou conexões isoladas).
+     *
+     * @param PDO|null $conn Conexão PDO customizada ou null para restaurar o comportamento padrão
+     * @return void
      */
     public function setConnection(?PDO $conn): void
     {
@@ -240,6 +282,10 @@ abstract class FormDinMigration
     /**
      * Retorna a conexão PDO ativa da transação atual.
      * Se nenhuma transação estiver aberta, abre automaticamente para o banco padrão da migration.
+     *
+     * @param string|null $database Nome da conexão de banco opcional
+     * @return PDO Conexão PDO ativa
+     * @throws \RuntimeException Se a classe TTransaction do Adianti não for encontrada
      */
     public function getConnection(?string $database = null): PDO
     {
@@ -263,6 +309,9 @@ abstract class FormDinMigration
 
     /**
      * Inicia uma transação explicitamente no banco informado.
+     *
+     * @param string|null $database Nome da conexão de banco opcional
+     * @return PDO Conexão PDO da transação aberta
      */
     public function beginTransaction(?string $database = null): PDO
     {
@@ -276,6 +325,9 @@ abstract class FormDinMigration
 
     /**
      * Comita a transação ativa tratando commits implícitos em SGBDs como MySQL.
+     *
+     * @return void
+     * @throws \Throwable Se ocorrer erro inesperado no commit
      */
     public function commitTransaction(): void
     {
@@ -297,6 +349,8 @@ abstract class FormDinMigration
 
     /**
      * Cancela a transação ativa.
+     *
+     * @return void
      */
     public function rollbackTransaction(): void
     {
@@ -322,9 +376,10 @@ abstract class FormDinMigration
      *       $conn->exec("UPDATE ...");
      *   });
      *
-     * @param callable(PDO): mixed $callback
-     * @param string|null $database
-     * @return mixed
+     * @param callable(PDO): mixed $callback Callback a ser executado com a conexão PDO ativa
+     * @param string|null $database Nome da conexão opcional
+     * @return mixed Resultado retornado pelo callback
+     * @throws \Throwable Relança qualquer exceção ocorrida durante a execução do callback
      */
     public function transaction(callable $callback, ?string $database = null): mixed
     {
@@ -347,6 +402,10 @@ abstract class FormDinMigration
 
     /**
      * Verifica se uma tabela ou view existe no banco de dados.
+     *
+     * @param string $table Nome da tabela ou view a verificar
+     * @param string|null $database Nome da conexão opcional
+     * @return bool True se a tabela/view existir, false caso contrário
      */
     public function tableExists(string $table, ?string $database = null): bool
     {
@@ -380,6 +439,11 @@ abstract class FormDinMigration
 
     /**
      * Verifica se uma coluna existe em determinada tabela.
+     *
+     * @param string $table Nome da tabela
+     * @param string $column Nome da coluna a verificar
+     * @param string|null $database Nome da conexão opcional
+     * @return bool True se a coluna existir, false caso contrário
      */
     public function columnExists(string $table, string $column, ?string $database = null): bool
     {
@@ -422,6 +486,11 @@ abstract class FormDinMigration
 
     /**
      * Verifica se um índice existe em determinada tabela.
+     *
+     * @param string $table Nome da tabela
+     * @param string $indexName Nome do índice a verificar
+     * @param string|null $database Nome da conexão opcional
+     * @return bool True se o índice existir, false caso contrário
      */
     public function indexExists(string $table, string $indexName, ?string $database = null): bool
     {
@@ -473,6 +542,7 @@ abstract class FormDinMigration
      * @param string $column Nome da coluna
      * @param string $typeDefinition Definição do tipo (ex: 'VARCHAR(100) NULL', 'INT DEFAULT 0')
      * @param string|null $database Conexão opcional
+     * @return void
      */
     public function addColumn(string $table, string $column, string $typeDefinition, ?string $database = null): void
     {
@@ -491,6 +561,11 @@ abstract class FormDinMigration
 
     /**
      * Remove uma coluna de uma tabela de forma portável.
+     *
+     * @param string $table Nome da tabela
+     * @param string $column Nome da coluna a ser removida
+     * @param string|null $database Conexão opcional
+     * @return void
      */
     public function dropColumn(string $table, string $column, ?string $database = null): void
     {
@@ -503,6 +578,11 @@ abstract class FormDinMigration
 
     /**
      * Remove um índice de uma tabela de forma portável.
+     *
+     * @param string $table Nome da tabela
+     * @param string $indexName Nome do índice a ser removido
+     * @param string|null $database Conexão opcional
+     * @return void
      */
     public function dropIndex(string $table, string $indexName, ?string $database = null): void
     {
@@ -522,6 +602,12 @@ abstract class FormDinMigration
 
     /**
      * Remove uma Foreign Key de uma tabela de forma portável.
+     *
+     * @param string $table Nome da tabela
+     * @param string $foreignKeyName Nome da chave estrangeira a ser removida
+     * @param string|null $database Conexão opcional
+     * @return void
+     * @throws \RuntimeException Se executado em SQLite (SQLite não suporta remoção direta de FK via ALTER TABLE)
      */
     public function dropForeignKey(string $table, string $foreignKeyName, ?string $database = null): void
     {
@@ -541,6 +627,11 @@ abstract class FormDinMigration
 
     /**
      * Cria ou substitui uma View de forma compatível com os 5 SGBDs.
+     *
+     * @param string $viewName Nome da view a ser criada/substituída
+     * @param string $selectSql Instrução SQL SELECT de definição da view
+     * @param string|null $database Conexão opcional
+     * @return void
      */
     public function createOrReplaceView(string $viewName, string $selectSql, ?string $database = null): void
     {
@@ -560,6 +651,10 @@ abstract class FormDinMigration
 
     /**
      * Remove uma View se existir.
+     *
+     * @param string $viewName Nome da view a ser removida
+     * @param string|null $database Conexão opcional
+     * @return void
      */
     public function dropView(string $viewName, ?string $database = null): void
     {
@@ -581,6 +676,7 @@ abstract class FormDinMigration
      * @param array<string, string> $sqlByDbms Mapa com o SQL por driver ('mysql', 'pgsql', 'sqlite', 'sqlsrv' ou 'default')
      * @param string|null $database Conexão opcional
      * @return int Quantidade de linhas afetadas
+     * @throws \RuntimeException Se nenhum SQL for definido para o SGBD conectado
      */
     public function executeByDbms(array $sqlByDbms, ?string $database = null): int
     {
@@ -600,9 +696,9 @@ abstract class FormDinMigration
     /**
      * Executa uma instrução SQL com suporte a parâmetros nomeados ou posicionais.
      *
-     * @param string $sql
-     * @param array $params
-     * @param string|null $database
+     * @param string $sql Instrução SQL a ser executada
+     * @param array $params Parâmetros bound opcionais (ex: [':id' => 10])
+     * @param string|null $database Conexão opcional
      * @return int Linhas afetadas
      */
     public function executeSql(string $sql, array $params = [], ?string $database = null): int
