@@ -33,6 +33,9 @@ class FormDinMigrationRunner
     /** Diretório onde ficam os arquivos de migration */
     private string $migrationsPath;
 
+    /** Flag indicando se a tabela de controle já foi verificada/criada */
+    private bool $tableEnsured = false;
+
     public function __construct(?string $migrationsPath = null, ?string $trackingDb = null)
     {
         $this->setMigrationsPath($migrationsPath);
@@ -63,6 +66,7 @@ class FormDinMigrationRunner
         }
 
         $this->trackingDb = $trackingDb;
+        $this->tableEnsured = false;
     }
 
     /**
@@ -162,28 +166,141 @@ class FormDinMigrationRunner
     // -------------------------------------------------------------------------
 
     /**
-     * Garante que a tabela de controle existe (com o schema atual) e retorna
-     * as versões já executadas. Inclui migração automática do schema legado.
-     *
-     * @return array indexado por script_id com dados das migrations executadas
+     * Identifica o tipo de SGBD (driver) da conexão informada.
+     * Retorna em minúsculo: 'mysql', 'pgsql', 'sqlite', 'sqlsrv', etc.
      */
-    private function ensureTableAndGetExecuted(): array
+    public function getDatabaseType(?string $database = null, ?PDO $conn = null): string
     {
+        $database = $database ?: $this->getTrackingDb();
+
+        if (class_exists(\Adianti\Database\TConnection::class)) {
+            try {
+                $info = \Adianti\Database\TConnection::getDatabaseInfo($database);
+                if (!empty($info['type'])) {
+                    return strtolower($info['type']);
+                }
+            } catch (\Throwable $e) {
+                // fallback para PDO
+            }
+        }
+
+        if ($conn instanceof PDO) {
+            try {
+                $driver = $conn->getAttribute(PDO::ATTR_DRIVER_NAME);
+                if (!empty($driver)) {
+                    return strtolower($driver);
+                }
+            } catch (\Throwable $e) {
+                // fallback
+            }
+        }
+
+        return 'mysql';
+    }
+
+    /**
+     * Retorna o comando SQL DDL para criar a tabela de controle db_migrations
+     * de acordo com o SGBD configurado.
+     */
+    public function getCreateTableSql(string $dbType): string
+    {
+        $dbType = strtolower($dbType);
+
+        switch ($dbType) {
+            case 'sqlite':
+                return "CREATE TABLE IF NOT EXISTS db_migrations (
+                    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                    script_id      VARCHAR(50)  NOT NULL UNIQUE,
+                    description    VARCHAR(255) NOT NULL DEFAULT '',
+                    db_name        VARCHAR(100) NOT NULL DEFAULT '',
+                    system_version VARCHAR(20)  NOT NULL DEFAULT '',
+                    executed_at    TEXT         NOT NULL,
+                    status         TEXT         NOT NULL CHECK (status IN ('success','error'))
+                )";
+
+            case 'pgsql':
+            case 'postgres':
+            case 'postgresql':
+                return "CREATE TABLE IF NOT EXISTS db_migrations (
+                    id             SERIAL PRIMARY KEY,
+                    script_id      VARCHAR(50)  NOT NULL UNIQUE,
+                    description    VARCHAR(255) NOT NULL DEFAULT '',
+                    db_name        VARCHAR(100) NOT NULL DEFAULT '',
+                    system_version VARCHAR(20)  NOT NULL DEFAULT '',
+                    executed_at    TIMESTAMP    NOT NULL,
+                    status         VARCHAR(10)  NOT NULL CHECK (status IN ('success','error'))
+                )";
+
+            case 'sqlsrv':
+            case 'mssql':
+            case 'sqlserver':
+                return "IF OBJECT_ID('db_migrations', 'U') IS NULL
+                CREATE TABLE db_migrations (
+                    id             INT IDENTITY(1,1) PRIMARY KEY,
+                    script_id      VARCHAR(50)  NOT NULL UNIQUE,
+                    description    VARCHAR(255) NOT NULL DEFAULT '',
+                    db_name        VARCHAR(100) NOT NULL DEFAULT '',
+                    system_version VARCHAR(20)  NOT NULL DEFAULT '',
+                    executed_at    DATETIME2    NOT NULL,
+                    status         VARCHAR(10)  NOT NULL CHECK (status IN ('success','error'))
+                )";
+
+            case 'mysql':
+            case 'mariadb':
+            default:
+                return "CREATE TABLE IF NOT EXISTS db_migrations (
+                    id             INT AUTO_INCREMENT PRIMARY KEY,
+                    script_id      VARCHAR(50)  NOT NULL UNIQUE,
+                    description    VARCHAR(255) NOT NULL DEFAULT '',
+                    db_name        VARCHAR(100) NOT NULL DEFAULT '',
+                    system_version VARCHAR(20)  NOT NULL DEFAULT '',
+                    executed_at    DATETIME     NOT NULL,
+                    status         VARCHAR(10)  NOT NULL CHECK (status IN ('success','error'))
+                )";
+        }
+    }
+
+    /**
+     * Garante que a tabela de controle db_migrations exista no SGBD configurado.
+     */
+    public function ensureTable(): void
+    {
+        if ($this->tableEnsured) {
+            return;
+        }
+
         TTransaction::open($this->getTrackingDb());
         $conn = TTransaction::get();
 
-        // Cria a tabela com o schema completo caso ainda não exista
-        $conn->exec("
-            CREATE TABLE IF NOT EXISTS db_migrations (
-                id                INT AUTO_INCREMENT PRIMARY KEY,
-                script_id         VARCHAR(50)  NOT NULL UNIQUE,
-                description       VARCHAR(255) NOT NULL DEFAULT '',
-                db_name           VARCHAR(100) NOT NULL DEFAULT '',
-                system_version    VARCHAR(20)  NOT NULL DEFAULT '',
-                executed_at       DATETIME     NOT NULL,
-                status            ENUM('success','error') NOT NULL
-            ) ENGINE=InnoDB COMMENT 'Tabela de controle de migrations';
-        ");
+        $dbType    = $this->getDatabaseType($this->getTrackingDb(), $conn);
+        $createSql = $this->getCreateTableSql($dbType);
+
+        $conn->exec($createSql);
+
+        try {
+            TTransaction::close();
+        } catch (\Throwable $e) {
+            // Em PHP 8+, comandos DDL causam commit implícito no MySQL.
+            if (strpos($e->getMessage(), 'active transaction') === false) {
+                throw $e;
+            }
+        }
+
+        $this->tableEnsured = true;
+    }
+
+    /**
+     * Garante que a tabela de controle existe (conforme o SGBD configurado) e retorna
+     * as versões já executadas.
+     *
+     * @return array indexado por script_id com dados das migrations executadas
+     */
+    public function ensureTableAndGetExecuted(): array
+    {
+        $this->ensureTable();
+
+        TTransaction::open($this->getTrackingDb());
+        $conn = TTransaction::get();
 
         $rows = $conn->query(
             "SELECT script_id, status, executed_at FROM db_migrations"
@@ -191,9 +308,7 @@ class FormDinMigrationRunner
 
         try {
             TTransaction::close();
-        } catch (Exception $e) {
-            // Em PHP 8+, comandos DDL (CREATE TABLE) causam um commit implícito no MySQL.
-            // Isso faz com que o PDO lance uma exceção ao tentar commitar (TTransaction::close()).
+        } catch (\Throwable $e) {
             if (strpos($e->getMessage(), 'active transaction') === false) {
                 throw $e;
             }
@@ -318,6 +433,61 @@ class FormDinMigrationRunner
     }
 
     /**
+     * Registra o resultado da migration na tabela de controle db_migrations
+     * de forma agnóstica a qualquer SGBD (sem ON DUPLICATE KEY e sem NOW()).
+     */
+    public function recordMigration(string $version, string $desc, string $database, string $systemVersion, string $status): void
+    {
+        $this->ensureTable();
+
+        TTransaction::open($this->getTrackingDb());
+        $conn = TTransaction::get();
+
+        $checkStmt = $conn->prepare("SELECT script_id FROM db_migrations WHERE script_id = :script_id");
+        $checkStmt->execute([':script_id' => $version]);
+        $exists = (bool) $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+        $now = date('Y-m-d H:i:s');
+
+        if ($exists) {
+            $stmt = $conn->prepare("
+                UPDATE db_migrations
+                SET description    = :description,
+                    db_name        = :db_name,
+                    system_version = :system_version,
+                    executed_at    = :executed_at,
+                    status         = :status
+                WHERE script_id    = :script_id
+            ");
+        } else {
+            $stmt = $conn->prepare("
+                INSERT INTO db_migrations
+                    (script_id, description, db_name, system_version, executed_at, status)
+                VALUES
+                    (:script_id, :description, :db_name, :system_version, :executed_at, :status)
+            ");
+        }
+
+        $stmt->execute([
+            ':script_id'      => $version,
+            ':description'    => $desc,
+            ':db_name'        => $database,
+            ':system_version' => $systemVersion,
+            ':executed_at'    => $now,
+            ':status'         => $status,
+        ]);
+
+        try {
+            TTransaction::close();
+        } catch (\Throwable $e) {
+            // Em MySQL comandos DDL anteriores podem ter causado commit implícito
+            if (strpos($e->getMessage(), 'active transaction') === false) {
+                throw $e;
+            }
+        }
+    }
+
+    /**
      * Executa uma migration e registra o resultado em db_migrations.
      */
     private function execute(FormDinMigration $migration): void
@@ -335,53 +505,18 @@ class FormDinMigrationRunner
 
         try {
             $migration->up();
-
-            TTransaction::open($this->getTrackingDb());
-            $conn = TTransaction::get();
-            $stmt = $conn->prepare("
-                INSERT INTO db_migrations
-                    (script_id, description, db_name, system_version, executed_at, status)
-                VALUES
-                    (:script_id, :description, :db_name, :system_version, NOW(), 'success')
-                ON DUPLICATE KEY UPDATE
-                    description    = VALUES(description),
-                    db_name        = VALUES(db_name),
-                    system_version = VALUES(system_version),
-                    executed_at    = NOW(),
-                    status         = 'success'
-            ");
-            $stmt->execute([
-                ':script_id'         => $version,
-                ':description'       => $desc,
-                ':db_name'           => $database,
-                ':system_version'    => $systemVersion,
-            ]);
-            TTransaction::close();
-
+            $this->recordMigration($version, $desc, $database, $systemVersion, 'success');
             echo "  -> Concluida com sucesso.\n\n";
 
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             // Tenta fechar qualquer transação aberta antes de registrar o erro
-            try { TTransaction::rollback(); } catch (Exception $ignored) {}
+            try { TTransaction::rollback(); } catch (\Throwable $ignored) {}
 
-            TTransaction::open($this->getTrackingDb());
-            $conn = TTransaction::get();
-            $stmt = $conn->prepare("
-                INSERT INTO db_migrations
-                    (script_id, description, db_name, system_version, executed_at, status)
-                VALUES
-                    (:script_id, :description, :db_name, :system_version, NOW(), 'error')
-                ON DUPLICATE KEY UPDATE
-                    executed_at = NOW(),
-                    status      = 'error'
-            ");
-            $stmt->execute([
-                ':script_id'         => $version,
-                ':description'       => $desc,
-                ':db_name'           => $database,
-                ':system_version'    => $systemVersion,
-            ]);
-            TTransaction::close();
+            try {
+                $this->recordMigration($version, $desc, $database, $systemVersion, 'error');
+            } catch (\Throwable $recordEx) {
+                echo "  -> AVISO: Não foi possível registrar o erro na tabela db_migrations: " . $recordEx->getMessage() . "\n";
+            }
 
             echo "  -> ERRO: " . $e->getMessage() . "\n\n";
 
