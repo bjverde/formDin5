@@ -69,6 +69,8 @@ abstract class FormDinMigration
     public const DBMS_POSTGRES  = 'pgsql';
     public const DBMS_SQLITE    = 'sqlite';
     public const DBMS_SQLSERVER = 'sqlsrv';
+    public const DBMS_ORACLE    = 'oci';
+    public const DBMS_FIREBIRD  = 'firebird';
 
     /**
      * Retorna os SGBDs compatíveis com esta migration.
@@ -134,11 +136,13 @@ abstract class FormDinMigration
         $driver = strtolower(trim($driver));
 
         return match ($driver) {
-            'sqlite', 'sqlite3'               => self::DBMS_SQLITE,
-            'pgsql', 'postgres', 'postgresql' => self::DBMS_POSTGRES,
-            'sqlsrv', 'mssql', 'sqlserver'    => self::DBMS_SQLSERVER,
-            'mysql', 'mariadb'                => self::DBMS_MYSQL,
-            default                           => $driver,
+            'sqlite', 'sqlite3'                       => self::DBMS_SQLITE,
+            'pgsql', 'postgres', 'postgresql'         => self::DBMS_POSTGRES,
+            'sqlsrv', 'mssql', 'sqlserver'            => self::DBMS_SQLSERVER,
+            'mysql', 'mariadb'                        => self::DBMS_MYSQL,
+            'oci', 'oci8', 'oracle', 'pdo_oci'        => self::DBMS_ORACLE,
+            'firebird', 'ibase', 'interbase', 'fbird' => self::DBMS_FIREBIRD,
+            default                                   => $driver,
         };
     }
 
@@ -260,6 +264,30 @@ abstract class FormDinMigration
     public function isSqlServer(?string $database = null, ?PDO $conn = null): bool
     {
         return $this->getDriverName($database, $conn) === self::DBMS_SQLSERVER;
+    }
+
+    /**
+     * Verifica se o banco de dados conectado é Oracle.
+     *
+     * @param string|null $database Nome da conexão opcional
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return bool True se for Oracle
+     */
+    public function isOracle(?string $database = null, ?PDO $conn = null): bool
+    {
+        return $this->getDriverName($database, $conn) === self::DBMS_ORACLE;
+    }
+
+    /**
+     * Verifica se o banco de dados conectado é Firebird ou Interbase.
+     *
+     * @param string|null $database Nome da conexão opcional
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return bool True se for Firebird / Interbase
+     */
+    public function isFirebird(?string $database = null, ?PDO $conn = null): bool
+    {
+        return $this->getDriverName($database, $conn) === self::DBMS_FIREBIRD;
     }
 
     // -------------------------------------------------------------------------
@@ -429,6 +457,16 @@ abstract class FormDinMigration
                 $stmt->execute([':table' => $tableClean]);
                 return (bool) $stmt->fetchColumn();
             })(),
+            self::DBMS_ORACLE => (function() use ($conn, $tableClean) {
+                $stmt = $conn->prepare("SELECT 1 FROM user_objects WHERE object_type IN ('TABLE', 'VIEW') AND UPPER(object_name) = UPPER(:table)");
+                $stmt->execute([':table' => $tableClean]);
+                return (bool) $stmt->fetchColumn();
+            })(),
+            self::DBMS_FIREBIRD => (function() use ($conn, $tableClean) {
+                $stmt = $conn->prepare("SELECT 1 FROM rdb\$relations WHERE TRIM(UPPER(rdb\$relation_name)) = UPPER(:table)");
+                $stmt->execute([':table' => $tableClean]);
+                return (bool) $stmt->fetchColumn();
+            })(),
             default => (function() use ($conn, $tableClean) { // MySQL / MariaDB
                 $stmt = $conn->prepare("SELECT 1 FROM information_schema.tables WHERE table_schema = DATABASE() AND LOWER(table_name) = LOWER(:table)");
                 $stmt->execute([':table' => $tableClean]);
@@ -473,6 +511,16 @@ abstract class FormDinMigration
             })(),
             self::DBMS_SQLSERVER => (function() use ($conn, $tableClean, $columnClean) {
                 $stmt = $conn->prepare("SELECT 1 FROM information_schema.columns WHERE LOWER(table_name) = LOWER(:table) AND LOWER(column_name) = LOWER(:col)");
+                $stmt->execute([':table' => $tableClean, ':col' => $columnClean]);
+                return (bool) $stmt->fetchColumn();
+            })(),
+            self::DBMS_ORACLE => (function() use ($conn, $tableClean, $columnClean) {
+                $stmt = $conn->prepare("SELECT 1 FROM user_tab_cols WHERE UPPER(table_name) = UPPER(:table) AND UPPER(column_name) = UPPER(:col)");
+                $stmt->execute([':table' => $tableClean, ':col' => $columnClean]);
+                return (bool) $stmt->fetchColumn();
+            })(),
+            self::DBMS_FIREBIRD => (function() use ($conn, $tableClean, $columnClean) {
+                $stmt = $conn->prepare("SELECT 1 FROM rdb\$relation_fields WHERE TRIM(UPPER(rdb\$relation_name)) = UPPER(:table) AND TRIM(UPPER(rdb\$field_name)) = UPPER(:col)");
                 $stmt->execute([':table' => $tableClean, ':col' => $columnClean]);
                 return (bool) $stmt->fetchColumn();
             })(),
@@ -523,6 +571,16 @@ abstract class FormDinMigration
                 $stmt->execute([':table' => $tableClean, ':idx' => $indexClean]);
                 return (bool) $stmt->fetchColumn();
             })(),
+            self::DBMS_ORACLE => (function() use ($conn, $tableClean, $indexClean) {
+                $stmt = $conn->prepare("SELECT 1 FROM user_indexes WHERE UPPER(table_name) = UPPER(:table) AND UPPER(index_name) = UPPER(:idx)");
+                $stmt->execute([':table' => $tableClean, ':idx' => $indexClean]);
+                return (bool) $stmt->fetchColumn();
+            })(),
+            self::DBMS_FIREBIRD => (function() use ($conn, $tableClean, $indexClean) {
+                $stmt = $conn->prepare("SELECT 1 FROM rdb\$indices WHERE TRIM(UPPER(rdb\$relation_name)) = UPPER(:table) AND TRIM(UPPER(rdb\$index_name)) = UPPER(:idx)");
+                $stmt->execute([':table' => $tableClean, ':idx' => $indexClean]);
+                return (bool) $stmt->fetchColumn();
+            })(),
             default => (function() use ($conn, $tableClean, $indexClean) { // MySQL
                 $stmt = $conn->prepare("SELECT 1 FROM information_schema.statistics WHERE table_schema = DATABASE() AND LOWER(table_name) = LOWER(:table) AND LOWER(index_name) = LOWER(:idx)");
                 $stmt->execute([':table' => $tableClean, ':idx' => $indexClean]);
@@ -552,8 +610,10 @@ abstract class FormDinMigration
         $columnClean = trim($column, '`"[] ');
 
         $sql = match ($driver) {
-            self::DBMS_SQLSERVER => "ALTER TABLE {$tableClean} ADD {$columnClean} {$typeDefinition}",
-            default              => "ALTER TABLE {$tableClean} ADD COLUMN {$columnClean} {$typeDefinition}",
+            self::DBMS_SQLSERVER,
+            self::DBMS_ORACLE,
+            self::DBMS_FIREBIRD => "ALTER TABLE {$tableClean} ADD {$columnClean} {$typeDefinition}",
+            default             => "ALTER TABLE {$tableClean} ADD COLUMN {$columnClean} {$typeDefinition}",
         };
 
         $conn->exec($sql);
@@ -570,10 +630,16 @@ abstract class FormDinMigration
     public function dropColumn(string $table, string $column, ?string $database = null): void
     {
         $conn = $this->getConnection($database);
+        $driver = $this->getDriverName($database, $conn);
         $tableClean = trim($table, '`"[] ');
         $columnClean = trim($column, '`"[] ');
 
-        $conn->exec("ALTER TABLE {$tableClean} DROP COLUMN {$columnClean}");
+        $sql = match ($driver) {
+            self::DBMS_FIREBIRD => "ALTER TABLE {$tableClean} DROP {$columnClean}",
+            default             => "ALTER TABLE {$tableClean} DROP COLUMN {$columnClean}",
+        };
+
+        $conn->exec($sql);
     }
 
     /**
@@ -594,6 +660,8 @@ abstract class FormDinMigration
         $sql = match ($driver) {
             self::DBMS_MYSQL     => "ALTER TABLE {$tableClean} DROP INDEX {$indexClean}",
             self::DBMS_SQLSERVER => "DROP INDEX {$indexClean} ON {$tableClean}",
+            self::DBMS_ORACLE,
+            self::DBMS_FIREBIRD  => "DROP INDEX {$indexClean}",
             default              => "DROP INDEX IF EXISTS {$indexClean}", // PostgreSQL, SQLite
         };
 
@@ -626,7 +694,7 @@ abstract class FormDinMigration
     }
 
     /**
-     * Cria ou substitui uma View de forma compatível com os 5 SGBDs.
+     * Cria ou substitui uma View de forma compatível com os 7 SGBDs suportados.
      *
      * @param string $viewName Nome da view a ser criada/substituída
      * @param string $selectSql Instrução SQL SELECT de definição da view
@@ -644,13 +712,14 @@ abstract class FormDinMigration
                 $conn->exec("DROP VIEW IF EXISTS {$viewClean}");
                 $conn->exec("CREATE VIEW {$viewClean} AS {$selectSql}");
             })(),
-            self::DBMS_SQLSERVER => $conn->exec("CREATE OR ALTER VIEW {$viewClean} AS {$selectSql}"),
-            default              => $conn->exec("CREATE OR REPLACE VIEW {$viewClean} AS {$selectSql}"), // MySQL, Postgres
+            self::DBMS_SQLSERVER,
+            self::DBMS_FIREBIRD => $conn->exec("CREATE OR ALTER VIEW {$viewClean} AS {$selectSql}"),
+            default             => $conn->exec("CREATE OR REPLACE VIEW {$viewClean} AS {$selectSql}"), // MySQL, Postgres, Oracle
         };
     }
 
     /**
-     * Remove uma View se existir.
+     * Remove uma View se existir de forma portável entre SGBDs.
      *
      * @param string $viewName Nome da view a ser removida
      * @param string|null $database Conexão opcional
@@ -659,7 +728,16 @@ abstract class FormDinMigration
     public function dropView(string $viewName, ?string $database = null): void
     {
         $conn = $this->getConnection($database);
+        $driver = $this->getDriverName($database, $conn);
         $viewClean = trim($viewName, '`"[] ');
+
+        if ($driver === self::DBMS_ORACLE || $driver === self::DBMS_FIREBIRD) {
+            if ($this->tableExists($viewClean, $database)) {
+                $conn->exec("DROP VIEW {$viewClean}");
+            }
+            return;
+        }
+
         $conn->exec("DROP VIEW IF EXISTS {$viewClean}");
     }
 

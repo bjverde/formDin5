@@ -412,12 +412,33 @@ class FormDinMigrationRunner
     // -------------------------------------------------------------------------
 
     /**
-     * Identifica o tipo de SGBD (driver) da conexão informada.
-     * Retorna em minúsculo: 'mysql', 'pgsql', 'sqlite', 'sqlsrv', etc.
+     * Normaliza os diferentes nomes de driver/SGBD para um padrão consistente.
+     *
+     * @param string $driver Nome ou alias do driver recebido
+     * @return string Nome padronizado do driver (mysql, pgsql, sqlite, sqlsrv, oci, firebird)
+     */
+    public function normalizeDriverName(string $driver): string
+    {
+        $driver = strtolower(trim($driver));
+
+        return match ($driver) {
+            'sqlite', 'sqlite3'                       => FormDinMigration::DBMS_SQLITE,
+            'pgsql', 'postgres', 'postgresql'         => FormDinMigration::DBMS_POSTGRES,
+            'sqlsrv', 'mssql', 'sqlserver'            => FormDinMigration::DBMS_SQLSERVER,
+            'mysql', 'mariadb'                        => FormDinMigration::DBMS_MYSQL,
+            'oci', 'oci8', 'oracle', 'pdo_oci'        => FormDinMigration::DBMS_ORACLE,
+            'firebird', 'ibase', 'interbase', 'fbird' => FormDinMigration::DBMS_FIREBIRD,
+            default                                   => $driver,
+        };
+    }
+
+    /**
+     * Identifica o tipo de SGBD (driver) da conexão informada de forma normalizada.
+     * Retorna um dos identificadores padronizados: 'mysql', 'pgsql', 'sqlite', 'sqlsrv', 'oci', 'firebird'.
      *
      * @param string|null $database Nome da conexão (default: trackingDb)
      * @param PDO|null $conn Conexão PDO ativa opcional
-     * @return string Identificador do driver em minúsculo
+     * @return string Identificador normalizado do driver
      */
     public function getDatabaseType(?string $database = null, ?PDO $conn = null): string
     {
@@ -427,7 +448,7 @@ class FormDinMigrationRunner
             try {
                 $info = \Adianti\Database\TConnection::getDatabaseInfo($database);
                 if (!empty($info['type'])) {
-                    return strtolower($info['type']);
+                    return $this->normalizeDriverName($info['type']);
                 }
             } catch (\Throwable $e) {
                 // fallback para PDO
@@ -438,29 +459,31 @@ class FormDinMigrationRunner
             try {
                 $driver = $conn->getAttribute(PDO::ATTR_DRIVER_NAME);
                 if (!empty($driver)) {
-                    return strtolower($driver);
+                    return $this->normalizeDriverName($driver);
                 }
             } catch (\Throwable $e) {
                 // fallback
             }
         }
 
-        return 'mysql';
+        return FormDinMigration::DBMS_MYSQL;
     }
 
     /**
      * Retorna o comando SQL DDL para criar a tabela de controle db_migrations
      * de acordo com o SGBD configurado.
      *
-     * @param string $dbType Identificador do SGBD ('mysql', 'pgsql', 'sqlite', 'sqlsrv')
+     * Suporta: MySQL/MariaDB, PostgreSQL, SQLite, SQL Server, Oracle e Firebird/Interbase.
+     *
+     * @param string $dbType Identificador do SGBD ('mysql', 'pgsql', 'sqlite', 'sqlsrv', 'oci', 'firebird')
      * @return string Instrução DDL CREATE TABLE compatível com o SGBD
      */
     public function getCreateTableSql(string $dbType): string
     {
-        $dbType = strtolower($dbType);
+        $dbType = $this->normalizeDriverName($dbType);
 
         switch ($dbType) {
-            case 'sqlite':
+            case FormDinMigration::DBMS_SQLITE:
                 return "CREATE TABLE IF NOT EXISTS db_migrations (
                     id             INTEGER PRIMARY KEY AUTOINCREMENT,
                     script_id      VARCHAR(50)  NOT NULL UNIQUE,
@@ -471,9 +494,7 @@ class FormDinMigrationRunner
                     status         TEXT         NOT NULL CHECK (status IN ('success','error'))
                 )";
 
-            case 'pgsql':
-            case 'postgres':
-            case 'postgresql':
+            case FormDinMigration::DBMS_POSTGRES:
                 return "CREATE TABLE IF NOT EXISTS db_migrations (
                     id             SERIAL PRIMARY KEY,
                     script_id      VARCHAR(50)  NOT NULL UNIQUE,
@@ -484,9 +505,7 @@ class FormDinMigrationRunner
                     status         VARCHAR(10)  NOT NULL CHECK (status IN ('success','error'))
                 )";
 
-            case 'sqlsrv':
-            case 'mssql':
-            case 'sqlserver':
+            case FormDinMigration::DBMS_SQLSERVER:
                 return "IF OBJECT_ID('db_migrations', 'U') IS NULL
                 CREATE TABLE db_migrations (
                     id             INT IDENTITY(1,1) PRIMARY KEY,
@@ -498,8 +517,40 @@ class FormDinMigrationRunner
                     status         VARCHAR(10)  NOT NULL CHECK (status IN ('success','error'))
                 )";
 
-            case 'mysql':
-            case 'mariadb':
+            case FormDinMigration::DBMS_ORACLE:
+                return "BEGIN
+    EXECUTE IMMEDIATE 'CREATE TABLE db_migrations (
+        id             NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+        script_id      VARCHAR2(50)  NOT NULL UNIQUE,
+        description    VARCHAR2(255) DEFAULT NULL,
+        db_name        VARCHAR2(100) DEFAULT NULL,
+        system_version VARCHAR2(20)  DEFAULT NULL,
+        executed_at    TIMESTAMP     NOT NULL,
+        status         VARCHAR2(10)  NOT NULL CHECK (status IN (''success'',''error''))
+    )';
+EXCEPTION
+    WHEN OTHERS THEN
+        IF SQLCODE != -955 THEN
+            RAISE;
+        END IF;
+END;";
+
+            case FormDinMigration::DBMS_FIREBIRD:
+                return "EXECUTE BLOCK AS
+BEGIN
+    IF (NOT EXISTS(SELECT 1 FROM rdb\$relations WHERE TRIM(rdb\$relation_name) = 'DB_MIGRATIONS')) THEN
+        EXECUTE STATEMENT 'CREATE TABLE db_migrations (
+            id             INTEGER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+            script_id      VARCHAR(50)  NOT NULL UNIQUE,
+            description    VARCHAR(255) DEFAULT '''' NOT NULL,
+            db_name        VARCHAR(100) DEFAULT '''' NOT NULL,
+            system_version VARCHAR(20)  DEFAULT '''' NOT NULL,
+            executed_at    TIMESTAMP    NOT NULL,
+            status         VARCHAR(10)  NOT NULL CHECK (status IN (''success'',''error''))
+        )';
+END";
+
+            case FormDinMigration::DBMS_MYSQL:
             default:
                 return "CREATE TABLE IF NOT EXISTS db_migrations (
                     id             INT AUTO_INCREMENT PRIMARY KEY,
