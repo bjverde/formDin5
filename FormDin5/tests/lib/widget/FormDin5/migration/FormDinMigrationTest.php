@@ -41,6 +41,8 @@ class FormDinMigrationTest extends TestCase
         $this->assertEquals('pgsql', FormDinMigration::DBMS_POSTGRES);
         $this->assertEquals('sqlite', FormDinMigration::DBMS_SQLITE);
         $this->assertEquals('sqlsrv', FormDinMigration::DBMS_SQLSERVER);
+        $this->assertEquals('oci', FormDinMigration::DBMS_ORACLE);
+        $this->assertEquals('firebird', FormDinMigration::DBMS_FIREBIRD);
     }
 
     public function test_normalize_driver_names(): void
@@ -57,6 +59,14 @@ class FormDinMigrationTest extends TestCase
         $this->assertEquals(FormDinMigration::DBMS_SQLSERVER, $migration->normalizeDriverName('sqlserver'));
         $this->assertEquals(FormDinMigration::DBMS_MYSQL, $migration->normalizeDriverName('mysql'));
         $this->assertEquals(FormDinMigration::DBMS_MYSQL, $migration->normalizeDriverName('mariadb'));
+        $this->assertEquals(FormDinMigration::DBMS_ORACLE, $migration->normalizeDriverName('oci'));
+        $this->assertEquals(FormDinMigration::DBMS_ORACLE, $migration->normalizeDriverName('oci8'));
+        $this->assertEquals(FormDinMigration::DBMS_ORACLE, $migration->normalizeDriverName('oracle'));
+        $this->assertEquals(FormDinMigration::DBMS_ORACLE, $migration->normalizeDriverName('pdo_oci'));
+        $this->assertEquals(FormDinMigration::DBMS_FIREBIRD, $migration->normalizeDriverName('firebird'));
+        $this->assertEquals(FormDinMigration::DBMS_FIREBIRD, $migration->normalizeDriverName('ibase'));
+        $this->assertEquals(FormDinMigration::DBMS_FIREBIRD, $migration->normalizeDriverName('interbase'));
+        $this->assertEquals(FormDinMigration::DBMS_FIREBIRD, $migration->normalizeDriverName('fbird'));
     }
 
     public function test_driver_check_with_pdo_sqlite(): void
@@ -70,6 +80,8 @@ class FormDinMigrationTest extends TestCase
         $this->assertFalse($migration->isMysql(null, $pdo));
         $this->assertFalse($migration->isPostgres(null, $pdo));
         $this->assertFalse($migration->isSqlServer(null, $pdo));
+        $this->assertFalse($migration->isOracle(null, $pdo));
+        $this->assertFalse($migration->isFirebird(null, $pdo));
     }
 
     public function test_driver_check_with_sqlite_dbapoio(): void
@@ -81,6 +93,8 @@ class FormDinMigrationTest extends TestCase
         $this->assertFalse($migration->isMysql());
         $this->assertFalse($migration->isPostgres());
         $this->assertFalse($migration->isSqlServer());
+        $this->assertFalse($migration->isOracle());
+        $this->assertFalse($migration->isFirebird());
     }
 
     public function test_default_fallback_to_mysql(): void
@@ -92,6 +106,8 @@ class FormDinMigrationTest extends TestCase
         $this->assertFalse($migration->isPostgres());
         $this->assertFalse($migration->isSqlite());
         $this->assertFalse($migration->isSqlServer());
+        $this->assertFalse($migration->isOracle());
+        $this->assertFalse($migration->isFirebird());
     }
 
     public function test_transaction_management_helpers(): void
@@ -127,6 +143,10 @@ class FormDinMigrationTest extends TestCase
         $this->assertTrue($defaultMigration->isDbmsSupported('pgsql'));
         $this->assertTrue($defaultMigration->isDbmsSupported('sqlite'));
         $this->assertTrue($defaultMigration->isDbmsSupported('sqlsrv'));
+        $this->assertTrue($defaultMigration->isDbmsSupported('oci'));
+        $this->assertTrue($defaultMigration->isDbmsSupported('oracle'));
+        $this->assertTrue($defaultMigration->isDbmsSupported('firebird'));
+        $this->assertTrue($defaultMigration->isDbmsSupported('ibase'));
 
         $mysqlOnly = new class extends FormDinMigration {
             public function getVersion(): string { return 'V099'; }
@@ -144,6 +164,8 @@ class FormDinMigrationTest extends TestCase
         $this->assertFalse($mysqlOnly->isDbmsSupported('pgsql'));
         $this->assertFalse($mysqlOnly->isDbmsSupported('sqlite'));
         $this->assertFalse($mysqlOnly->isDbmsSupported('sqlsrv'));
+        $this->assertFalse($mysqlOnly->isDbmsSupported('oci'));
+        $this->assertFalse($mysqlOnly->isDbmsSupported('firebird'));
 
         $multiDbms = new class extends FormDinMigration {
             public function getVersion(): string { return 'V100'; }
@@ -159,6 +181,8 @@ class FormDinMigrationTest extends TestCase
         $this->assertTrue($multiDbms->isDbmsSupported('pgsql'));
         $this->assertFalse($multiDbms->isDbmsSupported('sqlite'));
         $this->assertFalse($multiDbms->isDbmsSupported('sqlsrv'));
+        $this->assertFalse($multiDbms->isDbmsSupported('oci'));
+        $this->assertFalse($multiDbms->isDbmsSupported('firebird'));
     }
 
     public function test_schema_helpers_on_sqlite_memory(): void
