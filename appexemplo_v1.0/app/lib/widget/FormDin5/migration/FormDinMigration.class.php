@@ -50,13 +50,133 @@ abstract class FormDinMigration
      */
     abstract public function down(): void;
 
+    /** Constantes com identificadores padronizados dos SGBDs */
+    public const DBMS_MYSQL     = 'mysql';
+    public const DBMS_POSTGRES  = 'pgsql';
+    public const DBMS_SQLITE    = 'sqlite';
+    public const DBMS_SQLSERVER = 'sqlsrv';
+
     /**
      * Retorna o nome real do banco de dados configurado para uma conexão.
-     * Útil para referenciar tabelas de outros bancos em Foreign Keys.
+     * Útil para referenciar tabelas de outros bancos em Foreign Keys (onde suportado).
      */
     protected function getDatabaseName(string $connection): string
     {
         $info = \Adianti\Database\TConnection::getDatabaseInfo($connection);
         return $info['name'] ?? $connection;
+    }
+
+    /**
+     * Normaliza os diferentes nomes de driver/SGBD para um padrão consistente.
+     */
+    public function normalizeDriverName(string $driver): string
+    {
+        $driver = strtolower(trim($driver));
+
+        return match ($driver) {
+            'sqlite', 'sqlite3'               => self::DBMS_SQLITE,
+            'pgsql', 'postgres', 'postgresql' => self::DBMS_POSTGRES,
+            'sqlsrv', 'mssql', 'sqlserver'    => self::DBMS_SQLSERVER,
+            'mysql', 'mariadb'                => self::DBMS_MYSQL,
+            default                           => $driver,
+        };
+    }
+
+    /**
+     * Retorna o identificador normalizado do driver/SGBD conectado.
+     * Exemplos de retorno: 'mysql', 'pgsql', 'sqlite', 'sqlsrv'.
+     *
+     * @param string|null $database Nome da conexão (default: $this->getDatabase())
+     * @param PDO|null $conn Conexão PDO ativa opcional
+     * @return string
+     */
+    public function getDriverName(?string $database = null, ?PDO $conn = null): string
+    {
+        try {
+            $database = $database ?: $this->getDatabase();
+        } catch (\Throwable $e) {
+            $database = null;
+        }
+
+        // 1. Tenta obter pelo TConnection da Adianti se houver configuração
+        if (!empty($database) && class_exists(\Adianti\Database\TConnection::class)) {
+            try {
+                $info = \Adianti\Database\TConnection::getDatabaseInfo($database);
+                if (!empty($info['type'])) {
+                    return $this->normalizeDriverName($info['type']);
+                }
+            } catch (\Throwable $e) {
+                // continua para tentar via PDO
+            }
+        }
+
+        // 2. Tenta obter pelo PDO informado
+        if ($conn instanceof PDO) {
+            try {
+                $driver = $conn->getAttribute(PDO::ATTR_DRIVER_NAME);
+                if (!empty($driver)) {
+                    return $this->normalizeDriverName($driver);
+                }
+            } catch (\Throwable $e) {
+                // fallback
+            }
+        }
+
+        // 3. Tenta obter pela transação ativa do Adianti se houver
+        if (class_exists(\Adianti\Database\TTransaction::class)) {
+            try {
+                $activeConn = \Adianti\Database\TTransaction::get();
+                if ($activeConn instanceof PDO) {
+                    $driver = $activeConn->getAttribute(PDO::ATTR_DRIVER_NAME);
+                    if (!empty($driver)) {
+                        return $this->normalizeDriverName($driver);
+                    }
+                }
+            } catch (\Throwable $e) {
+                // fallback
+            }
+        }
+
+        return self::DBMS_MYSQL;
+    }
+
+    /**
+     * Alias para getDriverName().
+     */
+    public function getDriver(?string $database = null, ?PDO $conn = null): string
+    {
+        return $this->getDriverName($database, $conn);
+    }
+
+    /**
+     * Verifica se o banco de dados conectado é MySQL ou MariaDB.
+     */
+    public function isMysql(?string $database = null, ?PDO $conn = null): bool
+    {
+        return $this->getDriverName($database, $conn) === self::DBMS_MYSQL;
+    }
+
+    /**
+     * Verifica se o banco de dados conectado é PostgreSQL.
+     */
+    public function isPostgres(?string $database = null, ?PDO $conn = null): bool
+    {
+        return $this->getDriverName($database, $conn) === self::DBMS_POSTGRES;
+    }
+
+    /**
+     * Verifica se o banco de dados conectado é SQLite.
+     */
+    public function isSqlite(?string $database = null, ?PDO $conn = null): bool
+    {
+        return $this->getDriverName($database, $conn) === self::DBMS_SQLITE;
+    }
+
+    /**
+     * Verifica se o banco de dados conectado é SQL Server.
+     */
+    public function isSqlServer(?string $database = null, ?PDO $conn = null): bool
+    {
+        return $this->getDriverName($database, $conn) === self::DBMS_SQLSERVER;
     }
 }
