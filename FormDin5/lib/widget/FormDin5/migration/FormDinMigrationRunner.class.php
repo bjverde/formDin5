@@ -69,6 +69,61 @@ class FormDinMigrationRunner
         $this->tableEnsured = false;
     }
 
+    /** SGBD padrão assumido para migrations legadas que não sobrescrevem getSupportedDbms() */
+    private ?string $defaultLegacyDbms = null;
+
+    /**
+     * Define o SGBD padrão para migrations legadas que não sobrescrevem getSupportedDbms().
+     * Exemplo: $runner->setDefaultLegacyDbms(FormDinMigration::DBMS_MYSQL);
+     */
+    public function setDefaultLegacyDbms(?string $dbms): void
+    {
+        $this->defaultLegacyDbms = $dbms !== null ? strtolower(trim($dbms)) : null;
+    }
+
+    /**
+     * Retorna o SGBD padrão para migrations legadas.
+     */
+    public function getDefaultLegacyDbms(): ?string
+    {
+        return $this->defaultLegacyDbms;
+    }
+
+    /**
+     * Retorna a lista de SGBDs suportados pela migration, aplicando o default legado se configurado.
+     *
+     * @return string[]
+     */
+    public function getMigrationSupportedDbms(FormDinMigration $migration): array
+    {
+        if ($this->defaultLegacyDbms !== null) {
+            $reflector = new \ReflectionMethod($migration, 'getSupportedDbms');
+            if ($reflector->getDeclaringClass()->getName() === FormDinMigration::class) {
+                return [$this->defaultLegacyDbms];
+            }
+        }
+
+        return (array) $migration->getSupportedDbms();
+    }
+
+    /**
+     * Verifica se a migration é suportada no banco de dados alvo.
+     */
+    public function isMigrationSupported(FormDinMigration $migration, ?string $targetDbms = null): bool
+    {
+        $targetDbms = $targetDbms ?: $this->getDatabaseType($migration->getDatabase());
+        $supported = $this->getMigrationSupportedDbms($migration);
+
+        foreach ($supported as $item) {
+            $normalized = $migration->normalizeDriverName((string) $item);
+            if ($normalized === '*' || $normalized === 'all' || $normalized === $targetDbms) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Retorna o diretório onde ficam os arquivos de migration.
      */
@@ -151,6 +206,14 @@ class FormDinMigrationRunner
 
             $status     = $row ? $row['status'] : 'pendente';
             $executedAt = $row ? $row['executed_at'] : '-';
+
+            // Se ainda não foi executada, verifica se o banco configurado é suportado
+            if (!$row) {
+                $targetDbms = $this->getDatabaseType($m->getDatabase());
+                if (!$this->isMigrationSupported($m, $targetDbms)) {
+                    $status = 'incompativel';
+                }
+            }
 
             echo str_pad($version, 8)
                 . str_pad($status, 12)
@@ -701,6 +764,14 @@ class FormDinMigrationRunner
             return;
         }
 
+        $targetDbms = $this->getDatabaseType($database);
+        if (!$this->isMigrationSupported($migration, $targetDbms)) {
+            $supportedList = implode(', ', $this->getMigrationSupportedDbms($migration));
+            echo "  -> IGNORADA: migration desenvolvida para [{$supportedList}],"
+                . " incompativel com o banco '{$database}' ({$targetDbms}).\n\n";
+            return;
+        }
+
         // Abre transação no banco alvo se não houver nenhuma aberta
         if (class_exists(\Adianti\Database\TTransaction::class) && !\Adianti\Database\TTransaction::get()) {
             \Adianti\Database\TTransaction::open($database);
@@ -764,6 +835,14 @@ class FormDinMigrationRunner
         $database = $migration->getDatabase();
 
         echo "[{$version}] Revertendo: {$desc}\n";
+
+        $targetDbms = $this->getDatabaseType($database);
+        if (!$this->isMigrationSupported($migration, $targetDbms)) {
+            $supportedList = implode(', ', $this->getMigrationSupportedDbms($migration));
+            echo "  -> IGNORADA: migration desenvolvida para [{$supportedList}],"
+                . " incompativel com o banco '{$database}' ({$targetDbms}).\n\n";
+            return;
+        }
 
         // Abre transação no banco alvo se não houver nenhuma aberta
         if (class_exists(\Adianti\Database\TTransaction::class) && !\Adianti\Database\TTransaction::get()) {
