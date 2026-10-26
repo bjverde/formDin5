@@ -19,6 +19,13 @@
  * Para listar o status sem executar:
  *   $runner->status();
  */
+if (!class_exists('FormDinMigration')) {
+    $baseMigration = __DIR__ . '/FormDinMigration.class.php';
+    if (file_exists($baseMigration)) {
+        require_once $baseMigration;
+    }
+}
+
 class FormDinMigrationRunner
 {
     /** Versão do runner de migrations */
@@ -849,6 +856,9 @@ END";
                 if (strpos($e->getMessage(), 'active transaction') === false) {
                     throw $e;
                 }
+                // Como TTransaction::close() lançou exceção no commit, ela não decremeta o
+                // contador interno do Adianti nem limpa a conexão, gerando loop infinito.
+                FormDinMigration::forcePopTransaction();
             }
         }
     }
@@ -871,6 +881,7 @@ END";
                 try {
                     \Adianti\Database\TTransaction::rollback();
                 } catch (\Throwable $e) {
+                    FormDinMigration::forcePopTransaction();
                     break;
                 }
             }

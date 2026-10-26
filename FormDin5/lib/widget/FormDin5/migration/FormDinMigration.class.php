@@ -371,7 +371,40 @@ abstract class FormDinMigration
                 if (strpos($e->getMessage(), 'active transaction') === false) {
                     throw $e;
                 }
+                self::forcePopTransaction();
             }
+        }
+    }
+
+    /**
+     * Remove com segurança a transação atual do stack estático do Adianti (TTransaction)
+     * caso o commit/rollback tenha disparado exceção antes de limpar os ponteiros internos.
+     *
+     * @return void
+     */
+    public static function forcePopTransaction(): void
+    {
+        if (!class_exists(\Adianti\Database\TTransaction::class)) {
+            return;
+        }
+
+        try {
+            $ref = new \ReflectionClass(\Adianti\Database\TTransaction::class);
+            $propConn = $ref->getProperty('conn');
+            $conn = $propConn->getValue();
+
+            $propCounter = $ref->getProperty('counter');
+            $counter = $propCounter->getValue();
+
+            if ($counter !== null) {
+                if (is_array($conn) && isset($conn[$counter])) {
+                    $conn[$counter] = null;
+                    $propConn->setValue(null, $conn);
+                }
+                $propCounter->setValue(null, $counter - 1);
+            }
+        } catch (\Throwable $e) {
+            // Ignora falha de reflexão
         }
     }
 
@@ -391,6 +424,7 @@ abstract class FormDinMigration
                 \Adianti\Database\TTransaction::rollback();
             } catch (\Throwable $e) {
                 // Ignora se não houver transação ativa
+                self::forcePopTransaction();
             }
         }
     }
