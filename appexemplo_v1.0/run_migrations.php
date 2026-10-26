@@ -2,7 +2,11 @@
 /**
  * Entry point para execução e gerenciamento de migrations do FormDin 5.
  *
- * Via CLI (sem necessidade de token):
+ * INSTALAÇÃO EM UM NOVO PROJETO:
+ *   Copie este arquivo da pasta do FormDin5 para a raiz do seu projeto Adianti:
+ *   copy app/lib/widget/FormDin5/migration/run_migrations.php run_migrations.php
+ *
+ * VIA CLI (Terminal — sem necessidade de token):
  *   php run_migrations.php                  (executa migrations pendentes)
  *   php run_migrations.php --status         (ou -s: lista o status de cada migration)
  *   php run_migrations.php --rollback [N]   (ou -r: reverte as últimas N migrations, default: 1)
@@ -11,11 +15,12 @@
  *   php run_migrations.php --db=crm_db      (especifica o banco de rastreamento)
  *   php run_migrations.php --help           (ou -h: exibe menu de ajuda)
  *
- * Via WEB (usuário admin logado + token de confirmação em application.ini):
+ * VIA WEB (Navegador — usuário admin logado + token de confirmação em application.ini):
  *   Acesse run_migrations.php no navegador, informe o token e execute ações.
  *
- * As migrations ficam em app/database/migrations/V*.php e são executadas
- * em ordem lexicográfica (V001, V002, ...).
+ * LOCALIZAÇÃO DAS MIGRATIONS:
+ *   As migrations ficam em app/database/migrations/V*.php e são executadas
+ *   em ordem lexicográfica (V001, V002, ...).
  */
 
 // Localiza o init.php do Adianti Framework

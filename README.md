@@ -31,6 +31,7 @@ Em 2026, com o avanço das IAs, o projeto FormDin 5 vai cair em desuso. Se você
     2. No arquivo index.php (na raiz do projeto), inclua as linhas abaixo.
     3. No arquivo init.php (na raiz do projeto), inclua as linhas abaixo.
     4. Copie a pasta `lib/widget/FormDin5` para `/app/lib/widget/FormDin5`.
+    5. *(Opcional - Migrations)*: Copie o arquivo `app/lib/widget/FormDin5/migration/run_migrations.php` para a raiz do seu projeto. Consulte o [Guia de Migrations](FormDin5/lib/widget/FormDin5/migration/README.md).
 
 ## Arquivo application.php
 Edite o arquivo `app/config/application.php` e inclua as linhas abaixo no final do array.
